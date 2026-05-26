@@ -702,48 +702,7 @@
       .topbar { grid-template-columns: 1fr; }
     }
 
-    /* ── 通知鈴鐺 ──────────────────────────────────────── */
-    .notif-trigger {
-      position: fixed;
-      top: 14px;
-      right: 14px;
-      z-index: 901;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      box-shadow: 0 2px 12px rgba(0,0,0,.13);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: box-shadow .15s, background .15s;
-      color: var(--muted);
-    }
-    .notif-trigger:hover { box-shadow: 0 4px 20px rgba(0,0,0,.2); background: var(--surface-2); color: var(--ink); }
-    .notif-trigger svg { width: 20px; height: 20px; flex-shrink: 0; }
-
-    .notif-badge {
-      position: absolute;
-      top: -3px;
-      right: -3px;
-      min-width: 18px;
-      height: 18px;
-      padding: 0 4px;
-      border-radius: 9px;
-      background: var(--red);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid var(--bg);
-      pointer-events: none;
-    }
-    .notif-badge.hidden { display: none; }
-
+    /* ── 通知鈴鐺（嵌入 nav）──────────────────────────── */
     @keyframes bell-shake {
       0%,100% { transform: rotate(0); }
       15%      { transform: rotate(14deg); }
@@ -751,7 +710,21 @@
       55%      { transform: rotate(8deg); }
       75%      { transform: rotate(-5deg); }
     }
-    .notif-trigger.urgent svg { animation: bell-shake .7s ease .4s both; }
+    #notifTrigger.urgent .icon { animation: bell-shake .7s ease .4s both; }
+
+    #notifTrigger small.notif-badge {
+      color: var(--muted);
+      font-size: 11px;
+    }
+    #notifTrigger small.notif-badge.has-urgent {
+      background: var(--red);
+      color: #fff;
+      padding: 1px 6px;
+      border-radius: 9px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    #notifTrigger small.notif-badge.hidden { display: none; }
 
     /* ── 通知面板 ──────────────────────────────────────── */
     .notif-overlay {
@@ -877,6 +850,11 @@
           <svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3 6h.01"></path><path d="M3 12h.01"></path><path d="M3 18h.01"></path></svg>
           <span>列表</span>
           <small id="listCount">0</small>
+        </button>
+        <button type="button" id="notifTrigger" onclick="toggleNotifPanel()" title="工作通知">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span>通知</span>
+          <small class="notif-badge hidden" id="notifBadge">0</small>
         </button>
       </nav>
 
@@ -1161,6 +1139,7 @@
                 <button class="active" type="button" data-status-filter="open">未完成</button>
                 <button type="button" data-status-filter="soon">近期</button>
                 <button type="button" data-status-filter="overdue">逾期</button>
+                <button type="button" data-status-filter="done">已完成</button>
               </div>
             </div>
           </div>
@@ -1195,15 +1174,6 @@
 
     </main>
   </div>
-
-  <!-- ── 通知鈴鐺觸發鈕 ── -->
-  <button class="notif-trigger" id="notifTrigger" type="button" onclick="toggleNotifPanel()" title="工作通知">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-      <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-    </svg>
-    <span class="notif-badge hidden" id="notifBadge">0</span>
-  </button>
 
   <!-- ── 通知背板 ── -->
   <div class="notif-overlay" id="notifOverlay" onclick="closeNotifPanel()"></div>
@@ -2318,6 +2288,7 @@
         console.warn('無法從雲端載入工作清單，使用本機資料', err);
       }
       showLoader(false);
+      setView('list');
       renderAll();
       updateNotifBadge();
       // 載入完成：若有逾期或今天到期的工作，顯示提示 toast
@@ -2367,6 +2338,7 @@
       if (badge) {
         badge.textContent = urgent > 0 ? urgent : total;
         badge.classList.toggle('hidden', total === 0);
+        badge.classList.toggle('has-urgent', urgent > 0);
       }
       if (trigger) trigger.classList.toggle('urgent', urgent > 0);
     }
@@ -2432,6 +2404,34 @@
       requestAnimationFrame(() => {
         document.querySelector(`[data-task-id="${id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
+    }
+
+    // 覆寫 filteredTasks：補充「已完成」快篩邏輯
+    function filteredTasks() {
+      const keyword  = byId("searchInput")?.value.trim().toLowerCase() || "";
+      const category = byId("categoryFilter")?.value || "all";
+      const status   = byId("statusFilter")?.value   || "all";
+      const sortBy   = byId("sortBy")?.value          || "dueAsc";
+      let list = tasks.filter(task => {
+        const text = [task.title, task.category, task.owner, task.description, ...(task.tags || [])].join(" ").toLowerCase();
+        if (keyword && !text.includes(keyword)) return false;
+        if (category !== "all" && task.category !== category) return false;
+        if (status   !== "all" && task.status   !== status)   return false;
+        if (quickFilter === "open"    && task.status === "done") return false;
+        if (quickFilter === "soon"    && !isSoon(task))          return false;
+        if (quickFilter === "overdue" && !isOverdue(task))       return false;
+        if (quickFilter === "done"    && task.status !== "done") return false;
+        return true;
+      });
+      list.sort((a, b) => {
+        if (sortBy === "createdDesc") return new Date(b.createdAt) - new Date(a.createdAt);
+        if (sortBy === "priority")    return priorityWeight(b.priority) - priorityWeight(a.priority);
+        if (sortBy === "category")    return a.category.localeCompare(b.category, "zh-Hant") || a.title.localeCompare(b.title, "zh-Hant");
+        const ad = parseDate(a.dueAt)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+        const bd = parseDate(b.dueAt)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+        return ad - bd;
+      });
+      return list;
     }
 
     loadFromCloud();
