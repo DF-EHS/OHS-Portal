@@ -134,6 +134,8 @@
   .btn-blue:hover   { background: #1d4ed8; }
   .btn-teal   { background: var(--teal);   color: #fff; }
   .btn-teal:hover   { background: #0e7490; }
+  .btn-orange { background: var(--orange); color: #fff; }
+  .btn-orange:hover { background: #b45309; }
 
   /* ── placeholder card ── */
   .placeholder-card {
@@ -185,6 +187,8 @@
   body.dark .ci-green  { background: #052e16; }
   body.dark .ci-blue   { background: #1e3a5f; }
   body.dark .ci-orange { background: #431407; }
+  body.dark .btn-orange { background: #92400e; }
+  body.dark .btn-orange:hover { background: #78350f; }
   body.dark .ci-teal   { background: #042f2e; }
   body.dark .tg-navy   { background: #1e2d42; color: #93c5fd; }
   body.dark .tg-purple { background: #2d1b55; color: #c4b5fd; }
@@ -324,6 +328,30 @@
       <div class="card-footer">
         <div class="card-status"><span class="status-dot"></span>已上線</div>
         <button class="open-btn btn-blue" onclick="event.stopPropagation();location.href='./committee/'">開啟系統 ›</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+         模組 5：職安工作中樞
+         目標：./tasks/
+         ══════════════════════════════════════════════ -->
+    <div class="sys-card" onclick="location.href='./tasks/'">
+      <div class="card-header">
+        <div class="card-icon ci-orange">✅</div>
+        <div>
+          <div class="card-title">職安工作中樞</div>
+          <div class="card-desc">個人工作任務管理，支援重複排程、到期提醒、優先順序分類，並雲端同步至 Google Sheets。</div>
+        </div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tg-orange">任務管理</span>
+        <span class="tag tg-orange">重複排程</span>
+        <span class="tag tg-navy">到期提醒</span>
+        <span class="tag tg-green">雲端同步</span>
+      </div>
+      <div class="card-footer">
+        <div class="card-status"><span class="status-dot"></span>已上線</div>
+        <button class="open-btn btn-orange" onclick="event.stopPropagation();location.href='./tasks/'">開啟系統 ›</button>
       </div>
     </div>
 
