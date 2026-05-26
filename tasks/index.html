@@ -2319,6 +2319,7 @@
       }
       showLoader(false);
       renderAll();
+      updateNotifBadge();
       // 載入完成：若有逾期或今天到期的工作，顯示提示 toast
       const _ng = buildNotifItems();
       if (_ng.overdue.length > 0 || _ng.today.length > 0) {
@@ -2331,6 +2332,7 @@
 
     // 覆寫：每次變更後全量同步至雲端（fire-and-forget）
     function saveTasks() {
+      updateNotifBadge();
       apiPost({ action: 'bulkWrite', tasks }).catch(e => console.warn('雲端同步失敗', e));
     }
 
@@ -2431,10 +2433,6 @@
         document.querySelector(`[data-task-id="${id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
     }
-
-    // 覆寫 renderAll：每次重繪時同步更新角標
-    const _origRenderAll = renderAll;
-    function renderAll() { _origRenderAll(); updateNotifBadge(); }
 
     loadFromCloud();
   </script>
