@@ -2113,6 +2113,8 @@
           if (data.tasks.length > 0) {
             tasks = data.tasks;
           } else {
+            // 初次使用：以範例工作初始化並寫入雲端
+            tasks = starterTasks.map(t => ({ ...t }));
             apiPost({ action: 'bulkWrite', tasks }).catch(() => {});
           }
         }
