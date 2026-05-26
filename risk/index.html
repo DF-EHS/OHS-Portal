@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>危害鑑別及風險評估查詢系統</title>
+<style>
+  :root {
+    --navy:#1e3a5f; --bg:#f1f5f9; --card:#fff; --border:#e2e8f0;
+    --text:#1e293b; --sub:#64748b; --blue:#2563eb;
+    --green:#16a34a; --teal:#0891b2; --orange:#d97706; --red:#dc2626; --gray:#6b7280;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+
+  /* header */
+  header{background:var(--navy);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  header h1{font-size:17px;font-weight:700;}
+  .subtitle{font-size:11px;color:#94a3b8;margin-left:auto;}
+  .hdr-btn{padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);
+           color:#fff;font-size:12px;cursor:pointer;transition:background .15s;}
+  .hdr-btn:hover{background:rgba(255,255,255,.2);}
+  .hdr-btn.danger:hover{background:var(--red);border-color:var(--red);}
+
+  /* breadcrumb */
+  #breadcrumb{padding:7px 20px;background:#fff;border-bottom:1px solid var(--border);
+              font-size:12px;color:var(--sub);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .bc-btn{display:inline-flex;align-items:center;padding:3px 10px;border-radius:16px;
+          font-size:12px;font-weight:600;cursor:pointer;border:none;transition:background .15s;}
+  #bc-home{background:var(--navy);color:#fff;}
+  #bc-home:hover{background:#16305a;}
+  #bc-dept{background:#4c1d95;color:#fff;cursor:pointer;border:none;padding:3px 10px;
+           border-radius:16px;font-size:12px;font-weight:600;}
+  #bc-dept:hover{background:#3b0764;}
+  #bc-sheet{background:#f1f5f9;color:var(--sub);padding:3px 10px;border-radius:16px;font-size:12px;font-weight:600;}
+  .sep{color:#cbd5e1;}
+
+  /* toolbar */
+  #toolbar{padding:10px 20px;background:#fff;border-bottom:1px solid var(--border);
+           display:none;flex-wrap:wrap;gap:8px;align-items:center;}
+  #toolbar input,#toolbar select{border:1px solid var(--border);border-radius:6px;
+    padding:5px 9px;font-size:13px;outline:none;background:var(--bg);}
+  #toolbar input:focus,#toolbar select:focus{border-color:var(--blue);}
+  #search{min-width:200px;}
+
+  /* stats */
+  #stats-bar{display:none;gap:14px;padding:8px 20px;background:#fff;
+             border-bottom:1px solid var(--border);font-size:13px;flex-wrap:wrap;}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+
+  /* main */
+  #main{padding:18px 20px;}
+
+  /* Layer 0 */
+  #view-home{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;padding:28px 0;}
+  .dept-group{background:var(--card);border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.09);
+              overflow:hidden;min-width:300px;max-width:480px;flex:1;}
+  .dept-hdr{background:var(--navy);color:#fff;padding:24px 26px 18px;}
+  .dept-hdr .big-icon{font-size:40px;margin-bottom:6px;display:block;}
+  .dept-hdr h2{font-size:20px;font-weight:700;}
+  .dept-hdr p{font-size:12px;color:#94a3b8;margin-top:3px;}
+  .sheet-row{padding:16px 26px;display:flex;align-items:center;gap:14px;cursor:pointer;
+             border-top:1px solid var(--border);transition:background .15s;}
+  .sheet-row:hover{background:#eff6ff;}
+  .sheet-ico{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;
+             justify-content:center;font-size:24px;flex-shrink:0;}
+  .ic-blue{background:#dbeafe;} .ic-purple{background:#ede9fe;} .ic-orange{background:#ffedd5;}
+  .sheet-info h3{font-size:15px;font-weight:700;margin-bottom:3px;}
+  .sheet-info p{font-size:12px;color:var(--sub);}
+  .sheet-arr{margin-left:auto;color:var(--sub);font-size:20px;}
+
+  /* Layer 1 table */
+  .table-wrap{overflow-x:auto;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+  table{width:100%;border-collapse:collapse;background:var(--card);}
+  thead th{background:var(--navy);color:#fff;padding:9px 11px;text-align:left;font-size:13px;white-space:nowrap;}
+  thead th.sort{cursor:pointer;user-select:none;}
+  thead th.sort:hover{background:#16305a;}
+  .si{font-size:9px;margin-left:3px;}
+  tbody tr{border-bottom:1px solid var(--border);cursor:pointer;}
+  tbody tr:hover{background:#eff6ff;}
+  td{padding:8px 11px;font-size:13px;vertical-align:middle;}
+  td.nm{font-weight:600;color:var(--blue);}
+  .bar-wrap{display:flex;height:7px;border-radius:4px;overflow:hidden;background:var(--border);}
+  .bg-green{background:var(--green);} .bg-orange{background:var(--orange);}
+  .bg-red{background:var(--red);} .bg-gray{background:#cbd5e1;}
+
+  /* Layer 2 detail */
+  #view-detail{display:none;}
+  .dtool{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center;}
+  .sheet-meta{background:#fff;border-radius:8px;padding:14px 18px;
+              box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:14px;}
+  .sheet-meta h2{font-size:16px;margin-bottom:5px;color:var(--navy);}
+  .pills{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap;}
+  .pill{padding:3px 12px;border-radius:16px;font-size:12px;font-weight:600;}
+  .p-total{background:#dbeafe;color:var(--blue);} .p-green{background:#dcfce7;color:var(--green);}
+  .p-orange{background:#fef9c3;color:var(--orange);} .p-red{background:#fee2e2;color:var(--red);}
+  .p-gray{background:#f1f5f9;color:var(--gray);}
+  .sev-legend{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;padding:7px 11px;
+              background:#f8fafc;border-radius:6px;border:1px solid var(--border);font-size:11px;align-items:center;}
+  .sl-lbl{color:var(--sub);margin-right:3px;}
+
+  /* item cards */
+  .item-list{display:flex;flex-direction:column;gap:9px;}
+  .item-card{background:var(--card);border-radius:8px;overflow:hidden;
+             box-shadow:0 1px 4px rgba(0,0,0,.07);border-left:4px solid var(--border);}
+  .item-card.lv-1{border-left-color:var(--green);}
+  .item-card.lv-2{border-left-color:var(--teal);}
+  .item-card.lv-3{border-left-color:var(--orange);}
+  .item-card.lv-4{border-left-color:var(--red);}
+  .item-card.lv-na{border-left-color:#cbd5e1;}
+  .card-hdr{display:flex;align-items:center;gap:8px;padding:10px 12px;
+            user-select:none;flex-wrap:wrap;}
+  .card-hdr-click{cursor:pointer;flex:1;display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0;}
+  .card-hdr-click:hover .item-hazard{text-decoration:underline;}
+  .item-id{font-weight:700;color:var(--navy);font-size:11px;font-family:monospace;white-space:nowrap;}
+  .item-hazard{font-weight:600;font-size:14px;min-width:0;}
+  .item-path{font-size:11px;color:var(--sub);background:#f1f5f9;padding:2px 7px;border-radius:8px;white-space:nowrap;}
+  .lv-badge{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;white-space:nowrap;}
+  .lb-1{background:#dcfce7;color:#15803d;} .lb-2{background:#cffafe;color:#0e7490;}
+  .lb-3{background:#fef9c3;color:#a16207;} .lb-4{background:#fee2e2;color:#b91c1c;}
+  .lb-na{background:#f1f5f9;color:var(--gray);}
+  .chev{color:var(--sub);font-size:10px;transition:transform .2s;margin-left:2px;}
+  .chev.open{transform:rotate(180deg);}
+  /* card action buttons */
+  .card-actions{display:flex;gap:4px;flex-shrink:0;}
+  .act-btn{padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:#fff;
+           cursor:pointer;font-size:11px;color:var(--sub);transition:all .15s;}
+  .act-btn:hover{background:var(--bg);}
+  .act-btn.edit:hover{color:var(--blue);border-color:var(--blue);background:#eff6ff;}
+  .act-btn.del:hover{color:var(--red);border-color:var(--red);background:#fee2e2;}
+  /* card body */
+  .card-body{display:none;padding:0 14px 14px;}
+  .card-body.open{display:block;}
+  .body-path{font-size:11px;color:var(--sub);margin-bottom:10px;padding-top:2px;}
+  .ig{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px;margin-bottom:10px;}
+  @media(max-width:560px){.ig{grid-template-columns:1fr;}}
+  .il .il-lbl{font-size:10px;color:var(--sub);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;}
+  .il .il-val{font-size:13px;line-height:1.5;}
+  .risk-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center;background:#f8fafc;
+            border:1px solid var(--border);border-radius:6px;padding:7px 12px;margin-bottom:10px;font-size:13px;}
+  .rc{display:flex;flex-direction:column;align-items:center;gap:1px;}
+  .rc-l{font-size:10px;color:var(--sub);}
+  .rc-v{font-weight:700;font-size:15px;}
+  .op{color:var(--sub);font-size:16px;}
+  .sev-chip{display:inline-flex;align-items:center;justify-content:center;
+            width:26px;height:26px;border-radius:5px;font-weight:700;font-size:13px;}
+  .sA{background:#7f1d1d;color:#fff;} .sB{background:#dc2626;color:#fff;}
+  .sC{background:#f97316;color:#fff;} .sD{background:#fbbf24;color:#1e293b;}
+  .sE{background:#86efac;color:#1e293b;} .sF{background:#d1fae5;color:#064e3b;}
+  .risk-na{font-size:13px;color:var(--gray);font-style:italic;}
+  .sec-lbl{font-size:10px;color:var(--sub);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;}
+  .ctrl-box{background:#f8fafc;border-radius:6px;padding:9px 11px;font-size:13px;
+            line-height:1.7;border:1px solid var(--border);margin-bottom:9px;white-space:pre-wrap;}
+  .plan-box{background:#f0fdf4;border-radius:6px;padding:9px 11px;font-size:13px;
+            line-height:1.7;border:1px solid #bbf7d0;white-space:pre-wrap;}
+  .code-tag{display:inline-block;background:#e0f2fe;color:#075985;border-radius:3px;
+            padding:1px 6px;font-size:11px;font-family:monospace;margin:1px;}
+  .warn-box{background:#fef9c3;border:1px solid #fde047;border-radius:5px;
+            padding:7px 11px;font-size:12px;color:#854d0e;margin-bottom:10px;}
+
+  /* ── MODAL ── */
+  .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);
+            z-index:1000;align-items:center;justify-content:center;padding:16px;}
+  .modal-ov.open{display:flex;}
+  .modal{background:#fff;border-radius:12px;width:100%;max-width:700px;
+         max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+  .mhd{padding:14px 18px;border-bottom:1px solid var(--border);
+       display:flex;align-items:center;justify-content:space-between;}
+  .mhd h3{font-size:15px;color:var(--navy);font-weight:700;}
+  .m-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--sub);
+           line-height:1;padding:2px 6px;border-radius:4px;}
+  .m-close:hover{background:var(--bg);}
+  .mbody{padding:18px;overflow-y:auto;flex:1;}
+  .mfoot{padding:12px 18px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;}
+  .fg{margin-bottom:13px;}
+  .fg label{font-size:11px;color:var(--sub);display:block;margin-bottom:4px;
+            text-transform:uppercase;letter-spacing:.04em;}
+  .fg label.req::after{content:' *';color:var(--red);}
+  .fi,.fs,.fta{width:100%;border:1px solid var(--border);border-radius:6px;
+    padding:7px 9px;font-size:13px;outline:none;font-family:inherit;background:#fff;}
+  .fi:focus,.fs:focus,.fta:focus{border-color:var(--blue);}
+  .fta{resize:vertical;min-height:56px;}
+  .frow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .frow2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  @media(max-width:500px){.frow,.frow2{grid-template-columns:1fr;}}
+  .f4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  @media(max-width:560px){.f4{grid-template-columns:1fr 1fr;}}
+  .suggest-btn{padding:5px 10px;border:1px solid var(--blue);border-radius:6px;
+               background:#eff6ff;color:var(--blue);cursor:pointer;font-size:12px;white-space:nowrap;align-self:flex-end;}
+  .suggest-btn:hover{background:var(--blue);color:#fff;}
+  .risk-assess-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;}
+  .risk-assess-row .fg{flex:1;min-width:70px;margin-bottom:0;}
+  .sev-ref{margin-top:6px;font-size:11px;color:var(--sub);line-height:1.6;}
+
+  /* confirm dialog */
+  .confirm-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1100;
+              align-items:center;justify-content:center;padding:16px;}
+  .confirm-ov.open{display:flex;}
+  .confirm-box{background:#fff;border-radius:10px;padding:24px;max-width:380px;width:100%;
+               box-shadow:0 12px 40px rgba(0,0,0,.25);}
+  .confirm-box h4{font-size:15px;margin-bottom:8px;color:var(--navy);}
+  .confirm-box p{font-size:13px;color:var(--sub);margin-bottom:18px;line-height:1.6;}
+  .confirm-btns{display:flex;justify-content:flex-end;gap:8px;}
+
+  /* toast */
+  .toast{position:fixed;bottom:76px;right:20px;background:#1e293b;color:#fff;
+         padding:9px 16px;border-radius:8px;font-size:13px;opacity:0;
+         transform:translateY(8px);transition:opacity .2s,transform .2s;z-index:1200;
+         box-shadow:0 4px 12px rgba(0,0,0,.3);pointer-events:none;}
+  .toast.show{opacity:1;transform:translateY(0);}
+  .toast.err{background:var(--red);}
+
+  /* utilities */
+  mark{background:#fde68a;border-radius:2px;padding:0 1px;}
+  .empty{padding:36px;text-align:center;color:var(--sub);font-size:14px;}
+  .btn{padding:5px 14px;border-radius:6px;border:1px solid var(--border);
+       background:#fff;cursor:pointer;font-size:13px;color:var(--text);}
+  .btn:hover{background:var(--bg);}
+  .btn-primary{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .btn-primary:hover{background:#16305a;}
+  .btn-success{background:var(--green);color:#fff;border-color:var(--green);}
+  .btn-success:hover{background:#15803d;}
+  .btn-danger{background:var(--red);color:#fff;border-color:var(--red);}
+  .btn-danger:hover{background:#b91c1c;}
+
+  /* scroll top */
+  #scroll-top{position:fixed;bottom:20px;right:20px;width:42px;height:42px;border-radius:50%;
+              background:var(--navy);color:#fff;border:none;font-size:18px;cursor:pointer;
+              box-shadow:0 2px 8px rgba(0,0,0,.25);display:none;align-items:center;
+              justify-content:center;transition:background .15s;z-index:999;}
+  #scroll-top.visible{display:flex;}
+  #scroll-top:hover{background:#16305a;}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="hdr-btn" onclick="location.href='../'" title="回到職安管理系統入口">← 系統入口</button>
+  <h1>⚠️ 危害鑑別及風險評估查詢系統</h1>
+  <span class="subtitle">大豐環保科技 ｜ 115年度</span>
+  <button class="hdr-btn" onclick="exportHtml()" title="匯出目前資料為 HTML 檔">↓ 匯出 HTML</button>
+  <button class="hdr-btn danger" onclick="confirmReset()" title="清除所有變更，還原至預設資料">↺ 重置資料</button>
+</header>
+
+<div id="breadcrumb">
+  <button id="bc-home" class="bc-btn" onclick="showHome()">🏠 首頁</button>
+  <span id="bc-sep1" class="sep" style="display:none">›</span>
+  <button id="bc-dept" style="display:none" onclick="onBcDeptClick()"></button>
+  <span id="bc-sep-cat" class="sep" style="display:none">›</span>
+  <button id="bc-cat" style="display:none;background:#4c1d95;color:#fff;cursor:pointer;border:none;padding:3px 10px;border-radius:16px;font-size:12px;font-weight:600;" onclick="curCategory&&selectCategory(curCategory.id,false)"></button>
+  <span id="bc-sep2" class="sep" style="display:none">›</span>
+  <span id="bc-sheet" style="display:none"></span>
+</div>
+
+<div id="toolbar">
+  <input id="search" type="search" placeholder="🔍 搜尋…">
+  <select id="filter-process" style="display:none"><option value="">所有製程／活動</option></select>
+  <select id="filter-level" style="display:none">
+    <option value="">所有風險等級</option>
+    <option value="4">等級4 高風險</option>
+    <option value="3">等級3 需改善</option>
+    <option value="2">等級2 低度可接受</option>
+    <option value="1">等級1 可接受</option>
+    <option value="null">未評估</option>
+  </select>
+</div>
+<div id="stats-bar"></div>
+
+<div id="main">
+  <div id="view-home"></div>
+
+  <div id="view-summary" style="display:none">
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th style="width:32px">#</th>
+          <th>作業表名稱</th>
+          <th>涵蓋製程</th>
+          <th class="sort" onclick="sortBy('total')">總項目 <span class="si" id="si-total"></span></th>
+          <th style="min-width:110px">風險分佈</th>
+          <th class="sort" onclick="sortBy('high')">需改善↑ <span class="si" id="si-high"></span></th>
+          <th class="sort" onclick="sortBy('ok')">可接受 <span class="si" id="si-ok"></span></th>
+          <th>未評估</th>
+          <th style="width:80px">操作</th>
+        </tr></thead>
+        <tbody id="sheet-tbody"></tbody>
+      </table>
+    </div>
+    <div style="padding:12px 0;">
+      <button class="btn btn-success" onclick="openAddSheetModal()">＋ 新增作業表</button>
+    </div>
+  </div>
+
+  <div id="view-detail" style="display:none">
+    <div class="dtool">
+      <button class="btn btn-primary" onclick="showSummary()">← 返回作業表</button>
+      <button class="btn" onclick="expandAll()">展開全部</button>
+      <button class="btn" onclick="collapseAll()">收合全部</button>
+      <button class="btn btn-success" onclick="openAddItemModal()">＋ 新增危害項目</button>
+    </div>
+    <div id="sheet-meta-box" class="sheet-meta"></div>
+    <div id="item-list" class="item-list"></div>
+    <div id="no-items" class="empty" style="display:none">無符合條件的危害項目</div>
+  </div>
+</div>
+
+<!-- ── Item Modal ── -->
+<div id="item-modal" class="modal-ov" onclick="if(event.target===this)closeItemModal()">
+  <div class="modal">
+    <div class="mhd">
+      <h3 id="item-modal-title">新增危害項目</h3>
+      <button class="m-close" onclick="closeItemModal()">✕</button>
+    </div>
+    <div class="mbody">
+      <div class="frow2">
+        <div class="fg">
+          <label>編號（自動產生）</label>
+          <input id="f-id" class="fi" readonly style="background:var(--bg);color:var(--sub);">
+        </div>
+        <div class="fg">
+          <label class="req">製程／活動</label>
+          <input id="f-process" class="fi" list="dl-process" placeholder="e.g. 辦公作業">
+          <datalist id="dl-process"></datalist>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="req">步驟／節點</label>
+        <input id="f-step" class="fi" placeholder="e.g. 電腦操作">
+      </div>
+      <div class="fg">
+        <label class="req">危害因子</label>
+        <input id="f-hazard" class="fi" placeholder="e.g. 長時間使用電腦">
+      </div>
+      <div class="fg">
+        <label class="req">可能發生原因</label>
+        <textarea id="f-cause" class="fta" placeholder="說明導致危害的原因"></textarea>
+      </div>
+      <div class="fg">
+        <label class="req">後果影響</label>
+        <textarea id="f-consequence" class="fta" placeholder="說明可能造成的傷害或損失"></textarea>
+      </div>
+      <div class="fg">
+        <label>事故代碼（可多個，以 / 分隔）</label>
+        <input id="f-code" class="fi" placeholder="e.g. PH5/PH8">
+      </div>
+      <div class="fg">
+        <label class="req">現有控制方法</label>
+        <textarea id="f-control" class="fta" placeholder="目前已採取的防護或管制措施"></textarea>
+      </div>
+
+      <div class="fg">
+        <label>風險評估</label>
+        <div class="risk-assess-row">
+          <div class="fg"><label>頻率</label><input id="f-freq" class="fi" type="number" min="1" max="10" placeholder="1~10" oninput="autoSuggest()"></div>
+          <div class="fg"><label>機率</label><input id="f-prob" class="fi" type="number" min="1" max="10" placeholder="1~10" oninput="autoSuggest()"></div>
+          <div class="fg">
+            <label>嚴重度</label>
+            <select id="f-severity" class="fs" onchange="autoSuggest()">
+              <option value="">—</option>
+              <option value="A">A 極嚴重（死亡/永久失能）</option>
+              <option value="B">B 嚴重（重傷/住院）</option>
+              <option value="C">C 中等（需就醫）</option>
+              <option value="D">D 輕微（輕傷）</option>
+              <option value="E">E 可忽略</option>
+              <option value="F">F 極低</option>
+            </select>
+          </div>
+          <button class="suggest-btn" onclick="autoSuggest(true)">建議等級</button>
+          <div class="fg">
+            <label>等級</label>
+            <select id="f-level" class="fs">
+              <option value="">未評估</option>
+              <option value="1">1 可接受</option>
+              <option value="2">2 低度可接受</option>
+              <option value="3">3 需改善</option>
+              <option value="4">4 高風險</option>
+            </select>
+          </div>
+        </div>
+        <div class="sev-ref">頻率參考：1=極少 2=一次/年 4=一次/月 6=一次/週 8=每天 10=持續｜機率參考：1=幾乎不可能 3=可能 5=頗有可能 7=常常 10=確定</div>
+      </div>
+      <div class="fg">
+        <label>風險控制規劃</label>
+        <textarea id="f-plan" class="fta" placeholder="後續改善行動或已接受之說明"></textarea>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn" onclick="closeItemModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveItem()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Sheet Modal ── -->
+<div id="sheet-modal" class="modal-ov" onclick="if(event.target===this)closeSheetModal()">
+  <div class="modal" style="max-width:420px;">
+    <div class="mhd">
+      <h3 id="sheet-modal-title">新增作業表</h3>
+      <button class="m-close" onclick="closeSheetModal()">✕</button>
+    </div>
+    <div class="mbody">
+      <div class="fg">
+        <label>作業表 ID（自動）</label>
+        <input id="sf-id" class="fi" readonly style="background:var(--bg);color:var(--sub);">
+      </div>
+      <div class="fg">
+        <label class="req">作業表名稱</label>
+        <input id="sf-name" class="fi" placeholder="e.g. 倉儲作業">
+      </div>
+      <div class="fg">
+        <label>圖示（Emoji）</label>
+        <input id="sf-icon" class="fi" placeholder="e.g. 📦" maxlength="4">
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn" onclick="closeSheetModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveSheet()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Confirm Dialog ── -->
+<div id="confirm-ov" class="confirm-ov">
+  <div class="confirm-box">
+    <h4 id="confirm-title">確認</h4>
+    <p id="confirm-msg"></p>
+    <div class="confirm-btns">
+      <button class="btn" onclick="closeConfirm()">取消</button>
+      <button id="confirm-ok" class="btn btn-danger" onclick="runConfirm()">確認</button>
+    </div>
+  </div>
+</div>
+
+<button id="scroll-top" onclick="scrollToTop()">↑</button>
+
+<script>
+// ════════════════════════════════════════════════════════
+// 預設資料（EXPORT_DATA_START / EXPORT_DATA_END 標記供匯出使用）
+// ════════════════════════════════════════════════════════
+// EXPORT_DATA_START
+const DEFAULT_DATA = [
+  {
+    dept_id:'hq', dept_name:'總公司', dept_icon:'🏢',
+    year:'115', fill_date:'115.03.11', author:'王婕誼',
+    sheets:[
+      { id:'AD00', name:'訪客', icon:'👥', ic:'ic-blue', items:[
+        {id:'AD00NC01',process:'訪客',step:'參訪',hazard:'地面濕滑',cause:'清潔人員清潔造成地面濕滑',consequence:'可能導致人員跌倒、滑倒',code:'PH5',control:'人員告知',freq:4,prob:5,severity:'D',level:3,plan:'清潔作業時須放置「地面濕滑請小心」警示牌'},
+        {id:'AD00NC02',process:'訪客',step:'參訪',hazard:'跌倒滑倒／切割刺擦傷',cause:'安全防護措施不足',consequence:'可能導致人員跌倒、滑倒及切割、刺、擦傷',code:'PH5/PH8',control:'制訂入場須知',freq:4,prob:5,severity:'D',level:3,plan:'制訂入場須知'},
+        {id:'AD00NC03',process:'訪客',step:'參訪',hazard:'照度不足',cause:'現場環境照度不足',consequence:'人員不慎墜落、滾落、跌倒、滑倒',code:'PH13',control:'制訂入場須知',freq:4,prob:3,severity:'D',level:3,plan:'制訂入場須知'},
+        {id:'AD00NC04',process:'訪客',step:'參訪',hazard:'墜落、滾落',cause:'開口處未防護',consequence:'人員墜落、滾落之危害',code:'PH4',control:'制訂入場須知',freq:4,prob:3,severity:'C',level:3,plan:'制訂入場須知'},
+        {id:'AD00NC05',process:'訪客',step:'參訪',hazard:'感電',cause:'設備漏電或碰及帶電體',consequence:'人員受傷、設備損壞',code:'PH19',control:'制訂入場須知',freq:4,prob:5,severity:'D',level:3,plan:'制訂入場須知'},
+        {id:'AD00NC06',process:'訪客',step:'參訪',hazard:'滑倒',cause:'地面溼滑',consequence:'人員受傷、設備損壞',code:'PH5',control:'制訂入場須知',freq:4,prob:5,severity:'D',level:3,plan:'制訂入場須知'},
+        {id:'AD00NC07',process:'訪客',step:'面試',hazard:'身心不法侵害',cause:'人員溝通不良或誤觸敏感字眼',consequence:'身心不法侵害',code:'OT5',control:'建構行為規範與加強教育訓練',freq:2,prob:3,severity:'F',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD00NC08',process:'辦公作業',step:'各種作業',hazard:'生物性危害',cause:'三級生物安全等級',consequence:'人員傷害',code:'BI3',control:'配合衛服部疫管局之防疫措施，增訂內部作業指引',freq:10,prob:3,severity:'D',level:3,plan:'依衛服部公告相關措施'}
+      ]},
+      { id:'AD01', name:'行政管理', icon:'📋', ic:'ic-purple', items:[
+        {id:'AD01NC01',process:'辦公作業',step:'電腦操作',hazard:'長時間使用電腦',cause:'工作需要／未適時休息',consequence:'視力衰退、疲勞',code:'ER4/ER5',control:'減少長時間操作，適當休息',freq:8,prob:3,severity:'D',level:3,plan:'健康檢查'},
+        {id:'AD01NC02',process:'辦公作業',step:'電腦操作',hazard:'電能感電',cause:'誤使用電源或用電不慎',consequence:'感電',code:'PH19',control:'電源線均附接地且不得將接地端移除',freq:8,prob:3,severity:'D',level:3,plan:'電源接地'},
+        {id:'AD01NC03',process:'辦公作業',step:'電腦作業',hazard:'重複性操作傷害',cause:'長時間操作鍵盤及滑鼠、看螢幕時間過長',consequence:'手部關節疼痛及近視',code:'ER5',control:'減少長時間操作，適當休息',freq:8,prob:3,severity:'D',level:3,plan:'健康檢查'},
+        {id:'AD01NC04',process:'辦公作業',step:'文件影印',hazard:'粉塵、異味',cause:'影印機使用頻率高及無隔離措施',consequence:'呼吸道病變',code:'PH15/CH6',control:'影印機搬離員工座位',freq:4,prob:3,severity:'C',level:3,plan:'機械維修保養'},
+        {id:'AD01NC05',process:'辦公作業',step:'文件影印',hazard:'滾筒燙傷',cause:'印表機卡紙更換時未注意',consequence:'燒燙傷',code:'PH11',control:'使用時警告標語',freq:2,prob:3,severity:'E',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC06',process:'辦公作業',step:'文件影印',hazard:'印表機零部件割傷',cause:'印表機卡紙更換時未注意',consequence:'切割傷',code:'PH8',control:'使用時警告標語',freq:2,prob:3,severity:'E',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC07',process:'辦公作業',step:'文件銷毀',hazard:'粉塵、噪音',cause:'碎紙機使用頻率高',consequence:'呼吸道病變及影響聽力',code:'PH15/PH12',control:'分批次使用',freq:2,prob:3,severity:'C',level:3,plan:'機械維修保養'},
+        {id:'AD01NC08',process:'辦公作業',step:'文件銷毀',hazard:'捲夾危害',cause:'衣物或頭髮過於接近碎紙機刃部',consequence:'切割傷',code:'PH7/PH8',control:'建議人員將頭髮盤起或避免穿著寬鬆衣物操作',freq:6,prob:2,severity:'C',level:3,plan:'教育訓練時納入宣導'},
+        {id:'AD01NC09',process:'辦公作業',step:'文件歸檔',hazard:'撞擊',cause:'空間狹窄',consequence:'挫傷或瘀青',code:'PH6',control:'無特別措施',freq:2,prob:3,severity:'E',level:1,plan:'空間調整'},
+        {id:'AD01NC10',process:'辦公作業',step:'文件歸檔',hazard:'物體飛落',cause:'放置上方層架時可能因高度不足造成放置不平穩',consequence:'挫傷或瘀青',code:'PH6',control:'儘量放置下方層架，上方使用合梯增加高度',freq:2,prob:5,severity:'E',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC11',process:'辦公作業',step:'手工具使用',hazard:'訂書針、美工刀',cause:'使用頻率高',consequence:'刺傷及切割傷',code:'PH8',control:'使用手工具時應注意力集中',freq:4,prob:3,severity:'E',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC12',process:'辦公作業',step:'移動會議',hazard:'電線絆倒',cause:'人員未留意',consequence:'跌傷',code:'PH5',control:'同事間互相提醒',freq:4,prob:3,severity:'E',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC13',process:'辦公作業',step:'移動會議',hazard:'踩空跌倒',cause:'人員上下樓梯速度過快，未注意踏階',consequence:'跌倒造成扭傷、挫傷或拉傷，嚴重時可能導致骨折或頭部撞擊受傷',code:'PH5',control:'加強人員安全意識；張貼標語',freq:6,prob:3,severity:'C',level:3,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC14',process:'飲水機活動',step:'更換茶水',hazard:'熱水燙傷',cause:'誤觸熱水開關',consequence:'燒燙傷',code:'PH11',control:'張貼警告標語',freq:6,prob:5,severity:'E',level:2,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC15',process:'飲水機活動',step:'更換茶水',hazard:'電能漏電',cause:'飲水機漏電',consequence:'感電',code:'PH19',control:'加裝漏電斷路器',freq:6,prob:3,severity:'E',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC16',process:'飲水機活動',step:'更換茶水',hazard:'病菌感染',cause:'飲水機未定期更換濾心',consequence:'腸胃型疾病',code:'BI3',control:'定期更換濾心及檢查飲用水水質',freq:6,prob:3,severity:'C',level:3,plan:'定期檢測水質及更換濾心'},
+        {id:'AD01NC17',process:'微波加熱活動',step:'加熱食品',hazard:'微波熱能',cause:'微波容器誤用',consequence:'產生火花或分子撞擊動能',code:'PH19',control:'宣導同仁不可使用金屬容器',freq:8,prob:2,severity:'D',level:3,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC18',process:'蒸飯箱加熱活動',step:'加熱食品',hazard:'熱、電能',cause:'未注意與箱體距離',consequence:'燒燙傷、感電',code:'PH11',control:'使用防燙手套',freq:8,prob:2,severity:'E',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC19',process:'打掃清潔作業',step:'拖地',hazard:'撞傷',cause:'地板濕滑不易停止',consequence:'撞傷',code:'PH6',control:'保持地板乾燥',freq:4,prob:3,severity:'E',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC20',process:'打掃清潔作業',step:'拖地',hazard:'跌倒',cause:'地板濕滑人員跌落',consequence:'撞傷',code:'PH5',control:'保持地板乾燥',freq:4,prob:3,severity:'E',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC21',process:'辦公室修繕作業',step:'更換日光燈',hazard:'電能感電',cause:'未關閉開關更換日光燈',consequence:'感電',code:'PH19',control:'需將日光燈開關關閉',freq:1,prob:3,severity:'E',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC22',process:'辦公室修繕作業',step:'更換日光燈',hazard:'墜落',cause:'鋁梯未固定造成人員墜落',consequence:'骨折、撞傷',code:'PH4',control:'需將鋁梯固定且必要時需二人一組',freq:1,prob:3,severity:'C',level:3,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC23',process:'稽核活動',step:'交通運輸',hazard:'交通事故',cause:'人員注意力未集中或未遵守交通規則',consequence:'撞傷',code:'OT1',control:'車輛使用操作準則',freq:4,prob:7,severity:'C',level:3,plan:'車輛使用管制宣導'},
+        {id:'AD01NC24',process:'稽核活動',step:'現場稽核',hazard:'現場不熟悉',cause:'人員未留意',consequence:'跌傷',code:'PH5',control:'現場人員帶領',freq:4,prob:3,severity:'E',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC25',process:'辦公作業',step:'各種作業',hazard:'生物性危害',cause:'三級生物安全等級',consequence:'相關疾病傷害',code:'BI3',control:'配合衛服部疫管局之防疫措施，增訂內部作業指引',freq:10,prob:3,severity:'D',level:3,plan:'依衛服部公告相關措施'},
+        {id:'AD01NC26',process:'電氣箱檢修',step:'廠商檢點作業',hazard:'感電',cause:'感電、漏電',consequence:'感電、燒燙傷',code:'PH19',control:'作業管制；危害標示',freq:2,prob:2,severity:'B',level:3,plan:'禁止非相關人員碰觸'},
+        {id:'AD01NC27',process:'電氣室檢修',step:'廠商檢點作業',hazard:'感電（電線走火）',cause:'電線走火',consequence:'燒燙傷、火災',code:'CH1',control:'門禁上鎖；作業管制；危害標示',freq:2,prob:2,severity:'B',level:3,plan:'禁止非相關人員碰觸'},
+        {id:'AD01NC28',process:'出差作業',step:'面試活動',hazard:'身心不法侵害',cause:'人員溝通不良或誤觸敏感字眼',consequence:'身心不法侵害',code:'OT5',control:'建構行為規範與加強教育訓練',freq:2,prob:8,severity:'F',level:1,plan:'可接受，以現有方式控制'},
+        {id:'AD01NC29',process:'出差作業',step:'道路駕駛',hazard:'疲勞駕駛',cause:'長途行駛疲勞導致碰撞',consequence:'人員機具損傷',code:'PH6',control:'道路安全講習',freq:8,prob:5,severity:'D',level:4,plan:'宣導道路安全注意事項'},
+        {id:'AD01NC30',process:'出差作業',step:'道路駕駛',hazard:'不當駕駛行為',cause:'未保持安全距離、開車使用手機等不當行為',consequence:'人員機具損傷',code:'PH6',control:'道路安全講習',freq:8,prob:5,severity:'D',level:4,plan:'宣導道路安全注意事項'}
+      ]},
+      { id:'AD02', name:'供應商／保全', icon:'🔐', ic:'ic-orange', incomplete:true, items:[
+        {id:'AD02NC01',process:'巡廠作業',step:'樓梯巡查',hazard:'墜落、跌倒',cause:'樓梯間照明不足、地面濕滑、未注意高低差',consequence:'骨折、頭部受傷、甚至死亡',code:'',control:'定期巡查樓梯間狀況',freq:null,prob:null,severity:null,level:null,plan:'定期檢查照明、增設止滑條、規定巡邏時須攜帶手電筒'},
+        {id:'AD02NC02',process:'進出管理',step:'大門車道管制',hazard:'交通事故',cause:'車輛進出未減速、保全站位不當',consequence:'車禍、人員被撞傷',code:'',control:'設置減速丘',freq:null,prob:null,severity:null,level:null,plan:'設置減速丘'},
+        {id:'AD02NC03',process:'安全維護',step:'處理異常人士',hazard:'暴力攻擊',cause:'闖入者持械攻擊、防護裝備不足',consequence:'刀傷、毆傷',code:'',control:'配備警棍；設置求救警報',freq:null,prob:null,severity:null,level:null,plan:''}
+      ]}
+    ]
+  }
+
+// QX_DATA_START
+,{"dept_id":"qx","dept_name":"全興廠","dept_icon":"🏭","year":"114","fill_date":"114.08.01","author":"洪健翔","use_categories":true,"categories":[{"id":"visitor","name":"訪客與承攬商","icon":"👥","ic":"ic-blue"},{"id":"production","name":"生產製程作業","icon":"⚙️","ic":"ic-orange"},{"id":"equipment","name":"設備與機具作業","icon":"🔧","ic":"ic-purple"},{"id":"utility","name":"公用工程與環保設施","icon":"🏭","ic":"ic-blue"},{"id":"admin","name":"行政實驗室與建物","icon":"🏢","ic":"ic-purple"}],"sheets":[{"id":"ME00","name":"訪客","icon":"👥","ic":"ic-blue","category":"visitor","items":[{"id":"ME00NC01","process":"訪客","step":"參訪","hazard":"地面溼滑","cause":"地面溼滑人員行走不慎跌倒","consequence":"跌倒,滑倒\n切,割,刺,擦傷","code":"PH5/PH8","control":"1.入廠危害告知","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME00NC02","process":"訪客","step":"參訪","hazard":"照度不足","cause":"地面溼滑人員行走不慎跌倒","consequence":"跌倒,滑倒\n切,割,刺,擦傷","code":"PH5/PH8","control":"1.入廠危害告知\n2.半年定期照度檢測","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME00NC03","process":"訪客","step":"參訪","hazard":"物料未妥善存放","cause":"物料未妥善存放，造成人員遭絆倒","consequence":"跌倒,滑倒\n切,割,刺,擦傷","code":"PH5/PH8","control":"1.入廠危害告知\n2.定期環境整理整頓","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME00NC04","process":"訪客","step":"參訪","hazard":"物體飛落,掉落","cause":"物料被強風吹落","consequence":"物體飛落,掉落傷人","code":"PH1","control":"1.入廠危害告知\n2.配戴個人防護具","freq":4,"prob":5,"severity":"E","level":2,"plan":""},{"id":"ME00NC05","process":"訪客","step":"參訪","hazard":"開口處未防護","cause":"人員不慎於開口處踩空","consequence":"墜落,滾落","code":"PH4","control":"1.入廠危害告知\n2.開口處之警示圍籬","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME00NC06","process":"訪客","step":"參訪","hazard":"物體飛落,掉落","cause":"人員靠近物料吊裝","consequence":"物體飛落,掉落","code":"PH1","control":"1.入廠危害告知\n2.配戴個人防護具","freq":4,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME00NC07","process":"訪客","step":"參訪","hazard":"物品堆疊因重心不穩坍塌","cause":"物品堆疊過高貨方式不正確","consequence":"倒塌,崩塌","code":"PH2","control":"1.入廠危害告知\n2.配戴個人防護具","freq":4,"prob":2,"severity":"B","level":3,"plan":""},{"id":"ME00NC08","process":"訪客","step":"參訪","hazard":"堆高機車速過快","cause":"人為不當之操作動作","consequence":"倒塌,崩塌\n衝撞,被撞","code":"PH2/PH6","control":"1.入廠危害告知\n2.廠區限速管制","freq":4,"prob":7,"severity":"C","level":3,"plan":""},{"id":"ME00NC09","process":"訪客","step":"參訪","hazard":"載貨之中心不穩","cause":"人為不當之操作超載貨品","consequence":"倒塌,崩塌\n衝撞,被撞","code":"PH2/PH6","control":"1.入廠危害告知\n2.配戴個人防護具","freq":4,"prob":7,"severity":"C","level":3,"plan":""},{"id":"ME00NC10","process":"訪客","step":"參訪","hazard":"作業中之車輛機具","cause":"人員進入材料裝卸作業區域","consequence":"衝撞,被撞","code":"PH6","control":"1.入廠危害告知\n2.配戴個人防護具","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME00NC11","process":"訪客","step":"參訪","hazard":"物料帶有尖銳突出物","cause":"人員不慎誤觸之","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.入廠危害告知\n2.配戴個人防護具","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME00NC12","process":"訪客","step":"參訪","hazard":"接觸不明之化學品","cause":"運輸桶破裂造成藥水外洩","consequence":"跌倒,滑倒\n與有害物接觸","code":"PH5/CH3","control":"1.入廠危害告知\n2.配戴個人防護具","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME00NC13","process":"訪客","step":"參訪","hazard":"車輛行進間","cause":"廠區行駛車速過快","consequence":"衝撞,被撞","code":"PH6","control":"1.入廠危害告知\n2.配戴個人防護具","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME00NC14","process":"訪客","step":"參訪","hazard":"地面濕滑","cause":"成品磚中污水流出","consequence":"跌倒,滑倒","code":"PH5","control":"1.入廠危害告知\n2.配戴個人防護具","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME00NC15","process":"訪客","step":"參訪","hazard":"感電","cause":"設備漏電或碰及帶電體","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"1.入廠危害告知\n2.配戴個人防護具\n3.設備定期檢查","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME00NC16","process":"訪客","step":"各種作業","hazard":"生物性危害","cause":"三級生物安全等級","consequence":"人員傷害","code":"BI3","control":"配合衛服部疫管局之防疫措施，增訂內部作業指引","freq":4,"prob":5,"severity":"D","level":3,"plan":""}]},{"id":"ME07","name":"承攬商","icon":"🏗️","ic":"ic-blue","category":"visitor","items":[{"id":"ME07NC01","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"跌倒滑倒\n切割刺擦傷","cause":"環境濕滑","consequence":"跌倒,滑倒\n切,割,刺,擦傷","code":"PH5/PH8","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC02","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"照度不足","cause":"現場環境照度不足","consequence":"照明不足","code":"PH13","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME07NC03","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"跌倒滑倒\n切割刺擦傷\n壓傷","cause":"人為疏忽造成物料未妥善存放","consequence":"跌倒,滑倒\n切,割,刺,擦傷\n夾,捲,壓傷","code":"PH5/PH8/PH7","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME07NC04","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"物體飛落,掉落","cause":"人為疏忽造成手工具或物品飛落傷人","consequence":"物體飛落,掉落","code":"PH1","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"E","level":2,"plan":""},{"id":"ME07NC05","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"墜落,滾落","cause":"開口處未防護","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表\n3.特殊危害作業許可","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME07NC06","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"墜落、跌落","cause":"高度2M以上作業","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表\n3.特殊危害作業許可","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME07NC07","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"物體飛落,掉落","cause":"物料吊裝未有專人管制人員出入","consequence":"物體飛落,掉落","code":"PH1","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表\n3.特殊危害作業許可\n4.吊掛區域半徑有效範圍進行管制圍籬","freq":4,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME07EC08","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"火災、爆炸","cause":"高壓氣體鋼瓶未妥善存放","consequence":"火災\n爆炸","code":"CH1/CH2","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME07EC09","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"火災、爆炸","cause":"動火作業未有適當防護措施","consequence":"火災","code":"CH1","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表\n3.動火作業許可","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME07NC10","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"墜落,滾落","cause":"高架作業","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表\n3.特殊危害作業許可","freq":4,"prob":2,"severity":"B","level":3,"plan":""},{"id":"ME07NC11","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"倒塌崩塌","cause":"物品堆疊過高","consequence":"倒塌崩塌","code":"PH2","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":2,"severity":"B","level":4,"plan":""},{"id":"ME07NC12","process":"承攬商安全衛生管理","step":"零星、維修工程現場監工","hazard":"衝撞被撞\n倒塌崩塌","cause":"堆高機車速過快;超載貨品","consequence":"倒塌崩塌\n衝撞,被撞","code":"PH2/PH6","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"C","level":3,"plan":""},{"id":"ME07NC13","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"墜落滾落","cause":"不合格之合梯","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表\n3.特殊危害作業許可","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME07NC14","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"漏電,感電","cause":"手工具及機具用電","consequence":"漏電、感電","code":"PH19","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":2,"severity":"B","level":3,"plan":""},{"id":"ME07NC15","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"噪音過高,振動","cause":"地坪打鑿作業","consequence":"噪音過高\n振動","code":"PH12/PH18","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":3,"severity":"F","level":1,"plan":""},{"id":"ME07NC16","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"與有害物接觸","cause":"epoxy油漆作業","consequence":"與有害物接觸","code":"CH3","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME07NC17","process":"承攬商安全衛生管理","step":"零星、維修工程現場監工","hazard":"衝撞被撞","cause":"材料裝卸","consequence":"衝撞,被撞","code":"PH6","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC18","process":"承攬商安全衛生管理","step":"零星、維修工程現場監工","hazard":"切割刺擦傷","cause":"手工具、機具、施工區域尖銳突出物","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC19","process":"承攬商安全衛生管理","step":"零星、維修工程現場監工","hazard":"槽內作業","cause":"侷限空間作業(廢水區)","consequence":"通風不良,缺氧,窒息","code":"PH14","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表\n3.特殊危害作業許可\n4.訂定局限空間防護計畫書","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC20","process":"承攬商安全衛生管理","step":"零星、維修工程現場監工","hazard":"地磅校正作業","cause":"侷限空間作業","consequence":"通風不良,缺氧,窒息","code":"PH14","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表\n3.特殊危害作業許可\n4.訂定局限空間防護計畫書","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC21","process":"承攬商安全衛生管理","step":"廢水處理廠之化學藥品運輸","hazard":"化學品灼傷","cause":"運輸桶破裂造成藥水外洩","consequence":"化學品洩漏(含廢液)","code":"CH4","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC22","process":"承攬商安全衛生管理","step":"產品運輸之作業","hazard":"人員被撞","cause":"廠區行駛車速過快","consequence":"人員被撞","code":"PH6","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表\n3.施工區域進行圍籬及管制\n4.設置指揮人員","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC23","process":"承攬商安全衛生管理","step":"產品運輸之作業","hazard":"人員滑倒","cause":"成品磚中污水流出","consequence":"人員滑倒","code":"PH5","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC24","process":"承攬商安全衛生管理","step":"委外檢測之作業","hazard":"人員被撞","cause":"廠區行駛車速過快","consequence":"人員被撞","code":"PH6","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC25","process":"承攬商安全衛生管理","step":"客戶或主管機關訪廠","hazard":"人員被撞","cause":"廠區行駛車速過快","consequence":"人員被撞","code":"PH6","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC26","process":"承攬商安全衛生管理","step":"電氣設備委外維修","hazard":"感電","cause":"設備漏電或碰及帶電體","consequence":"人員受傷、設備損壞","code":"PH19","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC27","process":"承攬商安全衛生管理","step":"電氣設備委外維修","hazard":"物體飛落","cause":"工具或零件放置不平穩","consequence":"人員受傷、設備損壞","code":"PH1","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC28","process":"承攬商安全衛生管理","step":"電氣設備委外維修","hazard":"倒塌","cause":"施工架或梯子不穩","consequence":"人員受傷、設備損壞","code":"PH2","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC29","process":"承攬商安全衛生管理","step":"電氣設備委外維修","hazard":"滑倒","cause":"地面溼滑","consequence":"人員受傷、設備損壞","code":"PH5","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC30","process":"承攬商安全衛生管理","step":"電氣設備委外維修","hazard":"被撞","cause":"施工順序不良","consequence":"人員受傷、設備損壞","code":"PH6","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC31","process":"承攬商安全衛生管理","step":"電氣設備委外維修","hazard":"壓傷","cause":"零件放置位置不良","consequence":"人員受傷、設備損壞","code":"PH7","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC32","process":"承攬商安全衛生管理","step":"電氣設備委外維修","hazard":"割傷","cause":"施工中注意不集中","consequence":"人員受傷、設備損壞","code":"PH8","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":4,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME07NC33","process":"承攬商安全衛生管理","step":"電氣設備委外維修","hazard":"扶把、護欄不完整","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.教育訓練\n3.強化扶把、護欄之穩固\n4.加裝有墜落之虞處之安全護欄","freq":4,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME07NC34","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"噪音","cause":"於噪音作業區作業","consequence":"噪音過高","code":"PH12","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表","freq":6,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME07NC35","process":"承攬商安全衛生管理","step":"零星、維修工程區現場監工","hazard":"跌倒\n壓傷","cause":"人員搬運物料過程注意力不集中","consequence":"人員受傷、設備損壞","code":"PH5/PH7","control":"1.個人防護具配戴\n2.承攬商工具箱會議紀錄表\n3.較重之物料以推車或車輛進行搬運","freq":6,"prob":3,"severity":"C","level":3,"plan":""}]},{"id":"ME01","name":"廢棄物","icon":"♻️","ic":"ic-orange","category":"production","items":[{"id":"ME01NC01","process":"貨車清運","step":"拉取麻布袋","hazard":"直接拉取麻布袋","cause":"人員不當動作，手部遭麻布袋割傷、擦傷","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"F","level":1,"plan":""},{"id":"ME01NC02","process":"貨車清運","step":"油壓門升降","hazard":"油壓門升降中","cause":"人員不慎誤入升降中之油壓門","consequence":"夾,捲,壓傷","code":"PH7","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"E","level":2,"plan":""},{"id":"ME01NC03","process":"貨車清運","step":"覆網","hazard":"作業位置超過2公尺","cause":"人員不慎踩空墜落","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.教育訓練","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME01NC04","process":"貨車清運","step":"事業廢棄物運至貯區","hazard":"貨車行進間","cause":"人員在貨車清運區域走動","consequence":"衝撞,被撞","code":"PH6","control":"1.個人防護具配戴\n2.教育訓練","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME01NC05","process":"夾子車清運","step":"爬上操作台","hazard":"作業位置超過2公尺","cause":"人員不慎踩空墜落","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.教育訓練","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME01NC06","process":"夾子車清運","step":"操作夾子","hazard":"夾子之提升、旋轉動作","cause":"人員在夾子車作業區域走動","consequence":"物體飛落,掉落\n衝撞,被撞","code":"PH1/PH6","control":"1.個人防護具配戴\n2.作業區域管制","freq":8,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME01NC07","process":"夾子車清運","step":"覆網","hazard":"作業位置超過2公尺","cause":"人員不慎踩空墜落","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.教育訓練","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME01NC08","process":"夾子車清運","step":"事業廢棄物運至貯區","hazard":"車輛行進間","cause":"人員在夾子車作業區域走動","consequence":"衝撞,被撞","code":"PH6","control":"1.個人防護具配戴\n2.教育訓練","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME01NC09","process":"廢棄物運送","step":"污泥運至貯區","hazard":"車輛行進間","cause":"人員在運送作業區域走動","consequence":"衝撞,被撞","code":"PH6","control":"1.個人防護具配戴\n2.教育訓練","freq":6,"prob":3,"severity":"D","level":3,"plan":""}]},{"id":"ME02","name":"倉儲","icon":"📦","ic":"ic-orange","category":"production","items":[{"id":"ME02NC01","process":"倉儲作業","step":"車輛載運物料及過磅","hazard":"人員行走車道上","cause":"人員不慎行走車道上","consequence":"衝撞,被撞","code":"PH6","control":"1.個人防護具配戴\n2.人、機具、車動線區分","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME02NC02","process":"倉儲作業","step":"車輛載運物料及過磅","hazard":"物料掉落","cause":"車輛行駛太快造成物料掉落","consequence":"物體飛落,掉落","code":"PH1","control":"1.個人防護具配戴\n2.人、機具、車動線區分\n3.規範廠區車輛行駛速度","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME02NC03","process":"倉儲作業","step":"產品入庫","hazard":"物料表面尖銳造成","cause":"物料表面尖銳造成","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴","freq":6,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME02NC04","process":"倉儲作業","step":"產品存放","hazard":"物品堆疊不當","cause":"物品堆疊不當","consequence":"物體飛落,掉落","code":"PH1","control":"1.個人防護具配戴\n2.規範堆疊方式、高度限制","freq":6,"prob":2,"severity":"C","level":3,"plan":""},{"id":"ME02NC05","process":"倉儲作業","step":"產品存放","hazard":"跌倒","cause":"地面溼滑","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.排水設施","freq":6,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME02NC06","process":"倉儲作業","step":"產品存放","hazard":"毒化物外洩","cause":"農藥瓶殘餘液外流","consequence":"與有害物接觸","code":"CH3","control":"1.個人防護具配戴\n2.規劃專區存放","freq":6,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME02NC07","process":"倉儲作業","step":"產品存放","hazard":"化學物質外洩","cause":"化學藥品回收空桶仍有殘餘液外流","consequence":"與有害物接觸","code":"CH3","control":"1.個人防護具配戴\n2.規劃專區存放","freq":6,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME02NC08","process":"倉儲作業","step":"產品存放","hazard":"火災","cause":"外來火源引起火災事故","consequence":"火災","code":"CH1","control":"1.危害標示_廠區嚴禁煙火、\n2.設置滅火設施","freq":6,"prob":2,"severity":"C","level":3,"plan":""},{"id":"ME02NC09","process":"倉儲作業","step":"產品存放","hazard":"臭味","cause":"物品存放過久","consequence":"異味\n病媒滋生","code":"CH6  BI1","control":"1.個人防護具配戴\n2.廠區通風設備","freq":6,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME02NC10","process":"倉儲作業","step":"產品吊掛作業","hazard":"人員被掉落物撃中","cause":"使用天車吊掛作業使不慎","consequence":"物體飛落,掉落","code":"PH1","control":"1.個人防護具配戴\n2.天車吊掛作業時增加警示鳴笛聲","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME02NC11","process":"倉儲作業","step":"柴油存放","hazard":"易燃液體之存放","cause":"外來火源引起火災事故、槽體破裂","consequence":"火災\n化學品洩漏(含廢液)","code":"CH1  CH4","control":"1.危害標示_廠區嚴禁煙火、\n2.設置滅火設施             3.設置防液堤        4.設置吸酸棉\n5.安裝油水分離器","freq":6,"prob":1,"severity":"E","level":1,"plan":""}]},{"id":"ME04","name":"分選","icon":"🔀","ic":"ic-orange","category":"production","items":[{"id":"ME04NC01","process":"分選作業","step":"人工分選","hazard":"精密判選動作細小不良品","cause":"用眼過度","consequence":"重複性操作造成傷害","code":"ER5","control":"1.適當休息時間\n(每兩小時休息10分鐘)","freq":8,"prob":8,"severity":"F","level":2,"plan":""},{"id":"ME04NC02","process":"分選作業","step":"人工分選","hazard":"重複性動作","cause":"重複相同動作","consequence":"重複性操作造成傷害","code":"ER5","control":"1.適當休息時間\n(每兩小時休息10分鐘)","freq":8,"prob":8,"severity":"E","level":3,"plan":""},{"id":"ME04NC03","process":"分選作業","step":"人工分選","hazard":"分選品帶有金屬尖銳物","cause":"物料中夾帶尖銳物","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME04NC04","process":"分選作業","step":"人工分選","hazard":"設備作動中","cause":"未停機掛牌即進行作業","consequence":"夾,捲,壓傷","code":"PH7","control":"1.個人防護具配戴\n2.停機掛牌","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME04NC05","process":"分選作業","step":"人工分選","hazard":"機台設備之噪音","cause":"噪音作業區域","consequence":"噪音過高","code":"PH12","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"D","level":3,"plan":"目前持續行政管理及工程改善"},{"id":"ME04NC06","process":"分選作業","step":"人工分選","hazard":"分選品中殘留液","cause":"化學儲存桶之殘留液","consequence":"與有害物接觸","code":"CH3","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME04NC08","process":"分選作業","step":"人工分選","hazard":"分選品帶有金屬尖銳物","cause":"物料中夾帶針筒","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME04NC09","process":"分選作業","step":"機械保養","hazard":"空間","cause":"空間狹小","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練","freq":6,"prob":8,"severity":"F","level":2,"plan":""},{"id":"ME04NC10","process":"分選作業","step":"機械保養","hazard":"設備作動中","cause":"未停機掛牌即進行作業","consequence":"夾,捲,壓傷","code":"PH7","control":"1.個人防護具配戴\n2.停機掛牌\n3.教育訓練","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME04NC11","process":"分選作業","step":"拖運半成品","hazard":"運輸","cause":"與堆高機作業區域重疊","consequence":"衝撞,被撞","code":"PH6","control":"1.個人防護具配戴\n2.教育訓練","freq":6,"prob":2,"severity":"D","level":3,"plan":""},{"id":"ME04NC12","process":"分選作業","step":"拖運半成品","hazard":"半成品重量過重","cause":"半成品過重","consequence":"人工搬運超過荷重造成","code":"ER3","control":"1.使用機具搬運\n2.教育訓練","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME04NC13","process":"分選作業","step":"輸送帶清理","hazard":"輸送帶作動中","cause":"未停機掛牌即進行作業","consequence":"夾,捲,壓傷","code":"PH7","control":"1.個人防護具配戴\n2.停機掛牌\n3.教育訓練","freq":6,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME04NC14","process":"分選作業","step":"人員上下樓","hazard":"重心不穩\n未踩好","cause":"踩空、跌落","consequence":"跌倒,滑倒,滾落","code":"PH4/PH5","control":"1.個人防護具配戴\n2.張貼警示標語\n3.教育訓練\n4.階梯有防滑功能","freq":6,"prob":3,"severity":"C","level":3,"plan":""}]},{"id":"ME05","name":"解包","icon":"📤","ic":"ic-orange","category":"production","items":[{"id":"ME05NC01","process":"解包作業","step":"機械保養","hazard":"機台設倍之空間狹小","cause":"人員不慎碰撞受傷","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":8,"severity":"F","level":2,"plan":""},{"id":"ME05NC02","process":"解包作業","step":"機械保養","hazard":"滑倒","cause":"保養油外洩","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.環境清潔","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME05NC03","process":"解包作業","step":"機器操作","hazard":"感電","cause":"設備漏電","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"1.裝設漏電斷路器\n2.機台定期檢點","freq":2,"prob":2,"severity":"C","level":3,"plan":""},{"id":"ME05NC04","process":"解包作業","step":"機器操作","hazard":"夾傷","cause":"機台作動中即確認打包狀況","consequence":"夾,捲,壓傷","code":"PH7","control":"1.個人防護具配戴\n2.掛牌停機","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME05NC05","process":"解包作業","step":"成品籃放置","hazard":"障礙物","cause":"空間狹礙","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME05NC06","process":"解包作業","step":"確認產品","hazard":"割傷","cause":"確認產品，人員不慎碰觸帶有尖銳之產品","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME05NC07","process":"解包作業","step":"成品搬運","hazard":"噪音","cause":"於噪音區域作業","consequence":"噪音過高","code":"PH12","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME05NC08","process":"解包作業","step":"成品搬運","hazard":"滑倒","cause":"成品污水外流","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.環境清潔\n3.排水孔(溝)","freq":8,"prob":5,"severity":"E","level":3,"plan":""},{"id":"ME05NC09","process":"解包作業","step":"機器操作","hazard":"線路老舊及過戴或重疊","cause":"感電、漏電、火災","consequence":"人員感電漏電,感電(含靜電,火花)、灼傷","code":"PH19","control":"檢視是否老舊及過戴，適時更新替換","freq":10,"prob":3,"severity":"C","level":4,"plan":""},{"id":"ME05NC10","process":"機器保養","step":"保養作業","hazard":"發生火災，消防設備未作動","cause":"消防設備部分故障、損壞","consequence":"欲使用設備不完全","code":"OT3","control":"1.針對消防設備外觀、性能定時做檢查\n2.針對消防設備、器材定期做綜合檢查\n3.定期舉辦消防演練加強員工緊急應變處理","freq":5,"prob":2,"severity":"B","level":4,"plan":""}]},{"id":"ME06","name":"粉碎","icon":"⚙️","ic":"ic-orange","category":"production","items":[{"id":"ME06NC01","process":"粉碎作業","step":"塑膠分類","hazard":"作業人員重複性動作","cause":"重複相同動作","consequence":"重複性操作造成傷害","code":"ER5","control":"1.適當休息時間\n(每兩小時休息10分鐘)\n2.教育訓練","freq":8,"prob":8,"severity":"E","level":3,"plan":""},{"id":"ME06NC02","process":"粉碎作業","step":"塑膠分類","hazard":"待分類物之尖銳處","cause":"人員不當動作","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":5,"severity":"E","level":3,"plan":""},{"id":"ME06NC03","process":"粉碎作業","step":"塑膠分類","hazard":"待分類物之尖銳處","cause":"物料中夾帶針筒或尖銳物","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":5,"severity":"E","level":3,"plan":""},{"id":"ME06NC04","process":"粉碎作業","step":"機械保養","hazard":"機台設備之內部空間狹小","cause":"人員未配戴安全防護具","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME06NC05","process":"粉碎作業","step":"機械保養","hazard":"粉碎設備之機械作動","cause":"未停機掛牌即進行作業","consequence":"夾,捲,壓傷","code":"PH7","control":"1.個人防護具配戴\n2.停機掛牌\n3.教育訓練","freq":8,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME06NC06","process":"粉碎作業","step":"機械保養(換刀)","hazard":"平台高低差","cause":"人員踏空滑落","consequence":"墜落,滾落\n跌倒,滑倒","code":"PH4/PH5","control":"1.個人防護具配戴\n2.教育訓練\n3.設置照明設施\n4.加強梯面防滑功能且兩側安裝扶手","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME06NC07","process":"粉碎作業","step":"搬運原物料/成品","hazard":"運輸","cause":"與堆高機作業區域重疊","consequence":"衝撞,被撞","code":"PH6","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":2,"severity":"C","level":3,"plan":""},{"id":"ME06NC08","process":"粉碎作業","step":"搬運原物料/成品","hazard":"物料坍塌","cause":"物料重心不穩","consequence":"倒塌,崩塌","code":"PH2","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":2,"severity":"D","level":3,"plan":""},{"id":"ME06NC09","process":"粉碎作業","step":"破碎/粉碎","hazard":"噪音作業區域","cause":"塑膠破碎及撞擊","consequence":"噪音過高","code":"PH12","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME06NC10","process":"粉碎作業","step":"破碎","hazard":"化學品濺傷","cause":"塑膠桶中含有化學物","consequence":"化學品灼/濺傷","code":"CH9","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME06NC11","process":"粉碎作業","step":"破碎","hazard":"地面濕滑","cause":"製程廢水外流","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"D","level":4,"plan":""},{"id":"ME06NC12","process":"粉碎作業","step":"破碎","hazard":"農藥品殘留液","cause":"物料中殘留之液體外洩","consequence":"與有害物接觸","code":"CH3","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME06NC13","process":"粉碎作業","step":"重力分選池MB塔Na2SO4加藥(芒硝)","hazard":"化學品灼傷","cause":"加藥時噴濺","consequence":"化學品灼/濺傷","code":"CH9","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME06NC14","process":"粉碎作業","step":"重力分選池MB塔Na2SO4加藥(芒硝)","hazard":"化學品灼傷","cause":"加藥管路破裂","consequence":"化學品灼/濺傷","code":"CH9","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":2,"severity":"D","level":3,"plan":""},{"id":"ME06NC15","process":"粉碎作業","step":"成品搬運","hazard":"噪音","cause":"於噪音作業區作業","consequence":"噪音過高","code":"PH12","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME06NC16","process":"粉碎作業","step":"水洗","hazard":"燙傷","cause":"管路破裂異體噴濺","consequence":"燙傷/濺傷","code":"PH11","control":"1.個人防護具配戴\n2.教育訓練","freq":8,"prob":2,"severity":"D","level":3,"plan":""},{"id":"ME06NC17","process":"造粒","step":"粉碎","hazard":"噪音","cause":"熱熔設備運轉中，人員誤觸","consequence":"1.個人防護具配戴\n2.教育訓練\n3.聽力防護講座","code":"PH12","control":"1.個人防護具配戴\n2.教育訓練\n3.聽力防護講座","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME06NC18","process":"粉碎作業","step":"清理水池","hazard":"地面濕滑","cause":"人員跌倒","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.教育訓練\n3.夥同作業","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME06NC19","process":"粉碎作業","step":"機械操作","hazard":"線路老舊及過戴或重疊","cause":"感電、漏電、火災","consequence":"人員感電漏電,感電(含靜電,火花)、灼傷","code":"PH19","control":"檢視是否老舊及過戴，適時更新替換","freq":10,"prob":3,"severity":"C","level":4,"plan":""},{"id":"ME06NC20","process":"機器保養","step":"保養作業","hazard":"發生火災，消防設備未作動","cause":"消防設備部分故障、損壞","consequence":"欲使用設備不完全","code":"OT3","control":"1.針對消防設備外觀、性能定時做檢查\n2.針對消防設備、器材定期做綜合檢查\n3.定期舉辦消防演練加強員工緊急應變處理","freq":5,"prob":2,"severity":"B","level":4,"plan":""}]},{"id":"ME12","name":"新造粒生產線","icon":"🔥","ic":"ic-orange","category":"production","items":[{"id":"ME12NC01","process":"造粒作業","step":"熱熔","hazard":"設備高溫","cause":"熱熔設備運轉中，人員誤觸","consequence":"與高、低溫接觸(凍傷、灼/燙傷)","code":"PH11","control":"1.機台危害標示\n2.機台護圍、護蓋","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME12NC02","process":"造粒作業","step":"切粒","hazard":"切粒設備之刀具作動","cause":"設備運轉中，人員誤觸","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.機台危害標示\n2.機台護圍、護蓋","freq":2,"prob":5,"severity":"C","level":3,"plan":"工作守則-配戴手套"},{"id":"ME12NC03","process":"機台設備之噪音","step":"造粒","hazard":"噪音","cause":"設備運轉中，所產生噪音","consequence":"噪音過高","code":"PH12","control":"1.個人防護具配戴\n2.教育訓練\n3.聽力防護講座","freq":8,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME12NC04","process":"造粒機耗材更換","step":"濾網更換","hazard":"過濾器作動","cause":"過濾器運轉中，人員未使用夾具而捲入","consequence":"夾,捲,壓傷","code":"PH7","control":"1.機台危害標示\n2.個人防護具配戴\n3.教育訓練","freq":2,"prob":3,"severity":"E","level":1,"plan":"工作守則-依照標準工作方法或上級指示方法工作，不得擅自改變工作方法"},{"id":"ME12NC05","process":"造粒機耗材更換","step":"濾網更換","hazard":"設備高溫","cause":"過濾器之高溫，人員未配戴防護手套誤觸","consequence":"與高、低溫接觸(凍傷、灼/燙傷)","code":"PH11","control":"1.機台危害標示\n2.個人防護具配戴\n3.教育訓練","freq":6,"prob":3,"severity":"E","level":1,"plan":"工作守則-使用適當之護具，避免燙傷"},{"id":"ME12NC06","process":"再生塑膠粒裝袋","step":"淋膜袋縫合","hazard":"車縫機作動","cause":"人員捲入","consequence":"夾,捲,壓傷","code":"PH7","control":"1.機台危害標示\n2.個人防護具配戴\n3.教育訓練","freq":2,"prob":3,"severity":"E","level":1,"plan":"工作守則-依照標準工作方法或上級指示方法工作，不得擅自改變工作方法"},{"id":"ME12NC07","process":"造粒作業","step":"倒塑膠料","hazard":"扶把、護欄不完整","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.教育訓練\n3.強化扶把、護欄之穩固\n4.加裝有墜落之虞處之安全護欄","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME12NC08","process":"造粒包裝作業","step":"成品包裝","hazard":"刀具生鏽","cause":"人員不慎被刀片割傷","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.將已生鏽刀具刀片淘汰\n2.加強人員配戴防護具之相關安全衛生教育訓練\n3.強化個人防護具","freq":8,"prob":8,"severity":"D","level":4,"plan":""},{"id":"ME12NC09","process":"馬達維修","step":"維修作業","hazard":"機台內部殘留塑膠裂解油化","cause":"塑膠油噴出起火","consequence":"冒煙\n火災\n燙傷","code":"CH7/CH1/PH11","control":"1.個人防護具配戴\n2.教育訓練\n3.於起火口加裝房噴濺隔板並安裝連動裝置","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME12NC10","process":"機器保養","step":"保養作業","hazard":"發生火災，消防設備未作動","cause":"消防設備部分故障、損壞","consequence":"欲使用設備不完全","code":"OT3","control":"1.針對消防設備外觀、性能定時做檢查\n2.針對消防設備、器材定期做綜合檢查\n3.定期舉辦消防演練加強員工緊急應變處理","freq":5,"prob":2,"severity":"B","level":4,"plan":""},{"id":"ME12NC11","process":"成品包裝作業","step":"裹膜作業","hazard":"人員碰撞","cause":"設備運轉中，人員碰觸","consequence":"跌倒\n被撞","code":"PH5/PH6","control":"1.機台危害標示\n2.裝設安全護欄\n3.教育訓練","freq":6,"prob":2,"severity":"F","level":1,"plan":""},{"id":"ME12NC12","process":"成品包裝作業","step":"電腦作業","hazard":"人員碰撞","cause":"設備運轉中，人員碰觸","consequence":"跌倒\n被撞","code":"PH5/PH6","control":"1.機台危害標示\n2.裝設安全護欄，設置人員行走路線\n3.教育訓練","freq":6,"prob":2,"severity":"F","level":1,"plan":""},{"id":"ME12NC13","process":"成品包裝作業","step":"更換膠膜","hazard":"夾傷","cause":"未放置好立即關上護蓋","consequence":"夾傷","code":"PH7","control":"1.機台危害標示\n2.教育訓練","freq":4,"prob":2,"severity":"F","level":1,"plan":""},{"id":"ME12NC13","process":"塑料取樣作業","step":"塑料取樣","hazard":"跌倒、滑倒","cause":"樓梯間照明不足\n人員行走注意力未集中","consequence":"跌倒、滑倒","code":"PH4","control":"1.增加照明\n2.教育訓練\n3.個人防護具穿戴","freq":4,"prob":3,"severity":"D","level":3,"plan":""}]},{"id":"ME17","name":"色選機","icon":"🎨","ic":"ic-orange","category":"production","items":[{"id":"ME17NC01","process":"色選機作業","step":"產品吊掛作業","hazard":"人員被掉落物撃中","cause":"天車吊掛作業使用不慎","consequence":"物體飛落,掉落","code":"PH1","control":"1.個人防護具配戴\n2.天車吊掛作業前確實檢點\n3.加強確認物料吊掛狀況","freq":8,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME17NC03","process":"色選機作業","step":"色選","hazard":"噪音","cause":"設備運轉中，所產生噪音","consequence":"噪音過高","code":"PH12","control":"1.個人防護具配戴\n2.教育訓練\n3.聽力防護講座","freq":8,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME17NC05","process":"色選機作業","step":"人員裝袋放置","hazard":"A字梯傾倒","cause":"爬梯未夥同作業，導致A字梯傾倒","consequence":"墜落,滾落","code":"PH4","control":"1.需夥同作業\n2.教育訓練\n3.個人防護具配戴","freq":8,"prob":5,"severity":"E","level":3,"plan":""},{"id":"ME17NC07","process":"色選機作業","step":"馬達維修","hazard":"零件破裂飛散","cause":"零件噴飛","consequence":"砸傷、人員傷亡","code":"PH1/ER6/OT3","control":"1.機台危害標示\n2.個人防護具配戴\n3.教育訓練\n4.設備維修sop作業","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME17NC09","process":"色選機作業","step":"螺桿清潔維修","hazard":"割傷","cause":"機台未停機\n操作不當","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.機台危害標示\n2.個人防護具配戴\n3.教育訓練\n4.設置機台防呆裝置","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME17NC11","process":"色選機作業","step":"空壓機保養","hazard":"零件破裂飛散","cause":"零件噴飛","consequence":"砸傷、人員傷亡","code":"PH1/ER6/OT3","control":"1.機台危害標示\n2.個人防護具配戴\n3.教育訓練\n4.設備維修sop作業","freq":4,"prob":3,"severity":"D","level":3,"plan":""}]},{"id":"ME18","name":"濾網清洗","icon":"🧹","ic":"ic-orange","category":"production","items":[{"id":"ME18NC01","process":"鐵網清洗作業","step":"開封片鹼","hazard":"化學品灼/濺傷","cause":"未配戴化學防護用具","consequence":"化學品灼/濺傷","code":"CH9","control":"1.個人防護具配戴\n2.張貼防護具配戴照片\n3.現場擺放安全資料表\n4.教育訓練","freq":6,"prob":2,"severity":"D","level":3,"plan":""},{"id":"ME18NC02","process":"鐵網清洗作業","step":"片鹼倒入濾網清洗機","hazard":"化學品灼/濺傷","cause":"未配戴化學防護用具","consequence":"化學品灼/濺傷","code":"CH9","control":"1.個人防護具配戴\n2.張貼防護具配戴照片\n3.現場擺放安全資料表\n4.教育訓練","freq":6,"prob":2,"severity":"D","level":3,"plan":""},{"id":"ME18NC03","process":"鐵網清洗作業","step":"掀蓋","hazard":"刺鼻氣味","cause":"未配戴化學防護用具","consequence":"吸入性灼傷","code":"OT5","control":"1.個人防護具配戴\n2.張貼防護具配戴照片\n3.現場擺放安全資料表\n4.教育訓練","freq":6,"prob":2,"severity":"D","level":3,"plan":""}]},{"id":"ME20","name":"自動包裝機","icon":"📦","ic":"ic-orange","category":"production","items":[{"id":"ME20NF01","process":"包材上料作業","step":"淋膜袋放置","hazard":"手部關節或腳部關節與設備產生碰撞","cause":"作業姿勢不良","consequence":"切、割、刺、擦傷","code":"PH8","control":"1.教育訓練\n2.個人防護具配戴","freq":10,"prob":3,"severity":"E","level":2,"plan":""},{"id":"ME20NF02","process":"塑料填充作業","step":"淋膜袋填充料作業","hazard":"設備異常","cause":"人員查修","consequence":"遭輸送帶運轉部位夾入、捲入或壓傷","code":"PH7","control":"1.教育訓練\n2.個人防護具配戴\n3.緊急制動裝置\n4.訂定設備查/維修作業標準流程\n5.作業區域進行管制","freq":10,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME20NF03","process":"填充後自動移載作業","step":"輸送帶","hazard":"設備異常","cause":"人員查修","consequence":"遭輸送帶運轉部位夾入、捲入或壓傷","code":"PH7","control":"1.教育訓練\n2.個人防護具配戴\n3.緊急制動裝置\n4.訂定設備查/維修作業標準流程\n5.作業區域進行管制","freq":10,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME20NF04","process":"抓取包裝作業","step":"機械手臂旋轉","hazard":"機械手臂動作不當，撞擊至人頭部或身軀","cause":"人員查修","consequence":"衝撞,被撞","code":"PH6","control":"1.教育訓練\n2.個人防護具配戴\n3.緊急制動裝置\n4.作業區域進行管制","freq":10,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME20NF05","process":"放置成品袋作業","step":"機械手臂旋轉","hazard":"機械手臂動作不當，撞擊至人頭部或身軀","cause":"人員查修","consequence":"衝撞,被撞","code":"PH6","control":"1.教育訓練\n2.個人防護具配戴\n3.緊急制動裝置\n4.作業區域進行管制","freq":10,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME20NF06","process":"堆疊棧板作業","step":"棧板置放","hazard":"棧板堆疊過高","cause":"棧板掉落","consequence":"夾、捲、壓傷","code":"PH7","control":"1.教育訓練\n2.個人防護具配戴\n3.作業區域進行管制","freq":10,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME20NF07","process":"封膜","step":"封膜機旋轉","hazard":"設備旋轉、轉動","cause":"人員靠近","consequence":"夾、捲、壓傷","code":"PH7","control":"1.教育訓練\n2.個人防護具配戴\n3.作業區域進行管制","freq":10,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME20NF08","process":"機械設備保養作業","step":"設備保養","hazard":"設備之機械作動","cause":"未停機掛牌即進行作業","consequence":"夾,捲,壓傷","code":"PH7","control":"1.個人防護具配戴\n2.停機掛牌\n3.教育訓練\n4.需夥同作業並有現場負責人員監督","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME20NF09","process":"機械設備保養作業","step":"維修保養","hazard":"跌、滑倒","cause":"階梯踩空","consequence":"跌倒,滑倒","code":"PH5","control":"1.教育訓練\n2.作業區域進行管制\n3.個人防護具配戴","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME20NF10","process":"機械設備保養作業","step":"維修保養","hazard":"感電","cause":"設備漏電","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"1.裝設漏電斷路器\n2.個人防護具配戴\n3.作業區域進行管制","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME20NF11","process":"機械設備保養作業","step":"維修保養","hazard":"切,割,刺,擦傷","cause":"使用維修工具不當","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練\n3.作業區域進行管制","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME20NF12","process":"機械設備保養作業","step":"維修保養","hazard":"化學品濺傷\n(使用牛油-軸承之潤滑)","cause":"皮膚刺激","consequence":"化學品濺傷","code":"OT3","control":"1.個人防護具配戴\n2.人員教育訓練\n","freq":4,"prob":3,"severity":"C","level":3,"plan":""}]},{"id":"ME03","name":"堆高機","icon":"🚜","ic":"ic-purple","category":"equipment","items":[{"id":"ME03NC01","process":"堆高機操作","step":"堆高機作業","hazard":"設備暴衝","cause":"未落實檢點，機械零件損壞","consequence":"衝撞,被撞\n設備、設施損壞","code":"PH6  OT3","control":"確實依檢點表格項目檢點","freq":6,"prob":2,"severity":"D","level":3,"plan":""},{"id":"ME03NC02","process":"堆高機操作","step":"堆高機作業","hazard":"設備漏油","cause":"未落實檢點，機械零件損壞","consequence":"跌倒,滑倒","code":"PH5","control":"確實依檢點表格項目檢點","freq":6,"prob":2,"severity":"D","level":3,"plan":""},{"id":"ME03NC03","process":"堆高機操作","step":"堆高機作業","hazard":"人為不當動作","cause":"人員在堆高機操作區域走動","consequence":"衝撞,被撞","code":"PH6","control":"1.堆高機鳴笛及警示燈\n2.人、車動線區分\n3.人員教育訓練\n4.操作人員之證照資格","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME03NC04","process":"堆高機操作","step":"堆高機作業","hazard":"碼頭下操作時動線不明","cause":"廠商送貨車時與堆高機擦撞","consequence":"衝撞,被撞\n設備、設施損壞","code":"PH6  OT3","control":"1.設置作業指揮人員","freq":6,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME03NC05","process":"堆高機操作","step":"堆高機作業","hazard":"堆疊倒塌","cause":"產品堆疊不當造成倒塌","consequence":"倒塌,崩塌","code":"PH2","control":"1.規範堆疊方式、高度限制\n2.人員教育訓練","freq":6,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME03NC06","process":"堆高機操作","step":"堆高機作業","hazard":"噪音過高","cause":"於噪音作業場所作業","consequence":"噪音過高","code":"PH12","control":"1.個人防護具配戴\n2.教育訓練","freq":6,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME03NC07","process":"堆高機操作","step":"堆高機護欄平台","hazard":"物體飛落、掉落、墜落","cause":"人員於高處作業","consequence":"物體飛落、掉落、人員墜落","code":"PH1、PH4","control":"1.配戴個人防護用具(安全帽、安全帶)\n2.作業區域管制","freq":8,"prob":2,"severity":"C","level":3,"plan":""},{"id":"ME03NC07","process":"堆高機操作","step":"堆高機操作與貨櫃車協作作業","hazard":"缺乏溝通或誤判作業狀況","cause":"現場無明確的手勢、燈號、或指揮人員","consequence":"掉落、翻覆、人員墜落、設備、設施損壞","code":"PH1/PH4/OT3/","control":"1.懸掛警示牌(燈)\n2.建立許可程序sop\n3.設置現場指揮員\n4.加強貨櫃司機人員教育訓練","freq":8,"prob":3,"severity":"D","level":3,"plan":""}]},{"id":"ME11","name":"磨刀機作業","icon":"🔪","ic":"ic-purple","category":"equipment","items":[{"id":"ME11NC01","process":"磨刀機作業","step":"裝卸刀片","hazard":"碰觸金屬尖銳物","cause":"人員誤觸刀具","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.佩帶防切割手套\n2.教育訓練","freq":8,"prob":5,"severity":"E","level":3,"plan":""},{"id":"ME11NC02","process":"磨刀機作業","step":"刀具保養","hazard":"機台作動","cause":"設備運轉中，人員誤觸","consequence":"夾,捲,壓傷","code":"PH7","control":"1.機台危害標示\n2.機台護圍、護蓋\n3.教育訓練","freq":8,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME11NC03","process":"機器保養","step":"保養作業","hazard":"發生火災，消防設備未作動","cause":"消防設備部分故障、損壞","consequence":"欲使用設備不完全","code":"OT3","control":"1.針對消防設備外觀、性能定時做檢查\n2.針對消防設備、器材定期做綜合檢查\n3.定期舉辦消防演練加強員工緊急應變處理","freq":5,"prob":2,"severity":"B","level":4,"plan":""}]},{"id":"ME19","name":"自動化設備","icon":"🤖","ic":"ic-purple","category":"equipment","items":[{"id":"ME19NC01","process":"堆高機操作","step":"堆高機作業","hazard":"設備暴衝","cause":"未落實檢點，機械零件損壞","consequence":"衝撞,被撞\n設備、設施損壞","code":"PH6  OT3","control":"確實依檢點表格項目檢點","freq":6,"prob":2,"severity":"D","level":3,"plan":""},{"id":"ME19NC02","process":"堆高機操作","step":"堆高機作業","hazard":"設備漏油","cause":"未落實檢點，機械零件損壞","consequence":"跌倒,滑倒","code":"PH5","control":"確實依檢點表格項目檢點","freq":6,"prob":2,"severity":"D","level":3,"plan":""},{"id":"ME19NC03","process":"堆高機操作","step":"堆高機作業","hazard":"人為不當動作","cause":"人員在堆高機操作區域走動","consequence":"衝撞,被撞","code":"PH6","control":"1.堆高機鳴笛及警示燈\n2.人、車動線區分\n3.人員教育訓練\n4.操作人員之證照資格","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME19NC04","process":"堆高機操作","step":"堆高機作業","hazard":"動線不明","cause":"廠商送貨車時與堆高機擦撞","consequence":"衝撞,被撞\n設備、設施損壞","code":"PH6  OT3","control":"1.設置作業指揮人員","freq":6,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME19NC05","process":"堆高機操作","step":"堆高機作業\n(瓶磚置於輸送帶)","hazard":"瓶磚擺放倒塌","cause":"瓶磚不當造成倒塌","consequence":"倒塌,崩塌\n物體飛落、掉落\n壓傷","code":"PH2/PH1/PH7","control":"1.規範堆疊(放置)方式、高度限制\n2..個人防護具配戴\n3.人員教育訓練\n4.作業區人員管制","freq":6,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME19NC06","process":"堆高機操作","step":"堆高機作業","hazard":"噪音過高","cause":"於噪音作業場所作業","consequence":"噪音過高導致聽力受損","code":"PH12/OT5","control":"1.個人防護具配戴\n2.教育訓練","freq":6,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME19NC07","process":"剪線作業","step":"瓶磚鐵絲剪除作業","hazard":"鐵絲剪斷時彈飛","cause":"瓶磚未放置確實","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.作業區域管制\n2.定期檢查防護罩完整性","freq":6,"prob":1,"severity":"F","level":1,"plan":""},{"id":"ME19NC08","process":"剪線作業","step":"瓶磚鐵絲剪除作業","hazard":"鐵絲剪斷時彈飛","cause":"機台運轉異常\n（卡住或故障）","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.作業區域管制\n2.定期檢查防護罩完整性\n3.人員教育訓練\n4.設置自動緊急停機或警示系統","freq":6,"prob":1,"severity":"F","level":1,"plan":""},{"id":"ME19NC09","process":"剪線作業","step":"瓶磚鐵絲剪除作業","hazard":"地面有殘留鐵絲或掉落物","cause":"機台運轉異常\n（卡住或故障）","consequence":"跌倒,滑倒","code":"PH5","control":"1.作業區域管制\n2.定期檢查防護罩完整性\n3.人員教育訓練","freq":6,"prob":1,"severity":"F","level":1,"plan":""},{"id":"ME19NC10","process":"剪線作業","step":"瓶磚鐵絲剪除作業","hazard":"機台異常噪音或振動","cause":"機台運轉異常\n（卡住或故障）","consequence":"設備、設施損壞","code":"OT3","control":"1.機台定期檢點","freq":6,"prob":1,"severity":"F","level":1,"plan":""},{"id":"ME19NC11","process":"剪線作業","step":"瓶磚鐵絲剪除作業","hazard":"機台異常噪音或振動","cause":"噪音過高","consequence":"周邊人員短暫不適或設備損壞","code":"PH12","control":"1.設置遠端監控，避免人員長時間靠近\n2.定期檢查防護罩完整性","freq":6,"prob":3,"severity":"F","level":1,"plan":""},{"id":"ME19NC12","process":"剪線作業","step":"機械設備保養","hazard":"機台設備之空間狹小","cause":"人員不慎碰撞受傷","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練","freq":4,"prob":2,"severity":"E","level":1,"plan":""},{"id":"ME19NC13","process":"剪線作業","step":"機械設備保養","hazard":"滑倒","cause":"保養油外洩","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.環境清潔","freq":4,"prob":2,"severity":"F","level":1,"plan":""},{"id":"ME19NC14","process":"剪線作業","step":"機械設備保養","hazard":"感電","cause":"設備漏電","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"1.裝設漏電斷路器\n2.機台定期檢點\n3.個人防護具配戴","freq":4,"prob":2,"severity":"D","level":2,"plan":""},{"id":"ME19NC15","process":"剪線作業","step":"機械設備保養","hazard":"墜落,滾落","cause":"從事高架作業","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.人員教育訓練\n3.特殊危害作業許可","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME19NC16","process":"解包作業","step":"瓶磚解包作業","hazard":"地面有殘留鐵絲或掉落物","cause":"機台運轉異常\n（卡住或故障）","consequence":"跌倒,滑倒","code":"PH5","control":"1.作業區域管制\n2.定期檢查防護罩完整性","freq":4,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME19NC17","process":"解包作業","step":"瓶磚解包作業","hazard":"機台異常噪音或振動","cause":"機台運轉異常\n（卡住或故障）","consequence":"設備、設施損壞","code":"OT3","control":"1.機台定期檢點","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME19NC18","process":"解包作業","step":"瓶磚解包作業","hazard":"機台異常噪音或振動","cause":"噪音過高","consequence":"周邊人員短暫不適或設備損壞","code":"PH12","control":"1.設置遠端監控，避免人員長時間靠近\n2.定期檢查防護罩完整性","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME19NC19","process":"解包作業","step":"機械設備保養","hazard":"機台設備之空間狹小","cause":"人員不慎碰撞受傷","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練","freq":4,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME19NC20","process":"解包作業","step":"機械設備保養","hazard":"滑倒","cause":"保養油外洩","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.環境清潔","freq":4,"prob":3,"severity":"F","level":1,"plan":""},{"id":"ME19NC21","process":"解包作業","step":"機械設備保養","hazard":"墜落,滾落","cause":"從事高架作業","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.人員教育訓練\n3.特殊危害作業許可","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME19NC22","process":"解包作業","step":"機械設備保養","hazard":"感電","cause":"設備漏電","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"1.裝設漏電斷路器\n2.機台定期檢點\n3.個人防護具配戴","freq":4,"prob":2,"severity":"D","level":2,"plan":""},{"id":"ME19NC23","process":"磁選作業","step":"磁選異材分離作業","hazard":"設備磁性異常","cause":"部分異材彈飛","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.作業區域管制\n2.磁選機部位裝設防護罩","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME19NC24","process":"磁選作業","step":"設備保養","hazard":"滑倒","cause":"保養油外洩","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.環境清潔","freq":4,"prob":3,"severity":"F","level":1,"plan":""},{"id":"ME19NC25","process":"磁選作業","step":"機械設備保養","hazard":"墜落,滾落","cause":"從事高架作業","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.人員教育訓練\n3.特殊危害作業許可","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME19NC26","process":"磁選作業","step":"機械設備保養","hazard":"感電","cause":"設備漏電","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"1.裝設漏電斷路器\n2.機台定期檢點\n3.個人防護具配戴","freq":4,"prob":2,"severity":"D","level":2,"plan":""},{"id":"ME19NC27","process":"光選作業","step":"塑料篩選","hazard":"塑料飛散/彈出","cause":"光選/氣槍吹出","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.作業區域管制\n2.危險區域設置人機隔離裝置","freq":6,"prob":2,"severity":"E","level":1,"plan":""},{"id":"ME19NC28","process":"光選作業","step":"機械設備保養","hazard":"滑倒","cause":"保養油外洩","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.環境清潔","freq":4,"prob":3,"severity":"F","level":1,"plan":""},{"id":"ME19NC29","process":"光選作業","step":"機械設備保養","hazard":"墜落,滾落","cause":"從事高架作業","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.人員教育訓練\n3.特殊危害作業許可","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME19NC30","process":"光選作業","step":"機械設備保養","hazard":"感電","cause":"設備漏電","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"1.裝設漏電斷路器\n2.機台定期檢點\n3.個人防護具配戴","freq":4,"prob":2,"severity":"D","level":2,"plan":""},{"id":"ME19NC31","process":"粉碎作業","step":"瓶磚破碎/粉碎","hazard":"噪音作業區域","cause":"塑膠破碎及撞擊","consequence":"噪音過高","code":"PH12","control":"1.個人防護具配戴\n2.教育訓練\n3.設置遠端監控，避免人員長時間靠近","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME19NC32","process":"粉碎作業","step":"瓶磚破碎/粉碎","hazard":"地面濕滑","cause":"製程廢水外流","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.教育訓練\n3.作業區域管制\n","freq":6,"prob":3,"severity":"F","level":1,"plan":""},{"id":"ME19NC33","process":"粉碎作業","step":"機械設備保養","hazard":"機台設備之內部空間狹小","cause":"人員未配戴安全防護具","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練","freq":4,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME19NC34","process":"粉碎作業","step":"機械設備保養","hazard":"粉碎設備之機械作動","cause":"未停機掛牌即進行作業","consequence":"夾,捲,壓傷","code":"PH7","control":"1.個人防護具配戴\n2.停機掛牌\n3.教育訓練\n4.需夥同作業並有現場負責人員監督","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME19NC35","process":"粉碎作業","step":"機械設備保養","hazard":"墜落,滾落","cause":"從事高架作業","consequence":"墜落,滾落\n跌倒,滑倒","code":"PH4/PH5","control":"1.個人防護具配戴\n2.教育訓練","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME19NC36","process":"比重分選作業","step":"塑料比重篩選","hazard":"地面濕滑","cause":"製程廢水外流","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.教育訓練\n3.作業區域管制\n","freq":6,"prob":3,"severity":"F","level":1,"plan":""},{"id":"ME19NC37","process":"比重分選作業","step":"機械設備保養","hazard":"切,割,刺,擦傷","cause":"葉片、軸心損壞","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練\n","freq":4,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME19NC38","process":"比重分選作業","step":"清理底部","hazard":"地面濕滑","cause":"人員跌倒","consequence":"跌倒,滑倒","code":"PH5","control":"1.個人防護具配戴\n2.教育訓練\n3.夥同作業","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME19NC39","process":"脫水機作業","step":"塑料脫水","hazard":"切,割,刺,擦傷","cause":"人員打開脫水視窗將手伸入","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.張貼危害標語\n2.教育訓練","freq":4,"prob":2,"severity":"D","level":2,"plan":""},{"id":"ME19NC40","process":"脫水機作業","step":"機械設備保養","hazard":"切,割,刺,擦傷","cause":"更換脫水機網子","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練\n3.停機掛牌","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME19NC41","process":"風車乾燥作業","step":"機械設備維修","hazard":"人員遭重物撞、壓傷","cause":"風車進行吊掛","consequence":"物體飛落、掉落\n壓傷","code":"PH1/PH7","control":"1.個人防護具配戴\n2.人員教育訓練\n3.特殊危害作業許可","freq":1,"prob":3,"severity":"B","level":3,"plan":""},{"id":"ME19NC42","process":"劑量塔維修保養","step":"維修保養作業","hazard":"跌、滑倒","cause":"階梯踩空","consequence":"跌倒,滑倒","code":"PH5","control":"1.教育訓練\n2.作業區域進行管制\n3.個人防護具配戴","freq":4,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME19NC43","process":"劑量塔維修保養","step":"維修保養作業","hazard":"感電","cause":"設備漏電","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"1.裝設漏電斷路器\n2.個人防護具配戴\n3.作業區域進行管制","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME19NC44","process":"劑量塔維修保養","step":"維修保養作業","hazard":"切,割,刺,擦傷","cause":"使用維修工具不當","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練\n3.作業區域進行管制","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME19NC45","process":"儲料塔維修保養","step":"維修保養作業","hazard":"跌、滑倒","cause":"階梯踩空","consequence":"跌倒,滑倒","code":"PH5","control":"1.教育訓練\n2.作業區域進行管制\n3.個人防護具配戴","freq":4,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME19NC46","process":"儲料塔維修保養","step":"維修保養作業","hazard":"切,割,刺,擦傷","cause":"使用維修工具不當","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.個人防護具配戴\n2.教育訓練\n3.作業區域進行管制","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME19NC47","process":"自動化系統遠端管理作業","step":"自動化系統遠端管理監控","hazard":"視覺疲勞","cause":"長時間緊盯監控螢幕","consequence":"視覺疲勞危害\n頸肩僵硬","code":"OT5","control":"1.設定異常警報通知\n2.監控螢幕設置於適當位置及高度","freq":8,"prob":2,"severity":"F","level":1,"plan":""},{"id":"ME19NC48","process":"機械設備保養","step":"維修保養作業","hazard":"化學品濺傷\n(使用牛油-軸承之潤滑)","cause":"皮膚刺激","consequence":"化學品濺傷","code":"OT3","control":"1.個人防護具配戴\n2.人員教育訓練\n","freq":4,"prob":2,"severity":"F","level":1,"plan":""}]},{"id":"ME08","name":"廢水廠","icon":"💧","ic":"ic-blue","category":"utility","items":[{"id":"ME08NC01","process":"廢水處理","step":"pH調整槽操作","hazard":"化學品灼傷","cause":"加藥管路破裂","consequence":"化學品灼/濺傷","code":"CH9","control":"配戴護目鏡、耐酸鹼手套","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME08NC02","process":"廢水處理","step":"加藥桶操作","hazard":"化學品灼傷","cause":"加藥管路破裂","consequence":"化學品灼/濺傷","code":"CH9","control":"配戴護目鏡、耐酸鹼手套","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME08NC03","process":"廢水處理","step":"化學品填充","hazard":"化學品灼傷","cause":"加藥不慎溢出","consequence":"化學品灼/濺傷","code":"CH9","control":"配戴護目鏡、耐酸鹼手套","freq":6,"prob":5,"severity":"D","level":3,"plan":""},{"id":"ME08NC04","process":"廢水處理","step":"化學品填充","hazard":"開口邊緣","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"佩戴安全帶","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME08NC05","process":"廢水處理","step":"混凝槽操作","hazard":"開口邊緣","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"佩戴安全帶","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME08NC06","process":"廢水處理","step":"沉澱槽操作","hazard":"開口邊緣","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"佩戴安全帶","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME08NC07","process":"廢水處理","step":"污泥濃縮槽操作","hazard":"開口邊緣","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"佩戴安全帶","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME08NC08","process":"廢水處理","step":"調勻池操作","hazard":"開口邊緣","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"佩戴安全帶","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME08NC09","process":"廢水處理","step":"曝氣池操作","hazard":"開口邊緣","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"裝設防護網","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME08NC10","process":"廢水處理","step":"放流槽操作","hazard":"開口邊緣","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"裝設安全護欄","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME08NC11","process":"廢水處理","step":"設備操作","hazard":"電撃","cause":"感電","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"加裝漏電斷路器","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME08NC12","process":"廢水處理","step":"污泥脫水機操作","hazard":"電撃","cause":"感電","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"加裝漏電斷路器","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME08NC13","process":"廢水處理","step":"污泥脫水機操作","hazard":"設備捲入","cause":"夾傷","consequence":"夾,捲,壓傷","code":"PH7","control":"護蓋護罩","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME08NC14","process":"廢水處理","step":"污泥脫水機操作","hazard":"開口邊緣","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"佩戴安全帶","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME08NC16","process":"廢水處理","step":"污泥脫水機操作","hazard":"設備震動","cause":"震動","consequence":"振動","code":"PH18","control":"教育宣導","freq":1,"prob":1,"severity":"F","level":1,"plan":""},{"id":"ME08NC17","process":"廢水處理","step":"維修作業","hazard":"電撃","cause":"感電","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"加裝漏電斷路器","freq":6,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME08NC18","process":"廢水處理","step":"維修作業","hazard":"捲入","cause":"夾傷","consequence":"夾,捲,壓傷","code":"PH7","control":"護蓋護罩","freq":6,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME08NC19","process":"廢水處理","step":"維修作業","hazard":"開口邊緣","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"佩戴安全帶","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME08NC20","process":"廢水處理","step":"維修作業","hazard":"扶把、護欄不完整","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.教育訓練\n3.強化扶把、護欄之穩固\n4.加裝有墜落之虞處之安全護欄","freq":6,"prob":3,"severity":"E","level":1,"plan":""}]},{"id":"ME09","name":"電氣室","icon":"⚡","ic":"ic-blue","category":"utility","items":[{"id":"ME09NC01","process":"電氣室","step":"廠商檢點作業","hazard":"非相關作業人員進入","cause":"感電、漏電","consequence":"人員感電漏電,感電(含靜電,火花)、灼傷","code":"PH19","control":"1.門禁上鎖\n2.作業管制\n3.危害標示\n4.環境整潔/離地","freq":2,"prob":2,"severity":"B","level":3,"plan":"管制人員出入"},{"id":"ME09EC02","process":"電氣室","step":"廠商檢點作業","hazard":"非相關作業人員進入","cause":"電線走火","consequence":"火災","code":"CH1","control":"1.門禁上鎖\n2.作業管制\n3.危害標示","freq":2,"prob":2,"severity":"B","level":3,"plan":"管制人員出入"},{"id":"ME09EC03","process":"電氣室/集水坑","step":"廠商檢點作業","hazard":"非相關作業人員進入","cause":"墜落","consequence":"人員跌入集水坑","code":"CH4","control":"1.門禁上鎖\n2.工程改善(護蓋)","freq":2,"prob":2,"severity":"B","level":3,"plan":"管制人員出入"},{"id":"ME09EC04","process":"電氣室/發電機","step":"廠商檢點作業","hazard":"非相關作業人員進入","cause":"噪音","consequence":"聽力受損","code":"CH12","control":"1.門禁上鎖\n2.作業管制\n3.危害標示","freq":2,"prob":2,"severity":"B","level":3,"plan":"管制人員出入"},{"id":"ME09EC05","process":"電氣室","step":"柴油存放","hazard":"易燃液體之存放","cause":"外來火源引起火災事故、槽體破裂","consequence":"火災\n化學品洩漏(含廢液)","code":"CH1  CH4","control":"1.危害標示_廠區嚴禁煙火、\n2.設置滅火設施             3.設置防液堤","freq":6,"prob":1,"severity":"E","level":1,"plan":"管制人員出入"},{"id":"ME09EC06","process":"電氣室/發電機","step":"廠商檢點作業","hazard":"非相關作業人員進入","cause":"與有害物接觸","consequence":"過敏、有機毒害","code":"CH3","control":"1.危害標示","freq":2,"prob":2,"severity":"B","level":3,"plan":"管制人員出入"}]},{"id":"ME10","name":"工務","icon":"🔧","ic":"ic-blue","category":"utility","items":[{"id":"ME10NC01","process":"電氣設備修繕工程","step":"設備維修、保養","hazard":"設備未斷電","cause":"設備漏電或碰及帶電體","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"1.安全之工具\n2.配戴個人防護具\n3.教育訓練","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME10NC02","process":"電氣設備修繕工程","step":"設備維修、保養","hazard":"物件掉落","cause":"工具或零件放置不平穩","consequence":"物體飛落,掉落","code":"PH1","control":"1.使用工具袋\n2.作業區域圈圍","freq":4,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME10NC03","process":"電氣設備修繕工程","step":"設備維修、保養","hazard":"作業位置有高低落差","cause":"使用施工架或梯子不穩","consequence":"墜落,滾落","code":"PH4","control":"1.安全之工具\n2.配戴個人防護具\n3.教育訓練","freq":4,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME10NC04","process":"電氣設備修繕工程","step":"設備維修、保養","hazard":"地板黏滑","cause":"電氣設備之環境地面黏滑","consequence":"跌倒,滑倒","code":"PH5","control":"1.安全之工具\n2.配戴個人防護具\n3.教育訓練","freq":4,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME10NC15","process":"發電機及消防泵維護作業","step":"故障維修線路查修","hazard":"設備未斷電","cause":"設備未斷電，人員誤觸","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"1.安全之工具\n2.配戴個人防護具\n3.教育訓練","freq":2,"prob":3,"severity":"C","level":3,"plan":""},{"id":"ME10NC16","process":"發電機及消防泵維護作業","step":"定期保養發電機","hazard":"設備作動中產生高溫","cause":"設備運轉中，人員誤觸","consequence":"與高、低溫接觸(凍傷、灼/燙傷)","code":"PH11","control":"1.護蓋、護罩\n2.配戴個人防護具","freq":2,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME10NC17","process":"發電機及消防泵維護作業","step":"定期保養消防泵浦","hazard":"設備作動中產生高溫","cause":"設備運轉中，人員誤觸","consequence":"與高、低溫接觸(凍傷、灼/燙傷)","code":"PH11","control":"1.護蓋、護罩\n2.配戴個人防護具","freq":2,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME10EC18","process":"發電機及消防泵維護作業","step":"定期保養柴油洩漏","hazard":"易燃液體洩漏","cause":"人員不當動作","consequence":"火災","code":"CH1","control":"1.夥同作業\n2.滅火器","freq":2,"prob":2,"severity":"B","level":3,"plan":""},{"id":"ME10EC19","process":"發電機及消防泵維護作業","step":"定期保養機油洩漏","hazard":"易燃液體洩漏","cause":"人員不當動作","consequence":"火災","code":"CH1","control":"1.夥同作業\n2.滅火器","freq":2,"prob":2,"severity":"B","level":3,"plan":""},{"id":"ME10NC20","process":"空壓機運轉維護作業","step":"故障維修","hazard":"設備未斷電","cause":"人員不當動作","consequence":"漏電,感電(含靜電,火花)","code":"PH19","control":"1.設備斷電掛牌\n2.安全之工具\n3.配戴個人防護具","freq":2,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME10NC21","process":"空壓機運轉維護作業","step":"定期保養上黃油","hazard":"設備未斷電","cause":"人員不當動作","consequence":"夾,捲,壓傷","code":"PH7","control":"1.設備斷電掛牌\n2.安全之工具\n3.配戴個人防護具","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME10NC22","process":"空壓機運轉維護作業","step":"定期保養濾網清洗","hazard":"設備未斷電","cause":"人員不當動作","consequence":"夾,捲,壓傷","code":"PH7","control":"1.設備斷電掛牌\n2.安全之工具\n3.配戴個人防護具","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME10NC23","process":"空壓機運轉維護作業","step":"定期保養更換機油","hazard":"設備未斷電","cause":"人員不當動作","consequence":"夾,捲,壓傷","code":"PH7","control":"1.設備斷電掛牌\n2.安全之工具\n3.配戴個人防護具","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME10NC24","process":"空壓機運轉維護作業","step":"定期保養更換機油芯","hazard":"設備未斷電","cause":"人員不當動作","consequence":"夾,捲,壓傷","code":"PH7","control":"1.設備斷電掛牌\n2.安全之工具\n3.配戴個人防護具","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME10NC25","process":"空壓機運轉維護作業","step":"定期保養更換空氣濾芯","hazard":"設備未斷電","cause":"人員不當動作","consequence":"夾,捲,壓傷","code":"PH7","control":"1.設備斷電掛牌\n2.安全之工具\n3.配戴個人防護具","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME10NC26","process":"空壓機運轉維護作業","step":"定期保養更換水濾芯","hazard":"設備未斷電","cause":"人員不當動作","consequence":"夾,捲,壓傷","code":"PH7","control":"1.設備斷電掛牌\n2.安全之工具\n3.配戴個人防護具","freq":4,"prob":3,"severity":"D","level":3,"plan":""},{"id":"ME10NC27","process":"空壓機運轉維護作業","step":"定期保養冷卻水塔清洗","hazard":"設備未斷電","cause":"人員不當動作","consequence":"與高、低溫接觸(凍傷、灼/燙傷)","code":"PH11","control":"1.設備斷電掛牌\n2.安全之工具\n3.配戴個人防護具","freq":4,"prob":3,"severity":"E","level":1,"plan":""}]},{"id":"ME14","name":"空汙檢測","icon":"🌬️","ic":"ic-blue","category":"utility","items":[{"id":"ME14NC01","process":"空污檢測","step":"採樣檢測","hazard":"作業高度2米以上","cause":"人員不慎踩空衰落","consequence":"墜落,滾落","code":"PH4","control":"採樣平台設有安全護欄","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME14NC02","process":"空污檢測","step":"採樣檢測","hazard":"扶把、護欄不完整","cause":"人員不慎墜落","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.教育訓練\n3.強化扶把、護欄之穩固\n4.加裝有墜落之虞處之安全護欄","freq":6,"prob":3,"severity":"E","level":1,"plan":""}]},{"id":"ME13","name":"實驗室作業","icon":"🧪","ic":"ic-purple","category":"admin","items":[{"id":"ME13NF01","process":"造粒作業","step":"熱熔","hazard":"設備高溫","cause":"熱熔設備運轉中，人員誤觸","consequence":"與高、低溫接觸(凍傷、灼/燙傷)","code":"PH11","control":"1.機台危害標示\n2.機台護圍、護蓋\n3.人員教育訓練","freq":6,"prob":3,"severity":"E","level":1,"plan":""},{"id":"ME13NF02","process":"造粒作業","step":"切粒","hazard":"切粒設備之刀具作動","cause":"設備運轉中，人員誤觸","consequence":"切,割,刺,擦傷","code":"PH8","control":"1.機台危害標示\n2.機台護圍、護蓋\n4.人員教育訓練","freq":8,"prob":5,"severity":"E","level":3,"plan":""},{"id":"ME13NF03","process":"重金屬分析","step":"分析","hazard":"輻射傷害","cause":"操作不慎，人員有輻射傷害","consequence":"游離輻射暴露","code":"PH16","control":"1.機台危害標示\n2.機台護圍、護蓋                 3.每年三小時教育訓練","freq":8,"prob":2,"severity":"E","level":1,"plan":""},{"id":"ME13NF04","process":"重金屬分析","step":"分析","hazard":"輻射傷害","cause":"防護罩破損，人員暴露於輻射下","consequence":"游離輻射暴露","code":"PH16","control":"1.機台危害標示\n2.機台護圍、護蓋","freq":8,"prob":2,"severity":"E","level":1,"plan":""},{"id":"ME13NF04","process":"塑料取樣作業","step":"塑料取樣","hazard":"跌倒、滑倒","cause":"樓梯間照明不足\n人員行走注意力未集中","consequence":"跌倒、滑倒","code":"PH4","control":"1.人員教育訓練\n2.個人防護具穿戴","freq":4,"prob":3,"severity":"D","level":3,"plan":""}]},{"id":"ME15","name":"屋頂","icon":"🏠","ic":"ic-purple","category":"admin","items":[{"id":"ME15NC01","process":"屋頂作業","step":"驗收/場勘","hazard":"墜落,滾落","cause":"高度2M以上作業","consequence":"墜落,滾落","code":"PH4","control":"1.個人防護具配戴\n2.教育訓練\n3.特殊危害作業許可\n4.搭設安全母索及設置安全護欄","freq":1,"prob":2,"severity":"B","level":3,"plan":""},{"id":"ME15NC02","process":"屋頂作業","step":"自然破損","hazard":"漏水","cause":"使用不當\n天災\n雷擊","consequence":"機械設備感電","code":"PH19","control":"1.定期檢視屋頂防水情況\n2.教育訓練\n4.特殊危害作業許可","freq":1,"prob":2,"severity":"D","level":2,"plan":""},{"id":"ME15NC03","process":"屋頂作業","step":"自然破損","hazard":"漏水","cause":"使用不當\n天災\n雷擊","consequence":"滑倒","code":"PH5","control":"1.定期檢視屋頂防水情況\n2.教育訓練","freq":1,"prob":2,"severity":"E","level":1,"plan":""},{"id":"ME15NC04","process":"屋頂作業","step":"自然破損","hazard":"漏水","cause":"使用不當\n天災\n雷擊","consequence":"爆炸","code":"PH22","control":"1.定期檢視屋頂防水情況\n2.教育訓練\n3.啟動緊急應變","freq":1,"prob":2,"severity":"B","level":3,"plan":""},{"id":"ME15NC05","process":"屋頂作業","step":"自然破損","hazard":"漏水","cause":"使用不當\n天災\n雷擊","consequence":"火災","code":"CH1","control":"1.定期檢視屋頂防水情況\n2.教育訓練\n3.啟動緊急應變","freq":1,"prob":2,"severity":"B","level":3,"plan":""},{"id":"ME15NC06","process":"屋頂作業","step":"自然破損","hazard":"過載","cause":"隔熱毯過重","consequence":"倒塌、崩塌","code":"PH2","control":"1.定期檢視屋頂情況","freq":1,"prob":2,"severity":"B","level":3,"plan":""},{"id":"ME15NC07","process":"屋頂作業","step":"自然破損","hazard":"天災","cause":"隔熱毯掀起","consequence":"物體飛落、掉落","code":"PH11","control":"1.定期檢視屋頂情況","freq":1,"prob":2,"severity":"E","level":1,"plan":""},{"id":"ME15NC08","process":"屋頂作業","step":"自然破損","hazard":"廠內溫度過高","cause":"隔熱毯著火","consequence":"火災","code":"CH1","control":"1.定期檢視屋頂情況\n2.啟動緊急應變","freq":1,"prob":2,"severity":"B","level":3,"plan":""}]},{"id":"ME16","name":"行政管理","icon":"📋","ic":"ic-purple","category":"admin","items":[{"id":"ME16NC01","process":"辦公作業","step":"電腦操作","hazard":"時間過長","cause":"工作需要/未適時休息","consequence":"視力衰退/疲勞","code":"ER4    ER5","control":"作息正常","freq":6,"prob":5,"severity":"F","level":1,"plan":"健康檢查"},{"id":"ME16NC02","process":"辦公作業","step":"電腦操作","hazard":"電能","cause":"誤使用電源或用電不慎","consequence":"感電","code":"PH19","control":"電源線均附接地且不得將接地端移除","freq":1,"prob":3,"severity":"D","level":2,"plan":"電源接地"},{"id":"ME16NC03","process":"辦公作業","step":"電腦作業","hazard":"重複性操作造成傷害","cause":"長時間操作鍵盤及滑鼠、看螢幕時間過長","consequence":"可能導致手部關節疼痛及近視","code":"ER5","control":"減少長時間操作,適當休息","freq":6,"prob":5,"severity":"F","level":1,"plan":"健康檢查"},{"id":"ME16NC04","process":"辦公作業","step":"文件影印","hazard":"粉塵、異味","cause":"影印機使用頻率高及無隔離措施","consequence":"呼吸道病變","code":"PH15/CH6","control":"影印機搬離員工座位","freq":4,"prob":2,"severity":"D","level":2,"plan":"機械維修保養"},{"id":"ME16NC05","process":"辦公作業","step":"文件影印","hazard":"滾筒","cause":"印表機卡紙更換時未注意","consequence":"導致人員燙傷","code":"PH11","control":"使用時警告標語","freq":1,"prob":2,"severity":"E","level":1,"plan":"可接受,以現有方式控制"},{"id":"ME16NC06","process":"辦公作業","step":"文件影印","hazard":"印表機零部件","cause":"印表機卡紙更換時未注意","consequence":"導致人員割傷","code":"PH8","control":"使用時警告標語","freq":1,"prob":2,"severity":"E","level":1,"plan":"可接受,以現有方式控制"},{"id":"ME16NC07","process":"辦公作業","step":"文件銷毀","hazard":"粉塵、噪音","cause":"碎紙機使用頻率高","consequence":"呼吸道病變及影響聽力","code":"PH15/PH12","control":"分批次使用","freq":1,"prob":2,"severity":"D","level":2,"plan":"機械維修保養"},{"id":"ME16NC08","process":"辦公作業","step":"文件歸檔","hazard":"撞傷","cause":"空間太小","consequence":"瘀青","code":"PH6","control":"無","freq":2,"prob":2,"severity":"F","level":1,"plan":"空間調整"},{"id":"ME16NC09","process":"辦公作業","step":"手工具使用","hazard":"訂書針、美工刀","cause":"使用頻率高","consequence":"造成手部刺傷及切割傷","code":"PH8","control":"使用手工具時，應注意力集中","freq":6,"prob":2,"severity":"E","level":1,"plan":"可接受,以現有方式控制"},{"id":"ME16NC10","process":"辦公作業","step":"移動會議","hazard":"電線絆倒","cause":"人員未留意","consequence":"跌傷","code":"PH5","control":"同事間互相提醒","freq":2,"prob":3,"severity":"E","level":1,"plan":"可接受,以現有方式控制"},{"id":"ME16NC11","process":"飲水機作業","step":"更換茶水","hazard":"熱水","cause":"誤觸熱水開關","consequence":"可能造成燙傷","code":"PH11","control":"張貼警告標語","freq":4,"prob":3,"severity":"E","level":1,"plan":"可接受,以現有方式控制"},{"id":"ME16NC12","process":"飲水機作業","step":"更換茶水","hazard":"電能","cause":"飲水機漏電","consequence":"感電","code":"PH19","control":"加裝漏電斷路器","freq":1,"prob":2,"severity":"D","level":2,"plan":"可接受,以現有方式控制"},{"id":"ME16NC13","process":"飲水機作業","step":"更換茶水","hazard":"病菌感染","cause":"飲水機未定期更換濾心","consequence":"可能造成人員胃腸不適","code":"BI3","control":"定期更換濾心及檢查飲用水水質","freq":1,"prob":2,"severity":"E","level":1,"plan":"定期檢測水質及更換濾心"},{"id":"ME16NC14","process":"打掃清潔作業","step":"拖地","hazard":"撞傷","cause":"地板濕滑不易停止","consequence":"人員撞傷","code":"PH6","control":"保持地板乾燥","freq":1,"prob":2,"severity":"E","level":1,"plan":"可接受,以現有方式控制"},{"id":"ME16NC15","process":"打掃清潔作業","step":"拖地","hazard":"跌倒","cause":"地板濕滑人員跌落","consequence":"人員撞傷","code":"PH5","control":"保持地板乾燥","freq":1,"prob":2,"severity":"E","level":1,"plan":"可接受,以現有方式控制"},{"id":"ME16NC16","process":"辦公室修繕作業","step":"更換日光燈","hazard":"電能","cause":"未關閉開關更換日光燈","consequence":"人員感電","code":"PH19","control":"需將日光燈開關關閉","freq":1,"prob":3,"severity":"E","level":1,"plan":"可接受,以現有方式控制"},{"id":"ME16NC17","process":"辦公室修繕作業","step":"更換日光燈","hazard":"墜落","cause":"鋁梯未固定造成人員墜落","consequence":"骨折、撞傷","code":"PH4","control":"需將鋁梯固定且必要時需二人乙組","freq":1,"prob":5,"severity":"C","level":3,"plan":"可接受,以現有方式控制"},{"id":"ME16NC18","process":"稽核活動","step":"交通運輸","hazard":"交通事故","cause":"人員注意力未集中或未遵守交通規則","consequence":"撞傷","code":"OT1","control":"車輛使用操作準則","freq":1,"prob":5,"severity":"E","level":1,"plan":"車輛使用管制宣導"},{"id":"ME16NC19","process":"稽核活動","step":"現場稽核","hazard":"現場不熟悉","cause":"人員未留意","consequence":"跌傷","code":"PH5","control":"現場人員帶領","freq":2,"prob":3,"severity":"E","level":1,"plan":"可接受,以現有方式控制"},{"id":"ME16NC20","process":"辦公作業","step":"各種作業","hazard":"生物性危害","cause":"三級生物安全等級","consequence":"人員傷害","code":"BI3","control":"配合衛服部疫管局之防疫措施，增訂內部作業指引","freq":1,"prob":5,"severity":"B","level":3,"plan":"依衛服部公告相關措施"}]}]}
+// QX_DATA_END
+];
+// EXPORT_DATA_END
+
+// ════════════════════════════════════════════════════════
+// 狀態
+// ════════════════════════════════════════════════════════
+const LS_KEY = 'hazard-v1';
+let ALL_DATA, curDept, curSheet, sortState = { col: null, dir: 'desc' };
+let modalMode, modalSheetId, modalItemId;
+let sheetModalMode, confirmCallback;
+
+// ════════════════════════════════════════════════════════
+// LocalStorage
+// ════════════════════════════════════════════════════════
+function loadData() {
+  try {
+    const saved = localStorage.getItem(LS_KEY);
+    ALL_DATA = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_DATA));
+  } catch(e) {
+    ALL_DATA = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  }
+}
+function saveData() {
+  localStorage.setItem(LS_KEY, JSON.stringify(ALL_DATA));
+  toast('已自動儲存');
+}
+function confirmReset() {
+  openConfirm('確認重置資料', '將清除所有新增與修改，還原至預設資料。此動作無法復原，確定繼續？', () => {
+    localStorage.removeItem(LS_KEY);
+    loadData();
+    initHome();
+    showHome();
+    toast('已重置為預設資料');
+  });
+}
+
+// ════════════════════════════════════════════════════════
+// 工具
+// ════════════════════════════════════════════════════════
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+
+function stats(items) {
+  const s = { total: items.length, l1:0, l2:0, l3:0, l4:0, na:0 };
+  items.forEach(i => {
+    if      (i.level===1) s.l1++;
+    else if (i.level===2) s.l2++;
+    else if (i.level===3) s.l3++;
+    else if (i.level===4) s.l4++;
+    else                  s.na++;
+  });
+  return s;
+}
+
+function lvBadge(n) {
+  if (n==null) return `<span class="lv-badge lb-na">未評估</span>`;
+  const lbl = ['','等級1 可接受','等級2 低度','等級3 需改善','等級4 高風險'];
+  const cls = ['','lb-1','lb-2','lb-3','lb-4'];
+  return `<span class="lv-badge ${cls[n]}">${lbl[n]}</span>`;
+}
+function sevChip(s) {
+  if (!s) return '<span style="color:var(--gray)">—</span>';
+  return `<span class="sev-chip s${s}" title="嚴重度${s}">${s}</span>`;
+}
+function autoId(sheet) {
+  const nums = sheet.items.map(i => parseInt(i.id.slice(-2)) || 0);
+  const max = nums.length ? Math.max(...nums) : 0;
+  return `${sheet.id}NC${String(max+1).padStart(2,'0')}`;
+}
+function autoSheetId(dept) {
+  const nums = dept.sheets.map(s => parseInt(s.id.slice(2)) || 0);
+  const max = nums.length ? Math.max(...nums) : -1;
+  return `AD${String(max+1).padStart(2,'0')}`;
+}
+function suggestLevel(freq, prob, severity) {
+  if (!freq || !prob || !severity) return null;
+  const score = freq * prob;
+  switch (severity) {
+    case 'A': return 4;
+    case 'B': return score >= 10 ? 4 : 3;
+    case 'C': return score >= 40 ? 4 : 3;
+    case 'D': return score >= 40 ? 4 : score >= 6 ? 3 : 2;
+    case 'E': return score >= 30 ? 2 : 1;
+    case 'F': return 1;
+    default:  return null;
+  }
+}
+function findSheet(dept, sheetId) {
+  return dept.sheets.find(s => s.id === sheetId);
+}
+
+// ════════════════════════════════════════════════════════
+// 視圖
+// ════════════════════════════════════════════════════════
+function setView(name) {
+  document.getElementById('view-home').style.display    = name==='home'    ? 'flex'  : 'none';
+  document.getElementById('view-summary').style.display = name==='summary' ? 'block' : 'none';
+  document.getElementById('view-detail').style.display  = name==='detail'  ? 'block' : 'none';
+  document.getElementById('toolbar').style.display      = name!=='home'    ? 'flex'  : 'none';
+  document.getElementById('stats-bar').style.display    = name!=='home'    ? 'flex'  : 'none';
+}
+
+// ════════════════════════════════════════════════════════
+// Layer 0: 首頁
+// ════════════════════════════════════════════════════════
+function showHome(noPush) {
+  curDept = null; curSheet = null; setView('home');
+  document.getElementById('bc-sep1').style.display = 'none';
+  document.getElementById('bc-dept').style.display = 'none';
+  document.getElementById('bc-sep2').style.display = 'none';
+  document.getElementById('bc-sheet').style.display = 'none';
+  document.getElementById('filter-process').style.display = 'none';
+  document.getElementById('filter-level').style.display = 'none';
+  document.getElementById('search').value = '';
+  if (!noPush) history.pushState(null,'','#');
+}
+
+function initHome() {
+  const wrap = document.getElementById('view-home');
+  wrap.innerHTML = '';
+  ALL_DATA.forEach(dept => {
+    const allItems = dept.sheets.flatMap(s => s.items);
+    const hi = allItems.filter(i => i.level===4).length;
+    const group = document.createElement('div');
+    group.className = 'dept-group';
+    group.innerHTML = `
+      <div class="dept-hdr">
+        <span class="big-icon">${dept.dept_icon}</span>
+        <h2>${esc(dept.dept_name)}</h2>
+        <p>${dept.year}年度 ｜ 填表 ${esc(dept.fill_date)} ｜ 共 ${allItems.length} 項危害${hi>0?' ｜ ⚠ 高風險 '+hi+' 項':''}</p>
+      </div>`;
+    dept.sheets.forEach(sheet => {
+      const s = stats(sheet.items);
+      const card = document.createElement('div');
+      card.className = 'sheet-row';
+      card.innerHTML = `
+        <div class="sheet-ico ${sheet.ic||'ic-blue'}">${sheet.icon||'📄'}</div>
+        <div class="sheet-info">
+          <h3>${esc(sheet.name)}</h3>
+          <p>項目 ${s.total}　需改善 <b style="color:${s.l3+s.l4>0?'var(--red)':'var(--green)'}">${s.l3+s.l4}</b>　可接受 ${s.l1+s.l2}${s.na>0?' ｜ 未評估 '+s.na:''}</p>
+        </div>
+        <span class="sheet-arr">›</span>`;
+      card.onclick = () => { curDept = dept; selectSheet(sheet); };
+      group.appendChild(card);
+    });
+    wrap.appendChild(group);
+  });
+}
+
+// ════════════════════════════════════════════════════════
+// Layer 1: 作業表彙總
+// ════════════════════════════════════════════════════════
+function showSummary(noPush) {
+  curSheet = null;
+  if (!curDept) { showHome(); return; }
+  setView('summary');
+  document.getElementById('bc-sep1').style.display  = 'inline';
+  document.getElementById('bc-dept').style.display  = 'inline';
+  document.getElementById('bc-dept').textContent    = `${curDept.dept_icon} ${curDept.dept_name}`;
+  document.getElementById('bc-sep2').style.display  = 'none';
+  document.getElementById('bc-sheet').style.display = 'none';
+  document.getElementById('filter-process').style.display = 'none';
+  document.getElementById('filter-level').style.display = 'none';
+  document.getElementById('search').value = '';
+  document.getElementById('search').placeholder = '🔍 搜尋作業表…';
+  renderSummary();
+  renderStatsBar('summary');
+  if (!noPush) history.pushState(null,'',`#dept/${curDept.dept_id}`);
+}
+
+function renderSummary() {
+  const tbody = document.getElementById('sheet-tbody');
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  let sheets = curDept.sheets.filter(sh =>
+    !q || sh.name.includes(q) || sh.items.some(i => i.hazard.includes(q)||i.process.includes(q))
+  );
+  if (sortState.col) {
+    sheets = [...sheets].sort((a,b) => {
+      const sa=stats(a.items), sb=stats(b.items);
+      const m = { total:[sa.total,sb.total], high:[sa.l3+sa.l4,sb.l3+sb.l4], ok:[sa.l1+sa.l2,sb.l1+sb.l2] };
+      const [av,bv] = m[sortState.col]||[0,0];
+      return sortState.dir==='asc' ? av-bv : bv-av;
+    });
+  }
+  tbody.innerHTML = '';
+  if (!sheets.length) { tbody.innerHTML='<tr><td colspan="9" class="empty">無符合條件的作業表</td></tr>'; return; }
+  sheets.forEach((sheet, idx) => {
+    const s = stats(sheet.items);
+    const ok=s.l1+s.l2, hi=s.l3+s.l4;
+    const pOk=s.total?Math.round(ok/s.total*100):0;
+    const pL3=s.total?Math.round(s.l3/s.total*100):0;
+    const pL4=s.total?Math.round(s.l4/s.total*100):0;
+    const pNa=s.total?Math.round(s.na/s.total*100):0;
+    const procs=[...new Set(sheet.items.map(i=>i.process))].join('、');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${idx+1}</td>
+      <td class="nm">${sheet.icon||'📄'} ${esc(sheet.name)}${sheet.incomplete?'<span style="font-size:11px;color:var(--orange);font-weight:400"> ⚠未完成</span>':''}</td>
+      <td style="font-size:11px;color:var(--sub);max-width:160px;white-space:normal">${esc(procs)}</td>
+      <td><b>${s.total}</b></td>
+      <td><div class="bar-wrap" style="width:100px">
+        <div class="bg-green" style="width:${pOk}%"></div>
+        <div class="bg-orange" style="width:${pL3}%"></div>
+        <div class="bg-red" style="width:${pL4}%"></div>
+        <div class="bg-gray" style="width:${pNa}%"></div>
+      </div></td>
+      <td><b style="color:${hi>0?'var(--red)':'var(--gray)'}">${hi}</b></td>
+      <td>${ok}</td>
+      <td style="color:${s.na>0?'var(--orange)':'var(--gray)'}">${s.na}</td>
+      <td onclick="event.stopPropagation()">
+        <div style="display:flex;gap:4px">
+          <button class="act-btn edit" onclick="openEditSheetModal('${sheet.id}')">✎</button>
+          <button class="act-btn del" onclick="confirmDeleteSheet('${sheet.id}')">✕</button>
+        </div>
+      </td>`;
+    tr.onclick = () => selectSheet(sheet);
+    tbody.appendChild(tr);
+  });
+  updateSortIcons();
+}
+
+function sortBy(col) {
+  sortState.dir = (sortState.col===col && sortState.dir==='desc') ? 'asc' : 'desc';
+  sortState.col = col;
+  renderSummary();
+}
+function updateSortIcons() {
+  ['total','high','ok'].forEach(c => {
+    const el = document.getElementById(`si-${c}`);
+    if (el) el.textContent = sortState.col===c ? (sortState.dir==='asc'?'▲':'▼') : '';
+  });
+}
+
+// ════════════════════════════════════════════════════════
+// Layer 2: 危害項目清單
+// ════════════════════════════════════════════════════════
+function selectSheet(sheet) { curSheet = sheet; showDetail(); }
+
+function showDetail(noPush) {
+  if (!curDept||!curSheet) { showSummary(); return; }
+  setView('detail');
+  document.getElementById('bc-sep2').style.display  = 'inline';
+  document.getElementById('bc-sheet').style.display = 'inline';
+  document.getElementById('bc-sheet').textContent   = `${curSheet.icon||'📄'} ${curSheet.name}`;
+  document.getElementById('filter-process').style.display = 'inline-block';
+  document.getElementById('filter-level').style.display   = 'inline-block';
+  document.getElementById('search').value = '';
+  document.getElementById('search').placeholder = '🔍 搜尋危害因子、原因、後果…';
+  populateProcessFilter();
+  renderMetaBox();
+  renderItems();
+  renderStatsBar('detail');
+  window.scrollTo(0,0);
+  if (!noPush) history.pushState(null,'',`#sheet/${curDept.dept_id}/${curSheet.id}`);
+}
+
+function populateProcessFilter() {
+  const sel = document.getElementById('filter-process');
+  const procs = [...new Set(curSheet.items.map(i=>i.process))];
+  sel.innerHTML = '<option value="">所有製程／活動</option>';
+  procs.forEach(p => { const o=document.createElement('option'); o.value=p; o.textContent=p; sel.appendChild(o); });
+}
+
+const SEV_REF = [{k:'A',l:'極嚴重'},{k:'B',l:'嚴重'},{k:'C',l:'中等'},{k:'D',l:'輕微'},{k:'E',l:'可忽略'},{k:'F',l:'極低'}];
+
+function renderMetaBox() {
+  const s = stats(curSheet.items);
+  const sevHtml = SEV_REF.map(r=>`<span><span class="sev-chip s${r.k}" style="width:18px;height:18px;font-size:11px">${r.k}</span> ${esc(r.l)}</span>`).join('');
+  document.getElementById('sheet-meta-box').innerHTML = `
+    <h2>${curSheet.icon||'📄'} ${esc(curSheet.name)}</h2>
+    <div style="font-size:12px;color:var(--sub)">${esc(curDept.dept_name)} ｜ ${curDept.year}年度 ｜ 製訂：${esc(curDept.author)}</div>
+    <div class="pills">
+      <span class="pill p-total">總計 ${s.total}</span>
+      <span class="pill p-green">可接受(1+2) ${s.l1+s.l2}</span>
+      <span class="pill p-orange">需改善 ${s.l3}</span>
+      ${s.l4>0?`<span class="pill p-red">高風險 ${s.l4}</span>`:''}
+      ${s.na>0?`<span class="pill p-gray">未評估 ${s.na}</span>`:''}
+    </div>
+    <div class="sev-legend"><span class="sl-lbl">嚴重度：</span>${sevHtml}</div>`;
+}
+
+function renderItems() {
+  const list  = document.getElementById('item-list');
+  const noRes = document.getElementById('no-items');
+  const q       = document.getElementById('search').value.trim().toLowerCase();
+  const process = document.getElementById('filter-process').value;
+  const level   = document.getElementById('filter-level').value;
+  const items = curSheet.items.filter(i => {
+    if (process && i.process!==process) return false;
+    if (level==='null' && i.level!==null) return false;
+    if (level!==''&&level!=='null'&&String(i.level)!==level) return false;
+    if (q && ![i.hazard,i.cause,i.consequence,i.control,i.plan,i.process,i.step].join(' ').toLowerCase().includes(q)) return false;
+    return true;
+  });
+  list.innerHTML = ''; noRes.style.display = items.length?'none':'block';
+  const hl = t => q ? esc(t).replace(new RegExp(escRe(q),'gi'), m=>`<mark>${m}</mark>`) : esc(t);
+  items.forEach(item => {
+    const lk = item.level==null?'na':item.level;
+    const open = item.level>=3||item.level==null;
+    const codes = item.code ? item.code.split('/').map(c=>`<span class="code-tag">${esc(c.trim())}</span>`).join('') : '<span style="color:var(--gray)">—</span>';
+    const riskHtml = item.freq!=null
+      ? `<div class="risk-row">
+           <div class="rc"><span class="rc-l">頻率</span><span class="rc-v">${item.freq}</span></div>
+           <span class="op">×</span>
+           <div class="rc"><span class="rc-l">機率</span><span class="rc-v">${item.prob}</span></div>
+           <span class="op">→</span>
+           <div class="rc"><span class="rc-l">嚴重度</span>${sevChip(item.severity)}</div>
+           <span class="op">→</span>
+           <div class="rc"><span class="rc-l">等級</span>${lvBadge(item.level)}</div>
+         </div>`
+      : `<div class="warn-box">⚠ 尚未完成風險評估（頻率、機率、嚴重度待填）</div>`;
+    const card = document.createElement('div');
+    card.className = `item-card lv-${lk}`;
+    card.id = `card-${item.id}`;
+    card.innerHTML = `
+      <div class="card-hdr">
+        <div class="card-hdr-click" onclick="toggleCard('${item.id}')">
+          <span class="item-id">${esc(item.id)}</span>
+          <span class="item-hazard">${hl(item.hazard)}</span>
+          <span class="item-path">${esc(item.process)} › ${esc(item.step)}</span>
+          ${lvBadge(item.level)}
+          <span class="chev ${open?'open':''}" id="chev-${item.id}">▼</span>
+        </div>
+        <div class="card-actions">
+          <button class="act-btn edit" onclick="openEditItemModal('${item.id}')">✎ 編輯</button>
+          <button class="act-btn del" onclick="confirmDeleteItem('${item.id}')">✕ 刪除</button>
+        </div>
+      </div>
+      <div class="card-body ${open?'open':''}" id="body-${item.id}">
+        <div class="ig">
+          <div class="il"><div class="il-lbl">可能發生原因</div><div class="il-val">${hl(item.cause)}</div></div>
+          <div class="il"><div class="il-lbl">後果影響</div><div class="il-val">${hl(item.consequence)}</div></div>
+          <div class="il"><div class="il-lbl">事故代碼</div><div class="il-val">${codes}</div></div>
+        </div>
+        ${riskHtml}
+        <div class="sec-lbl">現有控制方法</div>
+        <div class="ctrl-box">${hl(item.control)}</div>
+        <div class="sec-lbl">風險控制規劃</div>
+        <div class="plan-box">${item.plan?hl(item.plan):'<span style="color:var(--gray);font-style:italic">（待補）</span>'}</div>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+function toggleCard(id) {
+  document.getElementById(`body-${id}`).classList.toggle('open');
+  document.getElementById(`chev-${id}`).classList.toggle('open');
+}
+function expandAll() {
+  document.querySelectorAll('#item-list .card-body').forEach(b=>b.classList.add('open'));
+  document.querySelectorAll('#item-list .chev').forEach(c=>c.classList.add('open'));
+}
+function collapseAll() {
+  document.querySelectorAll('#item-list .card-body').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('#item-list .chev').forEach(c=>c.classList.remove('open'));
+}
+
+// ════════════════════════════════════════════════════════
+// Stats Bar
+// ════════════════════════════════════════════════════════
+function renderStatsBar(view) {
+  const bar = document.getElementById('stats-bar');
+  const items = view==='summary' ? curDept.sheets.flatMap(s=>s.items) : curSheet.items;
+  const s = stats(items);
+  const lbl = view==='summary' ? curDept.dept_name : curSheet.name;
+  bar.innerHTML = `
+    <span><span class="dot" style="background:var(--blue)"></span> ${esc(lbl)} <b>${s.total}</b> 項</span>
+    <span><span class="dot" style="background:var(--green)"></span> 可接受 <b>${s.l1+s.l2}</b></span>
+    <span><span class="dot" style="background:var(--orange)"></span> 需改善 <b>${s.l3}</b></span>
+    ${s.l4>0?`<span><span class="dot" style="background:var(--red)"></span> 高風險 <b>${s.l4}</b></span>`:''}
+    ${s.na>0?`<span><span class="dot" style="background:var(--gray)"></span> 未評估 <b>${s.na}</b></span>`:''}`;
+}
+
+// ════════════════════════════════════════════════════════
+// Item Modal
+// ════════════════════════════════════════════════════════
+function openAddItemModal() {
+  modalMode = 'add'; modalSheetId = curSheet.id; modalItemId = null;
+  document.getElementById('item-modal-title').textContent = '新增危害項目';
+  clearItemForm();
+  document.getElementById('f-id').value = autoId(curSheet);
+  populateDlProcess();
+  document.getElementById('item-modal').classList.add('open');
+}
+function openEditItemModal(itemId) {
+  modalMode = 'edit'; modalSheetId = curSheet.id; modalItemId = itemId;
+  const item = curSheet.items.find(i=>i.id===itemId);
+  if (!item) return;
+  document.getElementById('item-modal-title').textContent = '編輯危害項目';
+  document.getElementById('f-id').value          = item.id;
+  document.getElementById('f-process').value     = item.process||'';
+  document.getElementById('f-step').value        = item.step||'';
+  document.getElementById('f-hazard').value      = item.hazard||'';
+  document.getElementById('f-cause').value       = item.cause||'';
+  document.getElementById('f-consequence').value = item.consequence||'';
+  document.getElementById('f-code').value        = item.code||'';
+  document.getElementById('f-control').value     = item.control||'';
+  document.getElementById('f-freq').value        = item.freq!=null?item.freq:'';
+  document.getElementById('f-prob').value        = item.prob!=null?item.prob:'';
+  document.getElementById('f-severity').value    = item.severity||'';
+  document.getElementById('f-level').value       = item.level!=null?String(item.level):'';
+  document.getElementById('f-plan').value        = item.plan||'';
+  populateDlProcess();
+  document.getElementById('item-modal').classList.add('open');
+}
+function closeItemModal() { document.getElementById('item-modal').classList.remove('open'); }
+function clearItemForm() {
+  ['f-process','f-step','f-hazard','f-cause','f-consequence','f-code','f-control','f-freq','f-prob','f-plan'].forEach(id=>{
+    document.getElementById(id).value='';
+  });
+  document.getElementById('f-severity').value='';
+  document.getElementById('f-level').value='';
+}
+function populateDlProcess() {
+  const dl = document.getElementById('dl-process');
+  const procs = [...new Set(curSheet.items.map(i=>i.process))];
+  dl.innerHTML = procs.map(p=>`<option value="${esc(p)}">`).join('');
+}
+function autoSuggest(force) {
+  const freq = parseFloat(document.getElementById('f-freq').value);
+  const prob = parseFloat(document.getElementById('f-prob').value);
+  const sev  = document.getElementById('f-severity').value;
+  const lvl  = suggestLevel(freq, prob, sev);
+  if (lvl && (force || !document.getElementById('f-level').value)) {
+    document.getElementById('f-level').value = String(lvl);
+    if (force) toast(`建議等級：${lvl}`);
+  }
+}
+function saveItem() {
+  const process = document.getElementById('f-process').value.trim();
+  const step    = document.getElementById('f-step').value.trim();
+  const hazard  = document.getElementById('f-hazard').value.trim();
+  const cause   = document.getElementById('f-cause').value.trim();
+  const consequence = document.getElementById('f-consequence').value.trim();
+  const control = document.getElementById('f-control').value.trim();
+  if (!process||!step||!hazard||!cause||!consequence||!control) {
+    toast('請填寫所有必填欄位（標 * 者）', 'err'); return;
+  }
+  const freqVal = document.getElementById('f-freq').value;
+  const probVal = document.getElementById('f-prob').value;
+  const levVal  = document.getElementById('f-level').value;
+  const item = {
+    id:          document.getElementById('f-id').value,
+    process, step, hazard, cause, consequence,
+    code:        document.getElementById('f-code').value.trim(),
+    control,
+    freq:        freqVal ? parseFloat(freqVal) : null,
+    prob:        probVal ? parseFloat(probVal) : null,
+    severity:    document.getElementById('f-severity').value || null,
+    level:       levVal ? parseInt(levVal) : null,
+    plan:        document.getElementById('f-plan').value.trim()
+  };
+  const dept  = ALL_DATA.find(d=>d.dept_id===curDept.dept_id);
+  const sheet = findSheet(dept, modalSheetId);
+  if (modalMode==='add') {
+    sheet.items.push(item);
+    toast('已新增危害項目');
+  } else {
+    const idx = sheet.items.findIndex(i=>i.id===modalItemId);
+    if (idx!==-1) sheet.items[idx]=item;
+    toast('已更新危害項目');
+  }
+  saveData();
+  curSheet = sheet;
+  closeItemModal();
+  renderMetaBox();
+  renderItems();
+  renderStatsBar('detail');
+  populateProcessFilter();
+}
+
+// ════════════════════════════════════════════════════════
+// Sheet Modal
+// ════════════════════════════════════════════════════════
+function openAddSheetModal() {
+  sheetModalMode = 'add';
+  document.getElementById('sheet-modal-title').textContent = '新增作業表';
+  document.getElementById('sf-id').value = autoSheetId(curDept);
+  document.getElementById('sf-name').value = '';
+  document.getElementById('sf-icon').value = '';
+  document.getElementById('sheet-modal').classList.add('open');
+}
+function openEditSheetModal(sheetId) {
+  sheetModalMode = 'edit';
+  const sheet = findSheet(curDept, sheetId);
+  if (!sheet) return;
+  document.getElementById('sheet-modal-title').textContent = '編輯作業表';
+  document.getElementById('sf-id').value = sheet.id;
+  document.getElementById('sf-name').value = sheet.name;
+  document.getElementById('sf-icon').value = sheet.icon||'';
+  document.getElementById('sheet-modal').classList.add('open');
+}
+function closeSheetModal() { document.getElementById('sheet-modal').classList.remove('open'); }
+function saveSheet() {
+  const name = document.getElementById('sf-name').value.trim();
+  const icon = document.getElementById('sf-icon').value.trim() || '📄';
+  if (!name) { toast('請填寫作業表名稱', 'err'); return; }
+  const dept = ALL_DATA.find(d=>d.dept_id===curDept.dept_id);
+  if (sheetModalMode==='add') {
+    const id = document.getElementById('sf-id').value;
+    dept.sheets.push({ id, name, icon, ic:'ic-blue', items:[] });
+    toast('已新增作業表');
+  } else {
+    const id = document.getElementById('sf-id').value;
+    const sheet = findSheet(dept, id);
+    if (sheet) { sheet.name=name; sheet.icon=icon; }
+    toast('已更新作業表');
+  }
+  saveData();
+  curDept = dept;
+  closeSheetModal();
+  renderSummary();
+  renderStatsBar('summary');
+  initHome();
+}
+function confirmDeleteSheet(sheetId) {
+  const sheet = findSheet(curDept, sheetId);
+  if (!sheet) return;
+  openConfirm('刪除作業表', `確定要刪除「${sheet.name}」作業表及其 ${sheet.items.length} 筆資料？此動作無法復原。`, () => {
+    const dept = ALL_DATA.find(d=>d.dept_id===curDept.dept_id);
+    dept.sheets = dept.sheets.filter(s=>s.id!==sheetId);
+    saveData();
+    curDept = dept;
+    toast('已刪除作業表');
+    renderSummary();
+    renderStatsBar('summary');
+    initHome();
+  });
+}
+
+// ════════════════════════════════════════════════════════
+// Delete Item
+// ════════════════════════════════════════════════════════
+function confirmDeleteItem(itemId) {
+  const item = curSheet.items.find(i=>i.id===itemId);
+  if (!item) return;
+  openConfirm('刪除危害項目', `確定要刪除「${item.hazard}」（${item.id}）？此動作無法復原。`, () => {
+    const dept  = ALL_DATA.find(d=>d.dept_id===curDept.dept_id);
+    const sheet = findSheet(dept, curSheet.id);
+    sheet.items = sheet.items.filter(i=>i.id!==itemId);
+    saveData();
+    curSheet = sheet;
+    toast('已刪除危害項目');
+    renderMetaBox();
+    renderItems();
+    renderStatsBar('detail');
+    initHome();
+  });
+}
+
+// ════════════════════════════════════════════════════════
+// Confirm Dialog
+// ════════════════════════════════════════════════════════
+function openConfirm(title, msg, cb) {
+  confirmCallback = cb;
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-msg').textContent   = msg;
+  document.getElementById('confirm-ov').classList.add('open');
+}
+function closeConfirm() {
+  confirmCallback = null;
+  document.getElementById('confirm-ov').classList.remove('open');
+}
+function runConfirm() { closeConfirm(); if (confirmCallback) confirmCallback(); }
+
+// ════════════════════════════════════════════════════════
+// Export
+// ════════════════════════════════════════════════════════
+function exportHtml() {
+  const raw = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const startMark = '// EXPORT_DATA_START';
+  const endMark   = '// EXPORT_DATA_END';
+  const si = raw.indexOf(startMark);
+  const ei = raw.indexOf(endMark) + endMark.length;
+  if (si===-1||ei===endMark.length-1) { toast('匯出失敗：找不到資料標記','err'); return; }
+  const dataJs = `// EXPORT_DATA_START\nconst DEFAULT_DATA = ${JSON.stringify(ALL_DATA, null, 2)};\n// EXPORT_DATA_END`;
+  const newHtml = raw.slice(0,si) + dataJs + raw.slice(ei);
+  const blob = new Blob([newHtml], { type:'text/html;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `危害鑑別及風險評估查詢系統_${new Date().toISOString().slice(0,10)}.html`;
+  a.click();
+  toast('已下載最新版 HTML');
+}
+
+// ════════════════════════════════════════════════════════
+// Toast
+// ════════════════════════════════════════════════════════
+function toast(msg, type='') {
+  const t = document.createElement('div');
+  t.className = 'toast' + (type?' '+type:'');
+  t.textContent = msg;
+  document.body.appendChild(t);
+  requestAnimationFrame(() => { t.classList.add('show'); });
+  setTimeout(() => { t.classList.remove('show'); setTimeout(()=>t.remove(),300); }, 2200);
+}
+
+// ════════════════════════════════════════════════════════
+// Scroll & Events
+// ════════════════════════════════════════════════════════
+function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
+window.addEventListener('scroll',()=>{ document.getElementById('scroll-top').classList.toggle('visible',window.scrollY>300); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeItemModal(); closeSheetModal(); closeConfirm(); }});
+document.getElementById('search').addEventListener('input',()=>{
+  if (document.getElementById('view-detail').style.display!=='none') renderItems();
+  else renderSummary();
+});
+document.getElementById('filter-process').addEventListener('change', renderItems);
+document.getElementById('filter-level').addEventListener('change', renderItems);
+
+// ════════════════════════════════════════════════════════
+// Hash 導航
+// ════════════════════════════════════════════════════════
+window.addEventListener('popstate', onHashChange);
+function onHashChange() {
+  const hash = location.hash;
+  if (!hash||hash==='#') { showHome(true); return; }
+  const p = hash.slice(1).split('/');
+  if (p[0]==='dept'&&p[1]) {
+    const dept = ALL_DATA.find(d=>d.dept_id===p[1]);
+    if (dept) { curDept=dept; showSummary(true); return; }
+  }
+  if (p[0]==='sheet'&&p[1]&&p[2]) {
+    const dept  = ALL_DATA.find(d=>d.dept_id===p[1]);
+    const sheet = dept&&dept.sheets.find(s=>s.id===p[2]);
+    if (dept&&sheet) { curDept=dept; curSheet=sheet; showDetail(true); return; }
+  }
+  showHome(true);
+}
+
+// ════════════════════════════════════════════════════════
+// Init
+// ════════════════════════════════════════════════════════
+loadData();
+initHome();
+onHashChange();
+
+// ════════════════════════════════════════════════════════
+// 類別導航增強（全興廠用）
+// ════════════════════════════════════════════════════════
+var curCategory = null;
+
+function selectCategory(catId, noPush) {
+  if (!curDept) return;
+  curCategory = curDept.categories ? curDept.categories.find(function(c){return c.id===catId;}) : null;
+  showSummary(noPush);
+  if (!noPush && curCategory) history.pushState(null,'','#cat/'+curDept.dept_id+'/'+catId);
+}
+
+function _setCatCrumb() {
+  var bcSepCat = document.getElementById('bc-sep-cat');
+  var bcCat    = document.getElementById('bc-cat');
+  if (!bcSepCat || !bcCat) return;
+  if (curCategory) {
+    bcSepCat.style.display = 'inline';
+    bcCat.style.display    = 'inline';
+    bcCat.textContent      = curCategory.icon + ' ' + curCategory.name;
+  } else {
+    bcSepCat.style.display = 'none';
+    bcCat.style.display    = 'none';
+  }
+}
+
+function initHome() {
+  var wrap = document.getElementById('view-home');
+  wrap.innerHTML = '';
+  ALL_DATA.forEach(function(dept) {
+    var allItems = dept.sheets.reduce(function(a,s){return a.concat(s.items);}, []);
+    var hi = allItems.filter(function(i){return i.level===4;}).length;
+    var group = document.createElement('div');
+    group.className = 'dept-group';
+    group.innerHTML =
+      '<div class="dept-hdr">' +
+      '<span class="big-icon">' + dept.dept_icon + '</span>' +
+      '<h2>' + esc(dept.dept_name) + '</h2>' +
+      '<p>' + dept.year + '年度 ｜ 填表 ' + esc(dept.fill_date) +
+      ' ｜ 共 ' + allItems.length + ' 項危害' +
+      (hi > 0 ? ' ｜ <span style="color:#fca5a5">⚠ 高風險 ' + hi + ' 項</span>' : '') +
+      '</p></div>';
+
+    if (dept.use_categories && dept.categories) {
+      dept.categories.forEach(function(cat) {
+        var catSheets = dept.sheets.filter(function(s){return s.category===cat.id;});
+        var catItems  = catSheets.reduce(function(a,s){return a.concat(s.items);}, []);
+        var s2 = stats(catItems);
+        var hi2 = s2.l3 + s2.l4;
+        var card = document.createElement('div');
+        card.className = 'sheet-row';
+        card.innerHTML =
+          '<div class="sheet-ico ' + (cat.ic||'ic-blue') + '">' + (cat.icon||'📋') + '</div>' +
+          '<div class="sheet-info"><h3>' + esc(cat.name) + '</h3>' +
+          '<p>' + catSheets.length + ' 個作業表 ｜ ' + catItems.length + ' 項危害' +
+          (hi2 > 0 ? ' ｜ <b style="color:var(--red)">⚠ 高風險 ' + hi2 + '</b>' : '') +
+          '</p></div><span class="sheet-arr">›</span>';
+        card.onclick = (function(d, cid){ return function(){
+          curDept = d; curCategory = null; selectCategory(cid);
+        };})(dept, cat.id);
+        group.appendChild(card);
+      });
+    } else {
+      dept.sheets.forEach(function(sheet) {
+        var s = stats(sheet.items);
+        var card = document.createElement('div');
+        card.className = 'sheet-row';
+        card.innerHTML =
+          '<div class="sheet-ico ' + (sheet.ic||'ic-blue') + '">' + (sheet.icon||'📄') + '</div>' +
+          '<div class="sheet-info"><h3>' + esc(sheet.name) + '</h3>' +
+          '<p>項目 ' + s.total + '　需改善 <b style="color:' +
+          (s.l3+s.l4>0?'var(--red)':'var(--green)') + '">' + (s.l3+s.l4) + '</b>' +
+          '　可接受 ' + (s.l1+s.l2) +
+          (s.na>0?' ｜ 未評估 '+s.na:'') + '</p></div>' +
+          '<span class="sheet-arr">›</span>';
+        card.onclick = (function(d, sh){ return function(){
+          curDept = d; selectSheet(sh);
+        };})(dept, sheet);
+        group.appendChild(card);
+      });
+    }
+    wrap.appendChild(group);
+  });
+}
+
+function showHome(noPush) {
+  curDept = null; curSheet = null; curCategory = null; setView('home');
+  document.getElementById('bc-sep1').style.display = 'none';
+  document.getElementById('bc-dept').style.display = 'none';
+  document.getElementById('bc-sep2').style.display = 'none';
+  document.getElementById('bc-sheet').style.display = 'none';
+  _setCatCrumb();
+  document.getElementById('filter-process').style.display = 'none';
+  document.getElementById('filter-level').style.display = 'none';
+  document.getElementById('search').value = '';
+  if (!noPush) history.pushState(null,'','#');
+}
+
+function showSummary(noPush) {
+  curSheet = null;
+  if (!curDept) { showHome(); return; }
+  setView('summary');
+  document.getElementById('bc-sep1').style.display  = 'inline';
+  document.getElementById('bc-dept').style.display  = 'inline';
+  document.getElementById('bc-dept').textContent    = curDept.dept_icon + ' ' + curDept.dept_name;
+  _setCatCrumb();
+  document.getElementById('bc-sep2').style.display  = 'none';
+  document.getElementById('bc-sheet').style.display = 'none';
+  document.getElementById('filter-process').style.display = 'none';
+  document.getElementById('filter-level').style.display   = 'none';
+  document.getElementById('search').value = '';
+  document.getElementById('search').placeholder = '🔍 搜尋作業表…';
+  renderSummary();
+  renderStatsBar('summary');
+  if (!noPush && !curCategory) history.pushState(null,'','#dept/'+curDept.dept_id);
+}
+
+function renderSummary() {
+  var tbody = document.getElementById('sheet-tbody');
+  var q = document.getElementById('search').value.trim().toLowerCase();
+  var sheets = curDept.sheets.filter(function(sh) {
+    if (curCategory && sh.category !== curCategory.id) return false;
+    if (q && !sh.name.includes(q) && !sh.items.some(function(i){
+      return i.hazard.includes(q) || i.process.includes(q);
+    })) return false;
+    return true;
+  });
+  if (sortState.col) {
+    sheets = sheets.slice().sort(function(a,b) {
+      var sa=stats(a.items), sb=stats(b.items);
+      var m={total:[sa.total,sb.total],high:[sa.l3+sa.l4,sb.l3+sb.l4],ok:[sa.l1+sa.l2,sb.l1+sb.l2]};
+      var vals=m[sortState.col]||[0,0];
+      return sortState.dir==='asc' ? vals[0]-vals[1] : vals[1]-vals[0];
+    });
+  }
+  tbody.innerHTML = '';
+  if (!sheets.length) {
+    tbody.innerHTML = '<tr><td colspan="9" class="empty">無符合條件的作業表</td></tr>';
+    return;
+  }
+  sheets.forEach(function(sheet, idx) {
+    var s = stats(sheet.items);
+    var ok=s.l1+s.l2, hi=s.l3+s.l4;
+    var pOk=s.total?Math.round(ok/s.total*100):0;
+    var pL3=s.total?Math.round(s.l3/s.total*100):0;
+    var pL4=s.total?Math.round(s.l4/s.total*100):0;
+    var pNa=s.total?Math.round(s.na/s.total*100):0;
+    var procs=[...new Set(sheet.items.map(function(i){return i.process;}))].join('、');
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td>'+(idx+1)+'</td>' +
+      '<td class="nm">'+(sheet.icon||'📄')+' '+esc(sheet.name)+
+      (sheet.incomplete?'<span style="font-size:11px;color:var(--orange);font-weight:400"> ⚠未完成</span>':'')+
+      '</td>' +
+      '<td style="font-size:11px;color:var(--sub);max-width:160px;white-space:normal">'+esc(procs)+'</td>' +
+      '<td><b>'+s.total+'</b></td>' +
+      '<td><div class="bar-wrap" style="width:100px">' +
+      '<div class="bg-green" style="width:'+pOk+'%"></div>' +
+      '<div class="bg-orange" style="width:'+pL3+'%"></div>' +
+      '<div class="bg-red" style="width:'+pL4+'%"></div>' +
+      '<div class="bg-gray" style="width:'+pNa+'%"></div>' +
+      '</div></td>' +
+      '<td><b style="color:'+(hi>0?'var(--red)':'var(--gray)')+'">'+hi+'</b></td>' +
+      '<td>'+ok+'</td>' +
+      '<td style="color:'+(s.na>0?'var(--orange)':'var(--gray)')+'">'+s.na+'</td>' +
+      '<td onclick="event.stopPropagation()"><div style="display:flex;gap:4px">' +
+      '<button class="act-btn edit" onclick="openEditSheetModal(\''+sheet.id+'\')">✎</button>' +
+      '<button class="act-btn del" onclick="confirmDeleteSheet(\''+sheet.id+'\')">✕</button>' +
+      '</div></td>';
+    tr.onclick = function(){ selectSheet(sheet); };
+    tbody.appendChild(tr);
+  });
+  updateSortIcons();
+}
+
+function renderStatsBar(view) {
+  var bar = document.getElementById('stats-bar');
+  var items, lbl;
+  if (view === 'summary') {
+    var sheets = curCategory
+      ? curDept.sheets.filter(function(s){return s.category===curCategory.id;})
+      : curDept.sheets;
+    items = sheets.reduce(function(a,s){return a.concat(s.items);}, []);
+    lbl = curCategory ? (curCategory.icon + ' ' + curCategory.name) : curDept.dept_name;
+  } else {
+    items = curSheet.items;
+    lbl = curSheet.name;
+  }
+  var s = stats(items);
+  bar.innerHTML =
+    '<span><span class="dot" style="background:var(--blue)"></span> '+esc(lbl)+' <b>'+s.total+'</b> 項</span>' +
+    '<span><span class="dot" style="background:var(--green)"></span> 可接受 <b>'+(s.l1+s.l2)+'</b></span>' +
+    '<span><span class="dot" style="background:var(--orange)"></span> 需改善 <b>'+s.l3+'</b></span>' +
+    (s.l4>0?'<span><span class="dot" style="background:var(--red)"></span> 高風險 <b>'+s.l4+'</b></span>':'') +
+    (s.na>0?'<span><span class="dot" style="background:var(--gray)"></span> 未評估 <b>'+s.na+'</b></span>':'');
+}
+
+function showDetail(noPush) {
+  if (!curDept||!curSheet) { showSummary(); return; }
+  setView('detail');
+  document.getElementById('bc-sep1').style.display  = 'inline';
+  document.getElementById('bc-dept').style.display  = 'inline';
+  document.getElementById('bc-dept').textContent    = curDept.dept_icon + ' ' + curDept.dept_name;
+  _setCatCrumb();
+  document.getElementById('bc-sep2').style.display  = 'inline';
+  document.getElementById('bc-sheet').style.display = 'inline';
+  document.getElementById('bc-sheet').textContent   = (curSheet.icon||'📄') + ' ' + curSheet.name;
+  document.getElementById('filter-process').style.display = 'inline-block';
+  document.getElementById('filter-level').style.display   = 'inline-block';
+  document.getElementById('search').value = '';
+  document.getElementById('search').placeholder = '🔍 搜尋危害因子、原因、後果…';
+  populateProcessFilter();
+  renderMetaBox();
+  renderItems();
+  renderStatsBar('detail');
+  window.scrollTo(0,0);
+  if (!noPush) history.pushState(null,'','#sheet/'+curDept.dept_id+'/'+curSheet.id);
+}
+
+function onHashChange() {
+  var hash = location.hash;
+  if (!hash || hash==='#') { showHome(true); return; }
+  var p = hash.slice(1).split('/');
+  if (p[0]==='cat' && p[1] && p[2]) {
+    var dept = ALL_DATA.find(function(d){return d.dept_id===p[1];});
+    if (dept) { curDept=dept; curCategory=null; selectCategory(p[2], true); return; }
+  }
+  if (p[0]==='dept' && p[1]) {
+    var dept = ALL_DATA.find(function(d){return d.dept_id===p[1];});
+    if (dept) { curDept=dept; curCategory=null; showSummary(true); return; }
+  }
+  if (p[0]==='sheet' && p[1] && p[2]) {
+    var dept  = ALL_DATA.find(function(d){return d.dept_id===p[1];});
+    var sheet = dept && dept.sheets.find(function(s){return s.id===p[2];});
+    if (dept && sheet) {
+      curDept=dept; curSheet=sheet;
+      curCategory = (dept.use_categories && sheet.category && dept.categories)
+        ? (dept.categories.find(function(c){return c.id===sheet.category;}) || null)
+        : null;
+      showDetail(true); return;
+    }
+  }
+  showHome(true);
+}
+
+// 重新初始化
+window.removeEventListener('popstate', onHashChange);
+window.addEventListener('popstate', onHashChange);
+loadData();
+initHome();
+onHashChange();
+
+function onBcDeptClick() {
+  if (curDept && curDept.use_categories) {
+    curCategory = null;
+    showHome();
+  } else {
+    showSummary();
+  }
+}
+
+</script>
+</body>
+</html>

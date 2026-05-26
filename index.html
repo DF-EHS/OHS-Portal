@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大豐環保科技 職安管理系統</title>
+<style>
+  :root {
+    --navy:   #1e3a5f;
+    --navy2:  #162d4a;
+    --bg:     #f1f5f9;
+    --card:   #ffffff;
+    --border: #e2e8f0;
+    --text:   #1e293b;
+    --sub:    #64748b;
+    --blue:   #2563eb;
+    --green:  #16a34a;
+    --orange: #d97706;
+    --red:    #dc2626;
+    --purple: #7c3aed;
+    --teal:   #0891b2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; display: flex; flex-direction: column;
+  }
+
+  /* ── header ── */
+  header {
+    background: linear-gradient(160deg, #e8821a 0%, #f59840 55%, #f9ad5a 100%);
+    color: #fff;
+    padding: 40px 40px 36px;
+    text-align: center;
+  }
+  .hdr-logo { margin-bottom: 14px; }
+  .hdr-logo img {
+    height: 130px;
+  }
+  .hdr-company { display: none; }
+  .hdr-system  { font-size: 17px; color: rgba(255,255,255,.85); letter-spacing: 5px; margin-top: 12px; }
+  .hdr-hint    { margin-top: 10px; font-size: 15px; color: rgba(255,255,255,.65); }
+
+  /* ── main ── */
+  main { flex: 1; max-width: 1080px; margin: 0 auto; width: 100%; padding: 40px 24px 60px; }
+
+  .section-label {
+    font-size: 11px; font-weight: 700; color: var(--sub);
+    letter-spacing: 4px; text-transform: uppercase;
+    margin-bottom: 22px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── card grid ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 22px;
+  }
+
+  /* ── system card ── */
+  .sys-card {
+    background: var(--card);
+    border-radius: 18px;
+    box-shadow: 0 2px 14px rgba(0,0,0,.07);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: transform .2s, box-shadow .2s;
+    cursor: pointer;
+  }
+  .sys-card:hover { transform: translateY(-5px); box-shadow: 0 10px 32px rgba(0,0,0,.13); }
+  .sys-card:active { transform: translateY(-2px); }
+
+  .card-header {
+    padding: 26px 26px 20px;
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .card-icon {
+    width: 58px; height: 58px; border-radius: 14px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px;
+  }
+  .ci-purple { background: #ede9fe; }
+  .ci-green  { background: #dcfce7; }
+  .ci-blue   { background: #dbeafe; }
+  .ci-orange { background: #ffedd5; }
+  .ci-teal   { background: #ccfbf1; }
+
+  .card-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+  .card-desc  { font-size: 13px; color: var(--sub); line-height: 1.6; }
+
+  .card-tags {
+    padding: 0 26px 16px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+    flex: 1;
+    align-items: flex-start;
+    align-content: flex-start;
+  }
+  .tag {
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+  }
+  .tg-navy   { background: #e0e7f0; color: #1e3a5f; }
+  .tg-purple { background: #ede9fe; color: #6d28d9; }
+  .tg-green  { background: #dcfce7; color: #15803d; }
+  .tg-orange { background: #ffedd5; color: #c2410c; }
+  .tg-blue   { background: #dbeafe; color: #1d4ed8; }
+  .tg-teal   { background: #ccfbf1; color: #0e7490; }
+
+  .card-footer {
+    padding: 14px 26px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-status { font-size: 12px; color: var(--sub); display: flex; align-items: center; gap: 5px; }
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green); display: inline-block;
+    box-shadow: 0 0 0 3px rgba(22,163,74,.2);
+  }
+
+  .open-btn {
+    padding: 8px 20px; border-radius: 9px;
+    font-size: 13px; font-weight: 600; border: none;
+    cursor: pointer; transition: background .15s, transform .1s;
+  }
+  .open-btn:active { transform: scale(.96); }
+  .btn-purple { background: var(--purple); color: #fff; }
+  .btn-purple:hover { background: #6d28d9; }
+  .btn-green  { background: var(--green);  color: #fff; }
+  .btn-green:hover  { background: #15803d; }
+  .btn-blue   { background: var(--blue);   color: #fff; }
+  .btn-blue:hover   { background: #1d4ed8; }
+  .btn-teal   { background: var(--teal);   color: #fff; }
+  .btn-teal:hover   { background: #0e7490; }
+
+  /* ── placeholder card ── */
+  .placeholder-card {
+    background: var(--card);
+    border-radius: 18px;
+    border: 2px dashed var(--border);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 48px 24px; text-align: center;
+    color: var(--sub); min-height: 220px;
+  }
+  .placeholder-card .ph-icon  { font-size: 40px; opacity: .3; margin-bottom: 12px; }
+  .placeholder-card .ph-title { font-size: 14px; font-weight: 700; opacity: .5; margin-bottom: 5px; }
+  .placeholder-card .ph-sub   { font-size: 12px; opacity: .35; }
+
+  /* ── footer ── */
+  footer {
+    text-align: center; padding: 20px 24px;
+    font-size: 12px; color: var(--sub);
+    border-top: 1px solid var(--border);
+    background: var(--card);
+  }
+
+  /* ── dark mode toggle button ── */
+  #dark-toggle {
+    position: fixed; bottom: 24px; right: 24px; z-index: 999;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text); border-radius: 50%;
+    width: 48px; height: 48px; font-size: 22px;
+    cursor: pointer; transition: background .15s, box-shadow .15s;
+    box-shadow: 0 4px 16px rgba(0,0,0,.15);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #dark-toggle:hover { box-shadow: 0 6px 22px rgba(0,0,0,.25); }
+
+  /* ── dark mode ── */
+  body.dark {
+    --bg:     #0f172a;
+    --card:   #1e293b;
+    --border: #334155;
+    --text:   #f1f5f9;
+    --sub:    #94a3b8;
+  }
+  body.dark header { background: linear-gradient(160deg, #2c1a0e 0%, #3d2010 55%, #4a2712 100%); }
+  body.dark .sys-card  { box-shadow: 0 2px 14px rgba(0,0,0,.4); }
+  body.dark .sys-card:hover { box-shadow: 0 10px 32px rgba(0,0,0,.55); }
+  body.dark .ci-purple { background: #3b0764; }
+  body.dark .ci-green  { background: #052e16; }
+  body.dark .ci-blue   { background: #1e3a5f; }
+  body.dark .ci-orange { background: #431407; }
+  body.dark .ci-teal   { background: #042f2e; }
+  body.dark .tg-navy   { background: #1e2d42; color: #93c5fd; }
+  body.dark .tg-purple { background: #2d1b55; color: #c4b5fd; }
+  body.dark .tg-green  { background: #052e16; color: #86efac; }
+  body.dark .tg-orange { background: #431407; color: #fdba74; }
+  body.dark .tg-blue   { background: #1e3054; color: #93c5fd; }
+  body.dark .tg-teal   { background: #042f2e; color: #5eead4; }
+  body.dark .placeholder-card { background: #1e293b; border-color: #334155; }
+</style>
+</head>
+<body>
+
+<header>
+  <button id="dark-toggle" onclick="toggleDark()" title="切換深色／淺色模式">🌙</button>
+  <div class="hdr-logo">
+    <img src="上地球logo.png" alt="大豐環保科技">
+  </div>
+  <div class="hdr-system">職業安全衛生管理系統</div>
+  <div class="hdr-hint">請選擇要查詢的系統模組</div>
+</header>
+
+<main>
+  <div class="section-label">系統模組</div>
+
+  <div class="card-grid">
+
+    <!-- ══════════════════════════════════════════════
+         模組 1：危害鑑別及風險評估
+         目標：./index.html（同目錄）
+         ══════════════════════════════════════════════ -->
+    <div class="sys-card" onclick="location.href='risk/'">
+      <div class="card-header">
+        <div class="card-icon ci-purple">⚠️</div>
+        <div>
+          <div class="card-title">危害鑑別及風險評估</div>
+          <div class="card-desc">查詢各廠區作業危害鑑別表，含風險等級評分、管制措施及不可接受風險清單。</div>
+        </div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tg-navy">總公司</span>
+        <span class="tag tg-orange">全興廠</span>
+        <span class="tag tg-purple">285 筆記錄</span>
+        <span class="tag tg-blue">21 作業表</span>
+      </div>
+      <div class="card-footer">
+        <div class="card-status"><span class="status-dot"></span>已上線</div>
+        <button class="open-btn btn-purple" onclick="event.stopPropagation();location.href='risk/'">開啟系統 ›</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+         模組 2：法規鑑別查詢系統
+         目標：../../法規鑑別/法規鑑別互動網站.html
+         ══════════════════════════════════════════════ -->
+    <div class="sys-card" onclick="location.href='../../法規鑑別/法規鑑別互動網站.html'">
+      <div class="card-header">
+        <div class="card-icon ci-green">📋</div>
+        <div>
+          <div class="card-title">法規鑑別查詢系統</div>
+          <div class="card-desc">查詢適用之職安衛法規、法條內容與合規狀態，支援條文搜尋與鑑別清單匯出。</div>
+        </div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tg-green">職安衛法</span>
+        <span class="tag tg-green">勞動法規</span>
+        <span class="tag tg-teal">環保法規</span>
+        <span class="tag tg-navy">鑑別清單</span>
+      </div>
+      <div class="card-footer">
+        <div class="card-status"><span class="status-dot"></span>已上線</div>
+        <button class="open-btn btn-green" onclick="event.stopPropagation();location.href='../../法規鑑別/法規鑑別互動網站.html'">開啟系統 ›</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+         模組 3：承攬商進場管理系統
+         目標：https://df-ehs.github.io/Contract-Management/（外部，開新分頁）
+         ══════════════════════════════════════════════ -->
+    <div class="sys-card" onclick="window.open('https://df-ehs.github.io/Contract-Management/','_blank')">
+      <div class="card-header">
+        <div class="card-icon ci-teal">🏗️</div>
+        <div>
+          <div class="card-title">承攬商進場管理系統</div>
+          <div class="card-desc">承攬商進場前依序完成危害告知確認、安全承諾書及工作許可證申請，全程電子化存檔供職安人員審核。</div>
+        </div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tg-teal">承攬商管理</span>
+        <span class="tag tg-teal">工作許可證</span>
+        <span class="tag tg-navy">電子簽名</span>
+        <span class="tag tg-blue">五步驟流程</span>
+      </div>
+      <div class="card-footer">
+        <div class="card-status"><span class="status-dot"></span>已上線</div>
+        <button class="open-btn btn-teal" onclick="event.stopPropagation();window.open('https://df-ehs.github.io/Contract-Management/','_blank')">開啟系統 ›</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+         【預留】新增更多模組時，複製上方卡片範本貼在此處
+         範本：
+         <div class="sys-card" onclick="location.href='YOUR_URL'">
+           <div class="card-header">
+             <div class="card-icon ci-blue">📊</div>
+             <div>
+               <div class="card-title">系統名稱</div>
+               <div class="card-desc">系統簡介…</div>
+             </div>
+           </div>
+           <div class="card-tags">
+             <span class="tag tg-blue">標籤</span>
+           </div>
+           <div class="card-footer">
+             <div class="card-status"><span class="status-dot"></span>已上線</div>
+             <button class="open-btn btn-blue" onclick="event.stopPropagation();location.href='YOUR_URL'">開啟系統 ›</button>
+           </div>
+         </div>
+         ══════════════════════════════════════════════ -->
+
+    <div class="placeholder-card">
+      <div class="ph-icon">＋</div>
+      <div class="ph-title">預留擴充位置</div>
+      <div class="ph-sub">如：職安健康管理、教育訓練記錄<br>意外事故管理、承攬商評核…</div>
+    </div>
+
+  </div>
+</main>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+
+<script>
+  function toggleDark() {
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.setItem('portal-dark', isDark ? '1' : '0');
+    document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
+  }
+  if (localStorage.getItem('portal-dark') === '1') {
+    document.body.classList.add('dark');
+    document.getElementById('dark-toggle').textContent = '☀️';
+  }
+</script>
+</body>
+</html>
