@@ -701,6 +701,151 @@
       .nav { grid-template-columns: 1fr; }
       .topbar { grid-template-columns: 1fr; }
     }
+
+    /* ── 通知鈴鐺 ──────────────────────────────────────── */
+    .notif-trigger {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 901;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: 0 2px 12px rgba(0,0,0,.13);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: box-shadow .15s, background .15s;
+      color: var(--muted);
+    }
+    .notif-trigger:hover { box-shadow: 0 4px 20px rgba(0,0,0,.2); background: var(--surface-2); color: var(--ink); }
+    .notif-trigger svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .notif-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 4px;
+      border-radius: 9px;
+      background: var(--red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--bg);
+      pointer-events: none;
+    }
+    .notif-badge.hidden { display: none; }
+
+    @keyframes bell-shake {
+      0%,100% { transform: rotate(0); }
+      15%      { transform: rotate(14deg); }
+      35%      { transform: rotate(-11deg); }
+      55%      { transform: rotate(8deg); }
+      75%      { transform: rotate(-5deg); }
+    }
+    .notif-trigger.urgent svg { animation: bell-shake .7s ease .4s both; }
+
+    /* ── 通知面板 ──────────────────────────────────────── */
+    .notif-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 910;
+      background: rgba(0,0,0,.22);
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s;
+    }
+    .notif-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .notif-panel {
+      position: fixed;
+      top: 0; right: 0;
+      width: 320px;
+      max-width: 100vw;
+      height: 100vh;
+      background: var(--surface);
+      border-left: 1px solid var(--line);
+      box-shadow: -6px 0 30px rgba(0,0,0,.16);
+      z-index: 920;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform .22s ease;
+    }
+    .notif-panel.open { transform: translateX(0); }
+
+    .notif-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+    .notif-head h3 { flex: 1; font-size: 15px; margin: 0; color: var(--ink); }
+    .notif-close {
+      width: 30px; height: 30px;
+      border-radius: 6px; border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .notif-close:hover { background: var(--surface-2); color: var(--ink); }
+
+    .notif-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .notif-group-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--muted);
+      padding: 12px 4px 4px;
+      text-transform: uppercase;
+    }
+    .notif-group-label:first-child { padding-top: 4px; }
+
+    .notif-item {
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: background .15s;
+    }
+    .notif-item:hover { background: var(--accent-soft); }
+    .notif-item.ni-overdue { border-left-color: var(--red); }
+    .notif-item.ni-today   { border-left-color: var(--amber); }
+    .notif-item.ni-soon    { border-left-color: var(--cyan); }
+
+    .notif-item-title { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+    .notif-item-sub   { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    .notif-empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 48px 20px;
+      font-size: 13px;
+      line-height: 2;
+    }
   </style>
 </head>
 <body>
@@ -1049,6 +1194,27 @@
       </section>
 
     </main>
+  </div>
+
+  <!-- ── 通知鈴鐺觸發鈕 ── -->
+  <button class="notif-trigger" id="notifTrigger" type="button" onclick="toggleNotifPanel()" title="工作通知">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+    </svg>
+    <span class="notif-badge hidden" id="notifBadge">0</span>
+  </button>
+
+  <!-- ── 通知背板 ── -->
+  <div class="notif-overlay" id="notifOverlay" onclick="closeNotifPanel()"></div>
+
+  <!-- ── 通知面板 ── -->
+  <div class="notif-panel" id="notifPanel">
+    <div class="notif-head">
+      <h3>🔔 工作通知</h3>
+      <button class="notif-close" type="button" onclick="closeNotifPanel()" title="關閉">✕</button>
+    </div>
+    <div class="notif-scroll" id="notifScroll"></div>
   </div>
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
@@ -2153,12 +2319,122 @@
       }
       showLoader(false);
       renderAll();
+      // 載入完成：若有逾期或今天到期的工作，顯示提示 toast
+      const _ng = buildNotifItems();
+      if (_ng.overdue.length > 0 || _ng.today.length > 0) {
+        const parts = [];
+        if (_ng.overdue.length) parts.push(`<strong>${_ng.overdue.length}</strong> 項已逾期`);
+        if (_ng.today.length)   parts.push(`<strong>${_ng.today.length}</strong> 項今天到期`);
+        showToast(`⚠️ ${parts.join('，')}，點選右上角 🔔 查看詳情。`);
+      }
     }
 
     // 覆寫：每次變更後全量同步至雲端（fire-and-forget）
     function saveTasks() {
       apiPost({ action: 'bulkWrite', tasks }).catch(e => console.warn('雲端同步失敗', e));
     }
+
+    // ── 通知中心 ──────────────────────────────────────────────────
+    function buildNotifItems() {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const g = { overdue: [], today: [], soon: [] };
+      tasks.forEach(task => {
+        if (task.status === 'done' || !task.dueAt) return;
+        const due = parseDate(task.dueAt);
+        if (!due) return;
+        const dueDay = new Date(due);
+        dueDay.setHours(0, 0, 0, 0);
+        const diff = Math.ceil((dueDay - today) / 86400000);
+        const rd = Number(task.reminderDays ?? 7);
+        if (diff < 0)            g.overdue.push({ task, diff });
+        else if (diff === 0)     g.today.push({ task, diff });
+        else if (diff <= rd)     g.soon.push({ task, diff });
+      });
+      g.overdue.sort((a, b) => a.diff - b.diff);
+      g.soon.sort((a, b) => a.diff - b.diff);
+      return g;
+    }
+
+    function updateNotifBadge() {
+      const g = buildNotifItems();
+      const urgent = g.overdue.length + g.today.length;
+      const total  = urgent + g.soon.length;
+      const badge   = document.getElementById('notifBadge');
+      const trigger = document.getElementById('notifTrigger');
+      if (badge) {
+        badge.textContent = urgent > 0 ? urgent : total;
+        badge.classList.toggle('hidden', total === 0);
+      }
+      if (trigger) trigger.classList.toggle('urgent', urgent > 0);
+    }
+
+    function renderNotifScroll() {
+      const el = document.getElementById('notifScroll');
+      if (!el) return;
+      const g = buildNotifItems();
+      const total = g.overdue.length + g.today.length + g.soon.length;
+      if (total === 0) {
+        el.innerHTML = '<div class="notif-empty">🎉<br>目前沒有待處理通知<br><small>所有工作皆在掌控中</small></div>';
+        return;
+      }
+      const itemHtml = (entry, cls) => {
+        const sub = entry.diff < 0  ? `已逾期 ${Math.abs(entry.diff)} 天`
+                  : entry.diff === 0 ? '今天到期'
+                  : `還有 ${entry.diff} 天`;
+        return `<div class="notif-item ${cls}" data-task-id="${entry.task.id}" onclick="notifGoto(this.dataset.taskId)">
+          <div class="notif-item-title">${escapeHtml(entry.task.title)}</div>
+          <div class="notif-item-sub">${sub}・${escapeHtml(entry.task.category)}</div>
+        </div>`;
+      };
+      let html = '';
+      if (g.overdue.length) {
+        html += `<div class="notif-group-label">🔴 已逾期（${g.overdue.length}）</div>`;
+        html += g.overdue.map(e => itemHtml(e, 'ni-overdue')).join('');
+      }
+      if (g.today.length) {
+        html += `<div class="notif-group-label">🟠 今天到期（${g.today.length}）</div>`;
+        html += g.today.map(e => itemHtml(e, 'ni-today')).join('');
+      }
+      if (g.soon.length) {
+        html += `<div class="notif-group-label">🔵 即將到期（${g.soon.length}）</div>`;
+        html += g.soon.map(e => itemHtml(e, 'ni-soon')).join('');
+      }
+      el.innerHTML = html;
+    }
+
+    function toggleNotifPanel() {
+      const panel = document.getElementById('notifPanel');
+      if (!panel) return;
+      if (panel.classList.contains('open')) { closeNotifPanel(); return; }
+      renderNotifScroll();
+      panel.classList.add('open');
+      document.getElementById('notifOverlay')?.classList.add('open');
+    }
+
+    function closeNotifPanel() {
+      document.getElementById('notifPanel')?.classList.remove('open');
+      document.getElementById('notifOverlay')?.classList.remove('open');
+    }
+
+    function notifGoto(id) {
+      closeNotifPanel();
+      highlightedTaskId = id;
+      setView('list');
+      setQuickFilter('open');
+      byId('searchInput').value = '';
+      byId('categoryFilter').value = 'all';
+      byId('statusFilter').value = 'all';
+      byId('sortBy').value = 'dueAsc';
+      renderAll();
+      requestAnimationFrame(() => {
+        document.querySelector(`[data-task-id="${id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+
+    // 覆寫 renderAll：每次重繪時同步更新角標
+    const _origRenderAll = renderAll;
+    function renderAll() { _origRenderAll(); updateNotifBadge(); }
 
     loadFromCloud();
   </script>
