@@ -1,0 +1,1944 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>承攬商進場管理系統 — 大豐環保科技</title>
+<style>
+:root{
+  --navy:#1e3a5f; --navy2:#162d4a; --bg:#f1f5f9; --card:#fff;
+  --border:#e2e8f0; --text:#1e293b; --sub:#64748b;
+  --blue:#2563eb; --green:#16a34a; --teal:#0891b2;
+  --orange:#d97706; --red:#dc2626; --gray:#6b7280;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;}
+
+/* ── Header ── */
+header{background:linear-gradient(135deg,#1e3a5f 0%,#1a4a7a 100%);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+header h1{font-size:16px;font-weight:700;letter-spacing:.5px;flex:1;}
+.subtitle{font-size:11px;color:#94a3b8;margin-left:auto;}
+.hdr-btn{padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:12px;cursor:pointer;transition:background .15s;font-family:inherit;}
+.hdr-btn:hover{background:rgba(255,255,255,.25);}
+
+/* ── Step bar ── */
+#step-bar{background:#fff;border-bottom:1px solid var(--border);padding:14px 20px;display:none;}
+.step-track{display:flex;align-items:flex-start;max-width:680px;margin:0 auto;position:relative;}
+.step-conn{flex:1;height:2px;background:var(--border);margin-top:14px;transition:background .3s;}
+.step-conn.done{background:var(--green);}
+.step-item{display:flex;flex-direction:column;align-items:center;min-width:56px;}
+.step-circle{width:28px;height:28px;border-radius:50%;background:#e2e8f0;color:var(--sub);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:all .3s;flex-shrink:0;}
+.step-item.active .step-circle{background:var(--blue);color:#fff;box-shadow:0 0 0 4px rgba(37,99,235,.15);}
+.step-item.done .step-circle{background:var(--green);color:#fff;}
+.step-lbl{font-size:10px;color:var(--sub);margin-top:5px;text-align:center;line-height:1.3;max-width:60px;}
+.step-item.active .step-lbl{color:var(--blue);font-weight:600;}
+.step-item.done .step-lbl{color:var(--green);}
+
+/* ── Main ── */
+#main{padding:20px;max-width:840px;margin:0 auto;}
+
+/* ── Home ── */
+.home-banner{text-align:center;padding:40px 20px 28px;}
+.home-banner h2{font-size:22px;color:var(--navy);margin-bottom:10px;font-weight:700;}
+.home-banner p{color:var(--sub);font-size:13px;line-height:1.8;}
+.home-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:24px;}
+.home-card{background:var(--card);border-radius:16px;padding:32px 24px;box-shadow:0 2px 14px rgba(0,0,0,.08);cursor:pointer;text-align:center;transition:transform .2s,box-shadow .2s,border-color .2s;border:2px solid transparent;}
+.home-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(0,0,0,.13);border-color:var(--blue);}
+.hc-icon{font-size:46px;margin-bottom:14px;}
+.hc-title{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.hc-desc{font-size:12px;color:var(--sub);line-height:1.8;}
+.hc-btn{display:inline-block;margin-top:16px;padding:7px 20px;background:var(--navy);color:#fff;border-radius:20px;font-size:12px;font-weight:600;}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:20px;}
+.info-card{background:var(--card);border-radius:10px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.info-card-lbl{font-size:10px;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;font-weight:700;}
+.info-card p{font-size:13px;line-height:2.1;}
+
+/* ── Form sections ── */
+.fsec{background:var(--card);border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,.08);margin-bottom:16px;overflow:hidden;}
+.fsec-hdr{background:var(--navy);color:#fff;padding:11px 18px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.fsec-body{padding:18px;}
+.fsec-note{background:#f0f9ff;border-left:3px solid var(--teal);padding:10px 14px;font-size:12px;color:#0c4a6e;line-height:1.7;margin-bottom:16px;border-radius:0 6px 6px 0;}
+
+/* ── Form fields ── */
+.fg{margin-bottom:14px;}
+.fg:last-child{margin-bottom:0;}
+.fg label{font-size:11px;color:var(--sub);display:block;margin-bottom:5px;font-weight:600;letter-spacing:.03em;}
+.fg label.req::after{content:' *';color:var(--red);}
+.fi,.fta,.fs{width:100%;border:1px solid var(--border);border-radius:7px;padding:8px 11px;font-size:13px;outline:none;font-family:inherit;background:#fff;transition:border-color .15s,box-shadow .15s;}
+.fi:focus,.fta:focus,.fs:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.08);}
+.fi.err{border-color:var(--red);}
+.fta{resize:vertical;min-height:64px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+@media(max-width:520px){.frow,.frow3{grid-template-columns:1fr;}}
+
+/* ── 行動版優化 ── */
+@media(max-width:767px){
+  /* 修正 1：font-size ≥ 16px → 防止 iOS Safari 自動縮放，date picker 才能正常開啟 */
+  .fi,.fta,.fs{font-size:16px;}
+  /* 修正 4：讓 modal header/footer 固定，body 獨立捲動（iOS sticky 問題） */
+  .modal{max-height:92vh;display:flex;flex-direction:column;}
+  .mbody{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  .mhd,.mfoot{position:relative !important;flex-shrink:0;}
+  /* 修正 5：加大觸控按鈕高度 */
+  .btn{min-height:40px;}
+  .btn-sm{padding:7px 13px;font-size:12px;min-height:36px;}
+}
+
+/* ── Chip checkboxes ── */
+.chk-wrap{display:flex;flex-wrap:wrap;gap:7px;}
+.chk-chip{display:flex;align-items:center;gap:5px;padding:5px 12px;border:1.5px solid var(--border);border-radius:20px;cursor:pointer;background:#fff;font-size:12px;user-select:none;transition:all .15s;}
+.chk-chip:hover{border-color:var(--blue);background:#eff6ff;}
+.chk-chip.sel{border-color:var(--blue);background:#dbeafe;color:#1d4ed8;font-weight:600;}
+.chk-chip input{display:none;}
+.chk-chip-lg{border-radius:8px;padding:7px 13px;font-size:13px;}
+
+/* ── Rules list ── */
+.rule-list{list-style:none;background:#f8fafc;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.rule-li{display:flex;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;line-height:1.6;}
+.rule-li:last-child{border-bottom:none;}
+.rule-li:nth-child(even){background:#f1f5f9;}
+.rule-n{color:var(--blue);font-weight:700;min-width:22px;flex-shrink:0;padding-top:1px;}
+
+/* ── Hazard type table ── */
+.htbl{width:100%;border-collapse:collapse;font-size:12px;}
+.htbl th{background:var(--navy);color:#fff;padding:9px 11px;text-align:left;font-weight:600;white-space:nowrap;}
+.htbl td{padding:9px 11px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5;}
+.htbl tr.apply-row td{background:#eff6ff;}
+.htbl tr:hover td{background:#f8fafc;}
+.htbl tr.apply-row:hover td{background:#dbeafe;}
+.apply-chk{display:flex;align-items:center;gap:5px;cursor:pointer;white-space:nowrap;}
+.apply-chk input{accent-color:var(--blue);width:15px;height:15px;}
+
+/* ── Commitment list ── */
+.commit-li{display:flex;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;line-height:1.6;}
+.commit-li:last-child{border-bottom:none;}
+.commit-li:nth-child(even){background:#fafbfc;}
+.commit-n{color:var(--navy);font-weight:700;min-width:22px;flex-shrink:0;padding-top:1px;}
+
+/* ── Confirm rows ── */
+.confirm-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:8px;cursor:pointer;margin-top:14px;transition:background .15s;border:1.5px solid #bbf7d0;background:#f0fdf4;}
+.confirm-row:hover{background:#dcfce7;}
+.confirm-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--green);flex-shrink:0;margin-top:2px;cursor:pointer;}
+.confirm-row span{font-size:13px;color:#166534;font-weight:600;line-height:1.6;}
+.confirm-row.unchecked{border-color:var(--border);background:#f8fafc;}
+.confirm-row.unchecked span{color:var(--sub);}
+
+/* ── Signature ── */
+.sig-outer{border:2px dashed #cbd5e1;border-radius:8px;background:#fafafa;position:relative;overflow:hidden;cursor:crosshair;}
+.sig-outer canvas{display:block;touch-action:none;}
+.sig-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#cbd5e1;font-size:13px;text-align:center;pointer-events:none;line-height:2;}
+.sig-tools{display:flex;gap:8px;margin-top:8px;}
+
+/* ── Summary ── */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px 24px;background:#f8fafc;padding:14px 16px;border-radius:8px;border:1px solid var(--border);}
+.si-l{font-size:10px;color:var(--sub);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;}
+.si-v{font-size:13px;font-weight:600;}
+
+/* ── Step navigation ── */
+.step-nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px;padding-top:16px;border-top:1px solid var(--border);}
+
+/* ── Success ── */
+.success-screen{text-align:center;padding:56px 20px;}
+.success-icon{font-size:72px;margin-bottom:16px;}
+.success-screen h2{font-size:22px;color:var(--green);margin-bottom:10px;}
+.success-screen p{color:var(--sub);font-size:13px;line-height:1.9;}
+.success-id{display:inline-block;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:7px 22px;border-radius:20px;font-size:13px;font-weight:700;margin-top:16px;letter-spacing:.08em;}
+.success-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px;}
+
+/* ── Records ── */
+.rec-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+.rec-toolbar input{border:1px solid var(--border);border-radius:7px;padding:7px 11px;font-size:13px;outline:none;background:#fff;transition:border-color .15s;flex:1;min-width:180px;max-width:320px;}
+.rec-toolbar input:focus{border-color:var(--blue);}
+.rec-wrap{overflow-x:auto;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+table.rec-tbl{width:100%;border-collapse:collapse;background:var(--card);}
+.rec-tbl thead th{background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-size:12px;white-space:nowrap;}
+.rec-tbl tbody tr{border-bottom:1px solid var(--border);transition:background .12s;}
+.rec-tbl tbody tr:hover{background:#eff6ff;}
+.rec-tbl td{padding:9px 12px;font-size:12px;vertical-align:middle;}
+.rec-tbl .nm{font-weight:600;color:var(--blue);}
+.badge{padding:2px 9px;border-radius:10px;font-size:11px;font-weight:600;}
+.badge-g{background:#dcfce7;color:#15803d;}
+.empty-state{padding:56px;text-align:center;color:var(--sub);font-size:14px;}
+
+/* ── Record detail ── */
+.detail-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+.detail-hdr h2{font-size:17px;color:var(--navy);}
+.detail-blk{background:var(--card);border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,.07);margin-bottom:14px;overflow:hidden;}
+.detail-blk-hdr{background:#f1f5f9;padding:9px 16px;font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);}
+.detail-blk-body{padding:16px;}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px 24px;}
+.dl{font-size:10px;color:var(--sub);margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em;}
+.dv{font-size:13px;font-weight:600;}
+.tag-list{display:flex;flex-wrap:wrap;gap:6px;}
+.tag-item{padding:3px 10px;background:#f1f5f9;border-radius:12px;font-size:12px;}
+.sig-img{max-width:100%;max-height:120px;border:1px solid var(--border);border-radius:6px;}
+
+/* ── Utilities ── */
+.btn{padding:7px 18px;border-radius:7px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:13px;color:var(--text);font-family:inherit;transition:background .15s;}
+.btn:hover{background:var(--bg);}
+.btn-primary{background:var(--navy);color:#fff;border-color:var(--navy);}
+.btn-primary:hover{background:#16305a;}
+.btn-success{background:var(--green);color:#fff;border-color:var(--green);}
+.btn-success:hover{background:#15803d;}
+.btn-danger{background:var(--red);color:#fff;border-color:var(--red);}
+.btn-danger:hover{background:#b91c1c;}
+.btn-sm{padding:4px 11px;font-size:11px;border-radius:6px;}
+mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:24px;right:20px;background:#1e293b;color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;z-index:9999;pointer-events:none;box-shadow:0 4px 14px rgba(0,0,0,.3);}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast.ok{background:var(--green);}
+.toast.bad{background:var(--red);}
+#loading-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10000;align-items:center;justify-content:center;flex-direction:column;gap:14px;color:#fff;font-size:14px;}
+#loading-overlay.show{display:flex;}
+.spinner{width:44px;height:44px;border:4px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── Full-screen Signature ── */
+#sig-fullscreen{display:none;position:fixed;inset:0;z-index:9000;flex-direction:column;}
+#sig-fullscreen.open{display:flex;}
+.sig-fs-hdr{background:var(--navy);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-shrink:0;}
+.sig-fs-title{font-size:14px;font-weight:700;flex:1;text-align:center;}
+#sig-fs-body{flex:1;position:relative;overflow:hidden;background:#fafafa;}
+#sig-fs-canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;}
+
+/* ── Login ── */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 62px);padding:24px;}
+.login-card{background:#fff;border-radius:16px;padding:44px 36px 36px;box-shadow:0 4px 32px rgba(0,0,0,.12);width:100%;max-width:360px;text-align:center;}
+.login-logo{font-size:52px;margin-bottom:10px;display:flex;justify-content:center;align-items:center;}
+.login-card h2{font-size:18px;color:var(--navy);font-weight:700;margin-bottom:4px;}
+.login-card p{font-size:12px;color:var(--sub);margin-bottom:28px;line-height:1.7;}
+.login-fi{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;font-size:16px;outline:none;font-family:inherit;margin-bottom:12px;transition:border-color .15s,box-shadow .15s;background:#fff;}
+.login-fi:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.08);}
+.login-btn{width:100%;padding:13px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;margin-top:4px;}
+.login-btn:hover{background:#16305a;}
+.login-err{color:var(--red);font-size:13px;margin-top:10px;display:none;}
+.role-badge{font-size:11px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:12px;padding:3px 10px;color:#e2e8f0;letter-spacing:.04em;}
+
+/* ── Edit Modal ── */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;overflow-y:auto;padding:20px;}
+.modal-ov.open{display:block;}
+.modal{background:#fff;border-radius:12px;width:100%;max-width:740px;margin:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.mhd{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:12px 12px 0 0;position:sticky;top:0;z-index:1;}
+.mhd h3{font-size:15px;color:var(--navy);font-weight:700;}
+.m-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--sub);padding:2px 7px;border-radius:5px;}
+.m-close:hover{background:var(--bg);}
+.mbody{padding:20px;}
+.mfoot{padding:12px 18px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;background:#fff;border-radius:0 0 12px 12px;position:sticky;bottom:0;}
+.edit-sec{margin-bottom:22px;}
+.edit-sec-lbl{font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.edit-worker-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;background:#f8fafc;padding:8px 10px;border-radius:7px;border:1px solid var(--border);}
+.sig-preview{height:38px;max-width:90px;object-fit:contain;border:1px solid var(--border);border-radius:4px;background:#fff;}
+.edited-badge{display:inline-block;background:#fff7ed;border:1px solid #fed7aa;color:#c2410c;padding:2px 9px;border-radius:10px;font-size:11px;font-weight:600;}
+
+/* ── Print ── */
+@media print{
+  header,#step-bar,.step-nav,.rec-toolbar,.hdr-btn,.hc-btn,.success-actions,
+  #btn-del-record,#btn-back-records,#btn-edit-record{display:none!important;}
+  .detail-blk{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;}
+  body{background:#fff;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <button class="hdr-btn" onclick="location.href='../'" title="回到職安管理系統入口">← 系統入口</button>
+  <button class="hdr-btn" id="hdr-home" onclick="showView('home')" style="display:none">🏠 首頁</button>
+  <h1>📋 承攬商進場管理系統</h1>
+  <span class="role-badge" id="hdr-role" style="display:none"></span>
+  <button class="hdr-btn" id="hdr-logout" onclick="doLogout()" style="display:none">登出</button>
+  <img src="./logo.png" alt="大豐環保科技" style="height:45px;object-fit:contain;flex-shrink:0;margin-left:auto"/>
+</header>
+
+<!-- ── Step bar ── -->
+<div id="step-bar">
+  <div class="step-track">
+    <div class="step-item" id="si-1"><div class="step-circle">1</div><div class="step-lbl">基本資料</div></div>
+    <div class="step-conn" id="sc-1-2"></div>
+    <div class="step-item" id="si-2"><div class="step-circle">2</div><div class="step-lbl">危害告知</div></div>
+    <div class="step-conn" id="sc-2-3"></div>
+    <div class="step-item" id="si-3"><div class="step-circle">3</div><div class="step-lbl">安衛切結</div></div>
+    <div class="step-conn" id="sc-3-4"></div>
+    <div class="step-item" id="si-4"><div class="step-circle">4</div><div class="step-lbl">作業許可</div></div>
+    <div class="step-conn" id="sc-4-5"></div>
+    <div class="step-item" id="si-5"><div class="step-circle">5</div><div class="step-lbl">簽名送出</div></div>
+  </div>
+</div>
+
+<!-- ── Main ── -->
+<div id="main">
+
+<!-- ════ View: Login ════ -->
+<div id="v-login">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo"><img src="./logo-login.png" alt="大豐環保科技" style="height:160px;object-fit:contain"/></div>
+      <h2>承攬商進場管理系統</h2>
+      <p>大豐環保科技股份有限公司<br>請輸入密碼以繼續</p>
+      <input class="login-fi" id="login-pass" type="password" placeholder="密碼"
+             autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+      <button class="login-btn" onclick="doLogin()">登入</button>
+      <div class="login-err" id="login-err">密碼錯誤，請重新輸入</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ View: Home ════ -->
+<div id="v-home">
+  <div class="home-banner">
+    <h2>歡迎使用承攬商進場管理系統</h2>
+    <p>承攬商進場前請依序完成危害告知確認、安衛切結書及作業許可申請書<br>填寫完成並電子簽名後，資料將自動留存於本系統供職安人員查閱</p>
+  </div>
+  <div class="home-cards">
+    <div class="home-card" onclick="startWizard()">
+      <div class="hc-icon">✍️</div>
+      <div class="hc-title">填寫進場申請</div>
+      <div class="hc-desc">新進承攬商依序填寫危害告知確認書、安衛管理切結書及作業許可申請書，完成電子簽名後送出留底</div>
+      <div class="hc-btn">開始填寫 →</div>
+    </div>
+    <div class="home-card" id="card-records" onclick="showView('records')">
+      <div class="hc-icon">📂</div>
+      <div class="hc-title">進場紀錄查詢</div>
+      <div class="hc-desc">查詢、列印或管理所有已提交的承攬商進場申請紀錄，支援關鍵字搜尋及 CSV 匯出功能</div>
+      <div class="hc-btn">查詢紀錄 →</div>
+    </div>
+  </div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-lbl">包含文件</div>
+      <p>📄 大豐環保危害告知書（114.01）<br>📝 承攬商環安衛管理告知切結書<br>📋 作業許可申請書</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-lbl">填寫流程</div>
+      <p>1️⃣ 填寫承攬商基本資料<br>2️⃣ 閱讀危害告知書並確認<br>3️⃣ 勾選適用作業類型並切結<br>4️⃣ 填寫作業許可申請書<br>5️⃣ 電子簽名後送出留底</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════ View: Wizard ════ -->
+<div id="v-wizard" style="display:none">
+
+  <!-- ── Step 1: 基本資料 ── -->
+  <div id="step-1">
+    <div class="fsec">
+      <div class="fsec-hdr">📝 承攬商基本資料</div>
+      <div class="fsec-body">
+        <div class="frow">
+          <div class="fg"><label class="req">承攬商名稱</label><input class="fi" id="f-company" placeholder="請輸入公司名稱"/></div>
+          <div class="fg"><label>合約 / 訂單編號</label><input class="fi" id="f-contract" placeholder="合約或訂單編號（選填）"/></div>
+        </div>
+        <div class="fg"><label class="req">工程 / 作業名稱</label><input class="fi" id="f-workname" placeholder="請輸入工程或作業名稱"/></div>
+        <div class="frow">
+          <div class="fg"><label class="req">現場負責人</label><input class="fi" id="f-supervisor" placeholder="姓名"/></div>
+          <div class="fg"><label>監工 / 安衛管理員</label><input class="fi" id="f-inspector" placeholder="姓名（選填）"/></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label class="req">聯絡電話</label><input class="fi" id="f-phone" type="tel" placeholder="手機或市話"/></div>
+          <div class="fg"><label>傳真</label><input class="fi" id="f-fax" placeholder="（選填）"/></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label class="req">作業開始日期</label><input class="fi" id="f-date-start" type="date"/></div>
+          <div class="fg"><label class="req">作業結束日期</label><input class="fi" id="f-date-end" type="date"/></div>
+        </div>
+        <div class="fg"><label class="req">工作區域</label><input class="fi" id="f-area" placeholder="請描述作業地點或區域"/></div>
+        <div class="fg">
+          <label class="req">作業時段（可複選）</label>
+          <div class="chk-wrap" style="margin-top:6px">
+            <label class="chk-chip chk-chip-lg"><input type="checkbox" value="日間" onchange="chipChange(this)"> ☀️ 日間</label>
+            <label class="chk-chip chk-chip-lg"><input type="checkbox" value="夜間" onchange="chipChange(this)"> 🌙 夜間</label>
+            <label class="chk-chip chk-chip-lg"><input type="checkbox" value="假日" onchange="chipChange(this)"> 📅 假日</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <div></div>
+      <button class="btn btn-primary" onclick="goNext(1)">下一步：危害告知確認 →</button>
+    </div>
+  </div>
+
+  <!-- ── Step 2: 危害告知書 ── -->
+  <div id="step-2" style="display:none">
+    <div class="fsec">
+      <div class="fsec-hdr">⚠️ 大豐環保科技股份有限公司 — 危害告知書（114.01）</div>
+      <div class="fsec-body">
+        <div class="fsec-note">以下為進場作業安全規定，請務必詳細閱讀。所有進入本場之人員及車輛，必須遵守以下全部規定。</div>
+        <ol class="rule-list" id="rule-list"></ol>
+        <label class="confirm-row unchecked" id="cr-hazard">
+          <input type="checkbox" id="cb-hazard" onchange="syncConfirmRow('cr-hazard',this)">
+          <span>本人及所屬作業人員已詳閱並了解以上 15 項危害告知規定，願承諾確實遵行，如有疏失願自行負責，與場（甲）方無關。</span>
+        </label>
+
+        <div style="margin-top:22px">
+          <div style="font-weight:700;color:var(--navy);margin-bottom:8px">👷 作業人員簽名</div>
+          <div class="fsec-note" style="margin-bottom:14px">請所有進場作業人員於下方填寫姓名並完成電子簽名，可按「＋ 新增作業人員」增加欄位。</div>
+          <div id="worker-sigs"></div>
+          <button class="btn btn-sm" style="margin-top:8px" onclick="addWorker()">＋ 新增作業人員</button>
+        </div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn" onclick="goPrev(2)">← 上一步</button>
+      <button class="btn btn-primary" onclick="goNext(2)">下一步：安衛切結書 →</button>
+    </div>
+  </div>
+
+  <!-- ── Step 3: 切結書 ── -->
+  <div id="step-3" style="display:none">
+    <div class="fsec">
+      <div class="fsec-hdr">📝 承攬商環安衛管理告知切結書</div>
+      <div class="fsec-body">
+        <div class="fsec-note">請於下表勾選本次進場作業涉及之作業類型，並確認相應之潛在危害因素及應備安全措施已了解。</div>
+        <div style="overflow-x:auto;margin-bottom:16px">
+          <table class="htbl">
+            <thead>
+              <tr>
+                <th style="width:52px;text-align:center">適用</th>
+                <th>作業活動或方式</th>
+                <th>潛在危害因素</th>
+                <th>應備安全措施</th>
+              </tr>
+            </thead>
+            <tbody id="hazard-tbody"></tbody>
+          </table>
+        </div>
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:10px">承諾事項</div>
+        <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--card)">
+          <div id="commit-list"></div>
+        </div>
+        <label class="confirm-row unchecked" id="cr-decl">
+          <input type="checkbox" id="cb-decl" onchange="syncConfirmRow('cr-decl',this)">
+          <span>本公司（承攬商）已詳閱並確認上述全部承諾事項，同意遵守大豐環保科技股份有限公司之一切環安衛管理規定。</span>
+        </label>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn" onclick="goPrev(3)">← 上一步</button>
+      <button class="btn btn-primary" onclick="goNext(3)">下一步：作業許可申請 →</button>
+    </div>
+  </div>
+
+  <!-- ── Step 4: 作業許可申請書 ── -->
+  <div id="step-4" style="display:none">
+    <div class="fsec">
+      <div class="fsec-hdr">📋 作業許可申請書</div>
+      <div class="fsec-body">
+        <div class="fsec-note">請依實際作業需求勾選各項（可複選），至少選擇一項作業內容分類。</div>
+
+        <div style="font-weight:700;color:var(--navy);margin-bottom:10px">A. 作業內容分類（至少勾選一項）</div>
+        <div class="chk-wrap" id="wrap-a"></div>
+
+        <div style="font-weight:700;color:var(--navy);margin:18px 0 10px">B. 使用工具（可複選）</div>
+        <div class="chk-wrap" id="wrap-b"></div>
+        <div id="tool-other-wrap" style="display:none;margin-top:10px">
+          <input class="fi" id="tool-other-txt" placeholder="請描述其他工具名稱" style="max-width:360px"/>
+        </div>
+
+        <div style="font-weight:700;color:var(--navy);margin:18px 0 10px">C. 公用需求（可複選，如需申請請向行政室另行辦理）</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+
+          <div>
+            <label class="chk-chip chk-chip-lg" id="cu-elec-chip"><input type="checkbox" id="cu-elec" onchange="toggleUtil('elec',this)"> ⚡ 用電需求</label>
+            <div id="cu-elec-det" style="display:none;margin-top:8px;padding-left:6px">
+              <div class="frow3">
+                <div class="fg"><label>用電量 (KW)</label><input class="fi" id="cu-elec-kw" placeholder="KW"/></div>
+                <div class="fg"><label>電壓 (V)</label><input class="fi" id="cu-elec-v" placeholder="V"/></div>
+                <div class="fg"><label>電流相數</label><input class="fi" id="cu-elec-ph" placeholder="1φ / 3φ"/></div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="chk-chip chk-chip-lg" id="cu-upw-chip"><input type="checkbox" id="cu-upw" onchange="toggleUtil('upw',this)"> 💧 UPW 用水</label>
+            <div id="cu-upw-det" style="display:none;margin-top:8px;padding-left:6px">
+              <div class="fg" style="max-width:200px"><label>用量 (M³/day)</label><input class="fi" id="cu-upw-v" placeholder="M³/day"/></div>
+            </div>
+          </div>
+
+          <div>
+            <label class="chk-chip chk-chip-lg" id="cu-cw-chip"><input type="checkbox" id="cu-cw" onchange="toggleUtil('cw',this)"> 🌊 CW 冷卻水</label>
+            <div id="cu-cw-det" style="display:none;margin-top:8px;padding-left:6px">
+              <div class="fg" style="max-width:200px"><label>用量 (M³/day)</label><input class="fi" id="cu-cw-v" placeholder="M³/day"/></div>
+            </div>
+          </div>
+
+          <div>
+            <label class="chk-chip chk-chip-lg" id="cu-air-chip"><input type="checkbox" id="cu-air" onchange="toggleUtil('air',this)"> 💨 壓縮空氣</label>
+            <div id="cu-air-det" style="display:none;margin-top:8px;padding-left:6px">
+              <div class="fg" style="max-width:200px"><label>用量 (L/min)</label><input class="fi" id="cu-air-v" placeholder="L/min"/></div>
+            </div>
+          </div>
+
+          <label class="chk-chip chk-chip-lg" id="cu-alarm-chip"><input type="checkbox" id="cu-alarm" onchange="chipChange(this)"> 🔕 火警警報中斷或隔離</label>
+          <label class="chk-chip chk-chip-lg" id="cu-fire-chip"><input type="checkbox" id="cu-fire" onchange="chipChange(this)"> 🚒 消防系統中斷</label>
+          <label class="chk-chip chk-chip-lg" id="cu-odor-chip"><input type="checkbox" id="cu-odor" onchange="chipChange(this)"> 🌬️ 異味離線審核</label>
+        </div>
+
+        <div style="font-weight:700;color:var(--navy);margin:18px 0 10px">D. 所需防護具（可複選）</div>
+        <div id="wrap-ppe" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"></div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn" onclick="goPrev(4)">← 上一步</button>
+      <button class="btn btn-primary" onclick="goNext(4)">下一步：簽名送出 →</button>
+    </div>
+  </div>
+
+  <!-- ── Step 5: 簽名送出 ── -->
+  <div id="step-5" style="display:none">
+    <div class="fsec">
+      <div class="fsec-hdr">✍️ 申請資料確認與電子簽名</div>
+      <div class="fsec-body">
+        <div style="font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;font-weight:700">申請摘要</div>
+        <div class="summary-grid" id="summary-grid" style="margin-bottom:18px"></div>
+
+        <div class="fg">
+          <label class="req">承攬商負責人姓名</label>
+          <input class="fi" id="f-signee" placeholder="請輸入負責人姓名（印刷字）" style="max-width:280px"/>
+        </div>
+        <div class="fg">
+          <label class="req">電子簽名</label>
+          <div class="sig-outer" id="sig-outer">
+            <canvas id="sig-canvas" height="180"></canvas>
+            <div class="sig-hint" id="sig-hint">請在此處簽名<br><span style="font-size:11px">可用滑鼠或觸控手指書寫</span></div>
+          </div>
+          <div class="sig-tools">
+            <button class="btn btn-sm" onclick="clearSig()">清除重簽</button>
+            <button class="btn btn-sm btn-primary" onclick="openSigFSMain()">⛶ 放大簽名</button>
+          </div>
+        </div>
+
+        <div style="background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:14px 16px;font-size:12px;color:#854d0e;line-height:1.9;margin-top:4px">
+          <strong>本人謹此聲明：</strong><br>
+          1. 已詳閱大豐環保科技危害告知書全部內容並承諾遵行<br>
+          2. 承攬商環安衛管理告知切結書已確認並完成電子簽名<br>
+          3. 作業許可申請書所填資訊正確無誤<br>
+          4. 本電子簽名具有與紙本親簽同等之效力
+        </div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn" onclick="goPrev(5)">← 上一步</button>
+      <button class="btn btn-success" onclick="submitForm()">✓ 確認送出留底</button>
+    </div>
+  </div>
+
+</div><!-- /v-wizard -->
+
+<!-- ════ View: Success ════ -->
+<div id="v-success" style="display:none">
+  <div class="success-screen">
+    <div class="success-icon">✅</div>
+    <h2>申請資料已成功送出</h2>
+    <p>您的進場申請已記錄在系統中，請截圖或列印本紀錄備存<br>如有任何問題，請洽大豐環保科技職安人員</p>
+    <div class="success-id" id="success-id-display"></div>
+    <div class="success-actions">
+      <button class="btn btn-primary" onclick="printLastRecord()">🖨️ 列印此紀錄</button>
+      <button class="btn" onclick="showView('records')">📂 查詢所有紀錄</button>
+      <button class="btn" onclick="showView('home')">🏠 返回首頁</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ View: Records ════ -->
+<div id="v-records" style="display:none">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+    <h2 style="font-size:17px;color:var(--navy)">📂 進場申請紀錄</h2>
+    <span id="rec-count" style="font-size:12px;color:var(--sub);background:#f1f5f9;padding:2px 10px;border-radius:12px"></span>
+    <button class="btn btn-sm" style="margin-left:auto" onclick="exportCSV()">↓ 匯出 CSV</button>
+  </div>
+  <div class="rec-toolbar">
+    <input id="rec-search" placeholder="搜尋承攬商名稱或工程名稱…" oninput="renderRecords()"/>
+  </div>
+  <div class="rec-wrap">
+    <table class="rec-tbl">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>申請日期時間</th>
+          <th>承攬商名稱</th>
+          <th>工程名稱</th>
+          <th>作業期間</th>
+          <th>時段</th>
+          <th>狀態</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="rec-tbody"></tbody>
+    </table>
+  </div>
+  <div id="rec-empty" class="empty-state" style="display:none">📭 目前尚無進場申請紀錄</div>
+</div>
+
+<!-- ════ View: Record Detail ════ -->
+<div id="v-rec-detail" style="display:none">
+  <div class="detail-hdr">
+    <button class="btn btn-sm" id="btn-back-records" onclick="showView('records')">← 返回清單</button>
+    <h2 id="detail-title">進場申請紀錄</h2>
+    <button class="btn btn-sm btn-primary" id="btn-edit-record" style="margin-left:auto">✏️ 編輯</button>
+    <button class="btn btn-sm" onclick="window.print()">🖨️ 列印</button>
+    <button class="btn btn-sm btn-danger" id="btn-del-record">🗑️ 刪除</button>
+  </div>
+  <div id="detail-content"></div>
+</div>
+
+</div><!-- /main -->
+
+<!-- ── Edit Modal ── -->
+<div class="modal-ov" id="edit-modal">
+  <div class="modal">
+    <div class="mhd">
+      <h3>✏️ 編輯進場申請紀錄</h3>
+      <button class="m-close" onclick="closeEditModal()">✕</button>
+    </div>
+    <div class="mbody" id="edit-body"></div>
+    <div class="mfoot">
+      <button class="btn" onclick="closeEditModal()">取消</button>
+      <button class="btn btn-success" onclick="saveEdit()">💾 儲存變更</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Toast ── -->
+<div class="toast" id="toast"></div>
+<div id="loading-overlay"><div class="spinner"></div><span id="loading-msg">載入中…</span></div>
+
+<script>
+// ════════════════════════════════════════════════
+//  資料
+// ════════════════════════════════════════════════
+const HAZARD_RULES = [
+  '為防止資收物中之玻璃、鐵釘或廢棄針頭(筒)等尖銳物對作業人員產生切割或刺穿等危害，應佩戴安全手套、穿著安全鞋及其他作業上所需之安全防護具。',
+  '作動機械設備進行保養、維修時，經現場主管同意後，需掛上「維修中」或「保養中」之掛牌，方可進行保養或維修作業。檢修工作如須在運轉狀態下實施，應採取必要之安全措施。',
+  '進入本場之車行限速為 15 公里/小時，任一時段均不得超過限速規定。',
+  '作業人員於工作場所禁止吸煙、飲食或飲酒。',
+  '進場工作人員應具有相關之合格人員操作證照證明文件，以供備查。欲借用場內機具務必向現場主管報備經同意始可借用，無相關合格操作證照者一律不得借用，並需依場內規範操作使用，另外使用中之相關責任均由借用者自行負責。',
+  '嚴禁以堆高機／挖掘機之貨叉或鏟具搭載、吊升人員。堆高機搬運貨物堆疊高度不可妨礙駕駛視線，如貨物太高應以倒車方式前進；若有妨礙駕駛視線，務必請另外一人現場指揮作業。挖掘機／堆高機等機具暫停或停止使用時，需歸回原位，並將貨叉置於地面，原動機熄火、放空檔、手剎車拉起及鑰匙拔起，並歸還鑰匙。',
+  '車輛系機械或堆高機等重型機具作業時，禁止任何人員進入操作半徑內，17 噸(含)以上作業應於作業範圍放置三角錐，禁止任何非相關人員進入作業範圍內，亦不得站立於吊掛物下方之危險區域。車子定位須拉手剎車及四輪氣煞，下坡路段時輪擋應擺放定位，車輛支撐架確實固定於平面位置。',
+  '進行高處（高於 1.8 公尺）作業時，需配戴安全帽等安全防護用具（3.5 噸以上(含)車頭及車斗等作業均須配戴安全帽）。',
+  '進行電路維修檢查，應使作業人員配戴絕緣防護用具，須經現場主管確認並取得許可後，始予以斷電並掛牌標示，再指派一人全程監視。',
+  '行動火作業時，須經由現場主管同意並於作業時需放置滅火器或距離 3 公尺內有滅火設施，並移除作業區之易燃物或燃料油儲存裝置、遠離危險易燃區等，而人員亦需配戴護目鏡。',
+  '清運車輛於啟動前，司機應確認周遭人員相關位置並發出信號後，始得啟動車輛。',
+  '開啟或關閉清運車輛之尾門之作業人員，應站立於側面安全位置，避免正面開啟，開門時先檢查門板是否有外推壓力後再開一小縫，確認未有大量物品滑落導致其遭受碰撞或掩埋之危害後，方得全面開啟。',
+  '車輛進入場區未到達指定傾貨區前，為防範意外事故發生，嚴禁私自將車斗開啟。',
+  '進場車輛行駛中，嚴禁人員站立後方車斗板上，卸貨完畢須確認車斗放置妥當，方可駛離作業區。',
+  '人員行經廠內出入口，需行走於人行道上，且應遵守「停、看、行」之規定，避免發生人車碰撞。',
+];
+
+const WORK_HAZARDS = [
+  {t:'密閉空間作業', h:'缺氧、窒息、火災爆炸', m:'機械通風、環境測定、空氣呼吸器、安全帶、安全索'},
+  {t:'電焊、氬焊、氣焊、熱熔', h:'灼傷、輻射危害、感電、燃燒、火災爆炸', m:'安全眼鏡、面罩、手套、自備消防設備、防火毯、防電擊裝置，警報系統隔離或中斷'},
+  {t:'高架作業或開口', h:'墜落、鷹架倒塌、物品墜落', m:'安全索、安全帶、安全帽、合格施工架、合格護欄、工具材料固定牢靠'},
+  {t:'危險性機械/設備、管路施工', h:'墜落、氣體外洩、爆炸火災', m:'個人防護器具、應變器材'},
+  {t:'氣體搬運、儲存、輸送、使用及排放', h:'氣體外洩、爆炸火災', m:'個人防護器具、洩漏應變器材、自備消防設備'},
+  {t:'危險物/有害物/毒化物運作、管路施工', h:'液體外洩、誤食、滑倒、酸/鹼氣體吸入、皮膚灼傷', m:'必要個人防護器具、洩漏應變器材'},
+  {t:'有機溶劑作業（油漆等）', h:'缺氧、有機溶劑氣體吸入、燃燒、火災、爆炸', m:'機械通風、環境測定、個人防護具、洩漏應變器材、自備消防設備'},
+  {t:'切割研磨作業', h:'燃燒、火災、爆炸、粉塵吸入、環境污染', m:'安全眼鏡、污染防治措施、警報系統隔離或中斷及其他必要個人防護具'},
+  {t:'電氣作業', h:'感電、火災、爆炸、燃燒', m:'靜電偵測器、活電感知器、必要個人防護具、自備消防設備'},
+  {t:'機台裝設、維修、保養', h:'上述危害因素及撞擊、刺傷、絆倒、滑倒等', m:'上述之適當防護具'},
+  {t:'其他', h:'撞擊、刺傷、絆倒、滑倒等', m:'必要個人防護器具'},
+];
+
+const COMMITMENTS = [
+  '確認了解並遵守貴公司之承攬商環安衛管理程序，並周知所屬人員。',
+  '進廠施工前提供法規要求之公司執照/證照、合格專責人員及特殊作業人員訓練合格證明、機械設備安全檢查合格證供查驗；工程施工另須提供勞工安全衛生管理計劃。',
+  '報價內容已包含勞工安全衛生相關費用，施工期間指派專人執行勞安衛管理工作；所僱用勞工已依法實施安全衛生教育訓練，並提供勞健保及意外保險，紀錄留存備查。',
+  '施工期間若違反勞工安全衛生規定，並經監工人員或勞安衛人員勸告後仍不改善，同意貴公司從應付款項中罰扣承攬商施工違規罰款。',
+  '若違反勞工安全衛生法規遭受告發、罰金或停工處罰時，業主及其他承攬商所蒙受之全部損失由本公司負責賠償，並同意貴公司從應付款項中罰扣相同款數。',
+  '施工期間如有職業災害或意外事故發生時，民、刑事責任概由本公司自行負責。',
+  '加入協議組織並接受協議組織管理；若有再承攬，須於再承攬人開工前完成再承攬合約，並盡勞工安全衛生法所規定之雇主責任。',
+  '公司名稱或代表人變更時，重新簽署此切結書；其他未明訂之處，適用中華民國相關法令及貴公司管理規定。',
+];
+
+const WORK_TYPES_A = [
+  '1. 營造工程','2. 機台、設備安裝/試車/維修/保養','3. 高架作業、高空作業、吊掛作業',
+  '4. 電焊、氬焊、點焊作業(氧氣、乙炔熔接)、切割','5. 裝潢/拆除作業、油漆除鏽作業',
+  '6. 有機溶劑/特用化學品/毒化物之運作','7. 水電設備操控工程','8. 作業環境/污染檢測',
+  '9. 高壓氣體供應(輸配管、灌裝或搬運等)','10. 原物料之裝卸','11. 冷凍空調設備操控工程',
+  '12. 環境清潔及消毒','13. 發塵作業','14. 密閉空間或通風不良場所作業',
+  '15. 消防/機械設備檢查或維修測試','16. 其它',
+];
+
+const TOOLS_B = [
+  '電焊機','乙炔鋼瓶氣焊','氬焊機','電動機','柴油發電機','圓盤鋸',
+  '電鋸','切割機','電熱器','塑膠熱熔','砂輪機','電鑽',
+  '照明(≤24V)','起重機','升降機','吊籠','氧氣鋼瓶','其他',
+];
+
+const PPE_ITEMS = [
+  {n:1,  label:'施工標示',  hasText:false},
+  {n:2,  label:'圍欄',      hasText:false},
+  {n:3,  label:'通道管制',  hasText:false},
+  {n:4,  label:'消防器材',  hasText:false},
+  {n:5,  label:'頭部防護',  hasText:true, ph:'請說明'},
+  {n:6,  label:'臉部防護',  hasText:true, ph:'請說明'},
+  {n:7,  label:'噪音防護',  hasText:true, ph:'請說明'},
+  {n:8,  label:'呼吸防護',  hasText:true, ph:'請說明'},
+  {n:9,  label:'手部防護',  hasText:true, ph:'請說明'},
+  {n:10, label:'防護衣',    hasText:true, ph:'＿＿級'},
+  {n:11, label:'安全帶',    hasText:false},
+  {n:12, label:'安全網',    hasText:false},
+  {n:13, label:'安全梯',    hasText:false},
+  {n:14, label:'其他',      hasText:true, ph:'請說明'},
+];
+
+// ════════════════════════════════════════════════
+//  Cloud API (Google Apps Script)
+// ════════════════════════════════════════════════
+const API_URL = 'https://script.google.com/macros/s/AKfycbzUXQ3tAvi9IdrzA7CRz6q9DVrTpszDQ5jg7kcm2NyKGZNPGe24qzmx8zmdZWutTYVWYg/exec';
+let lastId = null;
+let _currentRecord = null;
+
+function showLoading(msg='載入中…'){
+  document.getElementById('loading-msg').textContent = msg;
+  document.getElementById('loading-overlay').classList.add('show');
+}
+function hideLoading(){
+  document.getElementById('loading-overlay').classList.remove('show');
+}
+
+async function apiPost(payload){
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+  return res.json();
+}
+
+async function apiGet(params){
+  const qs = Object.entries(params).map(([k,v])=>k+'='+encodeURIComponent(v)).join('&');
+  const res = await fetch(API_URL + '?' + qs);
+  return res.json();
+}
+
+// ════════════════════════════════════════════════
+//  Auth（帳號密碼可在此修改）
+// ════════════════════════════════════════════════
+const USERS = {
+  admin: { pass: 'admin', role: 'admin' },
+  guest: { pass: 'guest', role: 'guest' },
+};
+let currentRole = null;
+
+function doLogin(){
+  const p = (document.getElementById('login-pass').value || '').trim();
+  const errEl = document.getElementById('login-err');
+  const user = Object.values(USERS).find(u => u.pass === p);
+  if(!user){
+    errEl.style.display = 'block';
+    document.getElementById('login-pass').value = '';
+    document.getElementById('login-pass').focus();
+    return;
+  }
+  errEl.style.display = 'none';
+  currentRole = user.role;
+  const isAdmin = currentRole === 'admin';
+  document.getElementById('hdr-home').style.display   = '';
+  document.getElementById('hdr-logout').style.display = '';
+  document.getElementById('hdr-role').style.display   = '';
+  document.getElementById('hdr-role').textContent     = isAdmin ? '管理者' : '承攬商';
+  document.getElementById('card-records').style.display = isAdmin ? '' : 'none';
+  showView('home');
+}
+
+function doLogout(){
+  currentRole = null;
+  document.getElementById('login-pass').value = '';
+  document.getElementById('hdr-home').style.display   = 'none';
+  document.getElementById('hdr-logout').style.display = 'none';
+  document.getElementById('hdr-role').style.display   = 'none';
+  showView('login');
+}
+
+// ════════════════════════════════════════════════
+//  Toast
+// ════════════════════════════════════════════════
+function toast(msg, type=''){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show ' + type;
+  setTimeout(()=>el.classList.remove('show'), 3200);
+}
+
+// ════════════════════════════════════════════════
+//  View routing
+// ════════════════════════════════════════════════
+function showView(name){
+  if(name !== 'login' && !currentRole){ showView('login'); return; }
+  if(name === 'records' && currentRole !== 'admin'){ toast('此帳號無查詢紀錄的權限','bad'); return; }
+  ['login','home','wizard','success','records','rec-detail'].forEach(v=>{
+    document.getElementById('v-'+v).style.display = 'none';
+  });
+  document.getElementById('v-'+name).style.display = '';
+  document.getElementById('step-bar').style.display = name==='wizard' ? 'block' : 'none';
+  if(name==='records') renderRecords().catch(()=>{});
+}
+
+// ════════════════════════════════════════════════
+//  初始化各步驟內容
+// ════════════════════════════════════════════════
+function buildRules(){
+  const ul = document.getElementById('rule-list');
+  HAZARD_RULES.forEach((r,i)=>{
+    const li = document.createElement('li');
+    li.className = 'rule-li';
+    li.innerHTML = `<span class="rule-n">${i+1}.</span><span>${r}</span>`;
+    ul.appendChild(li);
+  });
+}
+
+function buildHazardTable(){
+  const tb = document.getElementById('hazard-tbody');
+  WORK_HAZARDS.forEach((w,i)=>{
+    const tr = document.createElement('tr');
+    tr.id = 'htr-'+i;
+    tr.innerHTML = `
+      <td style="text-align:center">
+        <label class="apply-chk">
+          <input type="checkbox" id="wh-${i}" onchange="hazardRowCheck(${i},this)">
+        </label>
+      </td>
+      <td><strong>${w.t}</strong></td>
+      <td style="color:var(--red)">${w.h}</td>
+      <td style="color:var(--green)">${w.m}</td>`;
+    tb.appendChild(tr);
+  });
+}
+
+function hazardRowCheck(i, cb){
+  document.getElementById('htr-'+i).classList.toggle('apply-row', cb.checked);
+}
+
+function buildCommitments(){
+  const cl = document.getElementById('commit-list');
+  COMMITMENTS.forEach((c,i)=>{
+    const d = document.createElement('div');
+    d.className = 'commit-li';
+    d.innerHTML = `<span class="commit-n">${i+1}.</span><span>${c}</span>`;
+    cl.appendChild(d);
+  });
+}
+
+function buildCheckboxes(){
+  const wa = document.getElementById('wrap-a');
+  WORK_TYPES_A.forEach(t=>{
+    const lbl = document.createElement('label');
+    lbl.className = 'chk-chip';
+    lbl.innerHTML = `<input type="checkbox" value="${t}" onchange="chipChange(this)"> ${t}`;
+    wa.appendChild(lbl);
+  });
+
+  const wb = document.getElementById('wrap-b');
+  TOOLS_B.forEach(t=>{
+    const lbl = document.createElement('label');
+    lbl.className = 'chk-chip';
+    const isOther = t==='其他';
+    lbl.innerHTML = `<input type="checkbox" value="${t}" onchange="${isOther?'toolOtherToggle(this)':'chipChange(this)'}"> ${t}`;
+    wb.appendChild(lbl);
+  });
+}
+
+function ppeKey(label){ return 'ppe-' + label.replace(/\s/g,'_'); }
+
+function buildPPE(){
+  const wrap = document.getElementById('wrap-ppe');
+  PPE_ITEMS.forEach(item => {
+    const key = ppeKey(item.label);
+    if(item.hasText){
+      const div = document.createElement('div');
+      div.style.cssText = 'display:flex;align-items:center;gap:5px;';
+      div.innerHTML = `
+        <label class="chk-chip" id="${key}-chip">
+          <input type="checkbox" id="${key}-cb" onchange="ppeToggle('${item.label}',this)"> ${item.n}. ${item.label}
+        </label>
+        <input class="fi" id="${key}-txt" placeholder="${item.ph}"
+          style="display:none;width:120px;min-width:0;padding:5px 8px;font-size:12px;height:32px"/>`;
+      wrap.appendChild(div);
+    } else {
+      const lbl = document.createElement('label');
+      lbl.className = 'chk-chip';
+      lbl.innerHTML = `<input type="checkbox" id="${key}-cb" onchange="chipChange(this)"> ${item.n}. ${item.label}`;
+      wrap.appendChild(lbl);
+    }
+  });
+}
+
+function ppeToggle(label, cb){
+  cb.closest('.chk-chip').classList.toggle('sel', cb.checked);
+  const txt = document.getElementById(ppeKey(label) + '-txt');
+  if(txt){ txt.style.display = cb.checked ? 'inline-block' : 'none'; if(!cb.checked) txt.value = ''; }
+}
+
+function collectPPE(){
+  return PPE_ITEMS.map(item => {
+    const cb = document.getElementById(ppeKey(item.label) + '-cb');
+    if(!cb?.checked) return null;
+    const detail = item.hasText ? (document.getElementById(ppeKey(item.label) + '-txt')?.value.trim() || '') : null;
+    return detail !== null ? { label: item.label, detail } : { label: item.label };
+  }).filter(Boolean);
+}
+
+// ════════════════════════════════════════════════
+//  Chip helpers
+// ════════════════════════════════════════════════
+function chipChange(cb){
+  cb.closest('.chk-chip').classList.toggle('sel', cb.checked);
+}
+
+function toolOtherToggle(cb){
+  chipChange(cb);
+  document.getElementById('tool-other-wrap').style.display = cb.checked ? 'block' : 'none';
+}
+
+function syncConfirmRow(rowId, cb){
+  const row = document.getElementById(rowId);
+  if(cb.checked){
+    row.classList.remove('unchecked');
+  } else {
+    row.classList.add('unchecked');
+  }
+}
+
+function toggleUtil(key, cb){
+  chipChange(cb);
+  document.getElementById('cu-'+key+'-det').style.display = cb.checked ? 'block' : 'none';
+}
+
+// ════════════════════════════════════════════════
+//  Step indicator
+// ════════════════════════════════════════════════
+function setStep(n){
+  for(let i=1;i<=5;i++){
+    const el = document.getElementById('si-'+i);
+    el.classList.remove('active','done');
+    if(i<n) el.classList.add('done');
+    else if(i===n) el.classList.add('active');
+  }
+  for(let i=1;i<=4;i++){
+    document.getElementById(`sc-${i}-${i+1}`).classList.toggle('done', i<n);
+  }
+}
+
+// ════════════════════════════════════════════════
+//  Wizard navigation
+// ════════════════════════════════════════════════
+function startWizard(){
+  resetForm();
+  for(let i=1;i<=5;i++) document.getElementById('step-'+i).style.display = i===1?'':'none';
+  showView('wizard');
+  setStep(1);
+  window.scrollTo(0,0);
+}
+
+function goNext(cur){
+  const err = validateStep(cur);
+  if(err){ toast(err,'bad'); return; }
+  const nxt = cur+1;
+  document.getElementById('step-'+cur).style.display='none';
+  document.getElementById('step-'+nxt).style.display='';
+  setStep(nxt);
+  if(nxt===5) buildSummary();
+  if(nxt===2) resizeWorkerCanvases();
+  if(nxt===5) resizeMainSigCanvas();
+  window.scrollTo(0,0);
+}
+
+function goPrev(cur){
+  const prv = cur-1;
+  document.getElementById('step-'+cur).style.display='none';
+  document.getElementById('step-'+prv).style.display='';
+  setStep(prv);
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════════════
+//  Validation
+// ════════════════════════════════════════════════
+function validateStep(n){
+  if(n===1){
+    const req = ['f-company','f-workname','f-supervisor','f-phone','f-date-start','f-date-end','f-area'];
+    for(const id of req){
+      const el = document.getElementById(id);
+      if(!el.value.trim()){ el.classList.add('err'); el.focus(); return '請填寫所有必填欄位（標示 * 者）'; }
+      el.classList.remove('err');
+    }
+    const s=document.getElementById('f-date-start').value, e=document.getElementById('f-date-end').value;
+    if(s && e && e<s) return '作業結束日期不可早於開始日期';
+    const periods = [...document.querySelectorAll('#step-1 .chk-chip input:checked')];
+    if(!periods.length) return '請至少勾選一項作業時段';
+    return null;
+  }
+  if(n===2){
+    if(!document.getElementById('cb-hazard').checked) return '請詳閱危害告知書內容並勾選確認';
+    const wIds = Object.keys(workerStates);
+    if(!wIds.length) return '請至少新增一位作業人員';
+    const hasValid = wIds.some(id=>{
+      const nm = document.getElementById('wname-'+id)?.value.trim();
+      return nm && workerStates[id] && workerStates[id].hasData;
+    });
+    if(!hasValid) return '請至少填寫一位作業人員的姓名並完成簽名';
+    return null;
+  }
+  if(n===3){
+    if(!document.getElementById('cb-decl').checked) return '請詳閱承諾事項並勾選確認';
+    return null;
+  }
+  if(n===4){
+    const selected = [...document.querySelectorAll('#wrap-a input:checked')];
+    if(!selected.length) return '請至少勾選一項作業內容分類（Section A）';
+    return null;
+  }
+  if(n===5){
+    if(!document.getElementById('f-signee').value.trim()) return '請填寫承攬商負責人姓名';
+    if(sigIsEmpty()) return '請在簽名框中完成電子簽名';
+    return null;
+  }
+  return null;
+}
+
+// ════════════════════════════════════════════════
+//  Summary (Step 5)
+// ════════════════════════════════════════════════
+function buildSummary(){
+  const g = document.getElementById('summary-grid');
+  const ds = document.getElementById('f-date-start').value;
+  const de = document.getElementById('f-date-end').value;
+  const periods = [...document.querySelectorAll('#step-1 .chk-chip input:checked')].map(c=>c.value).join('、');
+  const items = [
+    ['承攬商名稱', g_('f-company')],
+    ['合約/訂單編號', g_('f-contract')],
+    ['工程名稱', g_('f-workname')],
+    ['現場負責人', g_('f-supervisor')],
+    ['作業期間', ds+' ~ '+de],
+    ['作業時段', periods],
+    ['工作區域', g_('f-area')],
+    ['聯絡電話', g_('f-phone')],
+  ];
+  g.innerHTML = items.map(([l,v])=>`<div><div class="si-l">${l}</div><div class="si-v">${v||'—'}</div></div>`).join('');
+}
+
+function g_(id){ return document.getElementById(id).value.trim(); }
+
+// ════════════════════════════════════════════════
+//  Signature pad
+// ════════════════════════════════════════════════
+let sigCtx, sigDrawing=false, sigHasData=false;
+
+// 修正 2：步驟切到2時，將各人員簽名畫布調整為實際可見寬度
+function resizeWorkerCanvases(){
+  Object.keys(workerStates).forEach(id => {
+    const canvas = document.getElementById('wsig-canvas-' + id);
+    const outer  = document.getElementById('wsig-outer-' + id);
+    if(!canvas || !outer) return;
+    const w = outer.clientWidth;
+    if(w > 0 && canvas.width !== w){
+      const snap = workerStates[id].hasData ? canvas.toDataURL() : null;
+      canvas.width = w;
+      const ctx = canvas.getContext('2d');
+      ctx.strokeStyle='#1e293b'; ctx.lineWidth=2; ctx.lineCap='round'; ctx.lineJoin='round';
+      workerStates[id].ctx = ctx;
+      if(snap){ const img=new Image(); img.onload=()=>ctx.drawImage(img,0,0); img.src=snap; }
+    }
+  });
+}
+
+// 修正 3：步驟切到5時，將主簽名畫布調整為實際可見寬度
+function resizeMainSigCanvas(){
+  const canvas = document.getElementById('sig-canvas');
+  const outer  = document.getElementById('sig-outer');
+  const w = outer.clientWidth;
+  if(w > 0 && canvas.width !== w){
+    const snap = sigHasData ? canvas.toDataURL() : null;
+    canvas.width = w;
+    sigCtx = canvas.getContext('2d');
+    sigCtx.strokeStyle='#1e293b'; sigCtx.lineWidth=2; sigCtx.lineCap='round'; sigCtx.lineJoin='round';
+    if(snap){ const img=new Image(); img.onload=()=>sigCtx.drawImage(img,0,0); img.src=snap; }
+  }
+}
+
+function initSig(){
+  const canvas = document.getElementById('sig-canvas');
+  const outer = document.getElementById('sig-outer');
+  canvas.width = outer.clientWidth || 780;
+
+  sigCtx = canvas.getContext('2d');
+  sigCtx.strokeStyle='#1e293b';
+  sigCtx.lineWidth=2;
+  sigCtx.lineCap='round';
+  sigCtx.lineJoin='round';
+
+  function pos(e){
+    const r = canvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return [src.clientX-r.left, src.clientY-r.top];
+  }
+
+  canvas.addEventListener('mousedown', e=>{ sigDrawing=true; const [x,y]=pos(e); sigCtx.beginPath(); sigCtx.moveTo(x,y); });
+  canvas.addEventListener('mousemove', e=>{ if(!sigDrawing) return; const [x,y]=pos(e); sigCtx.lineTo(x,y); sigCtx.stroke(); sigHasData=true; updateHint(); });
+  canvas.addEventListener('mouseup', ()=>sigDrawing=false);
+  canvas.addEventListener('mouseleave', ()=>sigDrawing=false);
+
+  canvas.addEventListener('touchstart', e=>{ e.preventDefault(); sigDrawing=true; const [x,y]=pos(e); sigCtx.beginPath(); sigCtx.moveTo(x,y); });
+  canvas.addEventListener('touchmove', e=>{ e.preventDefault(); if(!sigDrawing) return; const [x,y]=pos(e); sigCtx.lineTo(x,y); sigCtx.stroke(); sigHasData=true; updateHint(); });
+  canvas.addEventListener('touchend', ()=>sigDrawing=false);
+}
+
+function updateHint(){
+  document.getElementById('sig-hint').style.display = sigHasData ? 'none' : '';
+}
+
+function clearSig(){
+  const canvas = document.getElementById('sig-canvas');
+  sigCtx.clearRect(0,0,canvas.width,canvas.height);
+  sigHasData=false;
+  updateHint();
+}
+
+function sigIsEmpty(){ return !sigHasData; }
+
+// ════════════════════════════════════════════════
+//  作業人員多人簽名
+// ════════════════════════════════════════════════
+let workerCount = 0;
+const workerStates = {};
+
+function addWorker(){
+  workerCount++;
+  const id = workerCount;
+  const container = document.getElementById('worker-sigs');
+  const div = document.createElement('div');
+  div.id = 'worker-entry-' + id;
+  div.style.cssText = 'background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:10px;';
+  div.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+      <span style="font-size:12px;font-weight:700;color:var(--navy);flex-shrink:0">作業人員 ${id}</span>
+      <input class="fi" id="wname-${id}" placeholder="請輸入姓名" style="max-width:200px;flex:1"/>
+      ${id > 1 ? `<button class="btn btn-sm btn-danger" onclick="removeWorker(${id})">✕ 移除</button>` : ''}
+    </div>
+    <div class="sig-outer" id="wsig-outer-${id}">
+      <canvas id="wsig-canvas-${id}" height="130"></canvas>
+      <div class="sig-hint" id="wsig-hint-${id}" style="font-size:12px">請在此簽名</div>
+    </div>
+    <div class="sig-tools">
+      <button class="btn btn-sm" onclick="clearWorkerSig(${id})">清除重簽</button>
+      <button class="btn btn-sm btn-primary" onclick="openSigFSWorker(${id})">⛶ 放大簽名</button>
+    </div>`;
+  container.appendChild(div);
+  initWorkerCanvas(id);
+}
+
+function initWorkerCanvas(id){
+  const canvas = document.getElementById('wsig-canvas-' + id);
+  const outer  = document.getElementById('wsig-outer-' + id);
+  canvas.width  = outer.clientWidth || 600;
+  const ctx = canvas.getContext('2d');
+  ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  workerStates[id] = { drawing: false, hasData: false, ctx };
+
+  function pos(e){
+    const r = canvas.getBoundingClientRect();
+    const s = e.touches ? e.touches[0] : e;
+    return [s.clientX - r.left, s.clientY - r.top];
+  }
+  canvas.addEventListener('mousedown',  e=>{ workerStates[id].drawing=true; const [x,y]=pos(e); ctx.beginPath(); ctx.moveTo(x,y); });
+  canvas.addEventListener('mousemove',  e=>{ if(!workerStates[id].drawing) return; const [x,y]=pos(e); ctx.lineTo(x,y); ctx.stroke(); markWorkerSig(id); });
+  canvas.addEventListener('mouseup',    ()=>workerStates[id].drawing=false);
+  canvas.addEventListener('mouseleave', ()=>workerStates[id].drawing=false);
+  canvas.addEventListener('touchstart', e=>{ e.preventDefault(); workerStates[id].drawing=true; const [x,y]=pos(e); ctx.beginPath(); ctx.moveTo(x,y); });
+  canvas.addEventListener('touchmove',  e=>{ e.preventDefault(); if(!workerStates[id].drawing) return; const [x,y]=pos(e); ctx.lineTo(x,y); ctx.stroke(); markWorkerSig(id); });
+  canvas.addEventListener('touchend',   ()=>workerStates[id].drawing=false);
+}
+
+function markWorkerSig(id){
+  workerStates[id].hasData = true;
+  document.getElementById('wsig-hint-' + id).style.display = 'none';
+}
+
+function clearWorkerSig(id){
+  const canvas = document.getElementById('wsig-canvas-' + id);
+  workerStates[id].ctx.clearRect(0, 0, canvas.width, canvas.height);
+  workerStates[id].hasData = false;
+  document.getElementById('wsig-hint-' + id).style.display = '';
+}
+
+function removeWorker(id){
+  document.getElementById('worker-entry-' + id).remove();
+  delete workerStates[id];
+}
+
+function collectWorkers(){
+  return Object.keys(workerStates).map(id => {
+    const name = document.getElementById('wname-' + id)?.value.trim() || '';
+    const canvas = document.getElementById('wsig-canvas-' + id);
+    return {
+      name,
+      signature: (workerStates[id]?.hasData && canvas) ? canvas.toDataURL('image/png') : null,
+    };
+  }).filter(w => w.name || w.signature);
+}
+
+function getSigDataURL(){
+  return document.getElementById('sig-canvas').toDataURL('image/png');
+}
+
+// ════════════════════════════════════════════════
+//  Collect form data
+// ════════════════════════════════════════════════
+function collectData(){
+  const periods = [...document.querySelectorAll('#step-1 .chk-chip input:checked')].map(c=>c.value);
+  const appliedTypes = [...document.querySelectorAll('#hazard-tbody input:checked')].map(c=>{
+    return WORK_HAZARDS[parseInt(c.id.split('-')[1])].t;
+  });
+  const workTypesA = [...document.querySelectorAll('#wrap-a input:checked')].map(c=>c.value);
+  const toolsB = [...document.querySelectorAll('#wrap-b input:checked')].map(c=>c.value);
+
+  const utilities = {};
+  if(document.getElementById('cu-elec').checked){
+    utilities['用電需求'] = [
+      document.getElementById('cu-elec-kw').value&&`${document.getElementById('cu-elec-kw').value} KW`,
+      document.getElementById('cu-elec-v').value&&`${document.getElementById('cu-elec-v').value} V`,
+      document.getElementById('cu-elec-ph').value&&`${document.getElementById('cu-elec-ph').value} ∮`,
+    ].filter(Boolean).join(' / ')||'是';
+  }
+  if(document.getElementById('cu-upw').checked) utilities['UPW用水'] = (document.getElementById('cu-upw-v').value||'是')+' M³/day';
+  if(document.getElementById('cu-cw').checked) utilities['CW冷卻水'] = (document.getElementById('cu-cw-v').value||'是')+' M³/day';
+  if(document.getElementById('cu-air').checked) utilities['壓縮空氣'] = (document.getElementById('cu-air-v').value||'是')+' L/min';
+  if(document.getElementById('cu-alarm').checked) utilities['火警警報中斷/隔離'] = '是';
+  if(document.getElementById('cu-fire').checked) utilities['消防系統中斷'] = '是';
+  if(document.getElementById('cu-odor').checked) utilities['異味離線'] = '是';
+
+  return {
+    id: 'DF-'+ Date.now().toString(36).toUpperCase(),
+    submittedAt: new Date().toISOString(),
+    basic:{
+      company: g_('f-company'), contract: g_('f-contract'),
+      workname: g_('f-workname'), supervisor: g_('f-supervisor'),
+      inspector: g_('f-inspector'), phone: g_('f-phone'), fax: g_('f-fax'),
+      dateStart: g_('f-date-start'), dateEnd: g_('f-date-end'),
+      area: g_('f-area'), timePeriod: periods,
+    },
+    hazardConfirmed: true,
+    appliedHazardTypes: appliedTypes,
+    declarationConfirmed: true,
+    permit:{ workTypesA, toolsB, toolOther: document.getElementById('tool-other-txt').value, utilities, ppe: collectPPE() },
+    workers: collectWorkers(),
+    signee: g_('f-signee'),
+    signature: getSigDataURL(),
+  };
+}
+
+// ════════════════════════════════════════════════
+//  Submit
+// ════════════════════════════════════════════════
+async function submitForm(){
+  const err = validateStep(5);
+  if(err){ toast(err,'bad'); return; }
+  const data = collectData();
+  showLoading('正在送出申請…');
+  try {
+    const res = await apiPost({ action: 'submit', data });
+    if(!res.success) throw new Error(res.error);
+    lastId = data.id;
+    document.getElementById('success-id-display').textContent = '紀錄編號：' + data.id;
+    showView('success');
+    toast('申請資料已成功送出！','ok');
+  } catch(ex) {
+    toast('送出失敗：' + ex.message, 'bad');
+  } finally {
+    hideLoading();
+  }
+}
+
+async function printLastRecord(){
+  if(!lastId) return;
+  await viewRecord(lastId);
+  setTimeout(()=>window.print(), 400);
+}
+
+// ════════════════════════════════════════════════
+//  Reset form
+// ════════════════════════════════════════════════
+function resetForm(){
+  ['f-company','f-contract','f-workname','f-supervisor','f-inspector','f-phone','f-fax','f-date-start','f-date-end','f-area','f-signee','tool-other-txt','cu-elec-kw','cu-elec-v','cu-elec-ph','cu-upw-v','cu-cw-v','cu-air-v'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el){ el.value=''; el.classList.remove('err'); }
+  });
+  document.querySelectorAll('input[type=checkbox]').forEach(cb=>{ cb.checked=false; });
+  document.querySelectorAll('.chk-chip').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#hazard-tbody tr').forEach(tr=>tr.classList.remove('apply-row'));
+  ['cr-hazard','cr-decl'].forEach(id=>{ const el=document.getElementById(id); if(el){ el.classList.add('unchecked'); }});
+  ['cu-elec-det','cu-upw-det','cu-cw-det','cu-air-det','tool-other-wrap'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display='none';
+  });
+  if(sigCtx){ clearSig(); }
+  // 重設 PPE 文字欄位與顯示
+  PPE_ITEMS.filter(p => p.hasText).forEach(item => {
+    const key = ppeKey(item.label);
+    const txt = document.getElementById(key + '-txt');
+    if(txt){ txt.value = ''; txt.style.display = 'none'; }
+  });
+  // 重設作業人員簽名
+  document.getElementById('worker-sigs').innerHTML = '';
+  workerCount = 0;
+  Object.keys(workerStates).forEach(k => delete workerStates[k]);
+  addWorker();
+}
+
+// ════════════════════════════════════════════════
+//  Records list
+// ════════════════════════════════════════════════
+async function renderRecords(){
+  const q = (document.getElementById('rec-search').value||'').toLowerCase();
+  showLoading('載入紀錄中…');
+  let all = [];
+  try {
+    const res = await apiGet({ action: 'list' });
+    if(!res.success) throw new Error(res.error);
+    all = res.records || [];
+  } catch(ex) {
+    toast('載入失敗：' + ex.message, 'bad');
+  } finally {
+    hideLoading();
+  }
+  const filtered = all.filter(r=>
+    !q ||
+    (r.basic?.company||'').toLowerCase().includes(q) ||
+    (r.basic?.workname||'').toLowerCase().includes(q) ||
+    (r.basic?.supervisor||'').toLowerCase().includes(q)
+  );
+
+  document.getElementById('rec-count').textContent = `共 ${filtered.length} 筆`;
+  const tbody = document.getElementById('rec-tbody');
+  tbody.innerHTML='';
+
+  if(!filtered.length){
+    document.getElementById('rec-empty').style.display='block';
+    return;
+  }
+  document.getElementById('rec-empty').style.display='none';
+
+  filtered.forEach((r,idx)=>{
+    const dt = new Date(r.submittedAt);
+    const dtStr = dt.toLocaleDateString('zh-TW')+ ' ' + dt.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
+    const period = r.basic.timePeriod?.join('/') || '—';
+    const nm = q ? r.basic.company.replace(new RegExp(q,'gi'),m=>`<mark>${m}</mark>`) : r.basic.company;
+    const wn = q ? r.basic.workname.replace(new RegExp(q,'gi'),m=>`<mark>${m}</mark>`) : r.basic.workname;
+    const tr = document.createElement('tr');
+    tr.innerHTML=`
+      <td>${idx+1}</td>
+      <td>${dtStr}</td>
+      <td class="nm">${nm}</td>
+      <td>${wn}</td>
+      <td>${r.basic.dateStart} ~ ${r.basic.dateEnd}</td>
+      <td>${period}</td>
+      <td><span class="badge badge-g">已提交</span></td>
+      <td>
+        <button class="btn btn-sm btn-primary" onclick="viewRecord('${r.id}')">查看</button>
+        <button class="btn btn-sm btn-danger" style="margin-left:4px" onclick="confirmDelete('${r.id}')">刪除</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ════════════════════════════════════════════════
+//  Record detail
+// ════════════════════════════════════════════════
+let currentDetailId = null;
+
+async function viewRecord(id){
+  showLoading('載入紀錄…');
+  let r = null;
+  try {
+    const res = await apiGet({ action: 'get', id });
+    if(!res.success) throw new Error(res.error);
+    r = res.record;
+  } catch(ex) {
+    toast('載入失敗：' + ex.message, 'bad');
+    hideLoading();
+    return;
+  } finally {
+    hideLoading();
+  }
+  if(!r){ toast('找不到此紀錄','bad'); return; }
+  _currentRecord = r;
+  currentDetailId = id;
+
+  document.getElementById('detail-title').textContent = r.basic.company + ' — 進場申請紀錄';
+  document.getElementById('btn-del-record').onclick = ()=>confirmDelete(id);
+  document.getElementById('btn-edit-record').onclick = ()=>openEditModal(id);
+
+  const dt = new Date(r.submittedAt);
+  const dtStr = dt.toLocaleString('zh-TW');
+
+  function blk(title, bodyHtml){
+    return `<div class="detail-blk">
+      <div class="detail-blk-hdr">${title}</div>
+      <div class="detail-blk-body">${bodyHtml}</div>
+    </div>`;
+  }
+  function field(label, val){
+    return `<div><div class="dl">${label}</div><div class="dv">${val||'—'}</div></div>`;
+  }
+  function tags(arr){
+    if(!arr||!arr.length) return '<span style="color:var(--sub);font-size:12px">無</span>';
+    return `<div class="tag-list">${arr.map(t=>`<span class="tag-item">${t}</span>`).join('')}</div>`;
+  }
+
+  let html = '';
+
+  html += blk('📋 基本資料', `<div class="detail-grid">
+    ${field('紀錄編號',`<code>${r.id}</code>`)}
+    ${field('送出時間', dtStr + (r.editedAt ? `&nbsp;<span class="edited-badge">已編輯 ${new Date(r.editedAt).toLocaleDateString('zh-TW')}</span>` : ''))}
+    ${field('承攬商名稱',r.basic.company)}
+    ${field('合約/訂單編號',r.basic.contract)}
+    ${field('工程/作業名稱',r.basic.workname)}
+    ${field('現場負責人',r.basic.supervisor)}
+    ${field('監工/安衛管理員',r.basic.inspector||'—')}
+    ${field('聯絡電話',r.basic.phone)}
+    ${field('傳真',r.basic.fax||'—')}
+    ${field('作業開始日期',r.basic.dateStart)}
+    ${field('作業結束日期',r.basic.dateEnd)}
+    ${field('工作區域',r.basic.area)}
+    ${field('作業時段',r.basic.timePeriod?.join('、')||'—')}
+  </div>`);
+
+  const workers = r.workers || [];
+  const workerHtml = workers.length
+    ? workers.map((w,i) => `
+        <div style="${i < workers.length-1 ? 'padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--border)' : ''}">
+          <div class="dl">作業人員 ${i+1}</div>
+          <div class="dv" style="margin-bottom:6px">${w.name || '（未填姓名）'}</div>
+          ${w.signature
+            ? `<img class="sig-img" src="${w.signature}" alt="簽名"/>`
+            : '<span style="font-size:12px;color:var(--sub)">未簽名</span>'}
+        </div>`).join('')
+    : '<span style="font-size:12px;color:var(--sub)">無紀錄</span>';
+
+  html += blk('⚠️ 危害告知確認', `
+    <div style="color:var(--green);font-size:13px;font-weight:600;margin-bottom:14px">✅ 已確認閱讀大豐環保科技危害告知書（15項）</div>
+    <div style="font-size:12px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">👷 作業人員簽名（共 ${workers.length} 人）</div>
+    ${workerHtml}
+  `);
+
+  html += blk('📝 安衛切結書', `
+    <div style="margin-bottom:10px">
+      <div class="dl">勾選適用之作業類型</div>
+      ${tags(r.appliedHazardTypes)}
+    </div>
+    <div style="color:var(--green);font-size:13px;font-weight:600">✅ 已確認全部承諾事項（8項）</div>
+  `);
+
+  const utilStr = Object.entries(r.permit.utilities||{}).map(([k,v])=>`<span class="tag-item">${k}：${v}</span>`).join('');
+  const ppeArr = r.permit.ppe || [];
+  const ppeStr = ppeArr.map(p => `<span class="tag-item">${p.label}${p.detail?' ('+p.detail+')':''}</span>`).join('');
+
+  html += blk('📋 作業許可申請書', `
+    <div style="margin-bottom:12px">
+      <div class="dl" style="margin-bottom:6px">A. 作業內容分類</div>
+      ${tags(r.permit.workTypesA)}
+    </div>
+    <div style="margin-bottom:12px">
+      <div class="dl" style="margin-bottom:6px">B. 使用工具</div>
+      ${tags(r.permit.toolsB.concat(r.permit.toolOther?['其他：'+r.permit.toolOther]:[]))}
+    </div>
+    <div style="margin-bottom:12px">
+      <div class="dl" style="margin-bottom:6px">C. 公用需求</div>
+      ${utilStr ? `<div class="tag-list">${utilStr}</div>` : '<span style="color:var(--sub);font-size:12px">無</span>'}
+    </div>
+    <div>
+      <div class="dl" style="margin-bottom:6px">D. 所需防護具</div>
+      ${ppeStr ? `<div class="tag-list">${ppeStr}</div>` : '<span style="color:var(--sub);font-size:12px">無</span>'}
+    </div>
+  `);
+
+  html += blk('✍️ 電子簽名', `
+    <div style="margin-bottom:10px">
+      <div class="dl">承攬商負責人</div>
+      <div class="dv">${r.signee}</div>
+    </div>
+    <div>
+      <div class="dl" style="margin-bottom:6px">簽名</div>
+      <img class="sig-img" src="${r.signature}" alt="電子簽名"/>
+    </div>
+  `);
+
+  document.getElementById('detail-content').innerHTML = html;
+  showView('rec-detail');
+}
+
+async function confirmDelete(id){
+  if(confirm('確定要刪除此進場申請紀錄？此操作無法復原。')){
+    showLoading('刪除中…');
+    try {
+      const res = await apiPost({ action: 'delete', id });
+      if(!res.success) throw new Error(res.error);
+      toast('紀錄已刪除');
+      showView('records');
+    } catch(ex) {
+      toast('刪除失敗：' + ex.message, 'bad');
+    } finally {
+      hideLoading();
+    }
+  }
+}
+
+// ════════════════════════════════════════════════
+//  CSV export
+// ════════════════════════════════════════════════
+async function exportCSV(){
+  showLoading('匯出中…');
+  let all = [];
+  try {
+    const res = await apiGet({ action: 'list' });
+    if(!res.success) throw new Error(res.error);
+    all = res.records || [];
+  } catch(ex) {
+    toast('匯出失敗：' + ex.message, 'bad');
+    hideLoading();
+    return;
+  } finally {
+    hideLoading();
+  }
+  if(!all.length){ toast('目前無紀錄可匯出','bad'); return; }
+  const header = ['紀錄編號','送出時間','承攬商名稱','合約編號','工程名稱','現場負責人','聯絡電話','作業開始','作業結束','工作區域','作業時段','危害告知確認','切結書確認','作業類型(A)','使用工具(B)','公用需求(C)','負責人姓名'];
+  const rows = all.map(r=>[
+    r.id,
+    new Date(r.submittedAt).toLocaleString('zh-TW'),
+    r.basic.company, r.basic.contract, r.basic.workname, r.basic.supervisor,
+    r.basic.phone, r.basic.dateStart, r.basic.dateEnd, r.basic.area,
+    r.basic.timePeriod?.join('/'),
+    r.hazardConfirmed?'是':'否',
+    r.declarationConfirmed?'是':'否',
+    r.permit.workTypesA?.join('|'),
+    r.permit.toolsB?.join('|'),
+    Object.entries(r.permit.utilities||{}).map(([k,v])=>k+'='+v).join('|'),
+    r.signee,
+  ].map(v=>'"'+(v||'').toString().replace(/"/g,'""')+'"'));
+
+  const csv = '﻿' + [header, ...rows].map(r=>r.join(',')).join('\r\n');
+  const blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '承攬商進場紀錄_' + new Date().toLocaleDateString('zh-TW').replace(/\//g,'')+'.csv';
+  a.click();
+  toast('CSV 匯出成功','ok');
+}
+
+// ════════════════════════════════════════════════
+//  Edit Modal
+// ════════════════════════════════════════════════
+let editId = null;
+
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+function parseUtilVal(val, unit){
+  if(!val) return '';
+  const part = val.split(' / ').find(p => p.endsWith(' ' + unit));
+  return part ? part.slice(0, -unit.length - 1) : '';
+}
+
+function openEditModal(id){
+  const r = (_currentRecord && _currentRecord.id === id) ? _currentRecord : null;
+  if(!r){ toast('請先開啟紀錄詳情後再編輯','bad'); return; }
+  editId = id;
+  const b = r.basic, p = r.permit || {}, util = p.utilities || {};
+
+  const periodChips = ['日間','夜間','假日'].map(t => {
+    const icon = t==='日間'?'☀️':t==='夜間'?'🌙':'📅';
+    const sel = b.timePeriod?.includes(t) ? 'sel' : '';
+    return `<label class="chk-chip chk-chip-lg ${sel}"><input type="checkbox" value="${t}" onchange="chipChange(this)" ${sel?'checked':''}> ${icon} ${t}</label>`;
+  }).join('');
+
+  const hazardChips = WORK_HAZARDS.map(w => {
+    const sel = r.appliedHazardTypes?.includes(w.t) ? 'sel' : '';
+    return `<label class="chk-chip ${sel}"><input type="checkbox" value="${escAttr(w.t)}" onchange="chipChange(this)" ${sel?'checked':''}> ${w.t}</label>`;
+  }).join('');
+
+  const typeAChips = WORK_TYPES_A.map(t => {
+    const sel = p.workTypesA?.includes(t) ? 'sel' : '';
+    return `<label class="chk-chip ${sel}"><input type="checkbox" value="${escAttr(t)}" onchange="chipChange(this)" ${sel?'checked':''}> ${t}</label>`;
+  }).join('');
+
+  const toolChips = TOOLS_B.map(t => {
+    const sel = p.toolsB?.includes(t) ? 'sel' : '';
+    const fn = t==='其他' ? 'editToolOther(this)' : 'chipChange(this)';
+    return `<label class="chk-chip ${sel}"><input type="checkbox" value="${escAttr(t)}" onchange="${fn}" ${sel?'checked':''}> ${t}</label>`;
+  }).join('');
+
+  const workers = r.workers || [];
+  const workerRows = workers.map((w,i) => `
+    <div class="edit-worker-row" data-orig-idx="${i}">
+      <span style="font-size:11px;color:var(--sub);font-weight:700;min-width:60px">人員 ${i+1}</span>
+      <input class="fi" value="${esc(w.name)}" placeholder="姓名" style="max-width:180px;flex:1"/>
+      ${w.signature ? `<img class="sig-preview" src="${w.signature}" title="原始簽名"/>` : '<span style="font-size:11px;color:var(--sub)">無簽名</span>'}
+      <button class="btn btn-sm btn-danger" onclick="this.closest('.edit-worker-row').remove()">✕</button>
+    </div>`).join('');
+
+  document.getElementById('edit-body').innerHTML = `
+    <div class="edit-sec">
+      <div class="edit-sec-lbl">📝 基本資料</div>
+      <div class="frow">
+        <div class="fg"><label class="req">承攬商名稱</label><input class="fi" id="e-company" value="${esc(b.company)}"/></div>
+        <div class="fg"><label>合約/訂單編號</label><input class="fi" id="e-contract" value="${esc(b.contract)}"/></div>
+      </div>
+      <div class="fg"><label class="req">工程/作業名稱</label><input class="fi" id="e-workname" value="${esc(b.workname)}"/></div>
+      <div class="frow">
+        <div class="fg"><label class="req">現場負責人</label><input class="fi" id="e-supervisor" value="${esc(b.supervisor)}"/></div>
+        <div class="fg"><label>監工/安衛管理員</label><input class="fi" id="e-inspector" value="${esc(b.inspector||'')}"/></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="req">聯絡電話</label><input class="fi" id="e-phone" value="${esc(b.phone)}"/></div>
+        <div class="fg"><label>傳真</label><input class="fi" id="e-fax" value="${esc(b.fax||'')}"/></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="req">作業開始日期</label><input class="fi" id="e-date-start" type="date" value="${b.dateStart}"/></div>
+        <div class="fg"><label class="req">作業結束日期</label><input class="fi" id="e-date-end" type="date" value="${b.dateEnd}"/></div>
+      </div>
+      <div class="fg"><label class="req">工作區域</label><input class="fi" id="e-area" value="${esc(b.area)}"/></div>
+      <div class="fg"><label class="req">作業時段</label><div class="chk-wrap" style="margin-top:6px">${periodChips}</div></div>
+    </div>
+
+    <div class="edit-sec">
+      <div class="edit-sec-lbl">📝 切結書—本次適用作業類型</div>
+      <div class="chk-wrap" id="e-hazard-wrap">${hazardChips}</div>
+    </div>
+
+    <div class="edit-sec">
+      <div class="edit-sec-lbl">📋 作業許可—A. 作業內容分類</div>
+      <div class="chk-wrap" id="e-type-a-wrap">${typeAChips}</div>
+    </div>
+
+    <div class="edit-sec">
+      <div class="edit-sec-lbl">📋 作業許可—B. 使用工具</div>
+      <div class="chk-wrap">${toolChips}</div>
+      <div id="e-tool-other-wrap" style="display:${p.toolsB?.includes('其他')?'block':'none'};margin-top:8px">
+        <input class="fi" id="e-tool-other" value="${esc(p.toolOther||'')}" placeholder="請描述其他工具" style="max-width:360px"/>
+      </div>
+    </div>
+
+    <div class="edit-sec">
+      <div class="edit-sec-lbl">📋 作業許可—C. 公用需求</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div>
+          <label class="chk-chip chk-chip-lg ${util['用電需求']?'sel':''}">
+            <input type="checkbox" id="eu-elec" onchange="editToggleUtil('elec',this)" ${util['用電需求']?'checked':''}> ⚡ 用電需求
+          </label>
+          <div id="eu-elec-det" style="display:${util['用電需求']?'block':'none'};margin-top:6px;padding-left:6px">
+            <div class="frow3">
+              <div class="fg"><label>KW</label><input class="fi" id="eu-elec-kw" value="${parseUtilVal(util['用電需求'],'KW')}"/></div>
+              <div class="fg"><label>V</label><input class="fi" id="eu-elec-v" value="${parseUtilVal(util['用電需求'],'V')}"/></div>
+              <div class="fg"><label>相數</label><input class="fi" id="eu-elec-ph" value="${parseUtilVal(util['用電需求'],'∮')}"/></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label class="chk-chip chk-chip-lg ${util['UPW用水']?'sel':''}">
+            <input type="checkbox" id="eu-upw" onchange="editToggleUtil('upw',this)" ${util['UPW用水']?'checked':''}> 💧 UPW 用水
+          </label>
+          <div id="eu-upw-det" style="display:${util['UPW用水']?'block':'none'};margin-top:6px;padding-left:6px">
+            <div class="fg" style="max-width:180px"><label>M³/day</label><input class="fi" id="eu-upw-v" value="${(util['UPW用水']||'').replace(' M³/day','')}"/></div>
+          </div>
+        </div>
+        <div>
+          <label class="chk-chip chk-chip-lg ${util['CW冷卻水']?'sel':''}">
+            <input type="checkbox" id="eu-cw" onchange="editToggleUtil('cw',this)" ${util['CW冷卻水']?'checked':''}> 🌊 CW 冷卻水
+          </label>
+          <div id="eu-cw-det" style="display:${util['CW冷卻水']?'block':'none'};margin-top:6px;padding-left:6px">
+            <div class="fg" style="max-width:180px"><label>M³/day</label><input class="fi" id="eu-cw-v" value="${(util['CW冷卻水']||'').replace(' M³/day','')}"/></div>
+          </div>
+        </div>
+        <div>
+          <label class="chk-chip chk-chip-lg ${util['壓縮空氣']?'sel':''}">
+            <input type="checkbox" id="eu-air" onchange="editToggleUtil('air',this)" ${util['壓縮空氣']?'checked':''}> 💨 壓縮空氣
+          </label>
+          <div id="eu-air-det" style="display:${util['壓縮空氣']?'block':'none'};margin-top:6px;padding-left:6px">
+            <div class="fg" style="max-width:180px"><label>L/min</label><input class="fi" id="eu-air-v" value="${(util['壓縮空氣']||'').replace(' L/min','')}"/></div>
+          </div>
+        </div>
+        <label class="chk-chip chk-chip-lg ${util['火警警報中斷/隔離']?'sel':''}"><input type="checkbox" id="eu-alarm" onchange="chipChange(this)" ${util['火警警報中斷/隔離']?'checked':''}> 🔕 火警警報中斷或隔離</label>
+        <label class="chk-chip chk-chip-lg ${util['消防系統中斷']?'sel':''}"><input type="checkbox" id="eu-fire" onchange="chipChange(this)" ${util['消防系統中斷']?'checked':''}> 🚒 消防系統中斷</label>
+        <label class="chk-chip chk-chip-lg ${util['異味離線']?'sel':''}"><input type="checkbox" id="eu-odor" onchange="chipChange(this)" ${util['異味離線']?'checked':''}> 🌬️ 異味離線審核</label>
+      </div>
+    </div>
+
+    <div class="edit-sec">
+      <div class="edit-sec-lbl">👷 作業人員名單（可修改姓名或移除，簽名圖片保留原件）</div>
+      <div id="e-worker-list">${workerRows}</div>
+      <div style="font-size:11px;color:var(--sub);margin-top:6px">如需變更簽名，請讓人員重新填寫進場申請。</div>
+    </div>
+
+    <div class="edit-sec">
+      <div class="edit-sec-lbl">🦺 D. 所需防護具</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        ${PPE_ITEMS.map(item => {
+          const key = ppeKey(item.label);
+          const existing = (r.permit?.ppe||[]).find(p => p.label === item.label);
+          const checked = !!existing;
+          const detail = existing?.detail || '';
+          if(item.hasText){
+            return `<div style="display:flex;align-items:center;gap:5px">
+              <label class="chk-chip ${checked?'sel':''}">
+                <input type="checkbox" id="ep-${key}-cb" onchange="editPPEToggle('${key}',this)" ${checked?'checked':''}> ${item.n}. ${item.label}
+              </label>
+              <input class="fi" id="ep-${key}-txt" placeholder="${item.ph}" value="${esc(detail)}"
+                style="${checked?'':'display:none;'}width:120px;min-width:0;padding:5px 8px;font-size:12px;height:32px"/>
+            </div>`;
+          } else {
+            return `<label class="chk-chip ${checked?'sel':''}">
+              <input type="checkbox" id="ep-${key}-cb" onchange="chipChange(this)" ${checked?'checked':''}> ${item.n}. ${item.label}
+            </label>`;
+          }
+        }).join('')}
+      </div>
+    </div>
+
+    <div class="edit-sec">
+      <div class="edit-sec-lbl">✍️ 負責人姓名</div>
+      <div class="fg"><label class="req">承攬商負責人</label><input class="fi" id="e-signee" value="${esc(r.signee)}" style="max-width:280px"/></div>
+      <div style="font-size:11px;color:var(--sub);margin-top:4px">電子簽名圖片不可更改。</div>
+    </div>`;
+
+  document.getElementById('edit-modal').classList.add('open');
+}
+
+function escAttr(s){ return (s||'').replace(/"/g,'&quot;'); }
+
+function closeEditModal(){
+  document.getElementById('edit-modal').classList.remove('open');
+  editId = null;
+}
+
+function editToolOther(cb){
+  chipChange(cb);
+  document.getElementById('e-tool-other-wrap').style.display = cb.checked ? 'block' : 'none';
+}
+
+function editToggleUtil(key, cb){
+  chipChange(cb);
+  document.getElementById('eu-' + key + '-det').style.display = cb.checked ? 'block' : 'none';
+}
+
+function editPPEToggle(key, cb){
+  chipChange(cb);
+  const txt = document.getElementById('ep-' + key + '-txt');
+  if(txt){ txt.style.display = cb.checked ? 'inline-block' : 'none'; if(!cb.checked) txt.value = ''; }
+}
+
+async function saveEdit(){
+  const gv = id => document.getElementById(id)?.value.trim() || '';
+  const company    = gv('e-company');
+  const workname   = gv('e-workname');
+  const supervisor = gv('e-supervisor');
+  const phone      = gv('e-phone');
+  const dateStart  = gv('e-date-start');
+  const dateEnd    = gv('e-date-end');
+  const area       = gv('e-area');
+  const signee     = gv('e-signee');
+
+  if(!company||!workname||!supervisor||!phone||!dateStart||!dateEnd||!area||!signee){
+    toast('請填寫所有必填欄位（*）','bad'); return;
+  }
+  if(dateEnd < dateStart){ toast('結束日期不可早於開始日期','bad'); return; }
+
+  // 時段
+  const timePeriod = [...document.querySelectorAll('#edit-body .chk-chip input[type=checkbox]')]
+    .filter(cb => ['日間','夜間','假日'].includes(cb.value) && cb.checked).map(cb=>cb.value);
+  if(!timePeriod.length){ toast('請至少勾選一項作業時段','bad'); return; }
+
+  // 適用危害類型
+  const appliedHazardTypes = [...document.querySelectorAll('#e-hazard-wrap input:checked')].map(cb=>cb.value);
+
+  // 作業類型 A
+  const workTypesA = [...document.querySelectorAll('#e-type-a-wrap input:checked')].map(cb=>cb.value);
+  if(!workTypesA.length){ toast('請至少勾選一項作業內容分類（A）','bad'); return; }
+
+  // 工具 B
+  const toolsB = [...document.querySelectorAll('#edit-body .chk-chip input:checked')]
+    .filter(cb => TOOLS_B.includes(cb.value)).map(cb=>cb.value);
+
+  // 公用需求
+  const utilities = {};
+  if(document.getElementById('eu-elec')?.checked){
+    const kw=gv('eu-elec-kw'), v=gv('eu-elec-v'), ph=gv('eu-elec-ph');
+    utilities['用電需求'] = [kw&&kw+' KW', v&&v+' V', ph&&ph+' ∮'].filter(Boolean).join(' / ') || '是';
+  }
+  if(document.getElementById('eu-upw')?.checked)   utilities['UPW用水']       = (gv('eu-upw-v')||'是') + ' M³/day';
+  if(document.getElementById('eu-cw')?.checked)    utilities['CW冷卻水']      = (gv('eu-cw-v')||'是')  + ' M³/day';
+  if(document.getElementById('eu-air')?.checked)   utilities['壓縮空氣']      = (gv('eu-air-v')||'是') + ' L/min';
+  if(document.getElementById('eu-alarm')?.checked) utilities['火警警報中斷/隔離'] = '是';
+  if(document.getElementById('eu-fire')?.checked)  utilities['消防系統中斷']  = '是';
+  if(document.getElementById('eu-odor')?.checked)  utilities['異味離線']      = '是';
+
+  // 作業人員（保留原始簽名）
+  const orig = _currentRecord;
+  if(!orig){ toast('找不到原始紀錄','bad'); return; }
+  const origWorkers = orig?.workers || [];
+  const workers = [...document.querySelectorAll('#e-worker-list .edit-worker-row')].map(row => {
+    const origIdx = parseInt(row.dataset.origIdx);
+    const name = row.querySelector('input.fi')?.value.trim() || '';
+    return { name, signature: origWorkers[origIdx]?.signature || null };
+  }).filter(w => w.name || w.signature);
+
+  const updated = {
+    ...orig,
+    basic:{
+      ...orig.basic,
+      company, contract: gv('e-contract'), workname, supervisor,
+      inspector: gv('e-inspector'), phone, fax: gv('e-fax'),
+      dateStart, dateEnd, area, timePeriod,
+    },
+    appliedHazardTypes,
+    permit:{ ...orig.permit, workTypesA, toolsB, toolOther: gv('e-tool-other'), utilities,
+      ppe: PPE_ITEMS.map(item => {
+        const key = ppeKey(item.label);
+        const cb = document.getElementById('ep-' + key + '-cb');
+        if(!cb?.checked) return null;
+        const detail = item.hasText ? (document.getElementById('ep-' + key + '-txt')?.value.trim() || '') : null;
+        return detail !== null ? { label: item.label, detail } : { label: item.label };
+      }).filter(Boolean)
+    },
+    workers,
+    signee,
+    editedAt: new Date().toISOString(),
+  };
+
+  closeEditModal();
+  showLoading('儲存中…');
+  try {
+    const res = await apiPost({ action: 'update', id: editId, data: updated });
+    if(!res.success) throw new Error(res.error);
+    _currentRecord = updated;
+    toast('紀錄已儲存','ok');
+    viewRecord(editId);
+  } catch(ex) {
+    toast('儲存失敗：' + ex.message, 'bad');
+  } finally {
+    hideLoading();
+  }
+}
+
+// ════════════════════════════════════════════════
+//  Full-screen Signature
+// ════════════════════════════════════════════════
+let _sigFsCtx = null, _sigFsDrawing = false, _sigFsHasData = false, _sigFsCallback = null;
+
+function openSigFS(existingDataURL, onConfirm){
+  _sigFsCallback = onConfirm;
+  _sigFsHasData = false;
+  _sigFsDrawing = false;
+  document.getElementById('sig-fullscreen').classList.add('open');
+  requestAnimationFrame(()=>{
+    const body   = document.getElementById('sig-fs-body');
+    const canvas = document.getElementById('sig-fs-canvas');
+    canvas.width  = body.clientWidth;
+    canvas.height = body.clientHeight;
+    _sigFsCtx = canvas.getContext('2d');
+    _sigFsCtx.strokeStyle='#1e293b'; _sigFsCtx.lineWidth=2.5; _sigFsCtx.lineCap='round'; _sigFsCtx.lineJoin='round';
+    document.getElementById('sig-fs-hint').style.display = '';
+    if(existingDataURL){
+      const img = new Image();
+      img.onload = ()=>{ _sigFsCtx.drawImage(img,0,0,canvas.width,canvas.height); _sigFsHasData=true; document.getElementById('sig-fs-hint').style.display='none'; };
+      img.src = existingDataURL;
+    }
+  });
+}
+
+function clearSigFS(){
+  const c = document.getElementById('sig-fs-canvas');
+  _sigFsCtx.clearRect(0,0,c.width,c.height);
+  _sigFsHasData = false;
+  document.getElementById('sig-fs-hint').style.display = '';
+}
+
+function cancelSigFS(){
+  document.getElementById('sig-fullscreen').classList.remove('open');
+  _sigFsCallback = null;
+}
+
+function confirmSigFS(){
+  const c = document.getElementById('sig-fs-canvas');
+  const dataURL = _sigFsHasData ? c.toDataURL() : null;
+  document.getElementById('sig-fullscreen').classList.remove('open');
+  if(_sigFsCallback) _sigFsCallback(dataURL);
+  _sigFsCallback = null;
+}
+
+function openSigFSMain(){
+  const c = document.getElementById('sig-canvas');
+  openSigFS(sigHasData ? c.toDataURL() : null, (dataURL)=>{
+    sigCtx.clearRect(0,0,c.width,c.height);
+    if(dataURL){ const i=new Image(); i.onload=()=>{ sigCtx.drawImage(i,0,0,c.width,c.height); sigHasData=true; updateHint(); }; i.src=dataURL; }
+    else { sigHasData=false; updateHint(); }
+  });
+}
+
+function openSigFSWorker(id){
+  const c = document.getElementById('wsig-canvas-'+id);
+  openSigFS(workerStates[id]?.hasData ? c.toDataURL() : null, (dataURL)=>{
+    const ctx = workerStates[id].ctx;
+    ctx.clearRect(0,0,c.width,c.height);
+    if(dataURL){ const i=new Image(); i.onload=()=>{ ctx.drawImage(i,0,0,c.width,c.height); workerStates[id].hasData=true; markWorkerSig(id); }; i.src=dataURL; }
+    else { workerStates[id].hasData=false; document.getElementById('wsig-hint-'+id).style.display=''; }
+  });
+}
+
+function initSigFSEvents(){
+  const canvas = document.getElementById('sig-fs-canvas');
+  function pos(e){ const r=canvas.getBoundingClientRect(), s=e.touches?e.touches[0]:e; return [s.clientX-r.left, s.clientY-r.top]; }
+  canvas.addEventListener('mousedown',  e=>{ _sigFsDrawing=true; const [x,y]=pos(e); _sigFsCtx.beginPath(); _sigFsCtx.moveTo(x,y); });
+  canvas.addEventListener('mousemove',  e=>{ if(!_sigFsDrawing)return; const [x,y]=pos(e); _sigFsCtx.lineTo(x,y); _sigFsCtx.stroke(); _sigFsHasData=true; document.getElementById('sig-fs-hint').style.display='none'; });
+  canvas.addEventListener('mouseup',    ()=>_sigFsDrawing=false);
+  canvas.addEventListener('mouseleave', ()=>_sigFsDrawing=false);
+  canvas.addEventListener('touchstart', e=>{ e.preventDefault(); _sigFsDrawing=true; const [x,y]=pos(e); _sigFsCtx.beginPath(); _sigFsCtx.moveTo(x,y); },{passive:false});
+  canvas.addEventListener('touchmove',  e=>{ e.preventDefault(); if(!_sigFsDrawing)return; const [x,y]=pos(e); _sigFsCtx.lineTo(x,y); _sigFsCtx.stroke(); _sigFsHasData=true; document.getElementById('sig-fs-hint').style.display='none'; },{passive:false});
+  canvas.addEventListener('touchend',   ()=>_sigFsDrawing=false);
+}
+
+// ════════════════════════════════════════════════
+//  Init
+// ════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', ()=>{
+  buildRules();
+  buildHazardTable();
+  buildCommitments();
+  buildCheckboxes();
+  buildPPE();
+  initSig();
+  initSigFSEvents();
+  showView('login');
+});
+
+window.addEventListener('resize', ()=>{
+  if(document.getElementById('v-wizard').style.display!=='none'){
+    const canvas = document.getElementById('sig-canvas');
+    const outer = document.getElementById('sig-outer');
+    if(outer.clientWidth && canvas.width !== outer.clientWidth){
+      const img = sigHasData ? canvas.toDataURL() : null;
+      canvas.width = outer.clientWidth;
+      if(img){ const i=new Image(); i.onload=()=>sigCtx.drawImage(i,0,0); i.src=img; }
+    }
+  }
+});
+</script>
+
+<!-- ── Full-screen Signature Overlay ── -->
+<div id="sig-fullscreen">
+  <div class="sig-fs-hdr">
+    <button class="hdr-btn" onclick="cancelSigFS()" style="background:rgba(220,38,38,.8);border-color:#dc2626">✕ 取消</button>
+    <span class="sig-fs-title">請在框內簽名</span>
+    <div style="display:flex;gap:8px">
+      <button class="hdr-btn" onclick="clearSigFS()">清除</button>
+      <button class="hdr-btn" onclick="confirmSigFS()" style="background:rgba(22,163,74,.85);border-color:#16a34a">✓ 完成</button>
+    </div>
+  </div>
+  <div id="sig-fs-body">
+    <canvas id="sig-fs-canvas"></canvas>
+    <div class="sig-hint" id="sig-fs-hint" style="font-size:15px;line-height:2.5">請在此處簽名</div>
+  </div>
+</div>
+</body>
+</html>
