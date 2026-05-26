@@ -21,6 +21,9 @@
            color:#fff;font-size:12px;cursor:pointer;transition:background .15s;}
   .hdr-btn:hover{background:rgba(255,255,255,.2);}
   .hdr-btn.danger:hover{background:var(--red);border-color:var(--red);}
+  .hdr-brand{display:flex;align-items:center;gap:7px;margin-left:auto;flex-shrink:0;}
+  .hdr-brand img{height:24px;object-fit:contain;background:#fff;border-radius:3px;padding:1px 3px;}
+  .hdr-brand span{font-size:12px;color:#94a3b8;font-weight:600;white-space:nowrap;}
 
   /* breadcrumb */
   #breadcrumb{padding:7px 20px;background:#fff;border-bottom:1px solid var(--border);
@@ -242,9 +245,12 @@
 <header>
   <button class="hdr-btn" onclick="location.href='../'" title="回到職安管理系統入口">← 系統入口</button>
   <h1>⚠️ 危害鑑別及風險評估查詢系統</h1>
-  <span class="subtitle">大豐環保科技 ｜ 115年度</span>
   <button class="hdr-btn" onclick="exportHtml()" title="匯出目前資料為 HTML 檔">↓ 匯出 HTML</button>
   <button class="hdr-btn danger" onclick="confirmReset()" title="清除所有變更，還原至預設資料">↺ 重置資料</button>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
 </header>
 
 <div id="breadcrumb">
