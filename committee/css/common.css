@@ -1,0 +1,506 @@
+/* =============================================
+   common.css — 職災分析報告共用樣式
+   大豐環保｜法務及環安課
+   ============================================= */
+
+/* ===== CSS 變數 ===== */
+:root {
+  --primary: #1e4a6e;
+  --primary-light: #2a6496;
+  --primary-dark: #153a57;
+  --accent: #4caf50;
+  --accent-light: #81c784;
+  --warning: #ff9800;
+  --warning-light: #ffb74d;
+  --danger: #e53935;
+  --danger-light: #ef5350;
+  --info: #2196f3;
+  --info-light: #64b5f6;
+  --bg: #f5f7fa;
+  --card-bg: #ffffff;
+  --text: #333333;
+  --text-light: #666666;
+  --border: #e0e0e0;
+  --shadow: 0 2px 8px rgba(0,0,0,0.1);
+  --shadow-hover: 0 4px 16px rgba(0,0,0,0.15);
+  --radius: 12px;
+}
+
+/* ===== Reset ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* ===== 主內容容器 ===== */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ===== 返回連結 ===== */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: white;
+  color: var(--primary);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.9em;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  transition: all 0.2s;
+}
+.back-link:hover {
+  background: var(--primary);
+  color: white;
+}
+.summary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: white;
+  color: var(--primary);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.9em;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  border: 2px solid var(--primary);
+  transition: all 0.2s;
+}
+.summary-link:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* ===== 封面卡片 ===== */
+.cover-card {
+  color: white;
+  border-radius: var(--radius);
+  padding: 60px 40px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.cover-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+.cover-card h1 {
+  font-size: 2.2em;
+  margin-bottom: 10px;
+  position: relative;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.cover-card .subtitle {
+  font-size: 1.1em;
+  opacity: 0.9;
+  position: relative;
+}
+.cover-card .date {
+  margin-top: 20px;
+  font-size: 0.95em;
+  opacity: 0.8;
+  position: relative;
+}
+
+/* ===== KPI 網格 ===== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+.kpi-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--primary);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+.kpi-card .big-number {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.2;
+}
+.kpi-card .kpi-label {
+  font-size: 0.85em;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+.kpi-card.danger { border-top-color: var(--danger); }
+.kpi-card.danger .big-number { color: var(--danger); }
+.kpi-card.warning { border-top-color: var(--warning); }
+.kpi-card.warning .big-number { color: var(--warning); }
+.kpi-card.accent { border-top-color: var(--accent); }
+.kpi-card.accent .big-number { color: var(--accent); }
+.kpi-card.info { border-top-color: var(--info); }
+.kpi-card.info .big-number { color: var(--info); }
+
+/* ===== 通用卡片 ===== */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.card-header {
+  background: var(--primary);
+  color: white;
+  padding: 16px 24px;
+  font-size: 1.15em;
+  font-weight: 600;
+}
+.card-header.warning-header { background: var(--warning); }
+.card-header.danger-header { background: var(--danger); }
+.card-header.accent-header { background: var(--accent); }
+.card-header.info-header { background: var(--info); }
+.card-body { padding: 24px; }
+
+/* ===== 章節標題 ===== */
+.chapter {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  scroll-margin-top: 20px;
+}
+.chapter-title {
+  font-size: 1.6em;
+  color: var(--primary);
+  border-left: 5px solid var(--primary);
+  padding-left: 16px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+.chapter-subtitle {
+  color: var(--text-light);
+  font-size: 0.95em;
+  padding-left: 21px;
+}
+
+/* ===== 高亮卡片 ===== */
+.highlight-card {
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.warning-card {
+  background: linear-gradient(135deg, #fff3e0, #fff8e1);
+  border-left: 4px solid var(--warning);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.danger-card {
+  background: linear-gradient(135deg, #ffebee, #fce4ec);
+  border-left: 4px solid var(--danger);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.info-card {
+  background: linear-gradient(135deg, #e3f2fd, #e1f5fe);
+  border-left: 4px solid var(--info);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+
+/* ===== 圓餅圖 ===== */
+.chart-container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.pie-chart {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+.pie-chart::after {
+  content: '';
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  background: white;
+  border-radius: 50%;
+}
+.chart-legend { display: flex; flex-direction: column; gap: 10px; }
+.legend-item { display: flex; align-items: center; gap: 10px; font-size: 0.95em; }
+.legend-color { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; }
+
+/* ===== 表格 ===== */
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.92em; }
+th { background: var(--primary); color: white; padding: 12px 14px; text-align: left; font-weight: 600; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:nth-child(even) { background: #f8f9fa; }
+tr:hover { background: #e3f2fd; }
+
+/* ===== 徽章/風險等級 ===== */
+.badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.8em; font-weight: 600; }
+.badge-danger { background: #ffcdd2; color: #c62828; }
+.badge-warning { background: #ffe0b2; color: #e65100; }
+.badge-success { background: #c8e6c9; color: #2e7d32; }
+.badge-info { background: #bbdefb; color: #1565c0; }
+.risk-extreme { background: #b71c1c; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 600; }
+.risk-high { background: #e53935; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 600; }
+.risk-medium { background: #ff9800; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 600; }
+.risk-low { background: #4caf50; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 600; }
+
+/* ===== 長條圖 ===== */
+.bar-chart { margin: 12px 0; }
+.bar-row { display: flex; align-items: center; margin-bottom: 8px; gap: 10px; }
+.bar-label { width: 140px; text-align: right; font-size: 0.88em; flex-shrink: 0; }
+.bar-track { flex: 1; background: #e0e0e0; border-radius: 6px; height: 24px; overflow: hidden; }
+.bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  font-size: 0.78em;
+  color: white;
+  font-weight: 600;
+  transition: width 0.6s ease;
+}
+.bar-value { font-size: 0.88em; font-weight: 600; width: 50px; flex-shrink: 0; }
+
+/* ===== 雙欄/三欄佈局 ===== */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+/* ===== 流程圖 ===== */
+.flow-section { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+.flow-box {
+  background: var(--primary);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.92em;
+}
+.flow-box.warning-box { background: var(--warning); }
+.flow-box.danger-box { background: var(--danger); }
+.flow-box.accent-box { background: var(--accent); }
+.flow-arrow { font-size: 1.5em; color: var(--text-light); }
+
+/* ===== 流程圖 Tooltip ===== */
+.flow-box .tip-wrap { position: relative; display: inline; }
+.flow-box .tip-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: rgba(255,255,255,.45); color: inherit;
+  font-size: 8px; font-weight: 700; line-height: 1;
+  margin-left: 3px; vertical-align: super; cursor: help;
+}
+.flow-box .tip-text {
+  display: none; position: absolute; bottom: calc(100% + 6px); left: 50%;
+  transform: translateX(-50%); width: max-content; max-width: 220px;
+  background: #222; color: #fff; font-size: 0.88em; line-height: 1.4;
+  padding: 6px 10px; border-radius: 6px; z-index: 10;
+  white-space: normal; text-align: left; pointer-events: none;
+}
+.flow-box .tip-wrap:hover .tip-text { display: block; }
+
+/* ===== 瑞士乳酪模型 ===== */
+.swiss-cheese { display: flex; align-items: center; gap: 8px; overflow-x: auto; padding: 20px 0; }
+.cheese-layer {
+  min-width: 120px;
+  background: linear-gradient(180deg, #ffcc80, #ffb74d);
+  border-radius: 12px;
+  padding: 16px 12px;
+  text-align: center;
+  font-size: 0.82em;
+  font-weight: 600;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.cheese-layer .hole {
+  width: 20px;
+  height: 20px;
+  background: var(--bg);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.cheese-arrow { font-size: 1.8em; color: var(--danger); flex-shrink: 0; }
+
+/* ===== 清單樣式 ===== */
+.styled-list { list-style: none; padding: 0; }
+.styled-list li {
+  padding: 8px 0 8px 24px;
+  position: relative;
+  border-bottom: 1px solid #f0f0f0;
+}
+.styled-list li::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+.styled-list li.danger-li::before { background: var(--danger); }
+.styled-list li.warning-li::before { background: var(--warning); }
+
+/* ===== 優先序卡片 ===== */
+.priority-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--primary);
+}
+.priority-card.p1 { border-left-color: var(--danger); }
+.priority-card.p2 { border-left-color: var(--warning); }
+.priority-card.p3 { border-left-color: var(--info); }
+.priority-rank { font-size: 1.8em; font-weight: 800; line-height: 1; flex-shrink: 0; }
+.priority-card.p1 .priority-rank { color: var(--danger); }
+.priority-card.p2 .priority-rank { color: var(--warning); }
+.priority-card.p3 .priority-rank { color: var(--info); }
+
+/* ===== 關鍵發現 ===== */
+.key-finding {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 10px 0;
+  font-size: 0.93em;
+  border: 1px solid var(--border);
+}
+.key-finding strong { color: var(--primary); }
+
+/* ===== 分隔線 ===== */
+.divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border), transparent);
+  margin: 20px 0;
+}
+
+/* ===== 趨勢箭頭 ===== */
+.trend-up { color: var(--danger); font-weight: 700; }
+.trend-down { color: var(--accent); font-weight: 700; }
+
+/* ===== 頁尾 ===== */
+.footer {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 0.85em;
+  padding: 30px 0;
+  margin-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+/* ===== 回到頂部按鈕 ===== */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 44px;
+  height: 44px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.3em;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  z-index: 999;
+}
+.back-to-top.visible { opacity: 1; visibility: visible; }
+.back-to-top:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+/* ===== 響應式：平板 & 手機 ===== */
+@media (max-width: 768px) {
+  .two-col, .three-col { grid-template-columns: 1fr; }
+  .cover-card { padding: 40px 20px; }
+  .cover-card h1 { font-size: 1.6em; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .chart-container { flex-direction: column; }
+  .bar-label { width: 100px; font-size: 0.8em; }
+  .swiss-cheese { flex-direction: column; }
+  .flow-section { justify-content: center; }
+  .priority-card { flex-direction: column; gap: 10px; }
+}
+
+@media (max-width: 768px) {
+  body { font-size: 14px; line-height: 1.6; }
+  .container { padding: 12px 10px; }
+  .cover-card { padding: 30px 16px; margin-bottom: 20px; border-radius: 8px; }
+  .cover-card h1 { font-size: 1.35em; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpi-card { padding: 16px 12px; }
+  .kpi-card .big-number { font-size: 1.8em; }
+  .chapter-title { font-size: 1.2em; padding-left: 12px; }
+  .card-header { padding: 12px 16px; font-size: 1em; }
+  .card-body { padding: 14px 12px; overflow-x: auto; }
+  .bar-label { width: 80px; font-size: 0.75em; }
+  .bar-value { width: 40px; font-size: 0.78em; }
+  .bar-fill { font-size: 0.7em; padding-left: 4px; }
+  .pie-chart { width: 160px; height: 160px; }
+  table { font-size: 0.8em; min-width: 420px; }
+  .back-to-top { width: 38px; height: 38px; bottom: 20px; right: 16px; font-size: 1.1em; }
+}
+
+/* ===== 列印模式 ===== */
+@media print {
+  body { font-size: 12px; }
+  .card, .cover-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+  .back-to-top, .back-link { display: none !important; }
+}

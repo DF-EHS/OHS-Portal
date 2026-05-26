@@ -1,0 +1,2111 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年Q2 職安衛委員會報告｜大豐環保</title>
+  <style>/* =============================================
+   common.css — 職災分析報告共用樣式
+   大豐環保｜法務及環安課
+   ============================================= */
+
+/* ===== CSS 變數 ===== */
+:root {
+  --primary: #1e4a6e;
+  --primary-light: #2a6496;
+  --primary-dark: #153a57;
+  --accent: #4caf50;
+  --accent-light: #81c784;
+  --warning: #ff9800;
+  --warning-light: #ffb74d;
+  --danger: #e53935;
+  --danger-light: #ef5350;
+  --info: #2196f3;
+  --info-light: #64b5f6;
+  --bg: #f5f7fa;
+  --card-bg: #ffffff;
+  --text: #333333;
+  --text-light: #666666;
+  --border: #e0e0e0;
+  --shadow: 0 2px 8px rgba(0,0,0,0.1);
+  --shadow-hover: 0 4px 16px rgba(0,0,0,0.15);
+  --radius: 12px;
+}
+
+/* ===== Reset ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* ===== 主內容容器 ===== */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ===== 返回連結 ===== */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: white;
+  color: var(--primary);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.9em;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  transition: all 0.2s;
+}
+.back-link:hover {
+  background: var(--primary);
+  color: white;
+}
+.summary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: white;
+  color: var(--primary);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.9em;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  border: 2px solid var(--primary);
+  transition: all 0.2s;
+}
+.summary-link:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* ===== 封面卡片 ===== */
+.cover-card {
+  color: white;
+  border-radius: var(--radius);
+  padding: 60px 40px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.cover-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+.cover-card h1 {
+  font-size: 2.2em;
+  margin-bottom: 10px;
+  position: relative;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.cover-card .subtitle {
+  font-size: 1.1em;
+  opacity: 0.9;
+  position: relative;
+}
+.cover-card .date {
+  margin-top: 20px;
+  font-size: 0.95em;
+  opacity: 0.8;
+  position: relative;
+}
+
+/* ===== KPI 網格 ===== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+.kpi-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--primary);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+.kpi-card .big-number {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.2;
+}
+.kpi-card .kpi-label {
+  font-size: 0.85em;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+.kpi-card.danger { border-top-color: var(--danger); }
+.kpi-card.danger .big-number { color: var(--danger); }
+.kpi-card.warning { border-top-color: var(--warning); }
+.kpi-card.warning .big-number { color: var(--warning); }
+.kpi-card.accent { border-top-color: var(--accent); }
+.kpi-card.accent .big-number { color: var(--accent); }
+.kpi-card.info { border-top-color: var(--info); }
+.kpi-card.info .big-number { color: var(--info); }
+
+/* ===== 通用卡片 ===== */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.card-header {
+  background: var(--primary);
+  color: white;
+  padding: 16px 24px;
+  font-size: 1.15em;
+  font-weight: 600;
+}
+.card-header.warning-header { background: var(--warning); }
+.card-header.danger-header { background: var(--danger); }
+.card-header.accent-header { background: var(--accent); }
+.card-header.info-header { background: var(--info); }
+.card-body { padding: 24px; }
+
+/* ===== 章節標題 ===== */
+.chapter {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  scroll-margin-top: 20px;
+}
+.chapter-title {
+  font-size: 1.6em;
+  color: var(--primary);
+  border-left: 5px solid var(--primary);
+  padding-left: 16px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+.chapter-subtitle {
+  color: var(--text-light);
+  font-size: 0.95em;
+  padding-left: 21px;
+}
+
+/* ===== 高亮卡片 ===== */
+.highlight-card {
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.warning-card {
+  background: linear-gradient(135deg, #fff3e0, #fff8e1);
+  border-left: 4px solid var(--warning);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.danger-card {
+  background: linear-gradient(135deg, #ffebee, #fce4ec);
+  border-left: 4px solid var(--danger);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.info-card {
+  background: linear-gradient(135deg, #e3f2fd, #e1f5fe);
+  border-left: 4px solid var(--info);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+
+/* ===== 圓餅圖 ===== */
+.chart-container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.pie-chart {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+.pie-chart::after {
+  content: '';
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  background: white;
+  border-radius: 50%;
+}
+.chart-legend { display: flex; flex-direction: column; gap: 10px; }
+.legend-item { display: flex; align-items: center; gap: 10px; font-size: 0.95em; }
+.legend-color { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; }
+
+/* ===== 表格 ===== */
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.92em; }
+th { background: var(--primary); color: white; padding: 12px 14px; text-align: left; font-weight: 600; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:nth-child(even) { background: #f8f9fa; }
+tr:hover { background: #e3f2fd; }
+
+/* ===== 徽章/風險等級 ===== */
+.badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.8em; font-weight: 600; }
+.badge-danger { background: #ffcdd2; color: #c62828; }
+.badge-warning { background: #ffe0b2; color: #e65100; }
+.badge-success { background: #c8e6c9; color: #2e7d32; }
+.badge-info { background: #bbdefb; color: #1565c0; }
+.risk-extreme { background: #b71c1c; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 600; }
+.risk-high { background: #e53935; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 600; }
+.risk-medium { background: #ff9800; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 600; }
+.risk-low { background: #4caf50; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 600; }
+
+/* ===== 長條圖 ===== */
+.bar-chart { margin: 12px 0; }
+.bar-row { display: flex; align-items: center; margin-bottom: 8px; gap: 10px; }
+.bar-label { width: 140px; text-align: right; font-size: 0.88em; flex-shrink: 0; }
+.bar-track { flex: 1; background: #e0e0e0; border-radius: 6px; height: 24px; overflow: hidden; }
+.bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  font-size: 0.78em;
+  color: white;
+  font-weight: 600;
+  transition: width 0.6s ease;
+}
+.bar-value { font-size: 0.88em; font-weight: 600; width: 50px; flex-shrink: 0; }
+
+/* ===== 雙欄/三欄佈局 ===== */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.four-col { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+/* ===== 流程圖 ===== */
+.flow-section { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+.flow-box {
+  background: var(--primary);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.92em;
+}
+.flow-box.warning-box { background: var(--warning); }
+.flow-box.danger-box { background: var(--danger); }
+.flow-box.accent-box { background: var(--accent); }
+.flow-arrow { font-size: 1.5em; color: var(--text-light); }
+
+/* ===== 流程圖 Tooltip ===== */
+.flow-box .tip-wrap { position: relative; display: inline; }
+.flow-box .tip-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: rgba(255,255,255,.45); color: inherit;
+  font-size: 8px; font-weight: 700; line-height: 1;
+  margin-left: 3px; vertical-align: super; cursor: help;
+}
+.flow-box .tip-text {
+  display: none; position: absolute; bottom: calc(100% + 6px); left: 50%;
+  transform: translateX(-50%); width: max-content; max-width: 220px;
+  background: #222; color: #fff; font-size: 0.88em; line-height: 1.4;
+  padding: 6px 10px; border-radius: 6px; z-index: 10;
+  white-space: normal; text-align: left; pointer-events: none;
+}
+.flow-box .tip-wrap:hover .tip-text { display: block; }
+
+/* ===== 瑞士乳酪模型 ===== */
+.swiss-cheese { display: flex; align-items: center; gap: 8px; overflow-x: auto; padding: 20px 0; }
+.cheese-layer {
+  min-width: 120px;
+  background: linear-gradient(180deg, #ffcc80, #ffb74d);
+  border-radius: 12px;
+  padding: 16px 12px;
+  text-align: center;
+  font-size: 0.82em;
+  font-weight: 600;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.cheese-layer .hole {
+  width: 20px;
+  height: 20px;
+  background: var(--bg);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.cheese-arrow { font-size: 1.8em; color: var(--danger); flex-shrink: 0; }
+
+/* ===== 清單樣式 ===== */
+.styled-list { list-style: none; padding: 0; }
+.styled-list li {
+  padding: 8px 0 8px 24px;
+  position: relative;
+  border-bottom: 1px solid #f0f0f0;
+}
+.styled-list li::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+.styled-list li.danger-li::before { background: var(--danger); }
+.styled-list li.warning-li::before { background: var(--warning); }
+
+/* ===== 優先序卡片 ===== */
+.priority-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--primary);
+}
+.priority-card.p1 { border-left-color: var(--danger); }
+.priority-card.p2 { border-left-color: var(--warning); }
+.priority-card.p3 { border-left-color: var(--info); }
+.priority-rank { font-size: 1.8em; font-weight: 800; line-height: 1; flex-shrink: 0; }
+.priority-card.p1 .priority-rank { color: var(--danger); }
+.priority-card.p2 .priority-rank { color: var(--warning); }
+.priority-card.p3 .priority-rank { color: var(--info); }
+
+/* ===== 關鍵發現 ===== */
+.key-finding {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 10px 0;
+  font-size: 0.93em;
+  border: 1px solid var(--border);
+}
+.key-finding strong { color: var(--primary); }
+
+/* ===== 分隔線 ===== */
+.divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border), transparent);
+  margin: 20px 0;
+}
+
+/* ===== 趨勢箭頭 ===== */
+.trend-up { color: var(--danger); font-weight: 700; }
+.trend-down { color: var(--accent); font-weight: 700; }
+
+/* ===== 頁尾 ===== */
+.footer {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 0.85em;
+  padding: 30px 0;
+  margin-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+/* ===== 回到頂部按鈕 ===== */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 44px;
+  height: 44px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.3em;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  z-index: 999;
+}
+.back-to-top.visible { opacity: 1; visibility: visible; }
+.back-to-top:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+/* ===== 響應式：平板 & 手機 ===== */
+@media (max-width: 768px) {
+  .two-col, .three-col, .four-col { grid-template-columns: 1fr; }
+  .cover-card { padding: 40px 20px; }
+  .cover-card h1 { font-size: 1.6em; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .chart-container { flex-direction: column; }
+  .bar-label { width: 100px; font-size: 0.8em; }
+  .swiss-cheese { flex-direction: column; }
+  .flow-section { justify-content: center; }
+  .priority-card { flex-direction: column; gap: 10px; }
+}
+
+@media (max-width: 768px) {
+  body { font-size: 14px; line-height: 1.6; }
+  .container { padding: 12px 10px; }
+  .cover-card { padding: 30px 16px; margin-bottom: 20px; border-radius: 8px; }
+  .cover-card h1 { font-size: 1.35em; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpi-card { padding: 16px 12px; }
+  .kpi-card .big-number { font-size: 1.8em; }
+  .chapter-title { font-size: 1.2em; padding-left: 12px; }
+  .card-header { padding: 12px 16px; font-size: 1em; }
+  .card-body { padding: 14px 12px; overflow-x: auto; }
+  .bar-label { width: 80px; font-size: 0.75em; }
+  .bar-value { width: 40px; font-size: 0.78em; }
+  .bar-fill { font-size: 0.7em; padding-left: 4px; }
+  .pie-chart { width: 160px; height: 160px; }
+  table { font-size: 0.8em; min-width: 420px; }
+  .back-to-top { width: 38px; height: 38px; bottom: 20px; right: 16px; font-size: 1.1em; }
+}
+
+/* ===== 列印模式 ===== */
+@media print {
+  body { font-size: 12px; }
+  .card, .cover-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+  .back-to-top, .back-link { display: none !important; }
+}
+
+
+/* =============================================
+   sidebar.css — 側邊目錄樣式
+   大豐環保｜法務及環安課
+   ============================================= */
+
+:root {
+  --sidebar-width: 300px;
+}
+
+/* ===== 側邊目錄觸發區（桌面 hover） ===== */
+.sidebar-trigger {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 100vh;
+  z-index: 2000;
+  cursor: pointer;
+}
+.sidebar-trigger::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 60px;
+  background: rgba(30,74,110,0.3);
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+.sidebar-trigger:hover::after {
+  background: rgba(30,74,110,0.7);
+  width: 8px;
+  height: 80px;
+}
+
+/* ===== 側邊目錄面板 ===== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: white;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+  z-index: 1999;
+  transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* 桌面才用 hover 觸發 */
+@media (min-width: 1025px) {
+  .sidebar-trigger:hover ~ .sidebar,
+  .sidebar:hover {
+    left: 0;
+  }
+}
+
+/* ===== Sidebar 標頭 ===== */
+.sidebar-header {
+  color: white;
+  padding: 20px 18px 14px;
+  font-size: 1em;
+  font-weight: 700;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.sidebar-header small {
+  display: block;
+  font-weight: 400;
+  font-size: 0.78em;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+/* ===== 目錄項目 ===== */
+.toc-group {
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.toc-chapter {
+  display: block;
+  padding: 9px 18px;
+  font-size: 0.88em;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  transition: background 0.15s;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+}
+.toc-chapter:hover {
+  background: #e3f2fd;
+  border-left-color: var(--primary);
+}
+.toc-sub {
+  display: block;
+  padding: 5px 18px 5px 32px;
+  font-size: 0.82em;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: background 0.15s;
+  cursor: pointer;
+}
+.toc-sub:hover {
+  background: #f5f5f5;
+  color: var(--primary);
+}
+.sidebar-footer {
+  padding: 12px 18px;
+  font-size: 0.75em;
+  color: #999;
+  text-align: center;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* ===== 手機選單按鈕 ===== */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  width: 42px;
+  height: 42px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2em;
+  cursor: pointer;
+  z-index: 2001;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+  transition: all 0.3s;
+  line-height: 1;
+}
+
+/* ===== Sidebar 遮罩 ===== */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 1998;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.sidebar-overlay.active { opacity: 1; }
+
+/* ===== 響應式：平板與手機 sidebar ===== */
+@media (max-width: 1024px) {
+  .sidebar-trigger { display: none; }
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sidebar {
+    width: 80vw;
+    max-width: 300px;
+    left: -85vw;
+    transition: left 0.3s ease;
+  }
+  .sidebar.open { left: 0; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { width: 280px; }
+}
+
+/* ===== 列印模式：隱藏 sidebar ===== */
+@media print {
+  .sidebar-trigger,
+  .sidebar,
+  .mobile-menu-btn,
+  .sidebar-overlay {
+    display: none !important;
+  }
+}
+
+
+
+    /* ===== 封面色系 ===== */
+    .cover-card {
+      background: linear-gradient(135deg, #0d2137 0%, #1B3A6B 50%, #1e5799 100%);
+    }
+    .cover-card::after {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .sidebar-header {
+      background: linear-gradient(135deg, #1B3A6B, #2a5298);
+    }
+
+    /* === 封面 meta badges === */
+    .cover-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 22px;
+    }
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.28);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.84em;
+      color: rgba(255,255,255,0.92);
+      backdrop-filter: blur(4px);
+    }
+
+    /* ===== 快速導覽列 ===== */
+    .quick-nav {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px 20px 16px;
+      margin-bottom: 28px;
+      border-top: 3px solid #1B3A6B;
+    }
+    .quick-nav-title {
+      font-size: 0.72em;
+      color: var(--text-light);
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+    .quick-nav-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .quick-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      height: 30px;
+      padding: 0 13px;
+      border-radius: 20px;
+      background: #f0f4f9;
+      color: #1B3A6B;
+      text-decoration: none;
+      font-size: 0.78em;
+      font-weight: 600;
+      transition: all 0.2s;
+      border: 1.5px solid #cdd9ea;
+      white-space: nowrap;
+    }
+    .quick-nav-btn:hover {
+      background: #1B3A6B;
+      color: white;
+      border-color: #1B3A6B;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(27,58,107,0.25);
+    }
+    .quick-nav-btn.active {
+      background: #1B3A6B;
+      color: white;
+      border-color: #1B3A6B;
+    }
+    .quick-nav-btn.no-content {
+      background: #f8f8f8;
+      color: #bbb;
+      border-color: #eee;
+      font-weight: 400;
+    }
+
+    /* ===== 法源引用框 ===== */
+    .law-ref {
+      background: linear-gradient(135deg, #f0f4f9, #e8eef6);
+      border-left: 4px solid var(--primary);
+      padding: 12px 18px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88em;
+      color: #555;
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+    .law-ref strong { color: var(--primary); }
+
+    /* ===== 政策卡片 ===== */
+    .policy-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .policy-item:last-child { border-bottom: none; }
+    .policy-item:hover {
+      background: #fafbfd;
+      margin: 0 -24px;
+      padding-left: 24px;
+      padding-right: 24px;
+      border-radius: 6px;
+    }
+    .policy-tag {
+      background: linear-gradient(135deg, #1B3A6B, #2a5298);
+      color: white;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.78em;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(27,58,107,0.2);
+    }
+    .policy-desc { font-size: 0.93em; line-height: 1.75; color: #444; }
+
+    /* ===== 計畫欄位 ===== */
+    .plan-col-header {
+      background: linear-gradient(135deg, #1B3A6B, #2a5298);
+      color: white;
+      padding: 11px 18px;
+      border-radius: 10px 10px 0 0;
+      font-weight: 700;
+      font-size: 0.95em;
+    }
+    .plan-col-body {
+      border: 1.5px solid #cdd9ea;
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 14px 18px;
+      background: #fafcff;
+    }
+    .plan-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid #eef2f7;
+    }
+    .plan-item:last-child { border-bottom: none; }
+    .plan-dot {
+      width: 8px; height: 8px;
+      background: #C0392B;
+      border-radius: 50%;
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ===== 訓練狀態徽章 ===== */
+    .status-done {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1.5px solid #a5d6a7;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+    .status-pending {
+      display: inline-block;
+      background: #fff3e0;
+      color: #e65100;
+      border: 1.5px solid #ffcc80;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+    .status-na {
+      display: inline-block;
+      background: #f5f5f5;
+      color: #999;
+      border: 1px solid #e0e0e0;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-size: 0.8em;
+    }
+
+    /* ===== 提案卡片 ===== */
+    .proposal-card {
+      border: none;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 22px;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .proposal-card:hover {
+      box-shadow: 0 7px 24px rgba(27,58,107,0.14);
+      transform: translateY(-2px);
+    }
+    .proposal-header {
+      background: linear-gradient(135deg, #1B3A6B 0%, #2a5298 100%);
+      color: white;
+      padding: 14px 20px;
+      font-weight: 700;
+      font-size: 1.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .proposal-header::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: rgba(255,255,255,0.55);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .proposal-body {
+      padding: 18px 22px;
+      background: white;
+      border: 1.5px solid #dde8f5;
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+    .proposal-risk {
+      display: inline-block;
+      background: #fff0f0;
+      border: 1.5px solid #ffb3b3;
+      color: #c62828;
+      padding: 4px 14px;
+      border-radius: 6px;
+      font-size: 0.82em;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .proposal-goal {
+      background: linear-gradient(135deg, #e8f0fb, #ddeaff);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.9em;
+      color: #1B3A6B;
+      font-weight: 600;
+      margin-top: 14px;
+      border-left: 3px solid #1B3A6B;
+    }
+    .proposal-steps {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0;
+      counter-reset: pstep;
+    }
+    .proposal-steps li {
+      counter-increment: pstep;
+      padding: 8px 0 8px 38px;
+      position: relative;
+      font-size: 0.9em;
+      line-height: 1.65;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .proposal-steps li:last-child { border-bottom: none; }
+    .proposal-steps li::before {
+      content: counter(pstep);
+      position: absolute;
+      left: 0; top: 7px;
+      width: 24px; height: 24px;
+      background: #1B3A6B;
+      color: white;
+      border-radius: 50%;
+      font-size: 0.75em;
+      font-weight: 700;
+      text-align: center;
+      line-height: 24px;
+    }
+
+    /* ===== 稽核結果欄位 ===== */
+    .audit-done { border-top: 4px solid #4caf50; }
+    .audit-todo { border-top: 4px solid #e53935; }
+    .audit-col-label {
+      padding: 6px 12px;
+      font-weight: 700;
+      font-size: 0.85em;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    .audit-col-label.done { background: #e8f5e9; color: #2e7d32; }
+    .audit-col-label.todo { background: #ffebee; color: #c62828; }
+
+    /* ===== 照片展示區 ===== */
+    .photo-grid {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: 16px 0;
+    }
+    .photo-item {
+      flex: 1;
+      min-width: 200px;
+      max-width: 340px;
+      position: relative;
+    }
+    .photo-item img {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      object-fit: cover;
+      display: block;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: box-shadow 0.2s;
+    }
+    .photo-item img:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+    .photo-item { position: relative; }
+    .photo-zoom-btn {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.52);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity .2s, background .2s, transform .15s;
+      z-index: 2;
+      line-height: 1;
+    }
+    .photo-item:hover .photo-zoom-btn { opacity: 1; }
+    .photo-zoom-btn:hover { background: var(--primary); transform: scale(1.15); }
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+    }
+    #lightbox.active { display: flex; }
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 82vh;
+      border-radius: 8px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      object-fit: contain;
+    }
+    #lightbox-caption {
+      color: rgba(255,255,255,0.85);
+      font-size: 0.92em;
+      text-align: center;
+      max-width: 80vw;
+    }
+    #lightbox-close {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: #fff;
+      font-size: 22px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #lightbox-close:hover { background: rgba(255,255,255,0.28); }
+    .photo-caption {
+      font-size: 0.78em;
+      color: var(--text-light);
+      text-align: center;
+      margin-top: 8px;
+      padding: 0 4px;
+      line-height: 1.4;
+    }
+    /* 照片佔位符 */
+    .photo-placeholder {
+      width: 100%;
+      min-height: 180px;
+      background: #fafbfc;
+      border: 2px dashed #c5d5e8;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      font-size: 0.85em;
+      text-align: center;
+      padding: 22px;
+      gap: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .photo-placeholder:hover { border-color: #1B3A6B; background: #f0f5fb; }
+    .photo-placeholder .ph-icon { font-size: 2.4em; opacity: 0.5; }
+    .photo-placeholder .ph-filename {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      color: #c0c8d8;
+      word-break: break-all;
+    }
+    .photo-placeholder .ph-hint { font-size: 0.78em; color: #ccc; }
+    /* 行內上傳按鈕 */
+    .ph-upload-btn {
+      margin-top: 10px;
+      padding: 7px 18px;
+      background: #1B3A6B;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.82em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: filter 0.2s, transform 0.15s;
+      font-family: inherit;
+    }
+    .ph-upload-btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
+    .ph-upload-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .ph-upload-status { font-size: 0.78em; margin-top: 5px; min-height: 1em; }
+    /* 常駐新增按鈕列 */
+    .ph-add-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #cdd9ea;
+      flex-wrap: wrap;
+    }
+    .ph-add-btn {
+      padding: 6px 16px;
+      background: #f0f4f9;
+      color: var(--primary);
+      border: 1.5px solid #cdd9ea;
+      border-radius: 20px;
+      font-size: 0.82em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .ph-add-btn:hover { background: #dde8f5; border-color: var(--primary); transform: translateY(-1px); }
+    .ph-add-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .ph-add-status { font-size: 0.78em; color: #555; }
+    /* 照片刪除按鈕 */
+    .photo-del-btn {
+      position: absolute;
+      top: 7px; right: 42px;
+      width: 26px; height: 26px;
+      background: rgba(0,0,0,0.45);
+      color: white;
+      border: none; border-radius: 50%;
+      font-size: 12px; line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.15s, opacity 0.2s;
+      z-index: 10;
+      font-family: inherit;
+      opacity: 0;
+    }
+    .photo-item:hover .photo-del-btn { opacity: 1; }
+    .photo-del-btn:hover { background: rgba(198,40,40,0.92); transform: scale(1.15); }
+
+    /* ===== 圓餅圖佔位（保留供其他區塊使用） ===== */
+    .chart-placeholder-row {
+      display: flex;
+      gap: 16px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+    .chart-placeholder {
+      flex: 1;
+      min-width: 240px;
+      min-height: 220px;
+      background: #fafbfc;
+      border: 2px dashed #c5d5e8;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      font-size: 0.85em;
+      text-align: center;
+      padding: 20px;
+      gap: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .chart-placeholder:hover { border-color: #1B3A6B; background: #f0f5fb; }
+    .chart-placeholder .ph-icon { font-size: 2.8em; opacity: 0.45; }
+
+    /* ===== Chart.js 圓餅圖 ===== */
+    .chart-canvas-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 4px 0;
+    }
+    .chart-canvas-wrap {
+      flex: 1;
+      min-width: 260px;
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 16px 16px 14px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    .chart-canvas-title {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-size: 0.92em;
+    }
+    .chart-legend {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px 12px;
+    }
+    .chart-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.77em;
+      color: var(--text);
+    }
+    .chart-legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    @media (max-width: 768px) {
+      .chart-canvas-wrap { min-width: 100%; }
+    }
+
+    /* ===== KPI 表格 ===== */
+    .kpi-good { color: #2e7d32; font-weight: 700; }
+    .kpi-bad { color: #c62828; font-weight: 700; }
+    .kpi-na { color: #aaa; }
+
+    /* ===== 本期無異動區塊 ===== */
+    .no-action {
+      background: white;
+      border: 1.5px dashed #cdd9ea;
+      border-radius: var(--radius);
+      padding: 38px 30px;
+      text-align: center;
+      color: var(--text-light);
+      margin-bottom: 24px;
+    }
+    .no-action .no-action-icon { font-size: 2.4em; margin-bottom: 10px; opacity: 0.4; }
+    .no-action p { font-size: 0.95em; }
+
+    /* ===== 事故描述卡 ===== */
+    .incident-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      background: linear-gradient(135deg, #1B3A6B 0%, #2a5298 100%);
+      border-radius: 10px 10px 0 0;
+    }
+    .incident-header-item {
+      display: flex;
+      flex-direction: column;
+      padding: 14px 20px;
+      border-right: 1px solid rgba(255,255,255,0.14);
+      flex: 1;
+      min-width: 90px;
+    }
+    .incident-header-item:last-child { border-right: none; }
+    .incident-header-item span:first-child {
+      font-size: 0.7em;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .incident-header-item span:last-child {
+      font-weight: 700;
+      color: white;
+      font-size: 0.95em;
+    }
+    .incident-desc {
+      border: 1.5px solid #dde8f5;
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 18px 20px;
+      line-height: 1.85;
+      font-size: 0.95em;
+      background: #fafcff;
+    }
+
+    /* ===== 統計摘要數字 ===== */
+    .summary-stats {
+      display: flex;
+      gap: 14px;
+      margin: 22px 0;
+      flex-wrap: wrap;
+    }
+    .stat-box {
+      flex: 1;
+      min-width: 110px;
+      text-align: center;
+      padding: 18px 12px 14px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-box:hover { transform: translateY(-3px); box-shadow: 0 5px 18px rgba(0,0,0,0.1); }
+    .stat-box .stat-num {
+      font-size: 2.6em;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .stat-box .stat-label {
+      font-size: 0.8em;
+      color: var(--text-light);
+      margin-top: 7px;
+    }
+    .stat-box.red {
+      background: linear-gradient(135deg, #fff5f5, #fff);
+      border-color: #ffcdd2;
+      border-top: 4px solid var(--danger);
+    }
+    .stat-box.red .stat-num { color: var(--danger); }
+    .stat-box.green {
+      background: linear-gradient(135deg, #f1f8f1, #fff);
+      border-color: #c8e6c9;
+      border-top: 4px solid #4caf50;
+    }
+    .stat-box.green .stat-num { color: #2e7d32; }
+
+    /* ===== 章節頁尾導覽 ===== */
+    .nav-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .nav-footer a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 22px;
+      background: white;
+      color: var(--primary);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9em;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--primary);
+      transition: all 0.2s;
+    }
+    .nav-footer a:hover { background: var(--primary); color: white; }
+
+    /* ===== 響應式 ===== */
+    @media (max-width: 768px) {
+      .quick-nav { position: static; }
+      .quick-nav-btn { font-size: 0.72em; padding: 0 9px; height: 28px; }
+      .photo-item { min-width: 140px; }
+      .chart-placeholder { min-width: 100%; }
+      .incident-header-item { min-width: 80px; padding: 10px 12px; }
+      .incident-header-item span:last-child { font-size: 0.88em; }
+      .summary-stats { gap: 8px; }
+      .stat-box { min-width: 80px; padding: 14px 8px 10px; }
+      .stat-box .stat-num { font-size: 1.9em; }
+      .cover-meta { gap: 6px; }
+      .cover-badge { font-size: 0.78em; padding: 5px 12px; }
+    }
+  
+
+
+    .muted { color: var(--text-light); }
+    .small { font-size: 0.9em; }
+    .plan-col-header.alt { background: linear-gradient(135deg,#2c5f7e,#3a7ca5); }
+    .plan-dot.alt { background: #3a7ca5; }
+    .progress-note {
+      background:#fff3e0;
+      border-radius:6px;
+      padding:5px 12px;
+      font-size:0.85em;
+      margin-top:6px;
+    }
+    .progress-note span { color:#e65100; font-weight:700; }
+    .photo-item img {
+      height: 190px;
+      object-fit: contain;
+      background: #fafbfc;
+    }
+    .photo-placeholder .ph-icon {
+      font-size: 1.4em;
+      opacity: 0.7;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--primary);
+    }
+    .source-list a { color: var(--primary); word-break: break-all; }
+    .top-nav .back-link:last-child { border: 2px solid var(--primary); }
+  </style>
+</head>
+<body>
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()" aria-label="開啟目錄">&#9776;</button>
+<div class="sidebar-trigger"></div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">2026年Q2 職安衛委員會報告<small>大豐環保｜法務環安課</small></div>
+  <div class="toc-group"><a class="toc-chapter" href="#cover">封面</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s1">一、職業安全衛生政策</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s2">二、職安衛管理計畫</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s3">三、教育訓練計畫</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s4">四、作業環境監測</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s5">五、健康管理</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s6">六、安全衛生提案</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s7">七、自動檢查稽核</a><a class="toc-sub" href="#s7-risk">地下室風險</a><a class="toc-sub" href="#s7-done">已完成改善</a><a class="toc-sub" href="#s7-todo">待完成改善</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s8">八、機械設備危害預防</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s9">九、職業災害調查</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s10">十、現場管理績效（KPI）</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s11">十一、承攬業務管理</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s12">十二、其他事項</a></div>
+</nav>
+
+<div class="container">
+  <div class="top-nav">
+    <a class="back-link" href="../">&larr; 回 Q2 資料夾</a>
+    <a class="back-link" href="2026年Q2_職安衛委員會_v2.pptx">開啟 PPTX</a>
+  </div>
+
+  <div class="cover-card" id="cover">
+    <h1>2026年Q2 職業安全衛生委員會報告</h1>
+    <div class="subtitle">依《職業安全衛生管理辦法》第12條｜十二項辦理事項追蹤</div>
+    <div class="cover-meta">
+      <span class="cover-badge">法務環安課</span>
+      <span class="cover-badge">2026年第二季（4月～6月）</span>
+      <span class="cover-badge">報告日期：2026 年 6 月</span>
+      <span class="cover-badge">版本：v4（加入彰化全興廠教育訓練紀錄）</span>
+    </div>
+  </div>
+
+  <div class="quick-nav">
+    <div class="quick-nav-title">快速跳轉 — 十二項辦理事項</div>
+    <div class="quick-nav-items">
+      <a class="quick-nav-btn" href="#s1">一 政策</a>
+      <a class="quick-nav-btn" href="#s2">二 管理計畫</a>
+      <a class="quick-nav-btn" href="#s3">三 教育訓練</a>
+      <a class="quick-nav-btn" href="#s4">四 環境監測</a>
+      <a class="quick-nav-btn" href="#s5">五 健康管理</a>
+      <a class="quick-nav-btn" href="#s6">六 安衛提案</a>
+      <a class="quick-nav-btn" href="#s7">七 稽核</a>
+      <a class="quick-nav-btn" href="#s8">八 機械設備</a>
+      <a class="quick-nav-btn" href="#s9">九 職業災害</a>
+      <a class="quick-nav-btn" href="#s10">十 KPI</a>
+      <a class="quick-nav-btn no-content" href="#s11">十一 承攬</a>
+      <a class="quick-nav-btn" href="#s12">十二 其他</a>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:28px;">
+    <div class="card-header" style="background:linear-gradient(135deg,#1B3A6B,#2a5298);">2026年Q2 環安衛委員會辦理事項總覽</div>
+    <div class="card-body">
+      <div class="law-ref"><strong>依據：職業安全衛生管理辦法第12條</strong>　委員會應每三個月至少開會一次，辦理下列事項：</div>
+      <div class="two-col" style="margin-top:14px;gap:6px;">
+        <ol style="padding-left:22px;line-height:2.1;font-size:0.93em;margin:0;">
+          <li>擬訂之職業安全衛生政策提出建議。</li>
+          <li>協調、建議職業安全衛生管理計畫。</li>
+          <li>審議安全、衛生教育訓練實施計畫。</li>
+          <li>審議作業環境監測計畫、監測結果及採行措施。</li>
+          <li>審議健康管理、職業病預防及健康促進事項。</li>
+          <li>審議各項安全衛生提案。</li>
+        </ol>
+        <ol start="7" style="padding-left:22px;line-height:2.1;font-size:0.93em;margin:0;">
+          <li>審議事業單位自動檢查及安全衛生稽核事項。</li>
+          <li>審議機械、設備或原料、材料危害之預防措施。</li>
+          <li>審議職業災害調查報告。</li>
+          <li>考核現場安全衛生管理績效。</li>
+          <li>審議承攬業務安全衛生管理事項。</li>
+          <li>其他有關職業安全衛生管理事項。</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card accent"><div class="big-number">0</div><div class="kpi-label">本季職業災害</div></div>
+    <div class="kpi-card warning"><div class="big-number">5</div><div class="kpi-label">地下室高風險改善項目</div></div>
+    <div class="kpi-card info"><div class="big-number">50%</div><div class="kpi-label">教育訓練年度進度</div></div>
+    <div class="kpi-card"><div class="big-number">11</div><div class="kpi-label">年度列管安全衛生提案</div></div>
+  </div>
+
+  <div class="chapter" id="s1">
+    <div class="chapter-title">一、擬訂職業安全衛生政策</div>
+    <div class="chapter-subtitle">提出建議，宣示公司環安衛承諾</div>
+  </div>
+  <div class="card">
+    <div class="card-header ">政策承諾</div>
+    <div class="card-body">
+    <div class="law-ref"><strong>法源依據：</strong>職業安全衛生管理辦法第12條，職業安全衛生委員會應審議、協調及建議安全衛生相關事項。</div>
+    <div class="policy-item"><span class="policy-tag">(1) 遵守法規 減少衝擊</span><span class="policy-desc">確保作業中對環境造成最低衝擊，承諾遵守相關環安衛法律、法規、標準及其他要求。</span></div><div class="policy-item"><span class="policy-tag">(2) 節能減碳 推動綠能</span><span class="policy-desc">珍惜各項資產能源，提高污染防治效能，推動減碳減廢創造綠色能量。</span></div><div class="policy-item"><span class="policy-tag">(3) 危害預防 促進健康</span><span class="policy-desc">推動風險管理、傷害疾病預防、健康檢查與促進，降低危害事故發生。</span></div><div class="policy-item"><span class="policy-tag">(4) 落實溝通 持續改善</span><span class="policy-desc">將環保、安全衛生觀念融入員工、供應商、承攬商及利害關係者之訓練或告知。</span></div><div class="policy-item"><span class="policy-tag">(5) 永續經營 善盡責任</span><span class="policy-desc">持續改善環安衛系統，善盡對客戶、員工及其他利害關係者的責任。</span></div>
+  </div>
+  </div>
+
+  <div class="chapter" id="s2">
+    <div class="chapter-title">二、協調、建議職業安全衛生管理計畫</div>
+    <div class="chapter-subtitle">2026年度計畫執行進度</div>
+  </div>
+  <div class="two-col" style="margin-bottom:20px;">
+    <div>
+    <div class="plan-col-header">第二季執行重點（已執行）</div>
+    <div class="plan-col-body">
+      <div class="plan-item"><div class="plan-dot"></div><span>總部辦公室職安教育訓練（5/14 完成）</span></div><div class="plan-item"><div class="plan-dot"></div><span>彰化全興廠職安教育訓練（含消防實作，5/21 完成）</span></div><div class="plan-item"><div class="plan-dot"></div><span>地下室舊衣業務場所現勘暨風險評估（5/6 完成）</span></div><div class="plan-item"><div class="plan-dot"></div><span>會議室102自動分選垃圾桶開放前風險評估（5/13 完成）</span></div><div class="plan-item"><div class="plan-dot"></div><span>上半年作業環境監測（台中總公司 5/8、彰化全興廠 5/6，全數合格）</span></div><div class="plan-item"><div class="plan-dot"></div><span>防火管理提報（5/20 完成）</span></div><div class="plan-item"><div class="plan-dot"></div><span>職業護理師臨場服務衛教（每月持續）</span></div>
+    </div>
+  </div>
+    <div>
+    <div class="plan-col-header alt">本季及第三季執行重點（進行中／規劃中）</div>
+    <div class="plan-col-body">
+      <div class="plan-item"><div class="plan-dot alt"></div><span>司機員教育訓練</span></div><div class="plan-item"><div class="plan-dot alt"></div><span>法規鑑別與更新</span></div><div class="plan-item"><div class="plan-dot alt"></div><span>安全設備櫃增設計畫（簡報階段）</span></div><div class="plan-item"><div class="plan-dot alt"></div><span>年度在職員工健康檢查</span></div><div class="plan-item"><div class="plan-dot alt"></div><span>地下室電氣危害改善追蹤複查</span></div><div class="plan-item"><div class="plan-dot alt"></div><span>會議室102自動分選垃圾桶電氣 / 防夾 / SOP 改善後驗收</span></div><div class="plan-item"><div class="plan-dot alt"></div><span>彰化全興廠噪音聽力保護計畫落實（護耳具、聽力健檢、噪音標示）</span></div>
+    </div>
+  </div>
+  </div>
+  <div class="card">
+    <div class="card-header ">本季管理摘要</div>
+    <div class="card-body">
+    <div class="highlight-card"><strong>Q2 已執行：</strong>完成總部辦公室（5/14）及彰化全興廠（5/21）職安教育訓練（含消防實作）；辦理防火管理提報（5/20）；完成地下室舊衣業務現勘風險評估（5/6）及會議室102自動分選垃圾桶開放前風險評估（5/13）；上半年作業環境監測兩廠全數合格（5/6、5/8）；職護臨場服務每月持續執行。</div>
+    <div class="warning-card"><strong>本季及Q3 進行中／規劃中：</strong>司機員教育訓練、法規鑑別與更新、安全設備櫃增設計畫推進（簡報階段）、年度在職員工健康檢查、地下室電氣危害改善追蹤複查、會議室102設備電氣防護與SOP改善後驗收、彰化全興廠噪音聽力保護計畫落實。</div>
+  </div>
+  </div>
+
+  <div class="chapter" id="s3">
+    <div class="chapter-title">三、審議安全衛生教育訓練實施計畫</div>
+    <div class="chapter-subtitle">職業安全衛生法第32條 — 雇主對勞工應施以必要之安全衛生教育及訓練</div>
+  </div>
+  <div class="card">
+    <div class="card-header ">2026年度訓練項目執行狀況</div>
+    <div class="card-body"><table style="width:100%;">
+    <colgroup><col style="width:4%;"><col style="width:36%;"><col style="width:18%;"><col style="width:12%;"><col style="width:12%;"><col style="width:18%;"></colgroup>
+    <thead><tr><th>#</th><th>訓練項目</th><th>對象</th><th>計畫時程</th><th>狀態</th><th>執行日期</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>總部辦公室職安衛生教育訓練（含消防實作）</td><td>總部辦公室全體同仁</td><td>第二季</td><td><span class="status-done">已完成</span></td><td>5月14日</td></tr>
+      <tr><td>2</td><td>彰化全興廠職安衛生教育訓練（含消防實作）</td><td>彰化全興廠全體同仁</td><td>第二季</td><td><span class="status-done">已完成</span></td><td>5月21日</td></tr>
+      <tr><td>3</td><td>司機員教育訓練</td><td>持有駕照同仁</td><td>第二／三季</td><td><span class="status-pending">待執行</span></td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  </div>
+  <div class="card">
+    <div class="card-header info-header">總部辦公室職安教育訓練素材</div>
+    <div class="card-body">
+    <p class="muted small">2026/05/14 總部訓練教材涵蓋職安法規義務、辦公室 6S、電氣安全、人因工程、申訴通報、地震避難、交通安全與熱危害。</p>
+    <div class="photo-grid"><div class="photo-item"><img src="../素材/20260514總部教育訓練教材/img/10六S核心要求.png" alt="辦公室 6S 核心要求"><div class="photo-caption">辦公室 6S 核心要求</div></div><div class="photo-item"><img src="../素材/20260514總部教育訓練教材/img/11桌面凌亂.png" alt="辦公室整理整頓缺失示例"><div class="photo-caption">辦公室整理整頓缺失示例</div></div><div class="photo-item"><img src="../素材/20260514總部教育訓練教材/img/22電線危險行為.png" alt="電線與延長線危險行為"><div class="photo-caption">電線與延長線危險行為</div></div><div class="photo-item"><img src="../素材/20260514總部教育訓練教材/img/15搬運姿勢.png" alt="搬運姿勢與人因工程宣導"><div class="photo-caption">搬運姿勢與人因工程宣導</div></div></div>
+  </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" style="background:linear-gradient(135deg,#2e7d32,#388e3c);">2026/05/14 教育訓練現場紀錄</div>
+    <div class="card-body">
+      <p class="muted small" style="margin-bottom:14px;">本次訓練含室內職安課程講解、CPR 示範教學，以及室外滅火器實作演練，全體同仁均參與完成。</p>
+      <div class="photo-grid">
+        <div class="photo-item">
+          <img src="../素材/20260514總部教育訓練教材/現場照片/S__89260070.jpg" alt="室內課程 — 職安教育訓練簡報講解">
+          <div class="photo-caption">室內課程 — 職安教育訓練簡報講解</div>
+        </div>
+        <div class="photo-item">
+          <img src="../素材/20260514總部教育訓練教材/現場照片/S__89260069.jpg" alt="室內課程 — CPR 示範教學（急救技能）">
+          <div class="photo-caption">室內課程 — CPR 示範教學</div>
+        </div>
+        <div class="photo-item">
+          <img src="../素材/20260514總部教育訓練教材/現場照片/S__89260068.jpg" alt="作業場所實作 — 消防講師示範點火與操作流程">
+          <div class="photo-caption">作業場所實作 — 消防講師示範點火流程</div>
+        </div>
+        <div class="photo-item">
+          <img src="../素材/20260514總部教育訓練教材/現場照片/S__89260066.jpg" alt="作業場所實作 — 同仁實操滅火器（一）">
+          <div class="photo-caption">作業場所實作 — 同仁實操滅火器（一）</div>
+        </div>
+        <div class="photo-item">
+          <img src="../素材/20260514總部教育訓練教材/現場照片/S__89260067.jpg" alt="作業場所實作 — 同仁實操滅火器（二）">
+          <div class="photo-caption">作業場所實作 — 同仁實操滅火器（二）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);">2026/05/21 彰化全興廠教育訓練現場紀錄</div>
+    <div class="card-body">
+      <p class="muted small" style="margin-bottom:14px;">本次訓練含室內職安課程（職安法規、急救知識）及室外消防水帶操作實作演練，全廠員工均參與完成。</p>
+      <div class="photo-grid">
+        <div class="photo-item">
+          <img src="../素材/20260521全興廠教育訓練教材/現場照片/S__88825870.jpg" alt="室內課程 — 職安教育訓練簡報講解（急救知識宣導）">
+          <div class="photo-caption">室內課程 — 職安教育訓練簡報講解</div>
+        </div>
+        <div class="photo-item">
+          <img src="../素材/20260521全興廠教育訓練教材/現場照片/S__88825871.jpg" alt="室內課程 — 訓練進行中（同仁專注聆聽）">
+          <div class="photo-caption">室內課程 — 訓練進行中</div>
+        </div>
+        <div class="photo-item">
+          <img src="../素材/20260521全興廠教育訓練教材/現場照片/S__88825872.jpg" alt="室內課程 — 消防安全課程（初期滅火與疏散程序）">
+          <div class="photo-caption">室內課程 — 消防安全與疏散程序講解</div>
+        </div>
+        <div class="photo-item">
+          <img src="../素材/20260521全興廠教育訓練教材/現場照片/S__88825868.jpg" alt="作業場所實作 — 全員集合廠區，準備進行水帶操作演練">
+          <div class="photo-caption">作業場所實作 — 全員集合準備演練</div>
+        </div>
+        <div class="photo-item">
+          <img src="../素材/20260521全興廠教育訓練教材/現場照片/S__88825864.jpg" alt="作業場所實作 — 消防講師示範水帶操作要領">
+          <div class="photo-caption">作業場所實作 — 消防講師示範水帶操作</div>
+        </div>
+        <div class="photo-item">
+          <img src="../素材/20260521全興廠教育訓練教材/現場照片/S__88825865.jpg" alt="作業場所實作 — 講師示範水帶出水（對準水桶）">
+          <div class="photo-caption">作業場所實作 — 講師示範水帶出水</div>
+        </div>
+        <div class="photo-item">
+          <img src="../素材/20260521全興廠教育訓練教材/現場照片/S__88825866.jpg" alt="作業場所實作 — 說明水帶接頭操作與出水控制">
+          <div class="photo-caption">作業場所實作 — 水帶接頭操作說明</div>
+        </div>
+        <div class="photo-item">
+          <img src="../素材/20260521全興廠教育訓練教材/現場照片/S__88825867.jpg" alt="作業場所實作 — 員工實際操作水帶演練，講師在旁指導">
+          <div class="photo-caption">作業場所實作 — 員工實操水帶演練</div>
+        </div>
+        <div class="photo-item">
+          <img src="../素材/20260521全興廠教育訓練教材/現場照片/S__88825869.jpg" alt="作業場所實作 — 演練全景（全廠員工參與）">
+          <div class="photo-caption">作業場所實作 — 演練全景（全員參與）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter" id="s4">
+    <div class="chapter-title">四、審議作業環境監測計畫、結果及採行措施</div>
+    <div class="chapter-subtitle">115年上半年作業環境監測結果</div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-header accent-header">監測概要</div>
+    <div class="card-body">
+      <div class="highlight-card"><strong>全數合格 — 共27點次，下次監測：115年11月</strong><br>台中總公司（案號 115059895A，監測日期 2026/05/08）及彰化全興廠（案號 115059872A，監測日期 2026/05/06）已完成上半年法定作業環境監測，所有監測項目結果均未超過容許標準。</div>
+      <table style="margin-top:14px;">
+        <thead><tr><th>廠區</th><th>案號</th><th>監測日期</th><th>監測項目</th><th>點次</th><th>結果</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="2">台中總公司</td><td rowspan="2">115059895A</td><td rowspan="2">2026/05/08</td><td>二氧化碳（CO₂）</td><td>9</td><td><span class="badge badge-success">全合格</span></td></tr>
+          <tr><td>照度</td><td>9</td><td><span class="badge badge-success">全合格</span></td></tr>
+          <tr><td rowspan="2">彰化全興廠</td><td rowspan="2">115059872A</td><td rowspan="2">2026/05/06</td><td>噪音（個人劑量）</td><td>4</td><td><span class="badge badge-success">全合格</span></td></tr>
+          <tr><td>照度</td><td>10</td><td><span class="badge badge-success">全合格</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-header info-header">台中總公司（案號 115059895A，監測日期 2026/05/08）</div>
+    <div class="card-body">
+      <div class="law-ref"><strong>監測機構：</strong>委外環測廠商｜<strong>儀器：</strong>CO₂ — CM-26 pSENSE / SENSE AIR（直讀式）；照度 — LM-74 DLM-533｜<strong>室外 CO₂ 對照值：</strong>436 ppm</div>
+      <p style="font-weight:700;margin-top:16px;margin-bottom:6px;color:var(--primary);">▶ 二氧化碳（CO₂）— 容許標準 5,000 ppm</p>
+      <table>
+        <thead><tr><th>樣本編號</th><th>量測位置</th><th>測定值（ppm）</th><th>容許標準</th><th>結果</th></tr></thead>
+        <tbody>
+          <tr><td>DO-01</td><td>1F 數位智能部</td><td>724</td><td>5,000</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>DO-02</td><td>1F 人資部</td><td>651</td><td>5,000</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>DO-03</td><td>1F 視訊會議室</td><td>825</td><td>5,000</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>DO-04</td><td>1F 面談室</td><td>608</td><td>5,000</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>DO-05</td><td>2F 國際事業部</td><td>995</td><td>5,000</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>DO-06</td><td>2F 電子商務部（家電回收）</td><td>986</td><td>5,000</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>DO-07</td><td>2F 電子商務部（客服行銷）</td><td>990</td><td>5,000</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>DO-08</td><td>3F 業務開發部</td><td>855</td><td>5,000</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>DO-09</td><td>3F 財務部</td><td>843</td><td>5,000</td><td><span class="badge badge-success">合格</span></td></tr>
+        </tbody>
+      </table>
+      <p style="font-weight:700;margin-top:18px;margin-bottom:6px;color:var(--primary);">▶ 照度 — 依作業性質需達基準值（Lux）</p>
+      <table>
+        <thead><tr><th>樣本編號</th><th>量測位置</th><th>測定值（Lux）</th><th>基準值（Lux）</th><th>結果</th></tr></thead>
+        <tbody>
+          <tr><td>LT-01</td><td>1F 數位智能部</td><td>480</td><td>300</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-02</td><td>1F 人資部</td><td>591</td><td>300</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-03</td><td>1F 視訊會議室</td><td>443</td><td>200</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-04</td><td>1F 面談室</td><td>390</td><td>200</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-05</td><td>2F 國際事業部</td><td>565</td><td>300</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-06</td><td>2F 電子商務部（家電回收）</td><td>653</td><td>300</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-07</td><td>2F 電子商務部（客服行銷）</td><td>673</td><td>300</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-08</td><td>3F 業務開發部</td><td>630</td><td>300</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-09</td><td>3F 財務部</td><td>468</td><td>300</td><td><span class="badge badge-success">合格</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-header warning-header">彰化全興廠（案號 115059872A，監測日期 2026/05/06）</div>
+    <div class="card-body">
+      <div class="law-ref"><strong>監測機構：</strong>委外環測廠商｜<strong>儀器：</strong>噪音劑量 — SV104；照度 — LM-68 DLM-533</div>
+      <p style="font-weight:700;margin-top:16px;margin-bottom:6px;color:var(--primary);">▶ 噪音（個人劑量計）— 法定容許標準 90 dBA / 100%</p>
+      <div class="warning-card" style="margin-bottom:10px;"><strong>注意：</strong>四名受測人員量測值均介於 87.0–89.9 dBA，雖全數未超過 90 dBA 法定容許標準，惟已超過 85 dBA 聽力保護行動值，依法屬「特別危害健康作業」，應依規定推動聽力保護計畫（護耳具使用、定期聽力檢查及噪音標示）。</div>
+      <table>
+        <thead><tr><th>樣本編號</th><th>作業類別</th><th>受測人員</th><th>劑量（%）</th><th>等效音量（dBA）</th><th>峰值（dB）</th><th>結果</th></tr></thead>
+        <tbody>
+          <tr><td>CD-01</td><td>處理一課／粉碎作業</td><td>吳鋐庭</td><td>50.92%</td><td>87.0</td><td>&lt;115</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>CD-02</td><td>處理二課／粉碎作業</td><td>薩拉育</td><td>78.20%</td><td style="color:var(--warning);font-weight:700;">89.9</td><td>&lt;115</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>CD-03</td><td>2F 造粒區（1號機）／押出成型</td><td>萬多</td><td>66.26%</td><td>88.9</td><td>&lt;115</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>CD-04</td><td>2F 造粒區（2號機）／押出成型</td><td>吉拉沙</td><td>58.49%</td><td>88.1</td><td>&lt;115</td><td><span class="badge badge-success">合格</span></td></tr>
+        </tbody>
+      </table>
+      <p style="font-weight:700;margin-top:18px;margin-bottom:6px;color:var(--primary);">▶ 照度 — 依作業性質需達基準值（Lux）</p>
+      <table>
+        <thead><tr><th>樣本編號</th><th>量測位置</th><th>測定值（Lux）</th><th>基準值（Lux）</th><th>結果</th></tr></thead>
+        <tbody>
+          <tr><td>LT-01</td><td>1F 自動打包機</td><td>535</td><td>200</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-02</td><td>1F 色選</td><td>685</td><td>200</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-03</td><td>1F 投料口</td><td>586</td><td>200</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-04</td><td>2F 3、4號機中間</td><td>355</td><td>200</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-05</td><td>2F 電梯口</td><td>372</td><td>50</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-06</td><td>入庫</td><td>476</td><td>100</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-07</td><td>成品儲存區</td><td>510</td><td>50</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-08</td><td>走道</td><td>501</td><td>50</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-09</td><td>原料儲存區</td><td>384</td><td>50</td><td><span class="badge badge-success">合格</span></td></tr>
+          <tr><td>LT-10</td><td>處理一課／粉碎作業區</td><td>326</td><td>100</td><td><span class="badge badge-success">合格</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header info-header">採行措施與後續行動</div>
+    <div class="card-body">
+      <div class="info-card"><strong>台中總公司：</strong>CO₂ 濃度及照度均符合標準，建議持續維持現有通風設施及照明設備。下次監測排定於 115年11月。</div>
+      <div class="warning-card" style="margin-top:10px;"><strong>彰化全興廠（噪音特別危害健康作業）：</strong>噪音量測值雖合法但全超 85 dBA，應啟動聽力保護計畫：（1）提供並強制佩戴防噪耳塞或耳罩；（2）下次年度健檢加入特殊健康檢查（聽力）；（3）噪音作業區加設危害告知標示；（4）評估工程控制以降低噪音源。下次監測排定於 115年11月。</div>
+      <div class="law-ref" style="margin-top:10px;"><strong>法源依據：</strong>職業安全衛生法第12條、勞工作業環境監測實施辦法；噪音超過 85 dBA 者應依職業安全衛生設施規則第 300 條規定辦理聽力保護。</div>
+    </div>
+  </div>
+
+  <div class="chapter" id="s5">
+    <div class="chapter-title">五、審議健康管理、職業病預防及健康促進事項</div>
+    <div class="chapter-subtitle">職護臨場服務與年度健檢追蹤</div>
+  </div>
+  <div class="three-col">
+    <div class="card"><div class="card-header accent-header">五月臨場服務日期</div><div class="card-body"><ul class="styled-list"><li>總部：5/15</li><li>全興廠：5/14</li></ul></div></div><div class="card"><div class="card-header accent-header">六月臨場服務日期</div><div class="card-body"><ul class="styled-list"><li>總部：6/23</li><li>全興廠：【待確認】</li></ul></div></div><div class="card"><div class="card-header accent-header">服務對象&amp;全年目標</div><div class="card-body"><ul class="styled-list"><li>年度健檢分級追蹤人員</li><li>職業病預防諮詢</li><li>職護臨場服務：12次／年</li></ul></div></div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="card-header accent-header">夏季熱危害預防宣導</div>
+    <div class="card-body">
+      <div class="law-ref"><strong>說明：</strong>Q2（4–6月）進入夏季高溫期間，依勞動部職業安全衛生署建議，主動宣導熱危害預防知識，降低同仁熱傷害風險。</div>
+      <div class="photo-grid" style="margin-top:14px;">
+        <div class="photo-item" style="max-width:100%;flex:none;">
+          <img src="../素材/img/38熱危害.jpg" alt="熱危害預防宣導海報" style="max-height:520px;object-fit:contain;width:100%;border-radius:10px;border:1px solid var(--border);">
+          <div class="photo-caption">夏季熱危害預防宣導（資料來源：勞動部職業安全衛生署）</div>
+        </div>
+      </div>
+      <table style="margin-top:16px;">
+        <thead><tr><th>熱傷害類型</th><th>主要症狀</th><th>處置方式</th></tr></thead>
+        <tbody>
+          <tr><td>熱痙攣</td><td>肌肉疼痛性痙攣</td><td>移至陰涼處休息、補充水分及電解質</td></tr>
+          <tr><td>熱衰竭</td><td>大量出汗、頭暈、噁心、皮膚濕冷</td><td>移至陰涼處休息、補充水分及電解質、抬高雙腳</td></tr>
+          <tr><td style="color:var(--danger);font-weight:700;">熱中暑</td><td style="color:var(--danger);">體溫超過40°C、意識不清、皮膚乾燙</td><td style="color:var(--danger);font-weight:700;">立即送醫（頭稍微墊高），同時進行降溫</td></tr>
+        </tbody>
+      </table>
+      <div class="warning-card" style="margin-top:12px;"><strong>預防要點：</strong>避免正午（11–14時）戶外高強度活動；每15–20分鐘補充水分；穿著淺色透氣衣物並配戴遮陽帽。</div>
+    </div>
+  </div>
+
+  <div class="chapter" id="s6">
+    <div class="chapter-title">六、審議各項安全衛生提案</div>
+    <div class="chapter-subtitle">2026年度安全衛生改善方案｜負責單位：法務環安課</div>
+  </div>
+  <div class="info-card"><strong>說明：</strong>本頁彙整 Q2 委員會審議之安全衛生改善方案，共六項（方案一至方案六），涵蓋地下室危害控制、辦公室環境、人因工程、設備安全等議題，持續列管追蹤。</div>
+  <div class="proposal-card">
+    <div class="proposal-header">方案一：地下室電氣危害改善（插座過載 / 電線走地）</div>
+    <div class="proposal-body">
+      <div class="proposal-risk">現勘發現單一插座同接三條線路（章魚腳），白色排插置於地板，電線橫跨通行區域（風險值 6 — 需改善）</div>
+      
+      <ol class="proposal-steps"><li>白色延長線改接工業延長線，消除直插牆壁插座之過載（已告知，確認執行）</li><li>排插架高固定至桌面或牆面，禁止直接置放地板（防潮濕接觸）</li><li>地板電線以線槽或線夾固定於踢腳板，不得橫跨通行區域</li></ol>
+      <div class="proposal-goal">目標：消除電線絆倒路徑，消除插座過載引燃風險，Q2 複查前全數完成改善</div>
+      <div class="progress-note"><span>本季進度：</span>已改善</div>
+    </div>
+  </div><div class="proposal-card">
+    <div class="proposal-header">方案二：地下室作業健康危害防護（粉塵 / 黴菌）</div>
+    <div class="proposal-body">
+      <div class="proposal-risk">舊衣翻動揚塵（粉塵吸入風險值 6）、潮濕黴菌孢子（風險值 6），密閉地下室通風不足，夏季高溫悶熱</div>
+      
+      <ol class="proposal-steps"><li>作業前 15 分鐘開啟機械換氣，全程維持通風</li><li>強制配戴 N95/KN95 口罩、棉紗手套、安全包趾鞋（PPE 清單已列入評估報告）</li><li>規定每 50 分鐘休息 10 分鐘，避免長時間悶熱環境作業</li></ol>
+      <div class="proposal-goal">目標：杜絕粉塵及黴菌孢子吸入危害，確保每次地下室作業均落實 PPE 配戴及換氣</div>
+      <div class="progress-note"><span>本季進度：</span>已改善</div>
+    </div>
+  </div><div class="proposal-card">
+    <div class="proposal-header">方案三：辦公室 6S 管理落實</div>
+    <div class="proposal-body">
+      <div class="proposal-risk">5/14 訓練中辦公室常見缺失：桌面凌亂、走道堆放雜物、延長線外接多孔插座、電線使用後未收納（訓練教材 Slide 10-11）</div>
+      <p class="muted small"><strong>風險危害分析：</strong>6S 管理（整理、整頓、清掃、清潔、素養、安全）是辦公室職安的基礎，訓練完成後需有後續稽查才能落地。</p>
+      <ol class="proposal-steps"><li>訓練後 2 週內進行辦公室自主檢查，對照 6S 項目逐樓層稽查並拍照記錄</li><li>建立「每日離座前確認清單」：清空通道、收納電線、關閉不用插座</li><li>每季 6S 競賽或評比，由各部門主管協助推動</li></ol>
+      <div class="proposal-goal">目標：訓練後 30 天完成首次稽查，辦公區通道淨空率達 100%，電線橫跨地板缺失歸零</div>
+      <div class="progress-note"><span>本季進度：</span>審議及改善追蹤中</div>
+    </div>
+  </div><div class="proposal-card">
+    <div class="proposal-header">方案四：搬運人因工程改善</div>
+    <div class="proposal-body">
+      <div class="proposal-risk">地下室舊衣搬運為彎腰重複性作業，腰背傷害風險值 6（需改善）；訓練中亦涵蓋人因性危害（腕道症候群、腰椎間盤突出）</div>
+      <p class="muted small"><strong>風險危害分析：</strong>人因工程傷害累積緩慢，不易被當場發現，但一旦發生往往損失工日長、難以快速復原，屬易被忽略的高成本風險。</p>
+      <ol class="proposal-steps"><li>針對地下室搬運作業納入工具箱會議（5 分鐘安全宣導），強調正確姿勢（蹲腿勿彎腰）</li><li>超過 15 公斤物品規定雙人搬運或使用推車，禁止單人強行搬運</li><li>辦公室長時間坐姿作業：推廣每 1 小時起身伸展，訓練教材已含腕道症候群預防影片</li><li>未來加入肌肉骨骼相關問卷，追蹤高風險同仁</li></ol>
+      <div class="proposal-goal">目標：減少搬運及長時間坐姿導致之肌肉骨骼傷害，地下室作業零腰背職災</div>
+      <div class="progress-note"><span>本季進度：</span>審議及改善追蹤中</div>
+    </div>
+  </div><div class="proposal-card">
+    <div class="proposal-header">方案五：總部安全設備櫃增設</div>
+    <div class="proposal-body">
+      <div class="proposal-risk">辦公室 PPE、急救及緊急應變用品分散，事故初期取用效率不足。</div>
+      <p class="muted small"><strong>風險危害分析：</strong>依安全設備櫃增設計劃報告，建議將急救、PPE、應變用品、點檢表與緊急聯絡資料集中管理。</p>
+      <ol class="proposal-steps"><li>優先於出入口附近設置設備櫃</li><li>納入急救箱、口罩、止滑手套、手電筒、防火毯、緊急聯絡表及月檢表</li></ol>
+      <div class="proposal-goal">目標：事故初期 3 分鐘內取得必要應變物資，建立月檢紀錄供委員會追蹤。</div>
+      <div class="progress-note"><span>本季進度：</span>Q2 計劃書撰寫中</div>
+    </div>
+  </div><div class="proposal-card">
+    <div class="proposal-header">方案六：會議室102自動分選垃圾桶開放前安全管制</div>
+    <div class="proposal-body">
+      <div class="proposal-risk">AI/自動分選垃圾桶含鋰電池、裸露電控、投放口與內部活動機構，改善前多項風險達 8-12 高風險。</div>
+      <p class="muted small"><strong>風險危害分析：</strong>依 2026/05/13 評估，設備在未完成電控防護、線束固定、防夾設計、周邊6S、SOP與教育訓練前，不宜開放一般人員使用。</p>
+      <ol class="proposal-steps"><li>電池區、電控區與垃圾收集區實體隔離，避免液體或碎屑進入電控與電池</li><li>控制板、端子及帶電部位加裝防護罩，線束固定並避開活動機構與銳邊</li><li>投放口與維修門建立防夾及斷電管制，卡料排除由受訓人員執行</li><li>建立操作、清潔、維修、卡料排除、異常停機及火災通報SOP</li><li>設備周邊1公尺保持整潔，移除紙箱、工具、包材並納入6S巡檢</li></ol>
+      <div class="proposal-goal">目標：每次使用前點檢後再啟用，將主要風險由高風險降至低至中、低度。</div>
+      <div class="progress-note"><span>本季進度：</span>Q2已完成風險評估、作業人員遵照SOP使用</div>
+    </div>
+  </div>
+
+  <div class="chapter" id="s7">
+    <div class="chapter-title">七、審議自動檢查及安全衛生稽核事項</div>
+    <div class="chapter-subtitle">總部地下室現勘與改善追蹤</div>
+  </div>
+  <div class="card">
+    <div class="card-header ">地下室舊衣分類作業風險總覽</div>
+    <div class="card-body">
+    <div id="s7-risk" class="law-ref"><strong>現勘日期：</strong>2026/05/06｜<strong>資料依據：</strong>地下室舊衣回收分類作業_職安風險評估策略.md</div>
+    <table>
+      <thead><tr><th>編號</th><th>危害情境</th><th>可能後果</th><th>風險值</th><th>控制措施</th></tr></thead>
+      <tbody><tr><td>A1</td><td>舊衣等可燃物堆置</td><td>火災延燒</td><td><span class="risk-medium">6</span></td><td>維持消防設備前 0.5m 淨空，移除近距離可燃物</td></tr><tr><td>A2</td><td>單一插座同接三條線路</td><td>過載、短路、引燃</td><td><span class="risk-medium">6</span></td><td>電工評估插座面板，更換老化插座並避免章魚腳</td></tr><tr><td>A3</td><td>延長線排插置地且鄰近舊衣</td><td>積塵、受潮、短路</td><td><span class="risk-medium">6</span></td><td>排插架高並改用工業延長線，地面線路固定</td></tr><tr><td>B1/B2</td><td>地下室粉塵與黴菌</td><td>呼吸道刺激、過敏</td><td><span class="risk-medium">6</span></td><td>作業前換氣 15 分鐘，佩戴 N95/KN95、手套與安全鞋</td></tr><tr><td>C1/C2</td><td>電線橫跨地面及搬運姿勢</td><td>絆倒、腰背傷害</td><td><span class="risk-medium">6</span></td><td>線槽/線夾固定，重物雙人搬運或使用推車</td></tr></tbody>
+    </table>
+    <div class="photo-grid">
+      <div class="photo-item">
+        <button class="photo-zoom-btn" onclick="openLightbox(this)" title="放大">&#x26F6;</button>
+        <img src="../素材/img/68330.jpg" alt="地下室照片 68330：延長線排插置地、通行線路與可燃物鄰近">
+        <div class="photo-caption">延長線排插置地、通行線路與可燃物鄰近</div>
+      </div>
+      <div class="photo-item">
+        <button class="photo-zoom-btn" onclick="openLightbox(this)" title="放大">&#x26F6;</button>
+        <img src="../素材/img/68331.jpg" alt="地下室照片 68331：單一插座同接三條線路，需電工評估">
+        <div class="photo-caption">單一插座同接三條線路（章魚腳），需電工評估</div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="two-col">
+    <div id="s7-done" class="card audit-done"><div class="card-header accent-header">已完成改善</div><div class="card-body"><div class="audit-col-label done">現勘當日已處理 / 已告知改善</div><table>
+    <thead><tr><th>法規 / 標準</th><th>發現事項</th><th>處理狀態</th></tr></thead>
+    <tbody><tr><td>消防法暨各類場所消防安全設備設置標準</td><td>地下室滅火器前方堆放舊衣物，阻礙取用（照片左）。</td><td>已完成：現勘當日告知後立即清空，滅火器前 0.5 m 淨空恢復</td></tr><tr><td>職業安全衛生設施規則 第 239-243 條（用電安全）</td><td>白色延長線直插牆壁插座，未接受工業延長線保護機制管控（照片右）。</td><td>已完成：告知後確認調整，白線改接工業延長線</td></tr></tbody>
+  </table></div></div>
+    <div id="s7-todo" class="card audit-todo"><div class="card-header danger-header">待完成改善</div><div class="card-body"><div class="audit-col-label todo">Q3 前追蹤複查</div><table>
+    <thead><tr><th>法規 / 標準</th><th>發現事項</th><th>處理狀態</th></tr></thead>
+    <tbody><tr><td>職業安全衛生設施規則 第 239 條（電氣設備安全）</td><td>單一插座同接三條線路（章魚腳），插座面板老化，有過載及短路引燃風險（照片右）。</td><td>待辦：電工評估插座面板更換，減少並聯線路；預計 Q3 前完成</td></tr><tr><td>職業安全衛生設施規則 第 21 條（通道整潔）</td><td>多條電線橫跨地板通行區域，形成絆倒路徑；延長線排插直接置放地板（照片 左/右）。</td><td>待辦：線槽/線夾固定走線、排插架高；責任人及完成日期填入改善追蹤表</td></tr></tbody>
+  </table></div></div>
+  </div>
+
+  <div class="chapter" id="s8">
+    <div class="chapter-title">八、審議機械、設備或原料、材料危害之預防措施</div>
+    <div class="chapter-subtitle">本季無新增機械設備重大異動</div>
+  </div>
+  <div class="card">
+    <div class="card-header danger-header">會議室102自動分選垃圾桶設備風險評估</div>
+    <div class="card-body">
+    <div class="law-ref"><strong>評估日期：</strong>2026/05/13｜<strong>評估對象：</strong>AI/自動分選垃圾桶、投放口、前後門、內部電控與鋰電池系統。</div>
+    <div class="warning-card"><strong>結論：</strong>未完成電控防護、線束固定、防夾設計、周邊6S、SOP與教育訓練前，不宜開放一般人員使用。</div>
+    <div class="photo-grid"><div class="photo-item"><img src="../素材/風險評估與危害鑑別/會議室102自動分選垃圾桶業務/69197.jpg" alt="設備內部鋰電池、線束與驅動機構"><div class="photo-caption">設備內部鋰電池、線束與驅動機構</div></div><div class="photo-item"><img src="../素材/風險評估與危害鑑別/會議室102自動分選垃圾桶業務/69198.jpg" alt="門板開啟、旁側紙箱與頂部工具零件"><div class="photo-caption">門板開啟、旁側紙箱與頂部工具零件</div></div><div class="photo-item"><img src="../素材/風險評估與危害鑑別/會議室102自動分選垃圾桶業務/69199.jpg" alt="控制板、馬達與接頭裸露"><div class="photo-caption">控制板、馬達與接頭裸露</div></div><div class="photo-item"><img src="../素材/風險評估與危害鑑別/會議室102自動分選垃圾桶業務/69200.jpg" alt="前方感應投放口與上方置物"><div class="photo-caption">前方感應投放口與上方置物</div></div></div>
+    <table>
+      <thead><tr><th>#</th><th>主要高風險項目</th><th>改善前風險</th><th>開放前控制措施</th></tr></thead>
+      <tbody><tr><td>1</td><td>鋰電池、BMS、充電線路</td><td><span class="risk-high">9/高</span></td><td>電池固定於阻燃/金屬隔離艙，確認BMS、保險絲、過流/過溫保護，異常發熱或膨脹立即停用。</td></tr><tr><td>2</td><td>控制板、驅動器、端子與外露線束</td><td><span class="risk-high">9/高</span></td><td>加裝絕緣防護罩或封閉式電控箱，線束固定並防拉脫，維修前斷電驗電。</td></tr><tr><td>3</td><td>感應投放口與內部活動機構</td><td><span class="risk-medium">6/中</span></td><td>投放口加防伸入、防夾感測或電流限制；卡料時禁止使用者伸手排除。</td></tr><tr><td>4</td><td>液體或濕垃圾滲入電控/電池區</td><td><span class="risk-high">9/高</span></td><td>垃圾區與電控/電池區實體隔離，導流防滴漏，張貼禁止投入液體及未倒空容器。</td></tr><tr><td>5</td><td>紙箱、工具、包材靠近設備</td><td><span class="risk-medium">6/中</span></td><td>周邊1公尺保持整潔，工具零件不得置於設備上方，納入6S巡檢。</td></tr><tr><td>6</td><td>缺少SOP、警示與權責窗口</td><td><span class="risk-medium">6/中</span></td><td>建立操作、清潔、維修、卡料排除、異常停機及火災通報SOP，完成教育後再開放使用。</td></tr></tbody>
+    </table>
+  </div>
+  </div><div class="card">
+    <div class="card-header warning-header">每日使用前確認重點</div>
+    <div class="card-body"><ul class="styled-list"><li>電池固定、BMS、保險絲、過溫/過流保護確認完成。</li><li>電控板、端子、驅動器已加防護罩，非維修人員不可觸及。</li><li>設備接地、漏電斷路器及電源容量確認完成。</li><li>線束已固定，無破皮、鬆脫、跨越活動機構或通道。</li><li>投放口與門板防夾措施、警示標籤完成。</li><li>清潔、卡料排除、維修斷電SOP已建立並完成教育訓練。</li><li>周邊紙箱、工具、包材已移除，通道與散熱空間保持暢通。</li><li>適用滅火器材位置明確，人員知道冒煙/起火時停用、疏散、通報流程。</li></ul></div>
+  </div>
+
+  <div class="chapter" id="s9">
+    <div class="chapter-title">九、審議職業災害調查報告</div>
+    <div class="chapter-subtitle">115年第二季職災調查</div>
+  </div>
+  <div class="card">
+    <div class="card-header accent-header">九、職業災害調查（115年Q2）</div>
+    <div class="card-body">
+    <div class="highlight-card"><strong>日期：本季無職業災害紀錄</strong><br>115年第二季（2026年4月至6月）期間，公司無職業災害、交通事故及上下班交通事故紀錄，本季職安管理績效良好。</div>
+    <div class="kpi-grid"><div class="kpi-card accent"><div class="big-number">0</div><div class="kpi-label">職災事件</div></div><div class="kpi-card accent"><div class="big-number">0</div><div class="kpi-label">交通事故</div></div><div class="kpi-card accent"><div class="big-number">0</div><div class="kpi-label">上下班交通事故</div></div></div>
+  </div>
+  </div>
+
+  <div class="chapter" id="s10">
+    <div class="chapter-title">十、考核現場安全衛生管理績效（KPI）</div>
+    <div class="chapter-subtitle">115年第二季執行成效</div>
+  </div>
+  <div class="card">
+    <div class="card-header ">KPI 達成狀況</div>
+    <div class="card-body"><table>
+    <thead><tr><th>#</th><th>指標名稱</th><th>指標內容</th><th>目標值</th><th>Q2 實際值</th><th>達成狀態</th></tr></thead>
+    <tbody><tr>
+        <td>1</td><td>管理系統文件</td><td class="muted small">相關文件表單完成率</td><td>不定期</td>
+        <td class="kpi-good">進行中</td>
+        <td><span class="badge badge-info">進行中</span></td>
+      </tr><tr>
+        <td>2</td><td>消防檢修申報</td><td class="muted small">消防系統正常運作</td><td>1次／年</td>
+        <td class="kpi-good">已完成（防火管理提報 5/20）</td>
+        <td><span class="badge badge-success">已完成</span></td>
+      </tr><tr>
+        <td>3</td><td>管理方案達成率</td><td class="muted small">達成數／目標件數</td><td>1次／年</td>
+        <td class="kpi-good">進行中（Q2 共六項方案審議列管）</td>
+        <td><span class="badge badge-info">進行中</span></td>
+      </tr><tr>
+        <td>4</td><td>內部稽核</td><td class="muted small">改善件數／缺失件數</td><td>1次／年</td>
+        <td class="kpi-na">明年Q1執行</td>
+        <td><span class="badge badge-warning">待執行</span></td>
+      </tr><tr>
+        <td>5</td><td>作業環境監測</td><td class="muted small">相關項目符合法規</td><td>2次／年</td>
+        <td class="kpi-good">50%（1/2，已完成第一次）</td>
+        <td><span class="badge badge-info">進行中</span></td>
+      </tr><tr>
+        <td>6</td><td>相關教育訓練</td><td class="muted small">消防（上下半年）/ 在職訓</td><td>2次／年</td>
+        <td class="kpi-good">50%（上半年兩廠完成）</td>
+        <td><span class="badge badge-info">進行中</span></td>
+      </tr><tr>
+        <td>7</td><td>辦理在職員工健檢</td><td class="muted small">符合資歷同仁進行健檢</td><td>1次／3年</td>
+        <td class="kpi-na">今年無辦理</td>
+        <td><span class="badge badge-success">已完成</span></td>
+      </tr><tr>
+        <td>8</td><td>職護臨場服務</td><td class="muted small">實際衛教次數／法定衛教次數</td><td>12次／年</td>
+        <td class="kpi-good">進行中（5月：總部5/15、全興廠5/14；6月：總部6/23）</td>
+        <td><span class="badge badge-info">進行中</span></td>
+      </tr></tbody>
+  </table></div>
+  </div>
+
+  <div class="chapter" id="s11">
+    <div class="chapter-title">十一、審議承攬業務安全衛生管理事項</div>
+    <div class="chapter-subtitle">本季承攬業務管理</div>
+  </div>
+  <div class="no-action"><div class="no-action-icon">本期無異動</div><p><strong>本季無新增承攬業務安全衛生審議事項</strong></p><p style="margin-top:8px;font-size:0.88em;">如 Q3 涉及設備櫃安裝、電工改善或環境設備施工，建議納入承攬商危害告知與施工前安全確認。</p></div>
+
+  <div class="chapter" id="s12">
+    <div class="chapter-title">十二、其他有關職業安全衛生管理事項</div>
+    <div class="chapter-subtitle">Q3 行動清單與資料來源</div>
+  </div>
+  <div class="card" style="margin-bottom:24px;">
+    <div class="card-header" style="background:#0277bd;">本季職安知識教育主題摘要</div>
+    <div class="card-body">
+      <div class="law-ref"><strong>依據：</strong>2026/05/14 總部辦公室職安教育訓練（辦公室職安教育訓練簡報_法規架構版_含圖片版_v7），課程涵蓋六大法規架構類別，以下為本季委員會確認之重點主題。</div>
+      <div class="two-col" style="margin-top:16px;">
+        <div class="priority-card p1">
+          <div class="priority-rank">1</div>
+          <div>
+            <strong>電氣安全（感電危害）</strong>
+            <p style="font-size:0.88em;margin-top:5px;color:var(--text-light);">感電電流對人體的危害程度（1mA–100mA）；下班前電源確認清單；延長線安全使用（禁止章魚腳、禁止串接）；潮濕環境用電禁忌；電氣異常（焦味、冒煙、跳脫）即停用通報。</p>
+          </div>
+        </div>
+        <div class="priority-card p2">
+          <div class="priority-rank">2</div>
+          <div>
+            <strong>人因工程（肌肉骨骼危害）</strong>
+            <p style="font-size:0.88em;margin-top:5px;color:var(--text-light);">久坐每45–60分鐘起立伸展；正確坐姿五要點（螢幕距離、椅背、膝蓋、手肘、頭部）；腕隧道症候群預防（手腕伸展三步驟）；螢幕視力20-20-20法則；搬運重物標準姿勢與法定重量限制。</p>
+          </div>
+        </div>
+        <div class="priority-card p3">
+          <div class="priority-rank">3</div>
+          <div>
+            <strong>辦公室 6S 管理</strong>
+            <p style="font-size:0.88em;margin-top:5px;color:var(--text-light);">整理（去除不必要）、整頓（定位定量）、清掃（清潔即點檢）、清潔（標準化）、素養（習慣遵守）、安全（融入日常）；每日離座清單（通道淨空、電線收納、插座關閉）。</p>
+          </div>
+        </div>
+        <div class="priority-card" style="border-left:5px solid var(--accent);">
+          <div class="priority-rank" style="color:var(--accent);">4</div>
+          <div>
+            <strong>夏季熱危害預防</strong>
+            <p style="font-size:0.88em;margin-top:5px;color:var(--text-light);">熱痙攣、熱衰竭、熱中暑三類型辨識與緊急處置；高溫期間預防措施（補水頻率、衣著、避開正午）；熱中暑為緊急醫療，需立即送醫。</p>
+          </div>
+        </div>
+        <div class="priority-card" style="border-left:5px solid var(--danger);">
+          <div class="priority-rank" style="color:var(--danger);">5</div>
+          <div>
+            <strong>緊急事故應變</strong>
+            <p style="font-size:0.88em;margin-top:5px;color:var(--text-light);">地震應變：趴下(DROP)→掩護(COVER)→穩住(HOLD ON)；逃生路線確認、集合點回報；有人昏倒處置四步驟（確認安全→呼叫→119→呼吸確認）；AED位置與基本操作。</p>
+          </div>
+        </div>
+        <div class="priority-card" style="border-left:5px solid #7c3aed;">
+          <div class="priority-rank" style="color:#7c3aed;">6</div>
+          <div>
+            <strong>職場不法侵害預防</strong>
+            <p style="font-size:0.88em;margin-top:5px;color:var(--text-light);">六大侵害類型（身體攻擊、語言攻擊、精神霸凌、性騷擾、歧視、過度控管）；內部申訴管道（分機120）；霸凌 vs. 合理管理的判斷標準；保密承諾與禁止報復。</p>
+          </div>
+        </div>
+      </div>
+      <div class="info-card" style="margin-top:14px;"><strong>Q3 建議補充主題：</strong>消防安全（另由外部消防講師辦理）、年度健康檢查結果說明、交通安全宣導（防禦性駕駛）、清潔劑化學品安全（SDS備置）。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header info-header">Q3 行動清單</div>
+    <div class="card-body">
+    <table>
+      <thead><tr><th>目標執行日期</th><th>行動事項</th><th>負責 / 追蹤</th></tr></thead>
+      <tbody>
+        <tr><td>2026/Q3</td><td>安全設備櫃採購簽核與設備清單確認</td><td>安衛管理單位</td></tr>
+        <tr><td>2026/Q3</td><td>安全設備櫃到貨安裝、月檢表建置；地下室電線固定與排插架高第一輪改善</td><td>安衛管理單位</td></tr>
+        <tr><td>2026/Q3</td><td>會議室102自動分選垃圾桶電氣防護、防夾、標示、SOP與教育訓練改善後驗收</td><td>安衛管理單位</td></tr>
+        <tr><td>2026/Q3</td><td>年度健檢、地下室電氣危害複查、彰化全興廠噪音聽力保護計畫落實、擦手紙架導入追蹤</td><td>安衛管理單位</td></tr>
+        <tr><td>2026/11</td><td>下半年作業環境監測（台中總公司、彰化全興廠）— 依廠商預排時程執行</td><td>安衛管理單位</td></tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+  <div class="card">
+    <div class="card-header ">資料來源</div>
+    <div class="card-body">
+    <ul class="styled-list source-list">
+      <li><a href="../素材/20260514總部教育訓練教材/Claude辦公室職安教育訓練簡報_法規架構版_含圖片版_v7.html">總部辦公室職安教育訓練教材 HTML</a></li>
+      <li><a href="../素材/風險評估與危害鑑別/地下室舊衣回收分類作業_職安風險評估策略.md">地下室舊衣回收分類作業_職安風險評估策略.md</a></li>
+      <li><a href="../素材/風險評估與危害鑑別/安全設備櫃增設計劃報告.md">安全設備櫃增設計劃報告.md</a></li>
+      <li><a href="../素材/風險評估與危害鑑別/環境衛生改善計畫_洗手乾燥設備優化.md">環境衛生改善計畫_洗手乾燥設備優化.md</a></li>
+      <li><a href="../素材/風險評估與危害鑑別/會議室102自動分選垃圾桶業務/會議室102自動分選垃圾桶風險評估及危害辨識報告.md">會議室102自動分選垃圾桶風險評估及危害辨識報告.md</a></li>
+      <li><a href="../腳本/config.js">Q2 簡報設定檔 config.js</a></li>
+      <li><a href="../素材/環境監測/202605大豐環保科技股份有限公司(總公司)-環測電子檔.pdf">台中總公司作業環境監測報告（案號 115059895A，2026/05/08）PDF</a></li>
+      <li><a href="../素材/環境監測/202605大豐環保科技股份有限公司(彰化)-環測電子檔.pdf">彰化全興廠作業環境監測報告（案號 115059872A，2026/05/06）PDF</a></li>
+    </ul>
+  </div>
+  </div>
+
+  <div class="footer">大豐環保科技股份有限公司｜法務環安課｜2026年Q2 職安衛委員會報告 v4</div>
+</div>
+
+<div id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
+  <img id="lightbox-img" src="" alt="">
+  <div id="lightbox-caption"></div>
+</div>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到頂部">&uarr;</button>
+<script>
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('active');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('active');
+}
+document.querySelectorAll('.toc-chapter, .toc-sub').forEach(function(link) {
+  link.addEventListener('click', closeSidebar);
+});
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('backToTop');
+  if (window.scrollY > 420) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+function openLightbox(btn) {
+  var item = btn.closest('.photo-item');
+  var img = item.querySelector('img');
+  var caption = item.querySelector('.photo-caption');
+  document.getElementById('lightbox-img').src = img.src;
+  document.getElementById('lightbox-img').alt = img.alt;
+  document.getElementById('lightbox-caption').textContent = caption ? caption.textContent : '';
+  document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightbox();
+});
+/* 統一為所有含圖片的 photo-item 加放大按鈕 */
+document.querySelectorAll('.photo-item').forEach(function(item) {
+  if (!item.querySelector('.photo-zoom-btn') && item.querySelector('img')) {
+    var btn = document.createElement('button');
+    btn.className = 'photo-zoom-btn';
+    btn.title = '放大';
+    btn.innerHTML = '&#x26F6;';
+    btn.addEventListener('click', function(e) { e.stopPropagation(); openLightbox(this); });
+    item.insertBefore(btn, item.firstChild);
+  }
+});
+</script>
+</body>
+</html>

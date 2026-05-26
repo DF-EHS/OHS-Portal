@@ -1,0 +1,2257 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年Q1 職安衛委員會報告｜大豐環保</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/sidebar.css">
+  <link rel="stylesheet" href="../../css/dark.css">
+  <script src="../../js/theme.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    /* ===== 封面色系 ===== */
+    .cover-card {
+      background: linear-gradient(135deg, #0d2137 0%, #1B3A6B 50%, #1e5799 100%);
+    }
+    .cover-card::after {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .sidebar-header {
+      background: linear-gradient(135deg, #1B3A6B, #2a5298);
+    }
+
+    /* === 封面 meta badges === */
+    .cover-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 22px;
+    }
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.28);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.84em;
+      color: rgba(255,255,255,0.92);
+      backdrop-filter: blur(4px);
+    }
+
+    /* ===== 快速導覽列 ===== */
+    .quick-nav {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px 20px 16px;
+      margin-bottom: 28px;
+      border-top: 3px solid #1B3A6B;
+    }
+    .quick-nav-title {
+      font-size: 0.72em;
+      color: var(--text-light);
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+    .quick-nav-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .quick-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      height: 30px;
+      padding: 0 13px;
+      border-radius: 20px;
+      background: #f0f4f9;
+      color: #1B3A6B;
+      text-decoration: none;
+      font-size: 0.78em;
+      font-weight: 600;
+      transition: all 0.2s;
+      border: 1.5px solid #cdd9ea;
+      white-space: nowrap;
+    }
+    .quick-nav-btn:hover {
+      background: #1B3A6B;
+      color: white;
+      border-color: #1B3A6B;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(27,58,107,0.25);
+    }
+    .quick-nav-btn.active {
+      background: #1B3A6B;
+      color: white;
+      border-color: #1B3A6B;
+    }
+    .quick-nav-btn.no-content {
+      background: #f8f8f8;
+      color: #bbb;
+      border-color: #eee;
+      font-weight: 400;
+    }
+
+    /* ===== 法源引用框 ===== */
+    .law-ref {
+      background: linear-gradient(135deg, #f0f4f9, #e8eef6);
+      border-left: 4px solid var(--primary);
+      padding: 12px 18px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88em;
+      color: #555;
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+    .law-ref strong { color: var(--primary); }
+
+    /* ===== 政策卡片 ===== */
+    .policy-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .policy-item:last-child { border-bottom: none; }
+    .policy-item:hover {
+      background: #fafbfd;
+      margin: 0 -24px;
+      padding-left: 24px;
+      padding-right: 24px;
+      border-radius: 6px;
+    }
+    .policy-tag {
+      background: linear-gradient(135deg, #1B3A6B, #2a5298);
+      color: white;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.78em;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(27,58,107,0.2);
+    }
+    .policy-desc { font-size: 0.93em; line-height: 1.75; color: #444; }
+
+    /* ===== 計畫欄位 ===== */
+    .plan-col-header {
+      background: linear-gradient(135deg, #1B3A6B, #2a5298);
+      color: white;
+      padding: 11px 18px;
+      border-radius: 10px 10px 0 0;
+      font-weight: 700;
+      font-size: 0.95em;
+    }
+    .plan-col-body {
+      border: 1.5px solid #cdd9ea;
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 14px 18px;
+      background: #fafcff;
+    }
+    .plan-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid #eef2f7;
+    }
+    .plan-item:last-child { border-bottom: none; }
+    .plan-dot {
+      width: 8px; height: 8px;
+      background: #C0392B;
+      border-radius: 50%;
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ===== 訓練狀態徽章 ===== */
+    .status-done {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1.5px solid #a5d6a7;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+    .status-pending {
+      display: inline-block;
+      background: #fff3e0;
+      color: #e65100;
+      border: 1.5px solid #ffcc80;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+    .status-na {
+      display: inline-block;
+      background: #f5f5f5;
+      color: #999;
+      border: 1px solid #e0e0e0;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-size: 0.8em;
+    }
+
+    /* ===== 提案卡片 ===== */
+    .proposal-card {
+      border: none;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 22px;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .proposal-card:hover {
+      box-shadow: 0 7px 24px rgba(27,58,107,0.14);
+      transform: translateY(-2px);
+    }
+    .proposal-header {
+      background: linear-gradient(135deg, #1B3A6B 0%, #2a5298 100%);
+      color: white;
+      padding: 14px 20px;
+      font-weight: 700;
+      font-size: 1.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .proposal-header::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: rgba(255,255,255,0.55);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .proposal-body {
+      padding: 18px 22px;
+      background: white;
+      border: 1.5px solid #dde8f5;
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+    .proposal-risk {
+      display: inline-block;
+      background: #fff0f0;
+      border: 1.5px solid #ffb3b3;
+      color: #c62828;
+      padding: 4px 14px;
+      border-radius: 6px;
+      font-size: 0.82em;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .proposal-goal {
+      background: linear-gradient(135deg, #e8f0fb, #ddeaff);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.9em;
+      color: #1B3A6B;
+      font-weight: 600;
+      margin-top: 14px;
+      border-left: 3px solid #1B3A6B;
+    }
+    .proposal-steps {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0;
+      counter-reset: pstep;
+    }
+    .proposal-steps li {
+      counter-increment: pstep;
+      padding: 8px 0 8px 38px;
+      position: relative;
+      font-size: 0.9em;
+      line-height: 1.65;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .proposal-steps li:last-child { border-bottom: none; }
+    .proposal-steps li::before {
+      content: counter(pstep);
+      position: absolute;
+      left: 0; top: 7px;
+      width: 24px; height: 24px;
+      background: #1B3A6B;
+      color: white;
+      border-radius: 50%;
+      font-size: 0.75em;
+      font-weight: 700;
+      text-align: center;
+      line-height: 24px;
+    }
+
+    /* ===== 稽核結果欄位 ===== */
+    .audit-done { border-top: 4px solid #4caf50; }
+    .audit-todo { border-top: 4px solid #e53935; }
+    .audit-col-label {
+      padding: 6px 12px;
+      font-weight: 700;
+      font-size: 0.85em;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    .audit-col-label.done { background: #e8f5e9; color: #2e7d32; }
+    .audit-col-label.todo { background: #ffebee; color: #c62828; }
+
+    /* ===== 照片展示區 ===== */
+    .photo-grid {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: 16px 0;
+    }
+    .photo-item {
+      flex: 1;
+      min-width: 200px;
+      max-width: 340px;
+      position: relative;
+    }
+    .photo-item img {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      object-fit: cover;
+      display: block;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: box-shadow 0.2s;
+    }
+    .photo-item img:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+    .photo-item { position: relative; }
+    .photo-zoom-btn {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.52);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity .2s, background .2s, transform .15s;
+      z-index: 2;
+      line-height: 1;
+    }
+    .photo-item:hover .photo-zoom-btn { opacity: 1; }
+    .photo-zoom-btn:hover { background: var(--primary); transform: scale(1.15); }
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+    }
+    #lightbox.active { display: flex; }
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 82vh;
+      border-radius: 8px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      object-fit: contain;
+    }
+    #lightbox-caption {
+      color: rgba(255,255,255,0.85);
+      font-size: 0.92em;
+      text-align: center;
+      max-width: 80vw;
+    }
+    #lightbox-close {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: #fff;
+      font-size: 22px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #lightbox-close:hover { background: rgba(255,255,255,0.28); }
+    .photo-caption {
+      font-size: 0.78em;
+      color: var(--text-light);
+      text-align: center;
+      margin-top: 8px;
+      padding: 0 4px;
+      line-height: 1.4;
+    }
+    /* 照片佔位符 */
+    .photo-placeholder {
+      width: 100%;
+      min-height: 180px;
+      background: #fafbfc;
+      border: 2px dashed #c5d5e8;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      font-size: 0.85em;
+      text-align: center;
+      padding: 22px;
+      gap: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .photo-placeholder:hover { border-color: #1B3A6B; background: #f0f5fb; }
+    .photo-placeholder .ph-icon { font-size: 2.4em; opacity: 0.5; }
+    .photo-placeholder .ph-filename {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78em;
+      color: #c0c8d8;
+      word-break: break-all;
+    }
+    .photo-placeholder .ph-hint { font-size: 0.78em; color: #ccc; }
+    /* 行內上傳按鈕 */
+    .ph-upload-btn {
+      margin-top: 10px;
+      padding: 7px 18px;
+      background: #1B3A6B;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.82em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: filter 0.2s, transform 0.15s;
+      font-family: inherit;
+    }
+    .ph-upload-btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
+    .ph-upload-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .ph-upload-status { font-size: 0.78em; margin-top: 5px; min-height: 1em; }
+    /* 常駐新增按鈕列 */
+    .ph-add-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #cdd9ea;
+      flex-wrap: wrap;
+    }
+    .ph-add-btn {
+      padding: 6px 16px;
+      background: #f0f4f9;
+      color: var(--primary);
+      border: 1.5px solid #cdd9ea;
+      border-radius: 20px;
+      font-size: 0.82em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .ph-add-btn:hover { background: #dde8f5; border-color: var(--primary); transform: translateY(-1px); }
+    .ph-add-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .ph-add-status { font-size: 0.78em; color: #555; }
+    /* 照片刪除按鈕 */
+    .photo-del-btn {
+      position: absolute;
+      top: 7px; right: 42px;
+      width: 26px; height: 26px;
+      background: rgba(0,0,0,0.45);
+      color: white;
+      border: none; border-radius: 50%;
+      font-size: 12px; line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.15s, opacity 0.2s;
+      z-index: 10;
+      font-family: inherit;
+      opacity: 0;
+    }
+    .photo-item:hover .photo-del-btn { opacity: 1; }
+    .photo-del-btn:hover { background: rgba(198,40,40,0.92); transform: scale(1.15); }
+
+    /* ===== 圓餅圖佔位（保留供其他區塊使用） ===== */
+    .chart-placeholder-row {
+      display: flex;
+      gap: 16px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+    .chart-placeholder {
+      flex: 1;
+      min-width: 240px;
+      min-height: 220px;
+      background: #fafbfc;
+      border: 2px dashed #c5d5e8;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      font-size: 0.85em;
+      text-align: center;
+      padding: 20px;
+      gap: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .chart-placeholder:hover { border-color: #1B3A6B; background: #f0f5fb; }
+    .chart-placeholder .ph-icon { font-size: 2.8em; opacity: 0.45; }
+
+    /* ===== Chart.js 圓餅圖 ===== */
+    .chart-canvas-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 4px 0;
+    }
+    .chart-canvas-wrap {
+      flex: 1;
+      min-width: 260px;
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 16px 16px 14px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    .chart-canvas-title {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-size: 0.92em;
+    }
+    .chart-legend {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px 12px;
+    }
+    .chart-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.77em;
+      color: var(--text);
+    }
+    .chart-legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    @media (max-width: 768px) {
+      .chart-canvas-wrap { min-width: 100%; }
+    }
+
+    /* ===== KPI 表格 ===== */
+    .kpi-good { color: #2e7d32; font-weight: 700; }
+    .kpi-bad { color: #c62828; font-weight: 700; }
+    .kpi-na { color: #aaa; }
+
+    /* ===== 本期無異動區塊 ===== */
+    .no-action {
+      background: white;
+      border: 1.5px dashed #cdd9ea;
+      border-radius: var(--radius);
+      padding: 38px 30px;
+      text-align: center;
+      color: var(--text-light);
+      margin-bottom: 24px;
+    }
+    .no-action .no-action-icon { font-size: 2.4em; margin-bottom: 10px; opacity: 0.4; }
+    .no-action p { font-size: 0.95em; }
+
+    /* ===== 事故描述卡 ===== */
+    .incident-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      background: linear-gradient(135deg, #1B3A6B 0%, #2a5298 100%);
+      border-radius: 10px 10px 0 0;
+    }
+    .incident-header-item {
+      display: flex;
+      flex-direction: column;
+      padding: 14px 20px;
+      border-right: 1px solid rgba(255,255,255,0.14);
+      flex: 1;
+      min-width: 90px;
+    }
+    .incident-header-item:last-child { border-right: none; }
+    .incident-header-item span:first-child {
+      font-size: 0.7em;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .incident-header-item span:last-child {
+      font-weight: 700;
+      color: white;
+      font-size: 0.95em;
+    }
+    .incident-desc {
+      border: 1.5px solid #dde8f5;
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 18px 20px;
+      line-height: 1.85;
+      font-size: 0.95em;
+      background: #fafcff;
+    }
+
+    /* ===== 統計摘要數字 ===== */
+    .summary-stats {
+      display: flex;
+      gap: 14px;
+      margin: 22px 0;
+      flex-wrap: wrap;
+    }
+    .stat-box {
+      flex: 1;
+      min-width: 110px;
+      text-align: center;
+      padding: 18px 12px 14px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-box:hover { transform: translateY(-3px); box-shadow: 0 5px 18px rgba(0,0,0,0.1); }
+    .stat-box .stat-num {
+      font-size: 2.6em;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .stat-box .stat-label {
+      font-size: 0.8em;
+      color: var(--text-light);
+      margin-top: 7px;
+    }
+    .stat-box.red {
+      background: linear-gradient(135deg, #fff5f5, #fff);
+      border-color: #ffcdd2;
+      border-top: 4px solid var(--danger);
+    }
+    .stat-box.red .stat-num { color: var(--danger); }
+    .stat-box.green {
+      background: linear-gradient(135deg, #f1f8f1, #fff);
+      border-color: #c8e6c9;
+      border-top: 4px solid #4caf50;
+    }
+    .stat-box.green .stat-num { color: #2e7d32; }
+
+    /* ===== 章節頁尾導覽 ===== */
+    .nav-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .nav-footer a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 22px;
+      background: white;
+      color: var(--primary);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9em;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--primary);
+      transition: all 0.2s;
+    }
+    .nav-footer a:hover { background: var(--primary); color: white; }
+
+    /* ===== 響應式 ===== */
+    @media (max-width: 768px) {
+      .quick-nav { position: static; }
+      .quick-nav-btn { font-size: 0.72em; padding: 0 9px; height: 28px; }
+      .photo-item { min-width: 140px; }
+      .chart-placeholder { min-width: 100%; }
+      .incident-header-item { min-width: 80px; padding: 10px 12px; }
+      .incident-header-item span:last-child { font-size: 0.88em; }
+      .summary-stats { gap: 8px; }
+      .stat-box { min-width: 80px; padding: 14px 8px 10px; }
+      .stat-box .stat-num { font-size: 1.9em; }
+      .cover-meta { gap: 6px; }
+      .cover-badge { font-size: 0.78em; padding: 5px 12px; }
+    }
+  </style>
+  <!-- 本機 / 線上圖片路徑自動切換 -->
+  <script>
+    var IS_LOCAL = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+    /* 顯示用路徑前綴：本機→GitHub Pages 絕對路徑，線上→相對路徑 */
+    var IMG_DISPLAY_BASE = IS_LOCAL
+      ? 'https://seiu777.github.io/df-ehs/committee/images/2026-Q1/'
+      : 'images/2026-Q1/';
+  </script>
+</head>
+<body>
+
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()" aria-label="開啟目錄">&#9776;</button>
+<div class="sidebar-trigger"></div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- ===== 側邊欄 ===== -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">2026年Q1 職安衛委員會報告<small>大豐環保｜法務環安課</small></div>
+  <div class="toc-group"><a class="toc-chapter" href="#cover">封面</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s1">一、職業安全衛生政策</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s2">二、職安衛管理計畫</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s3">三、教育訓練計畫</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s4">四、作業環境監測</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s5">五、健康管理</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s6">六、安全衛生提案</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s7">七、自動檢查稽核</a>
+    <a class="toc-sub" href="#s7-done">已完成改善</a>
+    <a class="toc-sub" href="#s7-todo">待完成改善</a>
+    <a class="toc-sub" href="#s7-photos">改善照片</a>
+    <a class="toc-sub" href="#s7-internal">內部自動稽核</a>
+  </div>
+  <div class="toc-group"><a class="toc-chapter" href="#s8">八、機械設備危害預防</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s9">九、職業災害調查</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s10">十、現場管理績效（KPI）</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s11">十一、承攬業務管理</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s12">十二、其他事項</a></div>
+</nav>
+
+<!-- ===== 主內容 ===== -->
+<div class="container">
+
+  <!-- 上方導覽 -->
+  <div class="top-nav">
+    <a class="back-link" href="index.html">&#8592; 委員會季報列表</a>
+    <a class="back-link" href="../index.html">&#127968; 回首頁</a>
+  </div>
+
+  <!-- ===== 封面卡片 ===== -->
+  <div class="cover-card" id="cover">
+    <div style="font-size:0.82em;opacity:0.75;margin-bottom:8px;letter-spacing:1px;">大豐環保科技股份有限公司</div>
+    <h1>2026年Q1 職安衛委員會報告</h1>
+    <div class="subtitle">依《職業安全衛生管理辦法》第12條</div>
+    <div class="cover-meta">
+      <span class="cover-badge">&#127970; 法務環安課</span>
+      <span class="cover-badge">&#128197; 2026年第一季（1月～3月）</span>
+      <span class="cover-badge">&#128203; 報告日期：2026年3月</span>
+    </div>
+  </div>
+
+  <!-- ===== 快速導覽列 ===== -->
+  <div class="quick-nav">
+    <div class="quick-nav-title">快速跳轉 — 十二項辦理事項</div>
+    <div class="quick-nav-items">
+      <a class="quick-nav-btn" href="#s1" title="一、職業安全衛生政策">一 政策</a>
+      <a class="quick-nav-btn" href="#s2" title="二、職安衛管理計畫">二 管理計畫</a>
+      <a class="quick-nav-btn" href="#s3" title="三、教育訓練計畫">三 教育訓練</a>
+      <a class="quick-nav-btn" href="#s4" title="四、作業環境監測">四 環境監測</a>
+      <a class="quick-nav-btn" href="#s5" title="五、健康管理">五 健康管理</a>
+      <a class="quick-nav-btn" href="#s6" title="六、安全衛生提案">六 安衛提案</a>
+      <a class="quick-nav-btn" href="#s7" title="七、自動檢查稽核">七 稽核</a>
+      <a class="quick-nav-btn no-content" href="#s8" title="八、機械設備危害預防（本期無異動）">八 機械設備</a>
+      <a class="quick-nav-btn" href="#s9" title="九、職業災害調查">九 職業災害</a>
+      <a class="quick-nav-btn" href="#s10" title="十、現場管理績效">十 KPI</a>
+      <a class="quick-nav-btn no-content" href="#s11" title="十一、承攬業務管理（本期無異動）">十一 承攬</a>
+      <a class="quick-nav-btn" href="#s12" title="十二、其他事項">十二 其他</a>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       一、職業安全衛生政策
+       =================================================== -->
+  <!-- ===== [更新提示] 政策內容如有修訂請更新此區塊 ===== -->
+  <div class="chapter" id="s1">
+    <div class="chapter-title">一、擬訂職業安全衛生政策</div>
+    <div class="chapter-subtitle">提出建議，宣示公司環安衛承諾</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="policy-item">
+        <span class="policy-tag">(1) 遵守法規 減少衝擊</span>
+        <span class="policy-desc">確保作業中對環境造成最低衝擊，承諾遵守相關環安衛法律、法規、標準及其他要求。</span>
+      </div>
+      <div class="policy-item">
+        <span class="policy-tag">(2) 節能減碳 推動綠能</span>
+        <span class="policy-desc">珍惜各項資產能源，提高污染防治效能，推動減碳減廢創造綠色能量。</span>
+      </div>
+      <div class="policy-item">
+        <span class="policy-tag">(3) 危害預防 促進健康</span>
+        <span class="policy-desc">推動風險管理、做好傷害疾病預防、健康檢查與促進，降低危害事故發生，確保員工與承攬商、訪客之安全，建構安全、健康、零災害之環境。</span>
+      </div>
+      <div class="policy-item">
+        <span class="policy-tag">(4) 落實溝通 持續改善</span>
+        <span class="policy-desc">將環保、安全衛生觀念融入員工、供應商、承攬商及利害關係者之訓練或告知，落實全員對環安衛的認知及緊急應變能力。</span>
+      </div>
+      <div class="policy-item">
+        <span class="policy-tag">(5) 永續經營 善盡責任</span>
+        <span class="policy-desc">持續改善環安衛系統，善盡對客戶、員工及其他利害關係者的責任。</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       二、職業安全衛生管理計畫
+       =================================================== -->
+  <!-- ===== [更新提示] 每季更新執行重點 ===== -->
+  <div class="chapter" id="s2">
+    <div class="chapter-title">二、協調、建議職業安全衛生管理計畫</div>
+    <div class="chapter-subtitle">2026年度計畫執行進度</div>
+  </div>
+  <div class="two-col" style="margin-bottom:20px;">
+    <div>
+      <div class="plan-col-header">第一季執行重點（已執行）</div>
+      <div class="plan-col-body">
+        <div class="plan-item"><div class="plan-dot"></div><span>道路安全宣導講習</span></div>
+        <div class="plan-item"><div class="plan-dot"></div><span>台中、全興員工在職訓練（含消防）</span></div>
+        <div class="plan-item"><div class="plan-dot"></div><span>健康管理（每月）：職業護理師臨場服務衛教</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="plan-col-header" style="background:linear-gradient(135deg,#2c5f7e,#3a7ca5);">第二季執行重點（規劃中）</div>
+      <div class="plan-col-body">
+        <div class="plan-item"><div class="plan-dot" style="background:#3a7ca5;"></div><span>上半年作業環境監測</span></div>
+        <div class="plan-item"><div class="plan-dot" style="background:#3a7ca5;"></div><span>危害鑑別與風險管理</span></div>
+        <div class="plan-item"><div class="plan-dot" style="background:#3a7ca5;"></div><span>年度在職員工健檢</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       三、教育訓練
+       =================================================== -->
+  <!-- ===== [更新提示] 每季更新訓練完成狀態 ===== -->
+  <div class="chapter" id="s3">
+    <div class="chapter-title">三、審議安全衛生教育訓練實施計畫</div>
+    <div class="chapter-subtitle">職業安全衛生法第32條 — 雇主對勞工應施以從事工作與預防災變所必要之安全衛生教育及訓練</div>
+  </div>
+  <div class="card">
+    <div class="card-header">2026年度訓練項目執行狀況</div>
+    <div class="card-body" style="padding:0;">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>訓練項目</th>
+            <th>對象</th>
+            <th>計畫時程</th>
+            <th>狀態</th>
+            <th>執行日期</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>職業安全衛生講習 &amp; 道路安全宣導</td>
+            <td>全體員工</td>
+            <td>第一季</td>
+            <td><span class="status-pending">待執行</span></td>
+            <td>3月30日</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>台中消防教育訓練</td>
+            <td>台中總公司</td>
+            <td>第一季</td>
+            <td><span class="status-pending">待執行</span></td>
+            <td>3月30日</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>全興消防教育訓練</td>
+            <td>全興廠員工</td>
+            <td>第一季</td>
+            <td><span class="status-pending">待執行</span></td>
+            <td>3月30日</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       四、作業環境監測
+       =================================================== -->
+  <!-- ===== [更新提示] 執行監測後填入實際數值 ===== -->
+  <div class="chapter" id="s4">
+    <div class="chapter-title">四、審議作業環境監測計畫</div>
+    <div class="chapter-subtitle">監測結果及採行措施</div>
+  </div>
+  <div class="law-ref">
+    <strong>法源依據：</strong>勞工作業環境監測實施辦法第7～9條 — 中央空調室內場所應每六個月監測 CO₂ 濃度一次以上；噪音達 85dB 以上作業場所應每六個月監測一次；室內採光照明應定期監測記錄。
+  </div>
+  <div class="info-card" style="margin-bottom:16px;">
+    <strong>2026年度監測計畫：</strong>上半年度實施監測（<span style="color:var(--danger);font-weight:700;">預計四、五月執行</span>）— 台中總公司 &amp; 全興廠
+  </div>
+  <div class="card">
+    <div class="card-header">監測項目一覽</div>
+    <div class="card-body" style="padding:0;">
+      <table>
+        <thead>
+          <tr>
+            <th>監測項目</th>
+            <th>台中總公司</th>
+            <th>彰化全興廠</th>
+            <th>法規標準</th>
+            <th>監測結果</th>
+            <th>預計時間</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>噪音（dB）</strong></td>
+            <td class="kpi-na">—</td>
+            <td>處理一課、處理二課、造粒課</td>
+            <td>≤ 90 dB</td>
+            <td class="kpi-na">待執行</td>
+            <td>2026年4～5月</td>
+          </tr>
+          <tr>
+            <td><strong>照度（lux）</strong></td>
+            <td>共 9 處</td>
+            <td>共 5 處</td>
+            <td>依計畫表</td>
+            <td class="kpi-na">待執行</td>
+            <td>2026年4～5月</td>
+          </tr>
+          <tr>
+            <td><strong>CO₂ 濃度（ppm）</strong></td>
+            <td>共 9 處</td>
+            <td class="kpi-na">—</td>
+            <td>≤ 5000 ppm</td>
+            <td class="kpi-na">待執行</td>
+            <td>2026年4～5月</td>
+          </tr>
+          <tr>
+            <td><strong>NaOH（mg/m³）</strong></td>
+            <td class="kpi-na">—</td>
+            <td>廢水區</td>
+            <td>≤ 2 mg/m³</td>
+            <td class="kpi-na">待執行</td>
+            <td>2026年4～5月</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       五、健康管理
+       =================================================== -->
+  <!-- ===== [更新提示] 每季更新臨場日期與進度 ===== -->
+  <div class="chapter" id="s5">
+    <div class="chapter-title">五、審議健康管理、職業病預防及健康促進事項</div>
+    <div class="chapter-subtitle">職護臨場服務 · 健康檢查 · 職業病預防</div>
+  </div>
+  <div class="highlight-card">
+    <strong>★ 本季重點：</strong>職護臨場衛教服務 — 執行新進人員及年度健檢分級人員衛教
+  </div>
+  <div class="three-col" style="margin-bottom:20px;">
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-header" style="font-size:0.95em;">&#128197; 三月臨場服務日期</div>
+      <div class="card-body">
+        <p style="margin-bottom:8px;"><strong>台中總公司：</strong>03/24（週一）<br>13:00 ～ 15:00</p>
+        <p><strong>全興廠：</strong><span class="status-pending">待執行</span></p>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-header" style="font-size:0.95em;">&#128100; 服務對象</div>
+      <div class="card-body">
+        <p style="margin-bottom:6px;">&#9679; 新進人員衛教輔導</p>
+        <p style="margin-bottom:6px;">&#9679; 年度健檢分級追蹤人員</p>
+        <p>&#9679; 職業病預防諮詢</p>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-header" style="font-size:0.95em;">&#127919; 2026年全年目標</div>
+      <div class="card-body">
+        <p style="margin-bottom:8px;">職護臨場服務：<strong>12次／年</strong><br><span style="color:var(--accent);font-weight:700;">目前進度：3次（進度25%）</span></p>
+        <p>在職員工健檢：<strong>1次／年</strong><br><span class="kpi-na">上半年執行</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 職護臨場服務照片 -->
+  <div class="card">
+    <div class="card-header">職護臨場服務紀錄照片</div>
+    <div class="card-body">
+      <div class="photo-grid" id="pg-nurse">
+        <div class="photo-item" style="max-width:100%;">
+          <img src="images/2026-Q1/nurse-service.jpg" alt="職護臨場服務">
+          <div class="photo-caption">職護臨場衛教服務（2026年3月）</div>
+        </div>
+        <!-- END:pg-nurse -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       六、安全衛生提案
+       =================================================== -->
+  <!-- ===== [更新提示] 每季更新提案內容與執行進度 ===== -->
+  <div class="chapter" id="s6">
+    <div class="chapter-title">六、審議各項安全衛生提案</div>
+    <div class="chapter-subtitle">2026年度安全衛生改善方案｜負責單位：法務環安課</div>
+  </div>
+
+  <div class="proposal-card">
+    <div class="proposal-header">方案一：降低交通事故風險</div>
+    <div class="proposal-body">
+      <div class="proposal-risk">交通事故（倒車碰撞、追撞、上下班通勤）</div>
+      <p style="font-size:0.9em;color:var(--text-light);margin-bottom:10px;"><strong>風險危害分析：</strong>交通事故2025年35件，佔全年66%；三年增長 +133%</p>
+      <ol class="proposal-steps">
+        <li>導入行車紀錄器 AI 分析系統，針對高風險駕駛行為（急煞、超速、分心）自動預警</li>
+        <li>推動倒車作業標準程序（查看 → 喇叭示警 → 緩速後退）</li>
+        <li>每季進行駕駛安全講習，含實際案例討論</li>
+      </ol>
+      <div class="proposal-goal">&#127919; 目標：降低交通事故件數至25件以下（減少30%），減少倒車碰撞類事故</div>
+      <div style="font-size:0.87em;color:var(--text-light);margin-top:8px;"><strong>預期效益：</strong>減少倒車碰撞類事故，降低公司損失工時</div>
+      <div style="background:#fff3e0;border-radius:6px;padding:5px 12px;font-size:0.85em;margin-top:6px;"><span style="color:#e65100;font-weight:700;">本季進度：</span>審議及規劃中</div>
+    </div>
+  </div>
+
+  <div class="proposal-card">
+    <div class="proposal-header">方案二：推動虛驚通報制度</div>
+    <div class="proposal-body">
+      <div class="proposal-risk">潛在危害認知不足</div>
+      <p style="font-size:0.9em;color:var(--text-light);margin-bottom:10px;"><strong>風險危害分析：</strong>通報量仍偏低，無法有效預警潛在風險</p>
+      <ol class="proposal-steps">
+        <li>建立虛驚通報獎勵機制（每件通報給予獎勵點數或禮券）</li>
+        <li>設定目標：月均虛驚通報5件以上</li>
+        <li>每月彙整虛驚案例進行安全宣導，讓通報者感受到「通報有用」</li>
+      </ol>
+      <div class="proposal-goal">&#127919; 目標：提升虛驚通報量至年均60件，透過早期發現潛在危害，預防實際事故發生</div>
+      <div style="font-size:0.87em;color:var(--text-light);margin-top:8px;"><strong>預期效益：</strong>透過早期發現潛在危害，預防實際事故發生</div>
+      <div style="background:#fff3e0;border-radius:6px;padding:5px 12px;font-size:0.85em;margin-top:6px;"><span style="color:#e65100;font-weight:700;">本季進度：</span>審議及規劃中</div>
+    </div>
+  </div>
+
+  <div class="proposal-card">
+    <div class="proposal-header">方案三：樓梯通道防滑工程與行走安全強化</div>
+    <div class="proposal-body">
+      <div class="proposal-risk">跌倒／墜落事故（骨折等重大傷害）</div>
+      <p style="font-size:0.9em;color:var(--text-light);margin-bottom:10px;"><strong>風險危害分析：</strong>跌倒/墜落事故6件，其中3件重大傷害合計損失210天（佔全年損失工日58.5%）；主因為雨天地滑、未穿安全鞋、未使用扶手</p>
+      <ol class="proposal-steps">
+        <li>清查各廠區樓梯與通道防滑設施，雨天高風險區域加裝防滑條與警示標誌</li>
+        <li>落實安全鞋穿戴規範，搬運重物時禁止使用樓梯（改用電梯或推車）</li>
+        <li>地面棧板散落立即清理，列入自動檢查項目</li>
+      </ol>
+      <div class="proposal-goal">&#127919; 目標：降低跌倒墜落事故至2件以下，減少因骨折等重大傷害造成的長期損失工日</div>
+      <div style="font-size:0.87em;color:var(--text-light);margin-top:8px;"><strong>預期效益：</strong>減少因骨折等重大傷害造成的長期損失工日</div>
+      <div style="background:#fff3e0;border-radius:6px;padding:5px 12px;font-size:0.85em;margin-top:6px;"><span style="color:#e65100;font-weight:700;">本季進度：</span>審議及規劃中</div>
+    </div>
+  </div>
+
+  <div class="proposal-card">
+    <div class="proposal-header">方案四：外籍員工安全教育強化方案（LOTO 多語言）</div>
+    <div class="proposal-body">
+      <div class="proposal-risk">被夾被捲事故（含外籍員工語言隔閡）</div>
+      <p style="font-size:0.9em;color:var(--text-light);margin-bottom:10px;"><strong>風險危害分析：</strong>三年被夾被捲事故5件中3件為外籍員工（含1件永久失能），主因為未使用規定工具、未待機台完全停止即伸手操作，語言隔閡可能導致 SOP 理解不足、安全告知未確實傳達</p>
+      <ol class="proposal-steps">
+        <li>建立多語言 LOTO 教育教材（中文/泰文/越南文），以實拍照片＋圖示為主</li>
+        <li>進行實機演練與評核，確認正確操作；外籍員工入職及每年複訓增加實機操作演練</li>
+        <li>機台旁張貼多語言警示標誌及 LOTO 八步驟圖卡，以紅色警示標明「未停止禁止伸手」</li>
+        <li>推動 Buddy 制度：每位外籍員工配對一位本籍員工指導，新進外籍員工前三個月隨行指導</li>
+      </ol>
+      <div class="proposal-goal">&#127919; 目標：杜絕外籍員工因語言隔閡或 SOP 理解不足導致的被夾被捲事故，外籍員工重大工安事故歸零</div>
+      <div style="font-size:0.87em;color:var(--text-light);margin-top:8px;"><strong>預期效益：</strong>杜絕外籍員工因語言隔閡或 SOP 理解不足導致的被夾被捲事故</div>
+      <div style="background:#fff3e0;border-radius:6px;padding:5px 12px;font-size:0.85em;margin-top:6px;"><span style="color:#e65100;font-weight:700;">本季進度：</span>審議及規劃中</div>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       七、自動檢查及安全衛生稽核
+       =================================================== -->
+  <div class="chapter" id="s7">
+    <div class="chapter-title">七、審議自動檢查及安全衛生稽核事項</div>
+    <div class="chapter-subtitle">本季受勞動檢查廠場 &amp; 內部自動稽核</div>
+  </div>
+
+  <!-- 總覽表 -->
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-header">總覽：本季受勞檢之廠場</div>
+    <div class="card-body" style="padding:0;">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>廠場名稱</th><th>受檢日期</th><th>缺失數</th><th>正式公文</th><th>改善報告</th><th>結案</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><strong>和美站</strong></td>
+            <td>115/03/17</td>
+            <td style="text-align:center;color:var(--danger);font-weight:700;">4</td>
+            <td><span class="status-pending">未收到</span></td>
+            <td><span class="status-pending">未回覆</span></td>
+            <td><span class="status-pending">否</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 和美站 (03/17) 詳細 -->
+  <div class="card" style="margin-bottom:6px;">
+    <div class="card-header">&#128205; 和美站（03/17）— 勞動檢查詳細紀錄</div>
+  </div>
+
+  <!-- 勞檢官方記錄截圖 -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header">1-1. 勞動檢查記錄照片</div>
+    <div class="card-body">
+      <div class="photo-grid" id="pg-inspection">
+        <div class="photo-item" style="max-width:100%;">
+          <img src="images/2026-Q1/labor-inspection-record.jpg" alt="勞動檢查記錄"
+               style="max-height:400px;object-fit:contain;background:#f5f5f5;">
+          <div class="photo-caption">勞動部職安署勞動檢查資訊管理系統 — 違規通知（2026.3.17）</div>
+        </div>
+        <!-- END:pg-inspection -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 已完成改善 -->
+  <div id="s7-done" style="margin-bottom:16px;">
+    <div class="card audit-done">
+      <div class="card-header" style="background:#2e7d32;">1-2. &#9989; 已完成改善項目</div>
+      <div class="card-body" style="padding:0;">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:36px;">#</th>
+              <th>法規依據</th>
+              <th style="font-size:0.82em;">法令條款說明</th>
+              <th>缺失內容</th>
+              <th>改善狀態</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align:center;">1</td>
+              <td style="font-size:0.82em;color:var(--text-light);">職業安全衛生設施規則<br>第209條</td>
+              <td style="font-size:0.8em;color:var(--text-light);">雇主對乙炔熔接裝置，為防止氣體逆流回火，應於每一吹管分別設安全器。</td>
+              <td>未於每一吹管分別設安全器</td>
+              <td><span class="status-done">已設置回火防止器（仍缺止回閥）</span></td>
+            </tr>
+            <tr>
+              <td style="text-align:center;">2</td>
+              <td style="font-size:0.82em;color:var(--text-light);">鍋爐及壓力容器安全規則<br>第30條第1項第3款</td>
+              <td style="font-size:0.8em;color:var(--text-light);">壓力容器之壓力表刻度板上，應明顯標示最高使用壓力之位置。</td>
+              <td>空壓機壓力表刻度板上，未明顯標示最高使用壓力之位置</td>
+              <td><span class="status-done">已完成標示改善</span></td>
+            </tr>
+            <tr>
+              <td style="text-align:center;">4</td>
+              <td style="font-size:0.82em;color:var(--text-light);">危害性化學品標示及通識規則<br>第12條第1項</td>
+              <td style="font-size:0.8em;color:var(--text-light);">對含有危害性化學品者，應依附表提供勞工安全資料表。</td>
+              <td>未提供勞工有關柴油安全資料表（SDS）</td>
+              <td><span class="status-done">已完成 SDS 提供</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 改善照片 -->
+  <div id="s7-photos">
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header">1-3. 改善照片紀錄</div>
+      <div class="card-body">
+        <p style="font-size:0.88em;font-weight:700;color:var(--accent);margin-bottom:10px;">&#9989; 已完成改善</p>
+        <div class="photo-grid" id="pg-improvement">
+          <div class="photo-item">
+            <img src="images/2026-Q1/flashback-arrester-after.jpg" alt="氧乙炔回火防止器改善後">
+            <div class="photo-caption">氧乙炔回火防止器 — 改善後</div>
+          </div>
+          <div class="photo-item">
+            <img src="images/2026-Q1/pressure-gauge-after.jpg" alt="空壓機最高壓力標示改善後">
+            <div class="photo-caption">空壓機最高壓力標示 — 改善後</div>
+          </div>
+          <div class="photo-item">
+            <img src="images/2026-Q1/diesel-sds-after.jpg" alt="柴油安全資料表改善後">
+            <div class="photo-caption">柴油之安全資料表 — 改善後</div>
+          </div>
+          <!-- END:pg-improvement -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 待完成改善 -->
+  <div id="s7-todo" style="margin-bottom:16px;">
+    <div class="card audit-todo">
+      <div class="card-header" style="background:#c62828;">1-4. &#9888; 待完成改善項目</div>
+      <div class="card-body" style="padding:0;">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:36px;">#</th>
+              <th>法規依據</th>
+              <th style="font-size:0.82em;">法令條款說明</th>
+              <th>缺失內容</th>
+              <th>備註／費用</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align:center;">1</td>
+              <td style="font-size:0.82em;color:var(--text-light);">職業安全衛生設施規則<br>第209條</td>
+              <td style="font-size:0.8em;color:var(--text-light);">雇主對乙炔熔接裝置，為防止氣體逆流回火，應於每一吹管分別設安全器。</td>
+              <td>乙炔熔接裝置每一吹管，未設置回火防止器（<strong>止回閥</strong>尚缺）</td>
+              <td style="font-size:0.85em;">「止回閥」尚缺需購置<br>約 $750／組</td>
+            </tr>
+            <tr>
+              <td style="text-align:center;">3</td>
+              <td style="font-size:0.82em;color:var(--text-light);">危害性化學品標示及通識規則<br>第5條第1項</td>
+              <td style="font-size:0.8em;color:var(--text-light);">裝有危害性化學品之容器，應標示名稱、主要成分、警示語、危害警告訊息、防範措施、製造者資料等。</td>
+              <td>某油品容器未完成危害性化學品容器標示（名稱、危害圖式、警示語等）</td>
+              <td style="font-size:0.85em;">需完成容器標示作業，向供應商詢問資料</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 需求設備或文件照片 -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header">1-5. 需求設備或文件照片</div>
+    <div class="card-body">
+      <p style="font-size:0.88em;color:var(--text-light);margin-bottom:12px;">待完成改善項目之需求設備或文件示意</p>
+      <div class="photo-grid" id="pg-equipment">
+        <div class="photo-item">
+          <img src="images/2026-Q1/check-valve-ref.jpg" alt="止回閥示意">
+          <div class="photo-caption">止回閥 — 需安裝於吹管接口</div>
+        </div>
+        <div class="photo-item">
+          <img src="images/2026-Q1/container-label-ref.jpg" alt="危害性化學品容器標示">
+          <div class="photo-caption">危害性化學品之容器標示 — 需張貼至儲槽容器外明顯處</div>
+        </div>
+        <div class="photo-item">
+          <img src="images/2026-Q1/氧乙炔及止回閥-安裝位置示意圖.png" alt="氧乙炔及止回閥 安裝位置示意圖">
+          <div class="photo-caption">氧乙炔及止回閥 安裝位置示意圖</div>
+        </div>
+        <!-- END:pg-equipment -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 內部自動檢查事項 -->
+  <div class="card" id="s7-internal" style="margin-bottom:16px;">
+    <div class="card-header">內部 — 事業單位自動檢查事項</div>
+    <div class="card-body">
+      <ol style="padding-left:20px;line-height:2;">
+        <li>廠場站點使用之<strong>【油漆溶劑（松香水）SDS】</strong>已過期，本季須更新</li>
+        <li>危害性化學品之<strong>【容器標示】【SDS】</strong>需清點是否張貼公告</li>
+        <li>每一氧乙炔<strong>【回火防止器】</strong>及<strong>【止回閥】</strong>之配置合規性</li>
+        <li>每一空壓機及所有其他壓力容器之<strong>【最高使用壓力】</strong>是否標示清楚</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 稽核統計圖表 -->
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-header">內部 — 事業單位自動稽核統計圖表</div>
+    <div class="card-body">
+      <div class="chart-canvas-row">
+        <div class="chart-canvas-wrap">
+          <div class="chart-canvas-title">&#128247; 監視器稽核符合率</div>
+          <canvas id="chart-monitor" style="max-height:260px;"></canvas>
+          <div class="chart-legend" id="legend-monitor"></div>
+        </div>
+        <div class="chart-canvas-wrap">
+          <div class="chart-canvas-title">&#128203; 現場巡檢符合率</div>
+          <canvas id="chart-patrol" style="max-height:260px;"></canvas>
+          <div class="chart-legend" id="legend-patrol"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       八、機械設備危害預防
+       =================================================== -->
+  <div class="chapter" id="s8">
+    <div class="chapter-title">八、審議機械設備危害預防措施</div>
+  </div>
+  <div class="no-action">
+    <div class="no-action-icon">&#128295;</div>
+    <p><strong>本期無異動</strong></p>
+    <p style="margin-top:8px;font-size:0.88em;">本季無機械、設備或原料、材料危害之預防審議事項。</p>
+  </div>
+
+  <!-- ===================================================
+       九、職業災害調查
+       =================================================== -->
+  <!-- ===== [更新提示] 每季更新職災事故資料 ===== -->
+  <div class="chapter" id="s9">
+    <div class="chapter-title">九、審議職業災害調查報告</div>
+    <div class="chapter-subtitle">115年第一季（2026年1月～3月）</div>
+  </div>
+  <div class="card">
+    <div class="card-header danger-header">事故案例</div>
+    <div class="card-body">
+      <div class="incident-header-row">
+        <div class="incident-header-item">
+          <span>日期：</span><span>115年3月5日</span>
+        </div>
+        <div class="incident-header-item">
+          <span>部門：</span><span>全興廠處理一課</span>
+        </div>
+        <div class="incident-header-item">
+          <span>分類：</span><span>工安事故</span>
+        </div>
+        <div class="incident-header-item">
+          <span>類型：</span><span>切割、挫傷</span>
+        </div>
+        <div class="incident-header-item">
+          <span>損失類別：</span><span>人損</span>
+        </div>
+        <div class="incident-header-item">
+          <span>損失工日：</span><span>3天</span>
+        </div>
+        <div class="incident-header-item">
+          <span>傷害部位：</span><span>眼角下方約兩公分處撕裂傷</span>
+        </div>
+        <div class="incident-header-item">
+          <span>傷害程度：</span><span>需縫合</span>
+        </div>
+      </div>
+      <div class="incident-desc">
+        同仁於產線工作結束進行清掃作業時，臉部不慎撞到設備造成眼角流血，經仲介陪同回報，醫師診斷為眼角下方約兩公分處撕裂傷，未傷及眼睛，縫合完成後即返家休息，醫師診斷證明開立宜休養三日。
+        <br><br><strong style="color:var(--primary);">改善措施：</strong>透過增設硬體防護與視覺警示措施，改善環境死角，彌補人員因作業專注度不足所衍生的碰撞風險，達成預防工安意外之成效。
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-stats">
+    <div class="stat-box red">
+      <div class="stat-num">1</div>
+      <div class="stat-label">工安事故</div>
+    </div>
+    <div class="stat-box green">
+      <div class="stat-num">0</div>
+      <div class="stat-label">交通事故</div>
+    </div>
+    <div class="stat-box green">
+      <div class="stat-num">0</div>
+      <div class="stat-label">通勤事故</div>
+    </div>
+    <div class="stat-box green">
+      <div class="stat-num">0</div>
+      <div class="stat-label">虛驚事故</div>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       十、現場安全衛生管理績效（KPI）
+       =================================================== -->
+  <!-- ===== [更新提示] 每季填入實際 KPI 數值 ===== -->
+  <div class="chapter" id="s10">
+    <div class="chapter-title">十、考核現場安全衛生管理績效（KPI）</div>
+    <div class="chapter-subtitle">115年第一季執行成效</div>
+  </div>
+  <div class="card">
+    <div class="card-header">KPI 達成狀況</div>
+    <div class="card-body" style="padding:0;">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>指標名稱</th>
+            <th>指標內容</th>
+            <th>目標值</th>
+            <th>Q1 實際值</th>
+            <th>達成狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>管理系統文件</td>
+            <td style="font-size:0.88em;color:var(--text-light);">相關文件表單完成率</td>
+            <td>不定期</td>
+            <td class="kpi-good">2次</td>
+            <td><span class="badge badge-success">進行中</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>消防檢修申報</td>
+            <td style="font-size:0.88em;color:var(--text-light);">消防系統正常運作</td>
+            <td>1次／年</td>
+            <td class="kpi-na">0次</td>
+            <td><span class="badge badge-success">進行中</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>管理方案達成率</td>
+            <td style="font-size:0.88em;color:var(--text-light);">達成數／目標件數</td>
+            <td>1次／年</td>
+            <td class="kpi-na">0次</td>
+            <td><span class="badge badge-success">進行中</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>內部稽核</td>
+            <td style="font-size:0.88em;color:var(--text-light);">改善件數／缺失件數</td>
+            <td>1次／年</td>
+            <td class="kpi-na">0次</td>
+            <td><span class="badge badge-success">進行中</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>作業環境監測</td>
+            <td style="font-size:0.88em;color:var(--text-light);">相關項目符合法規</td>
+            <td>2次／年</td>
+            <td class="kpi-na">0次</td>
+            <td><span class="badge badge-success">進行中</span></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>相關教育訓練</td>
+            <td style="font-size:0.88em;color:var(--text-light);">消防（上下半年）/ 在職訓</td>
+            <td>2次／年</td>
+            <td class="kpi-na">0次</td>
+            <td><span class="badge badge-success">進行中</span></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>辦理在職員工健檢</td>
+            <td style="font-size:0.88em;color:var(--text-light);">符合資歷同仁進行健檢</td>
+            <td>1次／年</td>
+            <td class="kpi-na">0次</td>
+            <td><span class="badge badge-success">進行中</span></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>職護臨場服務</td>
+            <td style="font-size:0.88em;color:var(--text-light);">實際衛教次數／法定衛教次數</td>
+            <td>12次／年</td>
+            <td class="kpi-good">3次</td>
+            <td><span class="badge badge-success">進行中</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       十一、承攬業務管理
+       =================================================== -->
+  <div class="chapter" id="s11">
+    <div class="chapter-title">十一、審議承攬業務安全衛生管理事項</div>
+  </div>
+  <div class="no-action">
+    <div class="no-action-icon">&#128221;</div>
+    <p><strong>本期無異動</strong></p>
+    <p style="margin-top:8px;font-size:0.88em;">本季無承攬業務安全衛生管理審議事項。</p>
+  </div>
+
+  <!-- ===================================================
+       十二、其他事項
+       =================================================== -->
+  <div class="chapter" id="s12">
+    <div class="chapter-title">十二、其他有關職業安全衛生管理事項</div>
+    <div class="chapter-subtitle">堆高機作業安全規範提案</div>
+  </div>
+
+  <!-- 提案主旨 -->
+  <div class="highlight-card" style="margin-bottom:16px;">
+    <strong>★ 提案主旨：</strong>請委員會審議 — 新增廠場堆高機作業安全標準：<br>
+    <span style="color:var(--danger);font-weight:700;">【堆高機轉彎時，不得隨意升降牙叉，以防堆高機翻覆。】</span>
+  </div>
+
+  <!-- 提案說明 -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header">一、公司近期堆高機翻覆事故（114年11月18日）</div>
+    <div class="card-body" style="padding:0;">
+      <table>
+        <tbody>
+          <tr><td style="font-weight:700;width:120px;background:#f5f7fa;">事故日期</td><td>民國114年11月18日</td></tr>
+          <tr><td style="font-weight:700;background:#f5f7fa;">事故地點</td><td>五股分選廠上料區（五股分選課）</td></tr>
+          <tr><td style="font-weight:700;background:#f5f7fa;">事故類型</td><td>堆高機翻覆（<span style="color:#e65100;font-weight:700;">虛驚事故</span>）</td></tr>
+          <tr><td style="font-weight:700;background:#f5f7fa;">事故經過</td><td>同仁駕駛堆高機時銑鬥舉至最高，轉彎加速時因重心不穩導致堆高機翻覆於鑽製輸送帶上。</td></tr>
+          <tr><td style="font-weight:700;background:#f5f7fa;">人員傷亡</td><td><span style="color:#2e7d32;font-weight:700;">無人受傷</span>（駕駛已繫安全帶並配戴安全帽）；廠商於隔日到場修復。</td></tr>
+          <tr><td style="font-weight:700;background:#f5f7fa;">財產損失</td><td>有（機械設備損壞，已修復）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 現場危險行為 -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header">二、現場持續存在之危險行為（114年3月廠內考核影片發現）</div>
+    <div class="card-body">
+      <div class="warning-card" style="padding:12px 16px;margin-bottom:12px;">
+        本年3月份進行廠內卡車司機定期考核作業時，職安人員於考核影片中觀察到廠區內堆高機存在以下危險操作行為：
+      </div>
+      <ul style="padding-left:20px;line-height:2;">
+        <li>行駛轉彎時未先減速，且同時將載有貨物的牙叉上升至較高位置</li>
+        <li>上述操作行為雖因本次承載為塑膠類輕質貨物而未發生事故，然若日後承載較重貨物，重心偏移之風險將顯著增加</li>
+        <li>此行為與上述114年11月18日翻覆事故之成因高度相似，顯示現場操作習慣尚未有效改善，翻覆風險仍持續存在</li>
+      </ul>
+
+      <!-- 影片區塊 -->
+      <div style="margin-top:16px;">
+        <p style="font-size:0.88em;font-weight:700;color:var(--primary);margin-bottom:10px;">&#127909; 堆高機危險行為影片</p>
+        <div id="video-block-forklift">
+          <!-- 影片播放器（檔案存在時顯示） -->
+          <video id="forklift-video" controls
+            style="width:100%;border-radius:8px;border:1px solid var(--border);background:#000;display:none;"
+            src="images/2026-Q1/forklift-danger.mov">
+          </video>
+          <!-- 佔位符（檔案不存在時顯示） -->
+          <div id="forklift-placeholder" class="photo-placeholder" style="display:flex;">
+            <div class="ph-icon">&#127909;</div>
+            <div>堆高機危險行為影片</div>
+            <div class="ph-filename">images/2026-Q1/forklift-danger.mov</div>
+            <button onclick="uploadVideoFile()" style="margin-top:12px;padding:8px 22px;background:var(--primary);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:0.9em;">&#127909; 上傳影片</button>
+            <div id="forklift-upload-status" style="font-size:0.82em;color:var(--text-light);margin-top:6px;"></div>
+          </div>
+        </div>
+        <div class="photo-caption">廠內卡車司機定期考核影片 — 可見堆高機轉彎時牙叉上升之危險操作（114年3月）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相關法規 -->
+  <div class="law-ref" style="margin-bottom:16px;">
+    <strong>相關法規（台中勞動檢查處堆高機安全作業指引）：</strong>
+    堆高機在道路行走時，牙叉不得離地超過20公分（確保行駛穩定性）；高度不得隨意進行連續升降操作，以免重心偏移造成翻覆。雖上述規定係針對道路行駛，然其訂定精神在於維持行駛穩定、防止翻覆，其原則仍應適用於廠場內堆高機操作。
+  </div>
+
+  <!-- 潛在風險 -->
+  <div class="info-card" style="margin-bottom:16px;border-left:4px solid var(--danger);">
+    <strong style="color:var(--danger);">潛在風險評估：</strong>若危險操作行為持續存在，可能導致：
+    <ul style="padding-left:20px;margin-top:8px;line-height:1.8;">
+      <li>堆高機翻覆，造成駕駛員壓傷、骨折，甚至死亡（尤其未繫安全帶或未戴安全帽情形下）</li>
+      <li>貨物墜落，導致周遭行人遭受撞擊傷害</li>
+      <li>設備損壞造成財產損失及作業停頓</li>
+    </ul>
+  </div>
+
+  <!-- 提案建議 -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header">三、提案建議（請委員會決議納入安全標準）</div>
+    <div class="card-body" style="padding:0;">
+      <table>
+        <thead><tr><th>#</th><th>安全標準內容</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="text-align:center;">1</td>
+            <td>堆高機行駛轉彎時，<strong>不得升降牙叉</strong>（無論空載或承載），待轉彎完成、行駛穩定後方可操作牙叉升降。</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">2</td>
+            <td>堆高機行駛時（含轉彎前後），牙叉應維持低位，<strong>離地高度以不超過20公分為原則</strong>。</td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">3</td>
+            <td>轉彎前應先減速，確認行進方向安全後再進行轉彎，<strong>禁止高速轉彎</strong>。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 建議配套措施 -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header">四、建議配套措施</div>
+    <div class="card-body">
+      <ul style="padding-left:20px;line-height:2;">
+        <li>將上述安全標準納入新進人員教育訓練及年度複訓課程</li>
+        <li>於堆高機駕駛艙內或車身明顯位置張貼操作安全注意事項貼紙，提醒駕駛人員</li>
+        <li>主管進行日常巡查時，將堆高機操作姿勢列為稽核項目之一</li>
+        <li>再次提醒各廠所有堆高機駕駛人員務必確實繫妥<strong>安全帶</strong>、配戴<strong>安全帽</strong>，以降低翻覆時之人員傷亡風險</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 委員會決議 -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header">五、委員會決議</div>
+    <div class="card-body">
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:1em;">
+          <input type="radio" name="committee-resolution" value="approved" id="res-approved"
+            style="width:18px;height:18px;accent-color:var(--primary);cursor:pointer;">
+          <span>照案通過</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:1em;">
+          <input type="radio" name="committee-resolution" value="modified" id="res-modified"
+            style="width:18px;height:18px;accent-color:var(--primary);cursor:pointer;">
+          <span>修正通過（修正意見如下）</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:1em;">
+          <input type="radio" name="committee-resolution" value="rejected" id="res-rejected"
+            style="width:18px;height:18px;accent-color:var(--primary);cursor:pointer;">
+          <span>不予通過（理由如下）</span>
+        </label>
+      </div>
+      <div style="margin-top:4px;">
+        <label style="font-size:0.9em;font-weight:600;color:var(--text-light);margin-bottom:6px;display:block;">決議意見：</label>
+        <textarea id="resolution-comment" rows="4"
+          placeholder="請輸入決議意見或補充說明…"
+          style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.95em;font-family:inherit;resize:vertical;background:var(--bg);color:var(--text);transition:border-color .2s;"
+          onfocus="this.style.borderColor='var(--primary)'"
+          onblur="this.style.borderColor='var(--border)'"
+          oninput="saveResolution()"></textarea>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+          <span id="res-save-hint" style="font-size:0.82em;color:var(--text-light);"></span>
+          <button onclick="clearResolution()"
+            style="font-size:0.82em;padding:4px 12px;border:1px solid var(--border);border-radius:6px;background:transparent;color:var(--text-light);cursor:pointer;">清除</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var KEY_RADIO = 'resolution-2026Q1-radio';
+    var KEY_TEXT  = 'resolution-2026Q1-text';
+    // 載入已儲存的選項
+    var saved = localStorage.getItem(KEY_RADIO);
+    if(saved){
+      var el = document.querySelector('input[name="committee-resolution"][value="'+saved+'"]');
+      if(el) el.checked = true;
+    }
+    // 載入已儲存的文字
+    var savedText = localStorage.getItem(KEY_TEXT);
+    if(savedText) document.getElementById('resolution-comment').value = savedText;
+    // 監聽 radio 變更
+    document.querySelectorAll('input[name="committee-resolution"]').forEach(function(r){
+      r.addEventListener('change', function(){ saveResolution(); });
+    });
+  })();
+  function saveResolution(){
+    var selected = document.querySelector('input[name="committee-resolution"]:checked');
+    if(selected) localStorage.setItem('resolution-2026Q1-radio', selected.value);
+    var text = document.getElementById('resolution-comment').value;
+    localStorage.setItem('resolution-2026Q1-text', text);
+    var hint = document.getElementById('res-save-hint');
+    hint.textContent = '已自動儲存';
+    clearTimeout(window._resHintTimer);
+    window._resHintTimer = setTimeout(function(){ hint.textContent = ''; }, 2000);
+  }
+  function clearResolution(){
+    document.querySelectorAll('input[name="committee-resolution"]').forEach(function(r){ r.checked = false; });
+    document.getElementById('resolution-comment').value = '';
+    localStorage.removeItem('resolution-2026Q1-radio');
+    localStorage.removeItem('resolution-2026Q1-text');
+    document.getElementById('res-save-hint').textContent = '已清除';
+    clearTimeout(window._resHintTimer);
+    window._resHintTimer = setTimeout(function(){ document.getElementById('res-save-hint').textContent = ''; }, 2000);
+  }
+  </script>
+
+  <!-- ===== 頁尾導覽 ===== -->
+  <div class="nav-footer">
+    <a href="index.html">&#8592; 返回季報列表</a>
+    <span style="color:var(--text-light);font-size:0.85em;">2026年Q2 報告將於Q2結束後更新</span>
+    <a href="../index.html">&#127968; 回首頁</a>
+  </div>
+
+  <div class="footer">
+    大豐環保科技股份有限公司｜法務環安課｜職安衛委員會季報｜2026年Q1
+  </div>
+
+</div><!-- /container -->
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8679;</button>
+
+<script src="../../js/sidebar.js"></script>
+<script>
+  /* 回到頂部按鈕 */
+  window.addEventListener('scroll', function() {
+    var btn = document.getElementById('backToTop');
+    if (window.scrollY > 300) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  });
+
+  /* 快速導覽按鈕 Active 狀態 */
+  var sections = document.querySelectorAll('.chapter[id]');
+  var navBtns = document.querySelectorAll('.quick-nav-btn');
+  window.addEventListener('scroll', function() {
+    var scrollY = window.scrollY + 120;
+    sections.forEach(function(sec) {
+      var top = sec.offsetTop;
+      var bottom = top + sec.offsetHeight + 200;
+      if (scrollY >= top && scrollY < bottom) {
+        var id = sec.id;
+        navBtns.forEach(function(btn) {
+          btn.classList.toggle('active', btn.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  });
+
+  /* ===== 圖片系統（重寫版） ===== */
+  /* 設計原則：
+     1. 靜態 HTML 只放乾淨的 <img> + <caption>，無 onerror / placeholder
+     2. 圖片載入失敗時隱藏（不顯示破圖或上傳框）
+     3. 上傳/刪除按鈕只在編輯模式（有 token）時出現
+     4. 本機瀏覽時自動改用 GitHub Pages URL */
+
+  var REPO_OWNER = 'seiu777';
+  var REPO_NAME = 'df-ehs';
+  var IMG_BASE = 'docs/committee/images/2026-Q1/';
+  var HTML_REPO_PATH = 'docs/committee/2026-Q1.html';
+
+  /* ---------- 工具函式 ---------- */
+
+  function fileToBase64(file) {
+    return new Promise(function(resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function() { resolve(reader.result.split(',')[1]); };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /* 取得 token（已儲存直接回傳，否則 prompt） */
+  function getToken() {
+    var token = localStorage.getItem('df-ehs-upload-token');
+    if (token) return token;
+    token = prompt('請輸入 GitHub Personal Access Token\n（需要 Contents: Read & Write 權限，之後會記住）');
+    if (!token) return null;
+    token = token.trim();
+    localStorage.setItem('df-ehs-upload-token', token);
+    return token;
+  }
+
+  /* 從 img src 推算 repo 路徑 */
+  function srcToRepoPath(src) {
+    if (!src) return null;
+    if (src.indexOf('blob:') === 0 || src.indexOf('data:') === 0) return null;
+    var ghPrefix = 'https://seiu777.github.io/df-ehs/committee/';
+    if (src.indexOf(ghPrefix) === 0) return 'docs/committee/' + src.substring(ghPrefix.length).replace(/\?.*$/, '');
+    var clean = src.replace(/^\.\//, '').replace(/\?.*$/, '');
+    if (clean.indexOf('http') === 0) return null;
+    return 'docs/committee/' + clean;
+  }
+
+  /* ---------- GitHub API ---------- */
+
+  async function getFileSha(repoPath, token) {
+    var hdrs = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github.v3+json' };
+    var base = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME;
+    try {
+      var refResp = await fetch(base + '/git/ref/heads/main', { headers: hdrs, cache: 'no-store' });
+      if (!refResp.ok) return null;
+      var commitSha = (await refResp.json()).object.sha;
+      var commitResp = await fetch(base + '/git/commits/' + commitSha, { headers: hdrs, cache: 'no-store' });
+      if (!commitResp.ok) return null;
+      var treeSha = (await commitResp.json()).tree.sha;
+      var treeResp = await fetch(base + '/git/trees/' + treeSha + '?recursive=1', { headers: hdrs, cache: 'no-store' });
+      if (!treeResp.ok) return null;
+      var tree = (await treeResp.json()).tree;
+      var match = tree.find(function(f) { return f.path === repoPath; });
+      return match ? match.sha : null;
+    } catch(e) { return null; }
+  }
+
+  async function uploadOneFile(file, repoPath, token) {
+    var base64 = await fileToBase64(file);
+    var encodedPath = repoPath.split('/').map(function(s) { return encodeURIComponent(s); }).join('/');
+    var apiUrl = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + encodedPath;
+    var hdrs = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github.v3+json' };
+    var sha = await getFileSha(repoPath, token);
+    var body = { message: '上傳照片：' + repoPath.split('/').pop(), content: base64, branch: 'main' };
+    if (sha) body.sha = sha;
+    var resp = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: Object.assign({ 'Content-Type': 'application/json' }, hdrs),
+      body: JSON.stringify(body)
+    });
+    if (resp.ok) return { ok: true };
+    var err = await resp.json();
+    return { ok: false, message: '[' + resp.status + '] ' + (err.message || '未知錯誤') };
+  }
+
+  async function getHtmlFromGitHub(token) {
+    var hdrs = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github.v3+json' };
+    var url = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + HTML_REPO_PATH + '?ref=main';
+    var resp = await fetch(url, { headers: hdrs, cache: 'no-store' });
+    if (!resp.ok) return null;
+    var json = await resp.json();
+    var raw = atob(json.content.replace(/\n/g, ''));
+    var bytes = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+    return { content: new TextDecoder('utf-8').decode(bytes), sha: json.sha };
+  }
+
+  async function saveHtmlToGitHub(token, html, sha) {
+    var hdrs = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' };
+    var url = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + HTML_REPO_PATH;
+    var encoded = new TextEncoder().encode(html);
+    var binaryStr = '';
+    for (var i = 0; i < encoded.length; i++) binaryStr += String.fromCharCode(encoded[i]);
+    var body = { message: '更新報告頁面照片', content: btoa(binaryStr), sha: sha, branch: 'main' };
+    var resp = await fetch(url, { method: 'PUT', headers: hdrs, body: JSON.stringify(body) });
+    if (resp.ok) return { ok: true };
+    var err = await resp.json().catch(function() { return {}; });
+    return { ok: false, message: '[' + resp.status + '] ' + (err.message || '未知錯誤') };
+  }
+
+  /* ---------- HTML 字串操作（寫入 GitHub） ---------- */
+
+  function insertPhotoHtml(html, gridId, photoEntries) {
+    var marker = '<!-- END:' + gridId + ' -->';
+    var idx = html.indexOf(marker);
+    if (idx === -1) return html;
+    var snippet = '';
+    photoEntries.forEach(function(entry) {
+      snippet += '\n        <div class="photo-item">\n' +
+        '          <img src="images/2026-Q1/' + entry.filename + '" alt="' + entry.caption + '">\n' +
+        '          <div class="photo-caption">' + entry.caption + '</div>\n' +
+        '        </div>';
+    });
+    return html.slice(0, idx) + snippet + '\n        ' + html.slice(idx);
+  }
+
+  function removePhotoItemFromHtml(html, filename) {
+    var searchStr = 'images/2026-Q1/' + filename;
+    var imgIdx = html.indexOf(searchStr);
+    if (imgIdx === -1) return html;
+    var startMarker = '<div class="photo-item"';
+    var startIdx = html.lastIndexOf(startMarker, imgIdx);
+    if (startIdx === -1) return html;
+    var depth = 0, endIdx = -1;
+    for (var i = startIdx; i < html.length; i++) {
+      if (html.substr(i, 4) === '<div') depth++;
+      else if (html.substr(i, 6) === '</div>') {
+        depth--;
+        if (depth === 0) { endIdx = i + 6; break; }
+      }
+    }
+    if (endIdx === -1) return html;
+    var before = html.substring(0, startIdx).replace(/\n\s*$/, '\n');
+    var after = html.substring(endIdx).replace(/^\s*\n?/, '');
+    return before + after;
+  }
+
+  /* ---------- UI 元件 ---------- */
+
+  function addZoomBtn(photoItem, img) {
+    if (photoItem.querySelector('.photo-zoom-btn')) return;
+    var btn = document.createElement('button');
+    btn.className = 'photo-zoom-btn';
+    btn.title = '放大查看';
+    btn.innerHTML = '&#128269;';
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var cap = photoItem.querySelector('.photo-caption');
+      openLightbox(img.src, cap ? cap.textContent.trim() : '');
+    });
+    photoItem.appendChild(btn);
+  }
+
+  function addDeleteBtn(photoItem, repoPath) {
+    if (photoItem.querySelector('.photo-del-btn')) return;
+    var btn = document.createElement('button');
+    btn.className = 'photo-del-btn';
+    btn.title = '刪除此照片';
+    btn.innerHTML = '✕';
+    btn.onclick = function(e) {
+      e.stopPropagation();
+      deletePhoto(btn, repoPath, photoItem);
+    };
+    photoItem.appendChild(btn);
+  }
+
+  function openLightbox(src, caption) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox-caption').textContent = caption || '';
+    document.getElementById('lightbox').classList.add('active');
+    document.addEventListener('keydown', onLightboxKey);
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.getElementById('lightbox-img').src = '';
+    document.removeEventListener('keydown', onLightboxKey);
+  }
+
+  function onLightboxKey(e) {
+    if (e.key === 'Escape') closeLightbox();
+  }
+
+  /* ---------- 刪除照片 ---------- */
+
+  async function deletePhoto(btn, repoPath, photoItem) {
+    var filename = repoPath.split('/').pop();
+    if (!confirm('確定要刪除「' + filename + '」嗎？\n此動作會從 GitHub 移除此照片。')) return;
+    var token = getToken();
+    if (!token) return;
+
+    btn.disabled = true;
+    btn.textContent = '…';
+    try {
+      var encodedPath = repoPath.split('/').map(function(s) { return encodeURIComponent(s); }).join('/');
+      var apiUrl = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + encodedPath;
+      var hdrs = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github.v3+json' };
+      var sha = await getFileSha(repoPath, token);
+      if (!sha) throw new Error('找不到此檔案');
+      var resp = await fetch(apiUrl, {
+        method: 'DELETE',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, hdrs),
+        body: JSON.stringify({ message: '刪除照片：' + filename, sha: sha, branch: 'main' })
+      });
+      if (resp.ok) {
+        var grid = photoItem.closest('.photo-grid');
+        photoItem.remove();
+        if (grid) refreshGridLayout(grid);
+        try {
+          var htmlData = await getHtmlFromGitHub(token);
+          if (htmlData) {
+            var newHtml = removePhotoItemFromHtml(htmlData.content, filename);
+            if (newHtml !== htmlData.content) await saveHtmlToGitHub(token, newHtml, htmlData.sha);
+          }
+        } catch(e2) {}
+      } else {
+        var err = await resp.json();
+        alert('刪除失敗：' + (err.message || resp.status));
+        btn.disabled = false; btn.textContent = '✕';
+      }
+    } catch(e) {
+      alert('錯誤：' + e.message);
+      btn.disabled = false; btn.textContent = '✕';
+    }
+  }
+
+  /* ---------- 新增照片到現有區塊 ---------- */
+
+  function addPhotosToGrid(btn, grid) {
+    var token = getToken();
+    if (!token) return;
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.multiple = true;
+    input.click();
+    input.onchange = function() {
+      if (input.files.length) appendPhotosToGrid(btn, grid, Array.from(input.files), token);
+    };
+  }
+
+  async function appendPhotosToGrid(btn, grid, files, token) {
+    var bar = btn.parentNode;
+    var statusEl = bar.querySelector('.ph-add-status');
+    btn.disabled = true;
+
+    var gridId = grid.id || '';
+    var success = 0, lastError = '', newEntries = [];
+
+    for (var i = 0; i < files.length; i++) {
+      statusEl.textContent = '上傳中 (' + (i + 1) + '/' + files.length + ')…';
+      var repoPath = IMG_BASE + files[i].name;
+      var result = await uploadOneFile(files[i], repoPath, token);
+      if (result.ok) {
+        success++;
+        var caption = files[i].name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+        var item = document.createElement('div');
+        item.className = 'photo-item';
+        var img = document.createElement('img');
+        img.src = URL.createObjectURL(files[i]);
+        img.dataset.repoPath = repoPath;
+        item.appendChild(img);
+        var cap = document.createElement('div');
+        cap.className = 'photo-caption';
+        cap.textContent = caption;
+        item.appendChild(cap);
+        addDeleteBtn(item, repoPath);
+        addZoomBtn(item, img);
+        grid.appendChild(item);
+        refreshGridLayout(grid);
+        newEntries.push({ filename: files[i].name, caption: caption });
+      } else {
+        lastError = result.message || '未知錯誤';
+      }
+    }
+
+    /* 永久寫入 HTML */
+    if (newEntries.length > 0 && gridId) {
+      statusEl.textContent = '正在更新頁面原始檔…';
+      try {
+        var htmlData = await getHtmlFromGitHub(token);
+        if (htmlData) {
+          var newHtml = insertPhotoHtml(htmlData.content, gridId, newEntries);
+          if (newHtml !== htmlData.content) await saveHtmlToGitHub(token, newHtml, htmlData.sha);
+        }
+      } catch(e) {}
+    }
+
+    if (success === files.length) {
+      statusEl.textContent = '✅ ' + success + '張上傳成功！';
+      statusEl.style.color = '#2e7d32';
+    } else {
+      statusEl.textContent = '⚠️ ' + success + '/' + files.length + '張成功。' + lastError;
+      statusEl.style.color = '#e65100';
+      if (lastError.indexOf('401') !== -1) localStorage.removeItem('df-ehs-upload-token');
+    }
+    btn.disabled = false;
+  }
+
+  /* ---------- 影片 ---------- */
+
+  (function(){
+    var vid = document.getElementById('forklift-video');
+    var ph  = document.getElementById('forklift-placeholder');
+    if (!vid || !ph) return;
+    /* 本機時修正影片 src */
+    if (IS_LOCAL) {
+      var s = vid.getAttribute('src');
+      if (s && s.indexOf('images/2026-Q1/') === 0) {
+        vid.src = IMG_DISPLAY_BASE + s.replace('images/2026-Q1/', '');
+      }
+    }
+    vid.addEventListener('canplay', function(){ vid.style.display = 'block'; ph.style.display = 'none'; });
+    vid.addEventListener('error', function(){ vid.style.display = 'none'; ph.style.display = 'flex'; });
+    vid.load();
+  })();
+
+  async function uploadVideoFile() {
+    var token = getToken();
+    if (!token) return;
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'video/*,.mov,.mp4,.avi,.webm';
+    input.click();
+    input.onchange = async function() {
+      var file = input.files[0];
+      if (!file) return;
+      var statusEl = document.getElementById('forklift-upload-status');
+      statusEl.textContent = '上傳中，請稍候…';
+      var result = await uploadOneFile(file, 'docs/committee/images/2026-Q1/forklift-danger.mov', token);
+      if (result.ok) {
+        statusEl.textContent = '✅ 上傳成功！';
+        var vid = document.getElementById('forklift-video');
+        var ph  = document.getElementById('forklift-placeholder');
+        vid.src = URL.createObjectURL(file);
+        vid.style.display = 'block';
+        ph.style.display  = 'none';
+      } else {
+        statusEl.textContent = '❌ 上傳失敗：' + (result.message || '未知錯誤');
+        statusEl.style.color = 'var(--danger)';
+      }
+    };
+  }
+
+  function refreshGridLayout(grid) {
+    var items = grid.querySelectorAll('.photo-item');
+    var count = items.length;
+    items.forEach(function(item) {
+      item.style.cssText = count === 1 ? 'max-width:100%;' : 'flex:1 1 calc(50% - 8px);min-width:120px;';
+    });
+    if (count > 1) { grid.style.display = 'flex'; grid.style.flexWrap = 'wrap'; grid.style.gap = '8px'; }
+  }
+
+  /* ---------- 頁面初始化 ---------- */
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var hasToken = !!localStorage.getItem('df-ehs-upload-token');
+
+    /* 1. 本機瀏覽時改寫圖片路徑 → GitHub Pages URL */
+    if (IS_LOCAL) {
+      document.querySelectorAll('img').forEach(function(el) {
+        var s = el.getAttribute('src');
+        if (s && s.indexOf('images/2026-Q1/') === 0) {
+          el.src = IMG_DISPLAY_BASE + s.replace('images/2026-Q1/', '');
+        }
+      });
+    }
+
+    /* 2. 圖片載入失敗時隱藏（不顯示破圖） */
+    document.querySelectorAll('.photo-grid .photo-item img').forEach(function(img) {
+      img.addEventListener('error', function() {
+        img.closest('.photo-item').style.display = 'none';
+      });
+    });
+
+    /* 3. 為已載入的照片加放大按鈕（所有人都能用） */
+    document.querySelectorAll('.photo-grid .photo-item img').forEach(function(img) {
+      var photoItem = img.closest('.photo-item');
+      if (!photoItem) return;
+      function tryZoom() { if (img.naturalWidth > 0) addZoomBtn(photoItem, img); }
+      if (img.complete) tryZoom(); else img.addEventListener('load', tryZoom);
+    });
+
+    /* 4. 編輯模式：有 token 時才顯示上傳/刪除按鈕 */
+    if (hasToken) {
+      /* 4a. 每個 photo-grid 下方加「新增照片」按鈕 */
+      document.querySelectorAll('.photo-grid').forEach(function(grid) {
+        var bar = document.createElement('div');
+        bar.className = 'ph-add-bar';
+        var btn = document.createElement('button');
+        btn.className = 'ph-add-btn';
+        btn.textContent = '📤 新增照片';
+        btn.onclick = function() { addPhotosToGrid(btn, grid); };
+        var status = document.createElement('div');
+        status.className = 'ph-add-status';
+        bar.appendChild(btn);
+        bar.appendChild(status);
+        grid.parentNode.insertBefore(bar, grid.nextSibling);
+      });
+
+      /* 4b. 為已載入的照片加刪除按鈕 */
+      document.querySelectorAll('.photo-grid .photo-item img').forEach(function(img) {
+        var photoItem = img.closest('.photo-item');
+        if (!photoItem) return;
+        function tryDel() {
+          if (img.naturalWidth > 0) {
+            var rp = img.dataset.repoPath || srcToRepoPath(img.getAttribute('src'));
+            if (rp) addDeleteBtn(photoItem, rp);
+          }
+        }
+        if (img.complete) tryDel(); else img.addEventListener('load', tryDel);
+      });
+    }
+  });
+</script>
+
+<!-- ===== 稽核統計圓餅圖 ===== -->
+<script>
+(function() {
+  /* ── Q1 資料 ── */
+  var monitorData = {
+    labels: ['未違規', '動力機械', '駕駛行為'],
+    data:   [6, 2, 2]
+  };
+  var patrolData = {
+    labels: ['未違規', '高架作業', '動火作業', '電氣作業', '動力機械',
+             '切割穿刺', '滑倒絆倒', '捲夾危害', '消防安全', '化學品', '其他'],
+    data:   [4, 2, 1, 1, 3, 1, 1, 1, 2, 1, 1]
+  };
+
+  /* ── 配色（符合大豐藍色企業風格） ── */
+  var palette = [
+    '#1565C0', '#E65100', '#6A1B9A', '#2E7D32', '#C62828',
+    '#0277BD', '#F9A825', '#37474F', '#00838F', '#4E342E', '#558B2F'
+  ];
+
+  /* ── 讀取目前主題，回傳 Chart.js 文字色 ── */
+  function getTextColor() {
+    return document.documentElement.getAttribute('data-theme') === 'dark'
+      ? '#a0a0b0' : '#555';
+  }
+
+  /* ── 建立圖例 ── */
+  function buildLegend(containerId, labels, colors, data) {
+    var el = document.getElementById(containerId);
+    if (!el) return;
+    var total = data.reduce(function(a, b) { return a + b; }, 0);
+    el.innerHTML = labels.map(function(label, i) {
+      var pct = total > 0 ? Math.round(data[i] / total * 100) : 0;
+      return '<div class="chart-legend-item">'
+        + '<div class="chart-legend-dot" style="background:' + colors[i] + ';"></div>'
+        + '<span>' + label + '&nbsp;' + data[i] + '（' + pct + '%）</span></div>';
+    }).join('');
+  }
+
+  /* ── 建立圓餅圖 ── */
+  function makeChart(canvasId, chartData) {
+    var ctx = document.getElementById(canvasId);
+    if (!ctx) return null;
+    var colors = palette.slice(0, chartData.labels.length);
+    buildLegend('legend-' + canvasId.replace('chart-', ''), chartData.labels, colors, chartData.data);
+    return new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: chartData.labels,
+        datasets: [{
+          data: chartData.data,
+          backgroundColor: colors,
+          borderColor: 'transparent',
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        cutout: '52%',
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                var total = ctx.dataset.data.reduce(function(a, b) { return a + b; }, 0);
+                var pct = Math.round(ctx.parsed / total * 100);
+                return ' ' + ctx.label + ': ' + ctx.parsed + ' 件（' + pct + '%）';
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  /* ── 主題切換時重建圖表 ── */
+  var charts = {};
+  function initCharts() {
+    if (charts.monitor) { charts.monitor.destroy(); }
+    if (charts.patrol)  { charts.patrol.destroy();  }
+    Chart.defaults.color = getTextColor();
+    charts.monitor = makeChart('chart-monitor', monitorData);
+    charts.patrol  = makeChart('chart-patrol',  patrolData);
+  }
+
+  /* 等 DOM 就緒後初始化 */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCharts);
+  } else {
+    initCharts();
+  }
+
+  /* 監聽主題切換（theme.js 會修改 html[data-theme]） */
+  var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      if (m.attributeName === 'data-theme') initCharts();
+    });
+  });
+  observer.observe(document.documentElement, { attributes: true });
+})();
+</script>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">&#10005;</button>
+  <img id="lightbox-img" src="" alt="">
+  <div id="lightbox-caption"></div>
+</div>
+</body>
+</html>
+
