@@ -26,14 +26,30 @@ function _resp(data) {
 }
 
 function _ensureSheet(ss) {
-  let sheet = ss.getSheetByName(SHEET_NAME);
+  var sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_NAME);
     sheet.appendRow(HEADERS);
-  } else if (sheet.getLastRow() === 0) {
-    sheet.appendRow(HEADERS);
+  } else {
+    // 若第一列空白（無欄位標題），清空後補回標題
+    var firstCell = sheet.getLastRow() > 0 ? String(sheet.getRange(1, 1).getValue()) : "";
+    if (!firstCell) {
+      sheet.clearContents();
+      sheet.appendRow(HEADERS);
+    }
   }
   return sheet;
+}
+
+// 一次性初始化工具：在 Apps Script 編輯器手動執行一次即可
+function setup() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) sheet = ss.insertSheet(SHEET_NAME);
+  else sheet.clearContents();
+  sheet.appendRow(HEADERS);
+  Logger.log('tasks 分頁初始化完成，共 ' + HEADERS.length + ' 個欄位標題。');
+  Logger.log('請重新整理 OHS Portal tasks 頁面，系統將自動寫入範例工作。');
 }
 
 function _findRowById(sheet, id) {
