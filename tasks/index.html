@@ -86,6 +86,23 @@
       overflow-y: auto;
     }
 
+    .portal-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 16px;
+      transition: background .15s, color .15s;
+    }
+    .portal-back:hover { background: var(--surface-2); color: var(--ink); }
+
     .brand {
       display: grid;
       grid-template-columns: 42px 1fr;
@@ -172,24 +189,26 @@
 
     .mini-stats {
       display: grid;
-      gap: 8px;
+      gap: 0;
     }
 
     .mini-stat {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 10px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 7px 2px;
+      border-bottom: 1px dashed var(--line);
       font-size: 13px;
+      color: var(--muted);
     }
+
+    .mini-stat:last-child { border-bottom: none; }
 
     .mini-stat strong {
       color: var(--accent);
-      font-size: 16px;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1;
     }
 
     .notification-card {
@@ -420,6 +439,16 @@
     .task-list.grid-mode .row-actions {
       align-self: end;
       padding-top: 4px;
+    }
+
+    .task-list.grid-mode .task-card > div:first-child {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .task-list.grid-mode .pill {
+      white-space: normal;
+      overflow-wrap: anywhere;
     }
 
     .task-card {
@@ -682,6 +711,7 @@
 </div>
   <div class="app">
     <aside class="sidebar">
+      <a class="portal-back" href="../">← 系統入口</a>
       <div class="brand">
         <div class="mark" aria-hidden="true">
           <svg class="icon" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z"></path><path d="M9 12l2 2 4-5"></path></svg>
@@ -714,7 +744,7 @@
         </div>
       </div>
 
-      <div class="side-block">
+      <div class="side-block" style="display:none">
         <h2>提醒</h2>
         <div class="notification-card">
           <button class="action" type="button" id="enableNotificationBtn">啟用瀏覽器通知</button>
