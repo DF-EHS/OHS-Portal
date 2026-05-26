@@ -819,10 +819,112 @@
       font-size: 13px;
       line-height: 2;
     }
+
+    /* ── 登入頁 ──────────────────────────────────────────── */
+    #login-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      background: linear-gradient(145deg, #111a16 0%, #1a2820 60%, #0f1a14 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-box {
+      width: 320px;
+      background: var(--surface);
+      border-radius: 18px;
+      padding: 40px 32px 36px;
+      text-align: center;
+      box-shadow: 0 28px 64px rgba(0,0,0,.45);
+      border: 1px solid rgba(121,185,149,.18);
+    }
+    .login-icon {
+      font-size: 36px;
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+    .login-box h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 6px;
+    }
+    .login-box p {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 24px;
+    }
+    .login-pwd-wrap {
+      position: relative;
+      margin-bottom: 10px;
+    }
+    .login-pwd-wrap input {
+      width: 100%;
+      padding: 11px 40px 11px 14px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--surface-2);
+      color: var(--ink);
+      font-size: 15px;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .login-pwd-wrap input:focus { border-color: var(--accent); }
+    .login-show-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 2px;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .login-err {
+      font-size: 12px;
+      color: var(--red);
+      margin: 0 0 10px;
+      min-height: 18px;
+    }
+    .login-err.hidden { visibility: hidden; }
+    .login-submit {
+      width: 100%;
+      padding: 11px;
+      border-radius: 9px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .15s, transform .1s;
+      margin-bottom: 18px;
+    }
+    .login-submit:hover { background: #338a5e; }
+    .login-submit:active { transform: scale(.97); }
+    .login-back {
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .login-back:hover { color: var(--ink); }
+    @keyframes login-shake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-8px); }
+      40%      { transform: translateX(7px); }
+      60%      { transform: translateX(-5px); }
+      80%      { transform: translateX(4px); }
+    }
+    .login-box.shake { animation: login-shake .4s ease; }
   </style>
 </head>
 <body>
-<div id="gs-loader" style="display:flex;position:fixed;inset:0;z-index:9999;background:rgba(23,32,29,.88);backdrop-filter:blur(6px);align-items:center;justify-content:center;flex-direction:column;gap:14px;">
+<div id="gs-loader" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(23,32,29,.88);backdrop-filter:blur(6px);align-items:center;justify-content:center;flex-direction:column;gap:14px;">
   <div style="width:44px;height:44px;border:4px solid rgba(121,185,149,.25);border-top-color:#79b995;border-radius:50%;animation:spin 1s linear infinite;"></div>
   <p style="color:#edf5ef;font-size:14px;font-weight:600;margin:0;letter-spacing:.5px;">從雲端載入工作清單⋯</p>
   <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
@@ -1173,6 +1275,24 @@
       </section>
 
     </main>
+  </div>
+
+  <!-- ── 登入頁 ── -->
+  <div id="login-overlay">
+    <div class="login-box" id="login-box">
+      <div class="login-icon">🔒</div>
+      <h2>職安工作中樞</h2>
+      <p>此系統為個人工作管理，請輸入密碼進入</p>
+      <form id="login-form" onsubmit="tryLogin(event)">
+        <div class="login-pwd-wrap">
+          <input id="login-pwd" type="password" placeholder="請輸入密碼" autocomplete="current-password">
+          <button type="button" class="login-show-btn" id="login-show-btn" onclick="togglePwdVisible()" title="顯示／隱藏密碼">👁</button>
+        </div>
+        <p class="login-err hidden" id="login-err">密碼錯誤，請再試一次</p>
+        <button class="login-submit" type="submit">進入系統</button>
+      </form>
+      <a class="login-back" href="../">← 回到系統入口</a>
+    </div>
   </div>
 
   <!-- ── 通知背板 ── -->
@@ -2252,6 +2372,54 @@
     updateNotificationStatus();
     startReminderChecker();
 
+    // ── 登入驗證 ──────────────────────────────────────────────────
+    const AUTH_KEY  = 'osh-tasks-auth-v1';
+    const AUTH_HASH = 'f695f6db85ce1d2a06c220ce4ba2739b567603fdb6c0c003787fc9633cf17c90';
+    const AUTH_TTL  = 24 * 60 * 60 * 1000; // 24 小時
+
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function isAuthenticated() {
+      try {
+        const s = JSON.parse(localStorage.getItem(AUTH_KEY));
+        return s && (Date.now() - s.ts < AUTH_TTL);
+      } catch { return false; }
+    }
+
+    function setAuthenticated() {
+      localStorage.setItem(AUTH_KEY, JSON.stringify({ ts: Date.now() }));
+    }
+
+    function togglePwdVisible() {
+      const inp = document.getElementById('login-pwd');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    }
+
+    async function tryLogin(event) {
+      event.preventDefault();
+      const pwd  = document.getElementById('login-pwd').value;
+      const hash = await sha256(pwd);
+      const err  = document.getElementById('login-err');
+      const box  = document.getElementById('login-box');
+      if (hash === AUTH_HASH) {
+        setAuthenticated();
+        document.getElementById('login-overlay').style.display = 'none';
+        loadFromCloud();
+      } else {
+        if (err) err.classList.remove('hidden');
+        if (box) {
+          box.classList.remove('shake');
+          void box.offsetWidth; // reflow to restart animation
+          box.classList.add('shake');
+        }
+        document.getElementById('login-pwd').value = '';
+        document.getElementById('login-pwd').focus();
+      }
+    }
+
     // ── Google Sheets 後端整合 ─────────────────────────────────────
     const GS_API = 'https://script.google.com/macros/s/AKfycbzkDcRv1jwyvIXGJ0Y07oOULXv0hhNx78501Z1EjJUOBo766ZAq_Rh4DGzFVwCY3wFW/exec';
 
@@ -2434,7 +2602,12 @@
       return list;
     }
 
-    loadFromCloud();
+    // 頁面載入時：已驗證直接進入，否則顯示登入頁
+    if (isAuthenticated()) {
+      document.getElementById('login-overlay').style.display = 'none';
+      loadFromCloud();
+    }
+    // else：login-overlay 保持顯示，等待使用者輸入密碼
   </script>
 </body>
 </html>
