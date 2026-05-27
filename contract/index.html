@@ -157,8 +157,9 @@ table.rec-tbl{width:100%;border-collapse:collapse;background:var(--card);}
 .rec-tbl thead th{background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-size:12px;white-space:nowrap;}
 .rec-tbl tbody tr{border-bottom:1px solid var(--border);transition:background .12s;}
 .rec-tbl tbody tr:hover{background:#eff6ff;}
-.rec-tbl td{padding:9px 12px;font-size:12px;vertical-align:middle;}
-.rec-tbl .nm{font-weight:600;color:var(--blue);}
+.rec-tbl td{padding:9px 12px;font-size:12px;vertical-align:middle;white-space:nowrap;}
+.rec-tbl .nm{font-weight:600;color:var(--blue);max-width:180px;overflow:hidden;text-overflow:ellipsis;}
+.rec-tbl .wn{max-width:180px;overflow:hidden;text-overflow:ellipsis;}
 .badge{padding:2px 9px;border-radius:10px;font-size:11px;font-weight:600;}
 .badge-g{background:#dcfce7;color:#15803d;}
 .empty-state{padding:56px;text-align:center;color:var(--sub);font-size:14px;}
@@ -1342,7 +1343,7 @@ async function renderRecords(){
       <td>${idx+1}</td>
       <td>${dtStr}</td>
       <td class="nm">${nm}</td>
-      <td>${wn}</td>
+      <td class="wn">${wn}</td>
       <td>${r.basic.dateStart} ~ ${r.basic.dateEnd}</td>
       <td>${period}</td>
       <td><span class="badge badge-g">已提交</span></td>
