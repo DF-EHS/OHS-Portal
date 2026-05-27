@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>承攬商管理系統 — 大豐環保科技</title>
+<title>承攬商進場管理系統 — 大豐環保科技</title>
 <style>
 :root{
   --navy:#1e3a5f; --navy2:#162d4a; --bg:#f1f5f9; --card:#fff;
@@ -20,9 +20,6 @@ header h1{font-size:16px;font-weight:700;letter-spacing:.5px;flex:1;}
 .subtitle{font-size:11px;color:#94a3b8;margin-left:auto;}
 .hdr-btn{padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:12px;cursor:pointer;transition:background .15s;font-family:inherit;}
 .hdr-btn:hover{background:rgba(255,255,255,.25);}
-.hdr-brand{display:flex;align-items:center;gap:7px;margin-left:auto;flex-shrink:0;}
-.hdr-brand img{height:24px;object-fit:contain;}
-.hdr-brand span{font-size:12px;color:#94a3b8;font-weight:600;white-space:nowrap;}
 
 /* ── Step bar ── */
 #step-bar{background:#fff;border-bottom:1px solid var(--border);padding:14px 20px;display:none;}
@@ -155,15 +152,10 @@ header h1{font-size:16px;font-weight:700;letter-spacing:.5px;flex:1;}
 .rec-toolbar input:focus{border-color:var(--blue);}
 .rec-wrap{overflow-x:auto;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
 table.rec-tbl{width:100%;border-collapse:collapse;background:var(--card);}
-.rec-tbl thead th{background:var(--navy);color:#fff;padding:9px 14px;text-align:left;font-size:12px;white-space:nowrap;}
-.rec-tbl thead th[data-col]{cursor:pointer;user-select:none;}
-.rec-tbl thead th[data-col]:hover{background:#1a4a7a;}
-.rec-tbl thead th.sorted{background:#1d5799;}
-.sort-arr{font-size:10px;opacity:.7;margin-left:5px;}
+.rec-tbl thead th{background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-size:12px;white-space:nowrap;}
 .rec-tbl tbody tr{border-bottom:1px solid var(--border);transition:background .12s;}
 .rec-tbl tbody tr:hover{background:#eff6ff;}
-.rec-tbl td{padding:9px 14px;font-size:12px;vertical-align:middle;white-space:nowrap;}
-.rec-tbl td.wn{white-space:normal;min-width:140px;max-width:220px;}
+.rec-tbl td{padding:9px 12px;font-size:12px;vertical-align:middle;}
 .rec-tbl .nm{font-weight:600;color:var(--blue);}
 .badge{padding:2px 9px;border-radius:10px;font-size:11px;font-weight:600;}
 .badge-g{background:#dcfce7;color:#15803d;}
@@ -254,15 +246,11 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
 
 <!-- ── Header ── -->
 <header>
-  <button class="hdr-btn" onclick="location.href='../'" title="回到職安管理系統入口">← 系統入口</button>
   <button class="hdr-btn" id="hdr-home" onclick="showView('home')" style="display:none">🏠 首頁</button>
-  <h1>📋 承攬商管理系統</h1>
+  <h1>📋 承攬商進場管理系統</h1>
   <span class="role-badge" id="hdr-role" style="display:none"></span>
   <button class="hdr-btn" id="hdr-logout" onclick="doLogout()" style="display:none">登出</button>
-  <div class="hdr-brand">
-    <img src="../dafon-logo.png" alt="大豐環保科技">
-    <span>大豐環保科技</span>
-  </div>
+  <img src="./logo.png" alt="大豐環保科技" style="height:45px;object-fit:contain;flex-shrink:0;margin-left:auto"/>
 </header>
 
 <!-- ── Step bar ── -->
@@ -288,7 +276,7 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
   <div class="login-wrap">
     <div class="login-card">
       <div class="login-logo"><img src="./logo-login.png" alt="大豐環保科技" style="height:160px;object-fit:contain"/></div>
-      <h2>承攬商管理系統</h2>
+      <h2>承攬商進場管理系統</h2>
       <p>大豐環保科技股份有限公司<br>請輸入密碼以繼續</p>
       <input class="login-fi" id="login-pass" type="password" placeholder="密碼"
              autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
@@ -301,7 +289,7 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
 <!-- ════ View: Home ════ -->
 <div id="v-home">
   <div class="home-banner">
-    <h2>歡迎使用承攬商管理系統</h2>
+    <h2>歡迎使用承攬商進場管理系統</h2>
     <p>承攬商進場前請依序完成危害告知確認、安衛切結書及作業許可申請書<br>填寫完成並電子簽名後，資料將自動留存於本系統供職安人員查閱</p>
   </div>
   <div class="home-cards">
@@ -560,7 +548,8 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
     <h2 style="font-size:17px;color:var(--navy)">📂 進場申請紀錄</h2>
     <span id="rec-count" style="font-size:12px;color:var(--sub);background:#f1f5f9;padding:2px 10px;border-radius:12px"></span>
-    <button class="btn btn-sm" style="margin-left:auto" onclick="exportCSV()">↓ 匯出 CSV</button>
+    <button class="btn btn-sm btn-primary" style="margin-left:auto" onclick="renderRecords()">↺ 載入資料</button>
+    <button class="btn btn-sm" onclick="exportCSV()">↓ 匯出 CSV</button>
   </div>
   <div class="rec-toolbar">
     <input id="rec-search" placeholder="搜尋承攬商名稱或工程名稱…" oninput="renderRecords()"/>
@@ -569,14 +558,14 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
     <table class="rec-tbl">
       <thead>
         <tr>
-          <th style="width:40px">#</th>
-          <th data-col="submittedAt" onclick="recSort('submittedAt')">申請日期時間<span class="sort-arr">↓</span></th>
-          <th data-col="company" onclick="recSort('company')">承攬商名稱<span class="sort-arr">⇅</span></th>
-          <th data-col="workname" onclick="recSort('workname')">工程名稱<span class="sort-arr">⇅</span></th>
-          <th data-col="dateStart" onclick="recSort('dateStart')">作業期間<span class="sort-arr">⇅</span></th>
+          <th>#</th>
+          <th>申請日期時間</th>
+          <th>承攬商名稱</th>
+          <th>工程名稱</th>
+          <th>作業期間</th>
           <th>時段</th>
-          <th style="width:64px">狀態</th>
-          <th style="width:100px">操作</th>
+          <th>狀態</th>
+          <th>操作</th>
         </tr>
       </thead>
       <tbody id="rec-tbody"></tbody>
@@ -1300,56 +1289,41 @@ function resetForm(){
 }
 
 // ════════════════════════════════════════════════
-//  Records list  (with cache + sort)
+//  Records list
 // ════════════════════════════════════════════════
-let recCache = null;
-let recSortCol = 'submittedAt';
-let recSortDir = -1;  // -1 = 新→舊
-
-function recSort(col){
-  if(recSortCol === col){ recSortDir *= -1; }
-  else { recSortCol = col; recSortDir = col === 'submittedAt' ? -1 : 1; }
-  _renderRecordRows();
-}
-
-function _renderRecordRows(){
+async function renderRecords(){
   const q = (document.getElementById('rec-search').value||'').toLowerCase();
-  const all = recCache || [];
-
-  let filtered = all.filter(r=>
+  showLoading('載入紀錄中…');
+  let all = [];
+  try {
+    const res = await apiGet({ action: 'list' });
+    if(!res.success) throw new Error(res.error);
+    all = res.records || [];
+  } catch(ex) {
+    toast('載入失敗：' + ex.message, 'bad');
+  } finally {
+    hideLoading();
+  }
+  const filtered = all.filter(r=>
     !q ||
     (r.basic?.company||'').toLowerCase().includes(q) ||
     (r.basic?.workname||'').toLowerCase().includes(q) ||
     (r.basic?.supervisor||'').toLowerCase().includes(q)
   );
 
-  filtered.sort((a,b)=>{
-    let va, vb;
-    if(recSortCol==='submittedAt'){ va=a.submittedAt||''; vb=b.submittedAt||''; }
-    else if(recSortCol==='company'){ va=a.basic?.company||''; vb=b.basic?.company||''; }
-    else if(recSortCol==='workname'){ va=a.basic?.workname||''; vb=b.basic?.workname||''; }
-    else if(recSortCol==='dateStart'){ va=a.basic?.dateStart||''; vb=b.basic?.dateStart||''; }
-    else { va=''; vb=''; }
-    return va<vb ? recSortDir : va>vb ? -recSortDir : 0;
-  });
-
-  // 更新排序箭頭
-  document.querySelectorAll('.rec-tbl thead th[data-col]').forEach(th=>{
-    const active = th.dataset.col === recSortCol;
-    th.classList.toggle('sorted', active);
-    const arr = th.querySelector('.sort-arr');
-    if(arr) arr.textContent = active ? (recSortDir===-1?'↓':'↑') : '⇅';
-  });
-
   document.getElementById('rec-count').textContent = `共 ${filtered.length} 筆`;
   const tbody = document.getElementById('rec-tbody');
   tbody.innerHTML='';
-  document.getElementById('rec-empty').style.display = filtered.length ? 'none' : 'block';
-  if(!filtered.length) return;
+
+  if(!filtered.length){
+    document.getElementById('rec-empty').style.display='block';
+    return;
+  }
+  document.getElementById('rec-empty').style.display='none';
 
   filtered.forEach((r,idx)=>{
     const dt = new Date(r.submittedAt);
-    const dtStr = dt.toLocaleDateString('zh-TW')+' '+dt.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
+    const dtStr = dt.toLocaleDateString('zh-TW')+ ' ' + dt.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
     const period = r.basic.timePeriod?.join('/') || '—';
     const nm = q ? r.basic.company.replace(new RegExp(q,'gi'),m=>`<mark>${m}</mark>`) : r.basic.company;
     const wn = q ? r.basic.workname.replace(new RegExp(q,'gi'),m=>`<mark>${m}</mark>`) : r.basic.workname;
@@ -1358,7 +1332,7 @@ function _renderRecordRows(){
       <td>${idx+1}</td>
       <td>${dtStr}</td>
       <td class="nm">${nm}</td>
-      <td class="wn">${wn}</td>
+      <td>${wn}</td>
       <td>${r.basic.dateStart} ~ ${r.basic.dateEnd}</td>
       <td>${period}</td>
       <td><span class="badge badge-g">已提交</span></td>
@@ -1368,24 +1342,6 @@ function _renderRecordRows(){
       </td>`;
     tbody.appendChild(tr);
   });
-}
-
-async function renderRecords(forceRefresh){
-  if(!recCache || forceRefresh){
-    showLoading('載入紀錄中…');
-    try {
-      const res = await apiGet({ action: 'list' });
-      if(!res.success) throw new Error(res.error);
-      recCache = res.records || [];
-    } catch(ex) {
-      toast('載入失敗：' + ex.message, 'bad');
-      hideLoading();
-      return;
-    } finally {
-      hideLoading();
-    }
-  }
-  _renderRecordRows();
 }
 
 // ════════════════════════════════════════════════
@@ -1521,7 +1477,6 @@ async function confirmDelete(id){
       const res = await apiPost({ action: 'delete', id });
       if(!res.success) throw new Error(res.error);
       toast('紀錄已刪除');
-      recCache = null;
       showView('records');
     } catch(ex) {
       toast('刪除失敗：' + ex.message, 'bad');
