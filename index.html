@@ -7,7 +7,6 @@
 <style>
   :root {
     --navy:   #1e3a5f;
-    --navy2:  #162d4a;
     --bg:     #f1f5f9;
     --card:   #ffffff;
     --border: #e2e8f0;
@@ -19,31 +18,95 @@
     --red:    #dc2626;
     --purple: #7c3aed;
     --teal:   #0891b2;
+    --sidebar-bg: #1a2d42;
+    --sidebar-w:  220px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
-    background: var(--bg); color: var(--text);
-    min-height: 100vh; display: flex; flex-direction: column;
+  html, body { height: 100%; overflow: hidden; }
+  body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; color: var(--text); }
+
+  /* ── Layout ── */
+  .layout { display: flex; height: 100vh; }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: var(--sidebar-w); flex-shrink: 0;
+    background: var(--sidebar-bg);
+    display: flex; flex-direction: column;
+    overflow: hidden;
   }
 
-  /* ── header ── */
-  header {
+  /* Orange brand block */
+  .brand {
     background: linear-gradient(160deg, #e8821a 0%, #f59840 55%, #f9ad5a 100%);
-    color: #fff;
-    padding: 28px 40px 24px;
+    padding: 20px 16px 18px;
     text-align: center;
+    flex-shrink: 0;
   }
-  .hdr-logo { margin-bottom: 14px; }
-  .hdr-logo img {
-    height: 130px;
+  .brand img { height: 72px; display: block; margin: 0 auto 10px; }
+  .brand-name { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: 1px; line-height: 1.4; }
+  .brand-sub  { font-size: 10px; color: rgba(255,255,255,.75); margin-top: 4px; letter-spacing: 2px; }
+
+  /* Nav */
+  .nav { flex: 1; overflow-y: auto; padding: 6px 0 4px; }
+  .nav::-webkit-scrollbar { width: 4px; }
+  .nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 4px; }
+
+  .nav-section {
+    font-size: 9px; font-weight: 700; color: rgba(255,255,255,.3);
+    letter-spacing: 3px; text-transform: uppercase;
+    padding: 14px 16px 5px;
   }
-  .hdr-company { display: none; }
-  .hdr-system  { font-size: 17px; color: rgba(255,255,255,.85); letter-spacing: 5px; margin-top: 12px; }
-  .hdr-hint    { margin-top: 10px; font-size: 15px; color: rgba(255,255,255,.65); }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 14px 9px 13px;
+    color: rgba(255,255,255,.65);
+    cursor: pointer; transition: background .15s, color .15s;
+    text-decoration: none; font-size: 12.5px;
+    border-left: 3px solid transparent;
+  }
+  .nav-item:hover { background: rgba(255,255,255,.07); color: #fff; }
+  .nav-item.active { background: rgba(255,255,255,.11); color: #fff; border-left-color: #f59840; }
+  .nav-icon { font-size: 15px; flex-shrink: 0; width: 18px; text-align: center; }
+
+  /* Sidebar footer */
+  .sidebar-foot {
+    flex-shrink: 0;
+    padding: 10px 12px;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .dark-btn {
+    width: 100%; padding: 7px 10px; border-radius: 6px;
+    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.06);
+    color: rgba(255,255,255,.6); font-size: 12px;
+    cursor: pointer; transition: background .15s;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    font-family: inherit;
+  }
+  .dark-btn:hover { background: rgba(255,255,255,.13); color: #fff; }
+
+  /* ── Content area ── */
+  .content {
+    flex: 1; overflow-y: auto;
+    background: var(--bg);
+    display: flex; flex-direction: column;
+  }
+
+  /* content top bar */
+  .content-topbar {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 28px;
+    display: flex; align-items: center; gap: 10px;
+    flex-shrink: 0;
+  }
+  .content-topbar h2 { font-size: 15px; font-weight: 700; color: var(--text); }
+  .topbar-sub { font-size: 12px; color: var(--sub); margin-left: 4px; }
 
   /* ── main ── */
-  main { flex: 1; max-width: 1080px; margin: 0 auto; width: 100%; padding: 40px 24px 60px; }
+  main { flex: 1; max-width: 1060px; margin: 0 auto; width: 100%; padding: 32px 28px 52px; }
 
   .section-label {
     font-size: 11px; font-weight: 700; color: var(--sub);
@@ -56,7 +119,7 @@
   .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-    gap: 22px;
+    gap: 20px;
   }
 
   /* ── system card ── */
@@ -64,12 +127,11 @@
     background: var(--card);
     border-radius: 18px;
     box-shadow: 0 2px 14px rgba(0,0,0,.07);
-    overflow: hidden;
-    display: flex; flex-direction: column;
+    overflow: hidden; display: flex; flex-direction: column;
     transition: transform .2s, box-shadow .2s;
     cursor: pointer;
   }
-  .sys-card:hover { transform: translateY(-5px); box-shadow: 0 10px 32px rgba(0,0,0,.13); }
+  .sys-card:hover  { transform: translateY(-5px); box-shadow: 0 10px 32px rgba(0,0,0,.13); }
   .sys-card:active { transform: translateY(-2px); }
 
   .card-header {
@@ -78,8 +140,7 @@
   }
   .card-icon {
     width: 58px; height: 58px; border-radius: 14px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 30px;
+    display: flex; align-items: center; justify-content: center; font-size: 30px;
   }
   .ci-purple { background: #ede9fe; }
   .ci-green  { background: #dcfce7; }
@@ -94,14 +155,9 @@
   .card-tags {
     padding: 0 26px 16px;
     display: flex; flex-wrap: wrap; gap: 6px;
-    flex: 1;
-    align-items: flex-start;
-    align-content: flex-start;
+    flex: 1; align-items: flex-start; align-content: flex-start;
   }
-  .tag {
-    padding: 3px 10px; border-radius: 20px;
-    font-size: 11px; font-weight: 600;
-  }
+  .tag { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
   .tg-navy   { background: #e0e7f0; color: #1e3a5f; }
   .tg-purple { background: #ede9fe; color: #6d28d9; }
   .tg-green  { background: #dcfce7; color: #15803d; }
@@ -116,17 +172,9 @@
     display: flex; align-items: center; justify-content: space-between;
   }
   .card-status { font-size: 12px; color: var(--sub); display: flex; align-items: center; gap: 5px; }
-  .status-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--green); display: inline-block;
-    box-shadow: 0 0 0 3px rgba(22,163,74,.2);
-  }
+  .status-dot  { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: inline-block; box-shadow: 0 0 0 3px rgba(22,163,74,.2); }
 
-  .open-btn {
-    padding: 8px 20px; border-radius: 9px;
-    font-size: 13px; font-weight: 600; border: none;
-    cursor: pointer; transition: background .15s, transform .1s;
-  }
+  .open-btn { padding: 8px 20px; border-radius: 9px; font-size: 13px; font-weight: 600; border: none; cursor: pointer; transition: background .15s, transform .1s; }
   .open-btn:active { transform: scale(.96); }
   .btn-purple { background: var(--purple); color: #fff; }
   .btn-purple:hover { background: #6d28d9; }
@@ -143,8 +191,7 @@
 
   /* ── placeholder card ── */
   .placeholder-card {
-    background: var(--card);
-    border-radius: 18px;
+    background: var(--card); border-radius: 18px;
     border: 2px dashed var(--border);
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
@@ -157,24 +204,11 @@
 
   /* ── footer ── */
   footer {
-    text-align: center; padding: 20px 24px;
+    text-align: center; padding: 18px 24px;
     font-size: 12px; color: var(--sub);
     border-top: 1px solid var(--border);
     background: var(--card);
   }
-
-  /* ── dark mode toggle button ── */
-  #dark-toggle {
-    position: fixed; bottom: 24px; right: 24px; z-index: 999;
-    background: var(--card);
-    border: 1px solid var(--border);
-    color: var(--text); border-radius: 50%;
-    width: 48px; height: 48px; font-size: 22px;
-    cursor: pointer; transition: background .15s, box-shadow .15s;
-    box-shadow: 0 4px 16px rgba(0,0,0,.15);
-    display: flex; align-items: center; justify-content: center;
-  }
-  #dark-toggle:hover { box-shadow: 0 6px 22px rgba(0,0,0,.25); }
 
   /* ── dark mode ── */
   body.dark {
@@ -183,20 +217,16 @@
     --border: #334155;
     --text:   #f1f5f9;
     --sub:    #94a3b8;
+    --sidebar-bg: #0d1b2a;
   }
-  body.dark header { background: linear-gradient(160deg, #2c1a0e 0%, #3d2010 55%, #4a2712 100%); }
-  body.dark .sys-card  { box-shadow: 0 2px 14px rgba(0,0,0,.4); }
+  body.dark .brand { background: linear-gradient(160deg, #2c1a0e 0%, #3d2010 55%, #4a2712 100%); }
+  body.dark .sys-card       { box-shadow: 0 2px 14px rgba(0,0,0,.4); }
   body.dark .sys-card:hover { box-shadow: 0 10px 32px rgba(0,0,0,.55); }
   body.dark .ci-purple { background: #3b0764; }
   body.dark .ci-green  { background: #052e16; }
   body.dark .ci-blue   { background: #1e3a5f; }
   body.dark .ci-orange { background: #431407; }
-  body.dark .btn-orange { background: #92400e; }
-  body.dark .btn-orange:hover { background: #78350f; }
   body.dark .ci-red    { background: #450a0a; }
-  body.dark .tg-red    { background: #450a0a; color: #fca5a5; }
-  body.dark .btn-red   { background: #991b1b; }
-  body.dark .btn-red:hover { background: #7f1d1d; }
   body.dark .ci-teal   { background: #042f2e; }
   body.dark .tg-navy   { background: #1e2d42; color: #93c5fd; }
   body.dark .tg-purple { background: #2d1b55; color: #c4b5fd; }
@@ -204,257 +234,266 @@
   body.dark .tg-orange { background: #431407; color: #fdba74; }
   body.dark .tg-blue   { background: #1e3054; color: #93c5fd; }
   body.dark .tg-teal   { background: #042f2e; color: #5eead4; }
+  body.dark .tg-red    { background: #450a0a; color: #fca5a5; }
+  body.dark .btn-orange { background: #92400e; }
+  body.dark .btn-orange:hover { background: #78350f; }
+  body.dark .btn-red    { background: #991b1b; }
+  body.dark .btn-red:hover { background: #7f1d1d; }
   body.dark .placeholder-card { background: #1e293b; border-color: #334155; }
+  body.dark .content-topbar   { background: #1e293b; border-color: #334155; }
 </style>
 </head>
 <body>
 
-<header>
-  <button id="dark-toggle" onclick="toggleDark()" title="切換深色／淺色模式">🌙</button>
-  <div class="hdr-logo">
-    <img src="上地球logo.png" alt="大豐環保科技">
+<div class="layout">
+
+  <!-- ══════ SIDEBAR ══════ -->
+  <aside class="sidebar">
+
+    <!-- 橘色品牌區 -->
+    <div class="brand">
+      <img src="上地球logo.png" alt="大豐環保科技">
+      <div class="brand-name">大豐環保科技</div>
+      <div class="brand-sub">職安衛管理系統</div>
+    </div>
+
+    <!-- 導覽列 -->
+    <nav class="nav">
+      <a class="nav-item active" href="./">
+        <span class="nav-icon">🏠</span>首頁
+      </a>
+
+      <div class="nav-section">系統模組</div>
+
+      <a class="nav-item" href="./risk/">
+        <span class="nav-icon">⚠️</span>危害鑑別及風險評估
+      </a>
+      <a class="nav-item" href="./law/">
+        <span class="nav-icon">📋</span>法規鑑別查詢系統
+      </a>
+      <a class="nav-item" href="./contract/">
+        <span class="nav-icon">🏗️</span>承攬商進場管理
+      </a>
+      <a class="nav-item" href="./committee/">
+        <span class="nav-icon">📊</span>安全衛生委員會
+      </a>
+      <a class="nav-item" href="./tasks/">
+        <span class="nav-icon">✅</span>職安工作中樞
+      </a>
+      <a class="nav-item" href="./news/">
+        <span class="nav-icon">📰</span>法規更新與職災情報
+      </a>
+      <a class="nav-item" href="./training/">
+        <span class="nav-icon">🎓</span>教育訓練教材庫
+      </a>
+      <a class="nav-item" href="./accident/">
+        <span class="nav-icon">📈</span>職業災害分析系統
+      </a>
+    </nav>
+
+    <!-- 底部：深色模式切換 -->
+    <div class="sidebar-foot">
+      <button class="dark-btn" id="dark-btn" onclick="toggleDark()">🌙 切換深色模式</button>
+    </div>
+
+  </aside>
+
+  <!-- ══════ CONTENT ══════ -->
+  <div class="content">
+
+    <div class="content-topbar">
+      <h2>🏠 首頁</h2>
+      <span class="topbar-sub">— 系統模組總覽</span>
+    </div>
+
+    <main>
+      <div class="section-label">系統模組</div>
+
+      <div class="card-grid">
+
+        <div class="sys-card" onclick="location.href='risk/'">
+          <div class="card-header">
+            <div class="card-icon ci-purple">⚠️</div>
+            <div>
+              <div class="card-title">危害鑑別及風險評估</div>
+              <div class="card-desc">查詢各廠區作業危害鑑別表，含風險等級評分、管制措施及不可接受風險清單。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-navy">總公司</span>
+            <span class="tag tg-orange">全興廠</span>
+            <span class="tag tg-purple">285 筆記錄</span>
+            <span class="tag tg-blue">21 作業表</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-purple" onclick="event.stopPropagation();location.href='risk/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./law/'">
+          <div class="card-header">
+            <div class="card-icon ci-green">📋</div>
+            <div>
+              <div class="card-title">法規鑑別查詢系統</div>
+              <div class="card-desc">查詢適用之職安衛法規、法條內容與合規狀態，支援條文搜尋與鑑別清單匯出，內建法規問答機器人即時解答條文疑問。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-green">職安衛法</span>
+            <span class="tag tg-green">勞動法規</span>
+            <span class="tag tg-teal">環保法規</span>
+            <span class="tag tg-navy">鑑別清單</span>
+            <span class="tag tg-green">⚖️ 問答機器人</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-green" onclick="event.stopPropagation();location.href='./law/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./contract/'">
+          <div class="card-header">
+            <div class="card-icon ci-teal">🏗️</div>
+            <div>
+              <div class="card-title">承攬商進場管理系統</div>
+              <div class="card-desc">承攬商進場前依序完成危害告知確認、安全承諾書及工作許可證申請，全程電子化存檔供職安人員審核。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-teal">承攬商管理</span>
+            <span class="tag tg-teal">工作許可證</span>
+            <span class="tag tg-navy">電子簽名</span>
+            <span class="tag tg-blue">五步驟流程</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-teal" onclick="event.stopPropagation();location.href='./contract/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./committee/'">
+          <div class="card-header">
+            <div class="card-icon ci-blue">📊</div>
+            <div>
+              <div class="card-title">安全衛生委員會報告</div>
+              <div class="card-desc">依年度與季度快速調閱職安衛委員會季報，包含安全改善成果、管理數據與各項決議追蹤。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-blue">2026 Q1 完成</span>
+            <span class="tag tg-orange">2026 Q2 製作中</span>
+            <span class="tag tg-navy">年度追蹤</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-blue" onclick="event.stopPropagation();location.href='./committee/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./tasks/'">
+          <div class="card-header">
+            <div class="card-icon ci-orange">✅</div>
+            <div>
+              <div class="card-title">職安工作中樞</div>
+              <div class="card-desc">個人工作任務管理，支援重複排程、到期提醒、優先順序分類，並雲端同步至 Google Sheets。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-orange">任務管理</span>
+            <span class="tag tg-orange">重複排程</span>
+            <span class="tag tg-navy">到期提醒</span>
+            <span class="tag tg-green">雲端同步</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-orange" onclick="event.stopPropagation();location.href='./tasks/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./news/'">
+          <div class="card-header">
+            <div class="card-icon ci-red">📰</div>
+            <div>
+              <div class="card-title">法規更新與職災情報</div>
+              <div class="card-desc">自動彙整職安署公告、重大職災新聞及法規更新，工作日每四小時由 AI 自動摘要更新。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-red">法規更新</span>
+            <span class="tag tg-red">重大職災</span>
+            <span class="tag tg-navy">AI 摘要</span>
+            <span class="tag tg-blue">每日自動更新</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-red" onclick="event.stopPropagation();location.href='./news/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./training/'">
+          <div class="card-header">
+            <div class="card-icon ci-green">🎓</div>
+            <div>
+              <div class="card-title">教育訓練教材庫</div>
+              <div class="card-desc">存放各期教育訓練互動簡報，上課時直接在瀏覽器開啟播放，含示範影片與圖表說明。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-green">辦公室職安</span>
+            <span class="tag tg-orange">全員必訓</span>
+            <span class="tag tg-navy">互動簡報</span>
+            <span class="tag tg-blue">示範影片</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-green" onclick="event.stopPropagation();location.href='./training/'">開啟教材 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./accident/'">
+          <div class="card-header">
+            <div class="card-icon ci-red">📈</div>
+            <div>
+              <div class="card-title">職業災害分析系統</div>
+              <div class="card-desc">彙整歷年職災事故資料，自動計算失能傷害頻率（FR）與嚴重率（SR），支援趨勢分析、部門分類及事故類型統計。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-red">FR / SR</span>
+            <span class="tag tg-red">趨勢分析</span>
+            <span class="tag tg-navy">部門統計</span>
+            <span class="tag tg-orange">事故分類</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-red" onclick="event.stopPropagation();location.href='./accident/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+        <div class="placeholder-card">
+          <div class="ph-icon">＋</div>
+          <div class="ph-title">預留擴充位置</div>
+          <div class="ph-sub">如：職安健康管理、承攬商評核…</div>
+        </div>
+
+      </div>
+    </main>
+
+    <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
   </div>
-  <div class="hdr-system">職業安全衛生管理系統</div>
-</header>
 
-<main>
-  <div class="section-label">系統模組</div>
-
-  <div class="card-grid">
-
-    <!-- ══════════════════════════════════════════════
-         模組 1：危害鑑別及風險評估
-         目標：./index.html（同目錄）
-         ══════════════════════════════════════════════ -->
-    <div class="sys-card" onclick="location.href='risk/'">
-      <div class="card-header">
-        <div class="card-icon ci-purple">⚠️</div>
-        <div>
-          <div class="card-title">危害鑑別及風險評估</div>
-          <div class="card-desc">查詢各廠區作業危害鑑別表，含風險等級評分、管制措施及不可接受風險清單。</div>
-        </div>
-      </div>
-      <div class="card-tags">
-        <span class="tag tg-navy">總公司</span>
-        <span class="tag tg-orange">全興廠</span>
-        <span class="tag tg-purple">285 筆記錄</span>
-        <span class="tag tg-blue">21 作業表</span>
-      </div>
-      <div class="card-footer">
-        <div class="card-status"><span class="status-dot"></span>已上線</div>
-        <button class="open-btn btn-purple" onclick="event.stopPropagation();location.href='risk/'">開啟系統 ›</button>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════
-         模組 2：法規鑑別查詢系統
-         目標：./law/
-         ══════════════════════════════════════════════ -->
-    <div class="sys-card" onclick="location.href='./law/'">
-      <div class="card-header">
-        <div class="card-icon ci-green">📋</div>
-        <div>
-          <div class="card-title">法規鑑別查詢系統</div>
-          <div class="card-desc">查詢適用之職安衛法規、法條內容與合規狀態，支援條文搜尋與鑑別清單匯出，內建法規問答機器人即時解答條文疑問。</div>
-        </div>
-      </div>
-      <div class="card-tags">
-        <span class="tag tg-green">職安衛法</span>
-        <span class="tag tg-green">勞動法規</span>
-        <span class="tag tg-teal">環保法規</span>
-        <span class="tag tg-navy">鑑別清單</span>
-        <span class="tag tg-green">⚖️ 問答機器人</span>
-      </div>
-      <div class="card-footer">
-        <div class="card-status"><span class="status-dot"></span>已上線</div>
-        <button class="open-btn btn-green" onclick="event.stopPropagation();location.href='./law/'">開啟系統 ›</button>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════
-         模組 3：承攬商進場管理系統
-         目標：./contract/（同 repo 子目錄）
-         ══════════════════════════════════════════════ -->
-    <div class="sys-card" onclick="location.href='./contract/'">
-      <div class="card-header">
-        <div class="card-icon ci-teal">🏗️</div>
-        <div>
-          <div class="card-title">承攬商進場管理系統</div>
-          <div class="card-desc">承攬商進場前依序完成危害告知確認、安全承諾書及工作許可證申請，全程電子化存檔供職安人員審核。</div>
-        </div>
-      </div>
-      <div class="card-tags">
-        <span class="tag tg-teal">承攬商管理</span>
-        <span class="tag tg-teal">工作許可證</span>
-        <span class="tag tg-navy">電子簽名</span>
-        <span class="tag tg-blue">五步驟流程</span>
-      </div>
-      <div class="card-footer">
-        <div class="card-status"><span class="status-dot"></span>已上線</div>
-        <button class="open-btn btn-teal" onclick="event.stopPropagation();location.href='./contract/'">開啟系統 ›</button>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════
-         【預留】新增更多模組時，複製上方卡片範本貼在此處
-         範本：
-         <div class="sys-card" onclick="location.href='YOUR_URL'">
-           <div class="card-header">
-             <div class="card-icon ci-blue">📊</div>
-             <div>
-               <div class="card-title">系統名稱</div>
-               <div class="card-desc">系統簡介…</div>
-             </div>
-           </div>
-           <div class="card-tags">
-             <span class="tag tg-blue">標籤</span>
-           </div>
-           <div class="card-footer">
-             <div class="card-status"><span class="status-dot"></span>已上線</div>
-             <button class="open-btn btn-blue" onclick="event.stopPropagation();location.href='YOUR_URL'">開啟系統 ›</button>
-           </div>
-         </div>
-         ══════════════════════════════════════════════ -->
-
-    <!-- ══════════════════════════════════════════════
-         模組 4：安全衛生委員會報告
-         目標：./committee/
-         ══════════════════════════════════════════════ -->
-    <div class="sys-card" onclick="location.href='./committee/'">
-      <div class="card-header">
-        <div class="card-icon ci-blue">📊</div>
-        <div>
-          <div class="card-title">安全衛生委員會報告</div>
-          <div class="card-desc">依年度與季度快速調閱職安衛委員會季報，包含安全改善成果、管理數據與各項決議追蹤。</div>
-        </div>
-      </div>
-      <div class="card-tags">
-        <span class="tag tg-blue">2026 Q1 完成</span>
-        <span class="tag tg-orange">2026 Q2 製作中</span>
-        <span class="tag tg-navy">年度追蹤</span>
-      </div>
-      <div class="card-footer">
-        <div class="card-status"><span class="status-dot"></span>已上線</div>
-        <button class="open-btn btn-blue" onclick="event.stopPropagation();location.href='./committee/'">開啟系統 ›</button>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════
-         模組 5：職安工作中樞
-         目標：./tasks/
-         ══════════════════════════════════════════════ -->
-    <div class="sys-card" onclick="location.href='./tasks/'">
-      <div class="card-header">
-        <div class="card-icon ci-orange">✅</div>
-        <div>
-          <div class="card-title">職安工作中樞</div>
-          <div class="card-desc">個人工作任務管理，支援重複排程、到期提醒、優先順序分類，並雲端同步至 Google Sheets。</div>
-        </div>
-      </div>
-      <div class="card-tags">
-        <span class="tag tg-orange">任務管理</span>
-        <span class="tag tg-orange">重複排程</span>
-        <span class="tag tg-navy">到期提醒</span>
-        <span class="tag tg-green">雲端同步</span>
-      </div>
-      <div class="card-footer">
-        <div class="card-status"><span class="status-dot"></span>已上線</div>
-        <button class="open-btn btn-orange" onclick="event.stopPropagation();location.href='./tasks/'">開啟系統 ›</button>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════
-         模組 6：法規更新與職災情報
-         目標：./news/
-         ══════════════════════════════════════════════ -->
-    <div class="sys-card" onclick="location.href='./news/'">
-      <div class="card-header">
-        <div class="card-icon ci-red">📰</div>
-        <div>
-          <div class="card-title">法規更新與職災情報</div>
-          <div class="card-desc">自動彙整職安署公告、重大職災新聞及法規更新，工作日每四小時由 AI 自動摘要更新。</div>
-        </div>
-      </div>
-      <div class="card-tags">
-        <span class="tag tg-red">法規更新</span>
-        <span class="tag tg-red">重大職災</span>
-        <span class="tag tg-navy">AI 摘要</span>
-        <span class="tag tg-blue">每日自動更新</span>
-      </div>
-      <div class="card-footer">
-        <div class="card-status"><span class="status-dot"></span>已上線</div>
-        <button class="open-btn btn-red" onclick="event.stopPropagation();location.href='./news/'">開啟系統 ›</button>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════
-         模組 7：教育訓練教材庫
-         目標：./training/
-         ══════════════════════════════════════════════ -->
-    <div class="sys-card" onclick="location.href='./training/'">
-      <div class="card-header">
-        <div class="card-icon ci-green">🎓</div>
-        <div>
-          <div class="card-title">教育訓練教材庫</div>
-          <div class="card-desc">存放各期教育訓練互動簡報，上課時直接在瀏覽器開啟播放，含示範影片與圖表說明。</div>
-        </div>
-      </div>
-      <div class="card-tags">
-        <span class="tag tg-green">辦公室職安</span>
-        <span class="tag tg-orange">全員必訓</span>
-        <span class="tag tg-navy">互動簡報</span>
-        <span class="tag tg-blue">示範影片</span>
-      </div>
-      <div class="card-footer">
-        <div class="card-status"><span class="status-dot"></span>已上線</div>
-        <button class="open-btn btn-green" onclick="event.stopPropagation();location.href='./training/'">開啟教材 ›</button>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════
-         模組 8：職業災害分析系統
-         目標：./accident/
-         ══════════════════════════════════════════════ -->
-    <div class="sys-card" onclick="location.href='./accident/'">
-      <div class="card-header">
-        <div class="card-icon ci-red">📊</div>
-        <div>
-          <div class="card-title">職業災害分析系統</div>
-          <div class="card-desc">彙整歷年職災事故資料，自動計算失能傷害頻率（FR）與嚴重率（SR），支援趨勢分析、部門分類及事故類型統計。</div>
-        </div>
-      </div>
-      <div class="card-tags">
-        <span class="tag tg-red">FR / SR</span>
-        <span class="tag tg-red">趨勢分析</span>
-        <span class="tag tg-navy">部門統計</span>
-        <span class="tag tg-orange">事故分類</span>
-      </div>
-      <div class="card-footer">
-        <div class="card-status"><span class="status-dot"></span>已上線</div>
-        <button class="open-btn btn-red" onclick="event.stopPropagation();location.href='./accident/'">開啟系統 ›</button>
-      </div>
-    </div>
-
-    <div class="placeholder-card">
-      <div class="ph-icon">＋</div>
-      <div class="ph-title">預留擴充位置</div>
-      <div class="ph-sub">如：職安健康管理、承攬商評核…</div>
-    </div>
-
-  </div>
-</main>
-
-<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+</div>
 
 <script>
   function toggleDark() {
     const isDark = document.body.classList.toggle('dark');
     localStorage.setItem('portal-dark', isDark ? '1' : '0');
-    document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
+    document.getElementById('dark-btn').textContent = isDark ? '☀️ 切換淺色模式' : '🌙 切換深色模式';
   }
   if (localStorage.getItem('portal-dark') === '1') {
     document.body.classList.add('dark');
-    document.getElementById('dark-toggle').textContent = '☀️';
+    document.getElementById('dark-btn').textContent = '☀️ 切換淺色模式';
   }
 </script>
 </body>
