@@ -1,0 +1,2192 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>辦公室職安教育訓練（法規架構版） | 大豐環保科技公司</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 20px; }
+
+:root {
+  --green: #2d7a3a;
+  --u1: #1565c0;
+  --u2: #6a1b9a;
+  --u3: #c62828;
+  --u4: #e65100;
+  --u5: #2d7a3a;
+  --u6: #0277bd;
+  --u7: #00695c;
+  --us: #4e342e;
+}
+
+body {
+  font-family: 'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', system-ui, sans-serif;
+  background: #111827;
+  color: #333;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ===== PRESENTATION ===== */
+#pres {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  transform: translateX(50px);
+}
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+}
+.slide.out-left {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+/* ===== TITLE SLIDE ===== */
+.slide-title {
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 45%, #1a237e 100%);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 3rem;
+}
+.slide-title .company-name {
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  opacity: 0.85;
+  margin-bottom: 1.2rem;
+}
+.slide-title h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 900;
+  line-height: 1.25;
+  margin-bottom: 2rem;
+  text-shadow: 0 3px 15px rgba(0,0,0,0.35);
+}
+.slide-title .meta-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.meta-tag {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.5rem 1.3rem;
+  border-radius: 20px;
+  font-size: 1rem;
+}
+.slide-title .quote {
+  font-size: 1.2rem;
+  font-style: italic;
+  opacity: 0.8;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+/* ===== UNIT HEADER ===== */
+.slide-unit {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 2rem;
+}
+.unit-bg-num {
+  font-size: clamp(6rem, 18vw, 12rem);
+  font-weight: 900;
+  opacity: 0.15;
+  line-height: 1;
+  margin-bottom: -2rem;
+  font-variant-numeric: tabular-nums;
+}
+.unit-eyebrow {
+  font-size: 1rem;
+  letter-spacing: 0.35em;
+  opacity: 0.75;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+}
+.unit-heading {
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+}
+.unit-time-badge {
+  display: inline-block;
+  margin-top: 1.2rem;
+  background: rgba(255,255,255,0.18);
+  padding: 0.4rem 1.5rem;
+  border-radius: 20px;
+  font-size: 1.1rem;
+}
+
+/* ===== CONTENT SLIDE ===== */
+.slide-content {
+  background: #ffffff;
+}
+.slide-header {
+  padding: 1.3rem 3rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+.unit-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.28rem 0.8rem;
+  border-radius: 4px;
+  color: white;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.slide-header h2 {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.3;
+}
+.slide-body {
+  padding: 1.5rem 3rem 2rem;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* ===== LEFT ACCENT BAR ===== */
+.accent {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+h3::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 1em;
+  border-radius: 2px;
+  background: #9ca3af;
+  flex-shrink: 0;
+}
+p { font-size: 1rem; line-height: 1.7; color: #374151; }
+ul, ol { padding-left: 1.5rem; }
+li { font-size: 1rem; line-height: 1.7; color: #374151; margin-bottom: 0.25rem; }
+strong { color: #111827; }
+
+/* ===== TABLES ===== */
+.tbl { overflow-x: auto; border-radius: 8px; border: 1px solid #e5e7eb; }
+table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+th { padding: 0.65rem 1rem; text-align: left; font-weight: 700; font-size: 0.9rem; color: white; }
+td { padding: 0.6rem 1rem; border-bottom: 1px solid #f3f4f6; color: #374151; }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: #f9fafb; }
+
+/* ===== CARDS ===== */
+.card {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 1rem 1.3rem;
+  border-left: 4px solid #d1d5db;
+}
+.card-danger { background: #fff7ed; border-left-color: #ea580c; }
+.card-warn   { background: #fefce8; border-left-color: #ca8a04; }
+.card-safe   { background: #f0fdf4; border-left-color: #16a34a; }
+.card-info   { background: #eff6ff; border-left-color: #2563eb; }
+.card-purple { background: #faf5ff; border-left-color: #7c3aed; }
+
+/* ===== GRID LAYOUTS ===== */
+.cols   { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+.cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.85rem; }
+
+/* ===== HIGHLIGHT BAR ===== */
+.highlight {
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.7rem 1.1rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+
+/* ===== NUMBERED STEPS ===== */
+.steps { list-style: none; padding: 0; counter-reset: step; }
+.steps li {
+  counter-increment: step;
+  padding: 0.55rem 0.5rem 0.55rem 2.6rem;
+  position: relative;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 1rem;
+}
+.steps li:last-child { border-bottom: none; }
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0; top: 0.48rem;
+  width: 1.7rem; height: 1.7rem;
+  background: #6b7280;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* ===== CHECKLIST ===== */
+.checklist { list-style: none; padding: 0; }
+.checklist li { padding: 0.35rem 0 0.35rem 1.9rem; position: relative; font-size: 1rem; }
+.checklist li::before { content: '☐'; position: absolute; left: 0; color: #6b7280; }
+
+/* ===== DCH (DROP COVER HOLD) ===== */
+.dch { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.1rem; }
+.dch-item {
+  background: var(--u3);
+  color: white;
+  border-radius: 10px;
+  padding: 1.5rem 1.2rem;
+  text-align: center;
+}
+.dch-item .en { font-size: 1.3rem; font-weight: 900; opacity: 0.65; }
+.dch-item .zh { font-size: 2.2rem; font-weight: 900; margin: 0.3rem 0; }
+.dch-item .desc { font-size: 0.95rem; opacity: 0.88; line-height: 1.5; }
+
+/* ===== 6S GRID ===== */
+.six-s { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; }
+.six-s-item {
+  border-radius: 9px;
+  padding: 1.2rem 0.9rem;
+  text-align: center;
+  color: white;
+}
+.six-s-item .s-en  { font-size: 0.9rem; opacity: 0.65; letter-spacing: 0.04em; }
+.six-s-item .s-zh  { font-size: 1.8rem; font-weight: 900; }
+.six-s-item .s-def { font-size: 0.9rem; opacity: 0.88; margin-top: 0.3rem; line-height: 1.4; }
+
+/* ===== KEY MESSAGE ===== */
+.key-msg {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: white;
+  padding: 1rem 1.4rem;
+  border-radius: 9px;
+}
+
+/* ===== HOTLINES ===== */
+.hotlines { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+.hotline {
+  background: #f5f3ff;
+  border: 1px solid #ddd6fe;
+  border-radius: 8px;
+  padding: 0.9rem;
+  text-align: center;
+}
+.hotline .num   { font-size: 2rem; font-weight: 900; color: var(--u2); line-height: 1; }
+.hotline .label { font-size: 0.9rem; color: #6b7280; margin-top: 0.3rem; line-height: 1.4; }
+
+/* ===== CONTACT GRID ===== */
+.contacts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+.contact-item {
+  background: #f9fafb;
+  border-radius: 7px;
+  padding: 0.75rem 1.1rem;
+}
+.contact-item .c-label { font-size: 0.9rem; color: #9ca3af; }
+.contact-item .c-value { font-size: 1.05rem; font-weight: 700; color: #111827; }
+
+/* ===== CLOSING SLIDE ===== */
+.slide-closing {
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #1a237e 100%);
+  color: white;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 3rem;
+}
+.slide-closing h2 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; margin-bottom: 1rem; }
+.slide-closing .sub { font-size: 1.3rem; opacity: 0.8; margin-bottom: 2.5rem; line-height: 1.7; }
+.slide-closing .slogan {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 900;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 1rem 3rem;
+  border-radius: 12px;
+  display: inline-block;
+  letter-spacing: 0.05em;
+}
+.slide-closing .org { font-size: 1rem; opacity: 0.65; margin-top: 2.5rem; line-height: 1.8; }
+
+/* ===== UNIT COLOR UTILITIES ===== */
+.bg-u1 { background: var(--u1); }
+.bg-u2 { background: var(--u2); }
+.bg-u3 { background: var(--u3); }
+.bg-u4 { background: var(--u4); }
+.bg-u5 { background: var(--u5); }
+.bg-u6 { background: var(--u6); }
+.bg-u7 { background: var(--u7); }
+.bg-us { background: var(--us); }
+
+/* ===== PROGRESS BAR ===== */
+#prog {
+  position: fixed;
+  top: 0; left: 0;
+  height: 4px;
+  background: #4ade80;
+  transition: width 0.3s ease;
+  z-index: 200;
+}
+
+/* ===== CONTROLS ===== */
+#ctrl {
+  position: fixed;
+  bottom: 1.2rem;
+  right: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  color: white;
+  z-index: 100;
+}
+#ctrl button {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+#ctrl button:hover { background: rgba(255,255,255,0.18); }
+#ctr-num { font-size: 0.78rem; opacity: 0.85; min-width: 3.8rem; text-align: center; }
+
+#back-btn {
+  position: fixed;
+  bottom: 1.2rem;
+  left: 1.4rem;
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: white;
+  padding: 0.4rem 0.95rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+  z-index: 100;
+  transition: background 0.15s;
+}
+#back-btn:hover { background: rgba(255,255,255,0.18); }
+
+.toc-btn {
+  background: none;
+  border: none;
+  color: #374151;
+  font: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  transition: color 0.15s;
+}
+.toc-btn:hover { color: var(--green); }
+.toc-btn::after {
+  content: '▶';
+  font-size: 0.75rem;
+  opacity: 0.45;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+.toc-btn:hover::after { opacity: 1; }
+
+/* ===== SLIDE NUM INDICATOR (top-right) ===== */
+#slide-num {
+  position: fixed;
+  top: 1rem; right: 1.2rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  z-index: 100;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== PASSWORD OVERLAY ===== */
+#pw-overlay {
+  position: fixed;
+  inset: 0;
+  background: #111827;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#pw-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2.5rem 3rem;
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+#pw-box .pw-logo {
+  color: #2d7a3a;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.4rem;
+}
+#pw-box h2 {
+  font-size: 1.1rem;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+#pw-input {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  margin-bottom: 0.8rem;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+#pw-input:focus { border-color: #2d7a3a; }
+#pw-btn {
+  width: 100%;
+  padding: 0.65rem;
+  background: #2d7a3a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#pw-btn:hover { background: #235e2d; }
+#pw-err {
+  color: #c62828;
+  font-size: 0.85rem;
+  margin-top: 0.6rem;
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<div id="pw-overlay">
+  <div id="pw-box">
+    <div class="pw-logo">大豐環保科技公司</div>
+    <h2>職業安全衛生教育訓練<br><span style="font-size:0.85rem;color:#6b7280;font-weight:400;">請輸入密碼以進入簡報</span></h2>
+    <input type="password" id="pw-input" placeholder="密碼" autocomplete="off">
+    <button id="pw-btn" onclick="checkPw()">進入</button>
+    <p id="pw-err">密碼錯誤，請再試一次</p>
+  </div>
+</div>
+
+<div id="prog"></div>
+<div id="slide-num">1 / 40</div>
+
+<div id="pres">
+
+<!-- ══════════════════════════════════
+     SLIDE 1 · TITLE
+══════════════════════════════════ -->
+<section class="slide slide-title active">
+  <div class="company-name">大豐環保科技公司</div>
+  <h1>總部職業安全衛生<br>教育訓練</h1>
+  <div class="meta-row">
+    <span class="meta-tag">適用對象：總部辦公室全體同仁</span>
+    <span class="meta-tag">訓練日期：2026 年 5 月</span>
+    <span class="meta-tag">主辦：法務及環安課</span>
+  </div>
+  <div class="quote">「安全不是選項，而是責任。」</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 2 · 法定課程大綱
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="slide-header"><h2>一般安全衛生教育訓練課程大綱</h2></div>
+  <div class="slide-body">
+    <div class="card card-info" style="margin-bottom:0.9rem;">
+      <strong>依據：職業安全衛生教育訓練規則 第 17 條</strong>　一般安全衛生教育訓練應涵蓋下列六大課程類別：
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr style="background:var(--green);"><th style="width:3.5rem;">編號</th><th>課程主題（點擊直達）</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:center;"><strong style="color:var(--u1); font-size:1.2rem;">一</strong></td><td><button class="toc-btn" onclick="event.stopPropagation(); show(2)">作業安全衛生有關法規概要</button></td></tr>
+          <tr><td style="text-align:center;"><strong style="color:var(--u2); font-size:1.2rem;">二</strong></td><td><button class="toc-btn" onclick="event.stopPropagation(); show(4)">職業安全衛生概念及安全衛生工作守則</button></td></tr>
+          <tr><td style="text-align:center;"><strong style="color:var(--u3); font-size:1.2rem;">三</strong></td><td><button class="toc-btn" onclick="event.stopPropagation(); show(6)">作業前、中、後之自動檢查</button></td></tr>
+          <tr><td style="text-align:center;"><strong style="color:var(--u4); font-size:1.2rem;">四</strong></td><td><button class="toc-btn" onclick="event.stopPropagation(); show(12)">標準作業程序</button></td></tr>
+          <tr><td style="text-align:center;"><strong style="color:var(--u5); font-size:1.2rem;">五</strong></td><td><button class="toc-btn" onclick="event.stopPropagation(); show(24)">緊急事故應變處理</button></td></tr>
+          <tr><td style="text-align:center;"><strong style="color:var(--u6); font-size:1.2rem;">六</strong></td><td><button class="toc-btn" onclick="event.stopPropagation(); show(28)">其他與勞工作業有關之安全衛生知識</button></td></tr>
+          <tr><td style="text-align:center;"><strong style="color:var(--us); font-size:1.2rem;">七</strong></td><td><button class="toc-btn" onclick="event.stopPropagation(); show(38)">補充說明</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card" style="border-left-color:var(--green); background:#f0fdf4; font-size:1rem; margin-top:0.6rem;">
+      本次訓練完全依上述六大法規架構規劃，課程內容依辦公室場所特性設計，涵蓋各核心面向。
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 3 · 一. CATEGORY HEADER
+══════════════════════════════════ -->
+<section class="slide slide-unit bg-u1">
+  <div class="unit-bg-num">一</div>
+  <div class="unit-eyebrow">CATEGORY ONE</div>
+  <div class="unit-heading">作業安全衛生<br>有關法規概要</div>
+  <div class="unit-time-badge">預計時間：10 分鐘</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 4 · 一. 作業安全衛生有關法規概要
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u1);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u1);">法規概要</span>
+    <h2>雇主與勞工義務（職業安全衛生法）</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>雇主義務（職業安全衛生法）</h3>
+        <div class="tbl">
+          <table>
+            <thead><tr style="background:var(--u1);"><th style="width:5rem; white-space:nowrap;">條文</th><th>義務重點</th></tr></thead>
+            <tbody>
+              <tr><td style="white-space:nowrap;">第 5 條</td><td>雇主使勞工從事工作，應在合理可行範圍內，採取必要之預防設備或措施，使勞工免於發生職業災害。</td></tr>
+              <tr><td style="white-space:nowrap;">第 20 條</td><td>雇主於僱用勞工時，應施行體格檢查；對在職勞工應施行下列健康檢查：
+一、一般健康檢查。
+二、從事特別危害健康作業者之特殊健康檢查。</td></tr>
+              <tr><td style="white-space:nowrap;">第 32 條</td><td>雇主對勞工應施以從事工作與預防災變所必要之安全衛生教育及訓練。</td></tr>
+              <tr><td style="white-space:nowrap;">第 34 條</td><td>雇主應依本法及有關規定會同勞工代表訂定適合其需要之安全衛生工作守則，報經勞動檢查機構備查後，公告實施。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3>勞工義務（職業安全衛生法）</h3>
+        <div class="tbl">
+          <table>
+            <thead><tr style="background:var(--u2);"><th style="width:5rem; white-space:nowrap;">條文</th><th>義務重點</th></tr></thead>
+            <tbody>
+              <tr><td style="white-space:nowrap;">第 20 條</td><td>勞工對於一般安全健康檢查及特殊健康檢查，有接受之義務。</td></tr>
+              <tr>
+                <td colspan="2" style="padding:0.4rem 0.6rem 0.5rem 1rem; background:#fafafa;">
+                  <div style="font-size:0.78em; color:#555; margin-bottom:0.3rem;">▶ 一般健康檢查頻率（勞工健康保護規則第三章第 17 條）</div>
+                  <table style="width:100%; font-size:0.85em; border-collapse:collapse;">
+                    <thead>
+                      <tr style="background:var(--u2);">
+                        <th style="padding:0.2rem 0.5rem; text-align:left; font-weight:600;">年齡</th>
+                        <th style="padding:0.2rem 0.5rem; text-align:left; font-weight:600;">檢查頻率</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="border-bottom:1px solid #ddd;"><td style="padding:0.2rem 0.5rem;">年滿 65 歲</td><td style="padding:0.2rem 0.5rem;">每年 1 次</td></tr>
+                      <tr style="border-bottom:1px solid #ddd;"><td style="padding:0.2rem 0.5rem;">40 歲以上未滿 65 歲</td><td style="padding:0.2rem 0.5rem;">每 3 年 1 次</td></tr>
+                      <tr><td style="padding:0.2rem 0.5rem;">未滿 40 歲</td><td style="padding:0.2rem 0.5rem;">每 5 年 1 次</td></tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr><td style="white-space:nowrap;">第 32 條</td><td>勞工應接受之義務從事工作與預防災變所必要之安全衛生教育及訓練。</td></tr>
+              <tr><td style="white-space:nowrap;">第 34 條</td><td>勞工對於雇主所訂之安全衛生工作守則，應切實遵行。</td></tr>
+              <tr><td style="white-space:nowrap;">第 46 條</td><td>違反第二十條、第三十二條或第三十四條之規定者，處新臺幣三千元以下罰鍰。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card card-warn" style="margin-top:0.7rem; font-size:1rem;">
+          <strong>職業災害定義（第 2 條）：</strong>因勞動場所之建築物、機械、設備、原料、材料、化學品、氣體、蒸氣、粉塵等或作業活動及其他職業上原因引起之工作者疾病、傷害、失能或死亡。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 5 · 二. CATEGORY HEADER
+══════════════════════════════════ -->
+<section class="slide slide-unit bg-u2">
+  <div class="unit-bg-num">二</div>
+  <div class="unit-eyebrow">CATEGORY TWO</div>
+  <div class="unit-heading">職業安全衛生概念<br>及安全衛生工作守則</div>
+  <div class="unit-time-badge">預計時間：10 分鐘</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 6 · 二. 安衛概念 & 工作守則
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u2);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u2);">安衛概念</span>
+    <h2>職安基本概念 & 安全衛生工作守則</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>職業安全衛生基本概念</h3>
+        <div class="tbl">
+          <table>
+            <thead><tr style="background:var(--u2);"><th>概念</th><th>說明</th></tr></thead>
+            <tbody>
+              <tr><td><strong>危害</strong></td><td>可能造成工作者傷害的環境或行為（如：濕滑地板、電線外露）</td></tr>
+              <tr><td><strong>風險</strong></td><td>危害發生的可能性與後果嚴重程度之組合</td></tr>
+              <tr><td><strong>事故</strong></td><td>未預期事件，可能導致人員傷害或財物損失</td></tr>
+              <tr><td><strong>職業災害</strong></td><td>因工作引起的疾病、傷害、失能或死亡</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:0.7rem; text-align:center;">
+          <img src="img/6風險控制.png" alt="風險控制優先順序" style="max-width:100%; max-height:18rem; object-fit:contain; border-radius:0.4rem;">
+        </div>
+      </div>
+      <div>
+        <h3>辦公室安全衛生工作守則重點</h3>
+        <div style="margin-bottom:0.7rem; text-align:center;">
+          <img src="img/06守則.png" alt="辦公室安全衛生工作守則六大要點" style="max-width:100%; max-height:18rem; object-fit:contain; border-radius:0.4rem;">
+        </div>
+        <div class="card card-warn" style="font-size:1rem;">
+          <strong>違反工作守則之後果：</strong>依《職業安全衛生法》第 46 條，可處新臺幣三千元以下罰鍰；情節重大者另依其他法規辦理。
+        </div>
+      </div>
+    </div>
+    <div class="card card-info" style="font-size:1rem; margin-top:0.3rem;">
+      <strong>📂 安全衛生工作守則查閱路徑：</strong>
+      <span style="display:inline-flex; align-items:center; flex-wrap:wrap; gap:0.3rem; margin-top:0.35rem; font-weight:600; color:#1e40af;">
+        EIP 系統
+        <span style="opacity:0.5; font-weight:400;">→</span>
+        應用程式
+        <span style="opacity:0.5; font-weight:400;">→</span>
+        公司文件
+        <span style="opacity:0.5; font-weight:400;">→</span>
+        ISO 文件管理
+        <span style="opacity:0.5; font-weight:400;">→</span>
+        大豐環保安全衛生工作手冊
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 7 · 三. CATEGORY HEADER
+══════════════════════════════════ -->
+<section class="slide slide-unit bg-u5">
+  <div class="unit-bg-num">三</div>
+  <div class="unit-eyebrow">CATEGORY THREE</div>
+  <div class="unit-heading">作業前、中、後之<br>自動檢查</div>
+  <div class="unit-time-badge">辦公室 6S 管理 ｜ 預計時間：10 分鐘</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 8 · 補充 職災統計
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--us);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--us);">補充</span>
+    <h2>職災統計</h2>
+  </div>
+  <div class="slide-body" style="justify-content:center; align-items:center;">
+    <div style="text-align:center;">
+      <img src="img/31職災統計.png" alt="職災統計" style="max-width:100%; max-height:32rem; object-fit:contain; border-radius:0.4rem;">
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 9 · 6S 總覽
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u5);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u5);">自動檢查</span>
+    <h2>什麼是 6S？</h2>
+  </div>
+  <div class="slide-body">
+    <p style="margin-bottom:0.6rem;">源自日本豐田生產系統，維持安全、高效工作環境的基礎管理法。</p>
+    <div class="six-s">
+      <div class="six-s-item" style="background:#1d4ed8;">
+        <div class="s-en">Seiri</div><div class="s-zh">整理</div>
+        <div class="s-def">區分必要與不必要，清除不必要的</div>
+      </div>
+      <div class="six-s-item" style="background:#0369a1;">
+        <div class="s-en">Seiton</div><div class="s-zh">整頓</div>
+        <div class="s-def">必要物品定位放置，取用便利</div>
+      </div>
+      <div class="six-s-item" style="background:#0f766e;">
+        <div class="s-en">Seiso</div><div class="s-zh">清掃</div>
+        <div class="s-def">徹底清潔工作環境</div>
+      </div>
+      <div class="six-s-item" style="background:#15803d;">
+        <div class="s-en">Seiketsu</div><div class="s-zh">清潔</div>
+        <div class="s-def">維持前三 S 的成果並標準化</div>
+      </div>
+      <div class="six-s-item" style="background:#4d7c0f;">
+        <div class="s-en">Shitsuke</div><div class="s-zh">素養</div>
+        <div class="s-def">養成遵守規定的習慣與態度</div>
+      </div>
+      <div class="six-s-item" style="background:#c2410c;">
+        <div class="s-en">Safety</div><div class="s-zh">安全</div>
+        <div class="s-def">將安全融入日常工作行為</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 10 · 整理 & 整頓
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u5);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u5);">自動檢查</span>
+    <h2>整理 & 整頓</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>整理（Seiri）—— 留下必要，去除多餘</h3>
+        <div class="card card-info" style="margin-bottom:0.7rem;">
+          <strong>「這個東西，最近 30 天內用過嗎？」</strong>
+          <p style="font-size:1rem; margin-top:0.3rem;">沒有 → 考慮移除或封存</p>
+        </div>
+        <h3>辦公桌整理原則</h3>
+        <ul>
+          <li><strong>文件</strong>：已結案→歸檔或銷毀；進行中→桌面可見</li>
+          <li><strong>物品</strong>：桌面只留今日工作所需</li>
+          <li><strong>數位</strong>：電腦桌面整理，刪除暫存檔</li>
+        </ul>
+      </div>
+      <div>
+        <h3>整頓（Seiton）—— 定點、定量、定標示</h3>
+        <div class="tbl" style="margin-bottom:0.7rem;">
+          <table>
+            <thead><tr style="background:var(--u5);"><th>使用頻率</th><th>收納位置</th></tr></thead>
+            <tbody>
+              <tr><td>高</td><td>最容易取用（桌面、抽屜頂層）</td></tr>
+              <tr><td>中</td><td>次要位置（抽屜深層、書架）</td></tr>
+              <tr><td>低</td><td>儲藏室或封存歸檔</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul>
+          <li>所有文件夾、抽屜、櫃子貼上標示</li>
+          <li>共用物品（如文具）確實歸還至指定位置</li>
+          <li>個人重要物品（鑰匙、印章）保管至安全位置</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 11 · 清掃、清潔、素養、安全
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u5);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u5);">自動檢查</span>
+    <h2>清掃、清潔、素養 & 安全</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>清掃（Seiso）—— 清潔即點檢</h3>
+        <div class="tbl">
+          <table>
+            <thead><tr style="background:var(--u5);"><th>區域</th><th>頻率</th><th>責任</th></tr></thead>
+            <tbody>
+              <tr><td>個人桌面</td><td>每日</td><td>個人</td></tr>
+              <tr><td>公用設備</td><td>每週</td><td>輪值</td></tr>
+              <tr><td>茶水間</td><td>每日</td><td>輪值</td></tr>
+              <tr><td>會議室</td><td>每次使用後</td><td>使用者</td></tr>
+              <tr><td>走廊或走道</td><td>隨時</td><td>每個人</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:0.95rem; color:#6b7280; margin-top:0.4rem;">清潔（Seiketsu）：制定6S檢查表，拍攝標準照片對照基準，定期舉辦 6S 評比。</p>
+      </div>
+      <div>
+        <h3>素養 & 安全的核心要求</h3>
+        <div style="text-align:center;">
+          <img src="img/10六S核心要求.png" alt="素養&安全的核心要求" style="max-width:100%; max-height:18rem; object-fit:contain; border-radius:0.4rem;">
+        </div>
+        <div class="card card-info" style="margin-top:0.7rem; font-size:1rem;">
+          最難也最重要的 S：<strong>素養（Shitsuke）</strong>。制度是死的，人是活的。從自身做起，以身作則。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 12 · 自動檢查實際案例
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u5);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u5);">自動檢查</span>
+    <h2>總部辦公室6S — 實際案例</h2>
+  </div>
+  <div class="slide-body">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem;">
+      <div style="text-align:center;">
+        <img src="img/11走道堆放雜物.png" alt="走道堆放雜物" style="max-width:100%; max-height:17rem; object-fit:contain; border-radius:0.4rem; background:#f9fafb;">
+        <p style="font-size:1.25rem; color:#374151; margin-top:0.5rem;">走道堆放雜物，阻礙逃生動線</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="img/11延長線外接多.jpg" alt="延長線外接多" style="max-width:100%; max-height:17rem; object-fit:contain; border-radius:0.4rem; background:#f9fafb;">
+        <p style="font-size:1.25rem; color:#374151; margin-top:0.5rem;">延長線多重串接，過載起火風險</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="img/11桌面凌亂.png" alt="桌面凌亂" style="max-width:100%; max-height:17rem; object-fit:contain; border-radius:0.4rem; background:#f9fafb;">
+        <p style="font-size:1.25rem; color:#374151; margin-top:0.5rem;">桌面凌亂，影響工作效率與安全</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="img/11電線使用完畢未收起.jpg" alt="電線使用完畢未收起" style="max-width:100%; max-height:17rem; object-fit:contain; border-radius:0.4rem; background:#f9fafb;">
+        <p style="font-size:1.25rem; color:#374151; margin-top:0.5rem;">電線使用完畢未收起，造成絆倒危險</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 14 · 四. CATEGORY HEADER
+══════════════════════════════════ -->
+<section class="slide slide-unit bg-u1">
+  <div class="unit-bg-num">四</div>
+  <div class="unit-eyebrow">CATEGORY FOUR</div>
+  <div class="unit-heading">標準作業程序</div>
+  <div class="unit-time-badge">人因危害・不法侵害・感電預防 ｜ 預計時間：40 分鐘</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 14 · 人因 INTRO
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u1);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u1);">SOP・人因</span>
+    <h2>什麼是人因性危害？</h2>
+  </div>
+  <div class="slide-body">
+    <p>因<strong>工作姿勢、重複動作、長期固定姿態</strong>等職業因素，導致肌肉骨骼系統損傷。辦公室工作者是<strong>高風險族群</strong>。</p>
+    <div class="cols">
+      <div>
+        <h3 style="--c:var(--u1);">辦公室常見受害部位</h3>
+        <ul>
+          <li>頭部：頭痛、偏頭痛</li>
+          <li>眼睛：視力退化、乾眼症</li>
+          <li>頸部：頸椎痠痛、僵硬</li>
+          <li>肩膀：痠痛、發炎</li>
+          <li>手腕：腕隧道症候群</li>
+          <li>背部：下背痛、椎間盤突出</li>
+          <li>腿部：靜脈曲張、水腫、血液循環不良</li>
+        </ul>
+      </div>
+      <div class="card card-info" style="text-align:center;">
+        <h3>本主題涵蓋的五大危害</h3>
+        <img src="img/12人因五大危害.png" alt="本主題涵蓋的五大危害" style="max-width:100%; max-height:18rem; object-fit:contain; border-radius:0.4rem;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 15 · 久坐
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u1);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u1);">SOP・人因</span>
+    <h2>危害一：久坐傷害</h2>
+  </div>
+  <div class="slide-body">
+    <div class="highlight" style="background:#fff7ed; border-left-color:var(--u4); color:#7c2d12;">
+      每天久坐超過 <strong>8 小時</strong>，腰背痛與心血管疾病風險顯著上升。
+    </div>
+    <div class="cols">
+      <div>
+        <h3>正確坐姿檢查</h3>
+        <div class="tbl">
+          <table>
+            <thead><tr style="background:var(--u1);"><th>部位</th><th>正確姿勢</th></tr></thead>
+            <tbody>
+              <tr><td>螢幕</td><td>距離 50–70 cm，頂部與眼齊平</td></tr>
+              <tr><td>椅背</td><td>腰部貼靠，支撐腰椎弧度</td></tr>
+              <tr><td>膝蓋</td><td>彎曲 90°，雙腳平放地面</td></tr>
+              <tr><td>手肘</td><td>彎曲 90°，與鍵盤齊平</td></tr>
+              <tr><td>頭部</td><td>自然直立，避免前傾低頭</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card card-safe" style="margin-top:0.7rem;">
+          <strong>每工作 45–60 分鐘，起立活動至少 5 分鐘。</strong>
+        </div>
+      </div>
+      <div>
+        <h3>辦公室伸展四部位</h3>
+        <ul>
+          <li><strong>頸部</strong>：左右側彎各停 10 秒；前後點頭各 10 秒</li>
+          <li><strong>肩膀</strong>：雙肩後轉圈 10 次；雙臂前伸十指交扣翻轉</li>
+          <li><strong>腰背</strong>：起立向前及向後彎伸展</li>
+          <li><strong>腿部</strong>：踮腳尖 20 次；坐姿抬腿伸直保持 10 秒</li>
+        </ul>
+        <div style="margin-top:1rem; display:flex; flex-direction:column; gap:0.7rem;">
+          <a href="video/Vodafone - 電腦正確使用方式.mp4" target="_blank"
+             style="display:flex; align-items:center; gap:0.6rem; padding:0.75rem 1.1rem; background:var(--u1); color:#fff; border-radius:0.5rem; text-decoration:none; font-weight:600; font-size:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+            <span style="font-size:1.3rem;">▶</span> 電腦正確使用方式
+          </a>
+          <a href="video/Vodafone - 手機正確使用方式.mp4" target="_blank"
+             style="display:flex; align-items:center; gap:0.6rem; padding:0.75rem 1.1rem; background:var(--u1); color:#fff; border-radius:0.5rem; text-decoration:none; font-weight:600; font-size:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+            <span style="font-size:1.3rem;">▶</span> 手機正確使用方式
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 16 · 腕隧道 & 螢幕
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u1);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u1);">SOP・人因</span>
+    <h2>危害二 & 三：腕隧道症候群 & 螢幕視力</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>腕隧道症候群</h3>
+        <p style="font-size:1rem; margin-bottom:0.5rem;">手腕正中神經受壓，長期使用鍵盤滑鼠的辦公族為好發族群。</p>
+        <div class="card card-warn" style="margin-bottom:0.6rem;">
+          <strong>症狀警訊</strong>
+          <ul style="margin-top:0.3rem;">
+            <li>拇指、食指、中指麻木刺痛</li>
+            <li>夜間症狀加重影響睡眠</li>
+            <li>手腕無力、難以抓握</li>
+          </ul>
+        </div>
+        <h3>手腕伸展三步驟</h3>
+        <ol class="steps">
+          <li style="--bc:var(--u1);">手掌向下，向上折腕保持 15 秒</li>
+          <li>手掌向上，向下折腕保持 15 秒</li>
+          <li>十指交扣旋轉 10 次</li>
+        </ol>
+        <div style="margin-top:1rem;">
+          <a href="video/人因性危害 - 職業性腕道症候群(Workrelated Carpal Tunnel Syndrome).mp4" target="_blank"
+             style="display:flex; align-items:center; gap:0.6rem; padding:0.75rem 1.1rem; background:var(--u1); color:#fff; border-radius:0.5rem; text-decoration:none; font-weight:600; font-size:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+            <span style="font-size:1.3rem;">▶</span> 認識腕隧道症候群
+          </a>
+        </div>
+      </div>
+      <div>
+        <h3>螢幕視力危害 — 20-20-20 法則</h3>
+        <div style="background:var(--u1); color:white; border-radius:10px; padding:1.2rem; text-align:center; margin-bottom:0.8rem;">
+          <div style="opacity:0.75; font-size:1rem; margin-bottom:0.4rem;">數位視覺疲勞的黃金對策</div>
+          <div style="font-size:1.1rem; font-weight:700; line-height:2;">
+            每隔 <span style="font-size:2rem; font-weight:900;">20</span> 分鐘<br>
+            看向 <span style="font-size:2rem; font-weight:900;">20</span> 英尺外<br>
+            持續 <span style="font-size:2rem; font-weight:900;">20</span> 秒
+          </div>
+        </div>
+        <div class="tbl">
+          <table>
+            <thead><tr style="background:var(--u1);"><th>螢幕設定</th><th>建議</th></tr></thead>
+            <tbody>
+              <tr><td>亮度</td><td>與環境光線相近</td></tr>
+              <tr><td>色溫</td><td>開啟護眼模式</td></tr>
+              <tr><td>字體</td><td>調整至舒適大小</td></tr>
+              <tr><td>眨眼</td><td>有意識地多眨眼</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 17 · 搬運 & 重複
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u1);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u1);">SOP・人因</span>
+    <h2>危害四 & 五：搬運重物 & 重複性動作</h2>
+  </div>
+  <div class="slide-body">
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.1rem; flex:1;">
+      <div>
+        <h3>正確搬運五步驟</h3>
+        <ol class="steps">
+          <li>蹲低身體，腳打開與肩同寬</li>
+          <li>腰背挺直，核心肌群收緊</li>
+          <li>雙手抱緊物品，靠近身體</li>
+          <li>用腿發力而非腰力站起</li>
+          <li>避免站起同時扭轉身體</li>
+        </ol>
+        <div class="tbl" style="margin-top:0.8rem;">
+          <table>
+            <thead><tr style="background:var(--u1);"><th>性別</th><th>偶爾搬運</th><th>頻繁搬運</th></tr></thead>
+            <tbody>
+              <tr><td>男性</td><td>25 kg 以下</td><td>15 kg 以下</td></tr>
+              <tr><td>女性</td><td>15 kg 以下</td><td>10 kg 以下</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card card-warn" style="margin-top:0.6rem; font-size:1rem;">
+          超過法定重量<strong>40kg以上</strong>時請尋求協助或使用搬運工具。
+        </div>
+      </div>
+      <div style="display:flex; align-items:flex-start; justify-content:center;">
+        <img src="img/15搬運姿勢.png" alt="正確搬運姿勢" style="width:100%; height:600px; border-radius:6px; object-fit:contain; background:#f9fafb;">
+      </div>
+      <div>
+        <h3>重複性動作傷害</h3>
+        <p style="font-size:1rem; margin-bottom:0.5rem;">同一動作反覆執行，累積性損傷，初期難以察覺。</p>
+        <div class="card card-warn" style="margin-bottom:0.6rem;">
+          <strong>常見情境</strong>
+          <ul style="margin-top:0.3rem;">
+            <li>長時間打字、點擊滑鼠</li>
+            <li>重複翻閱文件、資料整理</li>
+            <li>長時間肩夾電話</li>
+          </ul>
+        </div>
+        <h3>預防策略</h3>
+        <ul>
+          <li><strong>交替工作</strong>：變換任務類型，分散負荷</li>
+          <li>使用<strong>耳機</strong>代替肩夾電話</li>
+          <li>學習<strong>快捷鍵</strong>，減少滑鼠頻率</li>
+          <li>定期進行<strong>自我評估</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 18 · 不法 — 法規 & 類型
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u2);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u2);">SOP・不法</span>
+    <h2>法規依據與六大不法侵害類型</h2>
+  </div>
+  <div class="slide-body">
+    <div class="card card-purple">
+      <strong>《職業安全衛生法》第 6 條第 2 項</strong>
+      <p style="margin-top:0.3rem; font-size:1rem;">雇主應妥為規劃及採取必要之安全衛生措施，以<strong>預防職場不法侵害引起之危害</strong>。</p>
+    </div>
+    <div class="cols-3">
+      <div class="card" style="border-left-color:var(--u2); background:#faf5ff; text-align:center;">
+        <div style="font-size:1.1rem; font-weight:700; margin-bottom:0.2rem;">身體攻擊</div>
+        <div style="font-size:0.95rem; color:#6b7280;">肢體暴力、推擠、毆打</div>
+      </div>
+      <div class="card" style="border-left-color:var(--u2); background:#faf5ff; text-align:center;">
+        <div style="font-size:1.1rem; font-weight:700; margin-bottom:0.2rem;">語言攻擊</div>
+        <div style="font-size:0.95rem; color:#6b7280;">謾罵、威脅、恐嚇</div>
+      </div>
+      <div class="card" style="border-left-color:var(--u2); background:#faf5ff; text-align:center;">
+        <div style="font-size:1.1rem; font-weight:700; margin-bottom:0.2rem;">精神霸凌</div>
+        <div style="font-size:0.95rem; color:#6b7280;">孤立、排擠、嘲弄</div>
+      </div>
+      <div class="card" style="border-left-color:var(--u2); background:#faf5ff; text-align:center;">
+        <div style="font-size:1.1rem; font-weight:700; margin-bottom:0.2rem;">性騷擾</div>
+        <div style="font-size:0.95rem; color:#6b7280;">言語性、肢體性、環境性</div>
+      </div>
+      <div class="card" style="border-left-color:var(--u2); background:#faf5ff; text-align:center;">
+        <div style="font-size:1.1rem; font-weight:700; margin-bottom:0.2rem;">歧視</div>
+        <div style="font-size:0.95rem; color:#6b7280;">性別、年齡、身心障礙</div>
+      </div>
+      <div class="card" style="border-left-color:var(--u2); background:#faf5ff; text-align:center;">
+        <div style="font-size:1.1rem; font-weight:700; margin-bottom:0.2rem;">過度控管</div>
+        <div style="font-size:0.95rem; color:#6b7280;">不合理監視、施加過度壓力</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 19 · 霸凌
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u2);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u2);">SOP・不法</span>
+    <h2>職場霸凌的樣態與判斷</h2>
+  </div>
+  <div class="slide-body">
+    <div class="tbl">
+      <table>
+        <thead><tr style="background:var(--u2);"><th>霸凌類型</th><th>範例行為</th></tr></thead>
+        <tbody>
+          <tr><td>工作阻礙</td><td>故意不給資源、刻意製造失敗機會</td></tr>
+          <tr><td>人際孤立</td><td>集體排擠、不轉達重要訊息</td></tr>
+          <tr><td>言語攻擊</td><td>公開羞辱、惡意批評、散布謠言</td></tr>
+          <tr><td>過度施壓</td><td>不合理工作量、不可能的期限</td></tr>
+          <tr><td>侵犯隱私</td><td>未經同意翻閱個人物品、監視行蹤</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <img src="img/17霸凌.png" alt="職場霸凌示意" style="width:100%; height:400px; border-radius:6px; margin-bottom:0.6rem; object-fit:contain; background:#f9fafb;">
+    <div class="card card-safe">
+      <h3>霸凌 vs. 合理管理</h3>
+      <p style="margin-top:0.3rem;">合理的績效要求、工作指派、正當懲戒<strong>不構成霸凌</strong>。關鍵在於：<strong>是否具有針對性、反覆性，且造成傷害？</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 20 · 性騷擾
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u2);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u2);">SOP・不法</span>
+    <h2>性騷擾防治</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols-3">
+      <div class="card card-purple">
+        <strong>語言性</strong>
+        <ul style="margin-top:0.4rem; font-size:1rem;">
+          <li>不雅笑話、色情言論</li>
+          <li>詢問私人性生活</li>
+          <li>帶有性暗示的評論</li>
+        </ul>
+      </div>
+      <div class="card card-purple">
+        <strong>肢體性</strong>
+        <ul style="margin-top:0.4rem; font-size:1rem;">
+          <li>未經同意的肢體接觸</li>
+          <li>不必要的擁抱、親吻</li>
+        </ul>
+      </div>
+      <div class="card card-purple">
+        <strong>環境性</strong>
+        <ul style="margin-top:0.4rem; font-size:1rem;">
+          <li>張貼色情圖片、影片</li>
+          <li>充滿性別歧視氛圍</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight" style="background:#faf5ff; border-left-color:var(--u2); color:var(--u2);">
+      判斷標準以<strong>被行為人的感受</strong>為主，而非行為人的主觀意圖。
+    </div>
+    <div class="cols">
+      <div>
+        <h3>申訴管道(內部)</h3>
+        <div style="text-align:center;">
+          <img src="img/20內部申訴.png" alt="申訴管道流程" style="max-width:100%; max-height:35rem; object-fit:contain; border-radius:0.4rem;">
+        </div>
+      </div>
+      <div>
+        <h3>蒐集證據</h3>
+        <ul>
+          <li><strong>書面紀錄</strong>：時間、地點、事件經過</li>
+          <li><strong>保存訊息</strong>：Email、即時通訊截圖</li>
+          <li><strong>尋找證人</strong>：請在場同事協助</li>
+          <li><strong>就醫紀錄</strong>：留下醫療證明</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 21 · 法律責任 & 熱線
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u2);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u2);">SOP・不法</span>
+    <h2>法律責任與心理支持資源</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>雇主責任</h3>
+        <ul>
+          <li>建立申訴機制並確保保密</li>
+          <li>調查後須採取懲處措施</li>
+          <li>提供受害者支援資源</li>
+        </ul>
+        <h3 style="margin-top:0.8rem;">員工責任</h3>
+        <ul>
+          <li>自身不實施不法侵害</li>
+          <li>目擊時適時介入或通報</li>
+          <li>不報復申訴者</li>
+        </ul>
+        <div class="card card-safe" style="margin-top:0.8rem; font-size:1rem;">
+          <strong>保密承諾：</strong>所有申訴案件依法保密，嚴禁對申訴者進行任何形式的報復。
+        </div>
+      </div>
+      <div>
+        <h3>心理支持熱線</h3>
+        <div class="hotlines">
+          <div class="hotline" style="background:#f0fdf4; border-color:#bbf7d0;">
+            <div class="num" style="color:var(--u5); font-weight:700;">分機120</div>
+            <div class="label">員工協助方案</div>
+          </div>
+          <div class="hotline">
+            <div class="num">1925</div>
+            <div class="label">安心專線<br>24 小時</div>
+          </div>
+          <div class="hotline">
+            <div class="num">1980</div>
+            <div class="label">張老師專線</div>
+          </div>
+          <div class="hotline">
+            <div class="num">1995</div>
+            <div class="label">生命線</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 22 · 感電的危險性
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u4);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u4);">SOP・感電</span>
+    <h2>感電的危險性</h2>
+  </div>
+  <div class="slide-body">
+    <div class="highlight" style="background:#fff7ed; border-left-color:var(--u4); color:#7c2d12;">
+      感電輕則灼傷，重則造成<strong>心跳停止或死亡</strong>。辦公室雖非高壓環境，仍有多種感電風險。
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr style="background:var(--u4);"><th>電流大小</th><th>人體反應</th></tr></thead>
+        <tbody>
+          <tr><td>1 mA</td><td>輕微感覺</td></tr>
+          <tr><td>5 mA</td><td>疼痛感</td></tr>
+          <tr><td>10–20 mA</td><td><span style="color:var(--u4); font-weight:600;">肌肉收縮，無法自主脫離</span></td></tr>
+          <tr><td>50–100 mA</td><td><span style="color:var(--u3); font-weight:600;">心室震顫，可能致命</span></td></tr>
+          <tr><td>100 mA 以上</td><td><span style="color:var(--u3); font-weight:700;">死亡風險極高</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:1rem;">
+      <a href="video/感電危害(一般電器使用).mp4" target="_blank"
+         style="display:flex; align-items:center; gap:0.6rem; padding:0.75rem 1.1rem; background:var(--u4); color:#fff; border-radius:0.5rem; text-decoration:none; font-weight:600; font-size:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+        <span style="font-size:1.3rem;">▶</span> 認識一般電器用品感電危害
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 23 · 下班清單 & 延長線
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u4);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u4);">SOP・感電</span>
+    <h2>下班電源清單 & 延長線安全</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>下班前逐項確認</h3>
+        <ul class="checklist">
+          <li>電腦 / 筆電確認關機（非休眠）</li>
+          <li>螢幕電源關閉</li>
+          <li>印表機、掃描機電源關閉</li>
+          <li>個人小型設備關閉(電風扇、桌燈...等)</li>
+          <li>電熱水壺關閉</li>
+          <li>非必要延長線主開關關閉</li>
+          <li>冷氣確認關閉（最後離開者）</li>
+        </ul>
+        <div class="card card-info" style="margin-top:0.7rem; font-size:1rem;">
+          建議各部門張貼下班前檢查表，養成習慣。
+        </div>
+      </div>
+      <div>
+        <h3>電線常見危險行為</h3>
+        <div style="text-align:center;">
+          <img src="img/22電線危險行為.png" alt="電線常見危險行為" style="max-width:100%; max-height:36rem; object-fit:contain; border-radius:0.4rem;">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 24 · 潮濕 & 異常
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u4);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u4);">SOP・感電</span>
+    <h2>潮濕環境用電 & 電氣異常處理</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <div class="card card-danger">
+          <strong>危險情境</strong>
+          <ul style="margin-top:0.3rem; font-size:1rem;">
+            <li>在茶水間、洗手台附近用電</li>
+            <li>手濕時插拔插頭</li>
+            <li>飲料、雨傘滴水靠近電器</li>
+          </ul>
+        </div>
+        <div class="key-msg" style="background:var(--u4); margin-top:0.8rem;">
+          水與電，永遠保持距離。
+        </div>
+        <ul style="margin-top:0.7rem;">
+          <li>茶水間插座配置防潑水蓋</li>
+          <li>手濕必先擦乾再觸電器</li>
+          <li>雨天進辦公室，傘具收於指定區域</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card card-warn" style="margin-bottom:0.7rem;">
+          <strong>異常警訊</strong>
+          <ul style="margin-top:0.3rem; font-size:1rem;">
+            <li>插座或插頭過熱、有焦味</li>
+            <li>電器運作時異聲或火花</li>
+            <li>開關頻繁跳脫</li>
+          </ul>
+        </div>
+        <h3>異常處理步驟</h3>
+        <ol class="steps">
+          <li>立即停止使用該電器</li>
+          <li>通知總務 / 設備維修人員</li>
+          <li>若有焦味冒煙：撤離＋通報＋119</li>
+          <li>等待專業人員，<strong>勿自行拆修</strong></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 25 · 五. CATEGORY HEADER
+══════════════════════════════════ -->
+<section class="slide slide-unit bg-u3">
+  <div class="unit-bg-num">五</div>
+  <div class="unit-eyebrow">CATEGORY FIVE</div>
+  <div class="unit-heading">緊急事故處理與演練</div>
+  <div class="unit-time-badge">預計時間：10 分鐘</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 26 · 通報流程
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u3);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u3);">緊急應變</span>
+    <h2>緊急通報流程</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>通報步驟</h3>
+        <div style="text-align:center;">
+          <img src="img/24通報流程圖.png" alt="緊急通報流程圖" style="max-width:100%; max-height:18rem; object-fit:contain; border-radius:0.4rem;">
+        </div>
+      </div>
+      <div>
+        <h3>通報時說清楚三件事</h3>
+        <div class="card card-danger">
+          <p style="margin-bottom:0.7rem;"><strong>1. 發生什麼事</strong><br><span style="font-size:1rem; color:#92400e;">火災、有人受傷、地震…</span></p>
+          <p style="margin-bottom:0.7rem;"><strong>2. 在哪裡</strong><br><span style="font-size:1rem; color:#92400e;">棟別、樓層、詳細位置</span></p>
+          <p><strong>3. 需要什麼協助</strong><br><span style="font-size:1rem; color:#92400e;">急救、救護車、消防…等</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr style="background:var(--u3);"><th>情境</th><th>應變類型</th></tr></thead>
+        <tbody>
+          <tr><td>火災</td><td>消防應變（另由消防講師說明）</td></tr>
+          <tr><td>地震</td><td>地震應變</td></tr>
+          <tr><td>人員傷亡</td><td>急救與緊急通報</td></tr>
+          <tr><td>颱風 / 停電 / 淹水</td><td>天災應變</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 27 · 地震 SOP
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u3);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u3);">緊急應變</span>
+    <h2>地震應變</h2>
+  </div>
+  <div class="slide-body">
+    <div class="dch">
+      <div class="dch-item">
+        <div class="en">DROP</div>
+        <div class="zh">趴下</div>
+        <div class="desc">立即蹲低或趴下，降低重心</div>
+      </div>
+      <div class="dch-item">
+        <div class="en">COVER</div>
+        <div class="zh">掩護</div>
+        <div class="desc">堅固桌子下方<br>手護頭頸部<br>遠離窗戶玻璃及架子</div>
+      </div>
+      <div class="dch-item">
+        <div class="en">HOLD ON</div>
+        <div class="zh">穩住</div>
+        <div class="desc">抓住掩護物<br>維持姿勢<br>直到震動完全停止</div>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.1rem; margin-top:0.8rem;">
+      <div>
+        <h3>地震後確認</h3>
+        <ul>
+          <li>確認自身及同事是否受傷</li>
+          <li>檢查周圍是否有火災或漏氣</li>
+          <li>依指示有序疏散，<strong>禁搭電梯</strong></li>
+          <li>到達集合點後回報人數</li>
+        </ul>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:center;">
+        <img src="img/25地震new.jpg" alt="地震趴下掩護穩住" style="width:100%; height:455px; border-radius:6px; object-fit:contain; background:#f9fafb;">
+      </div>
+      <div>
+        <h3>其他天災應變</h3>
+        <div class="tbl">
+          <table>
+            <thead><tr style="background:var(--u3);"><th>情況</th><th>處置</th></tr></thead>
+            <tbody>
+              <tr><td>途中遇颱風</td><td>尋找安全地點避難，勿強行通勤</td></tr>
+              <tr><td>停電</td><td>儲存作業，待命指示</td></tr>
+              <tr><td>淹水</td><td>切斷電源，依指示疏散</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 28 · 逃生 & 急救
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u3);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u3);">緊急應變</span>
+    <h2>逃生路線 & 基本急救</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>逃生原則</h3>
+        <div style="text-align:center;">
+          <img src="img/27逃生流程圖.png" alt="逃生流程圖" style="max-width:100%; max-height:32.4rem; object-fit:contain; border-radius:0.4rem;">
+        </div>
+      </div>
+      <div>
+        <h3>遇到有人昏倒怎麼辦？</h3>
+        <ol class="steps">
+          <li>確認現場環境是否安全，包含自身安全</li>
+          <li>確認傷患意識，呼叫、輕拍肩膀</li>
+          <li>大聲呼救，請人撥打 119</li>
+          <li>確認呼吸（看胸部起伏，10 秒內）</li>
+        </ol>
+        <div class="cols" style="margin-top:0.6rem; gap:0.5rem;">
+          <div class="card card-danger" style="font-size:1rem; padding:0.6rem;">
+            <strong>沒有呼吸</strong><br>立即 CPR，請人取 AED
+          </div>
+          <div class="card card-safe" style="font-size:1rem; padding:0.6rem;">
+            <strong>有呼吸</strong><br>復甦姿勢，等待救援
+          </div>
+        </div>
+        <div class="card card-info" style="margin-top:0.6rem; font-size:1rem;">
+          <strong>AED操作</strong><br>
+          開機後依語音指示，任何人都能操作。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 29 · 六. CATEGORY HEADER
+══════════════════════════════════ -->
+<section class="slide slide-unit bg-u6">
+  <div class="unit-bg-num">六</div>
+  <div class="unit-eyebrow">CATEGORY SIX</div>
+  <div class="unit-heading">其他與作業業務有關之<br>安全衛生知識</div>
+  <div class="unit-time-badge">交通安全・健康促進 ｜ 預計時間：25 分鐘</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 30 · 防禦駕駛
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u6);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u6);">其他・交通</span>
+    <h2>防禦性駕駛五大原則</h2>
+  </div>
+  <div class="slide-body">
+    <p style="margin-bottom:0.7rem;">依勞動部統計，<strong>交通事故</strong>是職業災害的重要肇因之一，尤其上下班途中及公務出差最為常見。</p>
+    <div class="tbl">
+      <table>
+        <thead><tr style="background:var(--u6);"><th>原則</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td><strong>預判危險</strong></td><td>隨時觀察路況，預測可能的風險</td></tr>
+          <tr><td><strong>保持車距</strong></td><td>遵守「2 秒或3 秒法則」「÷2 或-20 法則」以上的安全距離</td></tr>
+          <tr><td><strong>速度適中</strong></td><td>依路況調整車速，不超速也不慢速</td></tr>
+          <tr><td><strong>不爭道</strong></td><td>讓路而非搶路，避免競爭心態</td></tr>
+          <tr><td><strong>保持清醒</strong></td><td>疲勞、情緒波動時不開車</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card card-info">
+      即使綠燈，也應<strong>確認左右無來車</strong>後再行進。
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 31 · 天氣 & 疲勞
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u6);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u6);">其他・交通</span>
+    <h2>惡劣天氣 & 疲勞駕駛</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>雨天行車注意</h3>
+        <div class="tbl">
+          <table>
+            <thead><tr style="background:var(--u6);"><th>項目</th><th>注意事項</th></tr></thead>
+            <tbody>
+              <tr><td>車速</td><td>降低 30% 以上</td></tr>
+              <tr><td>車距</td><td>延長為平時的 1.5–2 倍</td></tr>
+              <tr><td>雨刷</td><td>出發前確認功能正常</td></tr>
+              <tr><td>積水路段</td><td>緩慢通過，不猛踩煞車</td></tr>
+              <tr><td>水漂現象</td><td>速度過快輪胎失附著力，需提前減速</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3>疲勞駕駛</h3>
+        <div class="card card-danger" style="text-align:center; margin-bottom:0.7rem;">
+          持續清醒 <strong>18 小時</strong>的駕駛<br>
+          反應能力 = 血液酒精濃度 <strong style="color:var(--u3); font-size:1.1rem;">0.05%</strong>
+        </div>
+        <div class="card card-safe" style="font-size:1rem; margin-bottom:0.5rem;">
+          感到疲勞時 → 立即找安全地點靠邊停車<br>
+          休息 15–20 分鐘後再上路<br>
+          長途每 2 小時休息一次
+        </div>
+        <div class="card card-danger" style="font-size:1rem;">
+          <strong>絕不能做：</strong>搖下車窗吹風、靠意志力硬撐
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 32 · 分心 & 機車 & 行人
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u6);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u6);">其他・交通</span>
+    <h2>分心駕駛 & 機車 & 行人安全</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols-3">
+      <div>
+        <h3>分心駕駛</h3>
+        <div class="card card-danger" style="text-align:center; margin-bottom:0.6rem;">
+          傳一則訊息<br>眼睛離開路面 <strong>5 秒</strong><br>= 盲目行駛 <strong style="font-size:1.1rem;">83 公尺</strong><br>
+          <span style="font-size:0.95rem; color:#92400e;">（時速 60 km）</span>
+        </div>
+        <div class="card card-safe" style="font-size:1rem;">
+          ✓ 行前設定導航<br>
+          ✓ 藍牙免持聽筒<br>
+          ✓ 靠邊停車再回訊息
+        </div>
+      </div>
+      <div>
+        <h3>機車通勤安全</h3>
+        <p style="font-size:0.95rem; color:#6b7280; margin-bottom:0.4rem;">機車事故死亡率遠高於汽車，請特別重視。</p>
+        <div style="text-align:center;">
+          <img src="img/30機車安全.png" alt="機車通勤安全" style="max-width:100%; max-height:36.5rem; object-fit:contain; border-radius:0.4rem;">
+        </div>
+      </div>
+      <div>
+        <h3>行人 & 出差前</h3>
+        <ul style="font-size:1rem; margin-bottom:0.6rem;">
+          <li>過馬路走斑馬線，確認燈號</li>
+          <li>過路口時注意路況</li>
+          <li>夜間配戴反光配件</li>
+          <li>電扶梯抓好扶手</li>
+        </ul>
+        <div class="card" style="border-left-color:var(--u6); font-size:0.95rem;">
+          <strong>出差行車前確認</strong>
+          <ul class="checklist" style="margin-top:0.3rem;">
+            <li>輪胎氣壓與磨損</li>
+            <li>煞車與雨刷功能</li>
+            <li>充分休息再出發</li>
+            <li>出差行程確實報備</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 33 · 運動 & 飲食
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u7);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u7);">其他・健康</span>
+    <h2>規律運動 & 職場飲食</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <div style="background:var(--u7); color:white; border-radius:10px; padding:1rem; text-align:center; margin-bottom:0.7rem;">
+          <div style="font-size:1rem; opacity:0.75;">WHO 建議</div>
+          <div style="font-size:2.5rem; font-weight:900; line-height:1;">150 分鐘</div>
+          <div style="font-size:1rem; opacity:0.8;">成人每週中等強度有氧運動</div>
+        </div>
+        <h3>增加活動量的小技巧</h3>
+        <ul>
+          <li>大眾交通提早一站下車步行</li>
+          <li>電梯改走樓梯</li>
+          <li>午休 10 分鐘伸展或步行</li>
+          <li>每週安排 2–3 次健身活動</li>
+        </ul>
+      </div>
+      <div>
+        <h3>職場飲食健康</h3>
+        <div class="tbl" style="margin-bottom:0.6rem;">
+          <table>
+            <thead><tr style="background:var(--u7);"><th>常見問題</th><th>影響</th></tr></thead>
+            <tbody>
+              <tr><td>不吃早餐</td><td>午前專注力下降</td></tr>
+              <tr><td>外食過鹹過油</td><td>心血管風險上升</td></tr>
+              <tr><td>含糖飲料過多</td><td>下午精神不振</td></tr>
+              <tr><td>久坐不喝水</td><td>脫水影響大腦效率</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card card-safe" style="font-size:1rem;">
+          每日至少喝 <strong>1,500–2,000 ml</strong> 白開水<br>
+          咖啡每日不超過 <strong>2–3 杯</strong>，下午後避免
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 34 · 睡眠 & 壓力
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u7);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u7);">其他・健康</span>
+    <h2>睡眠管理 & 認識工作壓力</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>建議睡眠時數</h3>
+        <div class="tbl" style="margin-bottom:0.7rem;">
+          <table>
+            <thead><tr style="background:var(--u7);"><th>年齡層</th><th>建議時間</th></tr></thead>
+            <tbody>
+              <tr><td>18–64 歲</td><td><strong>6–8 小時</strong></td></tr>
+              <tr><td>65 歲以上</td><td><strong>7–8 小時</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>改善睡眠品質</h3>
+        <ul>
+          <li>固定就寢與起床時間（<strong>含假日</strong>）</li>
+          <li>睡前 1 小時遠離手機、平板、電腦、電視、遊戲機</li>
+          <li>保持臥室涼爽、黑暗、安靜</li>
+          <li>午後 3 點後避免咖啡因</li>
+        </ul>
+      </div>
+      <div>
+        <h3>壓力的兩面性</h3>
+        <div class="tbl" style="margin-bottom:0.6rem;">
+          <table>
+            <thead><tr style="background:var(--u7);"><th>適度壓力（正向）</th><th>過度壓力（負向）</th></tr></thead>
+            <tbody>
+              <tr><td>提高動力與效率</td><td>焦慮、憂鬱</td></tr>
+              <tr><td>促進學習與成長</td><td>睡眠障礙</td></tr>
+              <tr><td>增強解決問題能力</td><td>免疫力下降</td></tr>
+              <tr><td>—</td><td>職業倦怠（Burnout）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>常見壓力來源</h3>
+        <ul>
+          <li>工作量過大或過小</li>
+          <li>角色不明確或衝突</li>
+          <li>缺乏自主性與掌控感</li>
+          <li>工作與生活不平衡</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 35 · Burnout & 壓力技巧
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u7);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u7);">其他・健康</span>
+    <h2>職業倦怠 & 壓力管理技巧</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>職業倦怠（Burnout）</h3>
+        <p style="font-size:1rem; margin-bottom:0.5rem;">WHO 已列為職業現象，源於慢性工作壓力未妥善處理。</p>
+        <div class="card" style="border-left-color:var(--u7); margin-bottom:0.6rem;">
+          <strong>三大特徵</strong>
+          <ul style="margin-top:0.4rem; font-size:1rem;">
+            <li><strong>情感耗竭</strong>：精疲力竭，失去熱情</li>
+            <li><strong>去人性化</strong>：對同事客戶冷漠</li>
+            <li><strong>成就感低落</strong>：覺得工作無意義</li>
+          </ul>
+        </div>
+        <h3>早期警訊</h3>
+        <ul style="font-size:1rem;">
+          <li>週日晚上開始焦慮「明天要上班」</li>
+          <li>對曾經喜歡的工作感到厭倦</li>
+          <li>頻繁請假或想離職</li>
+        </ul>
+      </div>
+      <div>
+        <h3>壓力管理技巧</h3>
+        <div class="card card-info" style="margin-bottom:0.6rem;">
+          <strong>4-7-8 呼吸法</strong>（即時減壓）
+          <p style="font-size:1rem; margin-top:0.3rem;">吸氣 4 秒 → 憋氣 7 秒 → 吐氣 8 秒<br>重複 3–4 次，快速緩解緊張感</p>
+        </div>
+        <div class="card card-safe" style="margin-bottom:0.6rem;">
+          <strong>5-4-3-2-1 接地技巧</strong>（焦慮時）
+          <ul style="font-size:1rem; margin-top:0.3rem;">
+            <li>說出5 個看到的東西</li>
+            <li>碰觸4 個碰到的東西</li>
+            <li>聆聽3 個聽到的聲音</li>
+            <li>找出2 個聞到的氣味</li>
+            <li>品嘗1 個嘗到的味道</li>
+          </ul>
+        </div>
+        <div class="card" style="border-left-color:var(--u7); font-size:1rem;">
+          <strong>非暴力溝通（NVC）</strong>：觀察 → 感受 → 需要 → 請求
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 36 · 健康資源
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u7);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u7);">其他・健康</span>
+    <h2>健康促進資源</h2>
+  </div>
+  <div class="slide-body" style="justify-content:center;">
+    <div class="tbl">
+      <table>
+        <thead><tr style="background:var(--u7);"><th>資源</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td>年度健康檢查</td><td>公司安排健檢，每兩年一次</td></tr>
+          <tr><td>職護協助方案</td><td>健康諮詢，全程保密，一對一諮詢，每月一次</td></tr>
+          <tr><td>安心專線（24 小時）</td><td>1925</td></tr>
+          <tr><td>張老師專線</td><td>1980</td></tr>
+          <tr><td>生命線</td><td>1995</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="key-msg" style="background:var(--u7); font-size:1.4rem; margin-top:1.5rem;">
+      尋求協助是勇氣，不是軟弱。
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 37 · 職業病 & 化學品（第六章）
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u6);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u6);">其他・健康</span>
+    <h2>職業病預防 & 清潔劑化學品安全</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>常見職業病預防</h3>
+        <div class="tbl">
+          <table>
+            <thead><tr style="background:var(--u6);"><th>職業病</th><th>預防方式</th></tr></thead>
+            <tbody>
+              <tr><td>腕隧道症候群</td><td>人體工學設備、定時伸展</td></tr>
+              <tr><td>下背痛</td><td>正確坐姿、每小時起立</td></tr>
+              <tr><td>乾眼症</td><td>20-20-20 法則</td></tr>
+              <tr><td>頸椎病</td><td>螢幕高度調整</td></tr>
+              <tr><td>職業性聽力損失</td><td>耳機音量控制 60% 以下</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3>清潔劑化學品安全</h3>
+        <ul>
+          <li>存放在<strong>原包裝容器</strong>，不自行分裝至無標示容器</li>
+          <li><strong>不混合</strong>不同清潔劑（可能產生有毒氣體）</li>
+          <li>使用時保持<strong>通風</strong></li>
+          <li>必要時配戴<strong>手套</strong></li>
+          <li>備妥<strong>安全資料表（SDS）</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 38 · 夏日熱傷害預防（第六章）
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--u6);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--u6);">其他・健康</span>
+    <h2>夏日熱傷害預防</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>熱傷害類型與處置</h3>
+        <div class="tbl" style="margin-bottom:0.8rem;">
+          <table>
+            <thead><tr style="background:var(--u6);"><th>類型</th><th>處置</th></tr></thead>
+            <tbody>
+              <tr><td>熱痙攣</td><td>休息、補水、電解質</td></tr>
+              <tr><td>熱衰竭</td><td>休息、補水、電解質、將患者腳抬高</td></tr>
+              <tr><td style="color:var(--u3); font-weight:700;">熱中暑</td><td style="color:var(--u3); font-weight:700;">頭稍微墊高並立即送醫</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul style="font-size:1rem;">
+          <li>避免正午（11–14 時）戶外高強度活動</li>
+          <li>每 15–20 分鐘補充水分</li>
+          <li>配戴遮陽帽，穿著淺色透氣衣物</li>
+        </ul>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:center;">
+        <img src="img/38熱危害.jpg" alt="夏日熱傷害預防" style="width:100%; height:760px; border-radius:6px; object-fit:contain; background:#f9fafb;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 39 · SUPPLEMENT HEADER
+══════════════════════════════════ -->
+<section class="slide slide-unit bg-us">
+  <div class="unit-bg-num" style="font-size:8rem;">＋</div>
+  <div class="unit-eyebrow">SUPPLEMENTARY TOPICS</div>
+  <div class="unit-heading">補充主題</div>
+  <div class="unit-time-badge">訪客管理・資訊安全</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 41 · 訪客 & 資訊安全
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="accent" style="background:var(--us);"></div>
+  <div class="slide-header">
+    <span class="unit-badge" style="background:var(--us);">補充</span>
+    <h2>訪客管理・資訊安全</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cols">
+      <div>
+        <h3>訪客 & 外包商管理</h3>
+        <ul style="font-size:1rem;">
+          <li>訪客進入須登記換證</li>
+          <li>不得無陪同進入限制區域</li>
+          <li>發現陌生人主動詢問或通知警衛</li>
+          <li>承攬商進場前應提供職安資料</li>
+          <li>有安全顧慮立即向職安人員反映</li>
+        </ul>
+      </div>
+      <div>
+        <h3>資訊安全基本習慣</h3>
+        <ul style="font-size:1rem;">
+          <li>離開座位鎖定電腦（<strong>Win + L</strong>）</li>
+          <li>列印後立即取件，避免資料外洩</li>
+          <li>廢棄文件使用碎紙機銷毀</li>
+          <li>不開啟可疑郵件或連結</li>
+          <li>帳號密碼不共用，定期更換</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 41 · 課程重點回顧
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="slide-header"><h2>課程重點回顧</h2></div>
+  <div class="slide-body">
+    <div class="tbl">
+      <table>
+        <thead><tr style="background:var(--green);"><th>課程類別</th><th>核心行動</th></tr></thead>
+        <tbody>
+          <tr><td><strong style="color:var(--u1);">一</strong>　法規概要</td><td>了解雇主與勞工義務，違反規定有罰則</td></tr>
+          <tr><td><strong style="color:var(--u2);">二</strong>　安衛概念</td><td>危害識別、風險評估，切實遵守安全衛生工作守則</td></tr>
+          <tr><td><strong style="color:var(--u3);">三</strong>　自動檢查</td><td>落實 6S 管理，維持整潔有序的安全工作環境</td></tr>
+          <tr><td><strong style="color:var(--u4);">四</strong>　標準作業程序</td><td>正確姿勢工作、共建友善職場、下班確認電源安全用電</td></tr>
+          <tr><td><strong style="color:var(--u5);">五</strong>　緊急應變</td><td>熟記通報流程，了解逃生路線與集合點位置</td></tr>
+          <tr><td><strong style="color:var(--u6);">六</strong>　其他知識</td><td>防禦性駕駛不分心，規律運動充足睡眠，適時排解壓力</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cols" style="margin-top:0.8rem;">
+      <div class="card card-info">
+        <p>安全是每個人的責任，不只是職安部門的工作。</p>
+        <ul style="margin-top:0.5rem;">
+          <li>發現危險，<strong>說出來</strong></li>
+          <li>看到不對，<strong>採取行動</strong></li>
+          <li>遇到問題，<strong>尋求協助</strong></li>
+        </ul>
+      </div>
+      <div>
+        <h3>重要聯絡資訊</h3>
+        <div class="contacts">
+          <div class="contact-item">
+            <div class="c-label">職安相關諮詢</div>
+            <div class="c-value">職安室 分機：168</div>
+          </div>
+          <div class="contact-item">
+            <div class="c-label">人身安全申訴</div>
+            <div class="c-value">人資 分機：110</div>
+          </div>
+          <div class="contact-item">
+            <div class="c-label">設備異常通報</div>
+            <div class="c-value">總務 分機：155</div>
+          </div>
+          <div class="contact-item">
+            <div class="c-label">緊急事故</div>
+            <div class="c-value">119 / 110</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 42 · Q&A
+══════════════════════════════════ -->
+<section class="slide slide-content">
+  <div class="slide-header"><h2>Q &amp; A 時間</h2></div>
+  <div class="slide-body" style="justify-content:center; align-items:center; text-align:center; gap:1.5rem;">
+    <p style="font-size:1.1rem; color:#374151;">有任何問題，歡迎提問。<br>沒有笨問題，只有沒問到的風險。</p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <div class="hotline" style="padding:1rem 1.5rem; min-width:120px;">
+        <div class="num">119</div>
+        <div class="label">緊急消防/救護</div>
+      </div>
+      <div class="hotline" style="padding:1rem 1.5rem; min-width:120px;">
+        <div class="num">110</div>
+        <div class="label">報警</div>
+      </div>
+      <div class="hotline" style="padding:1rem 1.5rem; min-width:120px;">
+        <div class="num">1925</div>
+        <div class="label">安心專線</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 42 · CLOSING
+══════════════════════════════════ -->
+<section class="slide slide-closing">
+  <h2>感謝各位的參與</h2>
+  <div class="sub">祝大家工作順利、平安健康。</div>
+  <div class="slogan">「我安全，我回家。」</div>
+  <div class="org">大豐環保科技公司<br>職業安全衛生管理室<br>2026 年 5 月</div>
+</section>
+
+</div><!-- #pres -->
+
+<!-- Controls -->
+<div id="ctrl">
+  <button onclick="nav(-1)">◀ 上一頁</button>
+  <span id="ctr-num">1 / 40</span>
+  <button onclick="nav(1)">下一頁 ▶</button>
+</div>
+
+<!-- 返回大綱按鈕 -->
+<button id="back-btn" onclick="show(1)">☰ 返回大綱</button>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const N = slides.length;
+let cur = 0;
+
+function show(next) {
+  if (next < 0 || next >= N) return;
+  slides[cur].classList.remove('active');
+  if (next > cur) slides[cur].classList.add('out-left');
+  else slides[cur].classList.remove('out-left');
+  cur = next;
+  slides.forEach((s, i) => {
+    if (i !== cur) { s.classList.remove('active'); }
+  });
+  slides[cur].classList.remove('out-left');
+  slides[cur].classList.add('active');
+  tick();
+}
+
+function nav(d) { show(cur + d); }
+
+function tick() {
+  const label = `${cur + 1} / ${N}`;
+  document.getElementById('ctr-num').textContent = label;
+  document.getElementById('slide-num').textContent = label;
+  document.getElementById('prog').style.width = `${(cur + 1) / N * 100}%`;
+}
+
+document.addEventListener('keydown', e => {
+  if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); nav(1); }
+  else if (['ArrowLeft','ArrowUp'].includes(e.key)) { e.preventDefault(); nav(-1); }
+  else if (e.key === 'Home') show(0);
+  else if (e.key === 'End') show(N - 1);
+});
+
+// Touch swipe
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) nav(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+// Click zone navigation disabled
+
+tick();
+
+// Password protection
+(function(){
+  var _k = 'RGEwNTA4Zm9uMjAyNiU=';
+  window.checkPw = function(){
+    var v = document.getElementById('pw-input').value;
+    if (btoa(unescape(encodeURIComponent(v))) === _k) {
+      document.getElementById('pw-overlay').style.display = 'none';
+      sessionStorage.setItem('df_auth','1');
+    } else {
+      document.getElementById('pw-err').style.display = 'block';
+      document.getElementById('pw-input').value = '';
+      document.getElementById('pw-input').focus();
+    }
+  };
+  document.addEventListener('DOMContentLoaded', function(){
+    var inp = document.getElementById('pw-input');
+    if (inp) inp.addEventListener('keydown', function(e){ if(e.key==='Enter') window.checkPw(); });
+    if (sessionStorage.getItem('df_auth') === '1') {
+      document.getElementById('pw-overlay').style.display = 'none';
+    }
+  });
+})();
+</script>
+</body>
+</html>

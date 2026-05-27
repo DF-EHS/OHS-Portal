@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教育訓練教材庫 | 大豐環保科技</title>
+<style>
+:root {
+  --navy:   #1e3a5f;
+  --bg:     #f1f5f9;
+  --card:   #ffffff;
+  --border: #e2e8f0;
+  --text:   #1e293b;
+  --sub:    #64748b;
+  --green:  #16a34a;
+  --orange: #d97706;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+
+/* ── topbar ── */
+.topbar {
+  background: var(--navy);
+  color: #fff;
+  padding: 0 24px;
+  height: 46px;
+  display: flex; align-items: center; gap: 16px;
+  font-size: 14px;
+}
+.topbar a {
+  color: rgba(255,255,255,.7); text-decoration: none;
+  display: flex; align-items: center; gap: 6px;
+  transition: color .15s;
+}
+.topbar a:hover { color: #fff; }
+.topbar-sep { color: rgba(255,255,255,.3); }
+.topbar-title { font-weight: 600; color: #fff; }
+
+/* ── hero ── */
+.hero {
+  background: linear-gradient(135deg, #166534 0%, #16a34a 60%, #0f766e 100%);
+  color: #fff;
+  padding: 36px 40px;
+  text-align: center;
+}
+.hero h1 { font-size: 26px; font-weight: 800; letter-spacing: 2px; }
+.hero p  { margin-top: 8px; font-size: 14px; color: rgba(255,255,255,.8); }
+
+/* ── main ── */
+main { flex: 1; max-width: 980px; margin: 0 auto; width: 100%; padding: 36px 24px 60px; }
+
+.section-label {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: 4px; text-transform: uppercase;
+  margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── course cards ── */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.course-card {
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform .2s, box-shadow .2s;
+}
+.course-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,.12); }
+
+.cc-head {
+  padding: 22px 22px 16px;
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.cc-icon {
+  width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0;
+  background: #dcfce7;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+}
+.cc-date  { font-size: 11px; font-weight: 700; color: var(--green); letter-spacing: 1px; margin-bottom: 4px; }
+.cc-title { font-size: 16px; font-weight: 700; line-height: 1.35; }
+.cc-desc  { font-size: 12px; color: var(--sub); margin-top: 6px; line-height: 1.6; }
+
+.cc-tags {
+  padding: 0 22px 14px;
+  display: flex; flex-wrap: wrap; gap: 5px;
+  flex: 1;
+}
+.cc-tag {
+  padding: 2px 9px; border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+  background: #dcfce7; color: #15803d;
+}
+.cc-tag.orange { background: #ffedd5; color: #c2410c; }
+.cc-tag.blue   { background: #dbeafe; color: #1d4ed8; }
+.cc-tag.navy   { background: #e0e7f0; color: #1e3a5f; }
+
+.cc-footer {
+  padding: 14px 22px;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.cc-meta { font-size: 12px; color: var(--sub); }
+
+.open-btn {
+  padding: 9px 22px; border-radius: 9px;
+  font-size: 13px; font-weight: 600; border: none;
+  background: var(--green); color: #fff;
+  cursor: pointer; transition: background .15s, transform .1s;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+}
+.open-btn:hover  { background: #15803d; }
+.open-btn:active { transform: scale(.96); }
+
+/* ── empty placeholder ── */
+.ph-card {
+  background: var(--card);
+  border-radius: 16px;
+  border: 2px dashed var(--border);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 48px 24px; text-align: center;
+  color: var(--sub);
+}
+.ph-card .ph-icon  { font-size: 36px; opacity: .3; margin-bottom: 10px; }
+.ph-card .ph-title { font-size: 13px; font-weight: 700; opacity: .5; }
+
+/* ── footer ── */
+footer {
+  text-align: center; padding: 20px 24px;
+  font-size: 12px; color: var(--sub);
+  border-top: 1px solid var(--border);
+  background: var(--card);
+}
+
+/* ── dark mode ── */
+body.dark {
+  --bg:     #0f172a;
+  --card:   #1e293b;
+  --border: #334155;
+  --text:   #f1f5f9;
+  --sub:    #94a3b8;
+}
+body.dark .cc-icon  { background: #052e16; }
+body.dark .cc-tag   { background: #052e16; color: #86efac; }
+body.dark .cc-tag.orange { background: #431407; color: #fdba74; }
+body.dark .cc-tag.blue   { background: #1e3054; color: #93c5fd; }
+body.dark .cc-tag.navy   { background: #1e2d42; color: #93c5fd; }
+body.dark .ph-card  { background: #1e293b; border-color: #334155; }
+body.dark .topbar   { background: #0f172a; border-bottom: 1px solid #334155; }
+
+/* ── dark toggle ── */
+#dark-toggle {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text); border-radius: 50%;
+  width: 44px; height: 44px; font-size: 20px;
+  cursor: pointer; transition: background .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  display: flex; align-items: center; justify-content: center;
+}
+#dark-toggle:hover { box-shadow: 0 6px 22px rgba(0,0,0,.25); }
+</style>
+</head>
+<body>
+
+<button id="dark-toggle" onclick="toggleDark()" title="切換深色／淺色模式">🌙</button>
+
+<div class="topbar">
+  <a href="../">← 返回職安系統</a>
+  <span class="topbar-sep">›</span>
+  <span class="topbar-title">教育訓練教材庫</span>
+</div>
+
+<div class="hero">
+  <h1>教育訓練教材庫</h1>
+  <p>存放各期教育訓練簡報，點擊「開啟簡報」即可在瀏覽器中直接播放</p>
+</div>
+
+<main>
+  <div class="section-label">可用教材</div>
+
+  <div class="course-grid">
+
+    <!-- 20260514 辦公室職安教育訓練 -->
+    <div class="course-card">
+      <div class="cc-head">
+        <div class="cc-icon">🎓</div>
+        <div>
+          <div class="cc-date">2026-05-14</div>
+          <div class="cc-title">辦公室職業安全衛生教育訓練</div>
+          <div class="cc-desc">涵蓋職安法規架構、六大危害、緊急應變程序、人因性危害及熱危害預防。</div>
+        </div>
+      </div>
+      <div class="cc-tags">
+        <span class="cc-tag">辦公室作業</span>
+        <span class="cc-tag orange">全員必訓</span>
+        <span class="cc-tag blue">互動簡報</span>
+        <span class="cc-tag navy">5 部示範影片</span>
+      </div>
+      <div class="cc-footer">
+        <div class="cc-meta">大豐環保科技 · 總部</div>
+        <a class="open-btn" href="20260514/" target="_blank">開啟簡報 ›</a>
+      </div>
+    </div>
+
+    <!-- 預留 -->
+    <div class="ph-card">
+      <div class="ph-icon">＋</div>
+      <div class="ph-title">未來教材將陸續上傳</div>
+    </div>
+
+  </div>
+</main>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+
+<script>
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('portal-dark', isDark ? '1' : '0');
+  document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
+}
+if (localStorage.getItem('portal-dark') === '1') {
+  document.body.classList.add('dark');
+  document.getElementById('dark-toggle').textContent = '☀️';
+}
+</script>
+</body>
+</html>
