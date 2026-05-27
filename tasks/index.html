@@ -1736,6 +1736,7 @@
       byId("category").value = categories.includes(task.category) ? task.category : "其他";
       byId("customCategory").value = categories.includes(task.category) ? "" : task.category || "";
       byId("noDueDate").checked = isNoDueTask(task);
+      updateDueDateMode();
       byId("dueAt").value = task.noDueDate ? "" : task.dueAt || "";
       byId("status").value = task.status || "todo";
       byId("priority").value = task.priority || "medium";
@@ -1757,7 +1758,6 @@
       byId("documents").value = (task.documents || []).join("\n");
       byId("fileLink").value = task.fileLink || "";
       byId("fileLinkLabel").value = task.fileLinkLabel || "";
-      updateDueDateMode();
       updateRepeatFields();
     }
 
