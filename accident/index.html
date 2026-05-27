@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>職業災害分析系統 | 大豐環保科技</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --navy:#1e3a5f; --bg:#f1f5f9; --card:#fff; --border:#e2e8f0;
+  --text:#1e293b; --sub:#64748b;
+  --red:#dc2626; --orange:#f97316; --green:#16a34a; --blue:#2563eb; --amber:#f59e0b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+
+/* ── header ── */
+header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:12px;}
+header h1{font-size:18px;font-weight:700;}
+.hdr-btn{padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:12px;cursor:pointer;transition:background .15s;flex-shrink:0;}
+.hdr-btn:hover{background:rgba(255,255,255,.2);}
+.hdr-brand{display:flex;align-items:center;gap:7px;margin-left:auto;flex-shrink:0;}
+.hdr-brand img{height:24px;object-fit:contain;}
+.hdr-brand span{font-size:12px;color:#94a3b8;font-weight:600;white-space:nowrap;}
+
+/* ── filter bar ── */
+#fbar{background:var(--card);border-bottom:1px solid var(--border);padding:10px 24px;
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+#fbar label{font-size:12px;font-weight:700;color:var(--sub);}
+#fbar select{border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:13px;background:var(--bg);outline:none;font-family:inherit;cursor:pointer;}
+#fbar select:focus{border-color:var(--orange);}
+.fsep{width:1px;height:20px;background:var(--border);}
+#rst-btn{padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg);font-size:12px;cursor:pointer;color:var(--sub);}
+#rst-btn:hover{background:#e2e8f0;}
+
+/* ── main ── */
+main{max-width:1280px;margin:0 auto;padding:24px;}
+
+/* ── KPI ── */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px;}
+.kpi{background:var(--card);border-radius:12px;padding:18px 20px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-left:4px solid transparent;}
+.kpi.red  {border-left-color:var(--red);}
+.kpi.org  {border-left-color:var(--orange);}
+.kpi.blue {border-left-color:var(--blue);}
+.kpi.amb  {border-left-color:var(--amber);}
+.kpi-lbl{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:1px;margin-bottom:6px;text-transform:uppercase;}
+.kpi-val{font-size:30px;font-weight:900;line-height:1;}
+.kpi-sub{font-size:11px;color:var(--sub);margin-top:5px;}
+
+/* ── chart cards ── */
+.cc{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:20px;}
+.g2 {display:grid;grid-template-columns:3fr 2fr;gap:16px;margin-bottom:20px;}
+.g2b{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.g2 .cc,.g2b .cc{margin-bottom:0;}
+.ct{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+
+/* toggle */
+.tgg{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-left:auto;}
+.tgg button{padding:4px 12px;font-size:12px;border:none;background:var(--bg);cursor:pointer;color:var(--sub);transition:background .15s;}
+.tgg button.on{background:var(--navy);color:#fff;}
+
+/* ── FR/SR table ── */
+.ftbl{width:100%;border-collapse:collapse;font-size:13px;}
+.ftbl th{background:var(--navy);color:#fff;padding:8px 12px;text-align:center;font-weight:600;}
+.ftbl td{padding:7px 12px;text-align:center;border-bottom:1px solid var(--border);}
+.ftbl tr:nth-child(even) td{background:#f8fafc;}
+.vfr{font-weight:700;color:var(--orange);}
+.vsr{font-weight:700;color:var(--red);}
+.vdi{font-weight:700;color:var(--blue);}
+.note{font-size:11px;color:var(--sub);margin-top:10px;line-height:1.6;}
+
+/* ── data table ── */
+.tbl-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+#tsrch{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:13px;width:240px;outline:none;font-family:inherit;}
+#tsrch:focus{border-color:var(--orange);}
+#tct{font-size:12px;color:var(--sub);margin-left:auto;}
+.tw{overflow-x:auto;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+table{width:100%;border-collapse:collapse;background:var(--card);}
+thead th{background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-size:12px;white-space:nowrap;}
+tbody td{padding:7px 12px;font-size:12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tbody tr:hover td{background:#f0f9ff;}
+.bd{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;white-space:nowrap;}
+.bd-r{background:#fee2e2;color:#b91c1c;}
+.bd-b{background:#dbeafe;color:#1d4ed8;}
+.bd-o{background:#ffedd5;color:#c2410c;}
+.bd-g{background:#f1f5f9;color:var(--sub);}
+.dv{font-weight:700;color:var(--orange);}
+
+/* ── pager ── */
+.pgr{display:flex;gap:5px;align-items:center;margin-top:12px;justify-content:center;}
+.pgr button{padding:4px 10px;border:1px solid var(--border);border-radius:4px;background:var(--card);cursor:pointer;font-size:12px;}
+.pgr button.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+.pgr button:hover:not(.on){background:var(--bg);}
+.pgi{font-size:12px;color:var(--sub);}
+
+/* ── loading ── */
+#loading{text-align:center;padding:80px 24px;font-size:15px;color:var(--sub);line-height:2;}
+
+@media(max-width:900px){.kpi-row{grid-template-columns:repeat(2,1fr);}.g2,.g2b{grid-template-columns:1fr;}}
+@media(max-width:500px){.kpi-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="hdr-btn" onclick="location.href='../'" title="回到職安管理系統入口">← 系統入口</button>
+  <h1>📊 職業災害分析系統</h1>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
+
+<div id="fbar" style="display:none">
+  <label>年度</label>
+  <select id="fy" onchange="go()"><option value="">全部</option></select>
+  <label>季度</label>
+  <select id="fq" onchange="go()">
+    <option value="">全部</option>
+    <option>Q1</option><option>Q2</option><option>Q3</option><option>Q4</option>
+  </select>
+  <label>事故分類</label>
+  <select id="fc" onchange="go()"><option value="">全部</option></select>
+  <span class="fsep"></span>
+  <label>部門</label>
+  <select id="fd" onchange="go()"><option value="">全部</option></select>
+  <button id="rst-btn" onclick="rst()">✕ 重設</button>
+</div>
+
+<div id="loading">⏳ 資料載入中，請稍候…</div>
+
+<main id="app" style="display:none">
+
+  <!-- KPI -->
+  <div class="kpi-row">
+    <div class="kpi red">
+      <div class="kpi-lbl">總事故件數</div>
+      <div class="kpi-val" id="k1">—</div>
+      <div class="kpi-sub" id="k1s"></div>
+    </div>
+    <div class="kpi org">
+      <div class="kpi-lbl">失能傷害件數</div>
+      <div class="kpi-val" id="k2">—</div>
+      <div class="kpi-sub">預估休息天數 &gt; 0</div>
+    </div>
+    <div class="kpi blue">
+      <div class="kpi-lbl">失能傷害頻率 FR</div>
+      <div class="kpi-val" id="k3">—</div>
+      <div class="kpi-sub" id="k3s">每百萬工時</div>
+    </div>
+    <div class="kpi amb">
+      <div class="kpi-lbl">失能傷害嚴重率 SR</div>
+      <div class="kpi-val" id="k4">—</div>
+      <div class="kpi-sub" id="k4s">每百萬工時</div>
+    </div>
+  </div>
+
+  <!-- 趨勢 -->
+  <div class="cc">
+    <div class="ct">
+      事故件數趨勢
+      <div class="tgg">
+        <button id="bm" class="on" onclick="setM('m')">月</button>
+        <button id="bq" onclick="setM('q')">季</button>
+      </div>
+    </div>
+    <div style="position:relative;height:230px"><canvas id="ctrend"></canvas></div>
+  </div>
+
+  <!-- 部門 + 類型 -->
+  <div class="g2">
+    <div class="cc">
+      <div class="ct">各部門事故件數</div>
+      <div style="position:relative;height:300px"><canvas id="cdept"></canvas></div>
+    </div>
+    <div class="cc">
+      <div class="ct">事故類型占比</div>
+      <div style="position:relative;height:300px"><canvas id="ctype"></canvas></div>
+    </div>
+  </div>
+
+  <!-- FR/SR -->
+  <div class="g2b">
+    <div class="cc">
+      <div class="ct">年度 FR / SR 統計表</div>
+      <table class="ftbl" id="ftbl"></table>
+      <div class="note">
+        ＊2022年資料不完整，不計入 FR/SR<br>
+        ＊FR/SR 為全公司年度指標，不受上方篩選器影響
+      </div>
+    </div>
+    <div class="cc">
+      <div class="ct">FR / SR 年度趨勢</div>
+      <div style="position:relative;height:240px"><canvas id="cfrsr"></canvas></div>
+    </div>
+  </div>
+
+  <!-- 明細表 -->
+  <div class="cc">
+    <div class="ct">📋 事故明細清單</div>
+    <div class="tbl-top">
+      <input type="text" id="tsrch" placeholder="🔍 搜尋部門、類型、地點、姓名…" oninput="rtbl()">
+      <span id="tct"></span>
+    </div>
+    <div class="tw">
+      <table>
+        <thead><tr>
+          <th>發生日期</th><th>部門</th><th>事發地點</th>
+          <th>事故分類</th><th>事故類型</th><th>休息天數</th><th>是否懲處</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="pgr" id="pgr"></div>
+  </div>
+
+</main>
+
+<script>
+// ── 設定：填入 Apps Script 部署後的網址 ──────────────────────
+const DATA_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+
+const PG = 20;
+let ALL = [], FRSR = {}, mode = 'm', pg = 1, CH = {};
+
+// ── 載入 ────────────────────────────────────────────────────
+async function init() {
+  try {
+    const j = await fetch(DATA_URL).then(r => r.json());
+    ALL  = j.accidents;
+    FRSR = j.frsr;
+    buildFilters();
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('fbar').style.display    = 'flex';
+    document.getElementById('app').style.display     = 'block';
+    go();
+  } catch(e) {
+    document.getElementById('loading').innerHTML =
+      '⚠️ 資料載入失敗<br><br>' +
+      '請確認已完成以下步驟：<br>' +
+      '1. Apps Script 已部署為「網路應用程式」<br>' +
+      '2. 存取設定為「所有人」<br>' +
+      '3. 將部署網址填入 accident/index.html 的 DATA_URL<br><br>' +
+      '<small style="color:#94a3b8">' + e.message + '</small>';
+  }
+}
+
+// ── 篩選器初始化 ─────────────────────────────────────────────
+function buildFilters() {
+  const uniq = (key) => [...new Set(ALL.map(a => a[key]).filter(Boolean))].sort();
+  fill('fy',  uniq('year'));
+  fill('fc',  uniq('accClass'));
+  fill('fd',  uniq('dept'));
+}
+function fill(id, vals) {
+  const s = document.getElementById(id);
+  vals.forEach(v => { const o=document.createElement('option'); o.value=o.textContent=v; s.appendChild(o); });
+}
+function v(id) { return document.getElementById(id).value; }
+
+// ── 篩選 ────────────────────────────────────────────────────
+function filt() {
+  const fy=v('fy'), fq=v('fq'), fc=v('fc'), fd=v('fd');
+  return ALL.filter(a =>
+    (!fy || a.year===fy) && (!fq || a.quarter===fq) &&
+    (!fc || a.accClass===fc) && (!fd || a.dept===fd)
+  );
+}
+function rst() {
+  ['fy','fq','fc','fd'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('tsrch').value='';
+  pg=1; go();
+}
+function go() { const d=filt(); kpi(d); trend(d); dept(d); type_(d); frsr(); rtbl(); }
+function setM(m) {
+  mode=m;
+  document.getElementById('bm').classList.toggle('on',m==='m');
+  document.getElementById('bq').classList.toggle('on',m==='q');
+  trend(filt());
+}
+
+// ── KPI ─────────────────────────────────────────────────────
+function kpi(d) {
+  s('k1', d.length);
+  s('k2', d.filter(a=>a.restDays>0).length);
+  const yr  = v('fy') || Object.keys(FRSR).sort().pop();
+  const fy2 = FRSR[yr] || FRSR[Object.keys(FRSR).sort().pop()];
+  const usedYr = v('fy') || Object.keys(FRSR).sort().pop();
+  if (fy2) {
+    s('k3', fy2.fr!==null ? fy2.fr : '—');
+    s('k4', fy2.sr!==null ? fy2.sr : '—');
+    s('k3s', usedYr+'年 · 每百萬工時');
+    s('k4s', usedYr+'年 · 每百萬工時');
+  }
+}
+function s(id,v2) { document.getElementById(id).textContent=v2; }
+
+// ── 趨勢圖 ──────────────────────────────────────────────────
+function trend(d) {
+  const cnt={};
+  d.forEach(a => { const k=mode==='m'?a.year+'-'+a.month:a.year+'-'+a.quarter; cnt[k]=(cnt[k]||0)+1; });
+  const lbs=Object.keys(cnt).sort(), vs=lbs.map(k=>cnt[k]);
+  bar('ctrend', lbs, vs, '事故件數', '#f97316');
+}
+
+// ── 部門圖 ──────────────────────────────────────────────────
+function dept(d) {
+  const cnt={};
+  d.forEach(a=>{if(a.dept)cnt[a.dept]=(cnt[a.dept]||0)+1;});
+  const sd=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,15);
+  hbar('cdept', sd.map(x=>x[0]), sd.map(x=>x[1]));
+}
+
+// ── 類型圖 ──────────────────────────────────────────────────
+function type_(d) {
+  const cnt={};
+  d.forEach(a=>{if(a.accType)cnt[a.accType]=(cnt[a.accType]||0)+1;});
+  const sd=Object.entries(cnt).sort((a,b)=>b[1]-a[1]);
+  const cols=['#f97316','#ef4444','#3b82f6','#8b5cf6','#10b981','#f59e0b','#06b6d4','#ec4899','#6366f1','#84cc16','#14b8a6','#f43f5e'];
+  if(CH['ctype'])CH['ctype'].destroy();
+  CH['ctype']=new Chart(document.getElementById('ctype'),{
+    type:'doughnut',
+    data:{labels:sd.map(x=>x[0]),datasets:[{data:sd.map(x=>x[1]),backgroundColor:cols,borderWidth:1}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'right',labels:{font:{size:11},boxWidth:12,padding:8}},
+        tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed} 件`}}}}
+  });
+}
+
+// ── FR/SR ────────────────────────────────────────────────────
+function frsr() {
+  const yrs=Object.keys(FRSR).sort();
+  document.getElementById('ftbl').innerHTML=
+    '<tr><th>年度</th><th>總件數</th><th>失能件數</th><th>失能日數</th><th>總工時（人時）</th><th>FR</th><th>SR</th></tr>'+
+    yrs.map(y=>{const d=FRSR[y]; return `<tr>
+      <td><b>${y}</b></td><td>${d.total}</td>
+      <td class="vdi">${d.disabling}</td><td>${d.days}</td>
+      <td>${d.hours.toLocaleString()}</td>
+      <td class="vfr">${d.fr!==null?d.fr:'—'}</td>
+      <td class="vsr">${d.sr!==null?d.sr:'—'}</td>
+    </tr>`;}).join('');
+
+  if(CH['cfrsr'])CH['cfrsr'].destroy();
+  CH['cfrsr']=new Chart(document.getElementById('cfrsr'),{
+    type:'bar',
+    data:{labels:yrs,datasets:[
+      {label:'FR',data:yrs.map(y=>FRSR[y].fr),backgroundColor:'#f9731688',borderColor:'#f97316',borderWidth:2,yAxisID:'yL'},
+      {label:'SR',data:yrs.map(y=>FRSR[y].sr),backgroundColor:'#ef444488',borderColor:'#ef4444',borderWidth:2,yAxisID:'yR'},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{
+        yL:{position:'left', title:{display:true,text:'FR',font:{size:11}},beginAtZero:true},
+        yR:{position:'right',title:{display:true,text:'SR',font:{size:11}},beginAtZero:true,grid:{drawOnChartArea:false}},
+      },
+      plugins:{legend:{labels:{font:{size:12}}}}}
+  });
+}
+
+// ── 資料表 ──────────────────────────────────────────────────
+function rtbl() {
+  const q=document.getElementById('tsrch').value.toLowerCase();
+  let rows=filt().filter(a=>!q||[a.dept,a.accType,a.accClass,a.location,a.name].some(v=>v.toLowerCase().includes(q)));
+  rows.sort((a,b)=>b.date.localeCompare(a.date));
+  const tot=rows.length;
+  document.getElementById('tct').textContent='共 '+tot+' 筆';
+  const tp=Math.max(1,Math.ceil(tot/PG)); if(pg>tp)pg=tp;
+  document.getElementById('tbody').innerHTML=rows.slice((pg-1)*PG,pg*PG).map(a=>`
+    <tr>
+      <td>${a.date}</td><td>${a.dept}</td>
+      <td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${a.location}">${a.location}</td>
+      <td><span class="bd ${a.accClass.includes('交通')?'bd-b':'bd-r'}">${a.accClass}</span></td>
+      <td>${a.accType}</td>
+      <td>${a.restDays>0?'<span class="dv">'+a.restDays+' 天</span>':'—'}</td>
+      <td><span class="bd ${a.punished==='是'?'bd-o':'bd-g'}">${a.punished}</span></td>
+    </tr>`).join('');
+
+  const pr=document.getElementById('pgr');
+  if(tp<=1){pr.innerHTML='';return;}
+  let h=pg>1?`<button onclick="gp(${pg-1})">‹</button>`:'';
+  for(let p=Math.max(1,pg-2);p<=Math.min(tp,pg+2);p++)
+    h+=`<button class="${p===pg?'on':''}" onclick="gp(${p})">${p}</button>`;
+  if(pg<tp)h+=`<button onclick="gp(${pg+1})">›</button>`;
+  h+=`<span class="pgi">${pg}/${tp} 頁</span>`;
+  pr.innerHTML=h;
+}
+function gp(p){pg=p;rtbl();}
+
+// ── 通用圖表 ────────────────────────────────────────────────
+function bar(id,lbs,vals,lbl,col){
+  if(CH[id])CH[id].destroy();
+  CH[id]=new Chart(document.getElementById(id),{
+    type:'bar',
+    data:{labels:lbs,datasets:[{label:lbl,data:vals,backgroundColor:col+'88',borderColor:col,borderWidth:1}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{y:{beginAtZero:true,ticks:{stepSize:1}},x:{ticks:{font:{size:11},maxRotation:45}}}}
+  });
+}
+function hbar(id,lbs,vals){
+  if(CH[id])CH[id].destroy();
+  CH[id]=new Chart(document.getElementById(id),{
+    type:'bar',
+    data:{labels:lbs,datasets:[{data:vals,backgroundColor:'#3b82f688',borderColor:'#3b82f6',borderWidth:1}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{beginAtZero:true,ticks:{stepSize:1}},y:{ticks:{font:{size:11}}}}}
+  });
+}
+
+init();
+</script>
+</body>
+</html>
