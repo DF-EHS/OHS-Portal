@@ -16,7 +16,7 @@ body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:var(-
 
 /* ── Header ── */
 header{background:linear-gradient(135deg,#1e3a5f 0%,#1a4a7a 100%);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2);}
-header h1{font-size:16px;font-weight:700;letter-spacing:.5px;flex:1;}
+header h1{font-size:16px;font-weight:700;letter-spacing:.5px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .subtitle{font-size:11px;color:#94a3b8;margin-left:auto;}
 .hdr-btn{padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:12px;cursor:pointer;transition:background .15s;font-family:inherit;}
 .hdr-btn:hover{background:rgba(255,255,255,.25);}
@@ -545,11 +545,13 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
 
 <!-- ════ View: Records ════ -->
 <div id="v-records" style="display:none">
-  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
-    <h2 style="font-size:17px;color:var(--navy)">📂 進場申請紀錄</h2>
-    <span id="rec-count" style="font-size:12px;color:var(--sub);background:#f1f5f9;padding:2px 10px;border-radius:12px"></span>
-    <button class="btn btn-sm btn-primary" style="margin-left:auto" onclick="renderRecords()">↺ 載入資料</button>
-    <button class="btn btn-sm" onclick="exportCSV()">↓ 匯出 CSV</button>
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:nowrap">
+    <h2 style="font-size:17px;color:var(--navy);white-space:nowrap">📂 進場申請紀錄</h2>
+    <span id="rec-count" style="font-size:12px;color:var(--sub);background:#f1f5f9;padding:2px 10px;border-radius:12px;flex-shrink:0"></span>
+    <div style="margin-left:auto;display:flex;gap:8px;flex-shrink:0">
+      <button class="btn btn-sm btn-primary" onclick="renderRecords()">↺ 載入資料</button>
+      <button class="btn btn-sm" onclick="exportCSV()">↓ 匯出 CSV</button>
+    </div>
   </div>
   <div class="rec-toolbar">
     <input id="rec-search" placeholder="搜尋承攬商名稱或工程名稱…" oninput="renderRecords()"/>
