@@ -22,33 +22,20 @@ body {
   min-height: 100vh; display: flex; flex-direction: column;
 }
 
-/* ── topbar ── */
-.topbar {
-  background: var(--navy);
-  color: #fff;
-  padding: 0 24px;
-  height: 46px;
-  display: flex; align-items: center; gap: 16px;
-  font-size: 14px;
-}
-.topbar a {
-  color: rgba(255,255,255,.7); text-decoration: none;
-  display: flex; align-items: center; gap: 6px;
-  transition: color .15s;
-}
-.topbar a:hover { color: #fff; }
-.topbar-sep { color: rgba(255,255,255,.3); }
-.topbar-title { font-weight: 600; color: #fff; }
-
-/* ── hero ── */
-.hero {
-  background: linear-gradient(135deg, #166534 0%, #16a34a 60%, #0f766e 100%);
-  color: #fff;
-  padding: 36px 40px;
-  text-align: center;
-}
-.hero h1 { font-size: 26px; font-weight: 800; letter-spacing: 2px; }
-.hero p  { margin-top: 8px; font-size: 14px; color: rgba(255,255,255,.8); }
+/* ── header ── */
+header { background: var(--navy); color: #fff; padding: 14px 24px;
+         display: flex; align-items: center; gap: 12px; }
+header h1 { font-size: 18px; font-weight: 700; }
+.hdr-btn { padding: 5px 12px; border-radius: 6px;
+           border: 1px solid rgba(255,255,255,.3);
+           background: rgba(255,255,255,.1);
+           color: #fff; font-size: 12px; cursor: pointer;
+           transition: background .15s; flex-shrink: 0; }
+.hdr-btn:hover { background: rgba(255,255,255,.2); }
+.hdr-brand { display: flex; align-items: center; gap: 7px;
+             margin-left: auto; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 12px; color: #94a3b8; font-weight: 600; white-space: nowrap; }
 
 /* ── main ── */
 main { flex: 1; max-width: 980px; margin: 0 auto; width: 100%; padding: 36px 24px 60px; }
@@ -157,7 +144,6 @@ body.dark .cc-tag.orange { background: #431407; color: #fdba74; }
 body.dark .cc-tag.blue   { background: #1e3054; color: #93c5fd; }
 body.dark .cc-tag.navy   { background: #1e2d42; color: #93c5fd; }
 body.dark .ph-card  { background: #1e293b; border-color: #334155; }
-body.dark .topbar   { background: #0f172a; border-bottom: 1px solid #334155; }
 
 /* ── dark toggle ── */
 #dark-toggle {
@@ -177,16 +163,14 @@ body.dark .topbar   { background: #0f172a; border-bottom: 1px solid #334155; }
 
 <button id="dark-toggle" onclick="toggleDark()" title="切換深色／淺色模式">🌙</button>
 
-<div class="topbar">
-  <a href="../">← 返回職安系統</a>
-  <span class="topbar-sep">›</span>
-  <span class="topbar-title">教育訓練教材庫</span>
-</div>
-
-<div class="hero">
-  <h1>教育訓練教材庫</h1>
-  <p>存放各期教育訓練簡報，點擊「開啟簡報」即可在瀏覽器中直接播放</p>
-</div>
+<header>
+  <button class="hdr-btn" onclick="location.href='../'" title="回到職安管理系統入口">← 系統入口</button>
+  <h1>🎓 教育訓練教材庫</h1>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
 
 <main>
   <div class="section-label">可用教材</div>
