@@ -252,9 +252,9 @@ details:not([open]) .sec-arrow{{transform:rotate(-90deg)}}
 .n-desc{{font-size:13px;color:var(--sub);line-height:1.65;border-left:3px solid var(--border);padding-left:11px;margin-top:10px}}
 .no-news{{text-align:center;color:var(--sub);font-size:14px;padding:60px 0}}
 
-/* ── 回到頂部按鈕（左下角） ── */
-#backTop{{position:fixed;bottom:24px;left:24px;z-index:99;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(0,0,0,.2);opacity:0;transform:translateY(10px);transition:opacity .2s,transform .2s;pointer-events:none}}
-#backTop.show{{opacity:1;transform:translateY(0);pointer-events:auto}}
+/* ── 回到頂部按鈕（右下角圓形） ── */
+#backTop{{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25);display:none;align-items:center;justify-content:center;transition:background .15s;z-index:999}}
+#backTop.show{{display:flex}}
 #backTop:hover{{background:#162d4a}}
 
 footer{{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);border-top:1px solid var(--border);background:var(--card)}}
@@ -269,7 +269,7 @@ footer{{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);bord
   .nav-btn.active{{border-left-color:transparent;background:#dbeafe;color:#1d4ed8}}
   .nav-count{{display:none}}
   main{{padding:20px 16px 40px}}
-  #backTop{{bottom:16px;left:16px}}
+  #backTop{{bottom:16px;right:16px}}
 }}
 </style>
 </head>
@@ -306,7 +306,7 @@ footer{{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);bord
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 資料來源：勞動部職業安全衛生署、Google News</footer>
 
-<button id="backTop" onclick="window.scrollTo({{top:0,behavior:'smooth'}})">↑ 回到頂部</button>
+<button id="backTop" title="回到頂端" onclick="window.scrollTo({{top:0,behavior:'smooth'}})">↑</button>
 
 <script>
 // 回到頂部按鈕顯示控制
