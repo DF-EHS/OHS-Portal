@@ -36,6 +36,10 @@ main{flex:1;min-width:0;padding:32px 36px 60px}
 .page-hero h2{font-size:20px;font-weight:800;color:var(--navy);margin-bottom:6px}
 .page-hero p{font-size:13px;color:var(--sub);margin-bottom:10px}
 .updated-at{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--sub);background:#f8fafc;padding:4px 12px;border-radius:20px;border:1px solid var(--border)}
+.hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.toggle-btns{display:flex;gap:6px;flex-shrink:0;margin-top:4px}
+.toggle-btn{padding:5px 14px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--sub);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.toggle-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
 
 /* ── Collapsible sections ── */
 .n-section{margin-bottom:36px;scroll-margin-top:60px}
@@ -101,97 +105,28 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
   <aside class="sidebar">
     <div class="sidebar-inner">
       <div class="nav-label">快速跳轉</div>
-      <a class="nav-btn" href="#osha_news" data-id="osha_news"><span class="nav-dot" style="background:#2563eb"></span><span class="nav-name">職安署最新消息</span><span class="nav-count">8</span></a>
-    <a class="nav-btn" href="#osha_announce" data-id="osha_announce"><span class="nav-dot" style="background:#16a34a"></span><span class="nav-name">職安署公告</span><span class="nav-count">8</span></a>
-    <a class="nav-btn" href="#gnews_incident" data-id="gnews_incident"><span class="nav-dot" style="background:#dc2626"></span><span class="nav-name">重大職災新聞</span><span class="nav-count">2</span></a>
-    <a class="nav-btn" href="#gnews_ohs" data-id="gnews_ohs"><span class="nav-dot" style="background:#7c3aed"></span><span class="nav-name">職安衛動態</span><span class="nav-count">7</span></a>
-    <a class="nav-btn" href="#gnews_law" data-id="gnews_law"><span class="nav-dot" style="background:#0891b2"></span><span class="nav-name">法規更新</span><span class="nav-count">2</span></a>
+      <a class="nav-btn" href="#osha_announce" data-id="osha_announce"><span class="nav-dot" style="background:#16a34a"></span><span class="nav-name">職安署公告</span><span class="nav-count">8</span></a>
+    <a class="nav-btn" href="#gnews_incident" data-id="gnews_incident"><span class="nav-dot" style="background:#dc2626"></span><span class="nav-name">重大職災新聞</span><span class="nav-count">3</span></a>
+    <a class="nav-btn" href="#gnews_ohs" data-id="gnews_ohs"><span class="nav-dot" style="background:#7c3aed"></span><span class="nav-name">職安衛動態</span><span class="nav-count">9</span></a>
+    <a class="nav-btn" href="#gnews_law" data-id="gnews_law"><span class="nav-dot" style="background:#0891b2"></span><span class="nav-name">法規更新</span><span class="nav-count">3</span></a>
     </div>
   </aside>
 
   <main>
     <div class="page-hero">
-      <h2>法規更新與重大職災新聞情報</h2>
-      <p>自動彙整職安署公告、最新消息及相關新聞，工作日每四小時自動更新。</p>
-      <div class="updated-at">🕐 最後更新：2026-05-27 08:54</div>
-    </div>
-    
-  <section class="n-section" id="osha_news">
-    <details open>
-      <summary class="sec-title">
-        <span class="sec-bar"></span>
-        <span class="sec-name">職安署最新消息</span>
-        <span class="sec-count">8</span>
-        <span class="sec-arrow">▾</span>
-      </summary>
-      <div class="sec-body">
-        <div class="n-card">
-          <div class="n-meta">
-            <span class="badge b-blue">職安署最新消息</span>
-            <span class="n-date">2026-05-19</span>
-          </div>
-          <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48419/203904/" target="_blank" rel="noopener">網路流傳「只要同事訂雞排沒揪就是職場霸凌」嗎？答案是：要同時符合5大要件，經過調查程序後，才能認定是職場霸凌</a>
-          <p class="n-desc">關於近期網路上流傳許多職場「踩霸凌紅線」行為的說法，容易造成誤解，例如，只要同事們一起訂雞排沒揪就是職場霸凌？只要主管不給員工請假就是職場霸凌？在工作群組中散布同事負面言論也是踩到霸凌的紅線？或是其他令人不舒服的對待方式。 勞動部表示，職場中難免會有人與人之間的意見不合、口角衝突等，這些令人不愉快或…</p>
+      <div class="hero-row">
+        <div>
+          <h2>法規更新與重大職災新聞情報</h2>
+          <p>自動彙整職安署公告、最新消息及相關新聞，工作日每四小時自動更新。</p>
         </div>
-        <div class="n-card">
-          <div class="n-meta">
-            <span class="badge b-blue">職安署最新消息</span>
-            <span class="n-date">2026-05-19</span>
-          </div>
-          <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48419/203886/" target="_blank" rel="noopener">落實外部公正調查機制，勞動部啟動職場霸凌調查培訓及建置人才庫</a>
-          <p class="n-desc">因應職安法職場霸凌防治新規範，勞動部特別訂定「職場霸凌調查專業人士培訓及專業人才庫建置要點」，建立人才查詢平台，協助雇主與地方政府在處理職場霸凌申訴案件時，能迅速遴選適當專家介入協助，建立公正、客觀及公平的職場霸凌申訴調查處置機制，並將自今(115)年6月起於全國辦理20場次培訓，至少目標培訓1,0…</p>
-        </div>
-        <div class="n-card">
-          <div class="n-meta">
-            <span class="badge b-blue">職安署最新消息</span>
-            <span class="n-date">2026-05-19</span>
-          </div>
-          <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48419/203872/" target="_blank" rel="noopener">防範戶外熱危害 勞動部啟動高溫專案檢查及改善追蹤機制</a>
-          <p class="n-desc">近期各地氣溫逐漸升高，為防止勞工於戶外作業發生熱中暑、熱衰竭等職業災害，勞動部自6月1日起將同步展開雙軌防護機制，除啟動「戶外高溫專案檢查」，針對營造、道路修繕等高風險作業場所加強勞動檢查外，另辦理「熱危害改善追蹤查核」，督促事業單位確實提供遮陽、降溫、飲水及休息等防護措施，保障戶外作業勞工安全健康…</p>
-        </div>
-        <div class="n-card">
-          <div class="n-meta">
-            <span class="badge b-blue">職安署最新消息</span>
-            <span class="n-date">2026-05-08</span>
-          </div>
-          <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48419/203630/" target="_blank" rel="noopener">強化高風險作業風險評估及預防措施 勞動部預告「職業安全衛生設施規則」修正草案</a>
-          <p class="n-desc">鑑於近年國內發生多起廠場有機過氧化物、熱媒油火災事故及國際發生硝酸銨爆炸事故，且部分事業單位在進行具墜落、倒塌、崩塌等高風險作業時，仍未落實風險評估與預防措施；另對於機械設備維修作業亦常見未管制停機作業，導致重大職業災害發生，亟需透過制度修正強化管理與預防機制，勞動部已邀集各部會、相關公(協)會及專…</p>
-        </div>
-        <div class="n-card">
-          <div class="n-meta">
-            <span class="badge b-blue">職安署最新消息</span>
-            <span class="n-date">2026-05-06</span>
-          </div>
-          <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48419/203493/" target="_blank" rel="noopener">防範戶外高溫作業危害 職安署115年防護設施補助申請開跑</a>
-          <p class="n-desc">為因應近年夏季極端高溫日益頻繁，戶外工作者面臨的熱危害風險持續升高，勞動部職安署於5月6日修正發布「改善安全衛生設施及器具補助作業要點」，開始受理中小企業及自營作業者申請高溫作業相關防護設施、器具及個人防護具，以協助其有效應對即將到來的夏季炎熱氣候。 勞動部表示，本次修正重點聚焦於長時間在戶外作業的…</p>
-        </div>
-        <div class="n-card">
-          <div class="n-meta">
-            <span class="badge b-blue">職安署最新消息</span>
-            <span class="n-date">2026-05-05</span>
-          </div>
-          <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48419/203458/" target="_blank" rel="noopener">勞動部公布115年第1季重大職災死亡統計，降幅15％，將持續強化職場減災行動</a>
-          <p class="n-desc">勞動部今（5）日公布115年第1季全產業重大職業災害死亡統計，截至3月31日止，全產業重大職災死亡人數為50人，較114年同期59人減少9人，降幅約15％，顯示整體職災死亡人數呈現下降趨勢。 勞動部指出，整體職災雖持續改善，惟營造業仍為職業災害風險較高之產業。115年第1季營造業死亡人數為27人，占…</p>
-        </div>
-        <div class="n-card">
-          <div class="n-meta">
-            <span class="badge b-blue">職安署最新消息</span>
-            <span class="n-date">2026-05-05</span>
-          </div>
-          <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48419/203416/" target="_blank" rel="noopener">翻轉3K產業工作環境，職安署攜手產業公會啟動改善行動，打造安全健康職場</a>
-          <p class="n-desc">為提升特定製程(3K)產業健康安全工作環境，促進國人就業，勞動部於今(4)日假台大醫院國際會議中心舉辦「特定製程產業工作環境改善合作伙伴啟動」活動。在洪申翰部長見證下，由職安署林毓堂署長與鑄造品工業、表面處理工業、橡膠暨彈性體工業、塑膠製品工業、流體傳動工業及黏性膠帶工業等6大產業公會理事長共同啟動…</p>
-        </div>
-        <div class="n-card">
-          <div class="n-meta">
-            <span class="badge b-blue">職安署最新消息</span>
-            <span class="n-date">2026-04-30</span>
-          </div>
-          <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48419/202870/" target="_blank" rel="noopener">落實營造工程源頭防災 勞動部預告「工程安全設計及統合管理辦法」條文草案</a>
-          <p class="n-desc">因應《職業安全衛生法》新增第15條之1及第27條之1，勞動部已邀集各部會、相關公(協)會及專業團體共同研商，分別於北、中、南3區辦理說明會收集意見，完成附屬法規《工程安全設計及統合管理辦法》草案，並自115年4月27日起預告30日，持續廣納各界意見。 勞動部表示，依《職業安全衛生法》第15條之1第4…</p>
+        <div class="toggle-btns">
+          <button class="toggle-btn" onclick="toggleAll(true)">全部展開</button>
+          <button class="toggle-btn" onclick="toggleAll(false)">全部收起</button>
         </div>
       </div>
-    </details>
-  </section>
+      <div class="updated-at">🕐 最後更新：2026-05-27 09:03</div>
+    </div>
+    
   <section class="n-section" id="osha_announce">
     <details open>
       <summary class="sec-title">
@@ -272,7 +207,7 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
       <summary class="sec-title">
         <span class="sec-bar"></span>
         <span class="sec-name">重大職災新聞</span>
-        <span class="sec-count">2</span>
+        <span class="sec-count">3</span>
         <span class="sec-arrow">▾</span>
       </summary>
       <div class="sec-body">
@@ -283,6 +218,14 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
           </div>
           <a class="n-title" href="https://news.google.com/rss/articles/CBMiS0FVX3lxTE1CX3RqQV9mQmlqdWVHSk9qNVJsaGx0ZG5nQlJ3cnd0RTIyWENtR3o0LXNBbzQyczl6VDBpOFVZaUREVG80ZEhsQUtpOA?oc=5" target="_blank" rel="noopener">高污染、重大職災企業仍獲頒永續獎，環團憂漂綠漏洞恐衝擊國際競爭力</a>
           <p class="n-desc">高污染、重大職災企業仍獲頒永續獎，環團憂漂綠漏洞恐衝擊國際競爭力&nbsp;&nbsp;CSR@天下</p>
+        </div>
+        <div class="n-card">
+          <div class="n-meta">
+            <span class="badge b-red">重大職災新聞</span>
+            <span class="n-date">2026-05-19</span>
+          </div>
+          <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48419/203872/" target="_blank" rel="noopener">防範戶外熱危害 勞動部啟動高溫專案檢查及改善追蹤機制</a>
+          <p class="n-desc">近期各地氣溫逐漸升高，為防止勞工於戶外作業發生熱中暑、熱衰竭等職業災害，勞動部自6月1日起將同步展開雙軌防護機制，除啟動「戶外高溫專案檢查」，針對營造、道路修繕等高風險作業場所加強勞動檢查外，另辦理「熱危害改善追蹤查核」，督促事業單位確實提供遮陽、降溫、飲水及休息等防護措施，保障戶外作業勞工安全健康…</p>
         </div>
         <div class="n-card">
           <div class="n-meta">
@@ -300,10 +243,18 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
       <summary class="sec-title">
         <span class="sec-bar"></span>
         <span class="sec-name">職安衛動態</span>
-        <span class="sec-count">7</span>
+        <span class="sec-count">9</span>
         <span class="sec-arrow">▾</span>
       </summary>
       <div class="sec-body">
+        <div class="n-card">
+          <div class="n-meta">
+            <span class="badge b-purple">職安衛動態</span>
+            <span class="n-date">2026-05-26</span>
+          </div>
+          <a class="n-title" href="https://news.google.com/rss/articles/CBMiVkFVX3lxTFBSZXZEYlVPMlhoTS1XdG1qUnZPS3dCS01SUmMxSXBZVjdUX1B2ZExZX0dvdGpDUVpMc3lKakxjbjN3amdSSGhkUTBfTVJHTXFMUzk0djln?oc=5" target="_blank" rel="noopener">港務公司通過ISO/CNS 45001追查稽核職安管理成效獲肯定| 中華日報</a>
+          <p class="n-desc">港務公司通過ISO/CNS 45001追查稽核職安管理成效獲肯定| 中華日報&nbsp;&nbsp;LINE TODAY</p>
+        </div>
         <div class="n-card">
           <div class="n-meta">
             <span class="badge b-purple">職安衛動態</span>
@@ -357,6 +308,14 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
             <span class="badge b-purple">職安衛動態</span>
             <span class="n-date">2026-05-19</span>
           </div>
+          <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48419/203904/" target="_blank" rel="noopener">網路流傳「只要同事訂雞排沒揪就是職場霸凌」嗎？答案是：要同時符合5大要件，經過調查程序後，才能認定是職場霸凌</a>
+          <p class="n-desc">關於近期網路上流傳許多職場「踩霸凌紅線」行為的說法，容易造成誤解，例如，只要同事們一起訂雞排沒揪就是職場霸凌？只要主管不給員工請假就是職場霸凌？在工作群組中散布同事負面言論也是踩到霸凌的紅線？或是其他令人不舒服的對待方式。 勞動部表示，職場中難免會有人與人之間的意見不合、口角衝突等，這些令人不愉快或…</p>
+        </div>
+        <div class="n-card">
+          <div class="n-meta">
+            <span class="badge b-purple">職安衛動態</span>
+            <span class="n-date">2026-05-19</span>
+          </div>
           <a class="n-title" href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE5tSExjRkRueEh1V3ViMjRiYmJTNUx1NmlGNHF0WmZJdmp3OVZuYTJvWTM3aDJGajZoY1J1WVQtaUhDZFJkbDZOaUVYck45X2IzeTBYVEVhckduY3RzQ0Vz?oc=5" target="_blank" rel="noopener">職安法新制7月上路 中市勞工局辦說明會陪企業打造安心職場</a>
           <p class="n-desc">職安法新制7月上路 中市勞工局辦說明會陪企業打造安心職場&nbsp;&nbsp;taichung.gov.tw</p>
         </div>
@@ -368,7 +327,7 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
       <summary class="sec-title">
         <span class="sec-bar"></span>
         <span class="sec-name">法規更新</span>
-        <span class="sec-count">2</span>
+        <span class="sec-count">3</span>
         <span class="sec-arrow">▾</span>
       </summary>
       <div class="sec-body">
@@ -388,6 +347,14 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
           <a class="n-title" href="https://news.google.com/rss/articles/CBMiXEFVX3lxTFBwNVlvVnBrOV9ZWndQV1pwSW5lTU82NkRhSU82ZXFraE9DQWpoWElPd3RnUmZHaWtnQnBVZ2l1a2RuU085anRCSEZsbUxjNGNpZG1WNm1ibTBJZVNJ?oc=5" target="_blank" rel="noopener">勞動部提醒：聘僱已滿65歲之高齡勞工，雇主不得再以「年滿65歲」為由強制退休。勞動部提供繼續僱用高齡者補助！</a>
           <p class="n-desc">勞動部提醒：聘僱已滿65歲之高齡勞工，雇主不得再以「年滿65歲」為由強制退休。勞動部提供繼續僱用高齡者補助！&nbsp;&nbsp;mol.gov.tw</p>
         </div>
+        <div class="n-card">
+          <div class="n-meta">
+            <span class="badge b-teal">法規更新</span>
+            <span class="n-date">2026-05-19</span>
+          </div>
+          <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48419/203886/" target="_blank" rel="noopener">落實外部公正調查機制，勞動部啟動職場霸凌調查培訓及建置人才庫</a>
+          <p class="n-desc">因應職安法職場霸凌防治新規範，勞動部特別訂定「職場霸凌調查專業人士培訓及專業人才庫建置要點」，建立人才查詢平台，協助雇主與地方政府在處理職場霸凌申訴案件時，能迅速遴選適當專家介入協助，建立公正、客觀及公平的職場霸凌申訴調查處置機制，並將自今(115)年6月起於全國辦理20場次培訓，至少目標培訓1,0…</p>
+        </div>
       </div>
     </details>
   </section>
@@ -400,6 +367,11 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
 <button id="backTop" title="回到頂端" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
+// 全部展開 / 收起
+function toggleAll(open) {
+  document.querySelectorAll('.n-section details').forEach(d => d.open = open);
+}
+
 // 回到頂部按鈕顯示控制
 const backTop = document.getElementById('backTop');
 window.addEventListener('scroll', () => {
