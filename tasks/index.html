@@ -1205,6 +1205,17 @@
                 <label for="documents">需要文件</label>
                 <textarea id="documents" name="documents" placeholder="一行一項，例如：申報截圖、簽到表、證照清冊"></textarea>
               </div>
+
+              <div class="field full" style="display:flex;gap:10px;flex-wrap:wrap">
+                <div style="flex:2;min-width:180px">
+                  <label for="fileLink">附件連結（相對路徑或網址）</label>
+                  <input id="fileLink" name="fileLink" placeholder="例如：intro/職安衛新夥伴的生存報告.html">
+                </div>
+                <div style="flex:1;min-width:120px">
+                  <label for="fileLinkLabel">按鈕顯示名稱</label>
+                  <input id="fileLinkLabel" name="fileLinkLabel" placeholder="例如：開啟簡報">
+                </div>
+              </div>
             </div>
 
             <div class="form-actions" style="margin-top:14px;">
@@ -1694,7 +1705,9 @@
         repeatCustomText: byId("repeatCustomText").value.trim(),
         tags: byId("tags").value.split(",").map((item) => item.trim()).filter(Boolean),
         description: byId("description").value.trim(),
-        documents: byId("documents").value.split(/\n/).map((item) => item.trim()).filter(Boolean)
+        documents: byId("documents").value.split(/\n/).map((item) => item.trim()).filter(Boolean),
+        fileLink: byId("fileLink").value.trim(),
+        fileLinkLabel: byId("fileLinkLabel").value.trim()
       };
     }
 
@@ -1723,6 +1736,8 @@
       byId("tags").value = (task.tags || []).join(", ");
       byId("description").value = task.description || "";
       byId("documents").value = (task.documents || []).join("\n");
+      byId("fileLink").value = task.fileLink || "";
+      byId("fileLinkLabel").value = task.fileLinkLabel || "";
       updateDueDateMode();
       updateRepeatFields();
     }
