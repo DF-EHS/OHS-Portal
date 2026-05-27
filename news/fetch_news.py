@@ -32,7 +32,8 @@ def _gnews(q: str) -> str:
 
 RSS_SOURCES = [
     {"id": "osha_news",      "name": "職安署最新消息", "badge": "blue",
-     "url": "https://www.osha.gov.tw/48110/48417/48419/RssList"},
+     "url": "https://www.osha.gov.tw/48110/48417/48419/RssList",
+     "redistribute": True},   # 抓取後依關鍵字分類至其他四項，不單獨顯示
     {"id": "osha_announce",  "name": "職安署公告",     "badge": "green",
      "url": "https://www.osha.gov.tw/48110/48417/48423/RssList"},
     {"id": "gnews_incident", "name": "重大職災新聞",   "badge": "red",
@@ -42,6 +43,24 @@ RSS_SOURCES = [
     {"id": "gnews_law",      "name": "法規更新",        "badge": "teal",
      "url": _gnews("勞動部法規")},
 ]
+
+# 實際顯示的分類（不含 redistribute 來源）
+DISPLAY_SOURCES = [s for s in RSS_SOURCES if not s.get("redistribute")]
+
+
+def _classify_osha(title: str, desc: str) -> str:
+    """將職安署最新消息依關鍵字歸入四個顯示分類之一。"""
+    text = title + " " + desc
+    if any(k in text for k in ["法規", "法令", "修正", "修訂", "條例", "標準",
+                                 "施行", "訂定", "發布", "規則", "辦法"]):
+        return "gnews_law"
+    if any(k in text for k in ["職災", "事故", "傷亡", "死亡", "墜落", "爆炸",
+                                 "火災", "災害", "罹災", "工安"]):
+        return "gnews_incident"
+    if any(k in text for k in ["公告", "通知", "徵求", "報名", "申請",
+                                 "辦理", "徵選", "招標", "函"]):
+        return "osha_announce"
+    return "gnews_ohs"
 
 
 # ── Cache ─────────────────────────────────────────────────────────────────────
@@ -127,16 +146,16 @@ _NAV_COLORS = {
 }
 
 def generate_html(items: list, updated_at: str) -> str:
-    by_source: dict = {s["id"]: [] for s in RSS_SOURCES}
+    by_source: dict = {s["id"]: [] for s in DISPLAY_SOURCES}
     for it in items:
         sid = it.get("source_id", "")
         if sid in by_source:
             by_source[sid].append(it)
 
-    # 左側導覽按鈕（含各分類數量）
+    # 左側導覽按鈕（含各分類數量，只顯示 DISPLAY_SOURCES）
     nav_items = []
-    for src in RSS_SOURCES:
-        count = len(by_source[src["id"]])
+    for src in DISPLAY_SOURCES:
+        count = len(by_source.get(src["id"], []))
         if not count:
             continue
         color = _NAV_COLORS.get(src["badge"], "#64748b")
@@ -151,7 +170,7 @@ def generate_html(items: list, updated_at: str) -> str:
 
     # 各來源區塊（可折疊 details/summary，預設展開）
     sections = []
-    for src in RSS_SOURCES:
+    for src in DISPLAY_SOURCES:
         src_items = by_source[src["id"]]
         if not src_items:
             continue
@@ -224,6 +243,10 @@ main{{flex:1;min-width:0;padding:32px 36px 60px}}
 .page-hero h2{{font-size:20px;font-weight:800;color:var(--navy);margin-bottom:6px}}
 .page-hero p{{font-size:13px;color:var(--sub);margin-bottom:10px}}
 .updated-at{{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--sub);background:#f8fafc;padding:4px 12px;border-radius:20px;border:1px solid var(--border)}}
+.hero-row{{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}}
+.toggle-btns{{display:flex;gap:6px;flex-shrink:0;margin-top:4px}}
+.toggle-btn{{padding:5px 14px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--sub);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}}
+.toggle-btn:hover{{background:var(--navy);color:#fff;border-color:var(--navy)}}
 
 /* ── Collapsible sections ── */
 .n-section{{margin-bottom:36px;scroll-margin-top:60px}}
@@ -295,8 +318,16 @@ footer{{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);bord
 
   <main>
     <div class="page-hero">
-      <h2>法規更新與重大職災新聞情報</h2>
-      <p>自動彙整職安署公告、最新消息及相關新聞，工作日每四小時自動更新。</p>
+      <div class="hero-row">
+        <div>
+          <h2>法規更新與重大職災新聞情報</h2>
+          <p>自動彙整職安署公告、最新消息及相關新聞，工作日每四小時自動更新。</p>
+        </div>
+        <div class="toggle-btns">
+          <button class="toggle-btn" onclick="toggleAll(true)">全部展開</button>
+          <button class="toggle-btn" onclick="toggleAll(false)">全部收起</button>
+        </div>
+      </div>
       <div class="updated-at">🕐 最後更新：{updated_at}</div>
     </div>
     {body}
@@ -309,6 +340,11 @@ footer{{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);bord
 <button id="backTop" title="回到頂端" onclick="window.scrollTo({{top:0,behavior:'smooth'}})">↑</button>
 
 <script>
+// 全部展開 / 收起
+function toggleAll(open) {{
+  document.querySelectorAll('.n-section details').forEach(d => d.open = open);
+}}
+
 // 回到頂部按鈕顯示控制
 const backTop = document.getElementById('backTop');
 window.addEventListener('scroll', () => {{
@@ -345,6 +381,16 @@ def main() -> None:
         print(f"  → {len(fetched)} items", flush=True)
         for it in fetched:
             existing[it["key"]] = it   # 新的覆蓋舊的（更新日期等欄位）
+
+    # 將 osha_news 項目重新分類至其他四個顯示分類
+    src_map = {s["id"]: s for s in RSS_SOURCES}
+    for it in existing.values():
+        if it.get("source_id") == "osha_news":
+            new_sid = _classify_osha(it.get("title", ""), it.get("desc", ""))
+            new_src = src_map[new_sid]
+            it["source_id"]   = new_sid
+            it["source_name"] = new_src["name"]
+            it["badge"]       = new_src["badge"]
 
     # 保留最近 KEEP_DAYS 天的資料，職安署文章永久保留
     cutoff = (datetime.now(timezone.utc) - timedelta(days=KEEP_DAYS)).timestamp()
