@@ -37,7 +37,10 @@ RSS_SOURCES = [
     {"id": "osha_announce",  "name": "職安署公告",     "badge": "green",
      "url": "https://www.osha.gov.tw/48110/48417/48423/RssList"},
     {"id": "gnews_incident", "name": "重大職災新聞",   "badge": "red",
-     "url": _gnews("重大職災")},
+     "url": _gnews("工安意外 OR 工安事故 OR 工廠意外 OR 工地意外 OR 工傷")},
+    {"id": "gnews_incident2","name": "重大職災新聞",   "badge": "red",
+     "url": _gnews("重大職災 OR 職業災害 OR 勞工死亡"),
+     "merge_into": "gnews_incident"},  # 合併顯示至 gnews_incident
     {"id": "gnews_ohs",      "name": "職安衛動態",     "badge": "purple",
      "url": _gnews("職業安全衛生")},
     {"id": "gnews_law",      "name": "法規更新",        "badge": "teal",
@@ -393,13 +396,24 @@ def main() -> None:
         for it in fetched:
             existing[it["key"]] = it   # 新的覆蓋舊的（更新日期等欄位）
 
-    # 將 osha_news 項目重新分類至其他四個顯示分類
+    # 處理需要重新分類或合併的來源
     src_map = {s["id"]: s for s in RSS_SOURCES}
     for it in existing.values():
-        if it.get("source_id") == "osha_news":
+        sid = it.get("source_id", "")
+        src = src_map.get(sid)
+        if src is None:
+            continue
+        if src.get("redistribute"):
+            # osha_news：依關鍵字分類
             new_sid = _classify_osha(it.get("title", ""), it.get("desc", ""))
             new_src = src_map[new_sid]
             it["source_id"]   = new_sid
+            it["source_name"] = new_src["name"]
+            it["badge"]       = new_src["badge"]
+        elif src.get("merge_into"):
+            # gnews_incident2 等合併來源：強制指向目標分類
+            new_src = src_map[src["merge_into"]]
+            it["source_id"]   = new_src["id"]
             it["source_name"] = new_src["name"]
             it["badge"]       = new_src["badge"]
 
