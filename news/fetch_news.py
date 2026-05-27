@@ -180,7 +180,15 @@ def generate_html(items: list, updated_at: str) -> str:
             f'<span class="nav-count">{count}</span>'
             f'</a>'
         )
-    sidebar = "\n    ".join(nav_items)
+    today_nav = (
+        '<a class="nav-btn" href="#today-section" data-id="today-section" id="today-nav" style="display:none">'
+        '<span class="nav-dot" style="background:#e11d48"></span>'
+        '<span class="nav-name">📌 今日情報</span>'
+        '<span class="nav-count" id="today-count">0</span>'
+        '</a>'
+        '<div style="height:1px;background:var(--border);margin:6px 4px 10px"></div>'
+    )
+    sidebar = today_nav + "\n    " + "\n    ".join(nav_items) if nav_items else today_nav
 
     # 各來源區塊（可折疊 details/summary，預設展開）
     sections = []
@@ -196,7 +204,7 @@ def generate_html(items: list, updated_at: str) -> str:
             if it.get("desc"):
                 desc_html = f'\n          <p class="n-desc">{it["desc"]}</p>'
             cards.append(f"""
-        <div class="n-card">
+        <div class="n-card" data-date="{date_str}">
           <div class="n-meta">
             <span class="badge b-{it['badge']}">{it['source_name']}</span>
             <span class="n-date">{date_str}</span>
@@ -217,7 +225,20 @@ def generate_html(items: list, updated_at: str) -> str:
     </details>
   </section>""")
 
-    body = "".join(sections) if sections else '<p class="no-news">目前暫無消息，請稍後再試。</p>'
+    today_sec = (
+        '\n  <section class="n-section" id="today-section" style="display:none">'
+        '\n    <details open>'
+        '\n      <summary class="sec-title">'
+        '\n        <span class="sec-bar" style="background:#e11d48"></span>'
+        '\n        <span class="sec-name">今日情報</span>'
+        '\n        <span class="sec-count" id="today-sec-count">0</span>'
+        '\n        <span class="sec-arrow">▾</span>'
+        '\n      </summary>'
+        '\n      <div class="sec-body" id="today-cards"></div>'
+        '\n    </details>'
+        '\n  </section>'
+    )
+    body = today_sec + ("".join(sections) if sections else '<p class="no-news">目前暫無消息，請稍後再試。</p>')
 
     return f"""<!DOCTYPE html>
 <html lang="zh-TW">
@@ -284,6 +305,7 @@ details:not([open]) .sec-arrow{{transform:rotate(-90deg)}}
 .b-purple{{background:#ede9fe;color:#6d28d9}}
 .b-teal  {{background:#ccfbf1;color:#0e7490}}
 .n-date{{font-size:12px;color:var(--sub)}}
+.n-new{{font-size:10px;font-weight:700;color:#fff;background:#e11d48;border-radius:4px;padding:1px 5px;margin-left:4px;vertical-align:middle;letter-spacing:.3px}}
 .n-title{{display:block;font-size:15px;font-weight:700;color:var(--navy);text-decoration:none;line-height:1.4;margin-bottom:4px}}
 .n-title:hover{{color:var(--blue);text-decoration:underline}}
 .n-desc{{font-size:13px;color:var(--sub);line-height:1.65;border-left:3px solid var(--border);padding-left:11px;margin-top:10px}}
@@ -358,6 +380,35 @@ footer{{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);bord
 function toggleAll(open) {{
   document.querySelectorAll('.n-section details').forEach(d => d.open = open);
 }}
+
+// 今日情報：標記 NEW! 並建立今日分區
+(function() {{
+  const today = new Date().toLocaleDateString('sv');
+  const matched = [];
+  document.querySelectorAll('.n-card[data-date]').forEach(card => {{
+    if (card.dataset.date === today) {{
+      const dateEl = card.querySelector('.n-date');
+      if (dateEl) {{
+        const b = document.createElement('span');
+        b.className = 'n-new';
+        b.textContent = 'NEW!';
+        dateEl.after(b);
+      }}
+      matched.push(card);
+    }}
+  }});
+  if (!matched.length) return;
+  const sec   = document.getElementById('today-section');
+  const tbody = document.getElementById('today-cards');
+  const nav   = document.getElementById('today-nav');
+  const cnt   = document.getElementById('today-count');
+  const scnt  = document.getElementById('today-sec-count');
+  matched.forEach(c => tbody.appendChild(c.cloneNode(true)));
+  sec.style.display = '';
+  nav.style.display = '';
+  cnt.textContent  = matched.length;
+  scnt.textContent = matched.length;
+}})();
 
 // 回到頂部按鈕顯示控制
 const backTop = document.getElementById('backTop');
