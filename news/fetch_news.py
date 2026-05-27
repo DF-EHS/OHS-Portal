@@ -133,20 +133,23 @@ def generate_html(items: list, updated_at: str) -> str:
         if sid in by_source:
             by_source[sid].append(it)
 
-    # 左側導覽按鈕（只顯示有內容的來源）
+    # 左側導覽按鈕（含各分類數量）
     nav_items = []
     for src in RSS_SOURCES:
-        if not by_source[src["id"]]:
+        count = len(by_source[src["id"]])
+        if not count:
             continue
         color = _NAV_COLORS.get(src["badge"], "#64748b")
         nav_items.append(
             f'<a class="nav-btn" href="#{src["id"]}" data-id="{src["id"]}">'
             f'<span class="nav-dot" style="background:{color}"></span>'
-            f'{src["name"]}</a>'
+            f'<span class="nav-name">{src["name"]}</span>'
+            f'<span class="nav-count">{count}</span>'
+            f'</a>'
         )
     sidebar = "\n    ".join(nav_items)
 
-    # 各來源區塊（section 加上 id 供錨點跳轉）
+    # 各來源區塊（可折疊 details/summary，預設展開）
     sections = []
     for src in RSS_SOURCES:
         src_items = by_source[src["id"]]
@@ -158,18 +161,27 @@ def generate_html(items: list, updated_at: str) -> str:
             date_str = dt.astimezone(TW).strftime("%Y-%m-%d") if dt else it.get("pubDate", "")[:10]
             desc_html = ""
             if it.get("desc"):
-                desc_html = f'\n        <p class="n-desc">{it["desc"]}</p>'
+                desc_html = f'\n          <p class="n-desc">{it["desc"]}</p>'
             cards.append(f"""
-      <div class="n-card">
-        <div class="n-meta">
-          <span class="badge b-{it['badge']}">{it['source_name']}</span>
-          <span class="n-date">{date_str}</span>
-        </div>
-        <a class="n-title" href="{it['link']}" target="_blank" rel="noopener">{it['title']}</a>{desc_html}
-      </div>""")
+        <div class="n-card">
+          <div class="n-meta">
+            <span class="badge b-{it['badge']}">{it['source_name']}</span>
+            <span class="n-date">{date_str}</span>
+          </div>
+          <a class="n-title" href="{it['link']}" target="_blank" rel="noopener">{it['title']}</a>{desc_html}
+        </div>""")
         sections.append(f"""
   <section class="n-section" id="{src['id']}">
-    <h2 class="sec-title">{src['name']}</h2>{"".join(cards)}
+    <details open>
+      <summary class="sec-title">
+        <span class="sec-bar"></span>
+        <span class="sec-name">{src['name']}</span>
+        <span class="sec-count">{len(src_items)}</span>
+        <span class="sec-arrow">▾</span>
+      </summary>
+      <div class="sec-body">{"".join(cards)}
+      </div>
+    </details>
   </section>""")
 
     body = "".join(sections) if sections else '<p class="no-news">目前暫無消息，請稍後再試。</p>'
@@ -193,27 +205,38 @@ header h1{{font-size:17px;font-weight:700;flex:1}}
 .hdr-brand img{{height:24px;object-fit:contain}}
 .hdr-brand span{{font-size:12px;color:#94a3b8;font-weight:600;white-space:nowrap}}
 
-/* ── Layout ── */
-.layout{{display:flex;flex:1;max-width:1140px;margin:0 auto;width:100%;padding:0 24px;gap:28px}}
-
-/* ── Sidebar ── */
-.sidebar{{width:172px;flex-shrink:0;padding-top:32px}}
-.sidebar-inner{{position:sticky;top:68px}}
-.nav-label{{font-size:10px;font-weight:700;color:var(--sub);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}}
-.nav-btn{{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:9px;font-size:13px;font-weight:600;color:var(--sub);text-decoration:none;margin-bottom:3px;border-left:3px solid transparent;transition:background .15s,color .15s,border-color .15s}}
-.nav-btn:hover{{background:var(--card);color:var(--text)}}
-.nav-btn.active{{background:var(--card);color:var(--navy);border-left-color:var(--navy);box-shadow:0 1px 5px rgba(0,0,0,.06)}}
-.nav-dot{{width:9px;height:9px;border-radius:50%;flex-shrink:0}}
+/* ── Layout（側欄緊靠左緣，full-height panel） ── */
+.layout{{display:flex;flex:1}}
+.sidebar{{width:185px;flex-shrink:0;background:var(--card);border-right:1px solid var(--border);align-self:stretch}}
+.sidebar-inner{{position:sticky;top:46px;height:calc(100vh - 46px);overflow-y:auto;padding:20px 10px 20px 14px}}
+.nav-label{{font-size:10px;font-weight:700;color:var(--sub);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}}
+.nav-btn{{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:12.5px;font-weight:600;color:var(--sub);text-decoration:none;margin-bottom:2px;border-left:3px solid transparent;transition:background .15s,color .15s,border-color .15s}}
+.nav-btn:hover{{background:var(--bg);color:var(--text)}}
+.nav-btn.active{{background:var(--bg);color:var(--navy);border-left-color:var(--navy)}}
+.nav-dot{{width:8px;height:8px;border-radius:50%;flex-shrink:0}}
+.nav-name{{flex:1;line-height:1.3}}
+.nav-count{{font-size:11px;background:var(--border);color:var(--sub);padding:1px 6px;border-radius:10px;flex-shrink:0}}
+.nav-btn.active .nav-count{{background:#dbeafe;color:#1d4ed8}}
 
 /* ── Main ── */
-main{{flex:1;min-width:0;padding:32px 0 60px}}
+main{{flex:1;min-width:0;padding:32px 36px 60px}}
 .page-hero{{margin-bottom:28px}}
 .page-hero h2{{font-size:20px;font-weight:800;color:var(--navy);margin-bottom:6px}}
 .page-hero p{{font-size:13px;color:var(--sub);margin-bottom:10px}}
 .updated-at{{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--sub);background:#f8fafc;padding:4px 12px;border-radius:20px;border:1px solid var(--border)}}
-.n-section{{margin-bottom:40px;scroll-margin-top:80px}}
-.sec-title{{font-size:12px;font-weight:700;color:var(--sub);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}}
-.sec-title::before{{content:'';display:inline-block;width:4px;height:15px;border-radius:2px;background:var(--navy);flex-shrink:0}}
+
+/* ── Collapsible sections ── */
+.n-section{{margin-bottom:36px;scroll-margin-top:60px}}
+details>summary{{list-style:none;cursor:pointer}}
+details>summary::-webkit-details-marker{{display:none}}
+.sec-title{{display:flex;align-items:center;gap:9px;padding-bottom:10px;border-bottom:2px solid var(--border);margin-bottom:14px;user-select:none}}
+.sec-bar{{width:4px;height:16px;border-radius:2px;background:var(--navy);flex-shrink:0}}
+.sec-name{{font-size:12px;font-weight:700;color:var(--sub);letter-spacing:2px;text-transform:uppercase;flex:1}}
+.sec-count{{font-size:11px;background:var(--border);color:var(--sub);padding:1px 7px;border-radius:10px}}
+.sec-arrow{{font-size:13px;color:var(--sub);transition:transform .2s;flex-shrink:0}}
+details:not([open]) .sec-arrow{{transform:rotate(-90deg)}}
+.sec-body{{padding-top:2px}}
+
 .n-card{{background:var(--card);border-radius:12px;padding:16px 18px;margin-bottom:10px;box-shadow:0 1px 5px rgba(0,0,0,.06);border:1px solid var(--border);transition:box-shadow .15s}}
 .n-card:hover{{box-shadow:0 4px 18px rgba(0,0,0,.11)}}
 .n-meta{{display:flex;align-items:center;gap:8px;margin-bottom:8px}}
@@ -228,17 +251,25 @@ main{{flex:1;min-width:0;padding:32px 0 60px}}
 .n-title:hover{{color:var(--blue);text-decoration:underline}}
 .n-desc{{font-size:13px;color:var(--sub);line-height:1.65;border-left:3px solid var(--border);padding-left:11px;margin-top:10px}}
 .no-news{{text-align:center;color:var(--sub);font-size:14px;padding:60px 0}}
+
+/* ── 回到頂部按鈕（左下角） ── */
+#backTop{{position:fixed;bottom:24px;left:24px;z-index:99;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(0,0,0,.2);opacity:0;transform:translateY(10px);transition:opacity .2s,transform .2s;pointer-events:none}}
+#backTop.show{{opacity:1;transform:translateY(0);pointer-events:auto}}
+#backTop:hover{{background:#162d4a}}
+
 footer{{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);border-top:1px solid var(--border);background:var(--card)}}
 
-/* ── Mobile：側欄改為頂部橫向捲動列 ── */
+/* ── Mobile ── */
 @media(max-width:720px){{
-  .layout{{flex-direction:column;padding:0 14px;gap:0}}
-  .sidebar{{width:100%;padding-top:16px}}
-  .sidebar-inner{{position:static;display:flex;gap:6px;overflow-x:auto;padding-bottom:12px}}
+  .layout{{flex-direction:column}}
+  .sidebar{{width:100%;border-right:none;border-bottom:1px solid var(--border)}}
+  .sidebar-inner{{position:static;height:auto;display:flex;gap:6px;overflow-x:auto;padding:12px 14px}}
   .nav-label{{display:none}}
-  .nav-btn{{flex-shrink:0;border-left:none;border-bottom:3px solid transparent;border-radius:20px;padding:6px 14px;background:var(--card);white-space:nowrap}}
-  .nav-btn.active{{border-bottom-color:var(--navy);border-left-color:transparent}}
-  main{{padding:16px 0 40px}}
+  .nav-btn{{flex-shrink:0;border-left:none;border-radius:20px;padding:6px 12px;white-space:nowrap}}
+  .nav-btn.active{{border-left-color:transparent;background:#dbeafe;color:#1d4ed8}}
+  .nav-count{{display:none}}
+  main{{padding:20px 16px 40px}}
+  #backTop{{bottom:16px;left:16px}}
 }}
 </style>
 </head>
@@ -275,8 +306,16 @@ footer{{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);bord
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 資料來源：勞動部職業安全衛生署、Google News</footer>
 
+<button id="backTop" onclick="window.scrollTo({{top:0,behavior:'smooth'}})">↑ 回到頂部</button>
+
 <script>
-// 滾動時自動高亮對應的左側按鈕
+// 回到頂部按鈕顯示控制
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => {{
+  backTop.classList.toggle('show', window.scrollY > 300);
+}}, {{passive: true}});
+
+// 滾動時自動高亮左側對應按鈕
 const sections = document.querySelectorAll('.n-section[id]');
 const navBtns  = document.querySelectorAll('.nav-btn[data-id]');
 if (sections.length && 'IntersectionObserver' in window) {{
