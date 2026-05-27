@@ -1391,6 +1391,25 @@
     ];
 
     let tasks = loadTasks();
+
+    // 自動注入固定任務（若尚未存在於 localStorage）
+    (function injectMissingTasks() {
+      const injections = [
+        Object.assign(
+          seed("自我介紹準備", "人員與設備變更", "2026-06-06T17:00", "none", "doing", "medium", "職安", "向部門同事介紹職安衛工作現況與個人背景。"),
+          { fileLink: "intro/職安衛新夥伴的生存報告.html", fileLinkLabel: "職安衛新夥伴的生存報告" }
+        ),
+      ];
+      let dirty = false;
+      injections.forEach(item => {
+        if (!tasks.some(t => t.title === item.title)) {
+          tasks.push(item);
+          dirty = true;
+        }
+      });
+      if (dirty) localStorage.setItem("osh-self-managed-tasks-v1", JSON.stringify(tasks));
+    })();
+
     let categories = loadCategories();
     let activeView = "form";
     let editingId = null;
