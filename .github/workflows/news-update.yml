@@ -2,9 +2,11 @@ name: OHS News Intelligence Update
 
 on:
   schedule:
-    # 工作日每四小時執行一次 (UTC 0,4,8,12 = 台灣時間 8,12,16,20 點)
     - cron: '0 0,4,8,12 * * 1-5'
   workflow_dispatch:
+  push:
+    paths:
+      - 'news/fetch_news.py'
 
 permissions:
   contents: write
@@ -22,12 +24,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: pip install anthropic
-
       - name: Fetch news and generate HTML
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python news/fetch_news.py
 
       - name: Commit and push changes
