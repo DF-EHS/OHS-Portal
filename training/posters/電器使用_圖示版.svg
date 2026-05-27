@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420mm" height="297mm" viewBox="0 0 4200 2970" role="img" aria-labelledby="title desc">
+  <title id="title">下班前電器使用標語海報圖示版</title>
+  <desc id="desc">A3 橫式海報，三個大區塊提醒關電源、拔插頭、看異常。</desc>
+  <defs>
+    <style>
+      .font {
+        font-family: "Microsoft JhengHei", "Noto Sans TC", "PingFang TC", Arial, sans-serif;
+        letter-spacing: 0;
+      }
+      .title { font-weight: 900; }
+      .label { font-weight: 800; }
+      .hint { font-weight: 700; }
+      .line {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+    <filter id="cardShadow" x="-8%" y="-8%" width="116%" height="120%">
+      <feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#092d35" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+
+  <rect width="4200" height="2970" fill="#f5f7ef"/>
+
+  <g filter="url(#cardShadow)">
+    <rect x="90" y="120" width="1265" height="2730" rx="78" fill="#ffffff" stroke="#d9e1dc" stroke-width="8"/>
+    <rect x="1468" y="120" width="1265" height="2730" rx="78" fill="#ffffff" stroke="#d9e1dc" stroke-width="8"/>
+    <rect x="2845" y="120" width="1265" height="2730" rx="78" fill="#ffffff" stroke="#d9e1dc" stroke-width="8"/>
+  </g>
+
+  <g class="font" text-anchor="middle">
+    <g transform="translate(90 120)">
+      <circle cx="632.5" cy="585" r="285" fill="#f2c84b"/>
+      <text x="632.5" y="710" fill="#173f4a" font-size="435" class="title">關</text>
+      <text x="632.5" y="1320" fill="#173f4a" font-size="255" class="label">關電源</text>
+      <text x="632.5" y="1545" fill="#5a7178" font-size="118" class="hint">不用的電器 OFF</text>
+      <g transform="translate(275 1830)">
+        <rect x="0" y="0" width="715" height="205" rx="102" fill="#e8f0ec" stroke="#174a59" stroke-width="44"/>
+        <circle cx="240" cy="102" r="78" fill="#174a59"/>
+        <path class="line" d="M470 60 L560 130" stroke="#e05d4f" stroke-width="44"/>
+      </g>
+    </g>
+
+    <g transform="translate(1468 120)">
+      <circle cx="632.5" cy="585" r="285" fill="#8bcfba"/>
+      <text x="632.5" y="710" fill="#173f4a" font-size="435" class="title">拔</text>
+      <text x="632.5" y="1320" fill="#173f4a" font-size="255" class="label">拔插頭</text>
+      <text x="632.5" y="1545" fill="#5a7178" font-size="118" class="hint">充電器、電熱設備</text>
+      <g transform="translate(205 1770)">
+        <path class="line" d="M35 245 C175 245 185 85 355 85" stroke="#174a59" stroke-width="46"/>
+        <rect x="350" y="20" width="210" height="170" rx="48" fill="#e8f0ec" stroke="#174a59" stroke-width="44"/>
+        <path class="line" d="M565 62 L690 62 M565 145 L690 145" stroke="#174a59" stroke-width="42"/>
+        <path class="line" d="M752 42 L865 160" stroke="#e05d4f" stroke-width="46"/>
+      </g>
+    </g>
+
+    <g transform="translate(2845 120)">
+      <circle cx="632.5" cy="585" r="285" fill="#ee8a6a"/>
+      <text x="632.5" y="710" fill="#173f4a" font-size="435" class="title">看</text>
+      <text x="632.5" y="1320" fill="#173f4a" font-size="255" class="label">看異常</text>
+      <text x="632.5" y="1545" fill="#5a7178" font-size="118" class="hint">異味、發熱、冒煙</text>
+      <g transform="translate(260 1760)">
+        <circle cx="290" cy="245" r="155" fill="#e8f0ec" stroke="#174a59" stroke-width="46"/>
+        <path class="line" d="M400 355 L625 580" stroke="#174a59" stroke-width="54"/>
+        <path class="line" d="M725 105 L725 350" stroke="#e05d4f" stroke-width="48"/>
+        <circle cx="725" cy="470" r="36" fill="#e05d4f"/>
+      </g>
+    </g>
+  </g>
+</svg>
