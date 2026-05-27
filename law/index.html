@@ -909,6 +909,9 @@ initSites();
 if (location.hash && location.hash !== '#') {
   onHashChange();
 }
+if (new URLSearchParams(location.search).get('chat') === '1') {
+  setTimeout(toggleChat, 300);
+}
 </script>
 </body>
 </html>
