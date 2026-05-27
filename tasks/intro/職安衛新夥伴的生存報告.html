@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>職安衛新夥伴的生存報告</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1e3461;
+      --orange: #f5a520;
+      --white:  #ffffff;
+      --light:  #f5f7fa;
+      --muted:  #5a6a7a;
+    }
+
+    body {
+      font-family: "Microsoft JhengHei", "蘋方-繁", sans-serif;
+      background: #111c2d;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Wrapper (sized by JS to match scaled deck) ─── */
+    #wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    /* ── Deck: fixed 1920×1080 design canvas ────────── */
+    .deck {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 48px 128px rgba(0,0,0,.65);
+      transform-origin: top left;
+    }
+
+    /* ── Slides ──────────────────────────────────────── */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 88px 112px;
+      background: var(--white);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s ease;
+    }
+    .slide.active { opacity: 1; pointer-events: auto; }
+
+    /* ── Cover ───────────────────────────────────────── */
+    .slide-cover {
+      background: var(--navy);
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px;
+    }
+    .cover-title {
+      font-size: 6rem;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 40px;
+      letter-spacing: .03em;
+    }
+    .cover-sub {
+      font-size: 2.8rem;
+      color: var(--orange);
+      letter-spacing: .05em;
+    }
+
+    /* ── Slide heading ───────────────────────────────── */
+    .sh {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--navy);
+      border-left: 10px solid var(--orange);
+      padding-left: 32px;
+      margin-bottom: 52px;
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+
+    /* ── Two-column ──────────────────────────────────── */
+    .two-col {
+      display: flex;
+      gap: 72px;
+      flex: 1;
+      align-items: center;
+      min-height: 0;
+    }
+    .col { flex: 1; min-width: 0; }
+
+    /* ── Check list ──────────────────────────────────── */
+    .ck { list-style: none; }
+    .ck li {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 26px;
+      font-size: 1.9rem;
+      color: var(--navy);
+      line-height: 1.5;
+    }
+    .ck li .dot {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .ck li b    { color: var(--navy); }
+    .ck li span { color: var(--muted); }
+
+    /* ── Image box ───────────────────────────────────── */
+    .imgbox {
+      border-radius: 24px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #e4e8ee;
+    }
+    .imgbox img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+
+    /* ── Timeline (horizontal) ───────────────────────── */
+    .timeline-wrap { position: relative; padding-top: 44px; }
+    .tl-line {
+      position: absolute; top: 20px; left: 0; right: 0;
+      height: 4px; background: #cfd8e4;
+    }
+    .tl-nodes {
+      position: relative; z-index: 1;
+      display: flex; justify-content: space-between;
+    }
+    .tl-node {
+      display: flex; flex-direction: column;
+      align-items: center; width: 18%;
+    }
+    .tl-dot {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--orange);
+      border: 6px solid #fff;
+      box-shadow: 0 0 0 4px var(--orange);
+      margin-bottom: 28px;
+    }
+    .tl-node strong { font-size: 1.75rem; color: var(--navy); margin-bottom: 10px; display: block; text-align: center; }
+    .tl-node span   { font-size: 1.4rem;  color: var(--muted); text-align: center; line-height: 1.6; }
+
+    /* ── Card row ────────────────────────────────────── */
+    .card-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 44px; flex: 1; align-items: center; }
+    .card {
+      background: #fff;
+      border-radius: 24px;
+      border-top: 8px solid var(--orange);
+      padding: 52px 40px;
+      text-align: center;
+      box-shadow: 0 4px 28px rgba(0,0,0,.07);
+    }
+    .card .icon { font-size: 4rem;  margin-bottom: 24px; }
+    .card h3    { font-size: 2.1rem; font-weight: 800; color: var(--navy); margin-bottom: 20px; }
+    .card p     { font-size: 1.74rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── Slide number ────────────────────────────────── */
+    .sn {
+      position: absolute; top: 32px; right: 44px;
+      font-size: 1.2rem; font-weight: 600; letter-spacing: .08em;
+      color: #fff;
+      background: rgba(30,52,97,.55);
+      padding: 6px 20px;
+      border-radius: 99px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── Nav inside deck (bottom-right) ─────────────── */
+    .deck-nav {
+      position: absolute;
+      bottom: 52px;
+      right: 68px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      z-index: 10;
+    }
+    .deck-nav button {
+      background: rgba(20,40,80,.72);
+      border: 2px solid rgba(255,255,255,.22);
+      color: #fff;
+      font-size: 1.6rem;
+      font-family: inherit;
+      font-weight: 600;
+      padding: 18px 52px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+      backdrop-filter: blur(6px);
+    }
+    .deck-nav button:hover:not(:disabled) {
+      background: var(--orange);
+      border-color: var(--orange);
+    }
+    .deck-nav button:disabled { opacity: .3; cursor: default; }
+    .deck-nav .ctr {
+      font-size: 1.4rem;
+      min-width: 90px;
+      text-align: center;
+      color: #fff;
+      background: rgba(20,40,80,.72);
+      padding: 18px 20px;
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,.22);
+    }
+
+    /* ── Progress strip (bottom of deck) ────────────── */
+    .deck-prog {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 8px;
+      background: rgba(0,0,0,.15);
+      z-index: 10;
+    }
+    .deck-prog-fill {
+      height: 100%;
+      background: var(--orange);
+      transition: width .4s ease;
+    }
+  </style>
+</head>
+<body>
+
+<div id="wrapper">
+<div class="deck" id="deck">
+
+  <!-- ① 封面 ──────────────────────────────────────────────── -->
+  <div class="slide slide-cover active">
+    <div class="cover-title" style="font-size:8.0rem;white-space:nowrap;">
+      職安衛新夥伴的生存報告
+    </div>
+    <div class="cover-sub">從打雜王到職安專家的奇幻旅程</div>
+    <div style="
+      margin-top: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      transform: translateX(350px);
+    ">
+      <span style="width:90px; height:1px; background:rgba(245,165,32,.5); display:block;"></span>
+      <span style="
+        font-size: 2.8rem;
+        font-weight: 400;
+        color: var(--orange);
+        letter-spacing: .45em;
+      ">賴佑毓</span>
+      <span style="width:90px; height:1px; background:rgba(245,165,32,.5); display:block;"></span>
+    </div>
+  </div>
+
+  <!-- ② 學經歷 ──────────────────────────────────────────────────  -->
+  <div class="slide" style="background:var(--light);">
+
+    <div class="sh">學經歷：打雜王的養成之路</div>
+    <p style="color:var(--muted);margin-top:60px;margin-bottom:72px;font-size:1.9rem;">
+      金門大學觀光管理學系畢業，我的打工履歷是一場 RPG 冒險：
+    </p>
+    <div class="timeline-wrap">
+      <div class="tl-line"></div>
+      <div class="tl-nodes">
+        <div class="tl-node">
+          <div class="tl-dot"></div>
+          <strong>金門導覽</strong>
+          <span>金門酒廠、城隍廟解說員</span>
+        </div>
+        <div class="tl-node">
+          <div class="tl-dot"></div>
+          <strong>百變工讀</strong>
+          <span>加油站、安親班、便當店</span>
+        </div>
+        <div class="tl-node">
+          <div class="tl-dot"></div>
+          <strong>法檢兵役</strong>
+          <span>台中高分檢服役</span>
+        </div>
+        <div class="tl-node">
+          <div class="tl-dot"></div>
+          <strong>飯店全包</strong>
+          <span>某台中台南連鎖飯店客務<br>(血汗)</span>
+        </div>
+        <div class="tl-node">
+          <div class="tl-dot"></div>
+          <strong>職安啟航</strong>
+          <span>品保SOP影片專員兼職安人員</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 為什麼在這裡 ──────────────────────────────────────────  -->
+  <div class="slide">
+
+    <div class="sh">為什麼我現在站在這裡？</div>
+    <div class="two-col">
+      <div style="text-align:center;flex-shrink:0;width:520px;">
+        <div style="font-size:11rem;font-weight:900;color:var(--orange);line-height:1;">100%</div>
+        <div style="font-size:1.9rem;font-weight:700;color:var(--navy);margin-top:16px;">對細節與 SOP 的執著</div>
+      </div>
+      <div class="col">
+        <h3 style="font-size:2.2rem;font-weight:800;color:var(--navy);margin-bottom:32px;">
+          從全包櫃檯到職安專家
+        </h3>
+        <p style="color:var(--muted);font-size:1.85rem;line-height:1.9;margin-bottom:28px;">
+          因為在飯店全包過，我知道每個流程都有風險；因為拍過 SOP 影片，
+          我明白「好懂」才是安全的關鍵。
+        </p>
+        <p style="color:var(--muted);font-size:1.85rem;line-height:1.9;">
+          我不只是在執行規則，我是在用「大家都能懂」的語言，
+          守護每位同仁的職業安全。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 體育之魂 ──────────────────────────────────────────────  -->
+  <div class="slide">
+
+    <div class="sh">體育之魂：20年不離不棄的鐵粉</div>
+    <div class="two-col">
+      <div class="col">
+        <ul class="ck">
+          <li><span class="dot">✓</span><span><b>棒球：</b>興農 → 義大 → 悍將（戰績再爛我也看）</span></li>
+          <li><span class="dot">✓</span><span><b>NBA：</b>達拉斯小牛 23 年忠誠守護</span></li>
+          <li><span class="dot">✓</span><span><b>足球：</b>利物浦 (Liverpool) 22 年 YNWA</span></li>
+          <li><span class="dot">✓</span><span><b>F1：</b>支持Red Bull紅牛車隊 17 年</span></li>
+          <li><span class="dot">✓</span><span><b>日摔：</b>經營「流量極其可憐」的 NOAH 解說頻道</span></li>
+        </ul>
+      </div>
+      <div class="imgbox" style="width:760px;height:580px;">
+        <img src="4.jpg" alt="F1 Red Bull Racing" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 硬核愛好 ──────────────────────────────────────────────  -->
+  <div class="slide">
+
+    <div class="sh">硬核愛好：從星空到古文明</div>
+    <div class="two-col">
+      <div class="imgbox" style="width:680px;height:580px;">
+        <img src="5.jpg" alt="Astronomy stargazing" />
+      </div>
+      <div class="col">
+        <h3 style="font-size:2.2rem;font-weight:800;color:var(--navy);margin-bottom:36px;">
+          多多培養興趣
+        </h3>
+        <ul class="ck">
+          <li><span class="dot">✓</span><span><b>歷史：</b>真實歷史比連續劇還要好看</span></li>
+          <li><span class="dot">✓</span><span><b>天文：</b>一頭栽進浩瀚未知的神秘科學</span></li>
+          <li><span class="dot">✓</span><span><b>動漫：</b>超人力霸王、寶可夢</span></li>
+          <li><span class="dot">✓</span><span><b>遊戲：</b>手遊、家機，都沒空玩</span></li>
+          <li><span class="dot">✓</span><span><b>音樂：</b>推薦給大家綠洲合唱團、體育健將合唱團、怕胖團</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ 樂樂 ──────────────────────────────────────────────────  -->
+  <div class="slide">
+
+    <div class="sh">回家後的「生存實戰演練」</div>
+    <div class="two-col">
+      <div class="col">
+        <h3 style="font-size:2.3rem;font-weight:800;color:var(--navy);margin-bottom:32px;">
+          終極大魔王：樂樂
+        </h3>
+        <p style="color:var(--muted);font-size:1.85rem;margin-bottom:16px;">
+          <strong style="color:var(--navy);">年齡：</strong>2 歲 3 個月 (貓狗嫌時期)
+        </p>
+        <p style="color:var(--muted);font-size:1.85rem;line-height:1.75;margin-bottom:40px;">
+          <strong style="color:var(--navy);">挑戰：</strong>家裡每天都是一場高風險、無 SOP、隨時崩潰的半獸人實戰演習。
+        </p>
+        <p style="font-style:italic;color:var(--navy);font-weight:600;font-size:1.85rem;
+                  border-left:6px solid var(--orange);padding-left:28px;line-height:1.75;">
+          「如果我能搞定樂樂，這世上應該沒有我搞不定的職安現場。」
+        </p>
+      </div>
+      <div class="imgbox" style="width:760px;height:620px;">
+        <img src="7.jpg" alt="Toddler Chaos" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ 英文名字事故 ────────────────────────────────────────────  -->
+  <div class="slide">
+
+    <div class="sh">關於我英文名字的「重大事故」</div>
+    <div class="two-col">
+      <div class="imgbox" style="width:580px;height:620px;">
+        <img src="https://archives.bulbagarden.net/media/upload/thumb/e/e0/0044Gloom.png/640px-0044Gloom.png"
+             alt="Pokemon Gloom"
+             style="object-fit:contain;background:#f0f0f0;" />
+      </div>
+      <div class="col">
+        <h3 style="font-size:2.5rem;font-weight:800;color:var(--navy);margin-bottom:32px;">
+          理想是 Gloomy，現實是 Gloom
+        </h3>
+        <p style="color:var(--muted);font-size:1.85rem;line-height:1.85;margin-bottom:28px;">
+          我原本期許自己是個帶點憂鬱哲學家氣息的 Gloomy。
+        </p>
+        <p style="color:var(--orange);font-weight:700;font-size:1.85rem;margin-bottom:10px;">
+          不知是我最敬重的學姐聽錯還是我人胖臉鬆咬字不清：
+        </p>
+        <p style="color:var(--muted);font-size:1.85rem;margin-bottom:36px;">
+          系統名稱從此變成了<strong style="color:var(--navy);">Gloom (臭臭花)</strong>。
+        </p>
+        <p style="font-style:italic;color:var(--muted);font-size:1.6rem;
+                  border-left:6px solid #d0d8e4;padding-left:28px;line-height:1.75;">
+          「我要在辦公室散發毒氣。」
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑧ 期待交流 ────────────────────────────────────────────── -->
+  <div class="slide" style="background:var(--light);">
+
+    <div class="sh">期待與大家交流！</div>
+    <div class="card-row">
+      <div class="card">
+        <div class="icon">🪖</div>
+        <h3>工作找我</h3>
+        <p>6S 管理、職安諮詢<br>分機 168(一路花)</p>
+      </div>
+      <div class="card">
+        <div class="icon">⚾</div>
+        <h3>下班找我</h3>
+        <p>聊球賽、聊歷史<br>聊摔角、聊賽車</p>
+      </div>
+      <div class="card">
+        <div class="icon">🎮</div>
+        <h3>可以叫我</h3>
+        <p>佑佑、佑毓<br>但禁止叫我臭臭花</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑨ 頻道 ──────────────────────────────────────────────────  -->
+  <div class="slide" style="background:var(--navy);align-items:center;justify-content:center;text-align:center;">
+    <div class="sh" style="color:var(--white);border-left-color:var(--orange);align-self:flex-start;margin-bottom:48px;">
+      如果大家真的想知道我的頻道......
+    </div>
+    <div style="
+      background:#fff;
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:0 16px 64px rgba(0,0,0,.5);
+      width:1400px;
+      flex-shrink:0;
+    ">
+      <img src="9.png" alt="格魯米的夢想擂台" style="width:100%;display:block;" />
+    </div>
+    <p style="margin-top:36px;color:rgba(255,255,255,.6);font-size:1.75rem;letter-spacing:.05em;">
+      格魯米の夢想擂台 ／ @gloomy_noahpro ／ 職業摔角NOAH 解說
+    </p>
+  </div>
+
+  <!-- Nav (inside deck, bottom-right) -->
+  <div class="deck-nav">
+    <button id="prev" onclick="go(-1)" disabled>← 上一頁</button>
+    <span class="ctr" id="ctr">1 / 9</span>
+    <button id="next" onclick="go(1)">下一頁 →</button>
+  </div>
+
+  <!-- Progress strip (bottom of deck) -->
+  <div class="deck-prog">
+    <div class="deck-prog-fill" id="prog" style="width:11.11%"></div>
+  </div>
+
+</div><!-- /deck -->
+</div><!-- /wrapper -->
+
+<script>
+  const DESIGN_W = 1920, DESIGN_H = 1080;
+  const deck    = document.getElementById('deck');
+  const wrapper = document.getElementById('wrapper');
+
+  function fitDeck() {
+    const scaleX = window.innerWidth  / DESIGN_W;
+    const scaleY = window.innerHeight / DESIGN_H;
+    const scale  = Math.min(scaleX, scaleY);
+
+    deck.style.transform = `scale(${scale})`;
+
+    const dispW = DESIGN_W * scale;
+    const dispH = DESIGN_H * scale;
+    wrapper.style.width  = dispW + 'px';
+    wrapper.style.height = dispH + 'px';
+  }
+
+  window.addEventListener('resize', fitDeck);
+  fitDeck();
+
+  // ── Slide navigation ────────────────────
+  const slides = document.querySelectorAll('.slide');
+  const N = slides.length;
+  let cur = 0;
+
+  function go(d) {
+    slides[cur].classList.remove('active');
+    cur = Math.max(0, Math.min(N - 1, cur + d));
+    slides[cur].classList.add('active');
+    document.getElementById('ctr').textContent  = (cur + 1) + ' / ' + N;
+    document.getElementById('prog').style.width = ((cur + 1) / N * 100) + '%';
+    document.getElementById('prev').disabled = cur === 0;
+    document.getElementById('next').disabled = cur === N - 1;
+  }
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); go(1);  }
+    if (['ArrowLeft', 'ArrowUp'       ].includes(e.key)) { e.preventDefault(); go(-1); }
+  });
+</script>
+</body>
+</html>

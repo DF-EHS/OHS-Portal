@@ -1356,6 +1356,7 @@
       seed("發布到期資訊", "證照管理與盤點", "", "none", "todo", "high", "職安 / 各單位", "透過 LINE 或 E-mail，利用 Outlook 通訊錄通知各單位。"),
       seed("在職確認與證照審核", "證照管理與盤點", "", "none", "todo", "medium", "職安 / HR", "利用 HRM 查詢是否在職，核對證號、取證單位、發照日與到期日。"),
       seed("二度催辦", "證照管理與盤點", "", "none", "waiting", "high", "職安 / 單位主管", "針對未回訓或未上傳者二次通知並壓定完成日期。"),
+      Object.assign(seed("自我介紹準備", "人員與設備變更", "2026-06-06T17:00", "none", "doing", "medium", "職安", "向部門同事介紹職安衛工作現況與個人背景。"), { fileLink: "intro/職安衛新夥伴的生存報告.html", fileLinkLabel: "職安衛新夥伴的生存報告" }),
       seed("新進員工追蹤", "人員與設備變更", "", "none", "todo", "medium", "職安 / HR", "新人第 1、7、30 天問卷調查。"),
       seed("職安人員報備", "人員與設備變更", "", "none", "todo", "high", "職安", "人員異動時向主管機關申報，附組織圖。"),
       seed("新設備評估", "人員與設備變更", "", "none", "todo", "high", "職安 / 使用單位", "新設備如 AI 智慧垃圾桶需製作風險評估與點檢表。"),
@@ -2214,6 +2215,7 @@
               ${task.owner ? `<span class="pill">${escapeHtml(task.owner)}</span>` : ""}
             </div>
             ${task.description ? `<div class="task-note">${escapeHtml(task.description)}</div>` : ""}
+            ${task.fileLink ? `<div style="margin-top:8px"><a href="${escapeHtml(task.fileLink)}" class="action" style="display:inline-flex;align-items:center;gap:5px;text-decoration:none;font-weight:700">📎 ${escapeHtml(task.fileLinkLabel || "開啟附件")}</a></div>` : ""}
             ${(task.tags || []).length ? `<div class="meta" style="margin-top:8px;">${task.tags.map((tag) => `<span class="pill">#${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
           </div>
           <div class="row-actions">
