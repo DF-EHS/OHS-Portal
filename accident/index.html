@@ -369,7 +369,7 @@ function rtbl() {
     <tr>
       <td>${a.date}</td><td>${a.dept}</td>
       <td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${a.location}">${a.location}</td>
-      <td><span class="bd ${a.accClass.includes('交通')?'bd-b':'bd-r'}">${a.accClass}</span></td>
+      <td><span class="bd ${a.accClass.includes('交通')?'bd-b':a.accClass.includes('虛驚')?'bd-o':'bd-r'}">${a.accClass}</span></td>
       <td>${a.accType}</td>
       <td>${a.restDays>0?'<span class="dv">'+a.restDays+' 天</span>':'—'}</td>
       <td><span class="bd ${a.punished==='是'?'bd-o':'bd-g'}">${a.punished}</span></td>
