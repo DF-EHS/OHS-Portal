@@ -1811,11 +1811,11 @@
       const task = tasks.find((item) => item.id === id);
       if (!task) return;
       editingId = id;
-      fillForm(task);
       byId("formTitle").textContent = "編輯工作項目";
       byId("formModePill").textContent = "編輯模式";
       byId("cancelEditBtn").classList.remove("hidden");
       setView("form");
+      fillForm(task);
     }
 
     function newTaskId() {
