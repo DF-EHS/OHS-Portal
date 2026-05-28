@@ -1989,39 +1989,51 @@ th{background:#d1d5db;font-weight:700;text-align:center;white-space:nowrap}
   /* ────────────────────────────────
      Doc 1：危害告知書
   ──────────────────────────────── */
-  const wCols = Math.min(workers.length || 1, 4);
+  const cnNum = ['一','二','三','四','五','六','七','八','九','十','十一','十二','十三','十四','十五'];
   let d1 = `<div class="page">
 <div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div><div class="co-name">大豐環保科技股份有限公司</div><div class="co-sub">Dafon Environmental Technology Co., Ltd.</div></div></div>
-<div class="doc-title">承攬商危害告知書</div>
-<div class="doc-no">FM-D2-EM-006-01D</div>
-<table style="margin-bottom:6px">
-  <tr><td class="lbl" style="width:22%">入場單位</td><td>${X(b.company)}</td><td class="lbl" style="width:13%">入場日期</td><td>${fd(b.dateStart)} 至 ${fd(b.dateEnd)}</td></tr>
-</table>
-<div style="font-size:11px;margin-bottom:4px">本公司場內危害告知事項如下，請詳閱並確認：</div>
-<table><tr><th style="width:26px">#</th><th>危害告知事項</th></tr>`;
+<div style="text-align:center;font-size:15px;font-weight:700;border-bottom:2px solid #1e3a5f;padding-bottom:5px;margin-bottom:7px">大豐環保科技股份有限公司－危害告知書　114.01</div>
+
+<table>
+  <tr><th style="width:38px">條次</th><th>危害告知事項</th></tr>`;
   HAZARD_RULES.forEach((rule,i)=>{
-    d1+=`<tr><td style="text-align:center;font-weight:700;color:#1e3a5f;font-size:11px">${i+1}</td><td style="font-size:11px;line-height:1.5">${X(rule)}</td></tr>`;
+    d1+=`<tr><td style="text-align:center;font-weight:700;color:#1e3a5f;font-size:11.5px;white-space:nowrap">${cnNum[i]}、</td><td style="font-size:11px;line-height:1.55">${X(rule)}</td></tr>`;
   });
   d1+=`</table>
-<div style="margin-top:7px">
-  <div style="font-weight:700;font-size:11px;margin-bottom:3px">入場人員簽章（共 ${workers.length} 人）：</div>
-  <table><tr>`;
-  if(workers.length){
-    workers.forEach(w=>{
-      d1+=`<td style="text-align:center;width:${100/wCols}%"><div style="font-size:11px;margin-bottom:2px">${X(w.name||'（未填）')}</div><div class="sig-box">${w.signature?`<img src="${w.signature}"/>`:'&nbsp;'}</div></td>`;
-    });
-  } else { d1+='<td style="color:#aaa;text-align:center;padding:10px">無紀錄</td>'; }
-  d1+=`</tr></table>
+<div style="font-size:11px;margin:5px 0 7px;padding:4px 8px;background:#fef9c3;border-left:3px solid #d97706">
+  ※ 所有進入本場之人員、車輛，必須遵守本場〝工作安全衛生管理要點〞
 </div>
-<div style="margin-top:7px">
-  <table><tr>
-    <td style="width:50%;text-align:center"><div style="font-weight:700;font-size:11px;margin-bottom:2px">現場主管簽章</div><div style="font-size:11px;margin-bottom:2px">${X(r.signee)}</div><div class="sig-box">${r.signature?`<img src="${r.signature}"/>`:'&nbsp;'}</div></td>
-    <td style="width:50%;text-align:center"><div style="font-weight:700;font-size:11px;margin-bottom:2px">大豐環保科技 安衛人員</div><div style="font-size:11px;margin-bottom:2px">&nbsp;</div><div class="sig-box">&nbsp;</div></td>
-  </tr></table>
+<div style="border:1px solid #888;overflow:hidden;border-radius:2px">
+  <div style="background:#1e3a5f;color:#fff;padding:4px 8px;font-weight:700;font-size:11.5px">入場單位與人員簽名</div>
+  <div style="padding:5px 8px;font-size:11px;line-height:1.7;border-bottom:1px solid #ccc">
+    以上事項願承諾確實遵行，以維護個人安全健康，若有疏失願自行負責，與場（甲）方無關。
+  </div>
+  <table style="margin:0">
+    <tr>
+      <td style="border-top:none;border-left:none;border-bottom:1px solid #ccc;border-right:1px solid #ccc;width:60%;padding:4px 8px;font-size:11px">
+        <span style="font-weight:600">入場單位：</span>${X(b.company)}
+      </td>
+      <td style="border-top:none;border-right:none;border-left:none;border-bottom:1px solid #ccc;padding:4px 8px;font-size:11px">
+        <span style="font-weight:600">入場日期：</span>${fd(b.dateStart)}
+      </td>
+    </tr>
+    <tr>
+      <td style="border:none;border-right:1px solid #ccc;padding:6px 8px;vertical-align:top">
+        <div style="font-weight:600;font-size:11px;margin-bottom:4px">入場人員簽章（共 ${workers.length} 人）：</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          ${workers.length ? workers.map(w=>`<div style="text-align:center;min-width:80px"><div style="font-size:10.5px;margin-bottom:2px">${X(w.name||'（未填）')}</div><div style="min-height:46px;border:1px solid #ccc;display:flex;align-items:center;justify-content:center">${w.signature?`<img src="${w.signature}" style="max-height:42px;max-width:78px"/>`:'&nbsp;'}</div></div>`).join('') : '<span style="color:#aaa;font-size:11px">無</span>'}
+        </div>
+      </td>
+      <td style="border:none;padding:6px 8px;vertical-align:top">
+        <div style="font-weight:600;font-size:11px;margin-bottom:4px">現場主管簽章：</div>
+        <div style="font-size:10.5px;margin-bottom:3px">${X(r.signee)}</div>
+        <div style="min-height:52px;border:1px solid #ccc;display:flex;align-items:center;justify-content:center">${r.signature?`<img src="${r.signature}" style="max-height:48px;max-width:100%"/>`:'&nbsp;'}</div>
+      </td>
+    </tr>
+  </table>
 </div>
 <div class="footer">FM-D2-EM-006-01D ／ 大豐環保科技股份有限公司</div>
 </div>`;
-
   /* ────────────────────────────────
      Doc 2：承攬商環安衛管理告知切結書
   ──────────────────────────────── */
