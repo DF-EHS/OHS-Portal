@@ -1817,14 +1817,15 @@ async function saveEdit(){
     editedAt: new Date().toISOString(),
   };
 
+  const savedId = editId;
   closeEditModal();
   showLoading('儲存中…');
   try {
-    const res = await apiPost({ action: 'update', id: editId, data: updated });
+    const res = await apiPost({ action: 'update', id: savedId, data: updated });
     if(!res.success) throw new Error(res.error);
     _currentRecord = updated;
     toast('紀錄已儲存','ok');
-    viewRecord(editId);
+    viewRecord(savedId);
   } catch(ex) {
     toast('儲存失敗：' + ex.message, 'bad');
   } finally {
