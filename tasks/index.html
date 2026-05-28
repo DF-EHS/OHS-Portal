@@ -615,19 +615,16 @@
     }
 
     .utility-dock {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 21;
       display: flex;
       gap: 8px;
       align-items: center;
-      padding: 6px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(var(--surface-rgb), .92);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
+      padding: 12px 0 4px;
+      margin-top: 16px;
+      border-top: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+    .utility-dock .utility-button {
+      flex: 1;
     }
 
     .utility-button {
@@ -979,6 +976,17 @@
           <p class="notification-status" id="notificationStatus">請先按上方按鈕，允許瀏覽器通知後才會開始提醒。</p>
         </div>
       </div>
+
+      <div class="utility-dock" aria-label="快速工具">
+        <button class="utility-button" type="button" id="themeToggleBtn" title="切換淺色或深色模式" aria-label="切換淺色或深色模式">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2"></path><path d="M12 19v2"></path><path d="M4.2 4.2l1.4 1.4"></path><path d="M18.4 18.4l1.4 1.4"></path><path d="M3 12h2"></path><path d="M19 12h2"></path><path d="M4.2 19.8l1.4-1.4"></path><path d="M18.4 5.6l1.4-1.4"></path><circle cx="12" cy="12" r="4"></circle></svg>
+          <span id="themeToggleText">深色</span>
+        </button>
+        <button class="utility-button" type="button" id="scrollTopBtn" title="捲動到頂部" aria-label="捲動到頂部">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg>
+          <span>頂部</span>
+        </button>
+      </div>
     </aside>
 
     <main class="main">
@@ -1319,16 +1327,6 @@
   </div>
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
-  <div class="utility-dock" aria-label="快速工具">
-    <button class="utility-button" type="button" id="themeToggleBtn" title="切換淺色或深色模式" aria-label="切換淺色或深色模式">
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2"></path><path d="M12 19v2"></path><path d="M4.2 4.2l1.4 1.4"></path><path d="M18.4 18.4l1.4 1.4"></path><path d="M3 12h2"></path><path d="M19 12h2"></path><path d="M4.2 19.8l1.4-1.4"></path><path d="M18.4 5.6l1.4-1.4"></path><circle cx="12" cy="12" r="4"></circle></svg>
-      <span id="themeToggleText">深色</span>
-    </button>
-    <button class="utility-button" type="button" id="scrollTopBtn" title="捲動到頂部" aria-label="捲動到頂部">
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg>
-      <span>頂部</span>
-    </button>
-  </div>
 
   <script>
     const STORAGE_KEY = "osh-self-managed-tasks-v1";
@@ -2368,7 +2366,7 @@
     });
     byId("taskForm").addEventListener("submit", saveTask);
     byId("resetFormBtn").addEventListener("click", resetForm);
-    byId("cancelEditBtn").addEventListener("click", resetForm);
+    byId("cancelEditBtn").addEventListener("click", () => { resetForm(); setView("list"); });
     byId("loadStarterBtn").addEventListener("click", loadStarter);
     byId("exportBtn").addEventListener("click", exportTasks);
     byId("importInput").addEventListener("change", (event) => importTasks(event.target.files[0]));
@@ -2501,7 +2499,7 @@
         const parts = [];
         if (_ng.overdue.length) parts.push(`<strong>${_ng.overdue.length}</strong> 項已逾期`);
         if (_ng.today.length)   parts.push(`<strong>${_ng.today.length}</strong> 項今天到期`);
-        showToast(`⚠️ ${parts.join('，')}，點選右上角 🔔 查看詳情。`);
+        showToast(`⚠️ ${parts.join('，')}，點選左側 🔔 查看詳情。`);
       }
     }
 
