@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -233,6 +233,57 @@
               justify-content:center;transition:background .15s;z-index:999;}
   #scroll-top.visible{display:flex;}
   #scroll-top:hover{background:#16305a;}
+
+  /* ── 風險評估機器人 ─────────────────────────────────────── */
+  #risk-fab{position:fixed;bottom:76px;right:24px;background:#d97706;color:#fff;border:none;
+    border-radius:28px;padding:13px 22px;font-size:15px;font-weight:700;cursor:pointer;
+    box-shadow:0 4px 16px rgba(0,0,0,.25);z-index:1000;display:flex;align-items:center;
+    gap:8px;transition:background .15s;}
+  #risk-fab:hover{background:#b45309;}
+  #risk-panel{position:fixed;bottom:136px;right:24px;width:min(420px,calc(100vw - 32px));
+    background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.22);z-index:1001;
+    display:none;flex-direction:column;overflow:hidden;max-height:600px;}
+  #risk-hdr{background:#92400e;color:#fff;padding:12px 18px;display:flex;align-items:center;
+    justify-content:space-between;font-weight:700;font-size:15px;flex-shrink:0;}
+  #risk-close{background:none;border:none;color:rgba(255,255,255,.8);font-size:18px;cursor:pointer;line-height:1;}
+  #risk-close:hover{color:#fff;}
+  #risk-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:200px;}
+  .rmsg-user{align-self:flex-end;background:#92400e;color:#fff;padding:8px 14px;
+    border-radius:18px 18px 4px 18px;max-width:85%;font-size:13px;word-break:break-word;}
+  .rmsg-bot{align-self:flex-start;max-width:100%;font-size:13px;width:100%;}
+  .risk-ai-bubble{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;
+    padding:10px 14px;font-size:13px;line-height:1.8;word-break:break-word;}
+  .risk-ai-bubble strong{color:#92400e;}
+  .risk-ai-bubble code{background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:12px;}
+  .risk-photo-preview{max-width:100%;max-height:160px;border-radius:8px;
+    border:1px solid var(--border);display:block;margin-bottom:4px;}
+  #risk-input-area{border-top:1px solid var(--border);flex-shrink:0;}
+  #risk-photo-bar{padding:8px 14px 0;display:flex;align-items:center;gap:8px;}
+  #risk-preview-wrap{display:none;padding:6px 14px 0;align-items:center;gap:6px;}
+  #risk-preview-wrap img{max-height:72px;border-radius:6px;border:1px solid var(--border);}
+  #risk-photo-clear{background:none;border:none;color:var(--sub);font-size:18px;cursor:pointer;line-height:1;}
+  #risk-photo-clear:hover{color:var(--red);}
+  #risk-text-row{display:flex;gap:8px;padding:8px 14px 10px;}
+  #risk-input{flex:1;border:1px solid var(--border);border-radius:20px;padding:7px 14px;
+    font-size:13px;outline:none;font-family:inherit;}
+  #risk-input:focus{border-color:#d97706;}
+  #risk-send{background:#d97706;color:#fff;border:none;border-radius:20px;padding:7px 16px;
+    font-size:13px;cursor:pointer;font-family:inherit;}
+  #risk-send:hover{background:#b45309;}
+  .risk-upload-btn{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:5px 10px;
+    font-size:12px;color:#c2410c;cursor:pointer;display:inline-flex;align-items:center;
+    gap:4px;font-weight:600;}
+  .risk-upload-btn:hover{background:#ffedd5;}
+  .risk-typing{display:flex;gap:5px;align-items:center;padding:8px 2px;}
+  .risk-typing span{width:8px;height:8px;border-radius:50%;background:#d97706;
+    animation:risk-bounce 1.2s ease-in-out infinite;}
+  .risk-typing span:nth-child(2){animation-delay:.2s;}
+  .risk-typing span:nth-child(3){animation-delay:.4s;}
+  @keyframes risk-bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-7px)}}
+  .risk-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+  .risk-chip{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:16px;
+    padding:4px 12px;font-size:12px;cursor:pointer;}
+  .risk-chip:hover{background:#ffedd5;}
 </style>
 </head>
 <body>
@@ -240,7 +291,8 @@
   <div style="width:44px;height:44px;border:4px solid #e2e8f0;border-top-color:#2563eb;border-radius:50%;animation:api-spin 1s linear infinite;"></div>
   <div style="font-size:14px;color:#64748b;font-family:'Microsoft JhengHei',sans-serif;">從 Google Sheets 載入資料中…</div>
 </div>
-<style>@keyframes api-spin{to{transform:rotate(360deg);}}</style>
+<style>@keyframes api-spin{to{transform:rotate(360deg);}
+</style>
 
 <header>
   <button class="hdr-btn" onclick="location.href='../'" title="回到職安管理系統入口">← 系統入口</button>
@@ -442,6 +494,44 @@
   </div>
 </div>
 
+<!-- ── 風險評估機器人 ── -->
+<button id="risk-fab" onclick="toggleRiskChat()">🔍 風險評估機器人</button>
+<div id="risk-panel">
+  <div id="risk-hdr">
+    <span>🔍 現場風險快速評估</span>
+    <button id="risk-close" onclick="toggleRiskChat()">✕</button>
+  </div>
+  <div id="risk-messages">
+    <div class="rmsg-bot">您好！請描述現場狀況，或直接上傳照片，我將快速辨識危害與風險等級。
+      <div class="risk-chips">
+        <span class="risk-chip" onclick="askRiskChip(this)">凌亂堆放區域</span>
+        <span class="risk-chip" onclick="askRiskChip(this)">新進設備評估</span>
+        <span class="risk-chip" onclick="askRiskChip(this)">電氣設備異常</span>
+        <span class="risk-chip" onclick="askRiskChip(this)">化學品儲存區</span>
+      </div>
+    </div>
+  </div>
+  <div id="risk-input-area">
+    <div id="risk-photo-bar">
+      <label class="risk-upload-btn" title="上傳照片或直接拍照">
+        📷 拍照 / 上傳
+        <input id="risk-file-input" type="file" accept="image/*" capture="environment"
+               style="display:none" onchange="onRiskPhoto(this)">
+      </label>
+      <span style="font-size:11px;color:var(--sub)">支援手機拍照・電腦上傳</span>
+    </div>
+    <div id="risk-preview-wrap">
+      <img id="risk-thumb">
+      <button id="risk-photo-clear" onclick="clearRiskPhoto()" title="移除照片">✕</button>
+    </div>
+    <div id="risk-text-row">
+      <input id="risk-input" type="text"
+             placeholder="描述現場狀況，或上傳照片後補充說明…"
+             onkeydown="if(event.key==='Enter')sendRiskChat()">
+      <button id="risk-send" onclick="sendRiskChat()">送出</button>
+    </div>
+  </div>
+</div>
 <button id="scroll-top" onclick="scrollToTop()">↑</button>
 
 <script>
@@ -1530,6 +1620,169 @@ function confirmReset() {
 // 頁面啟動：從雲端載入
 loadFromCloud();
 
+
+// ════════════════════════════════════════════════════════
+// 風險評估機器人
+// ════════════════════════════════════════════════════════
+const RISK_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+let riskOpen = false;
+let riskB64 = null;
+let riskMime = 'image/jpeg';
+
+function toggleRiskChat() {
+  riskOpen = !riskOpen;
+  document.getElementById('risk-panel').style.display = riskOpen ? 'flex' : 'none';
+  if (riskOpen) document.getElementById('risk-input').focus();
+}
+
+function appendRiskMsg(html, isUser) {
+  const msgs = document.getElementById('risk-messages');
+  const d = document.createElement('div');
+  d.className = isUser ? 'rmsg-user' : 'rmsg-bot';
+  d.innerHTML = html;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showRiskTyping() {
+  const msgs = document.getElementById('risk-messages');
+  const d = document.createElement('div');
+  d.className = 'rmsg-bot'; d.id = 'risk-typing-ind';
+  d.innerHTML = '<div class="risk-typing"><span></span><span></span><span></span></div>';
+  msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
+  return d;
+}
+
+function rMd(text) {
+  return text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/`(.+?)`/g,'<code>$1</code>')
+    .replace(/\n/g,'<br>');
+}
+
+function rEsc(s) {
+  return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+
+function onRiskPhoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const img = new Image();
+  img.onload = () => {
+    const MAX = 1024;
+    let w = img.width, h = img.height;
+    if (w > MAX || h > MAX) {
+      if (w >= h) { h = Math.round(h * MAX / w); w = MAX; }
+      else        { w = Math.round(w * MAX / h); h = MAX; }
+    }
+    const cv = document.createElement('canvas');
+    cv.width = w; cv.height = h;
+    cv.getContext('2d').drawImage(img, 0, 0, w, h);
+    const dataUrl = cv.toDataURL('image/jpeg', 0.85);
+    riskB64 = dataUrl.split(',')[1];
+    riskMime = 'image/jpeg';
+    document.getElementById('risk-thumb').src = dataUrl;
+    const pw = document.getElementById('risk-preview-wrap');
+    pw.style.display = 'flex';
+    document.getElementById('risk-input').placeholder = '可補充說明現場狀況（可選）…';
+  };
+  img.src = URL.createObjectURL(file);
+}
+
+function clearRiskPhoto() {
+  riskB64 = null;
+  document.getElementById('risk-preview-wrap').style.display = 'none';
+  document.getElementById('risk-thumb').src = '';
+  document.getElementById('risk-file-input').value = '';
+  document.getElementById('risk-input').placeholder = '描述現場狀況，或上傳照片後補充說明…';
+}
+
+function askRiskChip(el) {
+  document.getElementById('risk-input').value = el.textContent;
+  sendRiskChat();
+}
+
+async function sendRiskChat() {
+  const inp = document.getElementById('risk-input');
+  const btn = document.getElementById('risk-send');
+  const text = inp.value.trim();
+  const hasPhoto = !!riskB64;
+  if (!text && !hasPhoto) return;
+
+  // 在清除 UI 前儲存資料
+  const savedB64 = riskB64;
+  const savedMime = riskMime;
+
+  inp.value = ''; inp.disabled = true; btn.disabled = true;
+
+  // 顯示使用者訊息
+  let userHtml = hasPhoto
+    ? '<img src="data:' + savedMime + ';base64,' + savedB64 + '" class="risk-photo-preview">' + (text ? '<br>' + rEsc(text) : '')
+    : rEsc(text);
+  appendRiskMsg(userHtml, true);
+  clearRiskPhoto();
+
+  const typingEl = showRiskTyping();
+
+  // 組合訊息 content
+  const userContent = [];
+  if (hasPhoto) userContent.push({ type:'image_url', image_url:{ url:'data:' + savedMime + ';base64,' + savedB64 } });
+  userContent.push({ type:'text', text: text || '請分析照片中的現場狀況，辨識危害並評估風險等級。' });
+
+  const sysMsg = '你是大豐環保科技的職業安全衛生現場風險評估助理。公司業務為環保廢棄物回收處理，作業環境包含辦公室及現場。\n\n收到照片或文字描述後，請進行快速危害辨識與風險評估，以下列格式回答：\n\n🔍 **危害辨識**\n列出所有可見或潛在危害（物理、化學、電氣、人因、環境等）\n\n⚠️ **風險等級**\n每項危害標明：🔴 高風險（立即停工或處理）/ 🟡 中風險（本週內改善）/ 🟢 低風險（納入計畫）\n\n🚨 **立即行動建議**\n需馬上採取的措施\n\n✅ **中長期改善建議**\n系統性改善方向\n\n📋 **相關職安法規提示**（若有）\n適用條文或規定名稱\n\n請用條列式、簡潔的繁體中文回答，讓現場主管能快速判讀並行動。若照片不清楚或資訊不足，請說明需要補充哪些資訊。';
+
+  try {
+    const resp = await fetch(RISK_WORKER, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        stream: true,
+        temperature: 0.2,
+        messages:[
+          { role:'system', content: sysMsg },
+          { role:'user',   content: userContent }
+        ]
+      })
+    });
+
+    if (!resp.ok) throw new Error('服務暫時無法使用，請稍後再試（' + resp.status + '）');
+
+    typingEl.remove();
+
+    const msgs = document.getElementById('risk-messages');
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'rmsg-bot';
+    const bubble = document.createElement('div');
+    bubble.className = 'risk-ai-bubble';
+    msgDiv.appendChild(bubble);
+    msgs.appendChild(msgDiv);
+
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let full = '';
+    outer: while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      for (const line of decoder.decode(value).split('\n')) {
+        if (!line.startsWith('data: ')) continue;
+        const data = line.slice(6).trim();
+        if (data === '[DONE]') break outer;
+        try {
+          const token = JSON.parse(data).choices?.[0]?.delta?.content;
+          if (token) { full += token; bubble.innerHTML = rMd(full); msgs.scrollTop = msgs.scrollHeight; }
+        } catch {}
+      }
+    }
+
+  } catch(err) {
+    typingEl.remove();
+    appendRiskMsg('⚠️ ' + rEsc(err.message), false);
+  } finally {
+    inp.disabled = false; btn.disabled = false; inp.focus();
+  }
+}
 </script>
 </body>
 </html>
