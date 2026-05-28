@@ -1952,153 +1952,291 @@ function exportPDF(){
 }
 
 function buildPDFHtml(r, baseHref){
-  const X = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const X  = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const fd = d => (d||'').replace(/-/g,'/');
-  const b = r.basic, p = r.permit||{}, workers = r.workers||[];
+  const b  = r.basic, p = r.permit||{}, workers = r.workers||[];
   const appliedTypes = r.appliedHazardTypes||[];
   const ppeArr = p.ppe||[];
+  const util   = p.utilities||{};
+  const selA   = p.workTypesA||[], selB = p.toolsB||[];
+  const submittedDate = r.submittedAt ? new Date(r.submittedAt).toLocaleDateString('zh-TW') : '';
+  const ck = (arr,val) => arr.includes(val) ? '✅' : '□';
 
   const css = `
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:13px;color:#000;background:#fff;}
-.page{width:210mm;min-height:297mm;padding:14mm 14mm;page-break-after:always;background:#fff;}
-.page:last-child{page-break-after:auto;}
-.co-hdr{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.co-hdr img{height:38px;}
-.co-name{font-size:14px;font-weight:700;}
-.co-sub{font-size:11px;color:#555;}
-.doc-title{font-size:17px;font-weight:700;text-align:center;margin-bottom:4px;border-bottom:2px solid #1e3a5f;padding-bottom:6px;}
-.doc-no{font-size:11px;text-align:right;color:#777;margin-top:3px;margin-bottom:10px;}
-table{width:100%;border-collapse:collapse;}
-td,th{border:1px solid #aaa;padding:4px 7px;vertical-align:top;}
-th{background:#e5e7eb;font-weight:700;text-align:center;white-space:nowrap;}
-.lbl{background:#f3f4f6;font-weight:600;white-space:nowrap;width:22%;}
-.sec-hdr{background:#1e3a5f;color:#fff;padding:5px 8px;font-weight:700;font-size:12px;margin:9px 0 4px;}
-.sig-box{min-height:55px;display:flex;align-items:center;justify-content:center;border:none;}
-.sig-box img{max-height:50px;max-width:90%;}
-.chk-mark{font-size:14px;}
-@media print{.page{page-break-after:always;}.page:last-child{page-break-after:auto;}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:12px;color:#000;background:#fff}
+.page{width:210mm;min-height:297mm;padding:11mm 11mm;page-break-after:always;background:#fff}
+.page:last-child{page-break-after:auto}
+.co-hdr{display:flex;align-items:center;gap:9px;margin-bottom:5px}
+.co-hdr img{height:36px}
+.co-name{font-size:13px;font-weight:700}
+.co-sub{font-size:10px;color:#555}
+.doc-title{font-size:15px;font-weight:700;text-align:center;margin-bottom:3px;border-bottom:2px solid #1e3a5f;padding-bottom:4px}
+.doc-no{font-size:10px;text-align:right;color:#777;margin-top:2px;margin-bottom:7px}
+table{width:100%;border-collapse:collapse}
+td,th{border:1px solid #888;padding:3px 5px;vertical-align:middle}
+th{background:#d1d5db;font-weight:700;text-align:center;white-space:nowrap}
+.lbl{background:#f0f2f4;font-weight:600;white-space:nowrap;font-size:11px}
+.sec-hdr{background:#1e3a5f;color:#fff;padding:3px 7px;font-weight:700;font-size:11.5px;margin:6px 0 2px}
+.sig-box{min-height:46px;display:flex;align-items:center;justify-content:center}
+.sig-box img{max-height:42px;max-width:90%}
+.ck{font-size:13px}
+.note{font-size:10.5px;line-height:1.6;margin-bottom:2px}
+.footer{font-size:10px;text-align:right;color:#666;margin-top:5px}
+@media print{.page{page-break-after:always}.page:last-child{page-break-after:auto}}
 `;
 
-  /* ── Doc 1: 危害告知書 ── */
+  /* ────────────────────────────────
+     Doc 1：危害告知書
+  ──────────────────────────────── */
+  const wCols = Math.min(workers.length || 1, 4);
   let d1 = `<div class="page">
 <div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div><div class="co-name">大豐環保科技股份有限公司</div><div class="co-sub">Dafon Environmental Technology Co., Ltd.</div></div></div>
 <div class="doc-title">承攬商危害告知書</div>
-<div class="doc-no">文件編號：FM-D2-EM-006-01D</div>
-<table style="margin-bottom:8px"><tr><td class="lbl">入場單位</td><td>${X(b.company)}</td><td class="lbl" style="width:16%">入場日期</td><td>${fd(b.dateStart)} ~ ${fd(b.dateEnd)}</td></tr></table>
-<div style="font-size:12px;margin-bottom:6px">本公司場內危害告知事項如下，請詳閱並確認：</div>
-<table><tr><th style="width:30px">#</th><th>危害告知事項</th></tr>`;
+<div class="doc-no">FM-D2-EM-006-01D</div>
+<table style="margin-bottom:6px">
+  <tr><td class="lbl" style="width:22%">入場單位</td><td>${X(b.company)}</td><td class="lbl" style="width:13%">入場日期</td><td>${fd(b.dateStart)} 至 ${fd(b.dateEnd)}</td></tr>
+</table>
+<div style="font-size:11px;margin-bottom:4px">本公司場內危害告知事項如下，請詳閱並確認：</div>
+<table><tr><th style="width:26px">#</th><th>危害告知事項</th></tr>`;
   HAZARD_RULES.forEach((rule,i)=>{
-    d1+=`<tr><td style="text-align:center;font-weight:700;color:#1e3a5f;font-size:12px">${i+1}</td><td style="font-size:11.5px;line-height:1.55">${X(rule)}</td></tr>`;
+    d1+=`<tr><td style="text-align:center;font-weight:700;color:#1e3a5f;font-size:11px">${i+1}</td><td style="font-size:11px;line-height:1.5">${X(rule)}</td></tr>`;
   });
-
-  const wCols = Math.min(workers.length||1, 4);
-  d1 += `</table><div style="margin-top:10px"><div style="font-weight:700;font-size:12px;margin-bottom:6px">入場人員簽章（共 ${workers.length} 人）：</div><table><tr>`;
+  d1+=`</table>
+<div style="margin-top:7px">
+  <div style="font-weight:700;font-size:11px;margin-bottom:3px">入場人員簽章（共 ${workers.length} 人）：</div>
+  <table><tr>`;
   if(workers.length){
     workers.forEach(w=>{
-      d1+=`<td style="text-align:center;width:${100/wCols}%"><div style="font-size:12px;margin-bottom:3px">${X(w.name||'（未填姓名）')}</div><div class="sig-box">${w.signature?`<img src="${w.signature}"/>`:'&nbsp;'}</div></td>`;
+      d1+=`<td style="text-align:center;width:${100/wCols}%"><div style="font-size:11px;margin-bottom:2px">${X(w.name||'（未填）')}</div><div class="sig-box">${w.signature?`<img src="${w.signature}"/>`:'&nbsp;'}</div></td>`;
     });
-  } else {
-    d1+='<td style="color:#999;text-align:center;padding:16px">無紀錄</td>';
-  }
-  d1+=`</tr></table></div>
-<div style="margin-top:10px"><table><tr>
-<td style="width:50%;text-align:center"><div style="font-weight:700;font-size:12px;margin-bottom:3px">現場主管簽章</div><div style="font-size:12px;margin-bottom:3px">${X(r.signee)}</div><div class="sig-box">${r.signature?`<img src="${r.signature}"/>`:'&nbsp;'}</div></td>
-<td style="width:50%;text-align:center"><div style="font-weight:700;font-size:12px;margin-bottom:3px">大豐環保科技 安衛人員</div><div style="font-size:12px;margin-bottom:3px">&nbsp;</div><div class="sig-box">&nbsp;</div></td>
-</tr></table></div></div>`;
+  } else { d1+='<td style="color:#aaa;text-align:center;padding:10px">無紀錄</td>'; }
+  d1+=`</tr></table>
+</div>
+<div style="margin-top:7px">
+  <table><tr>
+    <td style="width:50%;text-align:center"><div style="font-weight:700;font-size:11px;margin-bottom:2px">現場主管簽章</div><div style="font-size:11px;margin-bottom:2px">${X(r.signee)}</div><div class="sig-box">${r.signature?`<img src="${r.signature}"/>`:'&nbsp;'}</div></td>
+    <td style="width:50%;text-align:center"><div style="font-weight:700;font-size:11px;margin-bottom:2px">大豐環保科技 安衛人員</div><div style="font-size:11px;margin-bottom:2px">&nbsp;</div><div class="sig-box">&nbsp;</div></td>
+  </tr></table>
+</div>
+<div class="footer">FM-D2-EM-006-01D ／ 大豐環保科技股份有限公司</div>
+</div>`;
 
-  /* ── Doc 2: 切結書 ── */
+  /* ────────────────────────────────
+     Doc 2：承攬商環安衛管理告知切結書
+  ──────────────────────────────── */
   let d2=`<div class="page">
 <div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div><div class="co-name">大豐環保科技股份有限公司</div><div class="co-sub">Dafon Environmental Technology Co., Ltd.</div></div></div>
 <div class="doc-title">承攬商環安衛管理告知切結書</div>
-<div class="doc-no">文件編號：FM-D2-EM-006-02D</div>
-<table style="margin-bottom:8px">
-<tr><td class="lbl">承攬商名稱</td><td>${X(b.company)}</td><td class="lbl" style="width:16%">負責人</td><td>${X(r.signee)}</td></tr>
-<tr><td class="lbl">工程/作業名稱</td><td colspan="3">${X(b.workname)}</td></tr>
-<tr><td class="lbl">作業期間</td><td colspan="3">${fd(b.dateStart)} ~ ${fd(b.dateEnd)}</td></tr>
+<div class="doc-no">FM-D2-EM-006-02D</div>
+<table style="margin-bottom:6px">
+  <tr><td class="lbl" style="width:22%">承攬商名稱</td><td>${X(b.company)}</td><td class="lbl" style="width:13%">負責人</td><td>${X(r.signee)}</td></tr>
+  <tr><td class="lbl">工程/作業名稱</td><td colspan="3">${X(b.workname)}</td></tr>
+  <tr><td class="lbl">作業期間</td><td colspan="3">${fd(b.dateStart)} 至 ${fd(b.dateEnd)}</td></tr>
 </table>
-<div style="font-weight:700;font-size:13px;margin-bottom:5px">一、本次作業可能涉及之危害類型（請勾選）：</div>
-<table><tr><th style="width:36px">勾選</th><th>作業類型</th><th>危害因素</th><th>防護措施</th></tr>`;
+<div style="font-weight:700;font-size:11.5px;margin-bottom:3px">一、本次作業可能涉及之危害類型（請勾選）：</div>
+<table>
+  <tr><th style="width:30px">勾選</th><th>作業類型</th><th>危害因素</th><th>防護措施</th></tr>`;
   WORK_HAZARDS.forEach(w=>{
     const chk=appliedTypes.includes(w.t);
-    d2+=`<tr${chk?' style="background:#f0fdf4"':''}><td style="text-align:center;font-size:15px">${chk?'✅':'☐'}</td><td style="font-size:12px;font-weight:${chk?700:400}">${X(w.t)}</td><td style="font-size:11px;color:#dc2626">${X(w.h)}</td><td style="font-size:11px;color:#15803d">${X(w.m)}</td></tr>`;
+    d2+=`<tr${chk?' style="background:#f0fdf4"':''}><td style="text-align:center;font-size:14px">${chk?'✅':'□'}</td><td style="font-size:11px;font-weight:${chk?700:400}">${X(w.t)}</td><td style="font-size:10.5px;color:#b91c1c">${X(w.h)}</td><td style="font-size:10.5px;color:#166534">${X(w.m)}</td></tr>`;
   });
   d2+=`</table>
-<div style="font-weight:700;font-size:13px;margin:10px 0 5px">二、本公司（承攬商）承諾事項：</div>
+<div style="font-weight:700;font-size:11.5px;margin:7px 0 3px">二、本公司（承攬商）承諾事項：</div>
 <table>`;
   COMMITMENTS.forEach((c,i)=>{
-    d2+=`<tr><td style="font-weight:700;color:#1e3a5f;width:26px;text-align:center">${i+1}</td><td style="font-size:12px;line-height:1.5">${X(c)}</td></tr>`;
+    d2+=`<tr><td style="font-weight:700;color:#1e3a5f;width:20px;text-align:center;font-size:11px">${i+1}</td><td style="font-size:11px;line-height:1.5">${X(c)}</td></tr>`;
   });
   d2+=`</table>
-<div style="margin-top:10px;font-size:12px;line-height:1.8;border:1px solid #aaa;padding:8px;background:#fafafa">本公司已閱讀並了解以上告知事項，同意確實遵守以上安衛規定及承諾事項，如有違反，願接受貴公司依規定處置。</div>
-<div style="margin-top:10px"><table><tr>
-<td style="width:50%;text-align:center"><div style="font-weight:700;font-size:12px;margin-bottom:3px">承攬商負責人簽章</div><div style="font-size:12px;margin-bottom:3px">${X(r.signee)}</div><div class="sig-box">${r.signature?`<img src="${r.signature}"/>`:'&nbsp;'}</div><div style="font-size:11px;margin-top:4px">簽署日期：${fd(b.dateStart)}</div></td>
-<td style="width:50%;text-align:center"><div style="font-weight:700;font-size:12px;margin-bottom:3px">大豐環保科技 安衛人員</div><div style="font-size:12px;margin-bottom:3px">${X(b.inspector||'&nbsp;')}</div><div class="sig-box">&nbsp;</div></td>
-</tr></table></div></div>`;
+<div style="margin-top:7px;font-size:11px;line-height:1.7;border:1px solid #aaa;padding:5px;background:#fafafa">本公司已閱讀並了解以上告知事項，同意確實遵守以上安衛規定及承諾事項，如有違反，願接受貴公司依規定處置。</div>
+<div style="margin-top:7px">
+  <table><tr>
+    <td style="width:50%;text-align:center"><div style="font-weight:700;font-size:11px;margin-bottom:2px">承攬商負責人簽章</div><div style="font-size:11px;margin-bottom:2px">${X(r.signee)}</div><div class="sig-box">${r.signature?`<img src="${r.signature}"/>`:'&nbsp;'}</div><div style="font-size:10px;margin-top:2px">日期：${fd(b.dateStart)}</div></td>
+    <td style="width:50%;text-align:center"><div style="font-weight:700;font-size:11px;margin-bottom:2px">大豐環保科技 安衛人員</div><div style="font-size:11px;margin-bottom:2px">${X(b.inspector||'&nbsp;')}</div><div class="sig-box">&nbsp;</div></td>
+  </tr></table>
+</div>
+<div class="footer">FM-D2-EM-006-02D ／ 大豐環保科技股份有限公司</div>
+</div>`;
 
-  /* ── Doc 3: 作業許可申請書 ── */
-  const allA=WORK_TYPES_A, selA=p.workTypesA||[];
-  const allB=TOOLS_B, selB=p.toolsB||[];
-  const util=p.utilities||{};
-  const utilKeys=['用電需求','UPW用水','CW冷卻水','壓縮空氣','火警警報中斷/隔離','消防系統中斷','異味離線'];
+  /* ────────────────────────────────
+     Doc 3：作業許可申請書
+  ──────────────────────────────── */
+  const elecVal = util['用電需求']||'';
+  const upwVal  = (util['UPW用水']||'').replace(/ M[³3]\/day/,'');
+  const cwVal   = (util['CW冷卻水']||'').replace(/ M[³3]\/day/,'');
+  const airVal  = (util['壓縮空氣']||'').replace(/ L\/min/,'');
 
   let d3=`<div class="page">
 <div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div><div class="co-name">大豐環保科技股份有限公司</div><div class="co-sub">Dafon Environmental Technology Co., Ltd.</div></div></div>
 <div class="doc-title">作業許可申請書</div>
-<div class="doc-no">文件編號：FM-D2-EM-006-03D</div>
-<table style="margin-bottom:8px">
-<tr><td class="lbl">承攬商名稱</td><td>${X(b.company)}</td><td class="lbl" style="width:18%">合約/訂單編號</td><td>${X(b.contract||'—')}</td></tr>
-<tr><td class="lbl">工程/作業名稱</td><td colspan="3">${X(b.workname)}</td></tr>
-<tr><td class="lbl">現場負責人</td><td>${X(b.supervisor)}</td><td class="lbl">聯絡電話</td><td>${X(b.phone)}</td></tr>
-<tr><td class="lbl">作業區域</td><td>${X(b.area)}</td><td class="lbl">作業時段</td><td>${X((b.timePeriod||[]).join('、'))}</td></tr>
-<tr><td class="lbl">作業開始日期</td><td>${fd(b.dateStart)}</td><td class="lbl">作業結束日期</td><td>${fd(b.dateEnd)}</td></tr>
+<div class="doc-no">FM-D2-EM-006-03D</div>
+
+<table style="margin-bottom:5px">
+  <tr>
+    <td class="lbl" style="width:26%">申請日期</td><td style="width:24%">${submittedDate}</td>
+    <td class="lbl" style="width:18%">合約(訂單)編號</td><td>${X(b.contract||'')}</td>
+  </tr>
+  <tr>
+    <td class="lbl">承攬商</td><td>${X(b.company)}</td>
+    <td class="lbl">作業(工程)名稱</td><td>${X(b.workname)}</td>
+  </tr>
+  <tr>
+    <td class="lbl">承攬商現場負責人</td><td>${X(b.supervisor)}</td>
+    <td class="lbl">作業期間</td><td>${fd(b.dateStart)} 至 ${fd(b.dateEnd)}</td>
+  </tr>
+  <tr>
+    <td class="lbl">承攬商監工(安衛管理員)</td><td>${X(b.inspector||'')}</td>
+    <td class="lbl">連絡電話／傳真</td><td>${X(b.phone)}${b.fax?' ／ '+X(b.fax):''}</td>
+  </tr>
+  <tr>
+    <td class="lbl">工作區域</td><td colspan="3">${X(b.area)}</td>
+  </tr>
+  <tr>
+    <td class="lbl">作業時段</td>
+    <td colspan="3" style="font-size:11px">
+      <span class="ck">${(b.timePeriod||[]).includes('日間')?'✅':'□'}</span> 日間 &nbsp;
+      <span class="ck">${(b.timePeriod||[]).includes('夜間')?'✅':'□'}</span> 夜間 &nbsp;
+      <span class="ck">${(b.timePeriod||[]).includes('假日')?'✅':'□'}</span> 假日
+      <span style="font-size:10px;color:#555;margin-left:8px">（作業期間若跨越假日或有夜間施工，應另加勾選以玆鑑別管理）</span>
+    </td>
+  </tr>
 </table>
-<div class="sec-hdr">A. 作業內容分類</div><table>`;
-  for(let i=0;i<allA.length;i+=2){
-    const a0=allA[i],a1=allA[i+1];
-    d3+=`<tr><td style="font-size:12px"><span class="chk-mark">${selA.includes(a0)?'✅':'☐'}</span> ${X(a0)}</td>`;
-    d3+=a1?`<td style="font-size:12px"><span class="chk-mark">${selA.includes(a1)?'✅':'☐'}</span> ${X(a1)}</td>`:'<td></td>';
-    d3+='</tr>';
-  }
-  d3+=`</table><div class="sec-hdr">B. 使用工具</div><table>`;
-  for(let i=0;i<allB.length;i+=3){
-    d3+='<tr>';
-    for(let j=0;j<3;j++){
-      const t=allB[i+j];
-      d3+=t?`<td style="font-size:12px"><span class="chk-mark">${selB.includes(t)?'✅':'☐'}</span> ${X(t)}</td>`:'<td></td>';
-    }
-    d3+='</tr>';
-  }
-  if(p.toolOther) d3+=`<tr><td colspan="3" style="font-size:12px"><span class="chk-mark">✅</span> 其他：${X(p.toolOther)}</td></tr>`;
-  d3+=`</table><div class="sec-hdr">C. 公用需求</div><table><tr>`;
-  utilKeys.forEach(k=>{
-    const v=util[k];
-    d3+=`<td style="text-align:center;font-size:11.5px"><span class="chk-mark">${v?'✅':'☐'}</span><br>${X(k)}${v&&v!=='是'?'<br><span style="font-size:10px;color:#555">'+X(v)+'</span>':''}</td>`;
-  });
-  d3+=`</tr></table><div class="sec-hdr">D. 所需防護具</div><table>`;
+
+<div class="sec-hdr">A. 作業內容分類（視工作需要申請動火作業）</div>
+<table>
+  <tr>
+    <td style="font-size:11px"><span class="ck">${ck(selA,'1. 營造工程')}</span> 1. 營造工程</td>
+    <td style="font-size:11px"><span class="ck">${ck(selA,'2. 機台、設備安裝/試車/維修/保養')}</span> 2. 機台、設備安裝/試車/維修/保養</td>
+    <td style="font-size:11px"><span class="ck">${ck(selA,'3. 高架作業、高空作業、吊掛作業')}</span> 3. 高架作業、高空作業、吊掛作業</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="font-size:11px"><span class="ck">${ck(selA,'4. 電焊、氬焊、點焊作業(氧氣、乙炔熔接)、切割')}</span> 4. 電焊、氬焊、點焊作業（氧氣、乙炔熔接）、切割</td>
+    <td style="font-size:11px"><span class="ck">${ck(selA,'5. 裝潢/拆除作業、油漆除鏽作業')}</span> 5. 裝潢/拆除作業、油漆除鏵作業</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="font-size:11px"><span class="ck">${ck(selA,'6. 有機溶劑/特用化學品/毒化物之運作')}</span> 6. 有機溶劑/特用化學品/毒化物之運作</td>
+    <td style="font-size:11px"><span class="ck">${ck(selA,'7. 水電設備操控工程')}</span> 7. 水電設備操控工程</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="font-size:11px"><span class="ck">${ck(selA,'8. 作業環境/污染檢測')}</span> 8. 作業環境/污染檢測</td>
+    <td style="font-size:11px"><span class="ck">${ck(selA,'9. 高壓氣體供應(輸配管、灌裝或搬運等)')}</span> 9. 高壓氣體供應（輸配管、灌裝或搬運等）</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="font-size:11px"><span class="ck">${ck(selA,'10. 原物料之裝卸')}</span> 10. 原物料之裝卸</td>
+    <td style="font-size:11px"><span class="ck">${ck(selA,'11. 冷凍空調設備操控工程')}</span> 11. 冷凍空調設備操控工程</td>
+  </tr>
+  <tr>
+    <td style="font-size:11px"><span class="ck">${ck(selA,'12. 環境清潔及消毒')}</span> 12. 環境清潔及消毒</td>
+    <td style="font-size:11px"><span class="ck">${ck(selA,'13. 發塵作業')}</span> 13. 發塵作業</td>
+    <td style="font-size:11px"><span class="ck">${ck(selA,'14. 密閉空間或通風不良場所作業')}</span> 14. 密閉空間或通風不良場所作業</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="font-size:11px"><span class="ck">${ck(selA,'15. 消防/機械設備檢查或維修測試')}</span> 15. 消防/機械設備檢查或維修測試</td>
+    <td style="font-size:11px"><span class="ck">${ck(selA,'16. 其它')}</span> 16. 其它</td>
+  </tr>
+</table>
+
+<div class="sec-hdr">B. 使用工具（視工作需要申請動火作業）</div>
+<table>
+  <tr>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'電焊機')}</span> 1. 電焊機</td>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'乙炔鋼瓶氣焊')}</span> 2. 乙炔鋼瓶氣焊</td>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'氬焊機')}</span> 3. 氬焊機</td>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'電動機')}</span> 4. 電動機</td>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'柴油發電機')}</span> 5. 柴油發電機</td>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'圓盤鋸')}</span> 6. 圓盤鋸</td>
+  </tr>
+  <tr>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'電鋸')}</span> 7. 電鋸</td>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'切割機')}</span> 8. 切割機</td>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'電熱器')}</span> 9. 電熱器</td>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'塑膠熱熔')}</span> 10. 塑膠熱熔</td>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'砂輪機')}</span> 11. 砂輪機</td>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'電鑽')}</span> 12. 電鑽</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="font-size:11px"><span class="ck">${ck(selB,'照明(≤24V)')}</span> 13. 照明（不得高於24V）</td>
+    <td colspan="2" style="font-size:11px"><span class="ck">${ck(selB,'起重機')}</span> 14. 起重機_____噸</td>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'升降機')}</span> 15. 升降機</td>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'吊籠')}</span> 16. 吊籠</td>
+  </tr>
+  <tr>
+    <td style="font-size:11px"><span class="ck">${ck(selB,'氧氣鋼瓶')}</span> 17. 氧氣鋼瓶</td>
+    <td colspan="5" style="font-size:11px"><span class="ck">${ck(selB,'其他')}</span> 18. 其他${p.toolOther?' ：'+X(p.toolOther):'_________________________'}</td>
+  </tr>
+</table>
+
+<div class="sec-hdr">C. 公用需求（依作業需求進行複選，請向廠行政室申請）</div>
+<table>
+  <tr>
+    <td colspan="4" style="font-size:11px">
+      <span class="ck">${elecVal?'✅':'□'}</span>
+      1. 用電需求：${elecVal ? X(elecVal) : '_______KW &nbsp; _______V &nbsp; _______W &nbsp; _______∮'}
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4" style="font-size:11px">
+      <span class="ck">${(upwVal||cwVal)?'✅':'□'}</span>
+      2. 水 &nbsp;（a. UPW &nbsp;${upwVal||'_________'}&nbsp;M³/day &nbsp;&nbsp;
+      <span class="ck">${cwVal?'✅':'□'}</span>
+      b. CW &nbsp;${cwVal||'_________'}&nbsp;M³/day）
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size:11px"><span class="ck">${airVal?'✅':'□'}</span> 3. 壓縮空氣 &nbsp;${airVal||'_______'}&nbsp;l/min</td>
+    <td style="font-size:11px"><span class="ck">${util['火警警報中斷/隔離']?'✅':'□'}</span> 4. 火警警報中斷或隔離</td>
+    <td style="font-size:11px"><span class="ck">${util['消防系統中斷']?'✅':'□'}</span> 5. 消防系統中斷</td>
+    <td style="font-size:11px"><span class="ck">${util['異味離線']?'✅':'□'}</span> 6. 異味離線</td>
+  </tr>
+</table>
+
+<div class="sec-hdr">D. 所需防護具</div>
+<table>`;
   for(let i=0;i<PPE_ITEMS.length;i+=4){
     d3+='<tr>';
     for(let j=0;j<4;j++){
       const item=PPE_ITEMS[i+j];
       if(item){
         const ex=ppeArr.find(q=>q.label===item.label);
-        d3+=`<td style="font-size:12px"><span class="chk-mark">${ex?'✅':'☐'}</span> ${item.n}. ${X(item.label)}${ex?.detail?'<br><span style="font-size:11px;color:#555">'+X(ex.detail)+'</span>':''}</td>`;
-      }else d3+='<td></td>';
+        d3+=`<td style="font-size:11px"><span class="ck">${ex?'✅':'□'}</span> ${item.n}. ${X(item.label)}${ex?.detail?' ('+X(ex.detail)+')':''}</td>`;
+      } else d3+='<td></td>';
     }
     d3+='</tr>';
   }
   d3+=`</table>
-<div style="margin-top:9px"><table>
-<tr><th colspan="4">審核欄</th></tr>
-<tr><th style="width:25%">申請人（承攬商負責人）</th><th style="width:25%">安衛人員</th><th style="width:25%">現場主管</th><th style="width:25%">廠長</th></tr>
-<tr>
-<td style="text-align:center;padding:5px"><div style="font-size:12px;margin-bottom:2px">${X(r.signee)}</div><div class="sig-box">${r.signature?`<img src="${r.signature}"/>`:'&nbsp;'}</div></td>
-<td style="text-align:center;padding:5px"><div style="font-size:12px;margin-bottom:2px">${X(b.inspector||'&nbsp;')}</div><div class="sig-box">&nbsp;</div></td>
-<td style="text-align:center;padding:5px"><div style="font-size:12px;margin-bottom:2px">&nbsp;</div><div class="sig-box">&nbsp;</div></td>
-<td style="text-align:center;padding:5px"><div style="font-size:12px;margin-bottom:2px">&nbsp;</div><div class="sig-box">&nbsp;</div></td>
-</tr>
-<tr><td colspan="4" style="font-size:11px;color:#666;padding:6px">備註：本申請書須由承攬商負責人填寫完整後，由安衛人員及現場主管審核確認後，方可開始作業。<br>作業人員（共 ${workers.length} 人）：${workers.map(w=>X(w.name||'未知')).join('、')||'無'}</td></tr>
-</table></div></div>`;
+
+<div style="margin-top:6px">
+  <table>
+    <tr><th colspan="5" style="background:#1e3a5f;color:#fff;padding:4px 7px">審核欄</th></tr>
+    <tr>
+      <th style="width:20%">申請欄</th>
+      <th style="width:20%">職安單位主管</th>
+      <th style="width:20%">職安人員</th>
+      <th style="width:20%">承辦單位主管</th>
+      <th style="width:20%">承辦人</th>
+    </tr>
+    <tr>
+      <td style="text-align:center;padding:4px">
+        <div style="font-size:11px;margin-bottom:2px">${X(r.signee)}</div>
+        <div class="sig-box">${r.signature?`<img src="${r.signature}"/>`:'&nbsp;'}</div>
+      </td>
+      <td>&nbsp;</td>
+      <td style="font-size:11px;text-align:center">${X(b.inspector||'')}</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+</div>
+
+<div style="margin-top:5px">
+  <div class="note">1. 正本由環安單位存檔，影本由請購/監工部門轉交承攬商貼於施工區域，並於施工完成後收回存檔。</div>
+  <div class="note">2. 本表非經環安單位簽核不得施工。環安單位應協助研判須會簽部門或須申請動火或特殊危險作業。</div>
+  <div class="note">3. 承攬商監工或現場安衛管理員，需負責監督管理承攬商施工之勞安衛工作。</div>
+  <div class="note">4. 如有動火或特殊危險性作業時（密閉空間作業、吊掛作業、開挖作業、高架作業等），須通知環安單位進行開工前、收工後檢查，以確保施工安全。</div>
+</div>
+<div style="margin-top:3px;font-size:10.5px;color:#555">作業人員（共 ${workers.length} 人）：${workers.map(w=>X(w.name||'未知')).join('、')||'無'}</div>
+<div class="footer">FM-D2-EM-006-03D ／ 大豐環保科技股份有限公司</div>
+</div>`;
 
   return `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><base href="${baseHref}"><title>承攬商進場文件 — ${X(b.company)}</title><style>${css}</style></head><body>${d1}${d2}${d3}</body></html>`;
 }
