@@ -1619,6 +1619,9 @@ function confirmReset() {
 
 // 頁面啟動：從雲端載入
 loadFromCloud();
+if (new URLSearchParams(location.search).get('chat') === '1') {
+  setTimeout(toggleRiskChat, 300);
+}
 
 
 // ════════════════════════════════════════════════════════
