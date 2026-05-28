@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -752,6 +752,7 @@ function doLogin(){
   document.getElementById('hdr-role').style.display    = '';
   document.getElementById('hdr-role').textContent      = isAdmin ? '管理者' : '承攬商';
   document.getElementById('card-records').style.display = isAdmin ? '' : 'none';
+  document.getElementById('card-v2').style.display = isAdmin ? '' : 'none';
   showView('home');
 }
 
