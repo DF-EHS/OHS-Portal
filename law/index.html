@@ -223,34 +223,7 @@
   .chat-typing span:nth-child(3) { animation-delay:.4s; }
   @keyframes chat-bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-7px)} }
 
-  /* ── API Key 設定 Modal ── */
-  #chat-key-modal {
-    position:fixed; inset:0; z-index:1200;
-    background:rgba(0,0,0,.5); backdrop-filter:blur(3px);
-    display:flex; align-items:center; justify-content:center;
-  }
-  #chat-key-box {
-    background:#fff; border-radius:16px;
-    padding:28px 24px 22px; width:min(400px,calc(100vw - 32px));
-    box-shadow:0 16px 48px rgba(0,0,0,.3);
-  }
-  #chat-key-box h3 { font-size:16px; margin-bottom:8px; color:var(--navy); }
-  #chat-key-box p  { font-size:12px; color:var(--sub); margin-bottom:16px; line-height:1.6; }
-  #chat-key-input  {
-    width:100%; border:1px solid var(--border); border-radius:8px;
-    padding:9px 12px; font-size:13px; outline:none; margin-bottom:8px;
-    font-family:inherit;
-  }
-  #chat-key-input:focus { border-color:#059669; }
-  #chat-key-err { font-size:12px; color:var(--red); min-height:18px; margin-bottom:10px; }
-  .key-btns { display:flex; gap:8px; justify-content:flex-end; }
-  .key-btns button { padding:7px 18px; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; border:none; }
-  .key-btn-save   { background:#059669; color:#fff; }
-  .key-btn-save:hover { background:#047857; }
-  .key-btn-cancel { background:var(--bg); color:var(--text); border:1px solid var(--border) !important; }
-  .key-btn-cancel:hover { background:#e2e8f0; }
-
-  /* ── Feature F: scroll to top ── */
+    /* ── Feature F: scroll to top ── */
   #scroll-top { position: fixed; bottom: 24px; right: 24px;
                  width: 44px; height: 44px; border-radius: 50%;
                  background: var(--navy); color: #fff; border: none;
@@ -342,27 +315,12 @@
 <button id="scroll-top" title="回到頂端" onclick="scrollToTop()">↑</button>
 
 <!-- Chatbot Widget -->
-<!-- ── API Key 設定 Modal ── -->
-<div id="chat-key-modal" style="display:none" onclick="if(event.target===this)closeKeyModal()">
-  <div id="chat-key-box">
-    <h3>⚙️ OpenAI API Key 設定</h3>
-    <p>請輸入您的 OpenAI API Key，將儲存在此瀏覽器的本機記憶體中，不會上傳至任何伺服器。<br>取得網址：<a href="https://platform.openai.com/api-keys" target="_blank" style="color:var(--blue)">platform.openai.com/api-keys</a></p>
-    <input id="chat-key-input" type="password" placeholder="sk-…" autocomplete="off"
-           onkeydown="if(event.key==='Enter')saveApiKey()">
-    <div id="chat-key-err"></div>
-    <div class="key-btns">
-      <button class="key-btn-cancel" onclick="closeKeyModal()">取消</button>
-      <button class="key-btn-save"   onclick="saveApiKey()">儲存並開始使用</button>
-    </div>
-  </div>
-</div>
 
 <button id="chat-fab" onclick="toggleChat()">⚖️ 法規問答機器人</button>
 <div id="chat-panel">
   <div id="chat-header">
     <span>⚖️ 法規智慧問答</span>
     <div style="display:flex;gap:6px;align-items:center">
-      <button id="chat-settings-btn" onclick="openKeyModal()" title="API Key 設定" style="background:none;border:none;color:rgba(255,255,255,.75);font-size:16px;cursor:pointer;line-height:1;padding:2px 4px;border-radius:4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.75)'">⚙️</button>
       <button id="chat-close" onclick="toggleChat()">✕</button>
     </div>
   </div>
@@ -911,28 +869,6 @@ function appendMsg(html, isUser) {
   setTimeout(() => msgs.scrollTop = msgs.scrollHeight, 30);
 }
 
-// ── OpenAI API Key 管理 ────────────────────────────────────────
-const OHS_KEY = 'ohs-openai-key';
-function getApiKey()  { return localStorage.getItem(OHS_KEY) || ''; }
-function setApiKey(k) { localStorage.setItem(OHS_KEY, k); }
-
-function openKeyModal() {
-  document.getElementById('chat-key-input').value = getApiKey();
-  document.getElementById('chat-key-err').textContent = '';
-  document.getElementById('chat-key-modal').style.display = 'flex';
-  setTimeout(() => document.getElementById('chat-key-input').focus(), 60);
-}
-function closeKeyModal() {
-  document.getElementById('chat-key-modal').style.display = 'none';
-}
-function saveApiKey() {
-  const k = document.getElementById('chat-key-input').value.trim();
-  const errEl = document.getElementById('chat-key-err');
-  if (!k.startsWith('sk-')) { errEl.textContent = 'Key 格式不符，應以 sk- 開頭'; return; }
-  setApiKey(k);
-  closeKeyModal();
-  appendMsg('✅ API Key 已儲存，現在可以開始提問！', false);
-}
 
 // ── 打字指示器 ─────────────────────────────────────────────────
 function showTyping() {
@@ -992,8 +928,6 @@ async function sendChat() {
   const q = inp.value.trim();
   if (!q) return;
 
-  const key = getApiKey();
-  if (!key) { openKeyModal(); return; }
 
   inp.value = '';
   inp.disabled = true;
@@ -1011,9 +945,9 @@ async function sendChat() {
   try {
     const sysMsg = '你是大豐環保科技股份有限公司的職業安全衛生法規助理。公司業務為環保廢棄物回收處理，員工包含辦公室人員及現場作業人員。\n\n請依據以下從公司「法規鑑別資料庫」中擷取的相關條文，以繁體中文回答使用者的問題。\n\n回答原則：\n1. 直接回答，不重述問題\n2. 引用條文時標明《法規名稱》第X條\n3. 合規狀態為「不符」的條文請特別加粗带提醒注意\n4. 若條文不夠完整回答，誠實說明並建議查閱完整法規\n5. 語氣專業親切，適合職安管理師參考\n\n相關法規條文：\n' + context;
 
-    const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+    const resp = await fetch('https://ohs-law-chatbot.df-hr-openai.workers.dev', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         stream: true,
@@ -1026,7 +960,7 @@ async function sendChat() {
     });
 
     if (!resp.ok) {
-      if (resp.status === 401) { localStorage.removeItem(OHS_KEY); throw new Error('API Key 無效或已過期，請重新設定（⚙️）'); }
+      if (resp.status === 401) { throw new Error('服務暫時無法使用，請稍後再試'); }
       const body = await resp.json().catch(() => ({}));
       throw new Error(body?.error?.message || 'API 錯誤 ' + resp.status);
     }
@@ -1063,7 +997,6 @@ async function sendChat() {
   } catch (err) {
     typingEl.remove();
     appendMsg('⚠️ ' + esc(err.message), false);
-    if (err.message.includes('Key') || err.message.includes('401')) openKeyModal();
   } finally {
     inp.disabled = false;
     sendBtn.disabled = false;
