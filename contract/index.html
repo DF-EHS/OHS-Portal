@@ -1899,19 +1899,21 @@ function confirmSigFS(){
 
 function openSigFSMain(){
   const c = document.getElementById('sig-canvas');
+  const cssW = parseInt(c.style.width) || c.width, cssH = parseInt(c.style.height) || c.height;
   openSigFS(sigHasData ? c.toDataURL() : null, (dataURL)=>{
-    sigCtx.clearRect(0,0,c.width,c.height);
-    if(dataURL){ const i=new Image(); i.onload=()=>{ sigCtx.drawImage(i,0,0,c.width,c.height); sigHasData=true; updateHint(); }; i.src=dataURL; }
+    sigCtx.clearRect(0,0,cssW,cssH);
+    if(dataURL){ const i=new Image(); i.onload=()=>{ sigCtx.drawImage(i,0,0,cssW,cssH); sigHasData=true; updateHint(); }; i.src=dataURL; }
     else { sigHasData=false; updateHint(); }
   });
 }
 
 function openSigFSWorker(id){
   const c = document.getElementById('wsig-canvas-'+id);
+  const cssW = parseInt(c.style.width) || c.width, cssH = parseInt(c.style.height) || c.height;
   openSigFS(workerStates[id]?.hasData ? c.toDataURL() : null, (dataURL)=>{
     const ctx = workerStates[id].ctx;
-    ctx.clearRect(0,0,c.width,c.height);
-    if(dataURL){ const i=new Image(); i.onload=()=>{ ctx.drawImage(i,0,0,c.width,c.height); workerStates[id].hasData=true; markWorkerSig(id); }; i.src=dataURL; }
+    ctx.clearRect(0,0,cssW,cssH);
+    if(dataURL){ const i=new Image(); i.onload=()=>{ ctx.drawImage(i,0,0,cssW,cssH); workerStates[id].hasData=true; markWorkerSig(id); }; i.src=dataURL; }
     else { workerStates[id].hasData=false; document.getElementById('wsig-hint-'+id).style.display=''; }
   });
 }
