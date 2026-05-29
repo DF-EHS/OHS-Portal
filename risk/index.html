@@ -523,6 +523,9 @@
     <div id="risk-preview-wrap">
       <img id="risk-thumb">
       <button id="risk-photo-clear" onclick="clearRiskPhoto()" title="移除照片">✕</button>
+      <span style="font-size:11px;color:#b45309;background:#fef3c7;border-radius:5px;padding:3px 8px;line-height:1.4">
+        ⚠️ 目前 AI 無法讀取照片<br>請以文字描述現場狀況
+      </span>
     </div>
     <div id="risk-text-row">
       <input id="risk-input" type="text"
@@ -1731,7 +1734,7 @@ async function sendRiskChat() {
   const sysMsg ='你是大豐環保科技的職業安全衛生現場風險評估助理。公司業務為環保廢棄物回收處理，作業環境包含辦公室及現場。\n\n收到照片或文字描述後，請進行快速危害辨識與風險評估，以下列格式回答：\n\n🔍 **危害辨識**\n列出所有可見或潛在危害（物理、化學、電氣、人因、環境等）\n\n⚠️ **風險等級**\n每項危害標明：🔴 高風險（立即停工或處理）/ 🟡 中風險（本週內改善）/ 🟢 低風險（納入計畫）\n\n🚨 **立即行動建議**\n需馬上採取的措施\n\n✅ **中長期改善建議**\n系統性改善方向\n\n📋 **相關職安法規提示**（若有）\n適用條文或規定名稱\n\n請用條列式、簡潔的繁體中文回答，讓現場主管能快速判讀並行動。若照片不清楚或資訊不足，請說明需要補充哪些資訊。';
 
   const userText = text || '請分析現場狀況，辨識危害並評估風險等級。';
-  const photoNote = hasPhoto ? '\n\n（使用者已上傳現場照片，請根據以上文字描述及您的職安知識協助進行危害辨識與風險評估）' : '';
+  const photoNote = hasPhoto ? '\n\n（使用者有上傳照片，但你無法直接看到照片內容。請勿猜測或假設照片中的內容。若使用者未提供文字描述，請請他們以文字說明現場狀況後再行評估。）' : '';
   const prompt = sysMsg + '\n\n使用者問題：' + userText + photoNote;
 
   try {
