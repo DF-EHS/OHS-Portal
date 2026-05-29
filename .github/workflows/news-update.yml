@@ -2,7 +2,7 @@ name: OHS News Intelligence Update
 
 on:
   schedule:
-    - cron: '0 0,4,8,12 * * 1-5'
+    - cron: '0 1 * * *'
   workflow_dispatch:
   push:
     paths:
