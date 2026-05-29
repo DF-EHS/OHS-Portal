@@ -969,6 +969,7 @@ async function sendChat() {
     }
 
     const data = await resp.json();
+    console.log('[AI raw response]', JSON.stringify(data));
     const aiText = data?.choices?.[0]?.message?.content
                 || data?.choices?.[0]?.text
                 || data?.text
@@ -976,7 +977,7 @@ async function sendChat() {
                 || data?.response
                 || '';
 
-    if (!aiText) throw new Error('回應格式無法解析，請截圖回報 IT');
+    if (!aiText) throw new Error('格式偵測中：' + JSON.stringify(data).slice(0, 300));
 
     typingEl.remove();
 
