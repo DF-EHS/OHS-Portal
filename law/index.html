@@ -921,14 +921,8 @@ function appendSourceCards(results, query) {
   msgs.scrollTop = msgs.scrollHeight;
 }
 
-// ── IT 閘道器設定 ─────────────────────────────────────────────
-const AI_CFG = {
-  url:     'https://df-it-openrouter-dispatch-api.it.zerozero.tw/api/v1/model/chat',
-  sdkKey:  'ordsk_5c68e4065189_52E0L6tOLtnV5eJV5fn16sNf832gs47K',
-  token:   '8HLYWF4-Z7egt6PbrcDi4_tN5dRtOAaxryMLmVOSHHhD-0WZcTNSzOOWEfygmiyllogMQ9uKVjPtJO8TPxZNKbtfI9RcRwv5ey9DQ0IQttLGqSOl5sjzB16tWX5Q8KjNhNWBplxs0I4-yYpSWoL-FPWS_opMJ-YXjjiGlJLaT2zhK-W1OP5A6-r0lQXjrK99iTspHoMCbHNpL_jOa5rqLlq2CfjxD5cArWnpwJ4d387HKBH4MJNXAD388oGQfM1iuYyDcTiH0urh5SM4Xlj_fPD8IZFDmmBbSdS1zYHCqyf6hWLyU8SpcWV_buKM--YWVnGrUynenCEgXpew0u39Ui85JQ',
-  project: '53670008080830464',
-  model:   'google/gemini-2.5-flash',
-};
+// ── Cloudflare Worker（CORS Proxy → IT Gemini 閘道器）──────────
+const AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
 
 // ── 主送出函數（RAG + Gemini）────────────────────────────────
 async function sendChat() {
@@ -963,15 +957,10 @@ async function sendChat() {
       '相關法規條文：\n' + context +
       '\n\n使用者問題：' + q;
 
-    const resp = await fetch(AI_CFG.url, {
+    const resp = await fetch(AI_WORKER, {
       method: 'POST',
-      headers: {
-        'Content-Type':  'application/json',
-        'X-SDK-Key':     AI_CFG.sdkKey,
-        'X-User-Token':  AI_CFG.token,
-        'X-Project-Code': AI_CFG.project,
-      },
-      body: JSON.stringify({ model: AI_CFG.model, text: prompt }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt }),
     });
 
     if (!resp.ok) {
