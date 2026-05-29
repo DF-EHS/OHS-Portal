@@ -1891,10 +1891,20 @@ function cancelSigFS(){
 
 function confirmSigFS(){
   const c = document.getElementById('sig-fs-canvas');
-  const dataURL = _sigFsHasData ? c.toDataURL() : null;
   document.getElementById('sig-fullscreen').classList.remove('open');
-  if(_sigFsCallback) _sigFsCallback(dataURL);
-  _sigFsCallback = null;
+  if(!_sigFsHasData){ if(_sigFsCallback) _sigFsCallback(null); _sigFsCallback=null; return; }
+  const angle = screen.orientation ? screen.orientation.angle : (window.orientation || 0);
+  const isLandscape = (Math.abs(+angle) === 90 || Math.abs(+angle) === 270);
+  if(!isLandscape){ if(_sigFsCallback) _sigFsCallback(c.toDataURL()); _sigFsCallback=null; return; }
+  // Landscape: rotate image back to portrait before returning
+  const tmp = document.createElement('canvas');
+  tmp.width = c.height; tmp.height = c.width;
+  const tctx = tmp.getContext('2d');
+  tctx.translate(tmp.width/2, tmp.height/2);
+  tctx.rotate(+angle === 90 ? -Math.PI/2 : Math.PI/2);
+  tctx.drawImage(c, -c.width/2, -c.height/2);
+  if(_sigFsCallback) _sigFsCallback(tmp.toDataURL());
+  _sigFsCallback=null;
 }
 
 function openSigFSMain(){
