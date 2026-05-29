@@ -84,10 +84,17 @@ function doGet() {
         var obj = {};
         headers.forEach(function(key, i){ obj[key] = _fmt(row[i]); });
         // 衍生欄位（不存在於 Sheets，由此計算）
-        var parts    = (obj.date || '').split('-');
-        obj.year     = parts[0] || '';
-        obj.month    = parts[1] || '';
-        obj.quarter  = parts[1] ? _quarter(parts[1]) : '';
+        // 支援 YYYYMMDD（無分隔）與 YYYY-MM-DD 兩種格式
+        var raw = (obj.date || '').replace(/[^0-9]/g, ''); // 去掉所有非數字
+        var y = '', mo = '';
+        if (raw.length >= 8) {
+          y  = raw.slice(0, 4);
+          mo = raw.slice(4, 6);
+          obj.date = y + '-' + mo + '-' + raw.slice(6, 8); // 統一格式化為 YYYY-MM-DD
+        }
+        obj.year     = y;
+        obj.month    = mo;
+        obj.quarter  = mo ? _quarter(mo) : '';
         obj.restDays = parseFloat(obj.restDays) || 0;
         return obj;
       });
