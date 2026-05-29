@@ -1728,29 +1728,28 @@ async function sendRiskChat() {
 
   const typingEl = showRiskTyping();
 
-  // 組合訊息 content
-  const userContent = [];
-  if (hasPhoto) userContent.push({ type:'image_url', image_url:{ url:'data:' + savedMime + ';base64,' + savedB64 } });
-  userContent.push({ type:'text', text: text || '請分析照片中的現場狀況，辨識危害並評估風險等級。' });
+  const sysMsg ='你是大豐環保科技的職業安全衛生現場風險評估助理。公司業務為環保廢棄物回收處理，作業環境包含辦公室及現場。\n\n收到照片或文字描述後，請進行快速危害辨識與風險評估，以下列格式回答：\n\n🔍 **危害辨識**\n列出所有可見或潛在危害（物理、化學、電氣、人因、環境等）\n\n⚠️ **風險等級**\n每項危害標明：🔴 高風險（立即停工或處理）/ 🟡 中風險（本週內改善）/ 🟢 低風險（納入計畫）\n\n🚨 **立即行動建議**\n需馬上採取的措施\n\n✅ **中長期改善建議**\n系統性改善方向\n\n📋 **相關職安法規提示**（若有）\n適用條文或規定名稱\n\n請用條列式、簡潔的繁體中文回答，讓現場主管能快速判讀並行動。若照片不清楚或資訊不足，請說明需要補充哪些資訊。';
 
-  const sysMsg = '你是大豐環保科技的職業安全衛生現場風險評估助理。公司業務為環保廢棄物回收處理，作業環境包含辦公室及現場。\n\n收到照片或文字描述後，請進行快速危害辨識與風險評估，以下列格式回答：\n\n🔍 **危害辨識**\n列出所有可見或潛在危害（物理、化學、電氣、人因、環境等）\n\n⚠️ **風險等級**\n每項危害標明：🔴 高風險（立即停工或處理）/ 🟡 中風險（本週內改善）/ 🟢 低風險（納入計畫）\n\n🚨 **立即行動建議**\n需馬上採取的措施\n\n✅ **中長期改善建議**\n系統性改善方向\n\n📋 **相關職安法規提示**（若有）\n適用條文或規定名稱\n\n請用條列式、簡潔的繁體中文回答，讓現場主管能快速判讀並行動。若照片不清楚或資訊不足，請說明需要補充哪些資訊。';
+  const userText = text || '請分析現場狀況，辨識危害並評估風險等級。';
+  const photoNote = hasPhoto ? '\n\n（使用者已上傳現場照片，請根據以上文字描述及您的職安知識協助進行危害辨識與風險評估）' : '';
+  const prompt = sysMsg + '\n\n使用者問題：' + userText + photoNote;
 
   try {
     const resp = await fetch(RISK_WORKER, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        stream: true,
-        temperature: 0.2,
-        messages:[
-          { role:'system', content: sysMsg },
-          { role:'user',   content: userContent }
-        ]
-      })
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt }),
     });
 
     if (!resp.ok) throw new Error('服務暫時無法使用，請稍後再試（' + resp.status + '）');
+
+    const data = await resp.json();
+    const aiText = data?.data
+                || data?.choices?.[0]?.message?.content
+                || data?.text
+                || '';
+
+    if (!aiText) throw new Error('AI 回應為空，請稍後再試');
 
     typingEl.remove();
 
@@ -1759,25 +1758,10 @@ async function sendRiskChat() {
     msgDiv.className = 'rmsg-bot';
     const bubble = document.createElement('div');
     bubble.className = 'risk-ai-bubble';
+    bubble.innerHTML = rMd(aiText);
     msgDiv.appendChild(bubble);
     msgs.appendChild(msgDiv);
-
-    const reader = resp.body.getReader();
-    const decoder = new TextDecoder();
-    let full = '';
-    outer: while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      for (const line of decoder.decode(value).split('\n')) {
-        if (!line.startsWith('data: ')) continue;
-        const data = line.slice(6).trim();
-        if (data === '[DONE]') break outer;
-        try {
-          const token = JSON.parse(data).choices?.[0]?.delta?.content;
-          if (token) { full += token; bubble.innerHTML = rMd(full); msgs.scrollTop = msgs.scrollHeight; }
-        } catch {}
-      }
-    }
+    msgs.scrollTop = msgs.scrollHeight;
 
   } catch(err) {
     typingEl.remove();
