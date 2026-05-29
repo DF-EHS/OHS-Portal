@@ -921,13 +921,21 @@ function appendSourceCards(results, query) {
   msgs.scrollTop = msgs.scrollHeight;
 }
 
-// ── 主送出函數（RAG + OpenAI streaming）──────────────────────
+// ── IT 閘道器設定 ─────────────────────────────────────────────
+const AI_CFG = {
+  url:     'https://df-it-openrouter-dispatch-api.it.zerozero.tw/api/v1/model/chat',
+  sdkKey:  'ordsk_5c68e4065189_52E0L6tOLtnV5eJV5fn16sNf832gs47K',
+  token:   '8HLYWF4-Z7egt6PbrcDi4_tN5dRtOAaxryMLmVOSHHhD-0WZcTNSzOOWEfygmiyllogMQ9uKVjPtJO8TPxZNKbtfI9RcRwv5ey9DQ0IQttLGqSOl5sjzB16tWX5Q8KjNhNWBplxs0I4-yYpSWoL-FPWS_opMJ-YXjjiGlJLaT2zhK-W1OP5A6-r0lQXjrK99iTspHoMCbHNpL_jOa5rqLlq2CfjxD5cArWnpwJ4d387HKBH4MJNXAD388oGQfM1iuYyDcTiH0urh5SM4Xlj_fPD8IZFDmmBbSdS1zYHCqyf6hWLyU8SpcWV_buKM--YWVnGrUynenCEgXpew0u39Ui85JQ',
+  project: '53670008080830464',
+  model:   'google/gemini-2.5-flash',
+};
+
+// ── 主送出函數（RAG + Gemini）────────────────────────────────
 async function sendChat() {
   const inp = document.getElementById('chat-input');
   const sendBtn = document.getElementById('chat-send');
   const q = inp.value.trim();
   if (!q) return;
-
 
   inp.value = '';
   inp.disabled = true;
@@ -943,27 +951,43 @@ async function sendChat() {
   const typingEl = showTyping();
 
   try {
-    const sysMsg = '你是大豐環保科技股份有限公司的職業安全衛生法規助理。公司業務為環保廢棄物回收處理，員工包含辦公室人員及現場作業人員。\n\n請依據以下從公司「法規鑑別資料庫」中擷取的相關條文，以繁體中文回答使用者的問題。\n\n回答原則：\n1. 直接回答，不重述問題\n2. 引用條文時標明《法規名稱》第X條\n3. 合規狀態為「不符」的條文請特別加粗带提醒注意\n4. 若條文不夠完整回答，誠實說明並建議查閱完整法規\n5. 語氣專業親切，適合職安管理師參考\n\n相關法規條文：\n' + context;
+    const prompt =
+      '你是大豐環保科技股份有限公司的職業安全衛生法規助理。公司業務為環保廢棄物回收處理，員工包含辦公室人員及現場作業人員。\n\n' +
+      '請依據以下從公司「法規鑑別資料庫」中擷取的相關條文，以繁體中文回答使用者的問題。\n\n' +
+      '回答原則：\n' +
+      '1. 直接回答，不重述問題\n' +
+      '2. 引用條文時標明《法規名稱》第X條\n' +
+      '3. 合規狀態為「不符」的條文請特別加粗提醒注意\n' +
+      '4. 若條文不夠完整回答，誠實說明並建議查閱完整法規\n' +
+      '5. 語氣專業親切，適合職安管理師參考\n\n' +
+      '相關法規條文：\n' + context +
+      '\n\n使用者問題：' + q;
 
-    const resp = await fetch('https://ohs-law-chatbot.df-hr-openai.workers.dev', {
+    const resp = await fetch(AI_CFG.url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        stream: true,
-        temperature: 0.3,
-        messages: [
-          { role: 'system', content: sysMsg },
-          { role: 'user', content: q }
-        ]
-      })
+      headers: {
+        'Content-Type':  'application/json',
+        'X-SDK-Key':     AI_CFG.sdkKey,
+        'X-User-Token':  AI_CFG.token,
+        'X-Project-Code': AI_CFG.project,
+      },
+      body: JSON.stringify({ model: AI_CFG.model, text: prompt }),
     });
 
     if (!resp.ok) {
-      if (resp.status === 401) { throw new Error('服務暫時無法使用，請稍後再試'); }
       const body = await resp.json().catch(() => ({}));
-      throw new Error(body?.error?.message || 'API 錯誤 ' + resp.status);
+      throw new Error(body?.error?.message || body?.message || 'API 錯誤 ' + resp.status);
     }
+
+    const data = await resp.json();
+    const aiText = data?.choices?.[0]?.message?.content
+                || data?.choices?.[0]?.text
+                || data?.text
+                || data?.content
+                || data?.response
+                || '';
+
+    if (!aiText) throw new Error('回應格式無法解析，請截圖回報 IT');
 
     typingEl.remove();
 
@@ -972,25 +996,10 @@ async function sendChat() {
     msgDiv.className = 'cmsg-bot';
     const bubble = document.createElement('div');
     bubble.className = 'chat-ai-bubble';
+    bubble.innerHTML = mdToHtml(aiText);
     msgDiv.appendChild(bubble);
     msgs.appendChild(msgDiv);
-
-    const reader = resp.body.getReader();
-    const decoder = new TextDecoder();
-    let full = '';
-    outer: while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      for (const line of decoder.decode(value).split('\n')) {
-        if (!line.startsWith('data: ')) continue;
-        const data = line.slice(6).trim();
-        if (data === '[DONE]') break outer;
-        try {
-          const token = JSON.parse(data).choices?.[0]?.delta?.content;
-          if (token) { full += token; bubble.innerHTML = mdToHtml(full); msgs.scrollTop = msgs.scrollHeight; }
-        } catch {}
-      }
-    }
+    msgs.scrollTop = msgs.scrollHeight;
 
     appendSourceCards(results, q);
 
