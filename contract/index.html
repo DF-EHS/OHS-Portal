@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -1046,14 +1046,17 @@ function resizeWorkerCanvases(){
     const canvas = document.getElementById('wsig-canvas-' + id);
     const outer  = document.getElementById('wsig-outer-' + id);
     if(!canvas || !outer) return;
-    const w = outer.clientWidth;
-    if(w > 0 && canvas.width !== w){
+    const dpr = window.devicePixelRatio || 1;
+    const w = outer.clientWidth, h = 130;
+    if(w > 0 && canvas.width !== w * dpr){
       const snap = workerStates[id].hasData ? canvas.toDataURL() : null;
-      canvas.width = w;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
       const ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
       ctx.strokeStyle='#1e293b'; ctx.lineWidth=2; ctx.lineCap='round'; ctx.lineJoin='round';
       workerStates[id].ctx = ctx;
-      if(snap){ const img=new Image(); img.onload=()=>ctx.drawImage(img,0,0); img.src=snap; }
+      if(snap){ const img=new Image(); img.onload=()=>ctx.drawImage(img,0,0,w,h); img.src=snap; }
     }
   });
 }
@@ -1062,22 +1065,29 @@ function resizeWorkerCanvases(){
 function resizeMainSigCanvas(){
   const canvas = document.getElementById('sig-canvas');
   const outer  = document.getElementById('sig-outer');
-  const w = outer.clientWidth;
-  if(w > 0 && canvas.width !== w){
+  const dpr = window.devicePixelRatio || 1;
+  const w = outer.clientWidth, h = 180;
+  if(w > 0 && canvas.width !== w * dpr){
     const snap = sigHasData ? canvas.toDataURL() : null;
-    canvas.width = w;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
     sigCtx = canvas.getContext('2d');
+    sigCtx.scale(dpr, dpr);
     sigCtx.strokeStyle='#1e293b'; sigCtx.lineWidth=2; sigCtx.lineCap='round'; sigCtx.lineJoin='round';
-    if(snap){ const img=new Image(); img.onload=()=>sigCtx.drawImage(img,0,0); img.src=snap; }
+    if(snap){ const img=new Image(); img.onload=()=>sigCtx.drawImage(img,0,0,w,h); img.src=snap; }
   }
 }
 
 function initSig(){
   const canvas = document.getElementById('sig-canvas');
   const outer = document.getElementById('sig-outer');
-  canvas.width = outer.clientWidth || 780;
+  const dpr = window.devicePixelRatio || 1;
+  const cssW = outer.clientWidth || 780, cssH = 180;
+  canvas.width = cssW * dpr; canvas.height = cssH * dpr;
+  canvas.style.width = cssW + 'px'; canvas.style.height = cssH + 'px';
 
   sigCtx = canvas.getContext('2d');
+  sigCtx.scale(dpr, dpr);
   sigCtx.strokeStyle='#1e293b';
   sigCtx.lineWidth=2;
   sigCtx.lineCap='round';
@@ -1146,8 +1156,12 @@ function addWorker(){
 function initWorkerCanvas(id){
   const canvas = document.getElementById('wsig-canvas-' + id);
   const outer  = document.getElementById('wsig-outer-' + id);
-  canvas.width  = outer.clientWidth || 600;
+  const dpr = window.devicePixelRatio || 1;
+  const cssW = outer.clientWidth || 600, cssH = 130;
+  canvas.width = cssW * dpr; canvas.height = cssH * dpr;
+  canvas.style.width = cssW + 'px'; canvas.style.height = cssH + 'px';
   const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
   ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
   workerStates[id] = { drawing: false, hasData: false, ctx };
 
@@ -1847,14 +1861,17 @@ function openSigFS(existingDataURL, onConfirm){
   requestAnimationFrame(()=>{
     const body   = document.getElementById('sig-fs-body');
     const canvas = document.getElementById('sig-fs-canvas');
-    canvas.width  = body.clientWidth;
-    canvas.height = body.clientHeight;
+    const dpr = window.devicePixelRatio || 1;
+    const cssW = body.clientWidth, cssH = body.clientHeight;
+    canvas.width  = cssW * dpr; canvas.height = cssH * dpr;
+    canvas.style.width = cssW + 'px'; canvas.style.height = cssH + 'px';
     _sigFsCtx = canvas.getContext('2d');
+    _sigFsCtx.scale(dpr, dpr);
     _sigFsCtx.strokeStyle='#1e293b'; _sigFsCtx.lineWidth=2.5; _sigFsCtx.lineCap='round'; _sigFsCtx.lineJoin='round';
     document.getElementById('sig-fs-hint').style.display = '';
     if(existingDataURL){
       const img = new Image();
-      img.onload = ()=>{ _sigFsCtx.drawImage(img,0,0,canvas.width,canvas.height); _sigFsHasData=true; document.getElementById('sig-fs-hint').style.display='none'; };
+      img.onload = ()=>{ _sigFsCtx.drawImage(img,0,0,cssW,cssH); _sigFsHasData=true; document.getElementById('sig-fs-hint').style.display='none'; };
       img.src = existingDataURL;
     }
   });
@@ -2037,39 +2054,59 @@ th{background:#d1d5db;font-weight:700;text-align:center;white-space:nowrap}
   /* ────────────────────────────────
      Doc 2：承攬商環安衛管理告知切結書
   ──────────────────────────────── */
+  const origHaz2=[
+    ['密閉空間作業','缺氧、窒息、火災爆炸','機械通風、環境測定、空氣呼吸氣、安全帶、安全索'],
+    ['電焊、氬焊、氣焊、熱熔','灼傷、輻射危害、感電、燃燒、火災爆炸','安全眼鏡、面罩、手套、自備消防設備、防火毯、防電擊裝置，警報系統隔離或中斷'],
+    ['高架作業或開口','墜落、鷹架倒塌、物品墜落','安全索、安全帶、安全帽、合格施工架、合格護欄、工具材料固定牢靠'],
+    ['危險性機械/設備、管路施工','墜落、氣體外洩、爆炸火災','個人防護器具、應變器材'],
+    ['氣體搬運、儲存、輸送、使用及排放場所','氣體外洩、爆炸火災','個人防護器具、洩漏應變器材、自備消防設備'],
+    ['危險物/有害物/毒化物運作、管路施工','液體外洩、誤食、滑倒、酸/鹼氣體吸入、皮膚灼傷','必要個人防護器具、洩漏應變器材'],
+    ['有機溶劑作業如油漆或使用含有機溶劑之作業','缺氧、有機溶劑氣體吸入、燃燒、火災、爆炸','機械通風、環境測定、個人防護具、洩漏應變器材、自備消防設備'],
+    ['切割研磨作業','燃燒、火災、爆炸、粉塵吸入、環境(或潔淨室)污染','安全眼鏡、污染防治措(設)施、警報系統隔離或中斷及其他必要個人防護具'],
+    ['電氣作業','感電、火災、爆炸、燃燒','靜電偵測器、活電感知器、必要個人防護具、自備消防設備'],
+    ['機台裝設、維修、保養','上述之危害因素及撞擊、刺傷、拌倒、滑倒等','上述之適當防護具'],
+    ['其他','撞擊、刺傷、拌倒、滑倒等','必要個人防護器具'],
+  ];
   let d2=`<div class="page">
 <div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div><div class="co-name">大豐環保科技股份有限公司</div><div class="co-sub">Dafon Environmental Technology Co., Ltd.</div></div></div>
 <div class="doc-title">承攬商環安衛管理告知切結書</div>
-<div class="doc-no">FM-D2-EM-006-02D</div>
-<table style="margin-bottom:6px">
-  <tr><td class="lbl" style="width:22%">承攬商名稱</td><td>${X(b.company)}</td><td class="lbl" style="width:13%">負責人</td><td>${X(r.signee)}</td></tr>
-  <tr><td class="lbl">工程/作業名稱</td><td colspan="3">${X(b.workname)}</td></tr>
-  <tr><td class="lbl">作業期間</td><td colspan="3">${fd(b.dateStart)} 至 ${fd(b.dateEnd)}</td></tr>
-</table>
-<div style="font-weight:700;font-size:11.5px;margin-bottom:3px">一、本次作業可能涉及之危害類型（請勾選）：</div>
-<table>
-  <tr><th style="width:30px">勾選</th><th>作業類型</th><th>危害因素</th><th>防護措施</th></tr>`;
-  WORK_HAZARDS.forEach(w=>{
+<div class="doc-no">FM-D2-EM-006-01B</div>
+<p style="font-size:11px;line-height:1.8;margin:6px 0 8px">　　茲經 大豐環保科技股份有限公司 通知，該公司施工環境中可能發生之危害因素及應採取之防範措施如下表，本公司已確實了解，於貴公司工作時將採取適當危害防範措施。</p>
+<table style="margin-bottom:8px;font-size:11px">
+  <tr><th style="width:36%">作業活動或方式</th><th style="width:32%">潛在危害因素</th><th>應備安全措施</th></tr>`;
+  WORK_HAZARDS.forEach((w,i)=>{
     const chk=appliedTypes.includes(w.t);
-    d2+=`<tr${chk?' style="background:#f0fdf4"':''}><td style="text-align:center;font-size:14px">${chk?'✅':'□'}</td><td style="font-size:11px;font-weight:${chk?700:400}">${X(w.t)}</td><td style="font-size:10.5px;color:#b91c1c">${X(w.h)}</td><td style="font-size:10.5px;color:#166534">${X(w.m)}</td></tr>`;
+    const row=origHaz2[i];
+    d2+=`<tr${chk?' style="background:#f0fdf4"':''}><td style="font-size:10.5px;font-weight:${chk?700:400}">${i+1}、${chk?'✅':'□'} ${X(row[0])}</td><td style="font-size:10.5px">${X(row[1])}</td><td style="font-size:10.5px">${X(row[2])}</td></tr>`;
   });
   d2+=`</table>
-<div style="font-weight:700;font-size:11.5px;margin:7px 0 3px">二、本公司（承攬商）承諾事項：</div>
-<table>`;
-  COMMITMENTS.forEach((c,i)=>{
-    d2+=`<tr><td style="font-weight:700;color:#1e3a5f;width:20px;text-align:center;font-size:11px">${i+1}</td><td style="font-size:11px;line-height:1.5">${X(c)}</td></tr>`;
+<p style="font-size:11px;line-height:1.8;margin:6px 0 6px">另茲承攬　貴公司之工程或勞務工作，同意遵守國內勞工安全衛生法規及其他中央主管機關之相關規定，並經 貴公司承辦人員告知、了解並承諾遵守下列規定：</p>
+<table style="margin-bottom:6px;font-size:11px">`;
+  [
+    '確認了解並遵守 貴公司之承攬商環安衛管理程序，並周知所屬人員。',
+    '進廠施工前提供上述法規要求之公司執照/證照，合格專責人員及特殊作業人員訓練合格證明、機械設備安全檢查合格證供 貴公司查驗，若為工程施工，另外提供勞工安全衛生管理計劃。',
+    '報價內容已包含勞工安全衛生相關費用，並於施工期間指派專人執行勞安衛管理工作，所僱用勞工已依法實施勞工安全衛生教育訓練，並提供勞健保及意外保險，紀錄留存備查。',
+    '施工期間若有違反本公司勞工安全衛生規定，並經監工人員或勞安衛人員勸告後仍不改善，同意 貴公司從應付款項中罰扣承攬商施工違規罰款（罰款項目及金額如附件）。',
+    '若有違反勞工安全衛生法規遭受告發、罰金或停工處罰時，期間業主及其他承攬商所蒙受之全部損失由本公司負責賠償。本公司除繳交主管機關所開立之罰單金額外，並同意 貴公司從應付款項中，罰扣相同款數。',
+    '施工期間，如有職業災害或意外事故發生時，民、刑事責任概由本公司自行負責。若因可歸咎於本公司之事由遭受檢查機構查獲處以罰鍰及停工而造成 貴公司及其他承攬商蒙受損失，本公司除繳交罰單外，願負責賠償相關損失，並同意 貴公司從應付款項中，罰扣相同款數。',
+    '加入協議組織，並接受協議組織管理。若承攬之工程，發包給再承攬人承攬時，須於再承攬人開工前完成再承攬合約，並盡勞工安全衛生法中所規定之雇主責任。',
+    '公司名稱或公司代表人變更時，重新簽署此切結書。',
+  ].forEach((c,i)=>{
+    d2+=`<tr><td style="font-weight:700;color:#1e3a5f;width:20px;text-align:center;font-size:11px;vertical-align:top;white-space:nowrap">${i+1}.</td><td style="font-size:11px;line-height:1.6">${X(c)}</td></tr>`;
   });
   d2+=`</table>
-<div style="margin-top:7px;font-size:11px;line-height:1.7;border:1px solid #aaa;padding:5px;background:#fafafa">本公司已閱讀並了解以上告知事項，同意確實遵守以上安衛規定及承諾事項，如有違反，願接受貴公司依規定處置。</div>
-<div style="margin-top:7px">
-  <table><tr>
-    <td style="width:50%;text-align:center"><div style="font-weight:700;font-size:11px;margin-bottom:2px">承攬商負責人簽章</div><div style="font-size:11px;margin-bottom:2px">${X(r.signee)}</div><div class="sig-box">${r.signature?`<img src="${r.signature}"/>`:'&nbsp;'}</div><div style="font-size:10px;margin-top:2px">日期：${fd(b.dateStart)}</div></td>
-    <td style="width:50%;text-align:center"><div style="font-weight:700;font-size:11px;margin-bottom:2px">大豐環保科技 安衛人員</div><div style="font-size:11px;margin-bottom:2px">${X(b.inspector||'&nbsp;')}</div><div class="sig-box">&nbsp;</div></td>
-  </tr></table>
-</div>
-<div class="footer">FM-D2-EM-006-02D ／ 大豐環保科技股份有限公司</div>
+<p style="font-size:10.5px;line-height:1.7;margin:4px 0 10px">　如有其他未明訂之處，適用中華民國政府頒定其他相關法令及 貴公司之相關管理規定。</p>
+<table style="font-size:11px;margin-top:10px"><tr>
+  <td style="width:50%;padding:6px 8px;vertical-align:top"><div style="font-weight:700;margin-bottom:4px">承攬商名稱(公司章)：</div><div style="min-height:32px;padding:2px 4px">${X(b.company)}</div></td>
+  <td style="width:50%;padding:6px 8px;vertical-align:top"><div style="font-weight:700;margin-bottom:4px">承攬商負責人(簽章)：</div><div style="font-size:11px;margin-bottom:2px">${X(r.signee)}</div><div class="sig-box">${r.signature?`<img src="${r.signature}"/>`:'&nbsp;'}</div></td>
+</tr><tr>
+  <td style="padding:6px 8px;vertical-align:top"><div style="font-weight:700;margin-bottom:4px">工程名稱(與合約或PO相同)：</div><div style="padding:2px 4px">${X(b.workname)}</div></td>
+  <td style="padding:6px 8px;vertical-align:top"><div style="font-weight:700;margin-bottom:4px">公司電話：</div><div style="padding:2px 4px">${X(b.phone)}</div></td>
+</tr></table>
+<div style="font-size:11px;margin:14px 0 6px">${(function(d){if(!d)return '中華民國　　　年　　月　　日';var p=d.split('-');return '中華民國 '+(parseInt(p[0])-1911)+' 年 '+parseInt(p[1])+' 月 '+parseInt(p[2])+' 日'})(b.dateStart)}</div>
+<div style="font-size:11px;text-align:right;margin-top:18px;padding-right:22mm">大豐環保科技股份有限公司</div>
+<div class="footer">FM-D2-EM-006-01B ／ 大豐環保科技股份有限公司</div>
 </div>`;
-
   /* ────────────────────────────────
      Doc 3：作業許可申請書
   ──────────────────────────────── */
