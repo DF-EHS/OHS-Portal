@@ -4,12 +4,13 @@
 //  功能：
 //   1. CORS Proxy，轉發請求到公司 IT API 閘道器
 //   2. 法規問答模式（text + context + webSearch:true）：
-//      自動執行 Brave Web Search，將搜尋結果注入 Gemini prompt
+//      自動執行 Google Custom Search，將搜尋結果注入 Gemini prompt
 //   3. 風險評估模式（text + images）：原有行為不變
 //
-//  需設定 Cloudflare Worker Secret：
-//   BRAVE_KEY — Brave Search API Key（免費方案 2,000 次/月）
-//   取得：https://brave.com/search/api/
+//  需設定 Cloudflare Worker Secrets：
+//   GOOGLE_KEY — Google Custom Search API Key（100 次/天免費）
+//   GOOGLE_CX  — Programmable Search Engine ID
+//   設定教學：https://programmablesearchengine.google.com/
 // ═══════════════════════════════════════════════════════════════
 
 const IT_URL     = 'https://df-it-openrouter-dispatch-api.it.zerozero.tw/api/v1/model/chat';
@@ -24,21 +25,19 @@ const CORS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
-// ── Brave Web Search ─────────────────────────────────────────────
-async function braveSearch(query, apiKey) {
+// ── Google Custom Search ─────────────────────────────────────────
+async function googleSearch(query, apiKey, cx) {
   try {
     const q = encodeURIComponent('台灣 職業安全衛生法規 ' + query);
-    const resp = await fetch(
-      `https://api.search.brave.com/res/v1/web/search?q=${q}&count=5&country=tw`,
-      { headers: { 'X-Subscription-Token': apiKey, 'Accept': 'application/json' } }
-    );
+    const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${q}&num=5&lr=lang_zh-TW`;
+    const resp = await fetch(url);
     if (!resp.ok) return '';
     const data = await resp.json();
-    const results = (data?.web?.results || []).slice(0, 5);
-    if (!results.length) return '';
+    const items = data?.items || [];
+    if (!items.length) return '';
     return '\n\n【網路搜尋結果（台灣職安法規）】\n' +
-      results.map((r, i) =>
-        `${i + 1}. ${r.title}\n   ${r.description || ''}\n   出處：${r.url}`
+      items.map((r, i) =>
+        `${i + 1}. ${r.title}\n   ${r.snippet || ''}\n   出處：${r.link}`
       ).join('\n\n');
   } catch {
     return '';
@@ -90,8 +89,8 @@ export default {
       let finalText = text;
       if (context !== undefined) {
         let webCtx = '';
-        if (webSearch && env?.BRAVE_KEY) {
-          webCtx = await braveSearch(text, env.BRAVE_KEY);
+        if (webSearch && env?.GOOGLE_KEY && env?.GOOGLE_CX) {
+          webCtx = await googleSearch(text, env.GOOGLE_KEY, env.GOOGLE_CX);
         }
         finalText = buildLawPrompt(text, context, webCtx);
       }
