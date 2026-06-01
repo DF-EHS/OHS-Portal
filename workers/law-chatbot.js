@@ -30,7 +30,7 @@ export default {
     }
 
     try {
-      const { text } = await request.json();
+      const { text, images } = await request.json();
 
       if (!text) {
         return new Response(JSON.stringify({ error: 'missing text' }), {
@@ -40,6 +40,9 @@ export default {
       }
 
       // 轉發到 IT 閘道器
+      const payload = { model: MODEL, text };
+      if (Array.isArray(images) && images.length) payload.images = images;
+
       const upstream = await fetch(IT_URL, {
         method: 'POST',
         headers: {
@@ -48,7 +51,7 @@ export default {
           'X-User-Token':   IT_TOKEN,
           'X-Project-Code': IT_PROJECT,
         },
-        body: JSON.stringify({ model: MODEL, text }),
+        body: JSON.stringify(payload),
       });
 
       const body = await upstream.text();
