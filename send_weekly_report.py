@@ -9,7 +9,6 @@ Usage:
 
 import json
 import sys
-import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -86,7 +85,8 @@ def build_prompt(news_items, week_label):
         f"以下是上週（{week_label}）的職安相關新聞與公告（共 {len(news_items)} 則）：\n\n"
         + lines
         + "\n\n請依下列格式撰寫本週職安週報，使用繁體中文，語氣親切易懂，"
-        "適合一般員工閱讀，避免艱澀術語，讓非職安專業的同仁也能輕鬆理解：\n\n"
+        "適合一般員工閱讀，避免艱澀術語，讓非職安專業的同仁也能輕鬆理解。\n"
+        "重要：同一事件可能來自多個媒體報導，請將相同事件合併為一則，不要重複描述：\n\n"
         "## 📋 本週情勢概覽\n（2-3句簡要說明這週整體職安狀況）\n\n"
         "## 🔴 重大事故與職災摘要\n（條列本週重要事故，每則一行；若無則寫「本週無重大職災新聞」）\n\n"
         "## 📢 法規與政策動態\n（整理法規修訂、政府公告、政策方向）\n\n"
@@ -168,41 +168,27 @@ def build_email_html(report_text, week_label, news_count):
 </div>"""
 
 
-# ── 寄出（Outlook COM，與工作日誌相同方式） ───────────────────────────
-def send_email(subject, html_body, to_email):
+# ── 開啟草稿供人工審閱（Outlook COM） ────────────────────────────────
+def save_email_draft(subject, html_body, to_email):
     try:
         import win32com.client
     except ImportError:
         print("[ERROR] 缺少 pywin32，請執行: pip install pywin32", file=sys.stderr)
         sys.exit(1)
 
-    outlook = win32com.client.Dispatch("Outlook.Application")
-    ns      = outlook.GetNamespace("MAPI")
-    mail    = outlook.CreateItem(0)
-    recip   = mail.Recipients.Add(to_email)
-    recip.Resolve()
-    mail.Subject  = subject
-    mail.HTMLBody = html_body
-    mail.Send()
-    del mail
-    time.sleep(2)
-
-    for i in range(1, ns.SyncObjects.Count + 1):
-        ns.SyncObjects.Item(i).Start()
-    time.sleep(10)
-
-    outbox = ns.GetDefaultFolder(4)
-    stuck  = any(
-        outbox.Items.Item(i).Subject == subject
-        for i in range(1, outbox.Items.Count + 1)
-    )
-    if stuck:
-        for i in range(1, ns.SyncObjects.Count + 1):
-            ns.SyncObjects.Item(i).Start()
-        time.sleep(10)
-        print("[WARN] 請手動確認 Outlook 寄件匣", file=sys.stderr)
-    else:
-        print(f"[OK] 週報已寄出至 {to_email}")
+    try:
+        outlook = win32com.client.Dispatch("Outlook.Application")
+        mail    = outlook.CreateItem(0)
+        recip   = mail.Recipients.Add(to_email)
+        recip.Resolve()
+        mail.Subject  = subject
+        mail.HTMLBody = html_body
+        mail.Save()
+        mail.Display(False)   # 開啟草稿視窗，等待人工審閱後手動按發送
+        print(f"[OK] 週報草稿已開啟，請確認內容後按「發送」")
+    except Exception as e:
+        print(f"[ERROR] Outlook 草稿建立失敗：{e}", file=sys.stderr)
+        sys.exit(1)
 
 
 # ── Main ──────────────────────────────────────────────────────────────
@@ -248,7 +234,7 @@ def main():
         print(safe(report_text[:600]))
         return
 
-    send_email(subject, html_body, to_email)
+    save_email_draft(subject, html_body, to_email)
 
 
 if __name__ == "__main__":
