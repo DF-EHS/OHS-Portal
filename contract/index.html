@@ -944,7 +944,16 @@ function startWizard(){
   showView('wizard');
   setStep(1);
   window.scrollTo(0,0);
+  history.pushState({ ohs:'wizard' }, '');
 }
+
+window.addEventListener('popstate', ()=>{
+  const wiz = document.getElementById('v-wizard');
+  if(wiz && wiz.style.display !== 'none'){
+    history.pushState({ ohs:'wizard' }, '');
+    toast('請使用頁面上的「上一步」按鈕，直接按瀏覽器上一頁會清除所有填寫資料', 'bad');
+  }
+});
 
 function goNext(cur){
   const err = validateStep(cur);
@@ -988,11 +997,8 @@ function validateStep(n){
     if(!document.getElementById('cb-hazard').checked) return '請詳閱危害告知書內容並勾選確認';
     const wIds = Object.keys(workerStates);
     if(!wIds.length) return '請至少新增一位作業人員';
-    const hasValid = wIds.some(id=>{
-      const nm = document.getElementById('wname-'+id)?.value.trim();
-      return nm && workerStates[id] && workerStates[id].hasData;
-    });
-    if(!hasValid) return '請至少填寫一位作業人員的姓名並完成簽名';
+    const hasValid = wIds.some(id => workerStates[id]?.hasData);
+    if(!hasValid) return '請至少一位作業人員完成簽名（姓名為選填）';
     return null;
   }
   if(n===3){
@@ -1956,13 +1962,8 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
 window.addEventListener('resize', ()=>{
   if(document.getElementById('v-wizard').style.display!=='none'){
-    const canvas = document.getElementById('sig-canvas');
-    const outer = document.getElementById('sig-outer');
-    if(outer.clientWidth && canvas.width !== outer.clientWidth){
-      const img = sigHasData ? canvas.toDataURL() : null;
-      canvas.width = outer.clientWidth;
-      if(img){ const i=new Image(); i.onload=()=>sigCtx.drawImage(i,0,0); i.src=img; }
-    }
+    resizeMainSigCanvas();
+    resizeWorkerCanvases();
   }
 });
 
