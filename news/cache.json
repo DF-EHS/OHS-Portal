@@ -1,12 +1,78 @@
 {
   "items": [
     {
+      "key": "8996e54f2b4125b7",
+      "title": "職安署修正發布「改善安全衛生設施與器具及防護具補助作業要點」",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/203516/",
+      "pubDate": "Mon, 01 Jun 2026 17:08:51 GMT",
+      "pubTs": 1780333731.0,
+      "desc": "勞動部職安署於5月6日修正發布「改善安全衛生設施及器具補助作業要點」，開始受理中小企業與自營作業者申請高溫作業相關防護設施、器具及個人防護具，以協助其有效應對夏季炎熱氣候。 補助標準如下：(1)熱危害預防設施、設備：100人以下中小企業及自營作業者，最高補助80%，每種設施與器具補助不超過10萬元，…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "7aaa59d923f39413",
+      "title": "工營中心職安講習示範觀摩 盼達零職災目標 | 青年日報",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5EUnVMd0FaZVlTY1RkV2llOU1odV9UOWRtbGh6TWo1eWN6NWlud1NvMWtKSTNjNVlINlZRbWRQSGJRYVNHNUt3QklUWHI1WmFvMkNQRGNn?oc=5",
+      "pubDate": "Mon, 01 Jun 2026 16:25:24 GMT",
+      "pubTs": 1780331124.0,
+      "desc": "工營中心職安講習示範觀摩 盼達零職災目標 | 青年日報&nbsp;&nbsp;LINE TODAY",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "fbb7769985cb8a61",
+      "title": "南韓工安意外！SK士清州廠毒氣外洩 「韓華航太」工廠爆炸至少5死",
+      "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE92UjQ1VG1VSkwzTUVzcWJZQjhWclI5bURpYnVvNXBKU1M2bG9zdHo3Umd3cUNPTnNiSTNLdWN5Y1FFbi04T0EtODE3TXFFZjN3SlplSTRaS05Welp3VHBmOA?oc=5",
+      "pubDate": "Mon, 01 Jun 2026 13:07:05 GMT",
+      "pubTs": 1780319225.0,
+      "desc": "南韓工安意外！SK士清州廠毒氣外洩 「韓華航太」工廠爆炸至少5死&nbsp;&nbsp;民視新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "25df174daacd41b9",
+      "title": "雲林消防安全再升級 成立「安衛訓練科」守護平安出勤歸航",
+      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5vcTZHT2ZCbVJrSGIya2ZoVVhVa2hYcFR3OWxTRVRnWld6UmR4cmpWTDgtYTJjYzRIOFBDa0ozbnV4QmNzWENIdw?oc=5",
+      "pubDate": "Mon, 01 Jun 2026 10:02:56 GMT",
+      "pubTs": 1780308176.0,
+      "desc": "雲林消防安全再升級 成立「安衛訓練科」守護平安出勤歸航&nbsp;&nbsp;台灣民眾電子報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "44e6a57c41f3b5be",
+      "title": "創六都之先 新北消防局「職業安全衛生室」揭牌成立",
+      "link": "https://news.google.com/rss/articles/CBMi0wJBVV95cUxPd0I2WGVoT2xhemwzR1FJci1ESnFHZWVvcjBTSy0xZDE4aGlHZkw4U0NVNV8xaVIySWh4a3FOSV9HbTVLNFRwY1UzVkxoUERIRXdCRmZORWphWUFfeUtWbjc0dzBFdXpDOVlqX29SSmVsQTRyalBjc29PUjhfdDFleWlQZFhYV2lqWWRES3l6SDNZVDZzV1BHcjdDU0NYWkhsQnFPYXVQUHhySWI1bnNPYUFzLXQ3eXF1cG1ELTJYQkhFZm5ZOEVsRk15YzJiVDdQaEN2V1lfbDNzTkRPbzZibWhiQ2xGSktUQnRFQXNrcXRvcXFtekJaMDFSLWprMjRQeW1fM3hxQnUtRy10b3pkU0JOTndlNVgzcXRxSnNEbnc5N2YzbHcxal9VVjhUVXM0blIxQWYxWW9pZExTTmo0c3Y5TkhQXzcwbFpINHl1UEFDYkU?oc=5",
+      "pubDate": "Mon, 01 Jun 2026 08:13:01 GMT",
+      "pubTs": 1780301581.0,
+      "desc": "創六都之先 新北消防局「職業安全衛生室」揭牌成立&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "d38b0f9b074c3f1f",
       "title": "張麗善推職安改革 安訓科落實消防員安全回家",
       "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE02aXBxaFdiLVZIUk5kN0ZXWHRUTmNaMzJHR1dhNEo1amJQUHBQMEJCQzlLd1BjZXpZX1ROYlJPNTA1NUNKZWtJeGJNcVVpdjc5MzZMTEpCQnMzenlOcHZkQjBzMkFJTVl0?oc=5",
       "pubDate": "Mon, 01 Jun 2026 08:05:44 GMT",
       "pubTs": 1780301144.0,
       "desc": "張麗善推職安改革 安訓科落實消防員安全回家&nbsp;&nbsp;元丰傳媒",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "3cdc346183123b81",
+      "title": "快新聞／創六都之先！新北成立「職業安全衛生室」朱惕之親曝期許",
+      "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1JbWI4Mkc2aWk3TW1xakt0S0FUYzNOcUwxQWt4ZU9kam5BNkVVeTJ3RGZBMHNNRUxpZVp5M2hIb0pPOTBpTGVyX1VsVkdQWFpmbFdUSlhUWWdCRFdOYlVQSg?oc=5",
+      "pubDate": "Mon, 01 Jun 2026 06:31:39 GMT",
+      "pubTs": 1780295499.0,
+      "desc": "快新聞／創六都之先！新北成立「職業安全衛生室」朱惕之親曝期許&nbsp;&nbsp;民視新聞網",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
@@ -67,6 +133,17 @@
       "badge": "red"
     },
     {
+      "key": "c6749b8ca578e759",
+      "title": "新北消防局「職業安全衛生室」創6都之先 朱惕之特別賦予3 個重要使命",
+      "link": "https://news.google.com/rss/articles/CBMiSkFVX3lxTFBpUUFNMjZDa0ozTUFzenBreXpXa1hLLUlGMjZrOTNBX0xwdk9oZzZtNm9tQWVvaTNCRlJmNmdtMkxaN1A1dTFfR2xR?oc=5",
+      "pubDate": "Mon, 01 Jun 2026 05:44:35 GMT",
+      "pubTs": 1780292675.0,
+      "desc": "新北消防局「職業安全衛生室」創6都之先 朱惕之特別賦予3 個重要使命&nbsp;&nbsp;匯流新聞網",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "3a54d6a7e2bbe1ae",
       "title": "新北「職業安全衛生室」揭牌 強化消防人員職業安全與健康照護",
       "link": "https://news.google.com/rss/articles/CBMiogNBVV95cUxPUTVDWFREUnF5eVNzRUxxRU5oRzMwRWF0X0kwM3lxQkRtWlNmUnpNeWV2ZjE3XzBFZ3hLaktCSWVtUnN6bTRuWjFqYnlJekw3VnRVTGZFb196N1ZEbnlvR1llV1hUWWNtTXI0TmMzN3lrMW94bHJ3eWVmaldGUkhOeE5QaEZJdXBrN2RCM2VzZ1JVWXFFSmFVT3pjVVRYVW5IbTEzbVZKS1pjVDB5RGlWa1dCdWMya2k4QUo2S3JoYmkxVUZ0UFFHcmFwRExUMDBaSFk4UXRYVTBLWVhmYkttSEp1VlBnT1hSZmg0d0d4Sk1MTGYtOTdpSC1tSFRkbkJiTmRxR3dYT29OU2VzY01nVHVRNU9HRHVaRW5BNjFRT0ZhTUZXWVFxV0xwNUVnTjhxV2FSa2ZMczFtczFOZHVJZ1duN3Fnd1dhYUlxMEdtREZ3b0dfTFdKaDJwUTlvWFlFem40NDhLZzhKYTVabFhmell6QkdSS0dTT01hQ2Q4bVVhV1N5cmVzX3N6R2o5UU1xV0luSTBTN0dSbE1kd21oTWVR?oc=5",
@@ -76,6 +153,28 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
+    },
+    {
+      "key": "bb8403472b22b745",
+      "title": "【更新】疑因火藥清理不慎 韓華航太工廠爆炸大火釀5死2輕重傷",
+      "link": "https://news.google.com/rss/articles/CBMiugJBVV95cUxPaW5ObUxJcF9NODBISGJuMHpIZUs0MnpXTzZGSklGODVGd3lsTjZOal9NQWVGbm5QcFBrazE1NnlnWDcyMmU5U0g1RVVudWgzOTF2R2ozY0hfQ0hrUGpmU0VmVmlzbEZNejF2bFlzLURtN2hZQlozc0cyMHk0VGpIcUxyWUZ5N2RTZEdwbmJIb0c4anVvT1dHcTh0WFNaTnpscWpsVXduTGt5d0pGZDhQU1dWQnk4MldYRWtRR1pac05CanVyZkphVE0yVkN3ckx5UjE4eGxleXBHVzY2SmliUnppOFVjNjRZenNTWDlQVFhKbXBxWDFsSGtOV3BVYnJoRHpIcDB4UC00XzZwRW93SllBMUFyREhpU29HajNsNHhDLVRNTzNYWTJEbGhZSUN6R1gtb0ctZWdoZw?oc=5",
+      "pubDate": "Mon, 01 Jun 2026 05:11:58 GMT",
+      "pubTs": 1780290718.0,
+      "desc": "【更新】疑因火藥清理不慎 韓華航太工廠爆炸大火釀5死2輕重傷&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "5ee9ee2a4653017a",
+      "title": "韓華航空航太工廠爆炸釀6死1傷！李在明下令全力救援 | CTWANT",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5VODFUNWd2U05RaGwxck9iZzZlSktmeW8yLUhpUm9hb0k0a1l0RmJfZHVUUnoxdmtWS1NBckxDTXVOcEZpSElra2tzWXYySjZqVk43SWxB?oc=5",
+      "pubDate": "Mon, 01 Jun 2026 05:10:03 GMT",
+      "pubTs": 1780290603.0,
+      "desc": "韓華航空航太工廠爆炸釀6死1傷！李在明下令全力救援 | CTWANT&nbsp;&nbsp;LINE TODAY",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "d9aee33e2032ace9",
@@ -128,6 +227,17 @@
       "pubDate": "Mon, 01 Jun 2026 04:18:05 GMT",
       "pubTs": 1780287485.0,
       "desc": "守護消防職安創六都之先 新北消防局成立職業安全衛生室&nbsp;&nbsp;UDN",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "2449dc98c832bf77",
+      "title": "守護消防職安創六都之先新北消防局成立職業安全衛生室| 大台北| 地方",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9QNTA5WmI5TzdUQWxUOTFZamhaRVJZOUFoeWdtUHREN0w0Vm5nUnJIM2w4TVl0SzFmNTJveEVtdE82RzYxdkUtR1dySkhLbjJl?oc=5",
+      "pubDate": "Mon, 01 Jun 2026 04:18:05 GMT",
+      "pubTs": 1780287485.0,
+      "desc": "守護消防職安創六都之先新北消防局成立職業安全衛生室| 大台北| 地方&nbsp;&nbsp;UDN",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
@@ -241,17 +351,6 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
-    },
-    {
-      "key": "14bc21a045aa579d",
-      "title": "完善勞保制度 打造安心職場-115年度勞（就）保暨勞工職業災害保險相關法規說明會",
-      "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNaURYak1aWlhhMmVzb0RGRi0tZEtHZUhBZi04SUVPNWpSTXF3clkzcjZFSVUzZ1pWdEdKUnY0QW5DdmRzSWlWb2NidG5lWkp4bTk3eFVhcWNjdWRQVjNoTDAxamliclBuUTRfNUxPYlE3ek5kenZkR21LMXFuaDRPQm0tY2VxQQ?oc=5",
-      "pubDate": "Sat, 30 May 2026 05:44:16 GMT",
-      "pubTs": 1780119856.0,
-      "desc": "完善勞保制度 打造安心職場-115年度勞（就）保暨勞工職業災害保險相關法規說明會&nbsp;&nbsp;chcg.gov.tw",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
     },
     {
       "key": "f4d56cb223d64fac",
@@ -513,6 +612,17 @@
       "pubDate": "Thu, 28 May 2026 08:40:06 GMT",
       "pubTs": 1779957606.0,
       "desc": "桃機捷驚悚工安意外！怪手擊中泰籍移工「頭部凹陷」送醫不治&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "e2619ddef0f96dfb",
+      "title": "跨出復工第一步!縣府辦理3場次協助職業災害勞工重返職場說明會",
+      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9WLVpxYno5b1doSmVhTmNOeXJuaTFta2VvZGhsM2xXMlc3RGtnc0NnRm1QMXBBZEZqWVJVY2RIQVhHTmRENGtzTDV3OVFNNHZlMG5mcV82STZ3c2tXa25nWENIdWRzbW9Mb1V3?oc=5",
+      "pubDate": "Thu, 28 May 2026 08:37:03 GMT",
+      "pubTs": 1779957423.0,
+      "desc": "跨出復工第一步!縣府辦理3場次協助職業災害勞工重返職場說明會&nbsp;&nbsp;台灣華報",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -1005,8 +1115,8 @@
       "key": "2e5cdb6f008cbed5",
       "title": "勞動部「4大修法新制」上路！8/1勞工退休金有新規定， 給付領錢都受影響",
       "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9nM0NpeW9aVV9Ebm9tVGNQOV9WcHF5ZkFmeHItTmlYSEJyMXVyeWxGTDI4N3hRcE45ajlBYjR5cVZnWXJkRkg1cVlDQ1c2WW0t?oc=5",
-      "pubDate": "Sun, 24 May 2026 03:10:43 GMT",
-      "pubTs": 1779592243.0,
+      "pubDate": "Sun, 24 May 2026 07:00:00 GMT",
+      "pubTs": 1779606000.0,
       "desc": "勞動部「4大修法新制」上路！8/1勞工退休金有新規定， 給付領錢都受影響&nbsp;&nbsp;風傳媒",
       "source_id": "gnews_law",
       "source_name": "法規更新",
@@ -1189,17 +1299,6 @@
       "badge": "purple"
     },
     {
-      "key": "8996e54f2b4125b7",
-      "title": "職安署修正發布「改善安全衛生設施與器具及防護具補助作業要點」",
-      "link": "https://www.osha.gov.tw/48110/48417/48423/203516/",
-      "pubDate": "Thu, 14 May 2026 17:36:46 GMT",
-      "pubTs": 1778780206.0,
-      "desc": "勞動部職安署於5月6日修正發布「改善安全衛生設施及器具補助作業要點」，開始受理中小企業與自營作業者申請高溫作業相關防護設施、器具及個人防護具，以協助其有效應對夏季炎熱氣候。 補助標準如下：(1)熱危害預防設施、設備：100人以下中小企業及自營作業者，最高補助80%，每種設施與器具補助不超過10萬元，…",
-      "source_id": "osha_announce",
-      "source_name": "職安署公告",
-      "badge": "green"
-    },
-    {
       "key": "f6e9a3dbd22a4473",
       "title": "日本高壓氣體保安協會(KHK)會長率團拜會職安署，交流氫能安全管理",
       "link": "https://www.osha.gov.tw/48110/48417/48423/202927/",
@@ -1244,5 +1343,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-06-01T08:10:05.371849+00:00"
+  "lastUpdated": "2026-06-01T19:33:52.888229+00:00"
 }
