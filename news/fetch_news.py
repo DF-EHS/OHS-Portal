@@ -294,15 +294,15 @@ header h1{{font-size:17px;font-weight:700;flex:1}}
 
 /* ── Layout（側欄緊靠左緣，full-height panel） ── */
 .layout{{display:flex;flex:1}}
-.sidebar{{width:185px;flex-shrink:0;background:var(--card);border-right:1px solid var(--border);align-self:stretch}}
-.sidebar-inner{{position:sticky;top:46px;height:calc(100vh - 46px);overflow-y:auto;padding:20px 10px 20px 14px}}
-.nav-label{{font-size:10px;font-weight:700;color:var(--sub);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}}
-.nav-btn{{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:12.5px;font-weight:600;color:var(--sub);text-decoration:none;margin-bottom:2px;border-left:3px solid transparent;transition:background .15s,color .15s,border-color .15s}}
+.sidebar{{width:215px;flex-shrink:0;background:var(--card);border-right:1px solid var(--border);align-self:stretch}}
+.sidebar-inner{{position:sticky;top:46px;height:calc(100vh - 46px);overflow-y:auto;padding:20px 12px 20px 16px}}
+.nav-label{{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}}
+.nav-btn{{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:8px;font-size:13.5px;font-weight:600;color:var(--sub);text-decoration:none;margin-bottom:3px;border-left:3px solid transparent;transition:background .15s,color .15s,border-color .15s}}
 .nav-btn:hover{{background:var(--bg);color:var(--text)}}
 .nav-btn.active{{background:var(--bg);color:var(--navy);border-left-color:var(--navy)}}
-.nav-dot{{width:8px;height:8px;border-radius:50%;flex-shrink:0}}
+.nav-dot{{width:9px;height:9px;border-radius:50%;flex-shrink:0}}
 .nav-name{{flex:1;line-height:1.3}}
-.nav-count{{font-size:11px;background:var(--border);color:var(--sub);padding:1px 6px;border-radius:10px;flex-shrink:0}}
+.nav-count{{font-size:12px;background:var(--border);color:var(--sub);padding:1px 7px;border-radius:10px;flex-shrink:0}}
 .nav-btn.active .nav-count{{background:#dbeafe;color:#1d4ed8}}
 
 /* ── Main ── */
