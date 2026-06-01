@@ -350,7 +350,13 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
           <div class="fg"><label class="req">作業開始日期</label><input class="fi" id="f-date-start" type="date"/></div>
           <div class="fg"><label class="req">作業結束日期</label><input class="fi" id="f-date-end" type="date"/></div>
         </div>
-        <div class="fg"><label class="req">工作區域</label><input class="fi" id="f-area" placeholder="請描述作業地點或區域"/></div>
+        <div class="fg"><label class="req">工作區域</label>
+          <select class="fi" id="f-area" style="max-width:280px">
+            <option value="">— 請選擇 —</option>
+            <option value="總部">總部</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
         <div class="fg">
           <label class="req">作業時段（可複選）</label>
           <div class="chk-wrap" style="margin-top:6px">
@@ -503,7 +509,7 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
         <div class="summary-grid" id="summary-grid" style="margin-bottom:18px"></div>
 
         <div class="fg">
-          <label class="req">承攬商負責人姓名</label>
+          <label>承攬商負責人姓名 <span style="font-size:11px;color:var(--sub)">（選填）</span></label>
           <input class="fi" id="f-signee" placeholder="請輸入負責人姓名（印刷字）" style="max-width:280px"/>
         </div>
         <div class="fg">
@@ -1011,7 +1017,6 @@ function validateStep(n){
     return null;
   }
   if(n===5){
-    if(!document.getElementById('f-signee').value.trim()) return '請填寫承攬商負責人姓名';
     if(sigIsEmpty()) return '請在簽名框中完成電子簽名';
     return null;
   }
