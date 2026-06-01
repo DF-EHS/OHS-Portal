@@ -186,6 +186,11 @@ def generate_html(items: list, updated_at: str) -> str:
         '<span class="nav-name">📌 今日情報</span>'
         '<span class="nav-count" id="today-count">0</span>'
         '</a>'
+        '<a class="nav-btn" href="#weekly-report" data-id="weekly-report">'
+        '<span class="nav-dot" style="background:#f59e0b"></span>'
+        '<span class="nav-name">📊 職安週報</span>'
+        '<span class="nav-count" style="background:#fef3c7;color:#92400e">AI</span>'
+        '</a>'
         '<div style="height:1px;background:var(--border);margin:6px 4px 10px"></div>'
     )
     sidebar = today_nav + "\n    " + "\n    ".join(nav_items) if nav_items else today_nav
@@ -238,7 +243,35 @@ def generate_html(items: list, updated_at: str) -> str:
         '\n    </details>'
         '\n  </section>'
     )
-    body = today_sec + ("".join(sections) if sections else '<p class="no-news">目前暫無消息，請稍後再試。</p>')
+    weekly_sec = (
+        '\n  <section class="n-section" id="weekly-report">'
+        '\n    <details open>'
+        '\n      <summary class="sec-title">'
+        '\n        <span class="sec-bar" style="background:#f59e0b"></span>'
+        '\n        <span class="sec-name">職安週報</span>'
+        '\n        <span class="sec-count" style="background:#fef3c7;color:#92400e">AI</span>'
+        '\n        <span class="sec-arrow">▾</span>'
+        '\n      </summary>'
+        '\n      <div class="sec-body">'
+        '\n        <div class="wr-card">'
+        '\n          <div class="wr-header">'
+        '\n            <div>'
+        '\n              <div class="wr-title">📊 本週職安情報彙整</div>'
+        '\n              <div class="wr-sub">由 Gemini AI 整合過去七天新聞，自動撰寫摘要</div>'
+        '\n            </div>'
+        '\n            <button class="wr-btn" id="wr-gen-btn">✨ 產生週報</button>'
+        '\n          </div>'
+        '\n          <div id="wr-loading" class="wr-loading" style="display:none">'
+        '\n            <div class="wr-spinner"></div><span>AI 正在彙整本週情報，請稍候...</span>'
+        '\n          </div>'
+        '\n          <div id="wr-content" class="wr-content" style="display:none"></div>'
+        '\n          <div id="wr-meta" class="wr-meta"></div>'
+        '\n        </div>'
+        '\n      </div>'
+        '\n    </details>'
+        '\n  </section>'
+    )
+    body = weekly_sec + today_sec + ("".join(sections) if sections else '<p class="no-news">目前暫無消息，請稍後再試。</p>')
 
     return f"""<!DOCTYPE html>
 <html lang="zh-TW">
@@ -315,6 +348,25 @@ details:not([open]) .sec-arrow{{transform:rotate(-90deg)}}
 #backTop{{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25);display:none;align-items:center;justify-content:center;transition:background .15s;z-index:999}}
 #backTop.show{{display:flex}}
 #backTop:hover{{background:#162d4a}}
+
+/* ── 職安週報 ── */
+.wr-card{{background:var(--card);border-radius:12px;padding:20px 22px;border:1px solid var(--border);box-shadow:0 1px 5px rgba(0,0,0,.06)}}
+.wr-header{{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}}
+.wr-title{{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:4px}}
+.wr-sub{{font-size:12px;color:var(--sub)}}
+.wr-btn{{padding:8px 18px;border-radius:8px;border:none;background:var(--navy);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:background .15s;flex-shrink:0}}
+.wr-btn:hover{{background:#162d4a}}
+.wr-btn:disabled{{background:#94a3b8;cursor:wait}}
+.wr-loading{{display:flex;align-items:center;gap:10px;padding:20px 0;color:var(--sub);font-size:13px}}
+.wr-spinner{{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}}
+@keyframes spin{{to{{transform:rotate(360deg)}}}}
+.wr-content{{font-size:14px;line-height:1.8;color:var(--text)}}
+.wr-content h3{{font-size:14px;font-weight:800;color:var(--navy);margin:18px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border)}}
+.wr-content h3:first-child{{margin-top:0}}
+.wr-content ul{{padding-left:18px;margin:6px 0 12px}}
+.wr-content li{{margin-bottom:5px}}
+.wr-content strong{{color:#b91c1c}}
+.wr-meta{{font-size:11px;color:var(--sub);margin-top:14px;padding-top:10px;border-top:1px dashed var(--border)}}
 
 footer{{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);border-top:1px solid var(--border);background:var(--card)}}
 
@@ -409,6 +461,113 @@ function toggleAll(open) {{
   nav.style.display = '';
   cnt.textContent  = matched.length;
   scnt.textContent = matched.length;
+}})();
+
+// 職安週報：AI 彙整上週新聞
+(function() {{
+  const WORKER    = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+  const CACHE_KEY = 'ohs_weekly_report_v1';
+  const CACHE_TTL = 6 * 3600 * 1000; // 6 小時快取
+
+  function getWeekNews() {{
+    const cutoff = Date.now() - 7 * 86400 * 1000;
+    const items  = [];
+    document.querySelectorAll('.n-card[data-date]').forEach(card => {{
+      if (new Date(card.dataset.date).getTime() >= cutoff) {{
+        const title  = card.querySelector('.n-title')?.textContent?.trim();
+        const desc   = card.querySelector('.n-desc')?.textContent?.trim();
+        const source = card.querySelector('.badge')?.textContent?.trim();
+        if (title) items.push(`[${{source}}] ${{title}}${{desc ? '：' + desc.substring(0, 60) : ''}}`);
+      }}
+    }});
+    return items;
+  }}
+
+  function mdToHtml(text) {{
+    return text
+      .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+      .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/^[-*] (.+)$/gm, '<li>$1</li>')
+      .replace(/(<li>[\s\S]*?<\/li>)(\n<li>)/g, '$1$2')
+      .replace(/(<li>.*<\/li>\n?)+/g, s => '<ul>' + s + '</ul>')
+      .replace(/\n{2,}/g, '</p><p>')
+      .replace(/^(?!<)/gm, '')
+      .trim();
+  }}
+
+  function renderReport(text, count, ts) {{
+    const content = document.getElementById('wr-content');
+    content.innerHTML = '<p>' + mdToHtml(text) + '</p>';
+    content.style.display = 'block';
+    const d = new Date(ts);
+    document.getElementById('wr-meta').textContent =
+      `基於本週 ${{count}} 則新聞 · ${{d.toLocaleDateString('zh-TW')}} ${{d.toLocaleTimeString('zh-TW', {{hour:'2-digit',minute:'2-digit'}})}} 產生`;
+  }}
+
+  async function generateReport() {{
+    const btn     = document.getElementById('wr-gen-btn');
+    const loading = document.getElementById('wr-loading');
+    const content = document.getElementById('wr-content');
+
+    btn.disabled     = true;
+    btn.textContent  = '產生中...';
+    loading.style.display = 'flex';
+    content.style.display = 'none';
+    document.getElementById('wr-meta').textContent = '';
+
+    const news = getWeekNews();
+    if (!news.length) {{
+      content.innerHTML = '<p style="color:var(--sub)">目前暫無本週新聞資料。</p>';
+      content.style.display = 'block';
+      loading.style.display = 'none';
+      btn.disabled = false; btn.textContent = '🔄 重新產生';
+      return;
+    }}
+
+    const prompt =
+      '你是大豐環保科技股份有限公司的職安週報編輯。公司業務為環保廢棄物回收處理，' +
+      '作業環境包含辦公室及現場。\n\n' +
+      `以下是過去七天收集到的職安相關新聞與公告（共 ${{news.length}} 則）：\n\n` +
+      news.join('\n') +
+      '\n\n請依下列格式撰寫本週職安週報，使用繁體中文，語氣專業，適合職安管理師閱讀：\n\n' +
+      '## 📋 本週情勢概覽\n（2-3句整體評估本週職安狀況）\n\n' +
+      '## 🔴 重大事故與職災摘要\n（條列本週重要事故，每則一行重點說明；若無則寫「本週無重大職災新聞」）\n\n' +
+      '## 📢 法規與政策動態\n（整理法規修訂、政府公告、政策方向）\n\n' +
+      '## 💡 給大豐的啟示與建議\n（2-3點針對廢棄物回收處理業的具體建議）';
+
+    try {{
+      const resp = await fetch(WORKER, {{
+        method: 'POST',
+        headers: {{ 'Content-Type': 'application/json' }},
+        body: JSON.stringify({{ text: prompt }}),
+      }});
+      if (!resp.ok) throw new Error('服務暫時無法使用 (' + resp.status + ')');
+      const data = await resp.json();
+      const text = data?.data || data?.choices?.[0]?.message?.content || data?.text || '';
+      if (!text) throw new Error('AI 回應為空');
+      const ts = Date.now();
+      localStorage.setItem(CACHE_KEY, JSON.stringify({{ ts, text, count: news.length }}));
+      renderReport(text, news.length, ts);
+    }} catch(e) {{
+      content.innerHTML = `<p style="color:#dc2626">⚠️ 產生失敗：${{e.message}}</p>`;
+      content.style.display = 'block';
+    }}
+    loading.style.display = 'none';
+    btn.disabled = false;
+    btn.textContent = '🔄 重新產生';
+  }}
+
+  // 頁面載入時檢查快取
+  try {{
+    const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+    if (cached && Date.now() - cached.ts < CACHE_TTL) {{
+      renderReport(cached.text, cached.count, cached.ts);
+      document.getElementById('wr-gen-btn').textContent = '🔄 重新產生';
+    }}
+  }} catch(_) {{}}
+
+  document.getElementById('wr-gen-btn').addEventListener('click', generateReport);
 }})();
 
 // 回到頂部按鈕顯示控制
