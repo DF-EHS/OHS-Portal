@@ -1,6 +1,17 @@
 {
   "items": [
     {
+      "key": "af1c27bdd68c6a47",
+      "title": "南韓同日兩起重大工安意外！SK海力士工廠大火至少7傷",
+      "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9hRUcxZFdOSmU0U2o4bVJOTkJqS2E2X0xuVUVINUFYcEtjOG04NUpxYkQ4MDlkNk01NUJKODBrM1BjaE5hemdvRmtYZTFpU3V4UWhnMm1rdzFGNVYw?oc=5",
+      "pubDate": "Mon, 01 Jun 2026 03:43:44 GMT",
+      "pubTs": 1780285424.0,
+      "desc": "南韓同日兩起重大工安意外！SK海力士工廠大火至少7傷&nbsp;&nbsp;太報 TaiSounds",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "99a76efa8697547a",
       "title": "托爾斯泰金句起訴！6旬工傷父當車手 親兒「大義滅親」檢舉背後原因惹鼻酸",
       "link": "https://news.google.com/rss/articles/CBMiwgNBVV95cUxPZVFZRDZoeFRzTkRsLW96SzNNeTZTZURpdUlrY1M2SktRcERCTGpTdzgwRUtFMEJWa3FlSWxBSmpZVlN0WkVidmpRckY5SGE1R3JOa0E4UU9UNFJ5YXl6MV92VF9GOFFYM1c0bmQyb2VWV09TdTFhdjlhU21XeE9YT1FyQlpGbGhxLVpibDQwMEh5VUZwd1VlSThkaExSeEtSNDB3d29raEwxbU1sQXV4S0JQMWh3NFg4QVFDNjY2dlBEcExxcGkyYkM3X3lsU0h3aGFJR0VYdVZTN2RZb1ZISEZZOTBnX3VNY2Z3WmI3RWFXMnRoOVpodVpkZ21EZy1peVRSaEZLaTB5Zjh0cmxMUFVXd29keXhkWmFpLWg5NmkxcWhPVkEwUElJMXVucUo0dUhISEcyVWVwRFQ4TG9BWGVDa0p6STZQUFZwcUp1UXAzN0hyaEJaNUhuYVdpeHFnU0xISmpmLUx3TE1pMG1VRWhEWExvVVJKUnd6Vjk5cVEtTHI2Um9JWUJKek1VUkE3OVFYV1BBWDV2a0RpOHpScWtjLW15NGJkbDVDSDFEN0hGdkpEMGx2NmlWbFpjSk9wNkE?oc=5",
@@ -417,6 +428,17 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "76faf88f8b580f20",
+      "title": "大村 鄉公所",
+      "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOOXoyNFdoX2w0ekpYOHVDaGs2eGRHaEZOdlNmcDZJNjhucDRPOWtLcG14YmJGLVF3NG1xS3BrWkpsX25xWU5md0NNQ3ZZTUgzMFhaR2k1Rzk4UkZNNlNaR1ItcGhSQmZseVhJMjgyaFUtMjJWS0ZCRGdzYzhaV2hfM2tmWEJJdw?oc=5",
+      "pubDate": "Thu, 28 May 2026 07:00:00 GMT",
+      "pubTs": 1779951600.0,
+      "desc": "大村 鄉公所&nbsp;&nbsp;chcg.gov.tw",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "9a00de2795d9e6c0",
@@ -1024,5 +1046,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-06-01T03:42:53.087990+00:00"
+  "lastUpdated": "2026-06-01T03:55:25.447601+00:00"
 }
