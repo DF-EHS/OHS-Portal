@@ -16,7 +16,7 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).parent
 CACHE_FILE  = SCRIPT_DIR / "news" / "cache.json"
 WORKER_URL  = "https://ohs-law-chatbot.df-hr-openai.workers.dev"
-DEFAULT_TO  = "df.hr.openai@df-recycle.com"
+DEFAULT_TO  = "gloom.lai@df-recycle.com"
 TW          = timezone(timedelta(hours=8))
 
 
