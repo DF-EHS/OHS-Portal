@@ -28,10 +28,21 @@
       "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5xOXI3MWRXZ0ZlM3ZQejFwaHlvR2J4c0xrSzQ2bXRWVDQwRjVEYnhXdVZQNlNaZnE0X0swcDRZRWktWE44U19YNUJSWllZcGs5bE9pN1NXd0J0MTdpNDNRM2xYcW1FcjctZk5obWtaMVkwa2xJWEMyU2EtZy1VZGM?oc=5",
       "pubDate": "Mon, 01 Jun 2026 06:10:00 GMT",
       "pubTs": 1780294200.0,
-      "desc": "從救人到守護自己！新北設六都首座「職業安全衛生室」 打造消防員最強後盾&nbsp;&nbsp;news.nextapple.com",
+      "desc": "從救人到守護自己！新北設六都首座「職業安全衛生室」 打造消防員最強後盾&nbsp;&nbsp;壹蘋新聞網",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
+    },
+    {
+      "key": "af1c27bdd68c6a47",
+      "title": "南韓同日兩起重大工安意外！SK海力士工廠大火至少7傷",
+      "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9hRUcxZFdOSmU0U2o4bVJOTkJqS2E2X0xuVUVINUFYcEtjOG04NUpxYkQ4MDlkNk01NUJKODBrM1BjaE5hemdvRmtYZTFpU3V4UWhnMm1rdzFGNVYw?oc=5",
+      "pubDate": "Mon, 01 Jun 2026 05:55:36 GMT",
+      "pubTs": 1780293336.0,
+      "desc": "南韓同日兩起重大工安意外！SK海力士工廠大火至少7傷&nbsp;&nbsp;太報 TaiSounds",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "1498104919038cae",
@@ -48,8 +59,8 @@
       "key": "3a54d6a7e2bbe1ae",
       "title": "新北「職業安全衛生室」揭牌 強化消防人員職業安全與健康照護",
       "link": "https://news.google.com/rss/articles/CBMiogNBVV95cUxPUTVDWFREUnF5eVNzRUxxRU5oRzMwRWF0X0kwM3lxQkRtWlNmUnpNeWV2ZjE3XzBFZ3hLaktCSWVtUnN6bTRuWjFqYnlJekw3VnRVTGZFb196N1ZEbnlvR1llV1hUWWNtTXI0TmMzN3lrMW94bHJ3eWVmaldGUkhOeE5QaEZJdXBrN2RCM2VzZ1JVWXFFSmFVT3pjVVRYVW5IbTEzbVZKS1pjVDB5RGlWa1dCdWMya2k4QUo2S3JoYmkxVUZ0UFFHcmFwRExUMDBaSFk4UXRYVTBLWVhmYkttSEp1VlBnT1hSZmg0d0d4Sk1MTGYtOTdpSC1tSFRkbkJiTmRxR3dYT29OU2VzY01nVHVRNU9HRHVaRW5BNjFRT0ZhTUZXWVFxV0xwNUVnTjhxV2FSa2ZMczFtczFOZHVJZ1duN3Fnd1dhYUlxMEdtREZ3b0dfTFdKaDJwUTlvWFlFem40NDhLZzhKYTVabFhmell6QkdSS0dTT01hQ2Q4bVVhV1N5cmVzX3N6R2o5UU1xV0luSTBTN0dSbE1kd21oTWVR?oc=5",
-      "pubDate": "Mon, 01 Jun 2026 05:15:59 GMT",
-      "pubTs": 1780290959.0,
+      "pubDate": "Mon, 01 Jun 2026 05:15:54 GMT",
+      "pubTs": 1780290954.0,
       "desc": "新北「職業安全衛生室」揭牌 強化消防人員職業安全與健康照護&nbsp;&nbsp;台灣好新聞",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
@@ -139,17 +150,6 @@
       "pubDate": "Mon, 01 Jun 2026 03:49:35 GMT",
       "pubTs": 1780285775.0,
       "desc": "【快訊】韓華航太工廠爆炸大火 至少4死兩傷&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "af1c27bdd68c6a47",
-      "title": "南韓同日兩起重大工安意外！SK海力士工廠大火至少7傷",
-      "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9hRUcxZFdOSmU0U2o4bVJOTkJqS2E2X0xuVUVINUFYcEtjOG04NUpxYkQ4MDlkNk01NUJKODBrM1BjaE5hemdvRmtYZTFpU3V4UWhnMm1rdzFGNVYw?oc=5",
-      "pubDate": "Mon, 01 Jun 2026 03:43:44 GMT",
-      "pubTs": 1780285424.0,
-      "desc": "南韓同日兩起重大工安意外！SK海力士工廠大火至少7傷&nbsp;&nbsp;太報 TaiSounds",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -1233,5 +1233,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-06-01T07:10:49.413923+00:00"
+  "lastUpdated": "2026-06-01T07:21:21.689969+00:00"
 }
