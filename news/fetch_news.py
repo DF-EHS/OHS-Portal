@@ -257,7 +257,7 @@ def generate_html(items: list, updated_at: str) -> str:
         '\n          <div class="wr-header">'
         '\n            <div>'
         '\n              <div class="wr-title">📊 本週職安情報彙整</div>'
-        '\n              <div class="wr-sub">由 Gemini AI 整合過去七天新聞，自動撰寫摘要</div>'
+        '\n              <div class="wr-sub" id="wr-sub">由 Gemini AI 整合上週（週日～週六）新聞，每週一自動撰寫</div>'
         '\n            </div>'
         '\n            <button class="wr-btn" id="wr-gen-btn">✨ 產生週報</button>'
         '\n          </div>'
@@ -463,21 +463,45 @@ function toggleAll(open) {{
   scnt.textContent = matched.length;
 }})();
 
-// 職安週報：AI 彙整上週新聞
+// 職安週報：AI 彙整上週新聞（週日～週六），週一自動產生
 (function() {{
-  const WORKER    = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
-  const CACHE_KEY = 'ohs_weekly_report_v1';
-  const CACHE_TTL = 6 * 3600 * 1000; // 6 小時快取
+  const WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+
+  // 計算上週日（週日為起點）到上週六的日期範圍
+  function getLastWeekRange() {{
+    const now = new Date();
+    const dow = now.getDay(); // 0=週日, 1=週一, ...
+    const sun = new Date(now);
+    sun.setDate(now.getDate() - (dow === 0 ? 7 : dow + 7));
+    sun.setHours(0,0,0,0);
+    const sat = new Date(sun);
+    sat.setDate(sun.getDate() + 6);
+    sat.setHours(23,59,59,999);
+    return {{ sun, sat }};
+  }}
+
+  // 以上週日期作為快取 key，每週自動失效
+  function getWeekKey() {{
+    const {{ sun }} = getLastWeekRange();
+    return 'ohs_weekly_' + sun.toLocaleDateString('sv');
+  }}
+
+  function getWeekLabel() {{
+    const {{ sun, sat }} = getLastWeekRange();
+    const fmt = d => (d.getMonth()+1) + '/' + d.getDate();
+    return fmt(sun) + ' ～ ' + fmt(sat);
+  }}
 
   function getWeekNews() {{
-    const cutoff = Date.now() - 7 * 86400 * 1000;
-    const items  = [];
+    const {{ sun, sat }} = getLastWeekRange();
+    const items = [];
     document.querySelectorAll('.n-card[data-date]').forEach(card => {{
-      if (new Date(card.dataset.date).getTime() >= cutoff) {{
+      const d = new Date(card.dataset.date);
+      if (d >= sun && d <= sat) {{
         const title  = card.querySelector('.n-title')?.textContent?.trim();
         const desc   = card.querySelector('.n-desc')?.textContent?.trim();
         const source = card.querySelector('.badge')?.textContent?.trim();
-        if (title) items.push(`[${{source}}] ${{title}}${{desc ? '：' + desc.substring(0, 60) : ''}}`);
+        if (title) items.push(`[${{source}}] ${{title}}${{desc ? '：' + desc.substring(0,60) : ''}}`);
       }}
     }});
     return items;
@@ -494,13 +518,14 @@ function toggleAll(open) {{
       .trim();
   }}
 
-  function renderReport(text, count, ts) {{
-    const content = document.getElementById('wr-content');
-    content.innerHTML = '<p>' + mdToHtml(text) + '</p>';
-    content.style.display = 'block';
+  function renderReport(text, count, ts, range) {{
+    const rangeStr = range || getWeekLabel();
+    document.getElementById('wr-content').innerHTML = mdToHtml(text);
+    document.getElementById('wr-content').style.display = 'block';
     const d = new Date(ts);
-    document.getElementById('wr-meta').textContent =
-      `基於本週 ${{count}} 則新聞 · ${{d.toLocaleDateString('zh-TW')}} ${{d.toLocaleTimeString('zh-TW', {{hour:'2-digit',minute:'2-digit'}})}} 產生`;
+    document.getElementById('wr-sub').textContent =
+      `上週（${{rangeStr}}）· 共 ${{count}} 則 · ${{d.toLocaleDateString('zh-TW')}} ${{d.toLocaleTimeString('zh-TW',{{hour:'2-digit',minute:'2-digit'}})}} 產生`;
+    document.getElementById('wr-meta').textContent = '';
   }}
 
   async function generateReport() {{
@@ -508,15 +533,17 @@ function toggleAll(open) {{
     const loading = document.getElementById('wr-loading');
     const content = document.getElementById('wr-content');
 
-    btn.disabled     = true;
-    btn.textContent  = '產生中...';
+    btn.disabled    = true;
+    btn.textContent = '產生中...';
     loading.style.display = 'flex';
     content.style.display = 'none';
     document.getElementById('wr-meta').textContent = '';
 
-    const news = getWeekNews();
+    const news      = getWeekNews();
+    const weekRange = getWeekLabel();
+
     if (!news.length) {{
-      content.innerHTML = '<p style="color:var(--sub)">目前暫無本週新聞資料。</p>';
+      content.innerHTML = '<p style="color:var(--sub)">暫無上週（' + weekRange + '）新聞資料，系統保留14天資料，請下週再試。</p>';
       content.style.display = 'block';
       loading.style.display = 'none';
       btn.disabled = false; btn.textContent = '🔄 重新產生';
@@ -526,7 +553,7 @@ function toggleAll(open) {{
     const prompt =
       '你是大豐環保科技股份有限公司的職安週報編輯。公司業務為環保廢棄物回收處理，' +
       '作業環境包含辦公室及現場。\\n\\n' +
-      `以下是過去七天收集到的職安相關新聞與公告（共 ${{news.length}} 則）：\n\n` +
+      `以下是上週（${{weekRange}}）收集到的職安相關新聞與公告（共 ${{news.length}} 則）：\\n\\n` +
       news.join('\\n') +
       '\\n\\n請依下列格式撰寫本週職安週報，使用繁體中文，語氣專業，適合職安管理師閱讀：\\n\\n' +
       '## 📋 本週情勢概覽\\n（2-3句整體評估本週職安狀況）\\n\\n' +
@@ -537,16 +564,17 @@ function toggleAll(open) {{
     try {{
       const resp = await fetch(WORKER, {{
         method: 'POST',
-        headers: {{ 'Content-Type': 'application/json' }},
-        body: JSON.stringify({{ text: prompt }}),
+        headers: {{'Content-Type':'application/json'}},
+        body: JSON.stringify({{text: prompt}}),
       }});
       if (!resp.ok) throw new Error('服務暫時無法使用 (' + resp.status + ')');
       const data = await resp.json();
       const text = data?.data || data?.choices?.[0]?.message?.content || data?.text || '';
       if (!text) throw new Error('AI 回應為空');
       const ts = Date.now();
-      localStorage.setItem(CACHE_KEY, JSON.stringify({{ ts, text, count: news.length }}));
-      renderReport(text, news.length, ts);
+      const cacheKey = getWeekKey();
+      localStorage.setItem(cacheKey, JSON.stringify({{ts, text, count:news.length, range:weekRange}}));
+      renderReport(text, news.length, ts, weekRange);
     }} catch(e) {{
       content.innerHTML = `<p style="color:#dc2626">⚠️ 產生失敗：${{e.message}}</p>`;
       content.style.display = 'block';
@@ -556,12 +584,15 @@ function toggleAll(open) {{
     btn.textContent = '🔄 重新產生';
   }}
 
-  // 頁面載入時檢查快取
+  // 頁面載入：有快取則顯示；今天是週一且尚無快取則自動產生
+  const cacheKey = getWeekKey();
   try {{
-    const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
-    if (cached && Date.now() - cached.ts < CACHE_TTL) {{
-      renderReport(cached.text, cached.count, cached.ts);
+    const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
+    if (cached) {{
+      renderReport(cached.text, cached.count, cached.ts, cached.range);
       document.getElementById('wr-gen-btn').textContent = '🔄 重新產生';
+    }} else if (new Date().getDay() === 1) {{
+      generateReport();
     }}
   }} catch(_) {{}}
 
