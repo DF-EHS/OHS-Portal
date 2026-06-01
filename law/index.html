@@ -948,7 +948,7 @@ async function sendChat() {
     const resp = await fetch(AI_WORKER, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: q, context, webSearch: true }),
+      body: JSON.stringify({ text: q, context }),
     });
 
     if (!resp.ok) {
