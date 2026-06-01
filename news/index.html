@@ -889,12 +889,13 @@ function toggleAll(open) {
   document.querySelectorAll('.n-section details').forEach(d => d.open = open);
 }
 
-// 今日情報：標記 NEW! 並建立今日分區
+// 今日情報：標記 NEW! 並建立今日分區（含前一天）
 (function() {
-  const today = new Date().toLocaleDateString('sv');
+  const today     = new Date().toLocaleDateString('sv');
+  const yesterday = new Date(Date.now() - 86400000).toLocaleDateString('sv');
   const matched = [];
   document.querySelectorAll('.n-card[data-date]').forEach(card => {
-    if (card.dataset.date === today) {
+    if (card.dataset.date === today || card.dataset.date === yesterday) {
       const dateEl = card.querySelector('.n-date');
       if (dateEl) {
         const b = document.createElement('span');
