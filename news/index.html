@@ -128,7 +128,7 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
       <a class="nav-btn" href="#today-section" data-id="today-section" id="today-nav" style="display:none"><span class="nav-dot" style="background:#e11d48"></span><span class="nav-name">📌 今日情報</span><span class="nav-count" id="today-count">0</span></a><a class="nav-btn" href="#weekly-report" data-id="weekly-report"><span class="nav-dot" style="background:#f59e0b"></span><span class="nav-name">📊 職安週報</span><span class="nav-count" style="background:#fef3c7;color:#92400e">AI</span></a><div style="height:1px;background:var(--border);margin:6px 4px 10px"></div>
     <a class="nav-btn" href="#osha_announce" data-id="osha_announce"><span class="nav-dot" style="background:#16a34a"></span><span class="nav-name">職安署公告</span><span class="nav-count">8</span></a>
     <a class="nav-btn" href="#gnews_incident" data-id="gnews_incident"><span class="nav-dot" style="background:#dc2626"></span><span class="nav-name">重大職災新聞</span><span class="nav-count">52</span></a>
-    <a class="nav-btn" href="#gnews_ohs" data-id="gnews_ohs"><span class="nav-dot" style="background:#7c3aed"></span><span class="nav-name">職安衛動態</span><span class="nav-count">28</span></a>
+    <a class="nav-btn" href="#gnews_ohs" data-id="gnews_ohs"><span class="nav-dot" style="background:#7c3aed"></span><span class="nav-name">職安衛動態</span><span class="nav-count">29</span></a>
     <a class="nav-btn" href="#gnews_law" data-id="gnews_law"><span class="nav-dot" style="background:#0891b2"></span><span class="nav-name">法規更新</span><span class="nav-count">4</span></a>
     </div>
   </aside>
@@ -145,7 +145,7 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
           <button class="toggle-btn" onclick="toggleAll(false)">全部收起</button>
         </div>
       </div>
-      <div class="updated-at">🕐 最後更新：2026-06-01 11:34</div>
+      <div class="updated-at">🕐 最後更新：2026-06-01 11:42</div>
     </div>
     
   <section class="n-section" id="weekly-report">
@@ -693,7 +693,7 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
       <summary class="sec-title">
         <span class="sec-bar"></span>
         <span class="sec-name">職安衛動態</span>
-        <span class="sec-count">28</span>
+        <span class="sec-count">29</span>
         <span class="sec-arrow">▾</span>
       </summary>
       <div class="sec-body">
@@ -712,6 +712,14 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
           </div>
           <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48419/204184/" target="_blank" rel="noopener">洪申翰勉勵新進勞檢員：用專業與同理心 做勞工最堅實的後盾</a>
           <p class="n-desc">勞動部洪申翰部長今（29）日出席「115年度聘用勞動條件檢查員職前訓練」結訓座談，除誠摯歡迎新進同仁加入勞工行政團隊外，也勉勵大家未來投入第一線勞動檢查工作時，要兼具「專業」與「同理心」，成為守護勞工權益的重要力量，並協助促進勞資關係和諧穩定。 洪部長高度肯定第一線檢查員的專業與貢獻。他表示，過去許…</p>
+        </div>
+        <div class="n-card" data-date="2026-05-29">
+          <div class="n-meta">
+            <span class="badge b-purple">職安衛動態</span>
+            <span class="n-date">2026-05-29</span>
+          </div>
+          <a class="n-title" href="https://news.google.com/rss/articles/CBMihAFBVV95cUxQb0RUdkppUm01VndMeGFIOHh4VGNqS2MzT1pWWXhBSU1XVHc1TXZCMmlPMVlwYXlhVGZtaHhhOGVITHBGSWNDZGJqeHNJMEtvNS1nR1FDM2RnZUFuRDBfMUw1YW5tWFZleS1aMGsyVkFTSWF4N01fcGlpdzJ6dC0yQ3FLOGk?oc=5" target="_blank" rel="noopener">降低職業災害發生 源頭防災不可少</a>
+          <p class="n-desc">降低職業災害發生 源頭防災不可少&nbsp;&nbsp;gov.taipei</p>
         </div>
         <div class="n-card" data-date="2026-05-29">
           <div class="n-meta">
@@ -1038,13 +1046,8 @@ function toggleAll(open) {
       .replace(/^### (.+)$/gm, '<h3>$1</h3>')
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
       .replace(/^[-*] (.+)$/gm, '<li>$1</li>')
-      .replace(/(<li>[\s\S]*?<\/li>)(
-<li>)/g, '$1$2')
-      .replace(/(<li>.*<\/li>
-?)+/g, s => '<ul>' + s + '</ul>')
-      .replace(/
-(2,)/g, '</p><p>')
-      .replace(/^(?!<)/gm, '')
+      .replace(/((?:<li>.*<\/li>\s*)+)/g, '<ul>$1</ul>')
+      .replace(/<\/ul>\s*<ul>/g, '')
       .trim();
   }
 
