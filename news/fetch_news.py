@@ -409,7 +409,7 @@ footer{{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);bord
       <div class="hero-row">
         <div>
           <h2>法規更新與重大職災新聞情報</h2>
-          <p>自動彙整職安署公告、最新消息及相關新聞，工作日每四小時自動更新。</p>
+          <p>自動彙整職安署公告、最新消息及相關新聞，工作日每日自動更新。</p>
         </div>
         <div class="toggle-btns">
           <button class="toggle-btn" onclick="toggleAll(true)">全部展開</button>
