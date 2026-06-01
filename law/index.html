@@ -945,22 +945,10 @@ async function sendChat() {
   const typingEl = showTyping();
 
   try {
-    const prompt =
-      '你是大豐環保科技股份有限公司的職業安全衛生法規助理。公司業務為環保廢棄物回收處理，員工包含辦公室人員及現場作業人員。\n\n' +
-      '請依據以下從公司「法規鑑別資料庫」中擷取的相關條文，以繁體中文回答使用者的問題。\n\n' +
-      '回答原則：\n' +
-      '1. 直接回答，不重述問題\n' +
-      '2. 引用條文時標明《法規名稱》第X條\n' +
-      '3. 合規狀態為「不符」的條文請特別加粗提醒注意\n' +
-      '4. 若條文不夠完整回答，誠實說明並建議查閱完整法規\n' +
-      '5. 語氣專業親切，適合職安管理師參考\n\n' +
-      '相關法規條文：\n' + context +
-      '\n\n使用者問題：' + q;
-
     const resp = await fetch(AI_WORKER, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: prompt }),
+      body: JSON.stringify({ text: q, context, webSearch: true }),
     });
 
     if (!resp.ok) {
