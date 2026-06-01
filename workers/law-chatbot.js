@@ -71,13 +71,28 @@ export default {
       return new Response(null, { status: 204, headers: CORS });
     }
 
-    // GET /ping — 診斷：確認 Worker 版本與 Secrets 是否載入
+    // GET — 診斷：確認版本、Secrets，並實際測試 Google Search
     if (request.method === 'GET') {
+      const url = new URL(request.url);
+      const testQ = url.searchParams.get('q') || '勞工健檢頻率';
+      let searchResult = null;
+      if (env?.GOOGLE_KEY && env?.GOOGLE_CX) {
+        const q = encodeURIComponent('台灣 職業安全衛生法規 ' + testQ);
+        const searchUrl = `https://www.googleapis.com/customsearch/v1?key=${env.GOOGLE_KEY}&cx=${env.GOOGLE_CX}&q=${q}&num=3&lr=lang_zh-TW`;
+        try {
+          const r = await fetch(searchUrl);
+          const d = await r.json();
+          searchResult = { status: r.status, items: (d.items || []).map(i => i.title), error: d.error || null };
+        } catch(e) {
+          searchResult = { error: e.message };
+        }
+      }
       return new Response(JSON.stringify({
         version: 'google-search-v1',
         hasGoogleKey: !!env?.GOOGLE_KEY,
         hasGoogleCx:  !!env?.GOOGLE_CX,
-      }), { headers: { 'Content-Type': 'application/json', ...CORS } });
+        searchTest: searchResult,
+      }, null, 2), { headers: { 'Content-Type': 'application/json', ...CORS } });
     }
 
     if (request.method !== 'POST') {
