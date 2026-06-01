@@ -489,10 +489,8 @@ function toggleAll(open) {{
       .replace(/^### (.+)$/gm, '<h3>$1</h3>')
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
       .replace(/^[-*] (.+)$/gm, '<li>$1</li>')
-      .replace(/(<li>[\s\S]*?<\/li>)(\n<li>)/g, '$1$2')
-      .replace(/(<li>.*<\/li>\n?)+/g, s => '<ul>' + s + '</ul>')
-      .replace(/\n{2,}/g, '</p><p>')
-      .replace(/^(?!<)/gm, '')
+      .replace(/((?:<li>.*<\/li>\s*)+)/g, '<ul>$1</ul>')
+      .replace(/<\/ul>\s*<ul>/g, '')
       .trim();
   }}
 
