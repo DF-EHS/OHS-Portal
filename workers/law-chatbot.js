@@ -71,6 +71,15 @@ export default {
       return new Response(null, { status: 204, headers: CORS });
     }
 
+    // GET /ping — 診斷：確認 Worker 版本與 Secrets 是否載入
+    if (request.method === 'GET') {
+      return new Response(JSON.stringify({
+        version: 'google-search-v1',
+        hasGoogleKey: !!env?.GOOGLE_KEY,
+        hasGoogleCx:  !!env?.GOOGLE_CX,
+      }), { headers: { 'Content-Type': 'application/json', ...CORS } });
+    }
+
     if (request.method !== 'POST') {
       return new Response('Method Not Allowed', { status: 405 });
     }
