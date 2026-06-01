@@ -19,15 +19,15 @@ header h1{font-size:17px;font-weight:700;flex:1}
 
 /* ── Layout（側欄緊靠左緣，full-height panel） ── */
 .layout{display:flex;flex:1}
-.sidebar{width:185px;flex-shrink:0;background:var(--card);border-right:1px solid var(--border);align-self:stretch}
-.sidebar-inner{position:sticky;top:46px;height:calc(100vh - 46px);overflow-y:auto;padding:20px 10px 20px 14px}
-.nav-label{font-size:10px;font-weight:700;color:var(--sub);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.nav-btn{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:12.5px;font-weight:600;color:var(--sub);text-decoration:none;margin-bottom:2px;border-left:3px solid transparent;transition:background .15s,color .15s,border-color .15s}
+.sidebar{width:215px;flex-shrink:0;background:var(--card);border-right:1px solid var(--border);align-self:stretch}
+.sidebar-inner{position:sticky;top:46px;height:calc(100vh - 46px);overflow-y:auto;padding:20px 12px 20px 16px}
+.nav-label{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.nav-btn{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:8px;font-size:13.5px;font-weight:600;color:var(--sub);text-decoration:none;margin-bottom:3px;border-left:3px solid transparent;transition:background .15s,color .15s,border-color .15s}
 .nav-btn:hover{background:var(--bg);color:var(--text)}
 .nav-btn.active{background:var(--bg);color:var(--navy);border-left-color:var(--navy)}
-.nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.nav-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 .nav-name{flex:1;line-height:1.3}
-.nav-count{font-size:11px;background:var(--border);color:var(--sub);padding:1px 6px;border-radius:10px;flex-shrink:0}
+.nav-count{font-size:12px;background:var(--border);color:var(--sub);padding:1px 7px;border-radius:10px;flex-shrink:0}
 .nav-btn.active .nav-count{background:#dbeafe;color:#1d4ed8}
 
 /* ── Main ── */
@@ -128,7 +128,7 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
       <a class="nav-btn" href="#today-section" data-id="today-section" id="today-nav" style="display:none"><span class="nav-dot" style="background:#e11d48"></span><span class="nav-name">📌 今日情報</span><span class="nav-count" id="today-count">0</span></a><a class="nav-btn" href="#weekly-report" data-id="weekly-report"><span class="nav-dot" style="background:#f59e0b"></span><span class="nav-name">📊 職安週報</span><span class="nav-count" style="background:#fef3c7;color:#92400e">AI</span></a><div style="height:1px;background:var(--border);margin:6px 4px 10px"></div>
     <a class="nav-btn" href="#osha_announce" data-id="osha_announce"><span class="nav-dot" style="background:#16a34a"></span><span class="nav-name">職安署公告</span><span class="nav-count">8</span></a>
     <a class="nav-btn" href="#gnews_incident" data-id="gnews_incident"><span class="nav-dot" style="background:#dc2626"></span><span class="nav-name">重大職災新聞</span><span class="nav-count">65</span></a>
-    <a class="nav-btn" href="#gnews_ohs" data-id="gnews_ohs"><span class="nav-dot" style="background:#7c3aed"></span><span class="nav-name">職安衛動態</span><span class="nav-count">35</span></a>
+    <a class="nav-btn" href="#gnews_ohs" data-id="gnews_ohs"><span class="nav-dot" style="background:#7c3aed"></span><span class="nav-name">職安衛動態</span><span class="nav-count">36</span></a>
     <a class="nav-btn" href="#gnews_law" data-id="gnews_law"><span class="nav-dot" style="background:#0891b2"></span><span class="nav-name">法規更新</span><span class="nav-count">4</span></a>
     </div>
   </aside>
@@ -145,7 +145,7 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
           <button class="toggle-btn" onclick="toggleAll(false)">全部收起</button>
         </div>
       </div>
-      <div class="updated-at">🕐 最後更新：2026-06-01 15:21</div>
+      <div class="updated-at">🕐 最後更新：2026-06-01 16:10</div>
     </div>
     
   <section class="n-section" id="weekly-report">
@@ -797,10 +797,18 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
       <summary class="sec-title">
         <span class="sec-bar"></span>
         <span class="sec-name">職安衛動態</span>
-        <span class="sec-count">35</span>
+        <span class="sec-count">36</span>
         <span class="sec-arrow">▾</span>
       </summary>
       <div class="sec-body">
+        <div class="n-card" data-date="2026-06-01">
+          <div class="n-meta">
+            <span class="badge b-purple">職安衛動態</span>
+            <span class="n-date">2026-06-01</span>
+          </div>
+          <a class="n-title" href="https://news.google.com/rss/articles/CBMiaEFVX3lxTE02aXBxaFdiLVZIUk5kN0ZXWHRUTmNaMzJHR1dhNEo1amJQUHBQMEJCQzlLd1BjZXpZX1ROYlJPNTA1NUNKZWtJeGJNcVVpdjc5MzZMTEpCQnMzenlOcHZkQjBzMkFJTVl0?oc=5" target="_blank" rel="noopener">張麗善推職安改革 安訓科落實消防員安全回家</a>
+          <p class="n-desc">張麗善推職安改革 安訓科落實消防員安全回家&nbsp;&nbsp;元丰傳媒</p>
+        </div>
         <div class="n-card" data-date="2026-06-01">
           <div class="n-meta">
             <span class="badge b-purple">職安衛動態</span>
