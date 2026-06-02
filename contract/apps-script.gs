@@ -37,22 +37,26 @@ function _resp(data) {
 //   2. 其次取第一個有資料、非 'evaluations' 的分頁（相容原始分頁名稱）
 //   3. 都沒有才建立新的 'records' 分頁
 function _getRecordsSheet(ss) {
-  var named = ss.getSheetByName('records');
-  if (named && named.getLastRow() > 1) return named;
-
+  // 依優先順序嘗試各種可能的分頁名稱
+  var candidates = ['進場申請', 'records', '工作表1', 'Sheet1'];
+  for (var i = 0; i < candidates.length; i++) {
+    var s = ss.getSheetByName(candidates[i]);
+    if (s && s.getLastRow() > 1) return s;
+  }
+  // 找任意有資料的非 evaluations 分頁
   var sheets = ss.getSheets();
   for (var i = 0; i < sheets.length; i++) {
     var s = sheets[i];
     if (s.getName() === 'evaluations') continue;
-    if (s.getLastRow() > 1) return s; // 找到有資料的分頁
+    if (s.getLastRow() > 1) return s;
   }
-
-  if (!named) {
-    named = ss.insertSheet('records');
-    named.appendRow(['id', 'data', 'submittedAt']);
-    named.setFrozenRows(1);
+  // 都沒有：建立 records 分頁
+  var fallback = ss.getSheetByName('records') || ss.insertSheet('records');
+  if (fallback.getLastRow() === 0) {
+    fallback.appendRow(['id', 'data', 'submittedAt']);
+    fallback.setFrozenRows(1);
   }
-  return named;
+  return fallback;
 }
 
 // 取得評核 Sheet（固定名稱，需要就建立）
