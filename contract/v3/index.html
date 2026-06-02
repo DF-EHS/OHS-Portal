@@ -236,45 +236,10 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
 .sig-preview{height:38px;max-width:90px;object-fit:contain;border:1px solid var(--border);border-radius:4px;background:#fff;}
 .edited-badge{display:inline-block;background:#fff7ed;border:1px solid #fed7aa;color:#c2410c;padding:2px 9px;border-radius:10px;font-size:11px;font-weight:600;}
 
-/* ── Evaluation ── */
-.eval-sec{margin-bottom:18px;border-radius:8px;overflow:hidden;border:1px solid var(--border);}
-.eval-sec-hdr{padding:10px 14px;font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.eval-sec-hdr.ea{background:linear-gradient(135deg,#1e3a5f,#1a5276);}
-.eval-sec-hdr.eb{background:linear-gradient(135deg,#155e26,#1a5276);}
-.eval-sec-hdr.ec{background:linear-gradient(135deg,#7d3c00,#c0392b);}
-.eval-sec-hdr .ev-badge{font-size:10px;background:rgba(255,255,255,.2);padding:1px 8px;border-radius:8px;font-weight:600;letter-spacing:.04em;white-space:nowrap;}
-.eval-tbl{width:100%;border-collapse:collapse;font-size:12px;}
-.eval-tbl th{background:#f8fafc;color:var(--sub);padding:7px 10px;font-size:11px;font-weight:700;letter-spacing:.04em;border-bottom:1px solid var(--border);text-align:left;}
-.eval-tbl td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle;line-height:1.4;}
-.eval-tbl tr:last-child td{border-bottom:none;}
-.eval-tbl tfoot tr td{border-top:2px solid var(--border)!important;border-bottom:none!important;}
-.ev-score-out{font-size:13px;font-weight:700;color:var(--navy);min-width:36px;display:inline-block;}
-.ev-chips{display:flex;flex-wrap:wrap;gap:4px;}
-.ev-chip{padding:3px 10px;border:1.5px solid var(--border);border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;transition:all .12s;user-select:none;white-space:nowrap;}
-.ev-chip:hover{background:#f1f5f9;}
-.ev-chip.good.sel{background:#dcfce7;border-color:#16a34a;color:#15803d;}
-.ev-chip.ok.sel{background:#dbeafe;border-color:#2563eb;color:#1d4ed8;}
-.ev-chip.fair.sel{background:#ffedd5;border-color:#ea580c;color:#c2410c;}
-.ev-chip.bad.sel{background:#fee2e2;border-color:#ef4444;color:#b91c1c;}
-.ev-chip.c1.sel{background:#dcfce7;border-color:#16a34a;color:#15803d;}
-.ev-chip.c2.sel{background:#dbeafe;border-color:#2563eb;color:#1d4ed8;}
-.ev-chip.c3.sel{background:#f0fdf4;border-color:#22c55e;color:#166534;}
-.ev-chip.c4.sel{background:#fff7ed;border-color:#f59e0b;color:#b45309;}
-.ev-chip.c5.sel{background:#fee2e2;border-color:#ef4444;color:#b91c1c;}
-.ev-grade-badge{display:inline-block;padding:1px 7px;border-radius:8px;font-size:10px;font-weight:700;vertical-align:middle;}
-.ev-grade-badge.ga{background:#dcfce7;color:#15803d;}
-.ev-grade-badge.gb{background:#dbeafe;color:#1d4ed8;}
-.ev-grade-badge.gc{background:#ffedd5;color:#c2410c;}
-.ev-grade-badge.gf{background:#fee2e2;color:#b91c1c;}
-.ev-score-bar{background:#1e3a5f;padding:14px 16px 10px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;border-radius:8px;margin-top:16px;}
-.ev-score-grp{text-align:center;min-width:72px;}
-.ev-score-lbl{font-size:9px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;}
-.ev-score-val{font-size:18px;font-weight:800;color:#fff;}
-
 /* ── Print ── */
 @media print{
   header,#step-bar,.step-nav,.rec-toolbar,.hdr-btn,.hc-btn,.success-actions,
-  #btn-del-record,#btn-back-records,#btn-edit-record,#btn-eval-record{display:none!important;}
+  #btn-del-record,#btn-back-records,#btn-edit-record{display:none!important;}
   .detail-blk{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;}
   body{background:#fff;}
 }
@@ -630,7 +595,6 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
     <button class="btn btn-sm" id="btn-back-records" onclick="showView('records')">← 返回清單</button>
     <h2 id="detail-title">進場申請紀錄</h2>
     <button class="btn btn-sm btn-primary" id="btn-edit-record" style="margin-left:auto">✏️ 編輯</button>
-    <button class="btn btn-sm" style="background:#059669;color:#fff;border-color:#059669;display:none" id="btn-eval-record">📊 評核</button>
     <button class="btn btn-sm" onclick="window.print()">🖨️ 列印</button>
     <button class="btn btn-sm btn-primary" onclick="exportPDF()">📄 匯出 PDF</button>
     <button class="btn btn-sm btn-danger" id="btn-del-record">🗑️ 刪除</button>
@@ -651,24 +615,6 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
     <div class="mfoot">
       <button class="btn" onclick="closeEditModal()">取消</button>
       <button class="btn btn-success" onclick="saveEdit()">💾 儲存變更</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── Evaluation Modal ── -->
-<div class="modal-ov" id="eval-modal">
-  <div class="modal" style="max-width:860px">
-    <div class="mhd">
-      <h3>📊 承攬商完工評核表</h3>
-      <button class="m-close" onclick="closeEvalModal()">✕</button>
-    </div>
-    <div class="mbody" id="eval-modal-body" style="padding:0"></div>
-    <div class="mfoot" style="justify-content:space-between;align-items:center;">
-      <div id="ev-foot-scores" style="font-size:12px;color:var(--sub)">請填寫各項評核後儲存</div>
-      <div style="display:flex;gap:8px">
-        <button class="btn" onclick="closeEvalModal()">取消</button>
-        <button class="btn btn-success" onclick="saveEval()">💾 儲存評核</button>
-      </div>
     </div>
   </div>
 </div>
@@ -1426,7 +1372,7 @@ async function renderRecords(){
       <td class="wn">${wn}</td>
       <td>${r.basic.dateStart} ~ ${r.basic.dateEnd}</td>
       <td>${period}</td>
-      <td><span class="badge badge-g">已提交</span>${currentRole==='admin'&&getEval(r.id)?'&nbsp;<span class="badge" style="background:#dbeafe;color:#1d4ed8">已評核</span>':''}</td>
+      <td><span class="badge badge-g">已提交</span></td>
       <td>
         <button class="btn btn-sm btn-primary" onclick="viewRecord('${r.id}')">查看</button>
         <button class="btn btn-sm btn-danger" style="margin-left:4px" onclick="confirmDelete('${r.id}')">刪除</button>
@@ -1461,11 +1407,6 @@ async function viewRecord(id){
   document.getElementById('detail-title').textContent = r.basic.company + ' — 進場申請紀錄';
   document.getElementById('btn-del-record').onclick = ()=>confirmDelete(id);
   document.getElementById('btn-edit-record').onclick = ()=>openEditModal(id);
-  const evalBtn = document.getElementById('btn-eval-record');
-  if(evalBtn){
-    evalBtn.style.display = currentRole==='admin' ? '' : 'none';
-    evalBtn.onclick = ()=>openEvalModal(id);
-  }
 
   const dt = new Date(r.submittedAt);
   const dtStr = dt.toLocaleString('zh-TW');
@@ -1562,15 +1503,6 @@ async function viewRecord(id){
     </div>
   `);
 
-  if(currentRole==='admin'){
-    const ev = getEval(id);
-    html += blk('📊 承攬商完工評核', ev ? renderEvalResult(id) :
-      `<div style="text-align:center;padding:28px 16px;color:var(--sub)">
-        <div style="font-size:40px;margin-bottom:10px">📊</div>
-        <p style="font-size:13px;margin-bottom:14px">尚未對此承攬商進行完工評核</p>
-        <button class="btn btn-primary" onclick="openEvalModal('${id}')">開始填寫評核表 →</button>
-      </div>`);
-  }
   document.getElementById('detail-content').innerHTML = html;
   showView('rec-detail');
 }
@@ -2022,370 +1954,6 @@ function initSigFSEvents(){
 // ════════════════════════════════════════════════
 //  Init
 // ════════════════════════════════════════════════
-// ════════════════════════════════════════════════
-//  Evaluation System
-// ════════════════════════════════════════════════
-const EVAL_A_ITEMS = [
-  {label:'工程品質評鑑', weight:20, desc:'品質查驗結果是否符合合約要求，收頭及外觀平整度'},
-  {label:'材料及設備品質', weight:20, desc:'各種材料品質是否符合合約規定及等級要求'},
-  {label:'協調配合度', weight:15, desc:'承攬商能否主動與承辦人員及其他承包商協調配合'},
-  {label:'工程執行與管理', weight:15, desc:'施工進度是否符合預定進度，管理是否良好'},
-  {label:'安衛工作執行配合度', weight:10, desc:'是否主動出示安衛證照及教育訓練記錄，積極配合安衛工作'},
-  {label:'現場安全防護措施', weight:10, desc:'是否主動溝通現場所需安全防護設備，並落實執行配置'},
-  {label:'個人防護器具配戴', weight:10, desc:'施工人員進入現場是否主動配戴，符合所有穿戴規定'},
-];
-const EVAL_A_FACTORS = [1.0, 0.8, 0.6, 0.0];
-const EVAL_A_RATING_LABELS = ['優','良','可','不良'];
-const EVAL_A_RATING_CLASSES = ['good','ok','fair','bad'];
-
-const EVAL_B_ITEMS = [
-  '墜落防止','感電防止','倒塌崩塌防止','火災、爆炸防止',
-  '中毒、缺氧及局限空間危害防止','工作場所災害防止','被撞防止',
-  '物體飛落防止','被捲、被夾或被切割等防止',
-  '提報施工計畫、安衛管理計畫/紀錄','自動檢查紀錄執行情況',
-  '安衛管理人員執行職務情況','安全衛生教育訓練實施情形',
-  '事件通報及後續處理改善狀況','其他',
-];
-
-const EVAL_C_ITEMS = [
-  '是否有良好之安全衛生管理制度',
-  '是否具有職業安全衛生管理人員',
-  '是否已實施勞工安全衛生教育訓練',
-  '是否有完整自動檢查紀錄或施工安全管制計畫',
-  '是否訂有完善之緊急應變演練計畫',
-];
-const EVAL_C_CHOICES = [
-  {lbl:'優良',val:20,cls:'c1'},{lbl:'良',val:16,cls:'c2'},
-  {lbl:'可',val:12,cls:'c3'},{lbl:'尚可',val:8,cls:'c4'},{lbl:'差',val:4,cls:'c5'},
-];
-
-let _evalId = null;
-
-function evalKey(id){ return 'eval_' + id; }
-function getEval(id){ try{ return JSON.parse(localStorage.getItem(evalKey(id))||'null'); }catch(e){ return null; } }
-function setEval(id, data){ localStorage.setItem(evalKey(id), JSON.stringify(data)); }
-
-function evGradeA(s){ if(s>=85)return{t:'甲等',c:'ga'};if(s>=65)return{t:'乙等',c:'gb'};return{t:'丙等',c:'gf'}; }
-function evGradeB(s){ if(s>=90)return{t:'良',c:'ga'};if(s>=70)return{t:'可',c:'gb'};if(s>=50)return{t:'尚可',c:'gc'};return{t:'差',c:'gf'}; }
-function evGradeC(s){ return s>=60?{t:'合格',c:'ga'}:{t:'不合格',c:'gf'}; }
-
-function openEvalModal(id){
-  _evalId = id;
-  buildEvalForm(getEval(id));
-  document.getElementById('eval-modal').classList.add('open');
-  updateEvalScores();
-}
-function closeEvalModal(){
-  document.getElementById('eval-modal').classList.remove('open');
-  _evalId = null;
-}
-
-function buildEvalForm(ex){
-  ex = ex || {};
-  const rowsA = EVAL_A_ITEMS.map((item,i)=>{
-    const sel = ex.a?.ratings?.[i] ?? null;
-    const chips = EVAL_A_RATING_LABELS.map((lbl,ri)=>{
-      const isSel = sel===ri?' sel':'';
-      return `<span class="ev-chip ${EVAL_A_RATING_CLASSES[ri]}${isSel}" onclick="evChipA(${i},${ri},this)">${lbl}</span>`;
-    }).join('');
-    return `<tr>
-      <td style="font-size:11px;color:var(--sub)">${item.weight}</td>
-      <td><strong>${item.label}</strong><br><span style="font-size:11px;color:var(--sub)">${item.desc}</span></td>
-      <td><div class="ev-chips" id="ev-a-chips-${i}">${chips}</div></td>
-      <td><span class="ev-score-out" id="ev-a-score-${i}">—</span></td>
-    </tr>`;
-  }).join('');
-
-  const enabledB = ex.b?.enabled || [];
-  const scoresB = ex.b?.scores || {};
-  const rowsB = EVAL_B_ITEMS.map((item,i)=>{
-    const isEnabled = enabledB.includes(i);
-    const sc = scoresB[i] ?? 7;
-    const opts = [1,2,3,4,5,6,7,8,9,10].map(v=>`<option value="${v}"${v===sc?' selected':''}>${v}</option>`).join('');
-    return `<tr id="ev-b-row-${i}" style="${isEnabled?'':'opacity:.45'}">
-      <td style="text-align:center">
-        <input type="checkbox" id="ev-b-cb-${i}" onchange="evBToggle(${i},this)" ${isEnabled?'checked':''}
-          style="width:15px;height:15px;accent-color:var(--navy);cursor:pointer">
-      </td>
-      <td style="font-size:12px">${item}</td>
-      <td><select class="fi" id="ev-b-sc-${i}" onchange="updateEvalScores()"
-          style="width:66px;padding:4px 6px;font-size:12px" ${isEnabled?'':'disabled'}>${opts}</select></td>
-    </tr>`;
-  }).join('');
-
-  const cRatings = ex.c?.ratings || {};
-  const rowsC = EVAL_C_ITEMS.map((item,i)=>{
-    const selVal = cRatings[i] ?? null;
-    const chips = EVAL_C_CHOICES.map(c=>{
-      const isSel = selVal===c.val?' sel':'';
-      return `<span class="ev-chip ${c.cls}${isSel}" onclick="evChipC(${i},${c.val},this)">${c.lbl}</span>`;
-    }).join('');
-    return `<tr>
-      <td style="font-size:11px;color:var(--sub)">${i+1}</td>
-      <td style="font-size:12px">${item}</td>
-      <td><div class="ev-chips" id="ev-c-chips-${i}">${chips}</div></td>
-      <td><span class="ev-score-out" id="ev-c-score-${i}">—</span></td>
-    </tr>`;
-  }).join('');
-
-  document.getElementById('eval-modal-body').innerHTML = `
-    <div style="padding:14px 20px 12px;background:#f8fafc;border-bottom:1px solid var(--border)">
-      <div class="frow" style="margin-bottom:10px">
-        <div class="fg"><label>評核日期</label><input class="fi" id="ev-date" type="date" value="${ex.date||new Date().toISOString().slice(0,10)}"/></div>
-        <div class="fg"><label>評核人員</label><input class="fi" id="ev-evaluator" placeholder="姓名" value="${ex.evaluator||''}"/></div>
-      </div>
-      <div class="fg" style="margin-bottom:0"><label>綜合備註（選填）</label><textarea class="fta" id="ev-remark" rows="2" placeholder="整體評核意見">${ex.remark||''}</textarea></div>
-    </div>
-
-    <div style="padding:16px 20px">
-
-      <!-- Section A -->
-      <div class="eval-sec">
-        <div class="eval-sec-hdr ea">A．完工驗收評鑑
-          <span class="ev-badge">大豐環保 FM-D2-EM-006-09 ／ 滿分 100</span>
-        </div>
-        <div style="font-size:11px;color:var(--sub);padding:7px 12px;background:#f8fafc;border-bottom:1px solid var(--border)">
-          優=1.0 ／ 良=0.8 ／ 可=0.6 ／ 不良=0 ；每違反一件安全衛生規定扣 10 分；甲等≥85 ／ 乙等 65–84 ／ 丙等&lt;65
-        </div>
-        <table class="eval-tbl">
-          <thead><tr><th style="width:36px">權重</th><th>評鑑項目</th><th>評比</th><th style="width:52px">得分</th></tr></thead>
-          <tbody>${rowsA}</tbody>
-          <tfoot>
-            <tr style="background:#fff8f0">
-              <td colspan="3" style="font-size:12px;font-weight:700">安全衛生違規件數（每件扣 10 分）</td>
-              <td><input type="number" id="ev-a-violations" min="0" max="10" value="${ex.a?.violations??0}"
-                  style="width:54px;padding:3px 6px;font-size:13px;border:1px solid var(--border);border-radius:6px;font-family:inherit"
-                  onchange="updateEvalScores()"/></td>
-            </tr>
-            <tr style="background:#f1f5f9;font-weight:700">
-              <td colspan="3" style="text-align:right;font-size:12px;padding-right:10px">Section A 合計得分</td>
-              <td><span id="ev-a-total" style="font-size:15px;font-weight:800;color:var(--navy)">—</span></td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
-      <!-- Section B -->
-      <div class="eval-sec">
-        <div class="eval-sec-hdr eb">B．安全衛生績效評估
-          <span class="ev-badge">1005-3-08-004 ／ 各項 1–10 分，加權平均 ×10</span>
-        </div>
-        <div style="font-size:11px;color:var(--sub);padding:7px 12px;background:#f8fafc;border-bottom:1px solid var(--border)">
-          勾選本次作業適用項目，依巡查結果評分：10–9=良 ／ 8–7=可 ／ 6–5=尚可 ／ 4–3=差 ／ 2以下=很差；平均×10≥60 合格
-        </div>
-        <table class="eval-tbl">
-          <thead><tr><th style="width:40px;text-align:center">適用</th><th>施作項目</th><th style="width:80px">配點（1–10）</th></tr></thead>
-          <tbody>${rowsB}</tbody>
-          <tfoot>
-            <tr style="background:#f1f5f9;font-weight:700">
-              <td colspan="2" style="text-align:right;font-size:12px;padding-right:10px">Section B 合計得分（平均×10）</td>
-              <td><span id="ev-b-total" style="font-size:15px;font-weight:800;color:var(--navy)">—</span></td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
-      <!-- Section C -->
-      <div class="eval-sec">
-        <div class="eval-sec-hdr ec">C．安全衛生管理制度評鑑
-          <span class="ev-badge">1005-3-08-005 ／ 各項最高 20 分，合計≥60 合格</span>
-        </div>
-        <div style="font-size:11px;color:var(--sub);padding:7px 12px;background:#f8fafc;border-bottom:1px solid var(--border)">
-          優良 17–20 ／ 良 13–16 ／ 可 9–12 ／ 尚可 5–8 ／ 差 0–4
-        </div>
-        <table class="eval-tbl">
-          <thead><tr><th style="width:28px">#</th><th>評鑑項目</th><th>評比</th><th style="width:52px">得分</th></tr></thead>
-          <tbody>${rowsC}</tbody>
-          <tfoot>
-            <tr style="background:#f1f5f9;font-weight:700">
-              <td colspan="3" style="text-align:right;font-size:12px;padding-right:10px">Section C 合計得分</td>
-              <td><span id="ev-c-total" style="font-size:15px;font-weight:800;color:var(--navy)">—</span></td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
-      <!-- Score summary bar -->
-      <div class="ev-score-bar">
-        <div class="ev-score-grp">
-          <div class="ev-score-lbl">A 完工驗收</div>
-          <div><span class="ev-score-val" id="ev-bar-a">—</span> <span id="ev-bar-a-g"></span></div>
-        </div>
-        <div class="ev-score-grp">
-          <div class="ev-score-lbl">B 安衛績效</div>
-          <div><span class="ev-score-val" id="ev-bar-b">—</span> <span id="ev-bar-b-g"></span></div>
-        </div>
-        <div class="ev-score-grp">
-          <div class="ev-score-lbl">C 管理制度</div>
-          <div><span class="ev-score-val" id="ev-bar-c">—</span> <span id="ev-bar-c-g"></span></div>
-        </div>
-        <div style="flex:1"></div>
-        <div id="ev-bar-result" style="font-size:13px;font-weight:700;color:#fff"></div>
-      </div>
-
-    </div>`;
-}
-
-function evChipA(itemIdx, ri, el){
-  const g = document.getElementById('ev-a-chips-'+itemIdx);
-  g.querySelectorAll('.ev-chip').forEach(c=>c.classList.remove('sel'));
-  el.classList.add('sel');
-  updateEvalScores();
-}
-function evChipC(itemIdx, val, el){
-  const g = document.getElementById('ev-c-chips-'+itemIdx);
-  g.querySelectorAll('.ev-chip').forEach(c=>c.classList.remove('sel'));
-  el.classList.add('sel');
-  updateEvalScores();
-}
-function evBToggle(i, cb){
-  document.getElementById('ev-b-row-'+i).style.opacity = cb.checked?'1':'0.45';
-  document.getElementById('ev-b-sc-'+i).disabled = !cb.checked;
-  updateEvalScores();
-}
-
-function updateEvalScores(){
-  // Section A
-  let scoreA = 0, completeA = true;
-  EVAL_A_ITEMS.forEach((item,i)=>{
-    const g = document.getElementById('ev-a-chips-'+i);
-    const sel = g?.querySelector('.ev-chip.sel');
-    const ri = sel ? [...g.querySelectorAll('.ev-chip')].indexOf(sel) : -1;
-    const out = document.getElementById('ev-a-score-'+i);
-    if(ri>=0){ const s=item.weight*EVAL_A_FACTORS[ri]; scoreA+=s; if(out) out.textContent=s.toFixed(0); }
-    else{ completeA=false; if(out) out.textContent='—'; }
-  });
-  const viol = parseInt(document.getElementById('ev-a-violations')?.value||'0')||0;
-  scoreA = Math.max(0, scoreA - viol*10);
-  const aEl = document.getElementById('ev-a-total');
-  if(aEl) aEl.textContent = completeA ? scoreA.toFixed(0) : '—';
-  const grA = completeA ? evGradeA(scoreA) : null;
-  const barA = document.getElementById('ev-bar-a');
-  const barAG = document.getElementById('ev-bar-a-g');
-  if(barA) barA.textContent = completeA ? scoreA.toFixed(0) : '—';
-  if(barAG) barAG.innerHTML = grA ? `<span class="ev-grade-badge ${grA.c}">${grA.t}</span>` : '';
-
-  // Section B
-  let sumB=0, cntB=0;
-  EVAL_B_ITEMS.forEach((_,i)=>{ if(document.getElementById('ev-b-cb-'+i)?.checked){ sumB+=parseInt(document.getElementById('ev-b-sc-'+i)?.value||0)||0; cntB++; } });
-  const scoreB = cntB>0 ? Math.round((sumB/cntB)*10) : null;
-  const bEl = document.getElementById('ev-b-total');
-  if(bEl) bEl.textContent = scoreB!==null ? scoreB : '—';
-  const grB = scoreB!==null ? evGradeB(scoreB) : null;
-  const barB = document.getElementById('ev-bar-b');
-  const barBG = document.getElementById('ev-bar-b-g');
-  if(barB) barB.textContent = scoreB!==null ? scoreB : '—';
-  if(barBG) barBG.innerHTML = grB ? `<span class="ev-grade-badge ${grB.c}">${grB.t}</span>` : '';
-
-  // Section C
-  let scoreC=0, completeC=true;
-  EVAL_C_ITEMS.forEach((_,i)=>{
-    const g = document.getElementById('ev-c-chips-'+i);
-    const sel = g?.querySelector('.ev-chip.sel');
-    const out = document.getElementById('ev-c-score-'+i);
-    if(sel){ const ci=[...g.querySelectorAll('.ev-chip')].indexOf(sel); const v=EVAL_C_CHOICES[ci]?.val||0; scoreC+=v; if(out) out.textContent=v; }
-    else{ completeC=false; if(out) out.textContent='—'; }
-  });
-  const cEl = document.getElementById('ev-c-total');
-  if(cEl) cEl.textContent = completeC ? scoreC : '—';
-  const grC = completeC ? evGradeC(scoreC) : null;
-  const barC = document.getElementById('ev-bar-c');
-  const barCG = document.getElementById('ev-bar-c-g');
-  if(barC) barC.textContent = completeC ? scoreC : '—';
-  if(barCG) barCG.innerHTML = grC ? `<span class="ev-grade-badge ${grC.c}">${grC.t}</span>` : '';
-
-  // Combined result + foot summary
-  const barR = document.getElementById('ev-bar-result');
-  if(barR && completeA && completeC){
-    const aOk=scoreA>=65, bOk=scoreB===null||scoreB>=60, cOk=scoreC>=60;
-    const pass=aOk&&bOk&&cOk;
-    barR.innerHTML = pass ? '✅ <span style="color:#86efac">綜合評核：通過</span>' : '❌ <span style="color:#fca5a5">綜合評核：未通過</span>';
-  } else if(barR){ barR.textContent=''; }
-
-  const foot = document.getElementById('ev-foot-scores');
-  if(foot && completeA && completeC){
-    foot.innerHTML = `A: <strong>${scoreA.toFixed(0)}</strong>　B: <strong>${scoreB!==null?scoreB:'未評'}</strong>　C: <strong>${scoreC}</strong>`;
-  }
-}
-
-function collectEvalData(){
-  const ratingsA = EVAL_A_ITEMS.map((_,i)=>{
-    const g=document.getElementById('ev-a-chips-'+i);
-    const sel=g?.querySelector('.ev-chip.sel');
-    return sel ? [...g.querySelectorAll('.ev-chip')].indexOf(sel) : null;
-  });
-  const enabledB=[], scoresB={};
-  EVAL_B_ITEMS.forEach((_,i)=>{ if(document.getElementById('ev-b-cb-'+i)?.checked){ enabledB.push(i); scoresB[i]=parseInt(document.getElementById('ev-b-sc-'+i)?.value||7); } });
-  const ratingsC={};
-  EVAL_C_ITEMS.forEach((_,i)=>{
-    const g=document.getElementById('ev-c-chips-'+i);
-    const sel=g?.querySelector('.ev-chip.sel');
-    if(sel){ const ci=[...g.querySelectorAll('.ev-chip')].indexOf(sel); ratingsC[i]=EVAL_C_CHOICES[ci]?.val; }
-  });
-  let scoreA=ratingsA.reduce((s,ri,i)=>s+(ri!==null?EVAL_A_ITEMS[i].weight*EVAL_A_FACTORS[ri]:0),0);
-  const viol=parseInt(document.getElementById('ev-a-violations')?.value||0)||0;
-  scoreA=Math.max(0,scoreA-viol*10);
-  const scoreB=enabledB.length>0 ? Math.round((enabledB.reduce((s,i)=>s+(scoresB[i]||0),0)/enabledB.length)*10) : null;
-  const cComplete=Object.keys(ratingsC).length===EVAL_C_ITEMS.length;
-  const scoreC=cComplete?Object.values(ratingsC).reduce((s,v)=>s+v,0):null;
-  return {
-    date: document.getElementById('ev-date')?.value||'',
-    evaluator: document.getElementById('ev-evaluator')?.value.trim()||'',
-    remark: document.getElementById('ev-remark')?.value.trim()||'',
-    a:{ratings:ratingsA, violations:viol, score:ratingsA.every(r=>r!==null)?scoreA:null},
-    b:{enabled:enabledB, scores:scoresB, score:scoreB},
-    c:{ratings:ratingsC, score:scoreC},
-    savedAt: new Date().toISOString(),
-  };
-}
-
-function saveEval(){
-  if(!_evalId){ toast('評核ID遺失','bad'); return; }
-  const data = collectEvalData();
-  if(data.a.score===null){ toast('請完整填寫 Section A 所有評比項目','bad'); return; }
-  if(data.c.score===null){ toast('請完整填寫 Section C 所有評鑑項目','bad'); return; }
-  setEval(_evalId, data);
-  const savedId = _evalId;
-  closeEvalModal();
-  toast('評核已儲存','ok');
-  if(_currentRecord?.id===savedId) viewRecord(savedId);
-}
-
-function renderEvalResult(id){
-  const ev = getEval(id);
-  if(!ev) return '';
-  const aS=ev.a?.score, bS=ev.b?.score, cS=ev.c?.score;
-  const grA=aS!==null&&aS!==undefined?evGradeA(aS):null;
-  const grC=cS!==null&&cS!==undefined?evGradeC(cS):null;
-  const aOk=aS>=65, bOk=bS===null||bS===undefined||bS>=60, cOk=cS>=60;
-  const pass=aOk&&bOk&&cOk;
-  const gb=(g)=>g?`<span class="ev-grade-badge ${g.c}">${g.t}</span>`:'';
-  return `<div style="border-radius:8px;overflow:hidden;border:1px solid var(--border)">
-    <div style="background:${pass?'#15803d':'#b91c1c'};color:#fff;padding:9px 14px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-      ${pass?'✅ 評核結果：通過（合格）':'❌ 評核結果：未通過（不合格）'}
-      <span style="margin-left:auto;font-size:11px;opacity:.85">評核日期：${ev.date||'—'} ／ 評核人：${ev.evaluator||'—'}</span>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));border-top:1px solid var(--border)">
-      <div style="padding:10px 14px;border-right:1px solid var(--border)">
-        <div class="dl">A 完工驗收</div>
-        <div class="dv">${aS!==null?aS?.toFixed(0)+'分':'—'} ${gb(grA)}</div>
-      </div>
-      <div style="padding:10px 14px;border-right:1px solid var(--border)">
-        <div class="dl">B 安衛績效</div>
-        <div class="dv">${bS!==null&&bS!==undefined?bS+'分':'未評'}</div>
-      </div>
-      <div style="padding:10px 14px">
-        <div class="dl">C 管理制度</div>
-        <div class="dv">${cS!==null?cS+'分':'—'} ${gb(grC)}</div>
-      </div>
-    </div>
-    ${ev.remark?`<div style="padding:8px 14px;font-size:12px;color:var(--sub);border-top:1px solid var(--border)">備註：${ev.remark}</div>`:''}
-    <div style="padding:8px 14px;text-align:right;border-top:1px solid var(--border)">
-      <button class="btn btn-sm btn-primary" onclick="openEvalModal('${id}')">✏️ 修改評核</button>
-    </div>
-  </div>`;
-}
-
 window.addEventListener('DOMContentLoaded', ()=>{
   buildRules();
   buildHazardTable();
