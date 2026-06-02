@@ -20,6 +20,7 @@
     --teal:   #0891b2;
     --indigo: #4f46e5;
     --amber:  #f59e0b;
+    --sky:    #0ea5e9;
     --sidebar-bg: #1a2d42;
     --sidebar-w:  260px;
   }
@@ -193,6 +194,8 @@
   .btn-indigo:hover { background: #4338ca; }
   .btn-amber  { background: var(--amber);  color: #fff; }
   .btn-amber:hover  { background: #b45309; }
+  .btn-sky    { background: var(--sky);    color: #fff; }
+  .btn-sky:hover    { background: #0284c7; }
 
   /* ── placeholder card ── */
   .placeholder-card {
@@ -248,6 +251,8 @@
   body.dark .btn-indigo:hover { background: #312e81; }
   body.dark .btn-amber  { background: #92400e; }
   body.dark .btn-amber:hover  { background: #78350f; }
+  body.dark .btn-sky    { background: #075985; }
+  body.dark .btn-sky:hover    { background: #0c4a6e; }
   body.dark .placeholder-card { background: #1e293b; border-color: #334155; }
   body.dark .content-topbar   { background: #1e293b; border-color: #334155; }
 
@@ -482,7 +487,7 @@
           </div>
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-red" onclick="event.stopPropagation();location.href='./news/'">開啟系統 ›</button>
+            <button class="open-btn btn-sky" onclick="event.stopPropagation();location.href='./news/'">開啟系統 ›</button>
           </div>
         </div>
 
@@ -528,7 +533,7 @@
 
         <div class="sys-card" onclick="location.href='./plans/'">
           <div class="card-header">
-            <div class="card-icon ci-blue">📋</div>
+            <div class="card-icon ci-blue">🗂️</div>
             <div>
               <div class="card-title">職業安全衛生計畫書</div>
               <div class="card-desc">彙整年度職安衛計畫書及各項專項計畫，包含高氣溫熱危害預防、特殊作業等計畫文件。</div>
