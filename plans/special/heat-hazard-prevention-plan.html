@@ -150,12 +150,19 @@ tr:hover{background:#fff3e0}
 .hi-tbl thead th{background:#f5f5f5;color:var(--text);font-size:.82em}
 .hi-tbl thead th:first-child{background:#333;color:white}
 
-/* ===== 勾選清單 ===== */
-.check-group{margin:16px 0}
-.check-group-title{font-size:.92em;font-weight:700;color:var(--primary);margin-bottom:10px;padding-left:12px;border-left:4px solid var(--primary)}
-.check-item{display:flex;align-items:flex-start;gap:12px;padding:9px 14px;border-radius:6px;margin-bottom:4px;background:var(--card-bg);border:1px solid var(--border);cursor:pointer;font-size:.9em}
-.check-item:hover{background:#fff3e0}
-.check-item input[type=checkbox]{width:16px;height:16px;flex-shrink:0;margin-top:2px;accent-color:var(--primary);cursor:pointer}
+/* ===== 附表三 檢核卡片 ===== */
+.chk-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px}
+.chk-card{border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--card-bg)}
+.chk-head{padding:10px 16px;font-size:.88em;font-weight:700;color:#fff;letter-spacing:.5px}
+.chk-head.c1{background:linear-gradient(135deg,#c44200,#d95a18)}
+.chk-head.c2{background:#00897b}
+.chk-head.c3{background:#d97706}
+.chk-head.c4{background:#c62828}
+.chk-list{list-style:none;padding:10px 14px;margin:0}
+.chk-list li{padding:7px 0 7px 18px;border-bottom:1px solid var(--border);font-size:.87em;line-height:1.55;position:relative;color:var(--text)}
+.chk-list li:last-child{border-bottom:none}
+.chk-list li::before{content:"›";position:absolute;left:4px;color:var(--primary);font-weight:700;font-size:1.1em}
+@media(max-width:700px){.chk-grid{grid-template-columns:1fr}}
 
 /* ===== 熱疾病卡片 ===== */
 .disease-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
@@ -570,35 +577,45 @@ tr:hover{background:#fff3e0}
       <div>填表人：<span style="border-bottom:1px solid var(--border);display:inline-block;width:120px"></span></div>
       <div>主管簽名：<span style="border-bottom:1px solid var(--border);display:inline-block;width:100px"></span></div>
     </div>
-    <div class="check-group">
-      <div class="check-group-title">（一）勞工作業管理</div>
-      <label class="check-item"><input type="checkbox"><span>指派勞工於高氣溫環境戶外作業前，是否已確認其完成熱適應？</span></label>
-      <label class="check-item"><input type="checkbox"><span>是否進行定期巡視作業（第三、四級每小時一次）？</span></label>
-      <label class="check-item"><input type="checkbox"><span>勞工是否有定期補充水分及電解質？</span></label>
-      <label class="check-item"><input type="checkbox"><span>勞工是否於中午期間適當進食？</span></label>
-      <label class="check-item"><input type="checkbox"><span>是否設置遮陽設施或空調設施供勞工休息？</span></label>
-      <label class="check-item"><input type="checkbox"><span>作業現場或鄰近處是否備有足夠清涼飲用水或含電解質飲料？</span></label>
-      <label class="check-item"><input type="checkbox"><span>勞工工作服與帽子（或頭盔）是否具備透氣性及排汗性？</span></label>
-      <label class="check-item"><input type="checkbox"><span>勞工是否有定時休息、減少連續作業時間或調整作業時間？</span></label>
-      <label class="check-item"><input type="checkbox"><span>夾子車駕駛室冷氣是否正常運作？</span></label>
-    </div>
-    <div class="check-group">
-      <div class="check-group-title">（二）勞工健康管理</div>
-      <label class="check-item"><input type="checkbox"><span>是否依健康檢查結果，調整勞工工作安排？</span></label>
-      <label class="check-item"><input type="checkbox"><span>是否指導勞工日常自主健康管理？</span></label>
-      <label class="check-item"><input type="checkbox"><span>是否備有體溫及血壓（含心跳速率）量測裝置？</span></label>
-      <label class="check-item"><input type="checkbox"><span>是否於作業前及作業期間確認勞工健康狀況？</span></label>
-    </div>
-    <div class="check-group">
-      <div class="check-group-title">（三）教育訓練</div>
-      <label class="check-item"><input type="checkbox"><span>勞工是否瞭解熱疾病徵兆、症狀及預防措施？</span></label>
-      <label class="check-item"><input type="checkbox"><span>勞工是否瞭解熱適應之重要性及規律補水？</span></label>
-      <label class="check-item"><input type="checkbox"><span>勞工是否瞭解發現夥伴有熱疾病症狀時應採取之行動？</span></label>
-    </div>
-    <div class="check-group">
-      <div class="check-group-title">（四）緊急應變</div>
-      <label class="check-item"><input type="checkbox"><span>所有勞工是否瞭解緊急聯絡流程及最近急診醫院位置？</span></label>
-      <label class="check-item"><input type="checkbox"><span>是否進行緊急應變演練？</span></label>
+    <div class="chk-grid">
+      <div class="chk-card">
+        <div class="chk-head c1">（一）勞工作業管理</div>
+        <ul class="chk-list">
+          <li>指派勞工於高氣溫環境戶外作業前，已確認其完成熱適應</li>
+          <li>進行定期巡視作業（第三、四級每小時一次）</li>
+          <li>勞工定期補充水分及電解質</li>
+          <li>勞工於中午期間適當進食</li>
+          <li>設置遮陽設施或空調設施供勞工休息</li>
+          <li>作業現場或鄰近處備有足夠清涼飲用水或含電解質飲料</li>
+          <li>勞工工作服與帽子（或頭盔）具備透氣性及排汗性</li>
+          <li>勞工定時休息、減少連續作業時間或調整作業時間</li>
+          <li>夾子車駕駛室冷氣正常運作</li>
+        </ul>
+      </div>
+      <div class="chk-card">
+        <div class="chk-head c2">（二）勞工健康管理</div>
+        <ul class="chk-list">
+          <li>依健康檢查結果，調整勞工工作安排</li>
+          <li>指導勞工日常自主健康管理</li>
+          <li>備有體溫及血壓（含心跳速率）量測裝置</li>
+          <li>於作業前及作業期間確認勞工健康狀況</li>
+        </ul>
+      </div>
+      <div class="chk-card">
+        <div class="chk-head c3">（三）教育訓練</div>
+        <ul class="chk-list">
+          <li>勞工瞭解熱疾病徵兆、症狀及預防措施</li>
+          <li>勞工瞭解熱適應之重要性及規律補水</li>
+          <li>勞工瞭解發現夥伴有熱疾病症狀時應採取之行動</li>
+        </ul>
+      </div>
+      <div class="chk-card">
+        <div class="chk-head c4">（四）緊急應變</div>
+        <ul class="chk-list">
+          <li>所有勞工瞭解緊急聯絡流程及最近急診醫院位置</li>
+          <li>進行緊急應變演練</li>
+        </ul>
+      </div>
     </div>
   </div></div>
 
@@ -705,12 +722,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
     const t=document.querySelector(a.getAttribute('href'));
     if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
-  });
-});
-document.querySelectorAll('.check-item input[type=checkbox]').forEach(cb=>{
-  cb.addEventListener('change',function(){
-    this.closest('.check-item').style.background=this.checked?'#e8f5e9':'';
-    this.closest('.check-item').style.borderColor=this.checked?'#a5d6a7':'';
   });
 });
 </script>
