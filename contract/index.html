@@ -1390,6 +1390,7 @@ async function renderRecords(){
     const res = await apiGet({ action: 'list' });
     if(!res.success) throw new Error(res.error);
     all = res.records || [];
+    if(currentRole==='admin') await loadEvalCache();
   } catch(ex) {
     toast('載入失敗：' + ex.message, 'bad');
   } finally {
@@ -1426,7 +1427,7 @@ async function renderRecords(){
       <td class="wn">${wn}</td>
       <td>${r.basic.dateStart} ~ ${r.basic.dateEnd}</td>
       <td>${period}</td>
-      <td><span class="badge badge-g">已提交</span>${currentRole==='admin'&&getEval(r.id)?'&nbsp;<span class="badge" style="background:#dbeafe;color:#1d4ed8">已評核</span>':''}</td>
+      <td><span class="badge badge-g">已提交</span>${currentRole==='admin'&&hasEval(r.id)?'&nbsp;<span class="badge" style="background:#dbeafe;color:#1d4ed8">已評核</span>':''}</td>
       <td>
         <button class="btn btn-sm btn-primary" onclick="viewRecord('${r.id}')">查看</button>
         <button class="btn btn-sm btn-danger" style="margin-left:4px" onclick="confirmDelete('${r.id}')">刪除</button>
@@ -1563,6 +1564,7 @@ async function viewRecord(id){
   `);
 
   if(currentRole==='admin'){
+    await loadEval(id);
     const ev = getEval(id);
     html += blk('📊 承攬商完工評核', ev ? renderEvalResult(id) :
       `<div style="text-align:center;padding:28px 16px;color:var(--sub)">
@@ -2060,17 +2062,41 @@ const EVAL_C_CHOICES = [
 ];
 
 let _evalId = null;
+let _evalCache = {};
+let _evalSet = new Set();
 
-function evalKey(id){ return 'eval_' + id; }
-function getEval(id){ try{ return JSON.parse(localStorage.getItem(evalKey(id))||'null'); }catch(e){ return null; } }
-function setEval(id, data){ localStorage.setItem(evalKey(id), JSON.stringify(data)); }
+function getEval(id){ return _evalCache[id] ?? null; }
+function hasEval(id){ return _evalSet.has(String(id)) || _evalCache[id] != null; }
+
+async function loadEval(id){
+  try{
+    const res = await apiGet({action:'getEval', id});
+    if(res.ok && res.data){ _evalCache[id] = res.data; _evalSet.add(String(id)); }
+    else { _evalCache[id] = null; }
+  }catch(e){ _evalCache[id] = null; }
+  return _evalCache[id];
+}
+async function setEval(id, data){
+  await apiPost({action:'saveEval', id, data});
+  _evalCache[id] = data;
+  _evalSet.add(String(id));
+}
+async function loadEvalCache(){
+  try{
+    const res = await apiGet({action:'listEvals'});
+    if(res.ok && res.ids) res.ids.forEach(id=>_evalSet.add(String(id)));
+  }catch(e){}
+}
 
 function evGradeA(s){ if(s>=85)return{t:'甲等',c:'ga'};if(s>=65)return{t:'乙等',c:'gb'};return{t:'丙等',c:'gf'}; }
 function evGradeB(s){ if(s>=90)return{t:'良',c:'ga'};if(s>=70)return{t:'可',c:'gb'};if(s>=50)return{t:'尚可',c:'gc'};return{t:'差',c:'gf'}; }
 function evGradeC(s){ return s>=60?{t:'合格',c:'ga'}:{t:'不合格',c:'gf'}; }
 
-function openEvalModal(id){
+async function openEvalModal(id){
   _evalId = id;
+  showLoading('載入評核資料…');
+  await loadEval(id);
+  hideLoading();
   buildEvalForm(getEval(id));
   document.getElementById('eval-modal').classList.add('open');
   updateEvalScores();
@@ -2339,12 +2365,20 @@ function collectEvalData(){
   };
 }
 
-function saveEval(){
+async function saveEval(){
   if(!_evalId){ toast('評核ID遺失','bad'); return; }
   const data = collectEvalData();
   if(data.a.score===null){ toast('請完整填寫 Section A 所有評比項目','bad'); return; }
   if(data.c.score===null){ toast('請完整填寫 Section C 所有評鑑項目','bad'); return; }
-  setEval(_evalId, data);
+  showLoading('儲存評核中…');
+  try{
+    await setEval(_evalId, data);
+  }catch(e){
+    hideLoading();
+    toast('儲存失敗：' + e.message, 'bad');
+    return;
+  }
+  hideLoading();
   const savedId = _evalId;
   closeEvalModal();
   toast('評核已儲存','ok');
