@@ -188,17 +188,26 @@ th:last-child{border-radius:0 4px 0 0}
 /* ── FOOTER ── */
 footer{background:var(--g1);color:rgba(255,255,255,.4);text-align:center;padding:20px 24px;font-size:11.5px;line-height:1.8}
 
+/* ── BACK NAV ── */
+.back-bar{background:#1e3a5f;padding:10px 20px;display:flex;align-items:center;gap:10px}
+.back-btn{padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:12px;text-decoration:none;font-family:var(--fw);transition:background .15s;white-space:nowrap}
+.back-btn:hover{background:rgba(255,255,255,.2);text-decoration:none}
+
 /* ── PRINT ── */
 @media print{
   body{background:#fff}
   .page{box-shadow:none;max-width:100%}
-  .topnav{display:none}
+  .topnav,.back-bar{display:none}
   main{padding:0 24px 40px}
   .hero{padding:32px 24px}
 }
 </style>
 </head>
 <body>
+<nav class="back-bar">
+  <a class="back-btn" href="../../">← 系統入口</a>
+  <a class="back-btn" href="../">← 計畫書</a>
+</nav>
 <div class="page">
 
 <!-- ════════════════ HERO ════════════════ -->
