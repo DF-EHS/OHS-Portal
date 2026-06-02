@@ -2566,7 +2566,8 @@ function filterEvalTable(){
       statusBadge = `<span class="badge" style="background:#dbeafe;color:#1d4ed8">已評核</span>`;
       resultCell  = `<span class="badge ${ok?'badge-g':''}" style="${ok?'':'background:#fee2e2;color:#b91c1c'}">${ok?'通過':'未通過'}</span>
         <span style="font-size:11px;color:var(--sub);margin-left:4px">A:${aS!=null?aS.toFixed(0):'—'} B:${bS!=null?bS:'—'} C:${cS!=null?cS:'—'}</span>`;
-      actionBtn   = `<button class="btn btn-sm btn-primary" onclick="openEvalModal('${r.id}')">✏️ 修改評核</button>`;
+      actionBtn   = `<button class="btn btn-sm btn-primary" onclick="openEvalModal('${r.id}')">✏️ 修改評核</button>
+                    <button class="btn btn-sm" onclick="exportEvalPDF('${r.id}')" style="margin-left:4px;background:#7c3aed;color:#fff;border-color:#7c3aed">📄 PDF</button>`;
     } else {
       statusBadge = `<span class="badge" style="background:#fff7ed;color:#c2410c">待評核</span>`;
       resultCell  = `<span style="color:var(--sub);font-size:12px">—</span>`;
@@ -2585,6 +2586,288 @@ function filterEvalTable(){
     `;
     tbody.appendChild(tr);
   });
+}
+
+// ════════════════════════════════════════════════
+//  Eval PDF Export
+// ════════════════════════════════════════════════
+function exportEvalPDF(id){
+  const ev = getEval(id);
+  if(!ev){ toast('此紀錄尚無評核資料，請先完成評核','bad'); return; }
+  const rec = _evalOverviewRecords.find(r => r.id === id);
+  const win = window.open('','_blank');
+  if(!win){ toast('請允許瀏覽器開啟彈出視窗','bad'); return; }
+  win.document.write(buildEvalPDFHtml(rec, ev));
+  win.document.close();
+  win.focus();
+  setTimeout(()=>win.print(), 800);
+}
+
+function buildEvalPDFHtml(rec, ev){
+  const baseHref = new URL('../', location.href).href;
+  const X = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const company  = rec?.basic?.company  || '—';
+  const workname = rec?.basic?.workname || '—';
+  const dateStart = rec?.basic?.dateStart || '—';
+  const dateEnd   = rec?.basic?.dateEnd   || '—';
+  const evalDate  = ev.date      || '—';
+  const evaluator = ev.evaluator || '—';
+
+  const ratingsA   = ev.a?.ratings    || [];
+  const itemScoresA= ev.a?.itemScores || [];
+  const violations = ev.a?.violations || 0;
+  const scoreA     = ev.a?.score;
+  const grA        = scoreA != null ? evGradeA(scoreA) : null;
+
+  const enabledB = ev.b?.enabled || [];
+  const scoresB  = ev.b?.scores  || {};
+  const scoreB   = ev.b?.score;
+  const grB      = scoreB != null ? evGradeB(scoreB) : null;
+
+  const ratingsC   = ev.c?.ratings    || {};
+  const itemScoresC= ev.c?.itemScores || {};
+  const scoreC     = ev.c?.score;
+  const grC        = scoreC != null ? evGradeC(scoreC) : null;
+
+  // 完整評鑑項目描述（依 FM-D2-EM-006-09）
+  const FULL_A = [
+    { label:'工程品質評鑑', weight:20,
+      descs:['品質查驗結果均能符合合約要求，收頭及外觀平整度佳。',
+             '品質查驗結果偶有不符合要求，但經補救後均能符合要求。',
+             '品質查驗結果常有不符合要求，但經補救後尚能符合要求。',
+             '品質無法符合合約要求，且無法予以補救。'] },
+    { label:'廠商所採用之工程材料及設備之品質優劣及等級評鑑', weight:20,
+      descs:['各種材料品質均符合合約規定，且均為高（上）級品。',
+             '經承辦人同意使用同等品且品質能符合合約規定。',
+             '未經承辦人同意逕行使用同等品。',
+             '使用材料品質劣於合約規定之品質。'] },
+    { label:'廠商優良事蹟及協調配合度評鑑', weight:15,
+      descs:['承攬商能主動與承辦人員及其他承包商協調，並積極配合。',
+             '承攬商經溝通協調後能盡力配合。',
+             '承攬商經溝通協調後尚能配合。',
+             '廠商經溝通協調後仍抗拒執行或藉故拖延。'] },
+    { label:'工程執行與管理評鑑', weight:15,
+      descs:['施工進度均能符合預定進度且管理良好。',
+             '施工進度偶有落後，但能在期限內完工且管理良好。',
+             '施工進度常有落後，但能在期限內完工，管理偶有缺失。',
+             '施工進度嚴重落後，且無法在期限內完工並且管理不良。'] },
+    { label:'廠商安衛工作執行配合度', weight:10,
+      descs:['承攬商主動出示安衛證照及教育訓練記錄，並積極配合執行安衛工作。',
+             '承攬商經要求後提出相關證書及訓練記錄，溝通協調後能盡力配合。',
+             '承攬商經要求仍未提出完整證書及訓練記錄，溝通協調後尚能配合。',
+             '廠商經溝通協調後仍抗拒執行或藉故拖延。'] },
+    { label:'廠商現場安全防護措施', weight:10,
+      descs:['承攬商主動與發包單位溝通現場所需安全防護設備，並落實執行配置。',
+             '承攬商經要求後，積極配合現場安全防護措施設備及器材設置。',
+             '承攬商經要求後，尚可配合安全防護措施設置但並不完整。',
+             '承攬商經要求後，仍抗拒或故意拖延現場安全防護設置。'] },
+    { label:'施工人員個人防護器具配戴狀況', weight:10,
+      descs:['所有工程人員進入施工現場後即主動配戴，並符合所有穿戴規定。',
+             '工程人員皆配戴安全防護器具，但未穿戴正確。',
+             '工程人員經要求後才配戴安全防護器具。',
+             '工程人員經要求後仍抗拒配戴或故意拖延安全防護器具。'] },
+  ];
+  const RLABELS = ['優','良','可','不良'];
+
+  // ── Section A 列 ──────────────────────────────────────
+  const rowsA = FULL_A.map((item,i)=>{
+    const ri    = ratingsA[i] ?? null;
+    const score = itemScoresA[i] ?? (ri !== null ? Math.round(item.weight * EVAL_A_FACTORS[ri]) : null);
+    const ratingHtml = item.descs.map((desc,di)=>{
+      const sel = ri === di;
+      return `<div style="display:flex;gap:3px;margin-bottom:2px;${sel?'background:#dbeafe;border-radius:3px;padding:1px 4px;':'padding:1px 4px;'}">
+        <span style="font-weight:700;min-width:20px;color:${sel?'#1d4ed8':'#777'}">${RLABELS[di]}：</span>
+        <span style="font-size:10px;line-height:1.5;color:${sel?'#1e3a5f':'#666'};${sel?'font-weight:600':''}">${X(desc)}</span>
+      </div>`;
+    }).join('');
+    return `<tr>
+      <td style="text-align:center;font-weight:700;vertical-align:middle">${i+1}</td>
+      <td style="vertical-align:middle;font-size:11px;font-weight:600">${X(item.label)}</td>
+      <td style="text-align:center;vertical-align:middle;font-weight:700">${item.weight}</td>
+      <td>${ratingHtml}</td>
+      <td style="text-align:center;vertical-align:middle;font-size:15px;font-weight:800;color:${ri!==null?'#1e3a5f':'#bbb'}">${score!==null?score:'—'}</td>
+      <td></td>
+    </tr>`;
+  }).join('');
+
+  // ── Section B 列 ──────────────────────────────────────
+  const rowsB = EVAL_B_ITEMS.map((item,i)=>{
+    const on = enabledB.includes(i);
+    const sc = scoresB[i] ?? '—';
+    return `<tr style="${on?'':'opacity:.4'}">
+      <td style="text-align:center">${on?'✅':'□'}</td>
+      <td style="font-size:11px">${X(item)}</td>
+      <td style="text-align:center;font-weight:700">${on?sc:'—'}</td>
+    </tr>`;
+  }).join('');
+
+  // ── Section C 列 ──────────────────────────────────────
+  const C_RANGE_LABELS = ['優良(17-20)','良(13-16)','可(9-12)','尚可(5-8)','差(0-4)'];
+  const rowsC = EVAL_C_ITEMS.map((item,i)=>{
+    const val   = ratingsC[i];
+    const score = itemScoresC[i] ?? val ?? null;
+    const ci    = EVAL_C_CHOICES.findIndex(c=>c.val===val);
+    return `<tr>
+      <td style="text-align:center;font-weight:700">${i+1}</td>
+      <td style="font-size:11px">${X(item)}</td>
+      <td style="text-align:center;font-size:10px">${ci>=0?C_RANGE_LABELS[ci]:'—'}</td>
+      <td style="text-align:center;font-weight:700">${score!==null?score:'—'}</td>
+    </tr>`;
+  }).join('');
+
+  const aOk = (scoreA??-1)>=65, bOk = scoreB==null||scoreB>=60, cOk = (scoreC??-1)>=60;
+  const allPass = aOk && bOk && cOk;
+  const gradeClass = c => c==='ga'?'grade-a':c==='gb'?'grade-b':'grade-f';
+
+  const css = `
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:12px;color:#000;background:#fff}
+.page{width:210mm;min-height:297mm;padding:10mm 12mm;page-break-after:always;background:#fff}
+.page:last-child{page-break-after:auto}
+.co-hdr{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.co-hdr img{height:32px}
+.co-name{font-size:13px;font-weight:700}
+.co-sub{font-size:10px;color:#555}
+.form-title{font-size:15px;font-weight:700;text-align:center;padding:5px;background:#1e3a5f;color:#fff;margin-bottom:4px;border-radius:3px}
+.form-sub{font-size:12px;text-align:center;font-weight:700;border:1px solid #1e3a5f;padding:3px;margin-bottom:8px;color:#1e3a5f}
+table{width:100%;border-collapse:collapse}
+td,th{border:1px solid #888;padding:4px 6px;vertical-align:middle}
+th{background:#1e3a5f;color:#fff;font-weight:700;text-align:center;font-size:11px}
+.sec-hdr{background:#1e3a5f;color:#fff;padding:4px 8px;font-weight:700;font-size:12px;margin:10px 0 3px;border-radius:2px}
+.info-row td{background:#f8fafc;font-size:11px}
+.score-hl{font-size:16px;font-weight:800;color:#1e3a5f;background:#dbeafe;padding:2px 8px;border-radius:4px}
+.grade-box{display:inline-block;padding:2px 10px;border-radius:4px;font-weight:800;font-size:13px}
+.grade-a{background:#dcfce7;color:#15803d;border:1.5px solid #16a34a}
+.grade-b{background:#dbeafe;color:#1d4ed8;border:1.5px solid #2563eb}
+.grade-f{background:#fee2e2;color:#b91c1c;border:1.5px solid #dc2626}
+@media print{.page{page-break-after:always}.page:last-child{page-break-after:auto}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+`;
+
+  // ── Page 1：A 完工驗收（FM-D2-EM-006-09）──────────────
+  const page1 = `<div class="page">
+<div class="co-hdr">
+  <img src="${baseHref}dafon-logo.png" alt="大豐環保科技">
+  <div><div class="co-name">大豐環保科技股份有限公司　Dafon Environmental Technology Co., Ltd.</div>
+  <div class="co-sub">承攬商完工驗收評鑑</div></div>
+</div>
+<div class="form-title">承攬商完工驗收評鑑表</div>
+<div class="form-sub">工程品質、安衛評鑑審核表</div>
+<table style="margin-bottom:8px">
+  <tr class="info-row">
+    <td style="width:15%;font-weight:700">工程名稱</td><td style="width:35%">${X(workname)}</td>
+    <td style="width:15%;font-weight:700">評鑑日期</td><td>${X(evalDate)}</td>
+  </tr>
+  <tr class="info-row">
+    <td style="font-weight:700">施工廠商</td><td>${X(company)}</td>
+    <td style="font-weight:700">作業期間</td><td>${X(dateStart)} ～ ${X(dateEnd)}</td>
+  </tr>
+</table>
+<table>
+  <thead><tr>
+    <th style="width:22px">項次</th>
+    <th style="width:20%">評鑑項目</th>
+    <th style="width:26px">權重</th>
+    <th>評比</th>
+    <th style="width:32px">分數</th>
+    <th style="width:56px">備註</th>
+  </tr></thead>
+  <tbody>
+    ${rowsA}
+    <tr style="background:#fff8f0">
+      <td style="text-align:center;font-weight:700">8</td>
+      <td colspan="3" style="font-size:11px;font-weight:700">違反安全衛生規定事項件數（每違反一件扣總分 10 分）</td>
+      <td style="text-align:center;font-weight:800;color:#dc2626">${violations>0?'−'+(violations*10):'0'}</td>
+      <td style="text-align:center;font-size:11px">${violations} 件</td>
+    </tr>
+    <tr style="background:#f1f5f9;font-weight:700">
+      <td colspan="4" style="text-align:right;font-size:12px;padding-right:10px">評鑑結果總分</td>
+      <td style="text-align:center"><span class="score-hl">${scoreA!==null?scoreA.toFixed(0):'—'}</span></td>
+      <td style="text-align:center">${grA?`<span class="grade-box ${gradeClass(grA.c)}">${grA.t}</span>`:'—'}</td>
+    </tr>
+  </tbody>
+</table>
+<div style="margin-top:8px;padding:6px 10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;font-size:10.5px;line-height:1.8">
+  <strong>等級說明：</strong>甲等 85 分以上 ／ 乙等 65–84 分 ／ 丙等 未滿 65 分<br>
+  <strong>評比加權指數：</strong>優 = 1.0 ／ 良 = 0.8 ／ 可 = 0.6 ／ 不良 = 0（每違反一件安衛規定事項扣總分 10 分）
+</div>
+<table style="margin-top:12px">
+  <tr><td style="width:50%;height:48px">評鑑人員：${X(evaluator)}</td><td style="width:50%">主管：</td></tr>
+</table>
+<div style="font-size:10px;color:#888;text-align:right;margin-top:4px">FM-D2-EM-006-09 ／ 大豐環保科技股份有限公司</div>
+</div>`;
+
+  // ── Page 2：B 安衛績效 + C 管理制度 + 綜合結果 ──────────
+  const page2 = `<div class="page">
+<div class="co-hdr">
+  <img src="${baseHref}dafon-logo.png" alt="大豐環保科技">
+  <div><div class="co-name">大豐環保科技股份有限公司</div></div>
+</div>
+<div class="form-title" style="font-size:13px">承攬商完工評核補充表 — 安衛績效 ＆ 管理制度</div>
+<table style="margin-bottom:6px">
+  <tr class="info-row">
+    <td style="width:16%;font-weight:700">工程名稱</td><td style="width:34%">${X(workname)}</td>
+    <td style="width:16%;font-weight:700">施工廠商</td><td>${X(company)}</td>
+  </tr>
+</table>
+
+<div class="sec-hdr">B．安全衛生績效評估（1005-3-08-004）</div>
+<div style="font-size:10px;color:#555;margin-bottom:3px">勾選本次作業適用項目，依巡查結果評分（1–10 分）；評均 × 10 ≥ 60 合格</div>
+<table>
+  <thead><tr><th style="width:28px">適用</th><th>施作項目</th><th style="width:52px">評分(1-10)</th></tr></thead>
+  <tbody>${rowsB}</tbody>
+  <tfoot><tr style="background:#f1f5f9">
+    <td colspan="2" style="text-align:right;font-weight:700;padding-right:8px">合計得分（平均 × 10）</td>
+    <td style="text-align:center;font-weight:800">${scoreB!==null?scoreB:'未評'}${grB?` (${grB.t})`:''}
+    </td>
+  </tr></tfoot>
+</table>
+
+<div class="sec-hdr" style="margin-top:12px">C．安全衛生管理制度評鑑（1005-3-08-005）</div>
+<div style="font-size:10px;color:#555;margin-bottom:3px">優良 17–20 ／ 良 13–16 ／ 可 9–12 ／ 尚可 5–8 ／ 差 0–4；合計 ≥ 60 合格</div>
+<table>
+  <thead><tr><th style="width:24px">#</th><th>評鑑項目</th><th style="width:80px">評比</th><th style="width:40px">得分</th></tr></thead>
+  <tbody>${rowsC}</tbody>
+  <tfoot><tr style="background:#f1f5f9">
+    <td colspan="3" style="text-align:right;font-weight:700;padding-right:8px">合計得分</td>
+    <td style="text-align:center;font-weight:800">${scoreC!==null?scoreC:'—'}${grC?` (${grC.t})`:''}
+    </td>
+  </tr></tfoot>
+</table>
+
+<div style="margin-top:14px;border:2px solid ${allPass?'#16a34a':'#dc2626'};border-radius:6px;overflow:hidden">
+  <div style="background:${allPass?'#15803d':'#b91c1c'};color:#fff;padding:7px 14px;font-size:13px;font-weight:700">
+    綜合評核結果：${allPass?'✅ 通過（合格）':'❌ 未通過（不合格）'}
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr">
+    <div style="text-align:center;padding:8px;border-right:1px solid #e2e8f0">
+      <div style="font-size:10px;color:#666;margin-bottom:2px">A 完工驗收</div>
+      <div style="font-size:20px;font-weight:800">${scoreA!==null?scoreA.toFixed(0):'—'}</div>
+      <div style="font-size:11px;color:${aOk?'#15803d':'#dc2626'}">${grA?grA.t:'—'} ${aOk?'✓':'✗'}</div>
+    </div>
+    <div style="text-align:center;padding:8px;border-right:1px solid #e2e8f0">
+      <div style="font-size:10px;color:#666;margin-bottom:2px">B 安衛績效</div>
+      <div style="font-size:20px;font-weight:800">${scoreB!==null?scoreB:'未評'}</div>
+      <div style="font-size:11px;color:${bOk?'#15803d':'#dc2626'}">${scoreB!==null?(bOk?'合格 ✓':'不合格 ✗'):'—'}</div>
+    </div>
+    <div style="text-align:center;padding:8px">
+      <div style="font-size:10px;color:#666;margin-bottom:2px">C 管理制度</div>
+      <div style="font-size:20px;font-weight:800">${scoreC!==null?scoreC:'—'}</div>
+      <div style="font-size:11px;color:${cOk?'#15803d':'#dc2626'}">${grC?grC.t:'—'} ${scoreC!==null?(cOk?'✓':'✗'):''}</div>
+    </div>
+  </div>
+</div>
+${ev.remark?`<div style="margin-top:10px;padding:7px 10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;font-size:11px"><strong>備註：</strong>${X(ev.remark)}</div>`:''}
+<table style="margin-top:14px">
+  <tr><td style="width:50%;height:48px">評鑑人員：${X(evaluator)}</td><td style="width:50%">主管：</td></tr>
+</table>
+<div style="font-size:10px;color:#888;text-align:right;margin-top:4px">大豐環保科技股份有限公司</div>
+</div>`;
+
+  return `<!DOCTYPE html><html lang="zh-TW"><head>
+<meta charset="UTF-8"><base href="${baseHref}">
+<title>承攬商評鑑表 — ${X(company)}</title>
+<style>${css}</style>
+</head><body>${page1}${page2}</body></html>`;
 }
 
 window.addEventListener('DOMContentLoaded', ()=>{
