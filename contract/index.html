@@ -164,6 +164,12 @@ table.rec-tbl{width:100%;border-collapse:collapse;background:var(--card);}
 .badge-g{background:#dcfce7;color:#15803d;}
 .empty-state{padding:56px;text-align:center;color:var(--sub);font-size:14px;}
 
+/* ── Eval Overview ── */
+.ev-stat-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:20px;}
+.ev-stat-card{background:var(--card);border-radius:10px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.07);text-align:center;}
+.ev-stat-num{font-size:26px;font-weight:800;color:var(--navy);line-height:1.1;}
+.ev-stat-lbl{font-size:11px;color:var(--sub);margin-top:4px;text-transform:uppercase;letter-spacing:.04em;}
+
 /* ── Record detail ── */
 .detail-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
 .detail-hdr h2{font-size:17px;color:var(--navy);}
@@ -274,7 +280,7 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
 /* ── Print ── */
 @media print{
   header,#step-bar,.step-nav,.rec-toolbar,.hdr-btn,.hc-btn,.success-actions,
-  #btn-del-record,#btn-back-records,#btn-edit-record,#btn-eval-record{display:none!important;}
+  #btn-del-record,#btn-back-records,#btn-edit-record{display:none!important;}
   .detail-blk{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;}
   body{background:#fff;}
 }
@@ -346,6 +352,12 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
       <div class="hc-title">進場紀錄查詢</div>
       <div class="hc-desc">查詢、列印或管理所有已提交的承攬商進場申請紀錄，支援關鍵字搜尋及 CSV 匯出功能</div>
       <div class="hc-btn">查詢紀錄 →</div>
+    </div>
+    <div class="home-card" id="card-eval" onclick="showView('eval-overview')" style="display:none">
+      <div class="hc-icon">📊</div>
+      <div class="hc-title">承攬商評鑑</div>
+      <div class="hc-desc">完工後對承攬商進行安衛評核，一覽各廠商評鑑狀態、得分及綜合結果</div>
+      <div class="hc-btn">前往評鑑 →</div>
     </div>
   </div>
   <div class="info-grid">
@@ -630,12 +642,42 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
     <button class="btn btn-sm" id="btn-back-records" onclick="showView('records')">← 返回清單</button>
     <h2 id="detail-title">進場申請紀錄</h2>
     <button class="btn btn-sm btn-primary" id="btn-edit-record" style="margin-left:auto">✏️ 編輯</button>
-    <button class="btn btn-sm" style="background:#059669;color:#fff;border-color:#059669;display:none" id="btn-eval-record">📊 評核</button>
     <button class="btn btn-sm" onclick="window.print()">🖨️ 列印</button>
     <button class="btn btn-sm btn-primary" onclick="exportPDF()">📄 匯出 PDF</button>
     <button class="btn btn-sm btn-danger" id="btn-del-record">🗑️ 刪除</button>
   </div>
   <div id="detail-content"></div>
+</div>
+
+<!-- ════ View: Eval Overview ════ -->
+<div id="v-eval-overview" style="display:none">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:nowrap">
+    <h2 style="font-size:17px;color:var(--navy);white-space:nowrap">📊 承攬商評鑑</h2>
+    <div style="margin-left:auto">
+      <button class="btn btn-sm btn-primary" onclick="renderEvalOverview()">↺ 重新載入</button>
+    </div>
+  </div>
+  <div class="ev-stat-bar" id="eval-stat-bar"></div>
+  <div class="rec-toolbar">
+    <input id="eval-search" placeholder="搜尋承攬商名稱或工程名稱…" oninput="filterEvalTable()"/>
+  </div>
+  <div class="rec-wrap">
+    <table class="rec-tbl">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>承攬商名稱</th>
+          <th>工程名稱</th>
+          <th>作業期間</th>
+          <th>評核狀態</th>
+          <th>評核結果</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="eval-tbody"></tbody>
+    </table>
+  </div>
+  <div id="eval-empty" class="empty-state" style="display:none">📭 目前尚無進場申請紀錄</div>
 </div>
 
 </div><!-- /main -->
@@ -813,6 +855,7 @@ function doLogin(){
   document.getElementById('hdr-role').style.display    = '';
   document.getElementById('hdr-role').textContent      = isAdmin ? '管理者' : '承攬商';
   document.getElementById('card-records').style.display = isAdmin ? '' : 'none';
+  document.getElementById('card-eval').style.display    = isAdmin ? '' : 'none';
   showView('home');
 }
 
@@ -841,13 +884,14 @@ function toast(msg, type=''){
 // ════════════════════════════════════════════════
 function showView(name){
   if(name !== 'login' && !currentRole){ showView('login'); return; }
-  if(name === 'records' && currentRole !== 'admin'){ toast('此帳號無查詢紀錄的權限','bad'); return; }
-  ['login','home','wizard','success','records','rec-detail'].forEach(v=>{
+  if((name === 'records' || name === 'eval-overview') && currentRole !== 'admin'){ toast('此帳號無查詢紀錄的權限','bad'); return; }
+  ['login','home','wizard','success','records','rec-detail','eval-overview'].forEach(v=>{
     document.getElementById('v-'+v).style.display = 'none';
   });
   document.getElementById('v-'+name).style.display = '';
   document.getElementById('step-bar').style.display = name==='wizard' ? 'block' : 'none';
   if(name==='records') renderRecords().catch(()=>{});
+  if(name==='eval-overview') renderEvalOverview().catch(()=>{});
 }
 
 // ════════════════════════════════════════════════
@@ -1462,11 +1506,6 @@ async function viewRecord(id){
   document.getElementById('detail-title').textContent = r.basic.company + ' — 進場申請紀錄';
   document.getElementById('btn-del-record').onclick = ()=>confirmDelete(id);
   document.getElementById('btn-edit-record').onclick = ()=>openEditModal(id);
-  const evalBtn = document.getElementById('btn-eval-record');
-  if(evalBtn){
-    evalBtn.style.display = currentRole==='admin' ? '' : 'none';
-    evalBtn.onclick = ()=>openEvalModal(id);
-  }
 
   const dt = new Date(r.submittedAt);
   const dtStr = dt.toLocaleString('zh-TW');
@@ -1563,16 +1602,6 @@ async function viewRecord(id){
     </div>
   `);
 
-  if(currentRole==='admin'){
-    await loadEval(id);
-    const ev = getEval(id);
-    html += blk('📊 承攬商完工評核', ev ? renderEvalResult(id) :
-      `<div style="text-align:center;padding:28px 16px;color:var(--sub)">
-        <div style="font-size:40px;margin-bottom:10px">📊</div>
-        <p style="font-size:13px;margin-bottom:14px">尚未對此承攬商進行完工評核</p>
-        <button class="btn btn-primary" onclick="openEvalModal('${id}')">開始填寫評核表 →</button>
-      </div>`);
-  }
   document.getElementById('detail-content').innerHTML = html;
   showView('rec-detail');
 }
@@ -2094,6 +2123,9 @@ function evGradeC(s){ return s>=60?{t:'合格',c:'ga'}:{t:'不合格',c:'gf'}; }
 
 async function openEvalModal(id){
   _evalId = id;
+  const rec = _evalOverviewRecords.find(r => r.id === id) || (_currentRecord?.id === id ? _currentRecord : null);
+  const titleEl = document.querySelector('#eval-modal .mhd h3');
+  if(titleEl) titleEl.textContent = rec?.basic?.company ? `📊 承攬商完工評核 — ${rec.basic.company}` : '📊 承攬商完工評核表';
   showLoading('載入評核資料…');
   await loadEval(id);
   hideLoading();
@@ -2382,7 +2414,11 @@ async function saveEval(){
   const savedId = _evalId;
   closeEvalModal();
   toast('評核已儲存','ok');
-  if(_currentRecord?.id===savedId) viewRecord(savedId);
+  if(document.getElementById('v-eval-overview').style.display !== 'none'){
+    filterEvalTable();
+  } else if(_currentRecord?.id===savedId){
+    viewRecord(savedId);
+  }
 }
 
 function renderEvalResult(id){
@@ -2418,6 +2454,99 @@ function renderEvalResult(id){
       <button class="btn btn-sm btn-primary" onclick="openEvalModal('${id}')">✏️ 修改評核</button>
     </div>
   </div>`;
+}
+
+// ════════════════════════════════════════════════
+//  Eval Overview
+// ════════════════════════════════════════════════
+let _evalOverviewRecords = [];
+
+async function renderEvalOverview(){
+  showLoading('載入評鑑清單…');
+  _evalOverviewRecords = [];
+  try {
+    const res = await apiGet({ action: 'list' });
+    if(!res.success) throw new Error(res.error);
+    _evalOverviewRecords = res.records || [];
+    await loadEvalCache();
+    // 並行載入所有已評核紀錄的詳細資料
+    await Promise.all([..._evalSet].map(id => loadEval(id)));
+  } catch(ex) {
+    toast('載入失敗：' + ex.message, 'bad');
+  } finally {
+    hideLoading();
+  }
+  filterEvalTable();
+}
+
+function filterEvalTable(){
+  const q = (document.getElementById('eval-search')?.value || '').toLowerCase();
+  const filtered = _evalOverviewRecords.filter(r =>
+    !q ||
+    (r.basic?.company||'').toLowerCase().includes(q) ||
+    (r.basic?.workname||'').toLowerCase().includes(q)
+  );
+
+  const total = filtered.length;
+  const evaluated = filtered.filter(r => hasEval(r.id)).length;
+  const pending = total - evaluated;
+  let pass = 0, fail = 0;
+  filtered.forEach(r => {
+    const ev = getEval(r.id);
+    if(ev){
+      const aOk = (ev.a?.score ?? -1) >= 65;
+      const bOk = ev.b?.score == null || ev.b.score >= 60;
+      const cOk = (ev.c?.score ?? -1) >= 60;
+      if(aOk && bOk && cOk) pass++; else fail++;
+    }
+  });
+
+  document.getElementById('eval-stat-bar').innerHTML = `
+    <div class="ev-stat-card"><div class="ev-stat-num">${total}</div><div class="ev-stat-lbl">紀錄總數</div></div>
+    <div class="ev-stat-card"><div class="ev-stat-num" style="color:var(--blue)">${evaluated}</div><div class="ev-stat-lbl">已評核</div></div>
+    <div class="ev-stat-card"><div class="ev-stat-num" style="color:var(--orange)">${pending}</div><div class="ev-stat-lbl">待評核</div></div>
+    <div class="ev-stat-card"><div class="ev-stat-num" style="color:var(--green)">${pass}</div><div class="ev-stat-lbl">合格</div></div>
+    <div class="ev-stat-card"><div class="ev-stat-num" style="color:var(--red)">${fail}</div><div class="ev-stat-lbl">不合格</div></div>
+  `;
+
+  const tbody = document.getElementById('eval-tbody');
+  tbody.innerHTML = '';
+  const emptyEl = document.getElementById('eval-empty');
+
+  if(!filtered.length){ emptyEl.style.display = 'block'; return; }
+  emptyEl.style.display = 'none';
+
+  filtered.forEach((r, idx) => {
+    const ev = getEval(r.id);
+    const hEv = hasEval(r.id);
+    let statusBadge, resultCell, actionBtn;
+
+    if(hEv && ev){
+      const aS = ev.a?.score, bS = ev.b?.score, cS = ev.c?.score;
+      const aOk = (aS ?? -1) >= 65, bOk = bS == null || bS >= 60, cOk = (cS ?? -1) >= 60;
+      const ok = aOk && bOk && cOk;
+      statusBadge = `<span class="badge" style="background:#dbeafe;color:#1d4ed8">已評核</span>`;
+      resultCell  = `<span class="badge ${ok?'badge-g':''}" style="${ok?'':'background:#fee2e2;color:#b91c1c'}">${ok?'通過':'未通過'}</span>
+        <span style="font-size:11px;color:var(--sub);margin-left:4px">A:${aS!=null?aS.toFixed(0):'—'} B:${bS!=null?bS:'—'} C:${cS!=null?cS:'—'}</span>`;
+      actionBtn   = `<button class="btn btn-sm btn-primary" onclick="openEvalModal('${r.id}')">✏️ 修改評核</button>`;
+    } else {
+      statusBadge = `<span class="badge" style="background:#fff7ed;color:#c2410c">待評核</span>`;
+      resultCell  = `<span style="color:var(--sub);font-size:12px">—</span>`;
+      actionBtn   = `<button class="btn btn-sm btn-success" onclick="openEvalModal('${r.id}')">📊 填寫評核</button>`;
+    }
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${idx+1}</td>
+      <td class="nm">${r.basic?.company||'—'}</td>
+      <td class="wn">${r.basic?.workname||'—'}</td>
+      <td style="white-space:nowrap;font-size:12px">${r.basic?.dateStart||'—'} ~ ${r.basic?.dateEnd||'—'}</td>
+      <td>${statusBadge}</td>
+      <td>${resultCell}</td>
+      <td>${actionBtn}</td>
+    `;
+    tbody.appendChild(tr);
+  });
 }
 
 window.addEventListener('DOMContentLoaded', ()=>{
