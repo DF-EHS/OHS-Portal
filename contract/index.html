@@ -2086,8 +2086,8 @@ const EVAL_C_ITEMS = [
   '是否訂有完善之緊急應變演練計畫',
 ];
 const EVAL_C_CHOICES = [
-  {lbl:'優良',val:20,cls:'c1'},{lbl:'良',val:16,cls:'c2'},
-  {lbl:'可',val:12,cls:'c3'},{lbl:'尚可',val:8,cls:'c4'},{lbl:'差',val:4,cls:'c5'},
+  {lbl:'優良',val:20,min:17,max:20,cls:'c1'},{lbl:'良',val:16,min:13,max:16,cls:'c2'},
+  {lbl:'可',val:12,min:9,max:12,cls:'c3'},{lbl:'尚可',val:8,min:5,max:8,cls:'c4'},{lbl:'差',val:4,min:0,max:4,cls:'c5'},
 ];
 
 let _evalId = null;
@@ -2142,6 +2142,9 @@ function buildEvalForm(ex){
   ex = ex || {};
   const rowsA = EVAL_A_ITEMS.map((item,i)=>{
     const sel = ex.a?.ratings?.[i] ?? null;
+    const savedScore = ex.a?.itemScores?.[i];
+    const defScore = sel !== null ? Math.round(item.weight * EVAL_A_FACTORS[sel]) : null;
+    const initScore = savedScore ?? defScore;
     const chips = EVAL_A_RATING_LABELS.map((lbl,ri)=>{
       const isSel = sel===ri?' sel':'';
       return `<span class="ev-chip ${EVAL_A_RATING_CLASSES[ri]}${isSel}" onclick="evChipA(${i},${ri},this)">${lbl}</span>`;
@@ -2150,7 +2153,13 @@ function buildEvalForm(ex){
       <td style="font-size:11px;color:var(--sub)">${item.weight}</td>
       <td><strong>${item.label}</strong><br><span style="font-size:11px;color:var(--sub)">${item.desc}</span></td>
       <td><div class="ev-chips" id="ev-a-chips-${i}">${chips}</div></td>
-      <td><span class="ev-score-out" id="ev-a-score-${i}">—</span></td>
+      <td>
+        <input type="number" id="ev-a-score-${i}" min="0" max="${item.weight}" step="1"
+          value="${initScore ?? ''}"
+          style="width:54px;padding:3px 6px;font-size:13px;border:1px solid var(--border);border-radius:6px;font-family:inherit;${initScore !== null ? '' : 'display:none'}"
+          onchange="updateEvalScores()"/>
+        <span id="ev-a-hint-${i}" style="font-size:13px;color:var(--sub);${initScore !== null ? 'display:none' : ''}">—</span>
+      </td>
     </tr>`;
   }).join('');
 
@@ -2174,6 +2183,9 @@ function buildEvalForm(ex){
   const cRatings = ex.c?.ratings || {};
   const rowsC = EVAL_C_ITEMS.map((item,i)=>{
     const selVal = cRatings[i] ?? null;
+    const savedScore = ex.c?.itemScores?.[i];
+    const initScore = savedScore ?? selVal;
+    const choice = selVal !== null ? EVAL_C_CHOICES.find(c=>c.val===selVal) : null;
     const chips = EVAL_C_CHOICES.map(c=>{
       const isSel = selVal===c.val?' sel':'';
       return `<span class="ev-chip ${c.cls}${isSel}" onclick="evChipC(${i},${c.val},this)">${c.lbl}</span>`;
@@ -2182,7 +2194,13 @@ function buildEvalForm(ex){
       <td style="font-size:11px;color:var(--sub)">${i+1}</td>
       <td style="font-size:12px">${item}</td>
       <td><div class="ev-chips" id="ev-c-chips-${i}">${chips}</div></td>
-      <td><span class="ev-score-out" id="ev-c-score-${i}">—</span></td>
+      <td>
+        <input type="number" id="ev-c-score-${i}" min="${choice?.min??0}" max="${choice?.max??20}" step="1"
+          value="${initScore ?? ''}"
+          style="width:54px;padding:3px 6px;font-size:13px;border:1px solid var(--border);border-radius:6px;font-family:inherit;${initScore !== null ? '' : 'display:none'}"
+          onchange="updateEvalScores()"/>
+        <span id="ev-c-hint-${i}" style="font-size:13px;color:var(--sub);${initScore !== null ? 'display:none' : ''}">—</span>
+      </td>
     </tr>`;
   }).join('');
 
@@ -2288,12 +2306,23 @@ function evChipA(itemIdx, ri, el){
   const g = document.getElementById('ev-a-chips-'+itemIdx);
   g.querySelectorAll('.ev-chip').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
+  const item = EVAL_A_ITEMS[itemIdx];
+  const defScore = Math.round(item.weight * EVAL_A_FACTORS[ri]);
+  const inp = document.getElementById('ev-a-score-'+itemIdx);
+  const hint = document.getElementById('ev-a-hint-'+itemIdx);
+  if(inp){ inp.value = defScore; inp.style.display = ''; }
+  if(hint){ hint.style.display = 'none'; }
   updateEvalScores();
 }
 function evChipC(itemIdx, val, el){
   const g = document.getElementById('ev-c-chips-'+itemIdx);
   g.querySelectorAll('.ev-chip').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
+  const choice = EVAL_C_CHOICES.find(c=>c.val===val);
+  const inp = document.getElementById('ev-c-score-'+itemIdx);
+  const hint = document.getElementById('ev-c-hint-'+itemIdx);
+  if(inp && choice){ inp.min = choice.min; inp.max = choice.max; inp.value = val; inp.style.display = ''; }
+  if(hint){ hint.style.display = 'none'; }
   updateEvalScores();
 }
 function evBToggle(i, cb){
@@ -2308,10 +2337,9 @@ function updateEvalScores(){
   EVAL_A_ITEMS.forEach((item,i)=>{
     const g = document.getElementById('ev-a-chips-'+i);
     const sel = g?.querySelector('.ev-chip.sel');
-    const ri = sel ? [...g.querySelectorAll('.ev-chip')].indexOf(sel) : -1;
-    const out = document.getElementById('ev-a-score-'+i);
-    if(ri>=0){ const s=item.weight*EVAL_A_FACTORS[ri]; scoreA+=s; if(out) out.textContent=s.toFixed(0); }
-    else{ completeA=false; if(out) out.textContent='—'; }
+    const inp = document.getElementById('ev-a-score-'+i);
+    if(sel){ scoreA += parseFloat(inp?.value) || 0; }
+    else { completeA = false; }
   });
   const viol = parseInt(document.getElementById('ev-a-violations')?.value||'0')||0;
   scoreA = Math.max(0, scoreA - viol*10);
@@ -2340,9 +2368,9 @@ function updateEvalScores(){
   EVAL_C_ITEMS.forEach((_,i)=>{
     const g = document.getElementById('ev-c-chips-'+i);
     const sel = g?.querySelector('.ev-chip.sel');
-    const out = document.getElementById('ev-c-score-'+i);
-    if(sel){ const ci=[...g.querySelectorAll('.ev-chip')].indexOf(sel); const v=EVAL_C_CHOICES[ci]?.val||0; scoreC+=v; if(out) out.textContent=v; }
-    else{ completeC=false; if(out) out.textContent='—'; }
+    const inp = document.getElementById('ev-c-score-'+i);
+    if(sel){ scoreC += parseFloat(inp?.value) || 0; }
+    else{ completeC = false; }
   });
   const cEl = document.getElementById('ev-c-total');
   if(cEl) cEl.textContent = completeC ? scoreC : '—';
@@ -2372,27 +2400,37 @@ function collectEvalData(){
     const sel=g?.querySelector('.ev-chip.sel');
     return sel ? [...g.querySelectorAll('.ev-chip')].indexOf(sel) : null;
   });
+  const itemScoresA = EVAL_A_ITEMS.map((_,i)=>{
+    const g=document.getElementById('ev-a-chips-'+i);
+    if(!g?.querySelector('.ev-chip.sel')) return null;
+    return parseFloat(document.getElementById('ev-a-score-'+i)?.value) || 0;
+  });
   const enabledB=[], scoresB={};
   EVAL_B_ITEMS.forEach((_,i)=>{ if(document.getElementById('ev-b-cb-'+i)?.checked){ enabledB.push(i); scoresB[i]=parseInt(document.getElementById('ev-b-sc-'+i)?.value||7); } });
-  const ratingsC={};
+  const ratingsC={}, itemScoresC={};
   EVAL_C_ITEMS.forEach((_,i)=>{
     const g=document.getElementById('ev-c-chips-'+i);
     const sel=g?.querySelector('.ev-chip.sel');
-    if(sel){ const ci=[...g.querySelectorAll('.ev-chip')].indexOf(sel); ratingsC[i]=EVAL_C_CHOICES[ci]?.val; }
+    if(sel){
+      const ci=[...g.querySelectorAll('.ev-chip')].indexOf(sel);
+      ratingsC[i]=EVAL_C_CHOICES[ci]?.val;
+      itemScoresC[i]=parseFloat(document.getElementById('ev-c-score-'+i)?.value) || 0;
+    }
   });
-  let scoreA=ratingsA.reduce((s,ri,i)=>s+(ri!==null?EVAL_A_ITEMS[i].weight*EVAL_A_FACTORS[ri]:0),0);
+  const allRatedA = ratingsA.every(r=>r!==null);
+  let scoreA = allRatedA ? itemScoresA.reduce((s,v)=>s+(v??0),0) : null;
   const viol=parseInt(document.getElementById('ev-a-violations')?.value||0)||0;
-  scoreA=Math.max(0,scoreA-viol*10);
+  if(scoreA!==null) scoreA=Math.max(0,scoreA-viol*10);
   const scoreB=enabledB.length>0 ? Math.round((enabledB.reduce((s,i)=>s+(scoresB[i]||0),0)/enabledB.length)*10) : null;
   const cComplete=Object.keys(ratingsC).length===EVAL_C_ITEMS.length;
-  const scoreC=cComplete?Object.values(ratingsC).reduce((s,v)=>s+v,0):null;
+  const scoreC=cComplete?Object.values(itemScoresC).reduce((s,v)=>s+v,0):null;
   return {
     date: document.getElementById('ev-date')?.value||'',
     evaluator: document.getElementById('ev-evaluator')?.value.trim()||'',
     remark: document.getElementById('ev-remark')?.value.trim()||'',
-    a:{ratings:ratingsA, violations:viol, score:ratingsA.every(r=>r!==null)?scoreA:null},
+    a:{ratings:ratingsA, itemScores:itemScoresA, violations:viol, score:scoreA},
     b:{enabled:enabledB, scores:scoresB, score:scoreB},
-    c:{ratings:ratingsC, score:scoreC},
+    c:{ratings:ratingsC, itemScores:itemScoresC, score:scoreC},
     savedAt: new Date().toISOString(),
   };
 }
