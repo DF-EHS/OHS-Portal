@@ -32,11 +32,35 @@ function _resp(data) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-function _getSheet(ss, name, headers) {
-  var sheet = ss.getSheetByName(name);
+// 取得申請紀錄 Sheet：
+//   1. 優先取名為 'records' 且有資料的分頁
+//   2. 其次取第一個有資料、非 'evaluations' 的分頁（相容原始分頁名稱）
+//   3. 都沒有才建立新的 'records' 分頁
+function _getRecordsSheet(ss) {
+  var named = ss.getSheetByName('records');
+  if (named && named.getLastRow() > 1) return named;
+
+  var sheets = ss.getSheets();
+  for (var i = 0; i < sheets.length; i++) {
+    var s = sheets[i];
+    if (s.getName() === 'evaluations') continue;
+    if (s.getLastRow() > 1) return s; // 找到有資料的分頁
+  }
+
+  if (!named) {
+    named = ss.insertSheet('records');
+    named.appendRow(['id', 'data', 'submittedAt']);
+    named.setFrozenRows(1);
+  }
+  return named;
+}
+
+// 取得評核 Sheet（固定名稱，需要就建立）
+function _getEvalSheet(ss) {
+  var sheet = ss.getSheetByName('evaluations');
   if (!sheet) {
-    sheet = ss.insertSheet(name);
-    sheet.appendRow(headers);
+    sheet = ss.insertSheet('evaluations');
+    sheet.appendRow(['id', 'data', 'savedAt', 'savedBy']);
     sheet.setFrozenRows(1);
   }
   return sheet;
@@ -64,7 +88,7 @@ function doGet(e) {
 
       // ── 取得所有申請紀錄（列表）────────────────────────────────────
       case 'list': {
-        var sheet = _getSheet(ss, 'records', ['id', 'data', 'submittedAt']);
+        var sheet = _getRecordsSheet(ss);
         var last = sheet.getLastRow();
         if (last < 2) return _resp({ success: true, records: [] });
         var rows = sheet.getRange(2, 1, last - 1, 2).getValues();
@@ -95,7 +119,7 @@ function doGet(e) {
       case 'get': {
         var id = params.id;
         if (!id) return _resp({ success: false, error: '缺少 id 參數' });
-        var sheet = _getSheet(ss, 'records', ['id', 'data', 'submittedAt']);
+        var sheet = _getRecordsSheet(ss);
         var rowNum = _findRow(sheet, id);
         if (rowNum < 0) return _resp({ success: false, error: '找不到此紀錄' });
         var dataStr = sheet.getRange(rowNum, 2).getValue();
@@ -149,7 +173,7 @@ function doPost(e) {
       case 'submit': {
         var data = payload.data;
         if (!data || !data.id) return _resp({ success: false, error: '資料格式錯誤' });
-        var sheet = _getSheet(ss, 'records', ['id', 'data', 'submittedAt']);
+        var sheet = _getRecordsSheet(ss);
         sheet.appendRow([
           String(data.id),
           JSON.stringify(data),
@@ -163,7 +187,7 @@ function doPost(e) {
         var id = payload.id;
         var data = payload.data;
         if (!id || !data) return _resp({ success: false, error: '缺少 id 或 data' });
-        var sheet = _getSheet(ss, 'records', ['id', 'data', 'submittedAt']);
+        var sheet = _getRecordsSheet(ss);
         var rowNum = _findRow(sheet, id);
         if (rowNum < 0) return _resp({ success: false, error: '找不到此紀錄' });
         sheet.getRange(rowNum, 2).setValue(JSON.stringify(data));
@@ -174,7 +198,7 @@ function doPost(e) {
       case 'delete': {
         var id = payload.id;
         if (!id) return _resp({ success: false, error: '缺少 id' });
-        var sheet = _getSheet(ss, 'records', ['id', 'data', 'submittedAt']);
+        var sheet = _getRecordsSheet(ss);
         var rowNum = _findRow(sheet, id);
         if (rowNum < 0) return _resp({ success: false, error: '找不到此紀錄' });
         sheet.deleteRow(rowNum);
@@ -186,7 +210,7 @@ function doPost(e) {
         var id = payload.id;
         var data = payload.data;
         if (!id || !data) return _resp({ ok: false, error: '缺少 id 或 data' });
-        var sheet = _getSheet(ss, 'evaluations', ['id', 'data', 'savedAt', 'savedBy']);
+        var sheet = _getEvalSheet(ss);
         var now = new Date().toISOString();
         var dataStr = JSON.stringify(data);
         var rowNum = _findRow(sheet, id);
