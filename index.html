@@ -18,6 +18,8 @@
     --red:    #dc2626;
     --purple: #7c3aed;
     --teal:   #0891b2;
+    --indigo: #4f46e5;
+    --amber:  #f59e0b;
     --sidebar-bg: #1a2d42;
     --sidebar-w:  260px;
   }
@@ -187,6 +189,10 @@
   .btn-orange:hover { background: #b45309; }
   .btn-red    { background: var(--red);    color: #fff; }
   .btn-red:hover    { background: #b91c1c; }
+  .btn-indigo { background: var(--indigo); color: #fff; }
+  .btn-indigo:hover { background: #4338ca; }
+  .btn-amber  { background: var(--amber);  color: #fff; }
+  .btn-amber:hover  { background: #b45309; }
 
   /* ── placeholder card ── */
   .placeholder-card {
@@ -238,6 +244,10 @@
   body.dark .btn-orange:hover { background: #78350f; }
   body.dark .btn-red    { background: #991b1b; }
   body.dark .btn-red:hover { background: #7f1d1d; }
+  body.dark .btn-indigo { background: #3730a3; }
+  body.dark .btn-indigo:hover { background: #312e81; }
+  body.dark .btn-amber  { background: #92400e; }
+  body.dark .btn-amber:hover  { background: #78350f; }
   body.dark .placeholder-card { background: #1e293b; border-color: #334155; }
   body.dark .content-topbar   { background: #1e293b; border-color: #334155; }
 
@@ -492,7 +502,7 @@
           </div>
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-green" onclick="event.stopPropagation();location.href='./training/'">開啟教材 ›</button>
+            <button class="open-btn btn-amber" onclick="event.stopPropagation();location.href='./training/'">開啟教材 ›</button>
           </div>
         </div>
 
@@ -531,7 +541,7 @@
           </div>
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-blue" onclick="event.stopPropagation();location.href='./plans/'">開啟 ›</button>
+            <button class="open-btn btn-indigo" onclick="event.stopPropagation();location.href='./plans/'">開啟系統 ›</button>
           </div>
         </div>
 
