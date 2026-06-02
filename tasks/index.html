@@ -1390,24 +1390,6 @@
 
     let tasks = loadTasks();
 
-    // 自動注入固定任務（若尚未存在於 localStorage）
-    (function injectMissingTasks() {
-      const injections = [
-        Object.assign(
-          seed("自我介紹準備", "人員與設備變更", "2026-06-06T17:00", "none", "doing", "medium", "職安", "向部門同事介紹職安衛工作現況與個人背景。"),
-          { fileLink: "intro/職安衛新夥伴的生存報告.html", fileLinkLabel: "職安衛新夥伴的生存報告" }
-        ),
-      ];
-      let dirty = false;
-      injections.forEach(item => {
-        if (!tasks.some(t => t.title === item.title)) {
-          tasks.push(item);
-          dirty = true;
-        }
-      });
-      if (dirty) localStorage.setItem("osh-self-managed-tasks-v1", JSON.stringify(tasks));
-    })();
-
     let categories = loadCategories();
     let activeView = "form";
     let editingId = null;
@@ -2470,7 +2452,13 @@
         const data = await resp.json();
         if (Array.isArray(data.tasks)) {
           if (data.tasks.length > 0) {
-            tasks = data.tasks;
+            // 去重：以 id 為 key，保留第一次出現的，避免 GAS Sheet 有重複列
+            const seen = new Set();
+            tasks = data.tasks.filter(t => {
+              if (!t.id || seen.has(t.id)) return false;
+              seen.add(t.id);
+              return true;
+            });
           } else {
             // 初次使用：以範例工作初始化並寫入雲端
             tasks = starterTasks.map(t => ({ ...t }));
@@ -2494,10 +2482,16 @@
       }
     }
 
-    // 覆寫：每次變更後全量同步至雲端（fire-and-forget）
+    // 覆寫：每次變更後全量同步至雲端（debounce 800ms，防止連續操作產生並發 bulkWrite）
+    let _saveTimer = null;
     function saveTasks() {
       updateNotifBadge();
-      apiPost({ action: 'bulkWrite', tasks }).catch(e => console.warn('雲端同步失敗', e));
+      clearTimeout(_saveTimer);
+      const snapshot = JSON.stringify(tasks); // 固定當下狀態，避免閉包拿到更新後的 tasks
+      _saveTimer = setTimeout(() => {
+        apiPost({ action: 'bulkWrite', tasks: JSON.parse(snapshot) })
+          .catch(e => console.warn('雲端同步失敗', e));
+      }, 800);
     }
 
     // ── 通知中心 ──────────────────────────────────────────────────

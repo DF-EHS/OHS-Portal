@@ -116,7 +116,13 @@ function doPost(e) {
     if (action === "bulkWrite") {
       var lastRow = sheet.getLastRow();
       if (lastRow > 1) sheet.deleteRows(2, lastRow - 1);
-      var tasks = payload.tasks || [];
+      // 去重：同一 id 只寫入第一筆，防止並發寫入產生重複列
+      var seen = {};
+      var tasks = (payload.tasks || []).filter(function(t) {
+        if (!t.id || seen[t.id]) return false;
+        seen[t.id] = true;
+        return true;
+      });
       tasks.forEach(function(task) { sheet.appendRow(_taskToRow(task)); });
       return _resp({ ok: true });
     }
