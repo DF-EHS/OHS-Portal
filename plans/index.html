@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>職業安全衛生計畫書 — 大豐環保科技</title>
+<style>
+:root{--navy:#1e3a5f;--bg:#f1f5f9;--card:#fff;--border:#e2e8f0;--text:#1e293b;--sub:#64748b;--blue:#2563eb}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+
+header{background:var(--navy);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
+header h1{font-size:17px;font-weight:700;flex:1}
+.hdr-btn{padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:none;transition:background .15s}
+.hdr-btn:hover{background:rgba(255,255,255,.2)}
+.hdr-brand{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.hdr-brand img{height:24px;object-fit:contain}
+.hdr-brand span{font-size:12px;color:#94a3b8;font-weight:600;white-space:nowrap}
+
+main{flex:1;max-width:900px;width:100%;margin:0 auto;padding:36px 24px 60px}
+
+.page-hero{margin-bottom:36px}
+.page-hero h2{font-size:22px;font-weight:800;color:var(--navy);margin-bottom:6px}
+.page-hero p{font-size:13px;color:var(--sub)}
+
+/* ── 分類區塊 ── */
+.cat-section{margin-bottom:44px}
+.cat-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+.cat-bar{width:4px;height:20px;border-radius:2px}
+.cat-bar.annual{background:#2563eb}
+.cat-bar.special{background:#dc2626}
+.cat-title{font-size:13px;font-weight:700;color:var(--sub);letter-spacing:2px;text-transform:uppercase;flex:1}
+.cat-count{font-size:11px;background:var(--border);color:var(--sub);padding:2px 8px;border-radius:10px}
+
+/* ── 計畫書卡片 ── */
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.plan-card{background:var(--card);border-radius:12px;padding:20px 22px;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.05);text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .15s,border-color .15s}
+.plan-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.11);border-color:#cbd5e1}
+.plan-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;width:fit-content}
+.plan-tag.annual{background:#dbeafe;color:#1d4ed8}
+.plan-tag.special{background:#fee2e2;color:#b91c1c}
+.plan-tag.draft{background:#fef3c7;color:#92400e}
+.plan-title{font-size:15px;font-weight:700;color:var(--navy);line-height:1.45}
+.plan-meta{display:flex;align-items:center;gap:10px;margin-top:auto}
+.plan-date{font-size:12px;color:var(--sub)}
+.plan-open{font-size:12px;color:var(--blue);font-weight:600;margin-left:auto}
+.plan-card:hover .plan-open{text-decoration:underline}
+
+/* ── 空白提示 ── */
+.empty{background:var(--card);border:2px dashed var(--border);border-radius:12px;padding:32px;text-align:center;color:var(--sub);font-size:13px}
+
+footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);border-top:1px solid var(--border);background:var(--card)}
+
+@media(max-width:600px){
+  main{padding:20px 16px 40px}
+  .plan-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="hdr-btn" href="../" title="回到系統入口">← 系統入口</a>
+  <h1>📋 職業安全衛生計畫書</h1>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
+
+<main>
+  <div class="page-hero">
+    <h2>職業安全衛生計畫書</h2>
+    <p>年度計畫書與各項專項計畫，點擊卡片即可開啟閱覽。</p>
+  </div>
+
+  <!-- ── 年度計畫書 ── -->
+  <section class="cat-section">
+    <div class="cat-header">
+      <div class="cat-bar annual"></div>
+      <span class="cat-title">年度計畫書</span>
+      <span class="cat-count" id="annual-count">0</span>
+    </div>
+    <div class="plan-grid" id="annual-grid">
+      <!-- 範例：新增年度計畫書時，複製下方 plan-card 區塊並修改 -->
+      <!--
+      <a class="plan-card" href="annual/2026/大豐環保-2026年度職安衛計畫書.html" target="_blank">
+        <span class="plan-tag annual">年度計畫</span>
+        <div class="plan-title">2026 年度職業安全衛生計畫書</div>
+        <div class="plan-meta">
+          <span class="plan-date">2026-01-01</span>
+          <span class="plan-open">開啟 →</span>
+        </div>
+      </a>
+      -->
+    </div>
+    <div class="empty" id="annual-empty">目前尚無年度計畫書</div>
+  </section>
+
+  <!-- ── 專項計畫書 ── -->
+  <section class="cat-section">
+    <div class="cat-header">
+      <div class="cat-bar special"></div>
+      <span class="cat-title">專項計畫書</span>
+      <span class="cat-count" id="special-count">0</span>
+    </div>
+    <div class="plan-grid" id="special-grid">
+      <a class="plan-card" href="special/大豐環保-高氣溫熱危害預防計畫書.html" target="_blank">
+        <span class="plan-tag special">專項計畫</span>
+        <div class="plan-title">高氣溫戶外作業熱危害預防計畫書</div>
+        <div class="plan-meta">
+          <span class="plan-date">2026-06</span>
+          <span class="plan-open">開啟 →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理</footer>
+
+<script>
+// 自動計算各分類數量
+['annual','special'].forEach(id => {
+  const grid  = document.getElementById(id + '-grid');
+  const count = document.getElementById(id + '-count');
+  const empty = document.getElementById(id + '-empty');
+  const n = grid ? grid.querySelectorAll('.plan-card').length : 0;
+  if (count) count.textContent = n;
+  if (empty) empty.style.display = n ? 'none' : '';
+});
+</script>
+
+</body>
+</html>

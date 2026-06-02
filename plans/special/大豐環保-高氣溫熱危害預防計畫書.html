@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>大豐環保 — 高氣溫戶外作業熱危害預防計畫書</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --or1:#FF5500;--or2:#FF8C00;--red:#CC1100;--gold:#FFB800;
+  --cream:#FFF3E0;--g1:#1A1A1A;--g2:#444;--g3:#777;--g4:#AAA;
+  --bg:#FFFAF5;--lg:#F0EDE8;--bd:#E0D8D0;
+  --teal:#00897B;--pur:#5C35CC;
+  --lv1:#F5A623;--lv2:#E86A10;--lv3:#CC1100;--lv4:#700000;
+  --fw:'Microsoft JhengHei','PingFang TC','Heiti TC',sans-serif;
+  --r:8px;
+}
+html{scroll-behavior:smooth}
+body{background:#DDD8D2;font-family:var(--fw);color:var(--g1);line-height:1.75;font-size:15.5px}
+
+/* ── OUTER PAGE ── */
+.page{max-width:920px;margin:0 auto;background:var(--bg);box-shadow:0 0 80px rgba(0,0,0,.25);min-height:100vh}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#FF5500 0%,#CC1100 60%,#8B0000 100%);padding:48px 56px 44px;position:relative;overflow:hidden}
+.hero-co{font-size:12.5px;color:#FFDDCC;letter-spacing:1px;margin-bottom:16px}
+.hero-title{font-size:39px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:6px}
+.hero-title span{color:#FFB800}
+.hero-law{display:inline-block;background:rgba(255,255,255,.15);color:#FFDDCC;font-size:11.5px;padding:4px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.25);margin-bottom:28px}
+.hero-meta{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:var(--r);padding:16px 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px 24px;max-width:480px}
+.hero-meta .mf label{font-size:10.5px;color:rgba(255,255,255,.6);display:block;margin-bottom:2px}
+.hero-meta .mf span{font-size:13.5px;color:#fff}
+.hero-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.chip{padding:5px 16px;border-radius:20px;font-size:11.5px;font-weight:700;color:#fff}
+.hero-flame{position:absolute;right:60px;top:30px;opacity:.85}
+.hero-deco{position:absolute;right:0;bottom:0;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 70%)}
+
+/* ── STICKY NAV ── */
+.topnav{position:sticky;top:0;z-index:100;background:rgba(26,26,26,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,85,0,.3);padding:0 24px;display:flex;align-items:center;gap:2px;overflow-x:auto;scrollbar-width:none}
+.topnav::-webkit-scrollbar{display:none}
+.topnav a{color:rgba(255,255,255,.65);font-size:12px;white-space:nowrap;padding:12px 10px;text-decoration:none;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.topnav a:hover{color:var(--gold);border-bottom-color:var(--gold)}
+.topnav .logo{color:var(--or1);font-weight:700;font-size:12.5px;margin-right:12px;white-space:nowrap;padding:12px 0}
+
+/* ── CONTENT ── */
+main{padding:0 56px 60px}
+
+/* ── SECTION ── */
+.sec{margin-top:52px}
+.sec-hd{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--lg)}
+.sec-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--or1),var(--red));color:#fff;font:700 15.5px var(--fw);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-title{font-size:20.5px;font-weight:700;color:var(--g1)}
+.sec-sub{font-size:13.5px;color:var(--g3);margin-top:1px}
+.subsec{margin-top:28px}
+.subsec-hd{font-size:16.5px;font-weight:700;color:var(--or1);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.subsec-hd::before{content:'';display:block;width:4px;height:18px;background:var(--or1);border-radius:2px}
+.sub2-hd{font-size:14.5px;font-weight:700;color:var(--g2);margin:14px 0 8px;padding-left:10px;border-left:3px solid var(--gold)}
+
+/* ── PROSE ── */
+p{color:var(--g2);margin-bottom:10px}
+ul,ol{padding-left:20px;color:var(--g2);margin-bottom:10px}
+li{margin-bottom:5px}
+strong{color:var(--g1);font-weight:700}
+a{color:var(--or1);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── CALLOUT ── */
+.callout{border-radius:var(--r);padding:14px 18px;margin:14px 0;font-size:14px}
+.callout.warn{background:#FFF5F5;border-left:4px solid var(--red);color:var(--red)}
+.callout.note{background:var(--cream);border-left:4px solid var(--gold);color:#7A4500}
+.callout.info{background:#EAF6F3;border-left:4px solid var(--teal);color:#005447}
+
+/* ── TABLES ── */
+.tbl-wrap{overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{background:linear-gradient(90deg,var(--or1),var(--red));color:#fff;padding:9px 12px;text-align:left;font-weight:700;font-size:12.5px}
+td{padding:8px 12px;border-bottom:1px solid var(--bd);vertical-align:top;color:var(--g2)}
+tr:nth-child(even) td{background:rgba(240,237,232,.4)}
+tr:hover td{background:var(--cream)}
+th:first-child{border-radius:4px 0 0 0}
+th:last-child{border-radius:0 4px 0 0}
+
+/* ── HEAT INDEX TABLE ── */
+.hi-tbl td{text-align:center;padding:6px 8px;font-size:13px;font-weight:600}
+.h1{background:#FEF3C7;color:#78350F}
+.h2{background:#FFEDD5;color:#7C2D12}
+.h3{background:#FEE2E2;color:#7F1D1D}
+.h4{background:#7F1D1D;color:#FCA5A5}
+.hna{background:var(--lg);color:var(--g4)}
+.hi-tbl thead th{background:var(--lg);color:var(--g2);font-size:12.5px}
+.hi-tbl thead th:first-child{background:var(--g1);color:#fff}
+
+/* ── LEVEL CARDS ── */
+.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.lv-card{border-radius:var(--r);overflow:hidden;border:.5px solid var(--bd)}
+.lv-card .lv-top{padding:10px 14px 8px;display:flex;align-items:center;gap:10px}
+.lv-card .lv-num{font:700 18.5px var(--fw);color:#fff}
+.lv-card .lv-range{font:700 12.5px var(--fw);color:rgba(255,255,255,.85)}
+.lv-card .lv-wx{font:400 11.5px var(--fw);color:rgba(255,255,255,.7)}
+.lv-card .lv-body{background:#fff;padding:10px 14px;font-size:13px;color:var(--g2)}
+.lv-card .lv-body li{margin-bottom:4px}
+.lv1 .lv-top{background:var(--lv1)} .lv1 .lv-num,.lv1 .lv-range,.lv1 .lv-wx{color:rgba(0,0,0,.75)!important}
+.lv2 .lv-top{background:var(--lv2)}
+.lv3 .lv-top{background:var(--lv3)}
+.lv4 .lv-top{background:var(--lv4)}
+
+/* ── ROLE CARDS ── */
+.role-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
+.role-card{background:#fff;border:.5px solid var(--bd);border-radius:var(--r);padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.role-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 14px var(--fw);color:#fff;flex-shrink:0}
+.role-name{font:700 13.5px var(--fw);margin-bottom:4px}
+.role-desc{font:400 13px/1.6 var(--fw);color:var(--g3)}
+
+/* ── STEPS (SOP) ── */
+.steps{display:flex;gap:0;margin:14px 0;position:relative}
+.steps::before{content:'';position:absolute;top:24px;left:24px;right:24px;height:2px;background:linear-gradient(90deg,var(--or1),var(--red));z-index:0}
+.step{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1}
+.step-dot{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--or1),var(--red));color:#fff;font:700 18.5px var(--fw);display:flex;align-items:center;justify-content:center;border:3px solid var(--bg)}
+.step-label{font:700 13px var(--fw);color:var(--or1);text-align:center}
+.step-body{background:#fff;border:.5px solid var(--bd);border-radius:6px;padding:10px;font-size:12.5px;color:var(--g2);text-align:center;line-height:1.6;width:100%}
+
+/* ── EMERGENCY 4-COL ── */
+.emer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.emer-card{border-radius:6px;overflow:hidden;border:.5px solid var(--bd)}
+.emer-card .ec-top{padding:10px;text-align:center}
+.emer-card .ec-step{font:700 10.5px var(--fw);color:rgba(255,255,255,.8)}
+.emer-card .ec-title{font:700 13.5px var(--fw);color:#fff;margin-top:2px}
+.emer-card .ec-body{background:#fff;padding:10px;font-size:12.5px;color:var(--g2);line-height:1.6}
+
+/* ── MEASURE CARDS (8 items 2-col) ── */
+.measure-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.mcard{background:#fff;border:.5px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.mcard .mc-top{height:6px}
+.mcard .mc-body{padding:12px 14px}
+.mcard .mc-title{font:700 13.5px var(--fw);margin-bottom:6px}
+.mcard .mc-text{font:400 13px/1.6 var(--fw);color:var(--g3)}
+.mcard .mc-list{font-size:13px;color:var(--g3);padding-left:16px;margin-top:4px}
+.mcard .mc-list li{margin-bottom:3px}
+
+/* ── DISEASE CARDS ── */
+.disease-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.dcard{background:#fff;border:.5px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.dcard .dc-top{padding:14px 10px;text-align:center}
+.dcard .dc-name{font:700 15.5px var(--fw);color:#fff}
+.dcard .dc-en{font:400 10.5px var(--fw);color:rgba(255,255,255,.65);margin-top:2px}
+.dcard .dc-warn{background:rgba(255,255,255,.2);color:#fff;font:700 8.5px var(--fw);padding:1px 6px;border-radius:10px;display:inline-block;margin-top:4px}
+.dcard .dc-body{padding:10px 12px}
+.dcard .dc-cause{background:var(--lg);border-radius:4px;padding:5px 9px;font:400 11.5px/1.5 var(--fw);color:var(--g3);margin-bottom:8px}
+.dcard .dc-label{font:700 11.5px var(--fw);margin-bottom:4px;padding-bottom:4px;border-bottom:.5px solid var(--bd)}
+.dcard ul{font-size:12px;color:var(--g2);padding-left:14px}
+.dcard li{margin-bottom:3px}
+.dcard .danger{color:var(--red);font-weight:700}
+
+/* ── CHECKLIST ── */
+.check-group{margin:16px 0}
+.check-group-title{font:700 14px var(--fw);color:var(--or1);margin-bottom:10px;padding-left:10px;border-left:4px solid var(--or1)}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:8px 12px;border-radius:6px;margin-bottom:4px;background:#fff;border:.5px solid var(--bd);cursor:pointer}
+.check-item:hover{background:var(--cream)}
+.check-item input[type=checkbox]{width:16px;height:16px;flex-shrink:0;margin-top:2px;accent-color:var(--or1);cursor:pointer}
+.check-item label{font:400 13.5px/1.5 var(--fw);color:var(--g2);cursor:pointer}
+.check-item.checked{background:#EAF6F3;border-color:var(--teal)}
+.check-item.checked label{color:var(--teal)}
+
+/* ── DIVIDER ── */
+.div-flame{display:flex;align-items:center;gap:16px;margin:48px 0 0;padding-top:24px;border-top:2px solid var(--lg)}
+.div-flame::before,.div-flame::after{content:'';flex:1;height:1px;background:var(--lg)}
+.div-flame span{color:var(--g4);font-size:12.5px;white-space:nowrap}
+
+/* ── APPENDIX HEADER ── */
+.app-hd{background:var(--lg);border-radius:var(--r);padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.app-tag{background:var(--or1);color:#fff;font:700 11.5px var(--fw);padding:3px 12px;border-radius:20px;white-space:nowrap}
+.app-title{font:700 17.5px var(--fw);color:var(--g1)}
+
+/* ── CONTACT GRID ── */
+.contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
+.ccard{background:#fff;border:.5px solid var(--bd);border-radius:6px;padding:12px 14px}
+.ccard .cc-role{font:700 13px var(--fw);margin-bottom:4px}
+.ccard .cc-info{font:400 12.5px var(--fw);color:var(--g3)}
+
+/* ── WEB TUTORIAL STEPS ── */
+.web-steps{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
+.ws-card{border-radius:var(--r);overflow:hidden;border:.5px solid var(--bd)}
+.ws-card .ws-top{padding:12px 14px;display:flex;align-items:center;gap:10px}
+.ws-card .ws-step{font:700 10.5px var(--fw);padding:2px 10px;background:rgba(255,255,255,.25);border-radius:20px;color:#fff}
+.ws-card .ws-title{font:700 14.5px var(--fw);color:#fff}
+.ws-card .ws-body{background:#fff;padding:12px 14px;font-size:13.5px;color:var(--g2);line-height:1.7}
+
+/* ── FOOTER ── */
+footer{background:var(--g1);color:rgba(255,255,255,.4);text-align:center;padding:20px 24px;font-size:11.5px;line-height:1.8}
+
+/* ── PRINT ── */
+@media print{
+  body{background:#fff}
+  .page{box-shadow:none;max-width:100%}
+  .topnav{display:none}
+  main{padding:0 24px 40px}
+  .hero{padding:32px 24px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ════════════════ HERO ════════════════ -->
+<header class="hero">
+  <div class="hero-deco"></div>
+  <svg class="hero-flame" width="100" height="130" viewBox="-50 -90 100 130">
+    <path fill="#FFB800" opacity=".9" d="M0-81C-34-38-47 8 0 28 47 8 34-38 0-81Z"/>
+    <path fill="#FF5500" d="M0-59C-24-24-30 0 0 17 30 0 24-24 0-59Z"/>
+    <path fill="#FFF0CC" d="M0-26C-11-11-12-2 0 4 12-2 11-11 0-26Z"/>
+  </svg>
+  <div class="hero-co">大豐環保科技股份有限公司</div>
+  <div class="hero-title">高氣溫戶外作業<br><span>熱危害預防計畫書</span></div>
+  <div class="hero-law">依職業安全衛生設施規則 §303-1 及 §324-6 訂定</div>
+  <div class="hero-meta">
+    <div class="mf"><label>版　　次</label><span>第一版</span></div>
+    <div class="mf"><label>訂定日期</label><span>中華民國115年6月</span></div>
+    <div class="mf"><label>法令依據</label><span>職安設施規則</span></div>
+    <div class="mf"><label>核　　准</label><span style="border-bottom:1px solid rgba(255,255,255,.4);display:block;width:120px;height:20px"></span></div>
+    <div class="mf"><label>審　　核</label><span style="border-bottom:1px solid rgba(255,255,255,.4);display:block;width:120px;height:20px"></span></div>
+    <div class="mf"><label>承　　辦</label><span style="border-bottom:1px solid rgba(255,255,255,.4);display:block;width:120px;height:20px"></span></div>
+  </div>
+  <div class="hero-chips">
+    <span class="chip" style="background:rgba(255,85,0,.7)">夾子車司機員</span>
+    <span class="chip" style="background:rgba(204,17,0,.7)">手動分選作業人員</span>
+    <span class="chip" style="background:rgba(255,184,0,.8);color:#1A1A1A">其他戶外作業人員</span>
+    <span class="chip" style="background:rgba(0,137,123,.7)">承攬商及派遣勞工</span>
+  </div>
+</header>
+
+<!-- ════════════════ TOP NAV ════════════════ -->
+<nav class="topnav">
+  <span class="logo">大豐環保</span>
+  <a href="#s1">一、目的</a>
+  <a href="#s2">二、法令</a>
+  <a href="#s3">三、適用範圍</a>
+  <a href="#s4">四、職責</a>
+  <a href="#s5">五、風險評估</a>
+  <a href="#s6">六、預防措施</a>
+  <a href="#s7">七、執行管理</a>
+  <a href="#t1">附表一</a>
+  <a href="#t2">附表二</a>
+  <a href="#t3">附表三</a>
+  <a href="#t4">附表四</a>
+  <a href="#app">附錄</a>
+</nav>
+
+<!-- ════════════════ MAIN ════════════════ -->
+<main>
+
+<!-- ── 一、目的 ── -->
+<section class="sec" id="s1">
+  <div class="sec-hd">
+    <div class="sec-num">一</div>
+    <div><div class="sec-title">目的</div></div>
+  </div>
+  <p>為保障本公司從事戶外作業之勞工（包含夾子車司機、手動分選作業人員及其他戶外作業人員）於高氣溫環境下之職業安全健康，預防熱疾病發生，依職業安全衛生設施規則第303條之1及第324條之6規定，並參照勞動部《高氣溫作業熱危害預防指引》（第三版，114年6月），特訂定本計畫，以供本公司全體相關人員遵循。</p>
+</section>
+
+<!-- ── 二、法令依據 ── -->
+<section class="sec" id="s2">
+  <div class="sec-hd">
+    <div class="sec-num">二</div>
+    <div><div class="sec-title">法令依據</div></div>
+  </div>
+  <div class="subsec">
+    <div class="subsec-hd">（一）職業安全衛生設施規則 第303條之1</div>
+    <p>雇主使勞工從事戶外作業，其熱危害風險等級達第四級以上者，應於作業場所設置遮陽設施，並提供風扇、水霧或其他降溫設備；另於鄰近作業場所設置具降溫效果之休息場所，並提供充足飲水。</p>
+  </div>
+  <div class="subsec">
+    <div class="subsec-hd">（二）職業安全衛生設施規則 第324條之6</div>
+    <p>雇主使勞工從事戶外作業，應視天候狀況採取：降低作業場所溫度、提供陰涼休息場所、提供適當飲料或食鹽水、調整作業時間、增加巡視頻率、實施健康管理、採取熱適應措施、留意作業前後健康狀況、實施熱疾病預防教育宣導、建立緊急醫療通報及應變機制等危害預防措施。</p>
+  </div>
+  <div class="subsec">
+    <div class="subsec-hd">（三）指引依據</div>
+    <p>勞動部《高氣溫作業熱危害預防指引》第三版（114年6月20日）</p>
+  </div>
+</section>
+
+<!-- ── 三、適用範圍 ── -->
+<section class="sec" id="s3">
+  <div class="sec-hd">
+    <div class="sec-num">三</div>
+    <div><div class="sec-title">適用範圍及對象</div></div>
+  </div>
+  <p>本計畫適用於本公司所有於戶外或半開放式環境從事作業之工作者，主要對象包含：</p>
+  <div class="role-grid" style="margin-top:14px">
+    <div class="role-card">
+      <div class="role-icon" style="background:var(--or1)">司</div>
+      <div><div class="role-name" style="color:var(--or1)">夾子車司機員</div><div class="role-desc">駕駛夾子車於各廠區、站區或廢棄物棄置場進行搬運及裝卸作業</div></div>
+    </div>
+    <div class="role-card">
+      <div class="role-icon" style="background:var(--red)">分</div>
+      <div><div class="role-name" style="color:var(--red)">手動分選作業人員</div><div class="role-desc">於戶外或半開放式場所從事廢棄物手動分類及初步處理作業</div></div>
+    </div>
+    <div class="role-card">
+      <div class="role-icon" style="background:var(--gold);color:var(--g1)">外</div>
+      <div><div class="role-name" style="color:var(--gold)">其他戶外作業人員</div><div class="role-desc">包括駐廠人員、設備維修人員等需於戶外長時間作業者</div></div>
+    </div>
+    <div class="role-card">
+      <div class="role-icon" style="background:var(--teal)">承</div>
+      <div><div class="role-name" style="color:var(--teal)">承攬商及派遣勞工</div><div class="role-desc">於本公司指揮監督下從事戶外作業者，一併適用本計畫</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 四、職責分工 ── -->
+<section class="sec" id="s4">
+  <div class="sec-hd">
+    <div class="sec-num">四</div>
+    <div><div class="sec-title">主管人員職責分工</div></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>層級</th><th>職稱／單位</th><th>職責</th></tr></thead>
+      <tbody>
+        <tr><td><strong style="color:var(--or1)">雇主</strong></td><td>公司負責人</td><td>核准本計畫；確保資源投入（遮陽設備、飲水、降溫器具）；緊急應變最終責任</td></tr>
+        <tr><td><strong style="color:var(--red)">主管</strong></td><td>現場主管／領班</td><td>執行日常巡視；確認措施落實；發現疑似熱疾病時立即啟動應變</td></tr>
+        <tr><td><strong style="color:var(--gold)">職安人員</strong></td><td>職業安全衛生管理師</td><td>訂定及更新本計畫；實施教育訓練；監控熱指數；紀錄與統計</td></tr>
+        <tr><td><strong style="color:var(--teal)">作業人員</strong></td><td>夾子車司機、分選員工</td><td>配合本計畫規定，執行自主健康管理，發現身體不適立即通報</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 五、風險評估 ── -->
+<section class="sec" id="s5">
+  <div class="sec-hd">
+    <div class="sec-num">五</div>
+    <div><div class="sec-title">熱危害風險評估方法</div></div>
+  </div>
+  <p>每日作業前，職安管理師或指定主管應查詢當日當地氣象資料（溫度及相對濕度），依下列程序評估熱危害風險等級，並通知現場人員採取對應措施。</p>
+
+  <div class="subsec">
+    <div class="subsec-hd">每日評估四步驟</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-dot">1</div>
+        <div class="step-label">查詢</div>
+        <div class="step-body">至中央氣象署或<br>職安署防護資訊網<br>查詢溫度及相對濕度</div>
+      </div>
+      <div class="step">
+        <div class="step-dot">2</div>
+        <div class="step-label">查表</div>
+        <div class="step-body">對照附表一<br>找出熱指數（HI）數值</div>
+      </div>
+      <div class="step">
+        <div class="step-dot">3</div>
+        <div class="step-label">分級</div>
+        <div class="step-body">對照附表二<br>確認當日風險等級<br>（第一～四級）</div>
+      </div>
+      <div class="step">
+        <div class="step-dot">4</div>
+        <div class="step-label">執行</div>
+        <div class="step-body">依等級採取對應措施<br>通知現場主管及<br>全體作業人員</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <strong>注意：</strong>若勞工於陽光直接照射下作業，或穿著不透氣厚重防護衣物時，應將風險等級提升一級。
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-hd">熱危害風險等級快速對照</div>
+    <div class="level-grid">
+      <div class="lv-card lv1">
+        <div class="lv-top">
+          <div>
+            <div class="lv-num">第一級（低）</div>
+            <div class="lv-range">HI 26.7 ～ 32.2 ℃</div>
+            <div class="lv-wx">溫暖微熱</div>
+          </div>
+        </div>
+        <div class="lv-body">基本防護，重體力作業加強警覺；提供透氣工作服、飲水；辦理教育訓練</div>
+      </div>
+      <div class="lv-card lv2">
+        <div class="lv-top">
+          <div>
+            <div class="lv-num">第二級（中）</div>
+            <div class="lv-range">HI 32.2 ～ 40.6 ℃</div>
+            <div class="lv-wx">偏熱，氣象局接近發布高溫</div>
+          </div>
+        </div>
+        <div class="lv-body">實施防護措施，提升危害認知；降溫、遮陽、調整作業時間、熱適應訓練</div>
+      </div>
+      <div class="lv-card lv3">
+        <div class="lv-top">
+          <div>
+            <div class="lv-num">第三級（高）</div>
+            <div class="lv-range">HI 40.6 ～ 54.4 ℃</div>
+            <div class="lv-wx">高溫，避免高氣溫時段作業</div>
+          </div>
+        </div>
+        <div class="lv-body">強化防護；每小時派專人巡視；避開上午10時至下午2時高強度作業</div>
+      </div>
+      <div class="lv-card lv4">
+        <div class="lv-top">
+          <div>
+            <div class="lv-num">第四級（極高）</div>
+            <div class="lv-range">HI 54.4 ℃ 以上</div>
+            <div class="lv-wx">極端高溫</div>
+          </div>
+        </div>
+        <div class="lv-body">避免戶外作業；依法設遮陽設施及降溫設備；設置具冷氣之休息場所</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 六、預防措施 ── -->
+<section class="sec" id="s6">
+  <div class="sec-hd">
+    <div class="sec-num">六</div>
+    <div><div class="sec-title">危害預防及管理措施</div></div>
+  </div>
+
+  <!-- 6.1 作業管理 -->
+  <div class="subsec">
+    <div class="subsec-hd">（一）勞工作業管理</div>
+    <div class="measure-grid">
+      <div class="mcard">
+        <div class="mc-top" style="background:var(--or1)"></div>
+        <div class="mc-body">
+          <div class="mc-title" style="color:var(--or1)">1｜降低勞工暴露溫度</div>
+          <ul class="mc-list">
+            <li><strong>夾子車司機：</strong>確認駕駛室冷氣正常；停車待命時在遮陽區</li>
+            <li><strong>分選作業區：</strong>設遮陽棚或噴霧風扇；低於30℃可用風扇散熱</li>
+            <li>環境溫度高於30℃時，避免熱風直吹勞工</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mcard">
+        <div class="mc-top" style="background:var(--red)"></div>
+        <div class="mc-body">
+          <div class="mc-title" style="color:var(--red)">2｜現場巡視</div>
+          <ul class="mc-list">
+            <li>第一、二級：作業前確認防護措施，作業期間留意勞工狀況</li>
+            <li><strong>第三、四級：每小時派專人巡視一次</strong></li>
+            <li>建議「夥伴制度」：至少2人一組互相觀察</li>
+            <li>發現不適立即停工，移至陰涼處，必要時送醫</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mcard">
+        <div class="mc-top" style="background:var(--gold)"></div>
+        <div class="mc-body">
+          <div class="mc-title" style="color:var(--gold)">3｜提供適當休息場所</div>
+          <ul class="mc-list">
+            <li>具備有效遮陽（不因日照方向改變而失效）</li>
+            <li>密閉貨櫃屋為休息場所者，必須設置冷氣</li>
+            <li>備有冷水、電解質飲料、濕毛巾</li>
+            <li>不定點作業時預先規劃沿途休息點</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mcard">
+        <div class="mc-top" style="background:var(--teal)"></div>
+        <div class="mc-body">
+          <div class="mc-title" style="color:var(--teal)">4｜提供適當工作服裝</div>
+          <ul class="mc-list">
+            <li>淺色、寬鬆、具吸濕排汗性、透氣之工作服及通風帽</li>
+            <li>紫外線指數過高（UV ≥ 8）時，建議穿著長袖</li>
+            <li>夾子車司機應配備抗UV袖套、頭巾等</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mcard">
+        <div class="mc-top" style="background:var(--pur)"></div>
+        <div class="mc-body">
+          <div class="mc-title" style="color:var(--pur)">5｜充足飲水及電解質補充</div>
+          <ul class="mc-list">
+            <li>備有清涼飲用水（約10～15℃）或含電解質飲料</li>
+            <li><strong>每15～20分鐘補充150～200 mL，不待口渴才補</strong></li>
+            <li>受限者至少每小時補充2～4杯（每杯約240 mL）</li>
+            <li>有鹽分攝取限制之勞工，應諮詢醫師建議</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mcard">
+        <div class="mc-top" style="background:#00838F"></div>
+        <div class="mc-body">
+          <div class="mc-title" style="color:#00838F">6｜調整熱適應能力</div>
+          <ul class="mc-list">
+            <li><strong>新進員工：</strong>第1天不超過20%，每天遞增20%至正常值</li>
+            <li><strong>有經驗員工：</strong>50% → 60% → 80% → 第4天正常</li>
+            <li>每年5月前辦理熱適應訓練</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mcard">
+        <div class="mc-top" style="background:#C2185B"></div>
+        <div class="mc-body">
+          <div class="mc-title" style="color:#C2185B">7｜調整作業時間</div>
+          <ul class="mc-list">
+            <li>避免於<strong>上午10時至下午2時</strong>安排高強度戶外作業</li>
+            <li>重體力作業每小時給予至少<strong>20分鐘休息</strong></li>
+            <li>第三、四級時，調整工作排程至清晨或傍晚</li>
+            <li>必要時增派人力，減少單人連續作業時間</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mcard">
+        <div class="mc-top" style="background:var(--g3)"></div>
+        <div class="mc-body">
+          <div class="mc-title" style="color:var(--g2)">8｜個人防護器具（最後防線）</div>
+          <div class="mc-text">於上述作業管理措施確有困難時，方考慮使用：</div>
+          <ul class="mc-list">
+            <li>冰背心、水冷循環背心、風扇背心</li>
+            <li>濕毛巾、隨身噴霧、保冷劑</li>
+            <li>抗UV袖套、頭巾、寬簷帽</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6.2 健康管理 -->
+  <div class="subsec">
+    <div class="subsec-hd">（二）勞工健康管理</div>
+    <div class="sub2-hd">1. 適當選配作業勞工</div>
+    <p>下列人員因體溫調節能力較弱，應避免長時間從事高氣溫作業，或於安排前諮詢醫師建議：</p>
+    <ul>
+      <li>高血壓、心臟病、糖尿病、腎臟病、肝疾病等慢性病患者</li>
+      <li>服用影響體溫調節、抑制排汗或利尿劑等藥物者</li>
+      <li>肥胖、妊娠、中高齡或高齡員工</li>
+      <li>近期缺乏熱暴露者，或曾罹患熱疾病者</li>
+      <li>新進勞工應配合辦理體格檢查，確認體適能後再安排作業</li>
+    </ul>
+    <div class="sub2-hd">2. 勞工個人自主健康管理</div>
+    <ul>
+      <li>宣導：保持正常作息、充足睡眠、均衡飲食，作業前後不飲酒</li>
+      <li>勞工應自我監測：如感頭暈、噁心、大量出汗異常等，立即告知主管</li>
+      <li>提醒員工注意前一晚是否充分補水，避免出勤前即已輕度脫水</li>
+    </ul>
+    <div class="sub2-hd">3. 確認作業勞工健康狀況</div>
+    <p>現場備有體溫計及血壓計（含心跳速率量測）。發現下列任一情形，<strong>立即停止作業，移至陰涼處並視情況送醫：</strong></p>
+    <div class="callout warn">
+      <ul style="color:var(--red);padding-left:18px">
+        <li>未熱適應者耳溫超過 <strong>38℃</strong>；已熱適應者超過 <strong>38.5℃</strong></li>
+        <li>心跳速率持續數分鐘超過 <strong>「180 − 年齡」次/分鐘</strong></li>
+        <li>停止作業1分鐘後心跳速率仍高於 <strong>120次/分鐘</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6.3 教育訓練 -->
+  <div class="subsec">
+    <div class="subsec-hd">（三）熱危害預防安全衛生教育訓練</div>
+    <p>本公司於每年一般職業安全衛生教育訓練中，同步辦理高氣溫作業熱危害預防教育訓練，對象為現場主管及全體戶外作業人員。</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th width="80">項目</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>必訓1</td><td>熱疾病種類（熱痙攣、熱衰竭、熱中暑等）、發生時機及臨床症狀</td></tr>
+          <tr><td>必訓2</td><td>熱疾病預防措施（本計畫各項管理措施及個人自主健康管理）</td></tr>
+          <tr><td>必訓3</td><td>緊急情況急救措施（現場急救處置原則，含 CPR/AED）與應變演練</td></tr>
+          <tr><td>必訓4</td><td>熱指數評估方法及本公司分級管理規定</td></tr>
+          <tr><td>必訓5</td><td>熱疾病職業災害案例分享</td></tr>
+          <tr><td>時間</td><td><strong>每年5月底前完成</strong>（於進入夏季高溫前完訓）；訓練紀錄至少留存3年</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 6.4 緊急應變 -->
+  <div class="subsec">
+    <div class="subsec-hd">（四）緊急醫療、通報及應變處理機制</div>
+    <div class="emer-grid">
+      <div class="emer-card">
+        <div class="ec-top" style="background:var(--or1)">
+          <div class="ec-step">Step 1</div>
+          <div class="ec-title">立即處置</div>
+        </div>
+        <div class="ec-body">
+          發現勞工出現熱疾病症狀（頭暈、大量出汗、意識不清）<br>→ 立即停止作業<br>→ 移至陰涼通風處<br>→ 鬆開衣物，平躺抬腿
+        </div>
+      </div>
+      <div class="emer-card">
+        <div class="ec-top" style="background:var(--gold)">
+          <div class="ec-step" style="color:rgba(0,0,0,.5)">Step 2</div>
+          <div class="ec-title" style="color:var(--g1)">降溫處置</div>
+        </div>
+        <div class="ec-body">
+          以冷濕毛巾或冰袋置於頸部、腋下、鼠蹊部散熱<br>→ 意識清醒者給予含電解質清涼飲料<br>→ 啟動電扇加速散熱
+        </div>
+      </div>
+      <div class="emer-card">
+        <div class="ec-top" style="background:var(--red)">
+          <div class="ec-step">Step 3</div>
+          <div class="ec-title">通報</div>
+        </div>
+        <div class="ec-body">
+          通報現場主管<br>→ 體溫超過40℃或意識不清 → <strong>立即撥打119</strong><br>→ 通報職安人員<br>→ 外派時同步通報客戶ESH
+        </div>
+      </div>
+      <div class="emer-card">
+        <div class="ec-top" style="background:var(--teal)">
+          <div class="ec-step">Step 4</div>
+          <div class="ec-title">後續處理</div>
+        </div>
+        <div class="ec-body">
+          填寫意外事故通報表<br>→ 職災認定由職安管理人員及人資部門辦理<br>→ 送醫費用及職災補償依勞基法辦理
+        </div>
+      </div>
+    </div>
+    <div class="sub2-hd">緊急聯絡資訊</div>
+    <div class="contact-grid">
+      <div class="ccard">
+        <div class="cc-role" style="color:var(--red)">🚑 消防救護 — 119</div>
+        <div class="cc-info">體溫超過40℃或意識不清時立即撥打</div>
+      </div>
+      <div class="ccard">
+        <div class="cc-role" style="color:var(--or1)">職安管理師 — 賴佑毓</div>
+        <div class="cc-info">(04)24224266 #168 ｜ 職安事件通報及後續處理</div>
+      </div>
+      <div class="ccard">
+        <div class="cc-role" style="color:var(--gold)">現場主管</div>
+        <div class="cc-info">（請填入）｜ 第一時間通報對象</div>
+      </div>
+      <div class="ccard">
+        <div class="cc-role" style="color:var(--teal)">最近醫院</div>
+        <div class="cc-info">（請填入）｜ 作業現場鄰近急診醫院，請由現場主管填寫</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 七、計畫執行 ── -->
+<section class="sec" id="s7">
+  <div class="sec-hd">
+    <div class="sec-num">七</div>
+    <div><div class="sec-title">計畫執行、紀錄與管理</div></div>
+  </div>
+  <ul>
+    <li>本計畫由職業安全衛生管理師負責訂定、更新及推動執行</li>
+    <li>每年5月底前完成教育訓練，訓練紀錄至少保存3年</li>
+    <li>熱指數查詢紀錄、現場巡視紀錄（含簽名）留存備查</li>
+    <li>每年至少檢討一次本計畫，有重大職災事故時應即時修訂</li>
+    <li>本計畫訂定後，應向全體戶外作業人員宣導並取得簽收確認</li>
+  </ul>
+</section>
+
+<!-- ════════════════ 附表 ════════════════ -->
+<div class="div-flame"><span>附　　表</span></div>
+
+<!-- ── 附表一 ── -->
+<section class="sec" id="t1">
+  <div class="app-hd">
+    <span class="app-tag">附表一</span>
+    <div class="app-title">熱指數對照表（簡化版）</div>
+  </div>
+  <div class="callout note">完整熱指數表請至 <a href="https://hiosha.osha.gov.tw/" target="_blank">hiosha.osha.gov.tw</a> 直接查詢即時熱指數。查詢方式：溫度（縱軸）× 相對濕度（橫軸）交叉值即為熱指數。</div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;font-size:12px">
+    <span><span style="display:inline-block;width:14px;height:14px;background:#FEF3C7;border:1px solid #F5A623;vertical-align:middle;border-radius:2px;margin-right:4px"></span>第一級（低）</span>
+    <span><span style="display:inline-block;width:14px;height:14px;background:#FFEDD5;border:1px solid #E86A10;vertical-align:middle;border-radius:2px;margin-right:4px"></span>第二級（中）</span>
+    <span><span style="display:inline-block;width:14px;height:14px;background:#FEE2E2;border:1px solid #CC1100;vertical-align:middle;border-radius:2px;margin-right:4px"></span>第三級（高）</span>
+    <span><span style="display:inline-block;width:14px;height:14px;background:#7F1D1D;border:1px solid #700000;vertical-align:middle;border-radius:2px;margin-right:4px"></span>第四級（極高）</span>
+  </div>
+  <div class="tbl-wrap">
+    <table class="hi-tbl">
+      <thead><tr><th>溫度(℃) ╲ 相對濕度(%)</th><th>40%</th><th>50%</th><th>60%</th><th>70%</th><th>80%</th><th>90%</th></tr></thead>
+      <tbody>
+        <tr><td style="background:var(--g1);color:#fff;font-weight:700;text-align:left">28.9</td><td class="h1">28.3</td><td class="h1">29.4</td><td class="h1">30.0</td><td class="h1">31.1</td><td class="h1">31.7</td><td class="h2">32.2</td></tr>
+        <tr><td style="background:var(--g1);color:#fff;font-weight:700;text-align:left">30.0</td><td class="h1">29.4</td><td class="h1">30.6</td><td class="h1">31.1</td><td class="h1">31.7</td><td class="h2">32.8</td><td class="h2">33.9</td></tr>
+        <tr><td style="background:var(--g1);color:#fff;font-weight:700;text-align:left">31.1</td><td class="h1">31.1</td><td class="h1">31.7</td><td class="h2">32.8</td><td class="h2">33.9</td><td class="h2">35.0</td><td class="h2">36.7</td></tr>
+        <tr><td style="background:var(--g1);color:#fff;font-weight:700;text-align:left">32.2</td><td class="h2">32.8</td><td class="h2">33.9</td><td class="h2">35.0</td><td class="h2">36.1</td><td class="h2">37.8</td><td class="h2">39.4</td></tr>
+        <tr><td style="background:var(--g1);color:#fff;font-weight:700;text-align:left">33.3</td><td class="h2">34.4</td><td class="h2">35.6</td><td class="h2">37.2</td><td class="h2">38.3</td><td class="h3">40.6</td><td class="h3">42.2</td></tr>
+        <tr><td style="background:var(--g1);color:#fff;font-weight:700;text-align:left">34.4</td><td class="h2">36.1</td><td class="h2">37.8</td><td class="h2">39.4</td><td class="h3">41.1</td><td class="h3">43.3</td><td class="h3">45.6</td></tr>
+        <tr><td style="background:var(--g1);color:#fff;font-weight:700;text-align:left">35.6</td><td class="h2">38.3</td><td class="h2">40.0</td><td class="h3">42.2</td><td class="h3">44.4</td><td class="h3">46.7</td><td class="h3">49.4</td></tr>
+        <tr><td style="background:var(--g1);color:#fff;font-weight:700;text-align:left">36.7</td><td class="h3">40.6</td><td class="h3">42.8</td><td class="h3">45.0</td><td class="h3">47.2</td><td class="h3">50.6</td><td class="h3">53.3</td></tr>
+        <tr><td style="background:var(--g1);color:#fff;font-weight:700;text-align:left">37.8</td><td class="h3">42.8</td><td class="h3">45.6</td><td class="h3">47.8</td><td class="h3">51.1</td><td class="h3">53.9</td><td class="h4">57.8</td></tr>
+        <tr><td style="background:var(--g1);color:#fff;font-weight:700;text-align:left">38.9</td><td class="h3">45.6</td><td class="h3">48.3</td><td class="h3">51.1</td><td class="h4">54.4</td><td class="h4">58.3</td><td class="hna">—</td></tr>
+        <tr><td style="background:var(--g1);color:#fff;font-weight:700;text-align:left">40.0</td><td class="h3">48.3</td><td class="h3">51.1</td><td class="h4">55.0</td><td class="h4">58.3</td><td class="hna">—</td><td class="hna">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 附表二 ── -->
+<section class="sec" id="t2">
+  <div class="app-hd">
+    <span class="app-tag">附表二</span>
+    <div class="app-title">不同熱危害風險等級對應之危害預防管理措施</div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>危害預防及管理措施</th>
+          <th style="background:#F5A623;color:#1A1A1A;text-align:center">第一級</th>
+          <th style="background:#E86A10;text-align:center">第二級</th>
+          <th style="background:#CC1100;text-align:center">第三級</th>
+          <th style="background:#700000;text-align:center">第四級</th>
+          <th>備註</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="6" style="background:var(--lg);font-weight:700;color:var(--or1)">（一）勞工作業管理</td></tr>
+        <tr><td>1. 降低勞工暴露溫度</td><td style="text-align:center">○</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●＊</td><td>第四級須設遮陽、降溫設備</td></tr>
+        <tr><td>2. 現場巡視勞工作業情形</td><td style="text-align:center">○</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td></td></tr>
+        <tr><td>3. 提供適當休息場所</td><td style="text-align:center">○</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●＊</td><td>第四級須設具冷氣之休息場所</td></tr>
+        <tr><td>4. 提供適當工作服裝</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td></td></tr>
+        <tr><td>5. 充足飲用水及電解質</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●＊</td><td></td></tr>
+        <tr><td>6. 調整熱適應能力</td><td style="text-align:center">—</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td></td></tr>
+        <tr><td>7. 調整作業時間</td><td style="text-align:center">—</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td>重體力作業第一級起即應執行</td></tr>
+        <tr><td>8. 個人防護器具</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">(△)</td><td style="text-align:center">(△)</td><td>最後防線，措施確有困難時</td></tr>
+        <tr><td colspan="6" style="background:var(--lg);font-weight:700;color:var(--teal)">（二）勞工健康管理</td></tr>
+        <tr><td>1～3. 選配/自主/確認健康</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td></td></tr>
+        <tr><td colspan="6" style="background:var(--lg);font-weight:700;color:var(--gold)">（三）教育訓練</td></tr>
+        <tr><td>熱危害預防教育訓練</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td>每年5月前辦理</td></tr>
+        <tr><td colspan="6" style="background:var(--lg);font-weight:700;color:var(--red)">（四）緊急醫療應變機制</td></tr>
+        <tr><td>建立緊急醫療通報及應變機制</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td style="text-align:center">●</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:12px;color:var(--g3);margin-top:8px">例：● 應執行　○ 重體力作業應執行，其他視需要　(△) 措施確有困難時使用</p>
+</section>
+
+<!-- ── 附表三 ── -->
+<section class="sec" id="t3">
+  <div class="app-hd">
+    <span class="app-tag">附表三</span>
+    <div class="app-title">高氣溫作業熱危害防範措施檢核表</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px;font-size:13px;color:var(--g2)">
+    <div>日期：<span style="border-bottom:1px solid var(--bd);display:inline-block;width:120px"></span></div>
+    <div>作業地點：<span style="border-bottom:1px solid var(--bd);display:inline-block;width:100px"></span></div>
+    <div>填表人：<span style="border-bottom:1px solid var(--bd);display:inline-block;width:120px"></span></div>
+    <div>主管簽名：<span style="border-bottom:1px solid var(--bd);display:inline-block;width:100px"></span></div>
+  </div>
+  <div class="check-group">
+    <div class="check-group-title">（一）勞工作業管理</div>
+    <label class="check-item"><input type="checkbox"><span>指派勞工於高氣溫環境戶外作業前，是否已確認其完成熱適應？</span></label>
+    <label class="check-item"><input type="checkbox"><span>是否進行定期巡視作業（第三、四級每小時一次）？</span></label>
+    <label class="check-item"><input type="checkbox"><span>勞工是否有定期補充水分及電解質？</span></label>
+    <label class="check-item"><input type="checkbox"><span>勞工是否於中午期間適當進食？</span></label>
+    <label class="check-item"><input type="checkbox"><span>是否設置遮陽設施或空調設施供勞工休息？</span></label>
+    <label class="check-item"><input type="checkbox"><span>作業現場或鄰近處是否備有足夠清涼飲用水或含電解質飲料？</span></label>
+    <label class="check-item"><input type="checkbox"><span>勞工工作服與帽子（或頭盔）是否具備透氣性及排汗性？</span></label>
+    <label class="check-item"><input type="checkbox"><span>勞工是否有定時休息、減少連續作業時間或調整作業時間？</span></label>
+    <label class="check-item"><input type="checkbox"><span>夾子車駕駛室冷氣是否正常運作？</span></label>
+  </div>
+  <div class="check-group">
+    <div class="check-group-title">（二）勞工健康管理</div>
+    <label class="check-item"><input type="checkbox"><span>是否依健康檢查結果，調整勞工工作安排？</span></label>
+    <label class="check-item"><input type="checkbox"><span>是否指導勞工日常自主健康管理？</span></label>
+    <label class="check-item"><input type="checkbox"><span>是否備有體溫及血壓（含心跳速率）量測裝置？</span></label>
+    <label class="check-item"><input type="checkbox"><span>是否於作業前及作業期間確認勞工健康狀況？</span></label>
+  </div>
+  <div class="check-group">
+    <div class="check-group-title">（三）教育訓練</div>
+    <label class="check-item"><input type="checkbox"><span>勞工是否瞭解熱疾病徵兆、症狀及預防措施？</span></label>
+    <label class="check-item"><input type="checkbox"><span>勞工是否瞭解熱適應之重要性及規律補水？</span></label>
+    <label class="check-item"><input type="checkbox"><span>勞工是否瞭解發現夥伴有熱疾病症狀時應採取之行動？</span></label>
+  </div>
+  <div class="check-group">
+    <div class="check-group-title">（四）緊急應變</div>
+    <label class="check-item"><input type="checkbox"><span>所有勞工是否瞭解緊急聯絡流程及最近急診醫院位置？</span></label>
+    <label class="check-item"><input type="checkbox"><span>是否進行緊急應變演練？</span></label>
+  </div>
+</section>
+
+<!-- ── 附表四 ── -->
+<section class="sec" id="t4">
+  <div class="app-hd">
+    <span class="app-tag">附表四</span>
+    <div class="app-title">常見熱疾病症狀及現場急救處置</div>
+  </div>
+  <div class="disease-grid">
+    <!-- 熱痙攣 -->
+    <div class="dcard">
+      <div class="dc-top" style="background:var(--lv1)">
+        <div class="dc-name" style="color:var(--g1)">熱痙攣</div>
+        <div class="dc-en" style="color:rgba(0,0,0,.5)">Heat Cramp</div>
+      </div>
+      <div class="dc-body">
+        <div class="dc-cause">大量流汗後電解質失衡</div>
+        <div class="dc-label" style="color:var(--lv1)">症狀</div>
+        <ul>
+          <li>肌肉局部抽筋（腹、手臂、腿）</li>
+          <li>體溫正常或輕微上升</li>
+          <li>大量出汗</li>
+        </ul>
+        <div class="dc-label" style="color:var(--teal);margin-top:10px">急救處置</div>
+        <ul>
+          <li>移至陰涼處休息</li>
+          <li>補充含電解質飲料</li>
+          <li>心臟病或症狀未消退者送醫</li>
+        </ul>
+      </div>
+    </div>
+    <!-- 熱暈厥 -->
+    <div class="dcard">
+      <div class="dc-top" style="background:var(--lv2)">
+        <div class="dc-name">熱暈厥</div>
+        <div class="dc-en">Heat Syncope</div>
+      </div>
+      <div class="dc-body">
+        <div class="dc-cause">血管擴張＋脫水導致姿勢性低血壓</div>
+        <div class="dc-label" style="color:var(--lv2)">症狀</div>
+        <ul>
+          <li>短暫昏厥</li>
+          <li>頭暈</li>
+          <li>姿勢改變時頭痛</li>
+        </ul>
+        <div class="dc-label" style="color:var(--teal);margin-top:10px">急救處置</div>
+        <ul>
+          <li>陰涼處平躺抬腿</li>
+          <li>鬆開衣物</li>
+          <li>恢復後給予飲水</li>
+          <li>體溫持續上升或意識不清→送醫</li>
+        </ul>
+      </div>
+    </div>
+    <!-- 熱衰竭 -->
+    <div class="dcard">
+      <div class="dc-top" style="background:var(--lv3)">
+        <div class="dc-name">熱衰竭</div>
+        <div class="dc-en">Heat Exhaustion</div>
+      </div>
+      <div class="dc-body">
+        <div class="dc-cause">嚴重脫水→循環衰竭（熱中暑前期）</div>
+        <div class="dc-label" style="color:var(--lv3)">症狀</div>
+        <ul>
+          <li>體溫正常或微升（低於40℃）</li>
+          <li>大量出汗、皮膚濕冷</li>
+          <li>頭暈噁心無力、心跳加快</li>
+        </ul>
+        <div class="dc-label" style="color:var(--teal);margin-top:10px">急救處置</div>
+        <ul>
+          <li>陰涼處平躺，腳抬高</li>
+          <li>移除不必要衣物</li>
+          <li>補充水分或清涼飲品</li>
+          <li>冷敷降溫；惡化→立即送醫</li>
+        </ul>
+      </div>
+    </div>
+    <!-- 熱中暑 -->
+    <div class="dcard" style="border-color:#CC1100">
+      <div class="dc-top" style="background:var(--lv4)">
+        <div class="dc-name">熱中暑</div>
+        <div class="dc-en">Heat Stroke</div>
+        <div class="dc-warn">最危險</div>
+      </div>
+      <div class="dc-body">
+        <div class="dc-cause">體溫調節中樞失調，核心體溫急升</div>
+        <div class="dc-label" style="color:var(--lv4)">症狀</div>
+        <ul>
+          <li>體溫超過40℃</li>
+          <li>神智不清、幻覺、昏迷</li>
+          <li>呼吸困難</li>
+          <li>可能皮膚乾燥發紅（無汗）</li>
+        </ul>
+        <div class="dc-label" style="color:var(--red);margin-top:10px">急救處置</div>
+        <ul>
+          <li class="danger">立即撥打 119</li>
+          <li>移至陰涼處、墊高頭部</li>
+          <li>鬆開衣物</li>
+          <li>冰袋置頸部、腋下、鼠蹊部</li>
+          <li>風扇加速散熱</li>
+          <li>陪伴直至醫療人員到達</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="callout info" style="margin-top:12px">更多熱疾病資訊請參閱衛福部國民健康署 <a href="https://www.hpa.gov.tw/" target="_blank">hpa.gov.tw</a> 預防熱傷害衛教傳播專區</div>
+</section>
+
+<!-- ════════════════ 附錄 ════════════════ -->
+<div class="div-flame"><span>附　　錄</span></div>
+
+<section class="sec" id="app">
+  <div class="app-hd">
+    <span class="app-tag">附錄</span>
+    <div><div class="app-title">高氣溫作業防護資訊網 操作教學</div><div style="font-size:12px;color:var(--g3);margin-top:2px">勞動部職業安全衛生署建置 — <a href="https://hiosha.osha.gov.tw/content/info/heat1.aspx" target="_blank">hiosha.osha.gov.tw/content/info/heat1.aspx</a></div></div>
+  </div>
+  <div class="callout note">本網站可即時查詢熱指數及對應風險等級，並連結至危害預防及管理措施。建議每日作業前由現場主管或職安人員查詢一次，並將結果通知全體戶外作業人員。</div>
+
+  <div class="subsec">
+    <div class="subsec-hd">操作步驟</div>
+    <div class="web-steps">
+      <div class="ws-card">
+        <div class="ws-top" style="background:var(--or1)">
+          <span class="ws-step">STEP 1</span>
+          <span class="ws-title">進入查詢頁面</span>
+        </div>
+        <div class="ws-body">開啟手機或電腦瀏覽器，前往 <a href="https://hiosha.osha.gov.tw/content/info/heat1.aspx" target="_blank">hiosha.osha.gov.tw</a>，點選「熱危害風險等級查詢計算」即可使用。</div>
+      </div>
+      <div class="ws-card">
+        <div class="ws-top" style="background:var(--gold)">
+          <span class="ws-step" style="color:rgba(0,0,0,.5)">STEP 2</span>
+          <span class="ws-title" style="color:var(--g1)">選擇查詢方式</span>
+        </div>
+        <div class="ws-body">
+          <strong>方式A（推薦）：</strong>選縣市 + 鄉鎮市區，系統自動帶入最新溫濕度<br>
+          <strong>方式B：</strong>手動輸入溫度(℃) + 相對濕度(%)，直接計算
+        </div>
+      </div>
+      <div class="ws-card">
+        <div class="ws-top" style="background:var(--red)">
+          <span class="ws-step">STEP 3</span>
+          <span class="ws-title">判讀風險等級</span>
+        </div>
+        <div class="ws-body">頁面以顏色色塊顯示等級：<strong style="color:#F5A623">黃</strong>=第一級、<strong style="color:#E86A10">橘</strong>=第二級、<strong style="color:#CC1100">紅</strong>=第三級、<strong style="color:#700000">深紅</strong>=第四級</div>
+      </div>
+      <div class="ws-card">
+        <div class="ws-top" style="background:var(--teal)">
+          <span class="ws-step">STEP 4</span>
+          <span class="ws-title">點選危害預防及管理措施</span>
+        </div>
+        <div class="ws-body">點選「危害預防及管理措施」按鈕，系統自動列出應採措施。<strong>截圖存入每日巡視紀錄，通知現場人員今日等級。</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-hd">其他實用功能</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>功能名稱</th><th>用途說明</th></tr></thead>
+        <tbody>
+          <tr><td><strong>喝水與休息提醒</strong></td><td>設定手機定時提醒補水，可依工班時間自訂間隔</td></tr>
+          <tr><td><strong>訂閱熱危害分級預警</strong></td><td>依地區訂閱，達指定等級時自動發送通知至手機或Email</td></tr>
+          <tr><td><strong>高氣溫戶外作業檢核表</strong></td><td>線上版現場檢核表，可填寫後列印或存檔留查</td></tr>
+          <tr><td><strong>常見熱疾病處置原則</strong></td><td>快速查閱各類熱疾病症狀及急救處置方式</td></tr>
+          <tr><td><strong>鄰近醫療機構資訊</strong></td><td>依作業地點查詢最近急診醫院，建議作業前先查好</td></tr>
+          <tr><td><strong>安裝 App</strong></td><td>下載手機App，可隨時查詢，離線亦可使用部分功能</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-hd">現場主管建議每日使用 SOP</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th width="130">時間點</th><th>操作步驟</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong style="color:var(--or1)">作業前（每日必做）</strong></td>
+            <td>
+              ① 開啟 hiosha.osha.gov.tw　② 點選「熱危害風險等級查詢計算」<br>
+              ③ 選擇作業地點縣市/鄉鎮 → 按「查詢」　④ 確認今日風險等級（顏色/級數）<br>
+              ⑤ 點選「危害預防及管理措施」確認應採事項<br>
+              ⑥ 截圖或記錄熱指數及等級，存入每日巡視紀錄<br>
+              ⑦ 通知現場人員今日等級及注意事項
+            </td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--red)">作業中（第三、四級）</strong></td>
+            <td>每小時重新查詢一次，確認等級未因天氣變化而提升；若提升，立即依新等級加強防護；第四級：立即評估是否停止戶外作業</td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--teal)">有人員不適</strong></td>
+            <td>立即執行緊急應變（見第六章第四節）；可至網站「常見熱疾病處置原則」確認急救步驟；可至「鄰近醫療機構資訊」查詢最近急診</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout note" style="font-size:12px">本附錄操作教學以文字說明呈現，實際網站介面如有更新，以職安署實際網頁為準。<br>網站技術支援：璞藝資訊 (02)2741-3239，服務時間 09:00–18:00，信箱：hiosha@pro2e.com.tw</div>
+</section>
+
+<!-- 版本紀錄 -->
+<section class="sec" id="ver">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:var(--lg);color:var(--g3)">版</div>
+    <div><div class="sec-title" style="color:var(--g3)">版本紀錄</div></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>版次</th><th>訂定/修訂日期</th><th>修訂摘要</th><th>核准人</th></tr></thead>
+      <tbody>
+        <tr><td>第一版</td><td>115年6月</td><td>初版訂定</td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  大豐環保科技股份有限公司<br>
+  高氣溫戶外作業熱危害預防計畫書　第一版　中華民國115年6月<br>
+  依職業安全衛生設施規則 §303-1 及 §324-6 訂定
+</footer>
+</div>
+
+<script>
+// Highlight active nav link on scroll
+const sections = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('.topnav a');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      links.forEach(l => l.style.color = l.getAttribute('href') === '#'+id ? 'var(--gold)' : '');
+    }
+  });
+}, {threshold: 0.25});
+sections.forEach(s => obs.observe(s));
+
+// Checkbox styling
+document.querySelectorAll('.check-item input').forEach(cb => {
+  cb.addEventListener('change', () => {
+    cb.closest('.check-item').classList.toggle('checked', cb.checked);
+  });
+});
+</script>
+</body>
+</html>
