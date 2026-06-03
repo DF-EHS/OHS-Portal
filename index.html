@@ -225,6 +225,9 @@
   .btn-amber:hover  { background: #b45309; }
   .btn-sky    { background: var(--sky);    color: #fff; }
   .btn-sky:hover    { background: #0284c7; }
+  .btn-heat   { background: #f97316;   color: #fff; }
+  .btn-heat:hover   { background: #ea580c; }
+  .ci-heat    { background: #ffedd5; }
 
   /* ── placeholder card ── */
   .placeholder-card {
@@ -282,6 +285,9 @@
   body.dark .btn-amber:hover  { background: #78350f; }
   body.dark .btn-sky    { background: #075985; }
   body.dark .btn-sky:hover    { background: #0c4a6e; }
+  body.dark .ci-heat    { background: #431407; }
+  body.dark .btn-heat   { background: #c2410c; }
+  body.dark .btn-heat:hover { background: #9a3412; }
   body.dark .placeholder-card { background: #1e293b; border-color: #334155; }
   body.dark .content-topbar   { background: #1e293b; border-color: #334155; }
 
@@ -590,7 +596,7 @@
 
         <div class="sys-card" onclick="location.href='./heat/'">
           <div class="card-header">
-            <div class="card-icon ci-red">🌡️</div>
+            <div class="card-icon ci-heat">🌡️</div>
             <div>
               <div class="card-title">熱危害風險即時查詢</div>
               <div class="card-desc">依據勞動部熱危害預防指引四級分類，自動取得所在地最近氣象站即時溫濕度，計算 WBGT 並顯示風險等級與防護建議。</div>
@@ -604,7 +610,7 @@
           </div>
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-red" onclick="event.stopPropagation();location.href='./heat/'">開啟查詢 ›</button>
+            <button class="open-btn btn-heat" onclick="event.stopPropagation();location.href='./heat/'">開啟查詢 ›</button>
           </div>
         </div>
 

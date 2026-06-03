@@ -50,7 +50,9 @@ header {
 }
 .hdr-back:hover { background: rgba(255,255,255,.2); }
 header h1 { font-size: 16px; font-weight: 700; }
-.hdr-brand { margin-left: auto; font-size: 11px; opacity: .65; white-space: nowrap; }
+.hdr-brand { margin-left: auto; display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 11px; opacity: .65; white-space: nowrap; }
 
 /* ── Main layout ── */
 main {
@@ -222,7 +224,10 @@ footer {
 <header>
   <button class="hdr-back" onclick="location.href='../'">← 系統入口</button>
   <h1>🌡️ 熱危害風險即時查詢</h1>
-  <span class="hdr-brand">大豐環保科技</span>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
 </header>
 
 <main id="app">
