@@ -72,6 +72,35 @@
   .nav-item.active { background: rgba(255,255,255,.11); color: #fff; border-left-color: #f59840; }
   .nav-icon { font-size: 17px; flex-shrink: 0; width: 20px; text-align: center; }
 
+  /* ── Heat mini widget ── */
+  .hw-widget {
+    margin: 6px 10px 10px;
+    background: rgba(255,255,255,.07);
+    border-radius: 12px;
+    padding: 11px 13px 9px;
+    border: 1px solid rgba(255,255,255,.1);
+  }
+  .hw-hd {
+    font-size: 10px; font-weight: 700;
+    color: rgba(255,255,255,.45); letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .hw-loading { font-size: 11px; color: rgba(255,255,255,.3); text-align: center; padding: 4px 0 6px; }
+  .hw-vals    { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .hw-temp    { font-size: 22px; font-weight: 800; color: #fff; }
+  .hw-rh      { font-size: 12px; color: rgba(255,255,255,.45); }
+  .hw-badge   { margin-left: auto; padding: 2px 9px; border-radius: 9px; font-size: 11px; font-weight: 700; }
+  .hw-sub     { font-size: 10px; color: rgba(255,255,255,.35); margin-bottom: 7px; }
+  .hw-link    {
+    display: block; text-align: center; font-size: 11px;
+    color: rgba(255,255,255,.4); text-decoration: none;
+    padding: 4px; border-radius: 6px;
+    background: rgba(255,255,255,.05);
+    transition: background .15s;
+  }
+  .hw-link:hover { background: rgba(255,255,255,.13); color: rgba(255,255,255,.8); }
+  .hw-err { font-size: 10px; color: rgba(255,100,100,.7); text-align: center; padding: 2px 0 5px; }
+
   /* Sidebar footer */
   .sidebar-foot {
     flex-shrink: 0;
@@ -336,9 +365,6 @@
       <a class="nav-item" href="./training/">
         <span class="nav-icon">🎓</span>教育訓練教材庫
       </a>
-      <a class="nav-item" href="./heat/">
-        <span class="nav-icon">🌡️</span>熱危害風險查詢
-      </a>
       <a class="nav-item" href="./accident/">
         <span class="nav-icon">📈</span>職業災害分析系統
       </a>
@@ -348,6 +374,16 @@
 
       <div class="nav-section">小工具</div>
 
+      <!-- 熱危害即時小工具 -->
+      <div class="hw-widget">
+        <div class="hw-hd">🌡️ 即時熱危害</div>
+        <div id="hw-body"><div class="hw-loading">定位中…</div></div>
+        <a class="hw-link" href="./heat/">查看詳情 →</a>
+      </div>
+
+      <a class="nav-item" href="./heat/">
+        <span class="nav-icon">🌡️</span>熱危害風險查詢
+      </a>
       <a class="nav-item" href="./law/?chat=1">
         <span class="nav-icon">⚖️</span>法規問答機器人
       </a>
@@ -591,6 +627,63 @@
 </div>
 
 <script>
+/* ── Heat widget ── */
+(function() {
+  const KEY = 'CWA-6A18801C-3D96-4113-93F6-8198BD0712F2';
+  const API = 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0001-001?Authorization=' + KEY + '&format=JSON';
+  const WL = [{label:'低',min:-Infinity,max:25,bg:'#dcfce7',cl:'#15803d'},
+              {label:'中',min:25,max:28,bg:'#fef9c3',cl:'#854d0e'},
+              {label:'高',min:28,max:30,bg:'#ffedd5',cl:'#9a3412'},
+              {label:'極高',min:30,max:Infinity,bg:'#fee2e2',cl:'#991b1b'}];
+  const HL = [{label:'舒適',min:-Infinity,max:27,bg:'#dcfce7',cl:'#15803d'},
+              {label:'注意',min:27,max:32,bg:'#fef9c3',cl:'#854d0e'},
+              {label:'警戒',min:32,max:41,bg:'#ffedd5',cl:'#9a3412'},
+              {label:'危險',min:41,max:Infinity,bg:'#fee2e2',cl:'#991b1b'}];
+  function wbgt(T,RH){
+    const Tw=T*Math.atan(0.151977*Math.sqrt(RH+8.313659))+Math.atan(T+RH)-Math.atan(RH-1.676331)+0.00391838*Math.pow(RH,1.5)*Math.atan(0.023101*RH)-4.686035;
+    return +(0.7*Tw+0.3*T).toFixed(1);
+  }
+  function hi(T,RH){
+    const Tf=T*9/5+32;
+    let H=Tf<80?0.5*(Tf+61+(Tf-68)*1.2+RH*0.094)
+      :-42.379+2.04901523*Tf+10.14333127*RH-0.22475541*Tf*RH-0.00683783*Tf*Tf
+       -0.05481717*RH*RH+0.00122874*Tf*Tf*RH+0.00085282*Tf*RH*RH-0.00000199*Tf*Tf*RH*RH;
+    return +((H-32)*5/9).toFixed(1);
+  }
+  function lv(arr,v){return arr.find(l=>v>=l.min&&v<l.max)||arr[arr.length-1];}
+  function hv(km){return km<1?Math.round(km*1000)+' m':km.toFixed(1)+' km';}
+  function haversine(a,b,c,d){const R=6371,r=Math.PI/180;const x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return R*2*Math.asin(Math.sqrt(x));}
+  function setBody(html){const el=document.getElementById('hw-body');if(el)el.innerHTML=html;}
+  function badge(l){return '<span class="hw-badge" style="background:'+l.bg+';color:'+l.cl+'">'+l.label+'</span>';}
+  if(!navigator.geolocation){setBody('<div class="hw-err">不支援定位</div>');return;}
+  navigator.geolocation.getCurrentPosition(async function(pos){
+    try{
+      const r=await fetch(API),j=await r.json();
+      let best=null,md=Infinity;
+      for(const s of j.records?.Station??[]){
+        const c=s.GeoInfo?.Coordinates?.find(x=>x.CoordinateName==='WGS84');
+        if(!c)continue;
+        const T=+s.WeatherElement?.AirTemperature,RH=+s.WeatherElement?.RelativeHumidity;
+        if(!isFinite(T)||!isFinite(RH)||T<-50||RH<0)continue;
+        const d=haversine(pos.coords.latitude,pos.coords.longitude,+c.StationLatitude,+c.StationLongitude);
+        if(d<md){md=d;best={T,RH,dist:d};}
+      }
+      if(!best){setBody('<div class="hw-err">無氣象站資料</div>');return;}
+      const w=wbgt(best.T,best.RH),h=hi(best.T,best.RH);
+      const wl=lv(WL,w),hl=lv(HL,h);
+      const worst=[wl,hl].sort((a,b)=>[wl,hl].indexOf(b)-[wl,hl].indexOf(a)).find(l=>['極高','危險','高','警戒','中','注意'].includes(l.label))||wl;
+      setBody(
+        '<div class="hw-vals">'+
+          '<span class="hw-temp">'+best.T.toFixed(1)+'°</span>'+
+          '<span class="hw-rh">'+Math.round(best.RH)+'%</span>'+
+          badge(worst)+
+        '</div>'+
+        '<div class="hw-sub">WBGT '+w+'°C ('+wl.label+') · HI '+h+'°C ('+hl.label+')</div>'
+      );
+    }catch(e){setBody('<div class="hw-err">資料載入失敗</div>');}
+  },function(){setBody('<div class="hw-err">位置存取被拒</div>');},{timeout:10000,maximumAge:300000});
+})();
+
   function toggleDark() {
     const isDark = document.body.classList.toggle('dark');
     localStorage.setItem('portal-dark', isDark ? '1' : '0');

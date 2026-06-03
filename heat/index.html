@@ -6,20 +6,26 @@
 <title>熱危害風險即時查詢 | 大豐環保科技</title>
 <style>
 :root {
-  --navy:   #0f172a;
-  --navy-2: #1e293b;
-  --navy-3: #334155;
-  --green:  #16a34a;
-  --green-d:#15803d;
-  --white:  #ffffff;
-  --slate:  #64748b;
-  --muted:  #94a3b8;
+  --bg:      #f1f5f9;
+  --card:    #ffffff;
+  --navy:    #1e3a5f;
+  --text:    #1e293b;
+  --sub:     #64748b;
+  --muted:   #94a3b8;
+  --border:  #e2e8f0;
+
+  --c-low:   #16a34a; --c-low-bg:  #dcfce7; --c-low-bd:  #86efac;
+  --c-mid:   #ca8a04; --c-mid-bg:  #fef9c3; --c-mid-bd:  #fde047;
+  --c-high:  #ea580c; --c-high-bg: #ffedd5; --c-high-bd: #fdba74;
+  --c-ext:   #dc2626; --c-ext-bg:  #fee2e2; --c-ext-bd:  #fca5a5;
 }
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
 body {
-  font-family: 'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', system-ui, sans-serif;
-  background: var(--navy);
-  color: var(--white);
+  font-family: 'PingFang TC','Microsoft JhengHei','Noto Sans TC',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,178 +34,186 @@ body {
 
 /* ── Header ── */
 header {
-  background: #1e3a5f;
-  padding: 12px 20px;
+  background: var(--navy);
+  color: #fff;
+  padding: 12px 24px;
   display: flex;
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
-  border-bottom: 1px solid rgba(255,255,255,.08);
 }
 .hdr-back {
-  padding: 5px 12px;
-  border-radius: 6px;
+  padding: 5px 12px; border-radius: 6px;
   border: 1px solid rgba(255,255,255,.3);
   background: rgba(255,255,255,.1);
-  color: #fff;
-  font-size: 12px;
-  cursor: pointer;
-  white-space: nowrap;
+  color: #fff; font-size: 12px; cursor: pointer;
 }
 .hdr-back:hover { background: rgba(255,255,255,.2); }
 header h1 { font-size: 16px; font-weight: 700; }
-.hdr-brand { margin-left: auto; font-size: 11px; color: #94a3b8; white-space: nowrap; }
+.hdr-brand { margin-left: auto; font-size: 11px; opacity: .65; white-space: nowrap; }
 
-/* ── Main ── */
+/* ── Main layout ── */
 main {
   flex: 1;
+  max-width: 660px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 28px 16px 32px;
   gap: 16px;
 }
 
-/* ── Risk card ── */
-.risk-card {
-  width: 100%;
-  max-width: 500px;
-  border-radius: 28px;
-  padding: 36px 28px 32px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  transition: background .4s;
+/* ── Station / weather card ── */
+.wx-card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
 }
-.risk-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,.18);
-  pointer-events: none;
-}
-.risk-icon  { font-size: 56px; line-height: 1; margin-bottom: 10px; position: relative; }
-.risk-label { font-size: 52px; font-weight: 900; letter-spacing: 4px; position: relative; }
-.risk-sub   { font-size: 13px; opacity: .75; margin-top: 6px; position: relative; }
-.risk-line  { width: 40px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.4);
-              margin: 18px auto; position: relative; }
-.risk-advice { font-size: 13.5px; line-height: 1.8; position: relative; }
-
-/* ── Data row ── */
-.data-row {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-  max-width: 500px;
-}
-.data-card {
-  flex: 1;
-  background: var(--navy-2);
-  border-radius: 18px;
-  padding: 16px 10px 14px;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,.06);
-}
-.data-val   { font-size: 26px; font-weight: 700; }
-.data-unit  { font-size: 12px; color: var(--muted); margin-top: 1px; }
-.data-label { font-size: 11px; color: var(--slate); margin-top: 5px; }
-
-/* ── Station strip ── */
-.station-strip {
-  width: 100%;
-  max-width: 500px;
-  background: var(--navy-2);
-  border-radius: 14px;
-  padding: 12px 16px;
-  font-size: 12px;
-  color: var(--muted);
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  border: 1px solid rgba(255,255,255,.06);
-}
-.station-strip b { color: #e2e8f0; font-weight: 600; }
-
-/* ── Refresh btn ── */
-.refresh-btn {
-  padding: 12px 36px;
-  border-radius: 14px;
-  border: none;
-  background: var(--green);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background .18s, transform .1s;
-}
-.refresh-btn:hover   { background: var(--green-d); }
-.refresh-btn:active  { transform: scale(.96); }
-.refresh-btn:disabled { opacity: .45; cursor: not-allowed; }
-
-/* ── Level legend ── */
-.legend {
-  width: 100%;
-  max-width: 500px;
-  background: var(--navy-2);
-  border-radius: 14px;
-  padding: 14px 16px;
-  border: 1px solid rgba(255,255,255,.06);
-}
-.legend-title { font-size: 11px; font-weight: 700; color: var(--slate);
-                letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-.legend-row {
+.wx-top {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 5px 0;
-  font-size: 12px;
+  gap: 14px;
+  margin-bottom: 16px;
 }
-.legend-row + .legend-row { border-top: 1px solid rgba(255,255,255,.05); }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.legend-name { font-weight: 700; width: 36px; flex-shrink: 0; }
-.legend-range { color: var(--muted); flex: 1; }
+.wx-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: #eff6ff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+}
+.wx-name   { font-size: 15px; font-weight: 700; }
+.wx-meta   { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.wx-vals   { display: flex; gap: 10px; }
+.wx-val-box {
+  flex: 1;
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+}
+.wx-num   { font-size: 24px; font-weight: 800; color: var(--navy); }
+.wx-unit  { font-size: 11px; color: var(--muted); }
+.wx-label { font-size: 11px; color: var(--sub); margin-top: 4px; }
+
+/* ── Section label ── */
+.sec-label {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: 3px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+}
+.sec-label::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ── Method cards ── */
+.method-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.mc {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 20px 14px 18px;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  text-align: center;
+  transition: border-color .3s;
+}
+.mc-head   { font-size: 10px; font-weight: 700; color: var(--sub);
+             letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+.mc-value  { font-size: 40px; font-weight: 900; line-height: 1; }
+.mc-unit   { font-size: 13px; color: var(--muted); margin-top: 2px; margin-bottom: 12px; }
+.mc-badge  {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 14px; border-radius: 20px;
+  font-size: 14px; font-weight: 700; margin-bottom: 10px;
+}
+.mc-sub    { font-size: 11px; color: var(--sub); line-height: 1.55; }
+.mc-range  { font-size: 10px; color: var(--muted); margin-top: 6px; }
+
+/* level colour bindings */
+.lv-low  { border-color: var(--c-low-bd);  }
+.lv-mid  { border-color: var(--c-mid-bd);  }
+.lv-high { border-color: var(--c-high-bd); }
+.lv-ext  { border-color: var(--c-ext-bd);  }
+
+.bv-low  { background: var(--c-low-bg);  color: var(--c-low);  }
+.bv-mid  { background: var(--c-mid-bg);  color: var(--c-mid);  }
+.bv-high { background: var(--c-high-bg); color: var(--c-high); }
+.bv-ext  { background: var(--c-ext-bg);  color: var(--c-ext);  }
+
+.tv-low  { color: var(--c-low);  }
+.tv-mid  { color: var(--c-mid);  }
+.tv-high { color: var(--c-high); }
+.tv-ext  { color: var(--c-ext);  }
+
+/* ── Advice card ── */
+.advice-card {
+  border-radius: 14px;
+  padding: 16px 18px;
+  font-size: 13px;
+  line-height: 1.8;
+  font-weight: 500;
+  border-left: 5px solid;
+}
+
+/* ── Actions row ── */
+.actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.refresh-btn {
+  padding: 10px 28px; border-radius: 10px;
+  border: none; background: var(--navy);
+  color: #fff; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: opacity .15s;
+}
+.refresh-btn:hover { opacity: .85; }
+.refresh-btn:disabled { opacity: .45; cursor: not-allowed; }
+.note-txt { font-size: 11px; color: var(--muted); line-height: 1.6; flex: 1; }
+
+/* ── Legend ── */
+.legend {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+}
+.legend-title { font-size: 10px; font-weight: 700; color: var(--sub);
+                letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.legend-cols  { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; }
+.lg-row       { display: flex; align-items: center; gap: 7px; font-size: 11px; }
+.lg-dot       { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.lg-name      { font-weight: 700; width: 32px; }
+.lg-range     { color: var(--muted); }
 
 /* ── State screens ── */
 .state-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   flex: 1;
-  gap: 14px;
-  text-align: center;
-  padding: 20px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 14px; text-align: center; padding: 40px 20px;
 }
-.state-icon { font-size: 48px; }
-.state-msg  { font-size: 14px; color: var(--muted); max-width: 300px; line-height: 1.7; }
+.state-icon { font-size: 44px; }
+.state-msg  { font-size: 14px; color: var(--sub); line-height: 1.7; max-width: 300px; }
 
-/* ── Note ── */
-.note {
-  font-size: 11px;
-  color: var(--slate);
-  text-align: center;
-  max-width: 500px;
-  line-height: 1.6;
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  will-change: transform;
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--navy);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
 }
 
 /* ── Footer ── */
 footer {
-  text-align: center;
-  padding: 14px 16px;
-  font-size: 11px;
-  color: var(--slate);
-  border-top: 1px solid rgba(255,255,255,.06);
+  text-align: center; padding: 14px;
+  font-size: 11px; color: var(--muted);
+  border-top: 1px solid var(--border);
+  background: var(--card);
   flex-shrink: 0;
-}
-
-/* ── Spinner ── */
-@keyframes spin { to { transform: rotate(360deg); } }
-.spinner {
-  width: 36px; height: 36px;
-  border: 3px solid rgba(255,255,255,.1);
-  border-top-color: var(--green);
-  border-radius: 50%;
-  animation: spin .7s linear infinite;
 }
 </style>
 </head>
@@ -218,67 +232,59 @@ footer {
   </div>
 </main>
 
-<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統 &nbsp;·&nbsp; 氣象資料來源：中央氣象署</footer>
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統 &nbsp;·&nbsp; 氣象資料：中央氣象署</footer>
 
 <script>
-/* ═══════════════════════════════════════
-   Config
-═══════════════════════════════════════ */
+/* ── API ── */
 const CWA_KEY = 'CWA-6A18801C-3D96-4113-93F6-8198BD0712F2';
 const API_URL = 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0001-001'
               + '?Authorization=' + CWA_KEY + '&format=JSON';
 
-/* ═══════════════════════════════════════
-   Risk levels — 勞動部熱危害預防指引（四級）
-   WBGT 閾值：25 / 28 / 30 °C
-═══════════════════════════════════════ */
-const LEVELS = [
-  {
-    key: 'low',
-    label: '低',
-    icon: '😊',
-    bg: 'linear-gradient(145deg,#14532d,#16a34a)',
-    dot: '#16a34a',
-    wbgtLabel: 'WBGT < 25°C',
-    min: -Infinity, max: 25,
-    advice: '目前氣候舒適。作業時仍須保持補水習慣，每小時至少飲用 200 ml 水分，並注意個人健康狀況。',
-  },
-  {
-    key: 'moderate',
-    label: '中',
-    icon: '⚠️',
-    bg: 'linear-gradient(145deg,#713f12,#ca8a04)',
-    dot: '#eab308',
-    wbgtLabel: '25°C ≤ WBGT < 28°C',
-    min: 25, max: 28,
-    advice: '氣溫偏高，建議加強補水（每 30 分鐘補充 200–300 ml），安排適度遮蔭休息，避免長時間連續作業。',
-  },
-  {
-    key: 'high',
-    label: '高',
-    icon: '🔶',
-    bg: 'linear-gradient(145deg,#7c2d12,#ea580c)',
-    dot: '#f97316',
-    wbgtLabel: '28°C ≤ WBGT < 30°C',
-    min: 28, max: 30,
-    advice: '熱危害風險偏高！強制安排遮蔭休息（每 45 分鐘休息至少 15 分鐘），指定人員監督作業人員狀況，備妥急救措施。',
-  },
-  {
-    key: 'extreme',
-    label: '極高',
-    icon: '🚨',
-    bg: 'linear-gradient(145deg,#7f1d1d,#dc2626)',
-    dot: '#ef4444',
-    wbgtLabel: 'WBGT ≥ 30°C',
-    min: 30, max: Infinity,
-    advice: '立即停止高強度戶外作業！若作業無法中止，須採取緊急降溫措施（灑水降溫、冷風扇）、安排專人陪同並保持通訊。出現頭暈、噁心、無汗等熱中暑症狀請立即送醫。',
-  },
+/* ════════════════════════════════════════
+   WBGT 四級（勞動部熱危害預防指引）
+   閾值：25 / 28 / 30 °C
+════════════════════════════════════════ */
+const WBGT_LEVELS = [
+  { key:'low',  label:'低',  dot:'#16a34a', lv:'lv-low',  bv:'bv-low',  tv:'tv-low',
+    range:'< 25°C', min:-Infinity, max:25,
+    advice:'目前 WBGT 處於低風險區間。持續補水（每小時至少 200 ml），注意個人健康狀態。' },
+  { key:'mid',  label:'中',  dot:'#ca8a04', lv:'lv-mid',  bv:'bv-mid',  tv:'tv-mid',
+    range:'25–28°C', min:25, max:28,
+    advice:'加強補水（每 30 分鐘 200–300 ml），安排遮蔭休息，避免長時間連續暴露。' },
+  { key:'high', label:'高',  dot:'#ea580c', lv:'lv-high', bv:'bv-high', tv:'tv-high',
+    range:'28–30°C', min:28, max:30,
+    advice:'強制安排遮蔭休息（每 45 分鐘休息 ≥ 15 分鐘），指定人員監督同仁狀況，備妥急救措施。' },
+  { key:'ext',  label:'極高', dot:'#dc2626', lv:'lv-ext',  bv:'bv-ext',  tv:'tv-ext',
+    range:'≥ 30°C', min:30, max:Infinity,
+    advice:'立即停止高強度戶外作業！若無法中止，採緊急降溫措施並安排專人陪同。出現熱中暑症狀立即送醫。' },
 ];
 
-/* ═══════════════════════════════════════
-   WBGT 估算（Stull 2011 濕球溫度法）
-   適用於遮蔭 / 室內環境（無直達日射）
-═══════════════════════════════════════ */
+/* ════════════════════════════════════════
+   熱指數（Heat Index）四級（勞動部）
+   閾值：27 / 32 / 41 °C
+════════════════════════════════════════ */
+const HI_LEVELS = [
+  { key:'low',  label:'舒適', dot:'#16a34a', lv:'lv-low',  bv:'bv-low',  tv:'tv-low',
+    range:'< 27°C', min:-Infinity, max:27,
+    advice:'體感溫度舒適，維持一般作業注意事項。' },
+  { key:'mid',  label:'注意', dot:'#ca8a04', lv:'lv-mid',  bv:'bv-mid',  tv:'tv-mid',
+    range:'27–32°C', min:27, max:32,
+    advice:'長時間暴露可能引起疲勞，加強補水並適度休息。' },
+  { key:'high', label:'警戒', dot:'#ea580c', lv:'lv-high', bv:'bv-high', tv:'tv-high',
+    range:'32–41°C', min:32, max:41,
+    advice:'持續暴露可能引起熱痙攣或熱衰竭，嚴格管控作業時間，落實遮蔭休息。' },
+  { key:'ext',  label:'危險', dot:'#dc2626', lv:'lv-ext',  bv:'bv-ext',  tv:'tv-ext',
+    range:'≥ 41°C', min:41, max:Infinity,
+    advice:'熱中暑危險性極高，立即停止作業或採取緊急防護。' },
+];
+
+/* ── 最嚴格等級（兩者取高）── */
+const KEY_ORDER = ['low','mid','high','ext'];
+function worstLevel(wbgtLv, hiLv) {
+  return KEY_ORDER.indexOf(wbgtLv.key) >= KEY_ORDER.indexOf(hiLv.key) ? wbgtLv : hiLv;
+}
+
+/* ── WBGT 估算（Stull 2011 濕球溫度法）── */
 function calcWBGT(T, RH) {
   const Tw = T * Math.atan(0.151977 * Math.sqrt(RH + 8.313659))
            + Math.atan(T + RH)
@@ -288,120 +294,158 @@ function calcWBGT(T, RH) {
   return +(0.7 * Tw + 0.3 * T).toFixed(1);
 }
 
-function getLevel(wbgt) {
-  return LEVELS.find(l => wbgt >= l.min && wbgt < l.max) || LEVELS[LEVELS.length - 1];
+/* ── 熱指數（Rothfusz NOAA 回歸式）── */
+function calcHeatIndex(T, RH) {
+  const Tf = T * 9 / 5 + 32;
+  let HI;
+  if (Tf < 80) {
+    HI = 0.5 * (Tf + 61 + (Tf - 68) * 1.2 + RH * 0.094);
+  } else {
+    HI = -42.379 + 2.04901523*Tf + 10.14333127*RH
+       - 0.22475541*Tf*RH - 0.00683783*Tf*Tf
+       - 0.05481717*RH*RH + 0.00122874*Tf*Tf*RH
+       + 0.00085282*Tf*RH*RH - 0.00000199*Tf*Tf*RH*RH;
+    if (RH < 13 && Tf >= 80 && Tf <= 112)
+      HI -= ((13 - RH) / 4) * Math.sqrt((17 - Math.abs(Tf - 95)) / 17);
+    if (RH > 85 && Tf >= 80 && Tf <= 87)
+      HI += ((RH - 85) / 10) * ((87 - Tf) / 5);
+  }
+  return +((HI - 32) * 5 / 9).toFixed(1);
 }
 
-/* ═══════════════════════════════════════
-   Haversine distance (km)
-═══════════════════════════════════════ */
+function getLevel(levels, val) {
+  return levels.find(l => val >= l.min && val < l.max) || levels[levels.length - 1];
+}
+
+/* ── Haversine (km) ── */
 function haversine(lat1, lon1, lat2, lon2) {
   const R = 6371, r = Math.PI / 180;
-  const dLat = (lat2 - lat1) * r;
-  const dLon = (lon2 - lon1) * r;
-  const a = Math.sin(dLat / 2) ** 2
-          + Math.cos(lat1 * r) * Math.cos(lat2 * r) * Math.sin(dLon / 2) ** 2;
+  const a = Math.sin((lat2-lat1)*r/2)**2
+          + Math.cos(lat1*r)*Math.cos(lat2*r)*Math.sin((lon2-lon1)*r/2)**2;
   return R * 2 * Math.asin(Math.sqrt(a));
 }
 
-/* ═══════════════════════════════════════
-   CWA API → nearest station
-═══════════════════════════════════════ */
+/* ── CWA API ── */
 async function fetchNearest(lat, lon) {
   const res = await fetch(API_URL);
   if (!res.ok) throw new Error(`API 回應錯誤 (${res.status})`);
   const json = await res.json();
-  const stations = json.records?.Station ?? [];
-
   let best = null, minDist = Infinity;
-  for (const s of stations) {
+  for (const s of json.records?.Station ?? []) {
     const coord = s.GeoInfo?.Coordinates?.find(c => c.CoordinateName === 'WGS84');
     if (!coord) continue;
-    const sLat = +coord.StationLatitude;
-    const sLon = +coord.StationLongitude;
     const T  = +s.WeatherElement?.AirTemperature;
     const RH = +s.WeatherElement?.RelativeHumidity;
-    if (!isFinite(T) || !isFinite(RH) || T < -50 || RH < 0 || RH > 105) continue;
-    const d = haversine(lat, lon, sLat, sLon);
-    if (d < minDist) {
-      minDist = d;
-      best = {
-        name: s.StationName,
-        id:   s.StationId,
-        T, RH, dist: d,
-        time: s.ObsTime?.DateTime ?? '',
-      };
-    }
+    if (!isFinite(T) || !isFinite(RH) || T < -50 || RH < 0) continue;
+    const d = haversine(lat, lon, +coord.StationLatitude, +coord.StationLongitude);
+    if (d < minDist) { minDist = d; best = { name: s.StationName, T, RH, dist: d, time: s.ObsTime?.DateTime ?? '' }; }
   }
-  if (!best) throw new Error('找不到有效的氣象站資料，請稍後再試。');
+  if (!best) throw new Error('找不到有效氣象站資料');
   return best;
 }
 
-/* ═══════════════════════════════════════
-   Render helpers
-═══════════════════════════════════════ */
-function distStr(km) {
-  return km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`;
+/* ── Render ── */
+function distStr(km) { return km < 1 ? `${Math.round(km*1000)} m` : `${km.toFixed(1)} km`; }
+function timeStr(iso) { return iso ? iso.replace('T',' ').slice(0,16) : ''; }
+
+function methodCard(title, value, unit, level, rangeLabel) {
+  return `
+    <div class="mc ${level.lv}">
+      <div class="mc-head">${title}</div>
+      <div class="mc-value ${level.tv}">${value}</div>
+      <div class="mc-unit">${unit}</div>
+      <div class="mc-badge ${level.bv}">${level.label}</div>
+      <div class="mc-range">${rangeLabel}：${level.range}</div>
+    </div>`;
 }
 
-function timeStr(iso) {
-  if (!iso) return '';
-  return iso.replace('T', ' ').substring(0, 16);
+function adviceCard(level) {
+  const colors = {
+    low:  { bg:'#f0fdf4', bd:'#16a34a', tx:'#14532d' },
+    mid:  { bg:'#fefce8', bd:'#ca8a04', tx:'#713f12' },
+    high: { bg:'#fff7ed', bd:'#ea580c', tx:'#7c2d12' },
+    ext:  { bg:'#fef2f2', bd:'#dc2626', tx:'#7f1d1d' },
+  }[level.key];
+  return `<div class="advice-card"
+    style="background:${colors.bg};border-color:${colors.bd};color:${colors.tx}">
+    <strong>📋 防護建議（依較嚴格等級）：</strong><br>${level.advice}
+  </div>`;
 }
 
-function renderResult(station) {
-  const wbgt  = calcWBGT(station.T, station.RH);
-  const level = getLevel(wbgt);
-
-  const legendRows = LEVELS.map(l => `
-    <div class="legend-row">
-      <div class="legend-dot" style="background:${l.dot}"></div>
-      <span class="legend-name" style="color:${l.dot}">${l.label}</span>
-      <span class="legend-range">${l.wbgtLabel}</span>
+function legendRows(levels, prefix) {
+  return levels.map(l => `
+    <div class="lg-row">
+      <div class="lg-dot" style="background:${l.dot}"></div>
+      <span class="lg-name" style="color:${l.dot}">${l.label}</span>
+      <span class="lg-range">${l.range}</span>
     </div>`).join('');
+}
+
+function renderResult(s) {
+  const wbgt    = calcWBGT(s.T, s.RH);
+  const hi      = calcHeatIndex(s.T, s.RH);
+  const wbgtLv  = getLevel(WBGT_LEVELS, wbgt);
+  const hiLv    = getLevel(HI_LEVELS, hi);
+  const worst   = worstLevel(wbgtLv, hiLv);
+  const ts      = timeStr(s.time);
 
   document.getElementById('app').innerHTML = `
-    <div class="risk-card" style="background:${level.bg}">
-      <div class="risk-icon">${level.icon}</div>
-      <div class="risk-label">${level.label}</div>
-      <div class="risk-sub">${level.wbgtLabel} &nbsp;·&nbsp; 估算 WBGT ${wbgt}°C</div>
-      <div class="risk-line"></div>
-      <div class="risk-advice">${level.advice}</div>
-    </div>
 
-    <div class="data-row">
-      <div class="data-card">
-        <div class="data-val" style="color:#60a5fa">${station.T.toFixed(1)}</div>
-        <div class="data-unit">°C</div>
-        <div class="data-label">氣溫</div>
+    <!-- 氣象站資料 -->
+    <div class="wx-card">
+      <div class="wx-top">
+        <div class="wx-icon">📡</div>
+        <div>
+          <div class="wx-name">${s.name} 氣象站</div>
+          <div class="wx-meta">距您 ${distStr(s.dist)}${ts ? '　·　觀測時間 ' + ts : ''}</div>
+        </div>
       </div>
-      <div class="data-card">
-        <div class="data-val" style="color:#34d399">${Math.round(station.RH)}</div>
-        <div class="data-unit">%</div>
-        <div class="data-label">相對濕度</div>
-      </div>
-      <div class="data-card">
-        <div class="data-val" style="color:#f87171">${wbgt}</div>
-        <div class="data-unit">°C</div>
-        <div class="data-label">WBGT（估算）</div>
+      <div class="wx-vals">
+        <div class="wx-val-box">
+          <div class="wx-num" style="color:#2563eb">${s.T.toFixed(1)}</div>
+          <div class="wx-unit">°C</div>
+          <div class="wx-label">氣溫</div>
+        </div>
+        <div class="wx-val-box">
+          <div class="wx-num" style="color:#0891b2">${Math.round(s.RH)}</div>
+          <div class="wx-unit">%</div>
+          <div class="wx-label">相對濕度</div>
+        </div>
       </div>
     </div>
 
-    <div class="station-strip">
-      <div>📡 最近測站：<b>${station.name}</b>（距離 ${distStr(station.dist)}）</div>
-      ${station.time ? `<div>🕐 觀測時間：<b>${timeStr(station.time)}</b></div>` : ''}
+    <!-- 兩種計算方法 -->
+    <div class="sec-label">風險評估</div>
+    <div class="method-grid">
+      ${methodCard('WBGT 估算值', wbgt, '°C（WBGT）', wbgtLv, '閾值')}
+      ${methodCard('熱指數（體感溫度）', hi, '°C（HI）', hiLv, '閾值')}
     </div>
 
-    <button class="refresh-btn" id="refresh-btn" onclick="startFetch()">🔄 重新整理</button>
+    <!-- 建議（取兩者較嚴格） -->
+    ${adviceCard(worst)}
 
-    <div class="note">
-      ⚠ 上方 WBGT 為遮蔭／室內估算值，戶外直射日光下實際值會更高。<br>
-      精確量測請使用 WBGT 實測計，並以現場儀器讀數為準。
+    <!-- 操作列 -->
+    <div class="actions">
+      <button type="button" class="refresh-btn" onclick="startFetch()">🔄 重新整理</button>
+      <div class="note-txt">
+        WBGT 為遮蔭估算值，戶外直射陽光下實際值更高。<br>
+        精確量測請使用 WBGT 實測計。
+      </div>
     </div>
 
+    <!-- 風險等級對照表 -->
     <div class="legend">
       <div class="legend-title">風險等級對照</div>
-      ${legendRows}
+      <div class="legend-cols">
+        <div>
+          <div style="font-size:10px;color:var(--sub);margin-bottom:6px;font-weight:700">WBGT（勞動部熱危害預防指引）</div>
+          ${legendRows(WBGT_LEVELS)}
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--sub);margin-bottom:6px;font-weight:700">熱指數 / 體感溫度（勞動部）</div>
+          ${legendRows(HI_LEVELS)}
+        </div>
+      </div>
     </div>
   `;
 }
@@ -414,43 +458,30 @@ function renderLoading(msg) {
     </div>`;
 }
 
-function renderError(msg, canRetry = true) {
+function renderError(msg) {
   document.getElementById('app').innerHTML = `
     <div class="state-wrap">
       <div class="state-icon">⚠️</div>
       <div class="state-msg">${msg}</div>
-      ${canRetry ? `<button class="refresh-btn" onclick="startFetch()">重試</button>` : ''}
+      <button type="button" class="refresh-btn" onclick="startFetch()">重試</button>
     </div>`;
 }
 
-/* ═══════════════════════════════════════
-   Main flow
-═══════════════════════════════════════ */
 function startFetch() {
-  if (!navigator.geolocation) {
-    renderError('此瀏覽器不支援定位功能，無法自動查詢。', false);
-    return;
-  }
-
+  if (!navigator.geolocation) { renderError('此瀏覽器不支援定位功能。'); return; }
   renderLoading('正在取得您的位置…');
-
   navigator.geolocation.getCurrentPosition(
     async pos => {
       try {
-        renderLoading('正在查詢最近氣象測站…');
-        const station = await fetchNearest(pos.coords.latitude, pos.coords.longitude);
-        renderResult(station);
-      } catch (e) {
-        renderError(`資料載入失敗：${e.message}`);
-      }
+        renderLoading('正在查詢最近氣象站…');
+        renderResult(await fetchNearest(pos.coords.latitude, pos.coords.longitude));
+      } catch(e) { renderError(`資料載入失敗：${e.message}`); }
     },
     err => {
-      const msgs = {
-        1: '您已拒絕位置存取權限。<br>請在瀏覽器網址列旁的鎖頭圖示中重新允許，然後重試。',
-        2: '無法取得位置資訊，請確認裝置 GPS 是否開啟。',
-        3: '位置請求逾時，請確認網路連線後重試。',
-      };
-      renderError(msgs[err.code] || '位置取得失敗，請重試。');
+      const m = { 1:'您已拒絕位置存取。請在瀏覽器網址列旁的鎖頭圖示中重新允許後重試。',
+                  2:'無法取得位置，請確認裝置 GPS 是否開啟。',
+                  3:'位置請求逾時，請確認網路後重試。' };
+      renderError(m[err.code] || '位置取得失敗，請重試。');
     },
     { timeout: 12000, maximumAge: 60000 }
   );
