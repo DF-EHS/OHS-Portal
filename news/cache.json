@@ -1,6 +1,72 @@
 {
   "items": [
     {
+      "key": "4b06c4ecb286de04",
+      "title": "勞動部公告「116年度職業災害預防及職業災害勞工重建重點及優先補助事項」",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/204402/",
+      "pubDate": "Wed, 03 Jun 2026 15:23:53 GMT",
+      "pubTs": 1780500233.0,
+      "desc": "一、依職業災害預防及職業災害勞工重建補助辦法第2條第2項規定辦理。 二、職業災害預防及職業災害勞工重建補助辦法第2條第1項所定職業災害預防及職業災害勞工重建補助事項如下： (一)職業災害預防技術之研發及培訓。 (二)職業災害預防及職業災害勞工重建之宣導。 (三)職業傷病之調查及研究。 (四)職業傷病…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "a1ff035e550c9cfd",
+      "title": "勞工局攜手南區職安中心舉辦外籍生職安先修課",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9JZmZyeUxhajVjZllNS05iamU5U0ZQMFdnSW5WSWZkWF96S3RCaW5EbUZOT1pfZWFZekpVbktKTTNsaUZieUNFNFlhZDhEVUR2LUE?oc=5",
+      "pubDate": "Wed, 03 Jun 2026 10:18:56 GMT",
+      "pubTs": 1780481936.0,
+      "desc": "勞工局攜手南區職安中心舉辦外籍生職安先修課&nbsp;&nbsp;中華新聞雲／中華日報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "0cc53130b76b9794",
+      "title": "台南市勞工局攜手南區職安中心 為境外生辦職安先修課",
+      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5KTVNXeWRma1BQMUN6MnBWemFENkdJOWkyU3VjMEhlYUtQb3hhSFVqRE1EVm0zc21uRF9nNVh3YWpqbnJvZlM3RndlMjd2dFRTSFdiZ3dkV0RualU3OEHSAWhBVV95cUxQWkhLV3Y0SThMcnNocm1sTXhjakhUNFczS1V6QzhSZjdSSmkzaUs5Z0JXa2F4OU5oamtVRVBCcnVlOXpqVHZiQkJRNlZqN0d4dGZiTkNnWUg4TkJxdDl6S2ZGQXR3eF83Yg?oc=5",
+      "pubDate": "Wed, 03 Jun 2026 08:09:00 GMT",
+      "pubTs": 1780474140.0,
+      "desc": "台南市勞工局攜手南區職安中心 為境外生辦職安先修課&nbsp;&nbsp;ETtoday新聞雲",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "ca5f4f2b2e9e6cf2",
+      "title": "嘉義驚悚工安意外！吊車失控傾斜「巨錘砸碎駕駛座」 60歲司機當場慘死",
+      "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1aMWVnTkItWXd0TGpzZGdTNmVYREk5ZExtNHNBaURRVUFrai1qLThpYUQ2YXdraVFxNVR3ekl0dHhhYUdJSDRIcnlvRWJmSTBhWFhsYlpQaXdSS2Q1U2FNZ9IBYEFVX3lxTE1aMWVnTkItWXd0TGpzZGdTNmVYREk5ZExtNHNBaURRVUFrai1qLThpYUQ2YXdraVFxNVR3ekl0dHhhYUdJSDRIcnlvRWJmSTBhWFhsYlpQaXdSS2Q1U2FNZw?oc=5",
+      "pubDate": "Wed, 03 Jun 2026 06:58:00 GMT",
+      "pubTs": 1780469880.0,
+      "desc": "嘉義驚悚工安意外！吊車失控傾斜「巨錘砸碎駕駛座」 60歲司機當場慘死&nbsp;&nbsp;鏡週刊Mirror Media",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "1450f199ac4a7e56",
+      "title": "台南市勞工局攜手南區職安中心辦理境外生「職安體感訓練活動」",
+      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBBNmVVbXRjQTZSdWxNOHVIUEsteDJRSFBiTGZjbEY0VzVxZ0JxVGhDOHF6c2hoVXJ0RUNESTAtdXVsVWVLYmhDNg?oc=5",
+      "pubDate": "Wed, 03 Jun 2026 06:25:56 GMT",
+      "pubTs": 1780467956.0,
+      "desc": "台南市勞工局攜手南區職安中心辦理境外生「職安體感訓練活動」&nbsp;&nbsp;台灣民眾電子報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "32a55018bc5c03d4",
+      "title": "台北跨年舞台工安意外！樂團主唱施工墜亡 承包商、監工判刑出爐",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1LbWJ3dHBPUjR1RzVNYm1uYmFhTm02cFJnSUZKOHg3ZmpFdFllV0hNbVF5c1JUaExCTVJXdjdmRzlMQnotSzhmeTk5X2EtTWU5WDJtdVNqR0xlWjlJX0V2d2pYcnZCaktsM1RBOVJR0gFuQVVfeXFMTUttYnd0cE9SNHVHNU1ibW5iYWFObTZwUmdJRko4eDdmakV0WWVXSE1tUXlzUlRoTEJNUld2N2ZHOUxCei1LOGZ5OTlfYS1NZTlYMm11U2pHTGVaOUlfRXZ3alhydkJqS2wzVEE5UlE?oc=5",
+      "pubDate": "Wed, 03 Jun 2026 03:47:25 GMT",
+      "pubTs": 1780458445.0,
+      "desc": "台北跨年舞台工安意外！樂團主唱施工墜亡 承包商、監工判刑出爐&nbsp;&nbsp;自由時報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "4d9ae36792748828",
       "title": "雲林縣消防局成立「安全衛生及訓練科」 守護第一線平安出勤 平安歸航 - 墨新聞-MORE News",
       "link": "https://news.google.com/rss/articles/CBMiQkFVX3lxTFBsUEIzSy1SajAtVlRKYXB4bUxnYXNIblNha181bW1wbVF3TlBTX1liRXBZN05kRThSY2xDQnFzcmg3dw?oc=5",
@@ -65,6 +131,17 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "aa4d91a9f7f4dce4",
+      "title": "工營中心職安衛生示範觀摩 落實零職災目標",
+      "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOV2UydHhLU3RuRFhzSkpXd3FPcUJsNFd3amt5YTZXOFJWVXZBUnhEUDN0bWg0ZUk0djdXTmNuVG9JckNxSXdTWmJPVVRhcExGUkEwZGdtYzcxazhmY3ZyZXctSDYzdnRtZGdBRXM2cVJlcklVM0V4S2Fqak14Vm5mcUVZZElQd2c?oc=5",
+      "pubDate": "Mon, 01 Jun 2026 11:22:22 GMT",
+      "pubTs": 1780312942.0,
+      "desc": "工營中心職安衛生示範觀摩 落實零職災目標&nbsp;&nbsp;軍事新聞通訊社",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "25df174daacd41b9",
@@ -1332,5 +1409,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-06-02T17:53:30.138412+00:00"
+  "lastUpdated": "2026-06-03T18:13:24.996578+00:00"
 }
