@@ -336,6 +336,9 @@
       <a class="nav-item" href="./training/">
         <span class="nav-icon">🎓</span>教育訓練教材庫
       </a>
+      <a class="nav-item" href="./heat/">
+        <span class="nav-icon">🌡️</span>熱危害風險查詢
+      </a>
       <a class="nav-item" href="./accident/">
         <span class="nav-icon">📈</span>職業災害分析系統
       </a>
@@ -550,6 +553,26 @@
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
             <button class="open-btn btn-indigo" onclick="event.stopPropagation();location.href='./plans/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./heat/'">
+          <div class="card-header">
+            <div class="card-icon ci-red">🌡️</div>
+            <div>
+              <div class="card-title">熱危害風險即時查詢</div>
+              <div class="card-desc">依據勞動部熱危害預防指引四級分類，自動取得所在地最近氣象站即時溫濕度，計算 WBGT 並顯示風險等級與防護建議。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-red">WBGT 估算</span>
+            <span class="tag tg-orange">四級風險</span>
+            <span class="tag tg-navy">即時氣象</span>
+            <span class="tag tg-green">中央氣象署</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-red" onclick="event.stopPropagation();location.href='./heat/'">開啟查詢 ›</button>
           </div>
         </div>
 
