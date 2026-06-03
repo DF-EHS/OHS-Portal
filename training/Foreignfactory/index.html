@@ -1,0 +1,959 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一般安全衛生教育訓練 · 外站承攬商 | 大豐環保科技</title>
+<style>
+/* ══════════════════════════════════════════
+   Reset & Base
+══════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --green:       #16a34a;
+  --green-dark:  #15803d;
+  --green-deep:  #14532d;
+  --navy:        #0f172a;
+  --navy-2:      #1e293b;
+  --navy-3:      #334155;
+  --slate:       #64748b;
+  --text-muted:  #94a3b8;
+  --white:       #ffffff;
+  --radius-lg:   14px;
+  --radius-xl:   20px;
+  --shadow-slide: 0 8px 40px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.35);
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--navy);
+  color: var(--white);
+  font-family: 'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══════════════════════════════════════════
+   Password Screen
+══════════════════════════════════════════ */
+#pw-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 40%, rgba(22,163,74,.18) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 75% 65%, rgba(20,83,45,.25) 0%, transparent 65%),
+    var(--navy);
+}
+
+.pw-card {
+  background: rgba(30,41,59,.92);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-xl);
+  padding: 3rem 3.2rem 2.8rem;
+  width: 420px;
+  max-width: 92vw;
+  text-align: center;
+  box-shadow: 0 24px 64px rgba(0,0,0,.6);
+}
+
+.pw-logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+.pw-logo-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 12px rgba(22,163,74,.6);
+}
+.pw-logo-text {
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--green);
+  text-transform: uppercase;
+}
+
+.pw-card h1 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.55;
+  margin-bottom: .5rem;
+}
+.pw-card .pw-subtitle {
+  font-size: .82rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.pw-field {
+  position: relative;
+  margin-bottom: 1rem;
+}
+.pw-field input {
+  width: 100%;
+  padding: .85rem 1.1rem;
+  font-size: .95rem;
+  font-family: inherit;
+  background: rgba(15,23,42,.7);
+  border: 1.5px solid rgba(255,255,255,.14);
+  border-radius: 10px;
+  color: var(--white);
+  outline: none;
+  letter-spacing: .08em;
+  transition: border-color .2s, box-shadow .2s;
+}
+.pw-field input::placeholder { color: var(--slate); letter-spacing: .04em; }
+.pw-field input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(22,163,74,.18);
+}
+
+.pw-btn {
+  width: 100%;
+  padding: .9rem;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-size: .95rem;
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: .06em;
+  cursor: pointer;
+  transition: opacity .15s, transform .1s;
+  box-shadow: 0 4px 16px rgba(22,163,74,.3);
+}
+.pw-btn:hover   { opacity: .88; }
+.pw-btn:active  { transform: scale(.97); }
+
+.pw-err {
+  margin-top: .75rem;
+  font-size: .82rem;
+  color: #f87171;
+  display: none;
+}
+
+/* ══════════════════════════════════════════
+   Progress Bar
+══════════════════════════════════════════ */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green), #4ade80);
+  z-index: 1000;
+  transition: width .25s ease;
+  box-shadow: 0 0 8px rgba(22,163,74,.5);
+}
+
+/* ══════════════════════════════════════════
+   Top UI Strip
+══════════════════════════════════════════ */
+#top-bar {
+  position: fixed;
+  top: 10px; left: 0; right: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  pointer-events: none;
+}
+#top-bar > * { pointer-events: auto; }
+
+.top-btn {
+  background: rgba(15,23,42,.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.1);
+  color: var(--text-muted);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: .04em;
+  transition: background .15s, color .15s;
+}
+.top-btn:hover { background: rgba(22,163,74,.2); color: #4ade80; border-color: rgba(22,163,74,.35); }
+
+#slide-badge {
+  background: rgba(15,23,42,.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.1);
+  color: var(--text-muted);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+}
+
+#video-pill {
+  background: rgba(124,58,237,.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(167,139,250,.3);
+  color: #e9d5ff;
+  padding: 5px 13px;
+  border-radius: 20px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  display: none;
+}
+
+/* ══════════════════════════════════════════
+   Main Stage
+══════════════════════════════════════════ */
+#stage {
+  position: fixed;
+  top: 44px;
+  left: 0; right: 0;
+  bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+}
+
+/* ── Image slide ── */
+#slide-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: var(--shadow-slide);
+  display: block;
+  background: #fff;
+  transition: opacity .18s ease;
+}
+
+/* ── Video slide ── */
+#video-layout {
+  display: none;
+  width: 100%;
+  height: 100%;
+  gap: 10px;
+  flex-direction: column;
+}
+
+/* Wide screen: side-by-side */
+@media (min-width: 900px) {
+  #video-layout {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  #video-thumb-wrap {
+    flex: 0 0 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  #video-thumb {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: var(--shadow-slide);
+    object-fit: contain;
+    background: #fff;
+    max-height: 100%;
+  }
+  #video-player-wrap {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+/* Narrow: stacked */
+@media (max-width: 899px) {
+  #video-layout { flex-direction: column; }
+  #video-thumb-wrap {
+    flex: 0 0 28%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #video-thumb {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    box-shadow: var(--shadow-slide);
+    object-fit: contain;
+    background: #fff;
+  }
+  #video-player-wrap { flex: 1 1 0; min-height: 0; display: flex; }
+}
+
+#video-player {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: #000;
+  outline: none;
+  box-shadow: var(--shadow-slide);
+  object-fit: contain;
+}
+
+#yt-player {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  box-shadow: var(--shadow-slide);
+  display: none;
+}
+body.fs-active #yt-player { border-radius: 0; box-shadow: none; }
+
+/* ══════════════════════════════════════════
+   Bottom Nav Bar
+══════════════════════════════════════════ */
+#nav-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 60px;
+  background: rgba(15,23,42,.97);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255,255,255,.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 500;
+}
+
+.nav-btn {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  color: var(--white);
+  padding: 8px 28px;
+  border-radius: 10px;
+  font-size: .84rem;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+  min-width: 110px;
+}
+.nav-btn:hover:not(:disabled) {
+  background: rgba(22,163,74,.18);
+  border-color: rgba(22,163,74,.4);
+  color: #4ade80;
+}
+.nav-btn:disabled { opacity: .22; cursor: not-allowed; }
+
+#nav-counter {
+  font-size: .84rem;
+  color: var(--slate);
+  font-variant-numeric: tabular-nums;
+  min-width: 60px;
+  text-align: center;
+  letter-spacing: .04em;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ══════════════════════════════════════════
+   Chapter Panel
+══════════════════════════════════════════ */
+#toc-backdrop {
+  position: fixed; inset: 0;
+  z-index: 700;
+  display: none;
+  background: rgba(0,0,0,.3);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+#toc-panel {
+  position: fixed;
+  top: 0; left: 0;
+  height: 100dvh;
+  width: 310px;
+  max-width: 88vw;
+  background: rgba(15,23,42,.98);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255,255,255,.09);
+  z-index: 800;
+  transform: translateX(-100%);
+  transition: transform .28s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#toc-panel.open { transform: translateX(0); }
+
+.toc-head {
+  padding: 1.4rem 1.4rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  flex-shrink: 0;
+}
+.toc-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .5rem;
+}
+.toc-logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.toc-logo-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+.toc-logo-name {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--green);
+  text-transform: uppercase;
+}
+.toc-close {
+  background: none;
+  border: none;
+  color: var(--slate);
+  font-size: 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color .15s;
+}
+.toc-close:hover { color: var(--white); }
+.toc-title {
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: .04em;
+}
+
+.toc-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: .8rem .9rem 1.5rem;
+}
+.toc-body::-webkit-scrollbar { width: 4px; }
+.toc-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 4px; }
+
+.toc-item {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--white);
+  font: inherit;
+  font-size: .84rem;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.45;
+  transition: background .15s;
+  margin-bottom: 2px;
+}
+.toc-item:hover { background: rgba(255,255,255,.07); }
+.toc-item:active { background: rgba(22,163,74,.15); }
+
+.toc-pill {
+  flex-shrink: 0;
+  font-size: .65rem;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 5px;
+  letter-spacing: .04em;
+  margin-top: 2px;
+  color: #fff;
+}
+.toc-item-text strong { display: block; }
+.toc-item-text small { font-size: .74rem; color: var(--slate); }
+
+/* Unit pill colours */
+.tp-cover { background: #374151; }
+.tp-u1    { background: #1565c0; }
+.tp-u2    { background: #6a1b9a; }
+.tp-u3    { background: #b91c1c; }
+.tp-u4    { background: #c2410c; }
+.tp-u5    { background: #15803d; }
+.tp-u6    { background: #0369a1; }
+.tp-u7    { background: #0f766e; }
+.tp-u8    { background: #78350f; }
+
+/* ── Fullscreen mode overrides ── */
+body.fs-active #stage {
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  align-items: stretch;
+  justify-content: stretch;
+}
+body.fs-active #slide-img {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  border-radius: 0;
+  box-shadow: none;
+}
+body.fs-active #video-layout {
+  padding: 0;
+}
+body.fs-active #video-thumb {
+  border-radius: 0;
+  box-shadow: none;
+}
+body.fs-active #video-player {
+  border-radius: 0;
+  box-shadow: none;
+}
+body.fs-active #top-bar {
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+body.fs-active #top-bar:hover {
+  opacity: 1;
+  pointer-events: auto;
+}
+body.fs-active #nav-bar {
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+body.fs-active #nav-bar:hover {
+  opacity: 1;
+  pointer-events: auto;
+}
+body.fs-active #back-btn   { display: none; }
+body.fs-active #progress-bar { z-index: 1001; }
+
+/* Back btn */
+#back-btn {
+  position: fixed;
+  bottom: 70px; left: 14px;
+  z-index: 400;
+  background: rgba(15,23,42,.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.1);
+  color: var(--slate);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: .76rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color .15s, background .15s;
+}
+#back-btn:hover { color: var(--white); background: rgba(255,255,255,.1); }
+
+/* ── Fullscreen button ── */
+#fs-btn {
+  background: rgba(15,23,42,.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.1);
+  color: var(--text-muted);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: .04em;
+  transition: background .15s, color .15s, border-color .15s;
+  white-space: nowrap;
+}
+#fs-btn:hover {
+  background: rgba(22,163,74,.2);
+  color: #4ade80;
+  border-color: rgba(22,163,74,.35);
+}
+</style>
+</head>
+<body>
+
+<!-- ══ Progress Bar ══ -->
+<div id="progress-bar" style="width:1.67%"></div>
+
+<!-- ══ Password Screen ══ -->
+<div id="pw-screen">
+  <div class="pw-card">
+    <div class="pw-logo-row">
+      <div class="pw-logo-dot"></div>
+      <span class="pw-logo-text">大豐環保科技</span>
+      <div class="pw-logo-dot"></div>
+    </div>
+    <h1>一般安全衛生教育訓練</h1>
+    <p class="pw-subtitle">外站承攬商適用 &nbsp;|&nbsp; 請輸入訓練密碼進入</p>
+    <div class="pw-field">
+      <input type="password" id="pw-input" placeholder="訓練密碼" autocomplete="off">
+    </div>
+    <button type="button" class="pw-btn" onclick="checkPw()">進入課程</button>
+    <p class="pw-err" id="pw-err">密碼錯誤，請洽職安人員</p>
+  </div>
+</div>
+
+<!-- ══ Top Bar ══ -->
+<div id="top-bar">
+  <button type="button" class="top-btn" id="toc-btn" onclick="toggleToc()">☰&ensp;章節導覽</button>
+  <div id="video-pill">▶ 影片播放</div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <button type="button" id="fs-btn" onclick="toggleFs()" title="全螢幕（F）">⛶&ensp;全螢幕</button>
+    <div id="slide-badge">1 / 60</div>
+  </div>
+</div>
+
+<!-- ══ TOC Panel ══ -->
+<div id="toc-backdrop" onclick="closeToc()"></div>
+<div id="toc-panel">
+  <div class="toc-head">
+    <div class="toc-head-row">
+      <div class="toc-logo">
+        <div class="toc-logo-dot"></div>
+        <span class="toc-logo-name">大豐環保科技</span>
+      </div>
+      <button type="button" class="toc-close" onclick="closeToc()">✕</button>
+    </div>
+    <div class="toc-title">課程章節導覽</div>
+  </div>
+  <div class="toc-body">
+
+    <button type="button" class="toc-item" onclick="goTo(1);closeToc()">
+      <span class="toc-pill tp-cover">封面</span>
+      <span class="toc-item-text">
+        <strong>課程封面與訓練說明</strong>
+        <small>投影片 1–2</small>
+      </span>
+    </button>
+
+    <button type="button" class="toc-item" onclick="goTo(3);closeToc()">
+      <span class="toc-pill tp-u1">Unit 1</span>
+      <span class="toc-item-text">
+        <strong>作業安全衛生有關法規概要</strong>
+        <small>投影片 3–5</small>
+      </span>
+    </button>
+
+    <button type="button" class="toc-item" onclick="goTo(6);closeToc()">
+      <span class="toc-pill tp-u2">Unit 2</span>
+      <span class="toc-item-text">
+        <strong>職業安全衛生概念及工作守則</strong>
+        <small>投影片 6–8</small>
+      </span>
+    </button>
+
+    <button type="button" class="toc-item" onclick="goTo(9);closeToc()">
+      <span class="toc-pill tp-u3">Unit 3</span>
+      <span class="toc-item-text">
+        <strong>作業前中後之自動檢查</strong>
+        <small>投影片 9–10</small>
+      </span>
+    </button>
+
+    <button type="button" class="toc-item" onclick="goTo(11);closeToc()">
+      <span class="toc-pill tp-u4">Unit 4</span>
+      <span class="toc-item-text">
+        <strong>標準作業程序</strong>
+        <small>投影片 11–36 &nbsp;·&nbsp; 含 8 段影片</small>
+      </span>
+    </button>
+
+    <button type="button" class="toc-item" onclick="goTo(37);closeToc()">
+      <span class="toc-pill tp-u5">Unit 5</span>
+      <span class="toc-item-text">
+        <strong>緊急事故應變處理</strong>
+        <small>投影片 37</small>
+      </span>
+    </button>
+
+    <button type="button" class="toc-item" onclick="goTo(38);closeToc()">
+      <span class="toc-pill tp-u6">Unit 6</span>
+      <span class="toc-item-text">
+        <strong>消防及急救常識暨演練</strong>
+        <small>投影片 38–53 &nbsp;·&nbsp; 含 5 段影片</small>
+      </span>
+    </button>
+
+    <button type="button" class="toc-item" onclick="goTo(54);closeToc()">
+      <span class="toc-pill tp-u7">Unit 7</span>
+      <span class="toc-item-text">
+        <strong>其他安全衛生知識（6S 管理）</strong>
+        <small>投影片 54–57</small>
+      </span>
+    </button>
+
+    <button type="button" class="toc-item" onclick="goTo(58);closeToc()">
+      <span class="toc-pill tp-u8">Unit 8</span>
+      <span class="toc-item-text">
+        <strong>現場作業安衛及 6S 案例</strong>
+        <small>投影片 58–60</small>
+      </span>
+    </button>
+
+  </div>
+</div>
+
+<!-- ══ Main Stage ══ -->
+<div id="stage">
+  <!-- Image slides -->
+  <img id="slide-img" src="slides/slide1.png" alt="投影片">
+
+  <!-- Video slides -->
+  <div id="video-layout">
+    <div id="video-thumb-wrap">
+      <img id="video-thumb" src="" alt="投影片縮圖">
+    </div>
+    <div id="video-player-wrap">
+      <video id="video-player" controls preload="none">
+        <source id="video-src" src="" type="video/mp4">
+      </video>
+      <iframe id="yt-player" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <div id="yt-fallback" style="display:none;flex:1 1 0;min-height:0;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#0f0f0f;border-radius:10px;box-shadow:var(--shadow-slide);">
+        <img id="yt-thumb-img" src="" alt="影片縮圖" style="max-width:100%;max-height:60%;object-fit:contain;border-radius:6px;">
+        <a id="yt-link" href="" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:1rem;font-weight:700;letter-spacing:.04em;">
+          ▶&ensp;前往 YouTube 觀看
+        </a>
+        <p style="color:#94a3b8;font-size:.78rem;">（嵌入播放需部署至網路環境）</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Bottom Nav Bar ══ -->
+<div id="nav-bar">
+  <button type="button" class="nav-btn" id="btn-prev" onclick="prev()" disabled>◀&ensp;上一頁</button>
+  <span id="nav-counter">1 / 60</span>
+  <button type="button" class="nav-btn" id="btn-next" onclick="next()">下一頁&ensp;▶</button>
+</div>
+
+<!-- ══ Back Link ══ -->
+<a id="back-btn" href="../index.html">← 返回教材庫</a>
+
+<script>
+/* ── Config ── */
+const TOTAL = 60;
+const VIDEO_MAP = {
+  14: 'video/media1.mp4',
+  17: 'video/media2.mp4',
+  20: 'video/media3.mp4',
+  22: 'video/media4.mp4',
+  26: 'video/media5.mp4',
+  30: 'video/media6.mp4',
+  32: 'video/media7.mp4',
+  // 34 -> YouTube (see YOUTUBE_MAP)
+  43: 'video/media9.mp4',
+  47: 'video/media10.mp4',
+  48: 'video/media11.mp4',
+  49: 'video/media12.mp4',
+  50: 'video/media13.mp4',
+};
+
+const YOUTUBE_MAP = {
+  34: {
+    embed: 'https://www.youtube.com/embed/gm3rcq7aeGM?rel=0',
+    watch: 'https://www.youtube.com/watch?v=gm3rcq7aeGM',
+    id:    'gm3rcq7aeGM',
+  },
+};
+
+/* ── State ── */
+let current = 1;
+
+/* ── DOM refs ── */
+const slideImg      = document.getElementById('slide-img');
+const videoLayout   = document.getElementById('video-layout');
+const videoThumb    = document.getElementById('video-thumb');
+const videoPlayer   = document.getElementById('video-player');
+const videoSrc      = document.getElementById('video-src');
+const progressBar   = document.getElementById('progress-bar');
+const slideBadge    = document.getElementById('slide-badge');
+const videoPill     = document.getElementById('video-pill');
+const navCounter    = document.getElementById('nav-counter');
+const btnPrev       = document.getElementById('btn-prev');
+const btnNext       = document.getElementById('btn-next');
+const ytPlayer      = document.getElementById('yt-player');
+const ytFallback    = document.getElementById('yt-fallback');
+const ytThumbImg    = document.getElementById('yt-thumb-img');
+const ytLink        = document.getElementById('yt-link');
+const isFileProto   = window.location.protocol === 'file:';
+
+/* ── Navigation ── */
+function goTo(n) {
+  n = Math.max(1, Math.min(TOTAL, n));
+
+  if (VIDEO_MAP[current]) videoPlayer.pause();
+  if (YOUTUBE_MAP[current]) { ytPlayer.src = ''; ytFallback.style.display = 'none'; }
+  current = n;
+
+  const label = `${n} / ${TOTAL}`;
+  slideBadge.textContent  = label;
+  navCounter.textContent  = label;
+  btnPrev.disabled        = n <= 1;
+  btnNext.disabled        = n >= TOTAL;
+  progressBar.style.width = `${(n / TOTAL) * 100}%`;
+
+  if (VIDEO_MAP[n] || YOUTUBE_MAP[n]) {
+    slideImg.style.display    = 'none';
+    videoLayout.style.display = 'flex';
+    videoPill.style.display   = '';
+    videoThumb.src = `slides/slide${n}.png`;
+
+    if (YOUTUBE_MAP[n]) {
+      const yt = YOUTUBE_MAP[n];
+      videoPlayer.style.display = 'none';
+      if (isFileProto) {
+        ytPlayer.style.display   = 'none';
+        ytPlayer.src             = '';
+        ytFallback.style.display = 'flex';
+        ytThumbImg.src = 'https://img.youtube.com/vi/' + yt.id + '/maxresdefault.jpg';
+        ytLink.href    = yt.watch;
+      } else {
+        ytFallback.style.display = 'none';
+        ytPlayer.style.display   = 'block';
+        ytPlayer.src = yt.embed;
+      }
+    } else {
+      ytPlayer.style.display    = 'none';
+      ytPlayer.src = '';
+      videoPlayer.style.display = '';
+      const src = VIDEO_MAP[n];
+      if (videoSrc.getAttribute('src') !== src) {
+        videoSrc.setAttribute('src', src);
+        videoPlayer.load();
+      }
+    }
+  } else {
+    videoLayout.style.display = 'none';
+    slideImg.style.display    = 'block';
+    slideImg.src               = `slides/slide${n}.png`;
+    videoPill.style.display    = 'none';
+  }
+
+  /* preload next image */
+  if (n < TOTAL && !VIDEO_MAP[n + 1] && !YOUTUBE_MAP[n + 1]) {
+    const pre = new Image();
+    pre.src = `slides/slide${n + 1}.png`;
+  }
+}
+
+function prev() { goTo(current - 1); }
+function next() { goTo(current + 1); }
+
+/* ── Keyboard ── */
+document.addEventListener('keydown', function(e) {
+  if (document.getElementById('pw-screen').style.display !== 'none'
+      && document.getElementById('pw-screen').style.display !== '') return;
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); next(); }
+  else if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')  { e.preventDefault(); prev(); }
+  else if (e.key === ' ') {
+    e.preventDefault();
+    if (VIDEO_MAP[current]) {
+      videoPlayer.paused ? videoPlayer.play() : videoPlayer.pause();
+    } else if (YOUTUBE_MAP[current]) { /* YouTube 由 iframe 自行控制 */
+    } else { next(); }
+  }
+  else if (e.key === 'f' || e.key === 'F') { toggleFs(); }
+});
+
+/* ── Touch swipe ── */
+let _tx = 0;
+document.addEventListener('touchstart', e => { _tx = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - _tx;
+  if (Math.abs(dx) > 50) { dx < 0 ? next() : prev(); }
+}, { passive: true });
+
+/* ── Fullscreen ── */
+function toggleFs() {
+  const el = document.documentElement;
+  const active = document.fullscreenElement || document.webkitFullscreenElement;
+  if (!active) {
+    if (el.requestFullscreen)       el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  } else {
+    if (document.exitFullscreen)       document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+  }
+}
+function _updateFsBtn() {
+  const btn  = document.getElementById('fs-btn');
+  const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  btn.textContent = isFs ? '⊡ 退出全螢幕' : '⛶ 全螢幕';
+  document.body.classList.toggle('fs-active', isFs);
+}
+document.addEventListener('fullscreenchange',       _updateFsBtn);
+document.addEventListener('webkitfullscreenchange', _updateFsBtn);
+
+/* ── TOC ── */
+function toggleToc() {
+  const panel = document.getElementById('toc-panel');
+  const bd    = document.getElementById('toc-backdrop');
+  if (panel.classList.contains('open')) { closeToc(); }
+  else { panel.classList.add('open'); bd.style.display = 'block'; }
+}
+function closeToc() {
+  document.getElementById('toc-panel').classList.remove('open');
+  document.getElementById('toc-backdrop').style.display = 'none';
+}
+
+/* ── Password ── */
+(function () {
+  const KEY = 'ZGYtb3V0c2lkZS10cmFpbmluZzIwMjY=';
+  const overlay = document.getElementById('pw-screen');
+  const errEl   = document.getElementById('pw-err');
+
+  window.checkPw = function () {
+    const v = document.getElementById('pw-input').value;
+    if (btoa(unescape(encodeURIComponent(v))) === KEY) {
+      overlay.style.display = 'none';
+      sessionStorage.setItem('df_ff_auth', '1');
+    } else {
+      errEl.style.display = 'block';
+      document.getElementById('pw-input').select();
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const inp = document.getElementById('pw-input');
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') window.checkPw(); });
+    if (sessionStorage.getItem('df_ff_auth') === '1') overlay.style.display = 'none';
+  });
+})();
+
+/* ── Init ── */
+goTo(1);
+</script>
+</body>
+</html>
