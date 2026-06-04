@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>職場霸凌防治合規行動計畫書｜大豐環保科技</title>
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "微軟正黑體", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #2C3E50;
+    background: #F4F6F9;
+  }
+
+  /* ── Color Variables ── */
+  :root {
+    --navy:   #1B3A5C;
+    --blue:   #2471A3;
+    --sky:    #D6EAF8;
+    --teal:   #148F77;
+    --teal-l: #D5F5E3;
+    --amber:  #D68910;
+    --amber-l:#FEF9E7;
+    --red:    #C0392B;
+    --red-l:  #FADBD8;
+    --gray:   #ECF0F1;
+    --dark:   #1C2833;
+    --white:  #FFFFFF;
+  }
+
+  /* ── Page Layout ── */
+  .page { max-width: 920px; margin: 0 auto; background: transparent; }
+
+  /* ── TOP NAV (above cover, on page background) ── */
+  .top-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 24px 12px;
+  }
+  .top-nav-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 18px; border-radius: 8px;
+    border: 1.5px solid var(--navy);
+    color: var(--navy); background: #fff;
+    font-size: 12px; font-weight: 700; text-decoration: none;
+    box-shadow: 0 2px 6px rgba(27,58,92,.15);
+    transition: background .15s, color .15s;
+  }
+  .top-nav-btn:hover { background: var(--navy); color: #fff; }
+
+  /* ── COVER (HERO STYLE) — rounded top corners only ── */
+  .cover {
+    background: linear-gradient(145deg, #1B3A5C 0%, #2471A3 60%, #148F77 100%);
+    color: #fff;
+    padding: 48px 56px 44px;
+    position: relative; overflow: hidden;
+  }
+  .cover-deco {
+    position: absolute; right: 0; bottom: 0;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,.06) 0%, transparent 70%);
+  }
+  .hero-co {
+    font-size: 12.5px; color: rgba(255,255,255,.7);
+    letter-spacing: 1px; margin-bottom: 16px;
+  }
+  .cover h1 {
+    font-size: 38px; font-weight: 700; color: #fff;
+    line-height: 1.25; margin-bottom: 6px;
+  }
+  .cover h1 span { color: #A9DFBF; }
+  .hero-law {
+    display: inline-block;
+    background: rgba(255,255,255,.15); color: rgba(255,255,255,.85);
+    font-size: 11.5px; padding: 4px 14px;
+    border-radius: 20px; border: 1px solid rgba(255,255,255,.25);
+    margin-bottom: 28px; white-space: nowrap;
+  }
+  .hero-meta {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 8px; padding: 16px 20px;
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 10px 24px; max-width: 520px; margin-bottom: 28px;
+  }
+  .hero-meta .mf label {
+    font-size: 10.5px; color: rgba(255,255,255,.6);
+    display: block; margin-bottom: 2px;
+  }
+  .hero-meta .mf span { font-size: 13.5px; color: #fff; }
+  .hero-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+  .chip {
+    padding: 5px 16px; border-radius: 20px;
+    font-size: 11.5px; font-weight: 700; color: #fff;
+  }
+
+  /* ── Key Stat Strip — rounded bottom corners only, tight below cover ── */
+  .stat-strip {
+    display: flex;
+    background: var(--navy);
+    overflow: hidden;
+  }
+  .stat-item {
+    flex: 1;
+    padding: 18px 20px;
+    text-align: center;
+    color: #fff;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-size: 26px; font-weight: 700; color: #A9DFBF; }
+  .stat-label { font-size: 11px; opacity: 0.75; margin-top: 2px; }
+
+  /* ── Section ── */
+  .section { padding: 44px 56px; border-bottom: 1px solid #ECF0F1; }
+  .section:last-child { border-bottom: none; }
+  .section-title {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 18px; font-weight: 700; color: var(--navy);
+    margin-bottom: 24px;
+  }
+  .section-title .num {
+    width: 32px; height: 32px;
+    background: var(--navy);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+
+  /* ── Alert Box ── */
+  .alert {
+    border-left: 4px solid;
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+    margin: 16px 0;
+    font-size: 13.5px;
+  }
+  .alert-blue  { border-color: var(--blue);  background: var(--sky); }
+  .alert-teal  { border-color: var(--teal);  background: var(--teal-l); }
+  .alert-amber { border-color: var(--amber); background: var(--amber-l); }
+  .alert-red   { border-color: var(--red);   background: var(--red-l); }
+  .alert strong { display: block; margin-bottom: 4px; }
+
+  /* ── Cards ── */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+  .card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .card {
+    border-radius: 8px;
+    padding: 20px;
+    position: relative; overflow: hidden;
+  }
+  .card-navy  { background: var(--navy);  color: #fff; }
+  .card-blue  { background: var(--blue);  color: #fff; }
+  .card-teal  { background: var(--teal);  color: #fff; }
+  .card-gray  { background: var(--gray);  color: var(--dark); }
+  .card-sky   { background: var(--sky);   color: var(--dark); }
+  .card-amber { background: var(--amber-l); border: 1px solid #F9CA24; color: var(--dark); }
+  .card-red   { background: var(--red-l); border: 1px solid var(--red); color: var(--dark); }
+  .card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .card p  { font-size: 12.5px; line-height: 1.7; opacity: 0.9; }
+  .card-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+
+  /* ── Threshold Strip ── */
+  .threshold-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-radius: 8px; overflow: hidden; margin: 20px 0; }
+  .th-item { padding: 20px 18px; }
+  .th-1 { background: #D6EAF8; }
+  .th-2 { background: #2471A3; color: #fff; }
+  .th-3 { background: #1B3A5C; color: #fff; }
+  .th-label { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .th-title { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+  .th-list { font-size: 12px; line-height: 2; }
+  .th-list li { list-style: none; }
+  .th-list li::before { content: "▸ "; }
+
+  /* ── Table ── */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  th {
+    background: var(--navy); color: #fff;
+    padding: 10px 12px; text-align: left; font-weight: 600;
+  }
+  td { padding: 9px 12px; border-bottom: 1px solid #E8ECF0; vertical-align: top; }
+  tr:nth-child(even) td { background: #F8F9FA; }
+  tr:hover td { background: var(--sky); }
+  .priority-h { color: var(--red); font-weight: 700; }
+  .priority-m { color: var(--amber); font-weight: 700; }
+  .tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 12px;
+    white-space: nowrap;
+  }
+  .tag-red   { background: var(--red-l);   color: var(--red); }
+  .tag-amber { background: var(--amber-l); color: var(--amber); }
+  .tag-teal  { background: var(--teal-l);  color: var(--teal); }
+
+  /* ── Steps / Timeline ── */
+  .steps { display: flex; flex-direction: column; gap: 0; margin: 20px 0; }
+  .step {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 14px 0;
+    border-left: 3px solid var(--blue);
+    padding-left: 20px;
+    position: relative;
+    margin-left: 16px;
+  }
+  .step::before {
+    content: attr(data-n);
+    position: absolute; left: -16px; top: 14px;
+    width: 30px; height: 30px;
+    background: var(--blue); color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step:last-child { border-left: 3px solid transparent; }
+  .step-content { flex: 1; }
+  .step-title { font-weight: 700; color: var(--navy); font-size: 14px; }
+  .step-time {
+    display: inline-block;
+    background: var(--navy); color: #fff;
+    font-size: 11px; padding: 1px 8px; border-radius: 10px;
+    margin-left: 8px; vertical-align: middle;
+  }
+  .step-desc { font-size: 12.5px; color: #555; margin-top: 4px; }
+  .step-rec  { font-size: 12px; color: #777; margin-top: 6px; }
+
+  /* ── 3-Action Blocks ── */
+  .action-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+  .action-block {
+    border-radius: 8px; padding: 20px;
+    background: var(--gray);
+  }
+  .action-num {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    color: var(--white); background: var(--navy);
+    display: inline-block; padding: 2px 10px; border-radius: 12px; margin-bottom: 10px;
+  }
+  .action-block h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .action-block ul { list-style: none; }
+  .action-block li { font-size: 12.5px; padding: 3px 0; }
+  .action-block li::before { content: "✓ "; color: var(--teal); font-weight: 700; }
+
+  /* ── Red Line Section ── */
+  .redline-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0; }
+  .redline-item {
+    background: var(--red-l); border: 1px solid #E6B0AA;
+    border-radius: 8px; padding: 14px 10px; text-align: center;
+  }
+  .redline-item .rl-icon { font-size: 22px; display: block; margin-bottom: 6px; }
+  .redline-item .rl-type { font-size: 12px; font-weight: 700; color: var(--red); margin-bottom: 4px; }
+  .redline-item .rl-desc { font-size: 11px; color: #555; line-height: 1.5; }
+
+  /* ── Check List ── */
+  .check-list { list-style: none; margin: 12px 0; }
+  .check-list li {
+    padding: 8px 12px;
+    border-left: 3px solid #BDC3C7;
+    margin-bottom: 6px;
+    background: #F8F9FA;
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+  }
+  .check-list li::before { content: "▸ "; font-size: 13px; color: var(--navy); font-weight: 700; }
+
+  /* ── Quote ── */
+  blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 12px 18px;
+    background: var(--teal-l);
+    border-radius: 0 6px 6px 0;
+    font-size: 13.5px;
+    margin: 16px 0;
+    color: #1a6b5a;
+  }
+
+  /* ── 3-Principle ── */
+  .principle-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+  .principle {
+    border-radius: 8px; padding: 18px;
+    text-align: center;
+  }
+  .principle .p-icon { font-size: 30px; display: block; margin-bottom: 8px; }
+  .principle .p-word { font-size: 22px; font-weight: 900; display: block; margin-bottom: 6px; }
+  .principle .p-desc { font-size: 12px; opacity: 0.85; }
+  .p-navy  { background: var(--navy);  color: #fff; }
+  .p-blue  { background: var(--blue);  color: #fff; }
+  .p-teal  { background: var(--teal);  color: #fff; }
+
+  /* ── Self-Check ── */
+  .self-check { background: var(--amber-l); border: 1px solid #F9CA24; border-radius: 8px; padding: 20px; margin: 16px 0; }
+  .self-check h4 { color: var(--amber); font-size: 14px; margin-bottom: 12px; }
+  .self-check ol { padding-left: 20px; }
+  .self-check li { font-size: 13px; padding: 4px 0; }
+
+  /* ── Footer ── */
+  .footer {
+    background: var(--dark); color: rgba(255,255,255,0.6);
+    padding: 28px 56px;
+    font-size: 11px; line-height: 1.9;
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;
+    flex-wrap: wrap;
+  }
+  .footer-right { text-align: right; }
+
+  /* ── QUICKNAV (white card + outline buttons) ── */
+  .quicknav {
+    margin: 16px 20px 0;
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 20px 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  }
+  .quicknav-label {
+    font-size: 11px; font-weight: 600; color: #999;
+    letter-spacing: 1px; margin-bottom: 12px;
+  }
+  .quicknav-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .qnav-btn {
+    padding: 6px 16px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; text-decoration: none;
+    background: transparent;
+    border: 1.5px solid var(--navy);
+    color: var(--navy);
+    transition: background .15s, color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  .qnav-btn:hover { background: var(--navy); color: #fff; }
+  @media print { .top-nav, .quicknav { display: none; } }
+
+  /* ── Print ── */
+  @media print {
+    body { background: #fff; font-size: 12px; }
+    .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 50px 50px 40px; }
+    .stat-strip, .th-1, .th-2, .th-3,
+    .card-navy, .card-blue, .card-teal,
+    .p-navy, .p-blue, .p-teal,
+    th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .section { padding: 30px 50px; page-break-inside: avoid; }
+    .card-grid, .action-3, .redline-grid { page-break-inside: avoid; }
+    .footer { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══ TOP NAV ══ -->
+<div class="top-nav">
+  <a class="top-nav-btn" href="../">← 計畫書</a>
+  <a class="top-nav-btn" href="../../">🏠 系統入口</a>
+</div>
+
+<!-- ══════════════════ COVER ══════════════════ -->
+<header class="cover">
+  <div class="cover-deco"></div>
+  <div class="hero-co">大豐環保科技股份有限公司　DA FON ENVIRONMENTAL TECHNOLOGY</div>
+  <h1>職場霸凌防治<br><span>計畫書</span></h1>
+  <div class="hero-law">依職業安全衛生法第22條之2第4項授權 ／ 職場霸凌防治準則（民國115年7月1日施行）</div>
+  <div class="hero-meta">
+    <div class="mf"><label>版　　次</label><span>1.0</span></div>
+    <div class="mf"><label>施行日期</label><span>民國115年</span></div>
+    <div class="mf"><label>主辦單位</label><span>人資部</span></div>
+    <div class="mf"><label>核　　准</label><span style="border-bottom:1px solid rgba(255,255,255,.4);display:block;width:100%;height:22px"></span></div>
+    <div class="mf"><label>審　　核</label><span style="border-bottom:1px solid rgba(255,255,255,.4);display:block;width:100%;height:22px"></span></div>
+    <div class="mf"><label>承　　辦</label><span style="border-bottom:1px solid rgba(255,255,255,.4);display:block;width:100%;height:22px"></span></div>
+  </div>
+  <div class="hero-chips">
+    <span class="chip" style="background:rgba(27,58,92,.75)">全體員工</span>
+    <span class="chip" style="background:rgba(36,113,163,.75)">各級主管</span>
+    <span class="chip" style="background:rgba(20,143,119,.8)">HR ／ 法務 ／ 職安</span>
+    <span class="chip" style="background:rgba(44,62,80,.8)">承攬商及派遣勞工</span>
+  </div>
+</header>
+
+<!-- 關鍵數字 -->
+<div class="stat-strip">
+  <div class="stat-item"><div class="stat-num">25</div><div class="stat-label">法規條文數</div></div>
+  <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">企業規模門檻（10/30/100人）</div></div>
+  <div class="stat-item"><div class="stat-num">≥1/2</div><div class="stat-label">調查小組外部委員比例</div></div>
+  <div class="stat-item"><div class="stat-num">300天</div><div class="stat-label">完整申訴流程最長時程</div></div>
+  <div class="stat-item"><div class="stat-num">3年</div><div class="stat-label">紀錄留存期限</div></div>
+</div>
+
+<!-- ══ QUICKNAV ══ -->
+<div class="quicknav">
+  <div class="quicknav-label">快速跳轉 — 各章節</div>
+  <div class="quicknav-btns">
+    <a class="qnav-btn" href="#s1">① 新法改變</a>
+    <a class="qnav-btn" href="#s2">② 規模門檻</a>
+    <a class="qnav-btn" href="#s3">③ 五大組織</a>
+    <a class="qnav-btn" href="#s4">④ 申訴流程</a>
+    <a class="qnav-btn" href="#s5">⑤ 培訓規劃</a>
+    <a class="qnav-btn" href="#s6">⑥ 行動清單</a>
+    <a class="qnav-btn" href="#s7">⑦ 霸凌紅線</a>
+    <a class="qnav-btn" href="#s8">⑧ 合規檢核</a>
+  </div>
+</div>
+
+<!-- ══════════════════ SECTION 1：新法核心改變 ══════════════════ -->
+<div id="s1" class="section">
+  <div class="section-title"><div class="num">1</div>新法最大改變：從罰鍰風險到舉證責任</div>
+
+  <div class="card-grid">
+    <div class="card card-navy">
+      <span class="card-icon">📋</span>
+      <h4>合規門檻大幅提高</h4>
+      <p>主管機關重視的不只是「有沒有申訴管道」，而是預防、受理、調查、處理、追蹤的完整機制是否建立。</p>
+    </div>
+    <div class="card card-blue">
+      <span class="card-icon">🛡️</span>
+      <h4>申訴人保護與舉證責任</h4>
+      <p>員工申訴後遭不利處分，企業必須舉證該處分與申訴無關。紀錄必須在日常管理中就形成，不能事後補造。</p>
+    </div>
+    <div class="card card-teal">
+      <span class="card-icon">📢</span>
+      <h4>違法資訊公開對外</h4>
+      <p>一旦被裁罰，事業單位名稱、負責人姓名、違反法條與裁罰金額均可能公開，直接衝擊雇主品牌。</p>
+    </div>
+  </div>
+
+  <div class="alert alert-amber">
+    <strong>⚠ 三大提醒</strong>
+    <p style="margin-top:6px;">① 不要只問「有沒有申訴信箱」，而要問「申訴進來後，誰受理、誰調查、誰決定、誰追蹤」。</p>
+    <p>② 不要只留存簽到表，也要留存課程內容、測驗或完訓紀錄、主管補訓紀錄。</p>
+    <p>③ 不要等到主管機關來查才補文件，<b>紀錄必須在事件發生當下就形成</b>。</p>
+  </div>
+</div>
+
+<!-- ══════════════════ SECTION 2：規模門檻 ══════════════════ -->
+<div id="s2" class="section">
+  <div class="section-title"><div class="num">2</div>三大規模門檻與對應義務</div>
+
+  <div class="threshold-grid">
+    <div class="th-item th-1">
+      <div class="th-label">10人以上</div>
+      <div class="th-title">基礎合規門檻</div>
+      <ul class="th-list">
+        <li>設置申訴管道</li>
+        <li>專用信箱 / 電話 / 傳真 / 通訊軟體</li>
+        <li>於工作場所顯著處公開揭示</li>
+        <li>受理翌日起7日內系統登錄</li>
+        <li>執行紀錄留存3年</li>
+      </ul>
+    </div>
+    <div class="th-item th-2">
+      <div class="th-label">30人以上</div>
+      <div class="th-title">制度建立門檻</div>
+      <ul class="th-list">
+        <li>訂定防治措施、申訴及懲處規範</li>
+        <li>指定專責單位統籌辦理</li>
+        <li>辦理防治教育訓練</li>
+        <li>設申訴處理單位（至少3人）</li>
+        <li>任一性別不得少於1/3</li>
+      </ul>
+    </div>
+    <div class="th-item th-3">
+      <div class="th-label">100人以上 ★</div>
+      <div class="th-title">最高義務層級（本公司適用）</div>
+      <ul class="th-list">
+        <li>組成調查小組（外部 ≥ 1/2）</li>
+        <li>受理起7日內組成</li>
+        <li>外部委員可自人才資料庫遴選</li>
+        <li>成員教育訓練 ≥ 3小時</li>
+        <li>申復小組外部比例 ≥ 2/3</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert alert-blue">
+    <strong>📌 大豐環保科技屬100人以上，三個層級義務全部適用，以最高標準執行。</strong>
+  </div>
+</div>
+
+<!-- ══════════════════ SECTION 3：企業必備5大組織 ══════════════════ -->
+<div id="s3" class="section">
+  <div class="section-title"><div class="num">3</div>企業必備五大組織架構</div>
+
+  <table>
+    <thead>
+      <tr><th>組織／機制</th><th>核心任務</th><th>未完成的風險</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>🏢 申訴處理單位</strong><br><small>至少3人，性別比≥1/3</small></td>
+        <td>負責受理、初步審查、通知與流程控管</td>
+        <td class="priority-h">案件進來後無人負責，容易延誤時程或處理不一致</td>
+      </tr>
+      <tr>
+        <td><strong>🔍 調查小組</strong><br><small>外部≥1/2，7日內組成</small></td>
+        <td>負責事實調查、訪談、證據整理與調查報告</td>
+        <td class="priority-h">調查程序被質疑不公正，可能造成重查或裁罰風險</td>
+      </tr>
+      <tr>
+        <td><strong>⚖️ 申復審議小組</strong><br><small>外部≥2/3，不得與調查小組重疊</small></td>
+        <td>處理當事人不服調查結果後的申復程序</td>
+        <td class="priority-h">原調查人員若重複參與，容易被質疑球員兼裁判</td>
+      </tr>
+      <tr>
+        <td><strong>📋 外部專家名冊</strong><br><small>具法律、職安、人資、心理或勞資爭議經驗</small></td>
+        <td>快速遴選具資格之外部委員，符合比例要求</td>
+        <td class="priority-m">案件發生後臨時找人，可能影響期限與程序品質</td>
+      </tr>
+      <tr>
+        <td><strong>🔄 利益迴避機制</strong><br><small>四親等血親、三親等姻親須迴避</small></td>
+        <td>確保調查公正，避免與當事人有利害關係者參與</td>
+        <td class="priority-m">調查結果被質疑偏頗，降低程序可信度</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════════ SECTION 4：申訴流程責任鏈 ══════════════════ -->
+<div id="s4" class="section">
+  <div class="section-title"><div class="num">4</div>申訴流程責任鏈（最長可達300天）</div>
+
+  <div class="principle-3">
+    <div class="principle p-navy"><span class="p-icon">⏱</span><span class="p-word">不拖</span><span class="p-desc">接到申訴後立即啟動程序，時程符合法規規定</span></div>
+    <div class="principle p-blue"><span class="p-icon">⚖️</span><span class="p-word">不偏</span><span class="p-desc">調查過程保持客觀公正，不預設立場</span></div>
+    <div class="principle p-teal"><span class="p-icon">📁</span><span class="p-word">不漏</span><span class="p-desc">所有紀錄完整留存，每一環節都能拿出資料</span></div>
+  </div>
+
+  <div class="steps">
+    <div class="step" data-n="①">
+      <div class="step-content">
+        <div class="step-title">申訴受理<span class="step-time">接獲起10日內決定</span></div>
+        <div class="step-desc">確認申訴內容、身分資訊、是否屬職場霸凌範圍；決定受理或不受理並書面通知申訴人。</div>
+        <div class="step-rec">📄 應留存：申訴表、收件時間、初步判斷紀錄、通知書及送達紀錄</div>
+      </div>
+    </div>
+    <div class="step" data-n="②">
+      <div class="step-content">
+        <div class="step-title">系統登錄<span class="step-time">受理翌日起7日內</span></div>
+        <div class="step-desc">依主管機關公告方式登錄職場霸凌通報系統，並通知申訴人登錄結果。</div>
+        <div class="step-rec">📄 應留存：系統登錄截圖、通知紀錄</div>
+      </div>
+    </div>
+    <div class="step" data-n="③">
+      <div class="step-content">
+        <div class="step-title">組成調查小組<span class="step-time">受理起7日內</span></div>
+        <div class="step-desc">確認委員資格、外部專家（≥1/2）、性別比例（任一性別≥1/3）與利益迴避聲明。申訴人有意願者得先進行協調（協調逾1個月無共識即停止）。</div>
+        <div class="step-rec">📄 應留存：委員名冊、迴避聲明、會議通知、協調紀錄</div>
+      </div>
+    </div>
+    <div class="step" data-n="④">
+      <div class="step-content">
+        <div class="step-title">進行調查與訪談<span class="step-time">訪談起2個月內完成（可延長1個月）</span></div>
+        <div class="step-desc">訪談申訴人、被申訴人、相關證人，蒐集證據；訪談全程應錄音錄影；不得令當事人對質；協調期間不計入時限。</div>
+        <div class="step-rec">📄 應留存：訪談紀錄、錄音錄影檔、證據清單、會議紀錄</div>
+      </div>
+    </div>
+    <div class="step" data-n="⑤">
+      <div class="step-content">
+        <div class="step-title">作成調查決定<span class="step-time">調查完成後1個月內</span></div>
+        <div class="step-desc">申訴處理單位召開決議會議（1/2以上出席，出席者過半數同意），作成霸凌成立與否之決定。</div>
+        <div class="step-rec">📄 應留存：調查報告、審議紀錄、決議文件</div>
+      </div>
+    </div>
+    <div class="step" data-n="⑥">
+      <div class="step-content">
+        <div class="step-title">通知當事人 ＆ 更新系統<span class="step-time">決定後10日通知／15日更新系統</span></div>
+        <div class="step-desc">書面通知申訴人與被申訴人調查結果，告知救濟方法及期限；15日內更新通報系統。</div>
+        <div class="step-rec">📄 應留存：通知書、送達紀錄、系統更新截圖</div>
+      </div>
+    </div>
+    <div class="step" data-n="⑦">
+      <div class="step-content">
+        <div class="step-title">懲戒行為人 ＆ 追蹤考核</div>
+        <div class="step-desc">霸凌成立者依D3-HR-005辦理懲戒（申誡→小過→大過→免職）；追蹤懲處執行，防止申訴人遭報復；提供被霸凌者心理諮商、法律諮詢等資源。</div>
+        <div class="step-rec">📄 應留存：懲戒紀錄、追蹤表、資源轉介紀錄</div>
+      </div>
+    </div>
+    <div class="step" data-n="⑧">
+      <div class="step-content">
+        <div class="step-title">申復程序（如當事人不服）<span class="step-time">30日內提出 → 30日內決定</span></div>
+        <div class="step-desc">接獲申復後7日內組成申復審議小組（外部≥2/3，不得與原調查小組重疊）；有重大瑕疵者須重新調查（可再展延30日）。</div>
+        <div class="step-rec">📄 應留存：申復書、審議小組名冊、決定通知書</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ SECTION 5：培訓規劃 ══════════════════ -->
+<div id="s5" class="section">
+  <div class="section-title"><div class="num">5</div>培訓規劃：合規核心，不是選配</div>
+
+  <div class="card-grid card-grid-2">
+    <div class="card card-sky">
+      <h4>👥 全體員工</h4>
+      <p><strong>必講內容：</strong>職場霸凌定義、六大行為樣態、申訴管道與申訴人保護<br>
+      <strong>目的：</strong>讓員工知道如何求助，也知道哪些行為不能做<br>
+      <strong>頻率：</strong>新進訓練 + 每年至少1次在職訓練</p>
+    </div>
+    <div class="card card-sky">
+      <h4>👔 各級主管</h4>
+      <p><strong>必講內容：</strong>合理管理界線、績效面談語言、公開指責風險、報復禁止<br>
+      <strong>目的：</strong>降低主管因管理失當引發申訴的機率<br>
+      <strong>重點：</strong>主管有連帶責任，知情不報即違規</p>
+    </div>
+    <div class="card card-sky">
+      <h4>⚙️ HR ／ 法務 ／ 職安窗口</h4>
+      <p><strong>必講內容：</strong>申訴流程、調查SOP、訪談技巧、證據保存、外部專家協作<br>
+      <strong>目的：</strong>確保案件發生時能依法啟動並完整留痕<br>
+      <strong>重點：</strong>調查小組成員需受訓 ≥ 3小時</p>
+    </div>
+    <div class="card card-sky">
+      <h4>🏛️ 高階管理層</h4>
+      <p><strong>必講內容：</strong>企業責任、品牌風險、組織文化、重大案件決策原則<br>
+      <strong>目的：</strong>讓合規不只是HR任務，而是管理層治理責任<br>
+      <strong>注意：</strong>最高負責人違反規定，罰鍰可達100萬元</p>
+    </div>
+  </div>
+
+  <div class="alert alert-red">
+    <strong>⚠ 訓練紀錄留存要求：</strong>
+    企業應保存課程教材、出席紀錄、完訓名單、測驗紀錄與補訓紀錄。僅憑紙本簽到或口頭宣導，稽查時無法快速提出完整資料，仍可能被認定合規不足。
+  </div>
+</div>
+
+<!-- ══════════════════ SECTION 6：立即行動清單 ══════════════════ -->
+<div id="s6" class="section">
+  <div class="section-title"><div class="num">6</div>立即行動清單：三條線同步推進</div>
+
+  <div class="action-3">
+    <div class="action-block">
+      <div class="action-num">STEP 1｜制度留痕</div>
+      <h4>建立文件制度</h4>
+      <ul>
+        <li>建立職場霸凌防治計畫</li>
+        <li>申訴程序SOP與決策矩陣</li>
+        <li>調查委員與申復委員名冊</li>
+        <li>利益迴避機制與簽署表</li>
+        <li>申訴書、調查通知書等表單</li>
+      </ul>
+    </div>
+    <div class="action-block">
+      <div class="action-num">STEP 2｜訓練留證</div>
+      <h4>落地教育訓練</h4>
+      <ul>
+        <li>全員教育訓練：霸凌認知與申訴管道</li>
+        <li>主管專項訓練：管理紅線與溝通技巧</li>
+        <li>調查人員訓練：調查與訪談SOP（≥3小時）</li>
+        <li>保存教材、簽到表、測驗與補訓紀錄</li>
+      </ul>
+    </div>
+    <div class="action-block">
+      <div class="action-num">STEP 3｜風險預警</div>
+      <h4>建立預警機制</h4>
+      <ul>
+        <li>建立舉報與申訴熱線</li>
+        <li>主管行為監測機制</li>
+        <li>離職面談與滿意度調查</li>
+        <li>定期檢討與改善追蹤</li>
+      </ul>
+    </div>
+  </div>
+
+  <h4 style="margin: 20px 0 10px; color: var(--navy); font-size: 14px;">優先順序與時程建議</h4>
+  <table>
+    <thead>
+      <tr><th>行動項目</th><th>優先順序</th><th>建議完成時間</th><th>負責單位</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>盤點現有申訴管道與工作規則</td><td><span class="tag tag-red">高</span></td><td>立即</td><td>HR ／ 法務</td></tr>
+      <tr><td>建立職場霸凌申訴處理SOP</td><td><span class="tag tag-red">高</span></td><td>2週內</td><td>HR ／ 法務 ／ 職安</td></tr>
+      <tr><td>建立外部專家名冊</td><td><span class="tag tag-red">高</span></td><td>2至4週內</td><td>HR ／ 法務</td></tr>
+      <tr><td>安排全員教育訓練</td><td><span class="tag tag-red">高</span></td><td>1個月內</td><td>HR ／ 訓練單位</td></tr>
+      <tr><td>安排主管專項訓練</td><td><span class="tag tag-red">高</span></td><td>1個月內</td><td>HR ／ 高階主管</td></tr>
+      <tr><td>導入紀錄留存與稽核機制</td><td><span class="tag tag-amber">中高</span></td><td>1至2個月內</td><td>HR ／ IT</td></tr>
+      <tr><td>建立風險預警指標</td><td><span class="tag tag-teal">中</span></td><td>2至3個月內</td><td>HR ／ 管理層</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════════ SECTION 7：霸凌紅線 ══════════════════ -->
+<div id="s7" class="section">
+  <div class="section-title"><div class="num">7</div>霸凌紅線：法院已認定的五類言行</div>
+
+  <blockquote>
+    主管仍可要求工作品質、進行績效面談、合理分派工作。問題不在管理本身，而在管理方式是否變成人身攻擊、公開羞辱、長期孤立或不合理對待。<strong>持續性與反覆性</strong>是判斷風險的重要因素。
+  </blockquote>
+
+  <div class="redline-grid">
+    <div class="redline-item">
+      <span class="rl-icon">🗣️</span>
+      <div class="rl-type">言語霸凌</div>
+      <div class="rl-desc">辱罵、諷刺、貶抑性語言、長時間不當斥責</div>
+    </div>
+    <div class="redline-item">
+      <span class="rl-icon">💔</span>
+      <div class="rl-type">人格貶抑</div>
+      <div class="rl-desc">否定能力、嘲笑、人身攻擊、當眾羞辱</div>
+    </div>
+    <div class="redline-item">
+      <span class="rl-icon">📣</span>
+      <div class="rl-type">名譽侵害</div>
+      <div class="rl-desc">不實指控、公開批評、散布謠言、揭露隱私</div>
+    </div>
+    <div class="redline-item">
+      <span class="rl-icon">🚫</span>
+      <div class="rl-type">孤立排擠</div>
+      <div class="rl-desc">刻意冷落、排除參與、不讓出席必要會議</div>
+    </div>
+    <div class="redline-item">
+      <span class="rl-icon">📉</span>
+      <div class="rl-type">剝奪職務</div>
+      <div class="rl-desc">不合理調職、減薪、降職、分配無意義任務</div>
+    </div>
+  </div>
+
+  <table style="margin-top:20px;">
+    <thead>
+      <tr><th>主管行為情境</th><th style="background:#1E8449;">✅ 較安全的做法</th><th style="background:#C0392B;">❌ 高風險紅線</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>績效要求</strong></td>
+        <td>針對具體工作成果、期限與改善標準溝通</td>
+        <td>用羞辱性字眼否定員工人格或能力</td>
+      </tr>
+      <tr>
+        <td><strong>工作分派</strong></td>
+        <td>依職務內容、能力與業務需要合理分配</td>
+        <td>刻意給予不合理工作量或無意義任務作為懲罰</td>
+      </tr>
+      <tr>
+        <td><strong>公開會議</strong></td>
+        <td>討論問題、流程與改善方案</td>
+        <td>在眾人面前反覆點名羞辱特定員工</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="self-check">
+    <h4>🪞 主管溝通前的三個自我檢查</h4>
+    <ol>
+      <li>我是在討論事情，還是在貶低這個人？</li>
+      <li>這是偶發提醒，還是已經反覆針對同一個人？</li>
+      <li>這段話如果被完整記錄下來，是否仍能被解釋為合理管理？</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ══════════════════ SECTION 8：合規自我檢核 ══════════════════ -->
+<div id="s8" class="section">
+  <div class="section-title"><div class="num">8</div>大豐環保科技合規自我檢核清單</div>
+
+  <div class="card-grid card-grid-2">
+    <div>
+      <h4 style="color:var(--navy); margin-bottom:10px;">📝 制度面</h4>
+      <ul class="check-list">
+        <li>職場霸凌防治計畫（D2-EM-031）已制定並公告</li>
+        <li>申訴管道已設置並於工作場所顯著處揭示</li>
+        <li>申訴處理單位已指定（≥3人，性別比合規）</li>
+        <li>外部專家名冊已建立</li>
+        <li>利益迴避機制與簽署表已備妥</li>
+        <li>各申訴、調查、申復相關表單已製備</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:var(--navy); margin-bottom:10px;">🎓 訓練面</h4>
+      <ul class="check-list">
+        <li>全員教育訓練已完成並留存紀錄</li>
+        <li>主管專項訓練已完成</li>
+        <li>調查人員訓練已完成（≥3小時）</li>
+        <li>課程教材、簽到表、測驗紀錄已存檔</li>
+      </ul>
+      <h4 style="color:var(--navy); margin: 16px 0 10px;">📊 紀錄面</h4>
+      <ul class="check-list">
+        <li>申訴案件完整紀錄留存機制已建立</li>
+        <li>系統登錄權限與程序已確認</li>
+        <li>紀錄保存期限設定為3年</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<div class="footer">
+  <div>
+    <div style="color:#fff; font-weight:700; margin-bottom:6px;">大豐環保科技股份有限公司</div>
+    職場霸凌防治合規行動計畫書<br>
+    依職業安全衛生法第22條之2第4項及職場霸凌防治準則草案制定<br>
+    申訴電話：(04)2422-4266 分機120　申訴信箱：hr@df-recycle.com.tw<br>
+    外部申訴：勞動部申訴專線 1955
+  </div>
+  <div class="footer-right">
+    資料來源：104職場力、勞動部草案公告、法源法律網<br>
+    版本：1.0　｜　日期：民國115年<br>
+    <br>
+    本文件為內部合規參考，如需正式法律解釋<br>
+    請洽法務、律師或勞資顧問確認
+  </div>
+</div>
+
+</div><!-- end .page -->
+</body>
+</html>
