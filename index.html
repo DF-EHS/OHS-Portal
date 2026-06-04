@@ -21,6 +21,7 @@
     --indigo: #4f46e5;
     --amber:  #f59e0b;
     --sky:    #0ea5e9;
+    --rose:   #e11d48;
     --sidebar-bg: #1a2d42;
     --sidebar-w:  260px;
   }
@@ -179,6 +180,7 @@
   .ci-orange { background: #ffedd5; }
   .ci-teal   { background: #ccfbf1; }
   .ci-red    { background: #fee2e2; }
+  .ci-rose   { background: #fce7f3; }
 
   .card-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
   .card-desc  { font-size: 13px; color: var(--sub); line-height: 1.6; }
@@ -196,6 +198,7 @@
   .tg-blue   { background: #dbeafe; color: #1d4ed8; }
   .tg-teal   { background: #ccfbf1; color: #0e7490; }
   .tg-red    { background: #fee2e2; color: #b91c1c; }
+  .tg-rose   { background: #fce7f3; color: #be185d; }
 
   .card-footer {
     padding: 14px 26px;
@@ -228,6 +231,8 @@
   .btn-heat   { background: #f97316;   color: #fff; }
   .btn-heat:hover   { background: #ea580c; }
   .ci-heat    { background: #ffedd5; }
+  .btn-rose   { background: var(--rose); color: #fff; }
+  .btn-rose:hover   { background: #be185d; }
 
   /* ── placeholder card ── */
   .placeholder-card {
@@ -288,6 +293,10 @@
   body.dark .ci-heat    { background: #431407; }
   body.dark .btn-heat   { background: #c2410c; }
   body.dark .btn-heat:hover { background: #9a3412; }
+  body.dark .ci-rose    { background: #4c0519; }
+  body.dark .tg-rose    { background: #4c0519; color: #fda4af; }
+  body.dark .btn-rose   { background: #9f1239; }
+  body.dark .btn-rose:hover { background: #881337; }
   body.dark .placeholder-card { background: #1e293b; border-color: #334155; }
   body.dark .content-topbar   { background: #1e293b; border-color: #334155; }
 
@@ -376,6 +385,9 @@
       </a>
       <a class="nav-item" href="./plans/">
         <span class="nav-icon">🗂️</span>職業安全衛生計畫書
+      </a>
+      <a class="nav-item" href="https://hr-corptraining.zerozero.tw/certificates" target="_blank">
+        <span class="nav-icon">🪪</span>證照管理
       </a>
 
       <div class="nav-section">小工具</div>
@@ -611,6 +623,26 @@
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
             <button class="open-btn btn-heat" onclick="event.stopPropagation();location.href='./heat/'">開啟查詢 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="window.open('https://hr-corptraining.zerozero.tw/certificates','_blank')">
+          <div class="card-header">
+            <div class="card-icon ci-rose">🪪</div>
+            <div>
+              <div class="card-title">證照管理系統</div>
+              <div class="card-desc">統一管理員工職業安全衛生相關證照，追蹤有效期限與到期提醒，支援證照種類分類與查詢。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-rose">技術士</span>
+            <span class="tag tg-rose">工安證照</span>
+            <span class="tag tg-navy">到期提醒</span>
+            <span class="tag tg-blue">人資管理</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-rose" onclick="event.stopPropagation();window.open('https://hr-corptraining.zerozero.tw/certificates','_blank')">開啟系統 ›</button>
           </div>
         </div>
 
