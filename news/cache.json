@@ -1,6 +1,17 @@
 {
   "items": [
     {
+      "key": "3555c2439a6ad8de",
+      "title": "快訊／高雄工安意外！3工人拆鷹架不慎摔落送醫",
+      "link": "https://news.google.com/rss/articles/CBMi3AJBVV95cUxPQng4b2ZmelVURnJhVG1sa290N2J3d0o0a05Ia2xSTmZJQ2swR3VpLWVJMzQ4YTdYT1puQWJJUy0wNENHbGc3N3ZQb2czU2RCZ3NzMU5JakQ2ZFYwQUJnaXpERjhIck1qTkQzQTUtbEdrYnNEZTAwcjJkS2hKbmUzejdlejVId3hHX3p1Rmx4ZFZpSm1XaGJ4a2oteENrRzJOdFBZalBsTERZM050N3R4QUpETzFieGVwRjRHelhMZG9zcVFNdGtBM2RwZjdmZjUxejc1SGpxN0MtUUs0dGJad3RoNk5hVmF4Y2dBRTNxZlEzQmphSXBZOTBPUzU2a0JnQ3pnZk9nRE5La2pwdGhyS3lGUUU1Nmt2UTBCZ1Q2bE5lcmpmRUs3ZnpvQ0pvTVRhSW9Uekxvd3FwTDJPRGFfanBvblp5ZEhmWU1CQ3VTQm5PTGZVXzhXRVFvd08?oc=5",
+      "pubDate": "Sat, 06 Jun 2026 03:15:50 GMT",
+      "pubTs": 1780715750.0,
+      "desc": "快訊／高雄工安意外！3工人拆鷹架不慎摔落送醫&nbsp;&nbsp;行銷人",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "63a0b2f24dc972f1",
       "title": "115年度改善安全衛生設施及熱危害防護具補助，因申請踴躍，將依序以小微型企業及自營作業者為優先補助對象",
       "link": "https://www.osha.gov.tw/48110/48417/48423/204454/",
@@ -10,6 +21,50 @@
       "source_id": "osha_announce",
       "source_name": "職安署公告",
       "badge": "green"
+    },
+    {
+      "key": "2bf9911bf35c35e8",
+      "title": "台中鐵工廠爆工安！泰籍移工塗裝作業突倒地 昏迷搶救中",
+      "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBWV1VaREhSci01czBXYjVFdHZ0S0dKY3pJOWFNYURLYzhLcW43TVR3R25GR0R3dXBIY1hwU3RxOFZPdGF0SjFtcFYxVVBIMzJkZS1YV3dtX3FFZkhUY1lzTUhzcUFHT1hoRWfSAW9BVV95cUxQcnM3NnlFVXBhbEJjbHdnZ2VtQVNjeGRBMUVxSEUzTUZacTdWdk41VkVQXzZYRG5wa1FudkFZcVBJZEJyb2tWUGxBRUF0TTBERjdsZkRPemVhN1NzX1Y3WVp5QnlWbkhiYlI5akUxejA?oc=5",
+      "pubDate": "Fri, 05 Jun 2026 09:59:04 GMT",
+      "pubTs": 1780653544.0,
+      "desc": "台中鐵工廠爆工安！泰籍移工塗裝作業突倒地 昏迷搶救中&nbsp;&nbsp;自由時報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "48d5b867f208db77",
+      "title": "台中工安意外！ 大雅工廠塗裝工廠泰籍工人疑似中毒昏迷送醫",
+      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5BNWJOR1pFUVowOUJDYjBvUndnQ0o3ZEIyeHVsVVFiUXpWNkt5UzJqRXFYUVI0bTRuVzRSN1JXazhRV0lzd05BZ0JCU0dJUQ?oc=5",
+      "pubDate": "Fri, 05 Jun 2026 09:44:00 GMT",
+      "pubTs": 1780652640.0,
+      "desc": "台中工安意外！ 大雅工廠塗裝工廠泰籍工人疑似中毒昏迷送醫&nbsp;&nbsp;記者爆料網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "01400b2675f97143",
+      "title": "提升外籍生職安知能！台南市勞工局攜手南區職安中心辦理外籍生職安體感訓練活動",
+      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBrX3JGeFVRRmhPVm1vNFhaMVQxUkxUand6NGlQNDFtT1ZsOG15MXd1NklraGp5czNZYnl2eEVMTHFEdDBNVklnaQ?oc=5",
+      "pubDate": "Fri, 05 Jun 2026 08:42:53 GMT",
+      "pubTs": 1780648973.0,
+      "desc": "提升外籍生職安知能！台南市勞工局攜手南區職安中心辦理外籍生職安體感訓練活動&nbsp;&nbsp;台灣民眾電子報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "cf8329ecf078e642",
+      "title": "台中大雅鐵工廠工安意外 工人疑中毒昏迷送醫搶救",
+      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1uSTZ2bjdFZUE3d3Nfek1CcVNBOElSOEVzMkpobV9JZ2h6Q0xtY3puTHFJa2F4TlFyNE4wS0lRQnZQV3B5dEE3UWE1MElyVEJQb21F?oc=5",
+      "pubDate": "Fri, 05 Jun 2026 08:00:28 GMT",
+      "pubTs": 1780646428.0,
+      "desc": "台中大雅鐵工廠工安意外 工人疑中毒昏迷送醫搶救&nbsp;&nbsp;中天新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "924761845cf9c7e4",
@@ -54,6 +109,17 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "69a0f2c422f576aa",
+      "title": "臺南市政府及職業安全衛生署共同針對轄內密室逃脫業者進行勞動檢查",
+      "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNcUVEUHFvOWtOMFRJSC1sckRiQW5NVllzVzMzWlpHYXFhU2tlX1dSRUVXZXJPQ2xwUnhZQnVlWVR0SHR4NG9NWmNGUG95MTZJMWpHVXBoWUJoR1ZIbXZkMC1zYTJHY1d0OVlzc01GLUpVQUxuY0c5TUhfVC1tSWRuMTN6M3ZrMjdnQ2NRWlJoM20wdGJBRzdxTmRoamt3ZU42dlI3ekFJVjJTVmRib0pKRElB?oc=5",
+      "pubDate": "Thu, 04 Jun 2026 01:55:38 GMT",
+      "pubTs": 1780538138.0,
+      "desc": "臺南市政府及職業安全衛生署共同針對轄內密室逃脫業者進行勞動檢查&nbsp;&nbsp;視傳媒",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "6fea2a9e58d3248a",
@@ -582,6 +648,17 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
+    },
+    {
+      "key": "14bc21a045aa579d",
+      "title": "完善勞保制度 打造安心職場-115年度勞（就）保暨勞工職業災害保險相關法規說明會",
+      "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNaURYak1aWlhhMmVzb0RGRi0tZEtHZUhBZi04SUVPNWpSTXF3clkzcjZFSVUzZ1pWdEdKUnY0QW5DdmRzSWlWb2NidG5lWkp4bTk3eFVhcWNjdWRQVjNoTDAxamliclBuUTRfNUxPYlE3ek5kenZkR21LMXFuaDRPQm0tY2VxQQ?oc=5",
+      "pubDate": "Sat, 30 May 2026 05:44:16 GMT",
+      "pubTs": 1780119856.0,
+      "desc": "完善勞保制度 打造安心職場-115年度勞（就）保暨勞工職業災害保險相關法規說明會&nbsp;&nbsp;chcg.gov.tw",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "f4d56cb223d64fac",
@@ -1420,17 +1497,6 @@
       "badge": "green"
     },
     {
-      "key": "902bcd047f1e4425",
-      "title": "防範「戶外熱危害」＋ 新職安法7月上路，勞動部啟動高溫專案檢查和改善追蹤| 人資充電",
-      "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTFA1a3Z5OUZrVjFaN0ZETDMxc2lreXZyaHBsSGR6NUk4a041UnZqcHpMaU1hcmZ6aUFvbmNndDA5UGhVaEthSEhydWNLRHFHN1MyQjFEQ2Fjb0FkNGhQT0lWZ2Jrd25JWHdidHc?oc=5",
-      "pubDate": "Fri, 22 May 2026 07:00:00 GMT",
-      "pubTs": 1779433200.0,
-      "desc": "防範「戶外熱危害」＋ 新職安法7月上路，勞動部啟動高溫專案檢查和改善追蹤| 人資充電&nbsp;&nbsp;104招募管理",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
       "key": "5f94e0595f184661",
       "title": "職安署舉辦「優良局部排氣裝置設計案例」競賽活動開跑",
       "link": "https://www.osha.gov.tw/48110/48417/48423/203924/",
@@ -1486,5 +1552,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-06-05T05:07:16.438467+00:00"
+  "lastUpdated": "2026-06-06T04:44:27.852845+00:00"
 }
