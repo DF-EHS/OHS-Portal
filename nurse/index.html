@@ -337,9 +337,9 @@ footer {
 <body>
 
 <header>
-  <button class="hdr-btn" onclick="location.href='../'">← 系統入口</button>
+  <button class="hdr-btn" id="hdr-portal" onclick="location.href='../'">← 系統入口</button>
   <h1>🏥 職護臨場服務</h1>
-  <button class="hdr-btn" onclick="doLogout()" style="margin-right:8px">登出</button>
+  <button class="hdr-btn" id="hdr-logout" onclick="doLogout()" style="display:none">登出</button>
   <div class="hdr-brand">
     <img src="../dafon-logo.png" alt="大豐環保科技">
     <span>大豐環保科技</span>
@@ -917,6 +917,12 @@ function showToast(msg, ms=2200) {
 // ── Auth ──
 const PASS = 'admin';  // ← 可在此修改登入密碼
 
+function setLoggedIn(on) {
+  document.getElementById('hdr-portal').style.display = on ? 'none' : '';
+  document.getElementById('hdr-logout').style.display = on ? ''     : 'none';
+  document.getElementById('login-overlay').style.display = on ? 'none' : 'flex';
+}
+
 function doLogin() {
   const p = (document.getElementById('login-pass').value || '').trim();
   const errEl = document.getElementById('login-err');
@@ -928,19 +934,19 @@ function doLogin() {
   }
   errEl.style.display = 'none';
   sessionStorage.setItem('nurse_auth', '1');
-  document.getElementById('login-overlay').style.display = 'none';
+  setLoggedIn(true);
   loadData();
 }
 
 function doLogout() {
   sessionStorage.removeItem('nurse_auth');
-  document.getElementById('login-overlay').style.display = 'flex';
   document.getElementById('login-pass').value = '';
+  setLoggedIn(false);
 }
 
 // ── Init ──
 if (sessionStorage.getItem('nurse_auth') === '1') {
-  document.getElementById('login-overlay').style.display = 'none';
+  setLoggedIn(true);
   loadData();
 }
 </script>
