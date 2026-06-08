@@ -746,6 +746,18 @@ async function runAIParse() {
   }
 }
 
+function normalizeRiskPct(v) {
+  const s = String(v || '').trim();
+  if (!s) return '';
+  const hasPct = s.includes('%');
+  const num = parseFloat(s);
+  if (isNaN(num)) return s;
+  // 若是小數（0.05）且無 % 符號，乘以 100 換算為百分比
+  const pct = (!hasPct && num > 0 && num < 1) ? num * 100 : num;
+  const rounded = Math.round(pct * 10) / 10;
+  return (Number.isInteger(rounded) ? rounded : rounded) + '%';
+}
+
 function applyAIResult(result) {
   const body      = document.getElementById('modal-body');
   const resultBox = document.getElementById('ai-result-box');
@@ -756,6 +768,9 @@ function applyAIResult(result) {
   fields.forEach(key => {
     let val = result[key];
     if (val == null || val === '') return;
+
+    // 缺血風險數值統一轉為百分比格式
+    if (key === '缺血風險數值') val = normalizeRiskPct(val);
 
     const el = body.querySelector(`[name="${key}"]`);
     if (!el) return;
