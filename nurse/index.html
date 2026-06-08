@@ -158,15 +158,22 @@ tbody tr.active { background: var(--accent-soft); }
 
 .dp-foot {
   padding: 12px 18px; border-top: 1px solid var(--border);
-  flex-shrink: 0;
+  flex-shrink: 0; display: flex; gap: 8px;
 }
 .dp-edit-btn {
-  width: 100%; padding: 9px; border-radius: 8px;
+  flex: 1; padding: 9px; border-radius: 8px;
   background: var(--accent); color: #fff; border: none;
   font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
   transition: background .15s;
 }
 .dp-edit-btn:hover { background: var(--accent-dk); }
+.dp-del-btn {
+  padding: 9px 14px; border-radius: 8px;
+  background: #fee2e2; color: var(--red); border: 1px solid #fecaca;
+  font-size: 14px; cursor: pointer; font-family: inherit;
+  transition: background .15s, color .15s;
+}
+.dp-del-btn:hover { background: var(--red); color: #fff; }
 
 /* ── State screens ── */
 .state-box {
@@ -350,6 +357,7 @@ footer {
     <div class="dp-body" id="dp-body"></div>
     <div class="dp-foot">
       <button class="dp-edit-btn" onclick="openModal(currentPerson)">✏️ 編輯此筆資料</button>
+      <button class="dp-del-btn" onclick="deleteRecord()" title="刪除此筆資料">🗑️</button>
     </div>
   </div>
 </div>
@@ -719,7 +727,8 @@ function applyAIResult(result) {
   const resultBox = document.getElementById('ai-result-box');
   const rows = [];
 
-  const fields = ['姓名','生日','年齡','性別','人因','缺血風險數值','缺血風險等級','工作負荷程度','異常工作負荷結果','代謝症候群'];
+  // 填入 AI 判讀欄位（年齡由生日推算，不直接採用 AI 值）
+  const fields = ['姓名','生日','性別','人因','缺血風險數值','缺血風險等級','工作負荷程度','異常工作負荷結果','代謝症候群'];
   fields.forEach(key => {
     let val = result[key];
     if (val == null || val === '') return;
@@ -733,6 +742,23 @@ function applyAIResult(result) {
 
     rows.push(`<div class="ai-row"><span class="ai-lbl">${key}</span><span class="ai-val">${result[key]}</span></div>`);
   });
+
+  // 從生日計算正確年齡
+  const birthStr = result['生日'];
+  if (birthStr) {
+    const birth = new Date(birthStr.replace(/\//g, '-'));
+    if (!isNaN(birth.getTime())) {
+      const today = new Date();
+      let age = today.getFullYear() - birth.getFullYear();
+      const m = today.getMonth() - birth.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+      if (age > 0 && age < 120) {
+        const ageEl = body.querySelector('[name="年齡"]');
+        if (ageEl) { ageEl.value = age; ageEl.closest('.field')?.classList.add('ai-filled'); }
+        rows.push(`<div class="ai-row"><span class="ai-lbl">年齡（計算）</span><span class="ai-val">${age}</span></div>`);
+      }
+    }
+  }
 
   if (rows.length) {
     resultBox.innerHTML = rows.join('');
@@ -775,6 +801,27 @@ async function saveRecord() {
     showToast('❌ 儲存失敗：' + e.message, 4000);
   } finally {
     btn.disabled = false; btn.textContent = '儲存';
+  }
+}
+
+// ── Delete ──
+async function deleteRecord() {
+  if (!currentPerson) return;
+  if (!confirm(`確定刪除「${currentPerson.姓名}」的資料？\n此操作會從 Google Sheets 移除該列，無法復原。`)) return;
+  try {
+    const res  = await fetch(API, {
+      method: 'POST',
+      redirect: 'follow',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'delete', row: currentPerson._row }),
+    });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error);
+    showToast('已刪除');
+    closeDetail();
+    await loadData();
+  } catch(e) {
+    showToast('❌ 刪除失敗：' + e.message, 4000);
   }
 }
 
