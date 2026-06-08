@@ -235,6 +235,52 @@ tbody tr.active { background: var(--accent-soft); }
 .btn-save:hover  { background: var(--accent-dk); }
 .btn-save:disabled { opacity: .6; cursor: not-allowed; }
 
+/* ── AI Upload section ── */
+.ai-section {
+  grid-column: 1 / -1;
+  background: #f0fdfa; border: 1px solid #99f6e4;
+  border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px;
+}
+.ai-sec-title { font-size: 12px; font-weight: 700; color: var(--accent-dk); display: flex; align-items: center; gap: 6px; }
+.drop-zone {
+  border: 2px dashed var(--accent); border-radius: 8px;
+  padding: 20px 16px; text-align: center; cursor: pointer;
+  background: #fff; transition: background .15s, border-color .15s;
+  user-select: none;
+}
+.drop-zone:hover, .drop-zone.drag-over { background: var(--accent-soft); border-color: var(--accent-dk); }
+.drop-icon { font-size: 28px; margin-bottom: 6px; }
+.drop-text { font-size: 13px; font-weight: 600; color: var(--accent-dk); }
+.drop-hint { font-size: 11px; color: var(--sub); margin-top: 3px; }
+.file-info-row {
+  display: flex; align-items: center; gap: 8px;
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 12px;
+}
+.file-info-name { flex: 1; font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ai-parse-btn {
+  padding: 6px 14px; border-radius: 6px; border: none;
+  background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
+  font-family: inherit; transition: background .15s;
+}
+.ai-parse-btn:hover    { background: var(--accent-dk); }
+.ai-parse-btn:disabled { opacity: .6; cursor: not-allowed; }
+.ai-clear-btn { background: none; border: none; color: var(--sub); cursor: pointer; font-size: 18px; line-height: 1; padding: 0 2px; }
+.ai-clear-btn:hover { color: var(--red); }
+.ai-status { font-size: 12px; text-align: center; min-height: 18px; }
+.ai-status.loading { color: var(--accent); }
+.ai-status.success { color: var(--green); }
+.ai-status.error   { color: var(--red); }
+.ai-result-box {
+  background: #fff; border: 1px solid #99f6e4; border-radius: 8px;
+  padding: 10px 14px; font-size: 12px; display: flex; flex-direction: column; gap: 4px;
+}
+.ai-result-box .ai-row { display: flex; gap: 8px; }
+.ai-result-box .ai-lbl { color: var(--sub); flex-shrink: 0; }
+.ai-result-box .ai-val { font-weight: 600; }
+.field.ai-filled input, .field.ai-filled select { border-color: var(--accent); background: #f0fdfa; }
+
 /* ── Toast ── */
 .toast {
   position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
@@ -531,8 +577,34 @@ function toISODate(v) { return v ? v.replace(/\//g,'-') : ''; }
 function openModal(data) {
   const editing = !!data;
   const d = data || {};
+  selectedFile = null;
   document.getElementById('modal-title').textContent = editing ? '編輯人員資料' : '新增人員';
-  document.getElementById('modal-body').innerHTML = `
+
+  const aiSection = editing ? '' : `
+    <div class="ai-section">
+      <div class="ai-sec-title">🤖 AI 體檢表判讀（選填）</div>
+      <div class="drop-zone" id="drop-zone"
+           ondragover="event.preventDefault();this.classList.add('drag-over')"
+           ondragleave="this.classList.remove('drag-over')"
+           ondrop="dropFile(event)"
+           onclick="document.getElementById('file-input').click()">
+        <div class="drop-icon">📄</div>
+        <div class="drop-text">點擊或拖曳體檢表（PDF / JPG / PNG）</div>
+        <div class="drop-sub">上傳後 AI 將自動填寫相關欄位</div>
+      </div>
+      <input type="file" id="file-input" accept="application/pdf,image/jpeg,image/png"
+             style="display:none" onchange="fileSelected(this.files[0])">
+      <div class="file-info-row" id="file-info-row" style="display:none">
+        <span>📎</span>
+        <span class="file-info-name" id="file-info-name"></span>
+        <button class="ai-parse-btn" id="ai-parse-btn" onclick="runAIParse()">AI 判讀</button>
+        <button class="ai-clear-btn" onclick="clearFile()" title="移除">✕</button>
+      </div>
+      <div class="ai-status" id="ai-status"></div>
+      <div class="ai-result-box" id="ai-result-box" style="display:none"></div>
+    </div>`;
+
+  document.getElementById('modal-body').innerHTML = aiSection + `
     <div class="field"><label>姓名 *</label>${inp('姓名', d.姓名)}</div>
     <div class="field"><label>員工編號</label>${inp('員工編號', d.員工編號)}</div>
     <div class="field"><label>生日</label>${inp('生日', toISODate(d.生日), 'date')}</div>
@@ -559,6 +631,98 @@ function openModal(data) {
 
 function closeModal() { document.getElementById('modal-mask').classList.remove('show'); }
 function maskClick(e) { if (e.target === e.currentTarget) closeModal(); }
+
+// ── AI Upload ──
+let selectedFile = null;
+
+function fileSelected(file) {
+  if (!file) return;
+  selectedFile = file;
+  document.getElementById('file-info-name').textContent = file.name;
+  document.getElementById('file-info-row').style.display = 'flex';
+  document.getElementById('drop-zone').style.display = 'none';
+  document.getElementById('ai-status').textContent = '';
+  document.getElementById('ai-status').className = 'ai-status';
+  document.getElementById('ai-result-box').style.display = 'none';
+}
+
+function dropFile(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) fileSelected(file);
+}
+
+function clearFile() {
+  selectedFile = null;
+  const fi = document.getElementById('file-input');
+  if (fi) fi.value = '';
+  document.getElementById('file-info-row').style.display = 'none';
+  document.getElementById('drop-zone').style.display = '';
+  document.getElementById('ai-status').textContent = '';
+  document.getElementById('ai-status').className = 'ai-status';
+  document.getElementById('ai-result-box').style.display = 'none';
+}
+
+async function runAIParse() {
+  if (!selectedFile) return;
+  const btn    = document.getElementById('ai-parse-btn');
+  const status = document.getElementById('ai-status');
+  btn.disabled = true;
+  status.className = 'ai-status';
+  status.textContent = '⏳ AI 判讀中，請稍候…';
+
+  try {
+    const fileData = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload  = e => resolve(e.target.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(selectedFile);
+    });
+
+    const res  = await fetch(API, {
+      method: 'POST',
+      body:   JSON.stringify({ action: 'ai-parse', fileData, fileType: selectedFile.type, fileName: selectedFile.name }),
+    });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error);
+
+    applyAIResult(json.result);
+    status.className = 'ai-status success';
+    status.textContent = '✅ 判讀完成，欄位已自動填入';
+  } catch(e) {
+    status.className = 'ai-status error';
+    status.textContent = '❌ 判讀失敗：' + e.message;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function applyAIResult(result) {
+  const body      = document.getElementById('modal-body');
+  const resultBox = document.getElementById('ai-result-box');
+  const rows = [];
+
+  const fields = ['姓名','生日','年齡','性別','人因','缺血風險數值','缺血風險等級','工作負荷程度','異常工作負荷結果','代謝症候群'];
+  fields.forEach(key => {
+    let val = result[key];
+    if (val == null || val === '') return;
+
+    const el = body.querySelector(`[name="${key}"]`);
+    if (!el) return;
+
+    if (el.type === 'date' && typeof val === 'string') val = val.replace(/\//g, '-');
+    el.value = val;
+    el.closest('.field')?.classList.add('ai-filled');
+
+    rows.push(`<div class="ai-row"><span class="ai-lbl">${key}</span><span class="ai-val">${result[key]}</span></div>`);
+  });
+
+  if (rows.length) {
+    resultBox.innerHTML = rows.join('');
+    resultBox.style.cssText = 'display:flex;flex-direction:column';
+  }
+}
 
 async function saveRecord() {
   const inputs = document.getElementById('modal-body').querySelectorAll('input,select');
