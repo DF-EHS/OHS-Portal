@@ -1,0 +1,227 @@
+// ═══════════════════════════════════════════════════════
+//  職護臨場服務 — Google Apps Script API
+//  Sheet ID: 1YGYnBRusJAwE3gNQ7ot39Bk79apRf6KQTKogQsT23x8
+// ═══════════════════════════════════════════════════════
+
+const SS_ID    = '1YGYnBRusJAwE3gNQ7ot39Bk79apRf6KQTKogQsT23x8';
+const TAB_NAME = '面談資料';
+
+const C = {
+  面談日期:    0,  姓名:        1,  員工編號:    2,
+  生日:        3,  部門:        4,  性別:        5,
+  備註:        6,  人因:        7,  缺血風險數值:8,
+  缺血風險等級:9,  工作負荷程度:10, 異常工作負荷:11,
+  代謝症候群:  12, 年齡:        13, 中高齡:      14,
+  職護:        15, 醫生:        16, 第一次面談:  17,
+  第二次面談:  18,
+};
+const NCOLS = 19;
+
+const PARSE_PROMPT = `你是台灣職業健康護理師助理，請分析這份體檢報告，依以下規則填寫資料，回傳純 JSON（不含其他說明文字）。
+
+【基本資料】直接從報告擷取：
+- 姓名（中文全名）
+- 生日（格式 yyyy/MM/dd）
+- 年齡（整數）
+- 性別（男 或 女）
+
+【評估欄位】依報告數據判斷：
+
+1. 人因（肌肉骨骼危害）：
+   - 無症狀：無肌肉骨骼不適症狀
+   - 有症狀但無危害：有不適但不影響工作能力
+   - 疑似有危害：有明顯症狀且可能影響工作
+
+2. 缺血風險數值：報告中 10 年弗雷明漢風險分數（格式如「5%」）；若無直接數值，依血壓、血糖、血脂、年齡、性別估算後填入
+
+3. 缺血風險等級：
+   - 低風險：低於 10%
+   - 中風險：10%～20%
+   - 高風險：超過 20%
+
+4. 工作負荷程度（依報告異常項目與嚴重程度）：
+   - 低負荷：無明顯異常
+   - 中負荷：部分項目輕度異常
+   - 高負荷：多項異常或有重大異常
+
+5. 異常工作負荷結果：
+   - 不需面談：低/中負荷且無緊急問題
+   - 建議面談：高負荷或有特別需關注項目
+
+6. 代謝症候群（依台灣衛福部診斷標準）：
+   - 代謝症候群：腹部肥胖（男腰圍≥90cm/女≥80cm）加上以下任 2 項：血壓≥130/85、空腹血糖≥100mg/dL、三酸甘油酯≥150mg/dL、HDL 偏低
+   - 高危險群：BMI≥27，或上述指標有任一項異常但未達代謝症候群診斷
+   - 正常：以上均在正常範圍
+
+回傳格式（純 JSON，key 使用中文，不要加任何說明）：
+{"姓名":"","生日":"","年齡":null,"性別":"","人因":"","缺血風險數值":"","缺血風險等級":"","工作負荷程度":"","異常工作負荷結果":"","代謝症候群":""}`;
+
+// ── HTTP handlers ──────────────────────────────────────
+
+function doGet(e) {
+  try {
+    const p = e.parameter || {};
+    if (p.action === 'get') return ok(getOne(Number(p.row)));
+    return ok(listAll());
+  } catch(err) { return fail(err.message); }
+}
+
+function doPost(e) {
+  try {
+    const b = JSON.parse(e.postData.contents);
+    if (b.action === 'add')      return ok(addRow(b.data));
+    if (b.action === 'update')   return ok(updateRow(b.data));
+    if (b.action === 'ai-parse') return ok(aiParse(b));
+    return fail('unknown action');
+  } catch(err) { return fail(err.message); }
+}
+
+// ── Response helpers ───────────────────────────────────
+
+function ok(d) {
+  return ContentService
+    .createTextOutput(JSON.stringify({ ok: true, ...d }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+function fail(msg) {
+  return ContentService
+    .createTextOutput(JSON.stringify({ ok: false, error: msg }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ── Sheet helpers ──────────────────────────────────────
+
+function sh() {
+  return SpreadsheetApp.openById(SS_ID).getSheetByName(TAB_NAME);
+}
+function fmtDate(v) {
+  if (!v) return '';
+  if (v instanceof Date) return Utilities.formatDate(v, 'Asia/Taipei', 'yyyy/MM/dd');
+  return String(v).trim();
+}
+function clean(v) {
+  const s = String(v == null ? '' : v).trim();
+  return (s === '#N/A' || s.toUpperCase() === 'N/A') ? '' : s;
+}
+function safeAge(v) {
+  const n = parseInt(v, 10);
+  return (!isNaN(n) && n >= 1 && n <= 120) ? n : null;
+}
+
+function rowToObj(row, rowNum) {
+  const raw = String(row[C.面談日期] || '');
+  const resigned = raw.includes('離職');
+  return {
+    _row:            rowNum,
+    狀態:            resigned ? '已離職' : '在職',
+    面談日期:        resigned ? '' : fmtDate(row[C.面談日期]),
+    姓名:            clean(row[C.姓名]),
+    員工編號:        String(row[C.員工編號] || ''),
+    生日:            fmtDate(row[C.生日]),
+    部門:            clean(row[C.部門]),
+    性別:            clean(row[C.性別]),
+    備註:            clean(row[C.備註]),
+    人因:            clean(row[C.人因]),
+    缺血風險數值:    clean(row[C.缺血風險數值]),
+    缺血風險等級:    clean(row[C.缺血風險等級]),
+    工作負荷程度:    clean(row[C.工作負荷程度]),
+    異常工作負荷結果:clean(row[C.異常工作負荷]),
+    代謝症候群:      clean(row[C.代謝症候群]),
+    年齡:            safeAge(row[C.年齡]),
+    中高齡:          clean(row[C.中高齡]),
+    職護:            clean(row[C.職護]),
+    醫生:            clean(row[C.醫生]),
+    第一次面談:      fmtDate(row[C.第一次面談]),
+    第二次面談:      fmtDate(row[C.第二次面談]),
+  };
+}
+
+// ── CRUD ──────────────────────────────────────────────
+
+function listAll() {
+  const vals = sh().getDataRange().getValues();
+  const data = [];
+  for (let i = 1; i < vals.length; i++) data.push(rowToObj(vals[i], i + 1));
+  return { count: data.length, data };
+}
+
+function getOne(rowNum) {
+  const row = sh().getRange(rowNum, 1, 1, NCOLS).getValues()[0];
+  return { data: rowToObj(row, rowNum) };
+}
+
+function objToRow(d) {
+  return [
+    d.面談日期||'', d.姓名||'',          d.員工編號||'',
+    d.生日||'',     d.部門||'',           d.性別||'',
+    d.備註||'',     d.人因||'',           d.缺血風險數值||'',
+    d.缺血風險等級||'', d.工作負荷程度||'', d.異常工作負荷結果||'',
+    d.代謝症候群||'', d.年齡||'',          d.中高齡||'',
+    d.職護||'',     d.醫生||'',           d.第一次面談||'',
+    d.第二次面談||'',
+  ];
+}
+
+function addRow(d) {
+  sh().appendRow(objToRow(d));
+  return { message: '新增成功' };
+}
+
+function updateRow(d) {
+  if (!d._row) throw new Error('缺少 _row');
+  sh().getRange(d._row, 1, 1, NCOLS).setValues([objToRow(d)]);
+  return { message: '更新成功' };
+}
+
+// ── IT OpenRouter Dispatch API 設定 ───────────────────
+const IT_URL     = 'https://df-it-openrouter-dispatch-api.it.zerozero.tw/api/v1/model/chat';
+const IT_SDK_KEY = 'ordsk_5c68e4065189_52E0L6tOLtnV5eJV5fn16sNf832gs47K';
+const IT_TOKEN   = '8HLYWF4-Z7egt6PbrcDi4_tN5dRtOAaxryMLmVOSHHhD-0WZcTNSzOOWEfygmiyllogMQ9uKVjPtJO8TPxZNKbtfI9RcRwv5ey9DQ0IQttLGqSOl5sjzB16tWX5Q8KjNhNWBplxs0I4-yYpSWoL-FPWS_opMJ-YXjjiGlJLaT2zhK-W1OP5A6-r0lQXjrK99iTspHoMCbHNpL_jOa5rqLlq2CfjxD5cArWnpwJ4d387HKBH4MJNXAD388oGQfM1iuYyDcTiH0urh5SM4Xlj_fPD8IZFDmmBbSdS1zYHCqyf6hWLyU8SpcWV_buKM--YWVnGrUynenCEgXpew0u39Ui85JQ';
+const IT_PROJECT = '53670008080830464';
+const IT_MODEL   = 'google/gemini-2.5-flash';
+
+// ── AI 體檢表判讀 ──────────────────────────────────────
+
+function aiParse(b) {
+  const fileType = b.fileType || '';
+  const isImage = fileType.startsWith('image/');
+  const isPdf   = fileType === 'application/pdf';
+  if (!isPdf && !isImage) throw new Error('僅支援 PDF 及圖片格式（JPG、PNG）');
+
+  // 組合圖片 data URI，Gemini 以 images 陣列傳入
+  const dataUri = 'data:' + fileType + ';base64,' + b.fileData;
+
+  // 呼叫公司 IT OpenRouter Dispatch API（Gemini 2.5 Flash）
+  const resp = UrlFetchApp.fetch(IT_URL, {
+    method: 'post',
+    headers: {
+      'Content-Type':   'application/json',
+      'X-SDK-Key':      IT_SDK_KEY,
+      'X-User-Token':   IT_TOKEN,
+      'X-Project-Code': IT_PROJECT,
+    },
+    payload: JSON.stringify({
+      model:  IT_MODEL,
+      text:   PARSE_PROMPT,
+      images: [dataUri],
+    }),
+    muteHttpExceptions: true,
+  });
+
+  const respJson = JSON.parse(resp.getContentText());
+  if (respJson.error) throw new Error('AI API：' + (respJson.error.message || respJson.error));
+
+  // 相容多種回傳格式
+  const text = (
+    respJson.data ||
+    (respJson.choices && respJson.choices[0] && respJson.choices[0].message && respJson.choices[0].message.content) ||
+    respJson.text ||
+    ''
+  ).trim();
+
+  const match = text.match(/\{[\s\S]*\}/);
+  if (!match) throw new Error('AI 未回傳有效 JSON，請重試');
+
+  const result = JSON.parse(match[0]);
+  return { result };
+}
