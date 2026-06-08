@@ -290,6 +290,34 @@ tbody tr.active { background: var(--accent-soft); }
 .ai-result-box .ai-val { font-weight: 600; }
 .field.ai-filled input, .field.ai-filled select { border-color: var(--accent); background: #f0fdfa; }
 
+/* ── Login overlay ── */
+.login-overlay {
+  position: fixed; inset: 0; z-index: 999;
+  background: var(--bg); display: flex;
+  align-items: center; justify-content: center; padding: 24px;
+}
+.login-card {
+  background: #fff; border-radius: 16px; padding: 44px 36px 36px;
+  box-shadow: 0 4px 32px rgba(0,0,0,.12); width: 100%; max-width: 360px; text-align: center;
+}
+.login-logo { margin-bottom: 16px; }
+.login-logo img { height: 80px; object-fit: contain; }
+.login-card h2 { font-size: 18px; color: var(--navy); font-weight: 700; margin-bottom: 4px; }
+.login-card p  { font-size: 12px; color: var(--sub); margin-bottom: 28px; line-height: 1.7; }
+.login-fi {
+  width: 100%; border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 12px 14px; font-size: 16px; outline: none; font-family: inherit;
+  margin-bottom: 12px; transition: border-color .15s, box-shadow .15s; background: #fff;
+}
+.login-fi:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(13,148,136,.08); }
+.login-btn {
+  width: 100%; padding: 13px; background: var(--accent); color: #fff;
+  border: none; border-radius: 8px; font-size: 15px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.login-btn:hover { background: var(--accent-dk); }
+.login-err { color: var(--red); font-size: 13px; margin-top: 10px; display: none; }
+
 /* ── Toast ── */
 .toast {
   position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
@@ -311,6 +339,7 @@ footer {
 <header>
   <button class="hdr-btn" onclick="location.href='../'">← 系統入口</button>
   <h1>🏥 職護臨場服務</h1>
+  <button class="hdr-btn" onclick="doLogout()" style="margin-right:8px">登出</button>
   <div class="hdr-brand">
     <img src="../dafon-logo.png" alt="大豐環保科技">
     <span>大豐環保科技</span>
@@ -363,6 +392,19 @@ footer {
 </div>
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統 &nbsp;·&nbsp; 職護臨場服務</footer>
+
+<!-- ── Login Overlay ── -->
+<div class="login-overlay" id="login-overlay">
+  <div class="login-card">
+    <div class="login-logo"><img src="../dafon-logo.png" alt="大豐環保科技"></div>
+    <h2>職護臨場服務</h2>
+    <p>大豐環保科技股份有限公司<br>請輸入密碼以繼續</p>
+    <input class="login-fi" id="login-pass" type="password" placeholder="請輸入密碼"
+           autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">登入</button>
+    <div class="login-err" id="login-err">密碼錯誤，請重新輸入</div>
+  </div>
+</div>
 
 <!-- 新增 / 編輯 Modal -->
 <div class="modal-mask" id="modal-mask" onclick="maskClick(event)">
@@ -872,8 +914,35 @@ function showToast(msg, ms=2200) {
   setTimeout(() => t.classList.remove('show'), ms);
 }
 
+// ── Auth ──
+const PASS = 'nurse2026';  // ← 可在此修改登入密碼
+
+function doLogin() {
+  const p = (document.getElementById('login-pass').value || '').trim();
+  const errEl = document.getElementById('login-err');
+  if (p !== PASS) {
+    errEl.style.display = 'block';
+    document.getElementById('login-pass').value = '';
+    document.getElementById('login-pass').focus();
+    return;
+  }
+  errEl.style.display = 'none';
+  sessionStorage.setItem('nurse_auth', '1');
+  document.getElementById('login-overlay').style.display = 'none';
+  loadData();
+}
+
+function doLogout() {
+  sessionStorage.removeItem('nurse_auth');
+  document.getElementById('login-overlay').style.display = 'flex';
+  document.getElementById('login-pass').value = '';
+}
+
 // ── Init ──
-loadData();
+if (sessionStorage.getItem('nurse_auth') === '1') {
+  document.getElementById('login-overlay').style.display = 'none';
+  loadData();
+}
 </script>
 </body>
 </html>
