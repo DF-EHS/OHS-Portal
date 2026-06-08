@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>職護臨場服務 | 大豐環保科技</title>
+<style>
+:root {
+  --accent:      #0d9488;
+  --accent-dk:   #0f766e;
+  --accent-soft: #ccfbf1;
+  --navy: #1e3a5f; --bg: #f1f5f9; --card: #fff;
+  --border: #e2e8f0; --text: #1e293b; --sub: #64748b;
+  --green: #16a34a; --red: #dc2626; --orange: #d97706;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif;
+  background: var(--bg); color: var(--text); font-size: 14px;
+  display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+}
+
+/* ── Header ── */
+header {
+  background: var(--accent); color: #fff;
+  padding: 12px 20px; display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0; z-index: 200;
+}
+header h1 { font-size: 17px; font-weight: 700; flex: 1; }
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer; font-family: inherit;
+  transition: background .15s;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.25); }
+.hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 12px; color: rgba(255,255,255,.75); font-weight: 600; white-space: nowrap; }
+
+/* ── Filter bar ── */
+.filter-bar {
+  background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 10px 20px; display: flex; gap: 8px; flex-wrap: wrap;
+  align-items: center; flex-shrink: 0;
+}
+.filter-bar input, .filter-bar select {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 6px 10px; font-size: 13px; outline: none;
+  background: var(--bg); font-family: inherit;
+}
+.filter-bar input:focus, .filter-bar select:focus { border-color: var(--accent); }
+#search { min-width: 220px; }
+.filter-sep { width: 1px; height: 20px; background: var(--border); }
+.add-btn {
+  margin-left: auto; padding: 7px 18px; border-radius: 8px;
+  background: var(--accent); color: #fff; font-size: 13px; font-weight: 600;
+  border: none; cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.add-btn:hover { background: var(--accent-dk); }
+
+/* ── Stats ── */
+.stats-bar {
+  padding: 10px 20px; display: flex; gap: 10px;
+  flex-wrap: wrap; flex-shrink: 0;
+}
+.stat-chip {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 7px 18px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.stat-num { font-size: 20px; font-weight: 800; line-height: 1; }
+.stat-lbl { font-size: 11px; color: var(--sub); margin-top: 3px; white-space: nowrap; }
+
+/* ── Main layout ── */
+.main-wrap {
+  position: relative; display: flex; flex: 1; overflow: hidden;
+}
+
+/* ── Table area ── */
+.table-wrap { flex: 1; overflow-y: auto; padding: 16px 20px 40px; }
+
+table {
+  width: 100%; border-collapse: collapse;
+  background: var(--card); border-radius: 12px;
+  overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+thead { background: #f8fafc; position: sticky; top: 0; }
+th {
+  padding: 10px 14px; font-size: 11px; font-weight: 700;
+  color: var(--sub); text-align: left; letter-spacing: .5px;
+  text-transform: uppercase; white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 9px 14px; font-size: 13px;
+  border-bottom: 1px solid #f1f5f9; vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tbody tr { cursor: pointer; transition: background .1s; }
+tbody tr:hover  { background: #f8fafc; }
+tbody tr.active { background: var(--accent-soft); }
+
+/* ── Badges ── */
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 20px;
+  font-size: 11px; font-weight: 700; white-space: nowrap;
+}
+.bd-green  { background: #dcfce7; color: #15803d; }
+.bd-red    { background: #fee2e2; color: #b91c1c; }
+.bd-orange { background: #ffedd5; color: #c2410c; }
+.bd-yellow { background: #fef9c3; color: #854d0e; }
+.bd-teal   { background: var(--accent-soft); color: var(--accent-dk); }
+.bd-gray   { background: #f1f5f9; color: #64748b; }
+.bd-none   { background: #f8fafc; color: #94a3b8; font-style: italic; font-weight: 400; }
+
+/* ── Detail panel ── */
+.detail-panel {
+  position: absolute; right: 0; top: 0; bottom: 0;
+  width: 360px; background: var(--card);
+  border-left: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .25s cubic-bezier(.4,0,.2,1);
+  z-index: 50; box-shadow: -4px 0 20px rgba(0,0,0,.08);
+}
+.detail-panel.open { transform: translateX(0); }
+
+.dp-head {
+  background: var(--accent); color: #fff;
+  padding: 16px 18px; flex-shrink: 0;
+}
+.dp-name { font-size: 18px; font-weight: 700; }
+.dp-meta { font-size: 12px; color: rgba(255,255,255,.75); margin-top: 4px; }
+.dp-close {
+  float: right; background: rgba(255,255,255,.15); border: none;
+  color: #fff; width: 26px; height: 26px; border-radius: 50%;
+  cursor: pointer; font-size: 14px; margin: -2px 0 0 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.dp-close:hover { background: rgba(255,255,255,.3); }
+
+.dp-body { flex: 1; overflow-y: auto; padding: 16px 18px; }
+.dp-section { margin-bottom: 18px; }
+.dp-sec-title {
+  font-size: 10px; font-weight: 700; color: var(--sub);
+  letter-spacing: 2px; text-transform: uppercase;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.dp-row {
+  display: flex; justify-content: space-between;
+  align-items: center; padding: 4px 0; font-size: 13px;
+}
+.dp-lbl  { color: var(--sub); flex-shrink: 0; margin-right: 8px; }
+.dp-val  { font-weight: 600; text-align: right; }
+.dp-val.empty { color: #94a3b8; font-weight: 400; font-style: italic; }
+
+.dp-foot {
+  padding: 12px 18px; border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.dp-edit-btn {
+  width: 100%; padding: 9px; border-radius: 8px;
+  background: var(--accent); color: #fff; border: none;
+  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: background .15s;
+}
+.dp-edit-btn:hover { background: var(--accent-dk); }
+
+/* ── State screens ── */
+.state-box {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 20px; text-align: center;
+  color: var(--sub); gap: 12px;
+}
+.state-icon { font-size: 40px; opacity: .4; }
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Modal ── */
+.modal-mask {
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  z-index: 500; display: none; align-items: flex-start;
+  justify-content: center; padding: 40px 16px; overflow-y: auto;
+}
+.modal-mask.show { display: flex; }
+.modal {
+  background: var(--card); border-radius: 16px;
+  width: 100%; max-width: 600px;
+  display: flex; flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden;
+}
+.modal-hdr {
+  background: var(--accent); color: #fff;
+  padding: 16px 22px; display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.modal-hdr h2 { font-size: 16px; font-weight: 700; flex: 1; }
+.modal-body {
+  padding: 22px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-size: 11px; font-weight: 700; color: var(--sub); letter-spacing: .5px; text-transform: uppercase; }
+.field input, .field select {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 7px 10px; font-size: 13px; outline: none;
+  font-family: inherit; background: var(--bg);
+}
+.field input:focus, .field select:focus { border-color: var(--accent); background: #fff; }
+.modal-foot {
+  padding: 14px 22px; border-top: 1px solid var(--border);
+  display: flex; gap: 10px; justify-content: flex-end; flex-shrink: 0;
+}
+.btn-cancel {
+  padding: 8px 20px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg);
+  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+}
+.btn-save {
+  padding: 8px 20px; border-radius: 8px;
+  background: var(--accent); color: #fff; border: none;
+  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: background .15s;
+}
+.btn-save:hover  { background: var(--accent-dk); }
+.btn-save:disabled { opacity: .6; cursor: not-allowed; }
+
+/* ── Toast ── */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: #1e293b; color: #fff; padding: 10px 22px;
+  border-radius: 10px; font-size: 13px; font-weight: 600;
+  z-index: 999; opacity: 0; transition: opacity .25s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+footer {
+  text-align: center; padding: 12px; font-size: 12px; color: var(--sub);
+  border-top: 1px solid var(--border); background: var(--card); flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="hdr-btn" onclick="location.href='../'">← 系統入口</button>
+  <h1>🏥 職護臨場服務</h1>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
+
+<div class="filter-bar">
+  <input type="search" id="search" placeholder="🔍  搜尋姓名、員工編號、部門…">
+  <div class="filter-sep"></div>
+  <select id="f-status">
+    <option value="">全部狀態</option>
+    <option value="在職">在職</option>
+    <option value="已離職">已離職</option>
+  </select>
+  <select id="f-dept" style="min-width:130px">
+    <option value="">全部部門</option>
+  </select>
+  <select id="f-meta">
+    <option value="">代謝症候群（全部）</option>
+    <option value="代謝症候群">代謝症候群</option>
+    <option value="高危險群">高危險群</option>
+    <option value="正常">正常</option>
+  </select>
+  <select id="f-workload">
+    <option value="">異常工作負荷（全部）</option>
+    <option value="建議面談">建議面談</option>
+    <option value="不需面談">不需面談</option>
+  </select>
+  <button class="add-btn" onclick="openModal()">＋ 新增人員</button>
+</div>
+
+<div class="stats-bar" id="stats-bar"></div>
+
+<div class="main-wrap">
+  <div class="table-wrap">
+    <div id="table-area">
+      <div class="state-box"><div class="spinner"></div><div>資料載入中…</div></div>
+    </div>
+  </div>
+
+  <!-- Detail panel -->
+  <div class="detail-panel" id="detail-panel">
+    <div class="dp-head" id="dp-head"></div>
+    <div class="dp-body" id="dp-body"></div>
+    <div class="dp-foot">
+      <button class="dp-edit-btn" onclick="openModal(currentPerson)">✏️ 編輯此筆資料</button>
+    </div>
+  </div>
+</div>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統 &nbsp;·&nbsp; 職護臨場服務</footer>
+
+<!-- 新增 / 編輯 Modal -->
+<div class="modal-mask" id="modal-mask" onclick="maskClick(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h2 id="modal-title">新增人員</h2>
+      <button class="dp-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeModal()">取消</button>
+      <button class="btn-save" id="save-btn" onclick="saveRecord()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = 'https://script.google.com/macros/s/AKfycbwkfYNBLoj5SctTucD__5gQQCz3EPncBA6lthPKbzVHhmo2HojpP9KZOMJ7nE6EyTdXZw/exec';
+
+let allData    = [];
+let filtered   = [];
+let currentPerson = null;
+
+// ── Badge renderers ──
+const B = {
+  status(v)  { return v==='已離職' ? b('bd-gray','已離職') : b('bd-teal','在職'); },
+  meta(v)    { return !v ? b('bd-none','—') : ({代謝症候群:b('bd-orange','代謝症候群'), 高危險群:b('bd-red','高危險群'), 正常:b('bd-green','正常')}[v] || b('bd-gray',v)); },
+  workload(v){ return !v ? b('bd-none','—') : ({建議面談:b('bd-red','建議面談'), 不需面談:b('bd-gray','不需面談')}[v] || b('bd-gray',v)); },
+  load(v)    { return !v ? b('bd-none','—') : ({高負荷:b('bd-red','高負荷'), 中負荷:b('bd-yellow','中負荷'), 低負荷:b('bd-teal','低負荷')}[v] || b('bd-gray',v)); },
+  yin(v)     { return !v ? b('bd-none','未評估') : ({疑似有危害:b('bd-red','疑似有危害'), 有症狀但無危害:b('bd-orange','有症狀但無危害'), 無症狀:b('bd-green','無症狀')}[v] || b('bd-gray',v)); },
+  risk(v)    { return !v ? b('bd-none','—') : ({高風險:b('bd-red','高風險'), 中風險:b('bd-orange','中風險'), 低風險:b('bd-green','低風險')}[v] || b('bd-gray',v)); },
+};
+function b(cls, txt) { return `<span class="badge ${cls}">${txt}</span>`; }
+
+// ── Fetch ──
+async function loadData() {
+  try {
+    const res  = await fetch(API + '?action=list');
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error);
+    allData = json.data;
+    buildDeptFilter();
+    renderStats();
+    applyFilters();
+  } catch(e) {
+    document.getElementById('table-area').innerHTML =
+      `<div class="state-box"><div class="state-icon">⚠️</div><div>資料載入失敗<br><small style="color:#94a3b8">${e.message}</small></div></div>`;
+  }
+}
+
+// ── Department filter ──
+function buildDeptFilter() {
+  const depts = [...new Set(allData.map(r => r.部門).filter(Boolean))].sort();
+  const sel   = document.getElementById('f-dept');
+  depts.forEach(d => { const o = document.createElement('option'); o.value = o.textContent = d; sel.appendChild(o); });
+}
+
+// ── Stats ──
+function renderStats() {
+  const total   = allData.length;
+  const active  = allData.filter(r => r.狀態==='在職').length;
+  const suggest = allData.filter(r => r.異常工作負荷結果==='建議面談').length;
+  const pending = allData.filter(r => r.狀態==='在職' && (!r.人因 || !r.工作負荷程度)).length;
+  const resigned= allData.filter(r => r.狀態==='已離職').length;
+  document.getElementById('stats-bar').innerHTML = [
+    chip(total,   '總人數',   'var(--accent)'),
+    chip(active,  '在職',     'var(--accent)'),
+    chip(suggest, '建議面談', 'var(--red)'),
+    chip(pending, '評估未完整','var(--orange)'),
+    chip(resigned,'已離職',   'var(--sub)'),
+  ].join('');
+}
+function chip(n, lbl, col) {
+  return `<div class="stat-chip"><div class="stat-num" style="color:${col}">${n}</div><div class="stat-lbl">${lbl}</div></div>`;
+}
+
+// ── Filters ──
+function applyFilters() {
+  const kw  = document.getElementById('search').value.toLowerCase();
+  const st  = document.getElementById('f-status').value;
+  const dp  = document.getElementById('f-dept').value;
+  const mt  = document.getElementById('f-meta').value;
+  const wl  = document.getElementById('f-workload').value;
+
+  filtered = allData.filter(r => {
+    if (st && r.狀態             !== st) return false;
+    if (dp && r.部門             !== dp) return false;
+    if (mt && r.代謝症候群       !== mt) return false;
+    if (wl && r.異常工作負荷結果 !== wl) return false;
+    if (kw) {
+      const hay = (r.姓名 + r.員工編號 + r.部門).toLowerCase();
+      if (!hay.includes(kw)) return false;
+    }
+    return true;
+  });
+  renderTable();
+}
+['search','f-status','f-dept','f-meta','f-workload'].forEach(
+  id => document.getElementById(id).addEventListener('input', applyFilters)
+);
+
+// ── Table ──
+function renderTable() {
+  if (!filtered.length) {
+    document.getElementById('table-area').innerHTML =
+      `<div class="state-box"><div class="state-icon">🔍</div><div>沒有符合條件的人員</div></div>`;
+    return;
+  }
+  const rows = filtered.map(r => `
+    <tr data-row="${r._row}" onclick="showDetail(${r._row})"
+        class="${currentPerson?._row === r._row ? 'active' : ''}">
+      <td>
+        <div style="font-weight:700">${r.姓名}</div>
+        <div style="font-size:11px;color:var(--sub)">${r.員工編號 || '—'}</div>
+      </td>
+      <td>${r.部門 || '—'}</td>
+      <td style="white-space:nowrap">${r.性別||'—'} / ${r.年齡!=null ? r.年齡+'歲' : '—'}</td>
+      <td>${B.meta(r.代謝症候群)}</td>
+      <td>${B.load(r.工作負荷程度)}</td>
+      <td>${B.workload(r.異常工作負荷結果)}</td>
+      <td style="font-size:12px;color:var(--sub)">${r.面談日期||'—'}</td>
+      <td>${B.status(r.狀態)}</td>
+    </tr>`).join('');
+
+  document.getElementById('table-area').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>姓名</th><th>部門</th><th>性別 / 年齡</th>
+        <th>代謝症候群</th><th>工作負荷</th><th>異常工作負荷</th>
+        <th>面談日期</th><th>狀態</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+// ── Detail panel ──
+function showDetail(rowNum) {
+  const r = allData.find(x => x._row === rowNum);
+  if (!r) return;
+  currentPerson = r;
+
+  document.querySelectorAll('tbody tr').forEach(tr => tr.classList.remove('active'));
+  const tr = document.querySelector(`tbody tr[data-row="${rowNum}"]`);
+  if (tr) tr.classList.add('active');
+
+  const val = (v, lbl) => `
+    <div class="dp-row">
+      <span class="dp-lbl">${lbl}</span>
+      <span class="dp-val ${v?'':'empty'}">${v||'—'}</span>
+    </div>`;
+
+  document.getElementById('dp-head').innerHTML = `
+    <button class="dp-close" onclick="closeDetail()">✕</button>
+    <div class="dp-name">${r.姓名}</div>
+    <div class="dp-meta">${r.部門} &nbsp;·&nbsp; ${r.性別||'—'} &nbsp;·&nbsp; ${r.年齡!=null?r.年齡+'歲':'—'}</div>`;
+
+  document.getElementById('dp-body').innerHTML = `
+    <div class="dp-section">
+      <div class="dp-sec-title">基本資料</div>
+      ${val(r.員工編號, '員工編號')}
+      ${val(r.生日, '生日')}
+      <div class="dp-row"><span class="dp-lbl">狀態</span>${B.status(r.狀態)}</div>
+      ${val(r.中高齡?'是':'', '中高齡')}
+      ${val(r.備註, '備註')}
+    </div>
+    <div class="dp-section">
+      <div class="dp-sec-title">健康評估</div>
+      <div class="dp-row"><span class="dp-lbl">人因危害</span>${B.yin(r.人因)}</div>
+      <div class="dp-row">
+        <span class="dp-lbl">缺血性心臟病風險</span>
+        <span>${r.缺血風險數值?`<span style="font-weight:600">${r.缺血風險數值}</span> `:''}${B.risk(r.缺血風險等級)}</span>
+      </div>
+      <div class="dp-row"><span class="dp-lbl">代謝症候群</span>${B.meta(r.代謝症候群)}</div>
+    </div>
+    <div class="dp-section">
+      <div class="dp-sec-title">工作負荷評估</div>
+      <div class="dp-row"><span class="dp-lbl">工作負荷程度</span>${B.load(r.工作負荷程度)}</div>
+      <div class="dp-row"><span class="dp-lbl">異常工作負荷結果</span>${B.workload(r.異常工作負荷結果)}</div>
+    </div>
+    <div class="dp-section">
+      <div class="dp-sec-title">面談紀錄</div>
+      ${val(r.面談日期, '面談日期')}
+      ${val(r.職護, '職護')}
+      ${val(r.醫生, '醫師')}
+      ${val(r.第一次面談, '第一次面談')}
+      ${val(r.第二次面談, '第二次面談')}
+    </div>`;
+
+  document.getElementById('detail-panel').classList.add('open');
+}
+
+function closeDetail() {
+  currentPerson = null;
+  document.getElementById('detail-panel').classList.remove('open');
+  document.querySelectorAll('tbody tr').forEach(tr => tr.classList.remove('active'));
+}
+
+// ── Modal ──
+const SEL_OPTS = {
+  性別:         ['男','女'],
+  狀態:         ['在職','已離職'],
+  人因:         ['無症狀','有症狀但無危害','疑似有危害'],
+  缺血風險等級: ['低風險','中風險','高風險'],
+  工作負荷程度: ['低負荷','中負荷','高負荷'],
+  異常工作負荷結果: ['不需面談','建議面談'],
+  代謝症候群:   ['正常','代謝症候群','高危險群'],
+};
+
+function sel(name, val) {
+  const opts = SEL_OPTS[name].map(o =>
+    `<option value="${o}" ${val===o?'selected':''}>${o}</option>`).join('');
+  return `<select name="${name}"><option value="">—</option>${opts}</select>`;
+}
+function inp(name, val, type='text') {
+  return `<input name="${name}" type="${type}" value="${escHtml(String(val||''))}"${type==='date'?' max="2099-12-31"':''}>`;
+}
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function toISODate(v) { return v ? v.replace(/\//g,'-') : ''; }
+
+function openModal(data) {
+  const editing = !!data;
+  const d = data || {};
+  document.getElementById('modal-title').textContent = editing ? '編輯人員資料' : '新增人員';
+  document.getElementById('modal-body').innerHTML = `
+    <div class="field"><label>姓名 *</label>${inp('姓名', d.姓名)}</div>
+    <div class="field"><label>員工編號</label>${inp('員工編號', d.員工編號)}</div>
+    <div class="field"><label>生日</label>${inp('生日', toISODate(d.生日), 'date')}</div>
+    <div class="field"><label>年齡</label>${inp('年齡', d.年齡, 'number')}</div>
+    <div class="field full"><label>部門</label>${inp('部門', d.部門)}</div>
+    <div class="field"><label>性別</label>${sel('性別', d.性別)}</div>
+    <div class="field"><label>狀態</label>${sel('狀態', d.狀態||'在職')}</div>
+    <div class="field"><label>面談日期</label>${inp('面談日期', toISODate(d.面談日期), 'date')}</div>
+    <div class="field"><label>備註</label>${inp('備註', d.備註)}</div>
+    <div class="field"><label>人因危害</label>${sel('人因', d.人因)}</div>
+    <div class="field"><label>缺血風險數值</label>${inp('缺血風險數值', d.缺血風險數值)}</div>
+    <div class="field"><label>缺血風險等級</label>${sel('缺血風險等級', d.缺血風險等級)}</div>
+    <div class="field"><label>工作負荷程度</label>${sel('工作負荷程度', d.工作負荷程度)}</div>
+    <div class="field"><label>異常工作負荷結果</label>${sel('異常工作負荷結果', d.異常工作負荷結果)}</div>
+    <div class="field"><label>代謝症候群</label>${sel('代謝症候群', d.代謝症候群)}</div>
+    <div class="field"><label>中高齡</label>${inp('中高齡', d.中高齡)}</div>
+    <div class="field"><label>職護</label>${inp('職護', d.職護)}</div>
+    <div class="field"><label>醫師</label>${inp('醫生', d.醫生)}</div>
+    <div class="field"><label>第一次面談</label>${inp('第一次面談', toISODate(d.第一次面談), 'date')}</div>
+    <div class="field"><label>第二次面談</label>${inp('第二次面談', toISODate(d.第二次面談), 'date')}</div>
+    <input type="hidden" name="_row" value="${d._row||''}">`;
+  document.getElementById('modal-mask').classList.add('show');
+}
+
+function closeModal() { document.getElementById('modal-mask').classList.remove('show'); }
+function maskClick(e) { if (e.target === e.currentTarget) closeModal(); }
+
+async function saveRecord() {
+  const inputs = document.getElementById('modal-body').querySelectorAll('input,select');
+  const data = {};
+  inputs.forEach(el => { if (el.name) data[el.name] = el.value; });
+
+  if (!data.姓名.trim()) { showToast('請填寫姓名'); return; }
+
+  // Convert date inputs (yyyy-MM-dd → yyyy/MM/dd)
+  ['生日','面談日期','第一次面談','第二次面談'].forEach(k => {
+    if (data[k]) data[k] = data[k].replace(/-/g, '/');
+  });
+  if (data._row) data._row = Number(data._row);
+
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true; btn.textContent = '儲存中…';
+
+  try {
+    const action = data._row ? 'update' : 'add';
+    const res  = await fetch(API, {
+      method: 'POST',
+      body:   JSON.stringify({ action, data }),
+    });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error);
+    showToast(data._row ? '已更新' : '已新增');
+    closeModal();
+    const wasRow = data._row;
+    await loadData();
+    if (wasRow) showDetail(wasRow);
+  } catch(e) {
+    showToast('❌ 儲存失敗：' + e.message, 4000);
+  } finally {
+    btn.disabled = false; btn.textContent = '儲存';
+  }
+}
+
+// ── Toast ──
+function showToast(msg, ms=2200) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), ms);
+}
+
+// ── Init ──
+loadData();
+</script>
+</body>
+</html>

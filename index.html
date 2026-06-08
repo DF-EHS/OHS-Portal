@@ -231,6 +231,10 @@
   .btn-heat   { background: #f97316;   color: #fff; }
   .btn-heat:hover   { background: #ea580c; }
   .ci-heat    { background: #ffedd5; }
+  .btn-nurse  { background: #0d9488;   color: #fff; }
+  .btn-nurse:hover  { background: #0f766e; }
+  .ci-nurse   { background: #ccfbf1; }
+  .tg-nurse   { background: #ccfbf1; color: #0f766e; }
   .btn-rose   { background: var(--rose); color: #fff; }
   .btn-rose:hover   { background: #be185d; }
 
@@ -293,6 +297,10 @@
   body.dark .ci-heat    { background: #431407; }
   body.dark .btn-heat   { background: #c2410c; }
   body.dark .btn-heat:hover { background: #9a3412; }
+  body.dark .ci-nurse   { background: #042f2e; }
+  body.dark .tg-nurse   { background: #042f2e; color: #5eead4; }
+  body.dark .btn-nurse  { background: #0f766e; }
+  body.dark .btn-nurse:hover { background: #115e59; }
   body.dark .ci-rose    { background: #4c0519; }
   body.dark .tg-rose    { background: #4c0519; color: #fda4af; }
   body.dark .btn-rose   { background: #9f1239; }
@@ -646,10 +654,30 @@
           </div>
         </div>
 
+        <div class="sys-card" onclick="location.href='./nurse/'">
+          <div class="card-header">
+            <div class="card-icon ci-nurse">🏥</div>
+            <div>
+              <div class="card-title">職護臨場服務</div>
+              <div class="card-desc">管理職護臨場服務人員名單，記錄健康評估結果，包含人因危害、缺血性心臟病風險、工作負荷程度、代謝症候群等評估項目。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-nurse">健康評估</span>
+            <span class="tag tg-nurse">臨場服務</span>
+            <span class="tag tg-orange">四大防護計畫</span>
+            <span class="tag tg-navy">Google Sheets</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-nurse" onclick="event.stopPropagation();location.href='./nurse/'">開啟系統 ›</button>
+          </div>
+        </div>
+
         <div class="placeholder-card">
           <div class="ph-icon">＋</div>
           <div class="ph-title">預留擴充位置</div>
-          <div class="ph-sub">如：職安健康管理、承攬商評核…</div>
+          <div class="ph-sub">如：承攬商評核…</div>
         </div>
 
       </div>
