@@ -392,7 +392,7 @@ function b(cls, txt) { return `<span class="badge ${cls}">${txt}</span>`; }
 // ── Fetch ──
 async function loadData() {
   try {
-    const res  = await fetch(API + '?action=list');
+    const res  = await fetch(API + '?action=list&t=' + Date.now(), { redirect: 'follow' });
     const json = await res.json();
     if (!json.ok) throw new Error(json.error);
     allData = json.data;
@@ -744,6 +744,8 @@ async function saveRecord() {
     const action = data._row ? 'update' : 'add';
     const res  = await fetch(API, {
       method: 'POST',
+      redirect: 'follow',
+      headers: { 'Content-Type': 'text/plain' },
       body:   JSON.stringify({ action, data }),
     });
     const json = await res.json();
