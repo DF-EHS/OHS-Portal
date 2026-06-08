@@ -207,6 +207,14 @@ function aiParse(b) {
     return 'data:' + ft + ';base64,' + f.fileData;
   });
 
+  // 若前端帶入檔名解析的員工編號 / 姓名，附加為 Prompt 提示
+  let prompt = PARSE_PROMPT;
+  if (b.name || b.empNo) {
+    prompt += '\n\n【人資系統檔名資訊（請以此為準）】\n'
+      + (b.empNo ? '員工編號：' + b.empNo + '\n' : '')
+      + (b.name  ? '姓名：' + b.name + '（直接採用此姓名填入，不需從報告重新判讀）\n' : '');
+  }
+
   // 呼叫公司 IT OpenRouter Dispatch API（Gemini 2.5 Flash）
   const resp = UrlFetchApp.fetch(IT_URL, {
     method: 'post',
@@ -218,7 +226,7 @@ function aiParse(b) {
     },
     payload: JSON.stringify({
       model:  IT_MODEL,
-      text:   PARSE_PROMPT,
+      text:   prompt,
       images: images,
     }),
     muteHttpExceptions: true,

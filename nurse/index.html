@@ -640,11 +640,34 @@ function maskClick(e) { if (e.target === e.currentTarget) closeModal(); }
 // ── AI Upload ──
 let selectedFiles = [];
 
+function parseFilename(filename) {
+  const base = filename.replace(/\.[^.]+$/, '');   // 去副檔名
+  const idx  = base.indexOf('-');
+  if (idx <= 0) return null;
+  return { empNo: base.slice(0, idx).trim(), name: base.slice(idx + 1).trim() };
+}
+
 function addFiles(fileList) {
   const allowed = ['application/pdf', 'image/jpeg', 'image/png'];
+  const wasEmpty = selectedFiles.length === 0;
   for (const f of fileList) {
     if (allowed.includes(f.type)) selectedFiles.push(f);
   }
+
+  // 第一次加入檔案時，從檔名解析員工編號與姓名直接填入表單
+  if (wasEmpty && selectedFiles.length > 0) {
+    const info = parseFilename(selectedFiles[0].name);
+    if (info) {
+      const body = document.getElementById('modal-body');
+      if (body) {
+        const nameEl = body.querySelector('[name="姓名"]');
+        const empEl  = body.querySelector('[name="員工編號"]');
+        if (nameEl && !nameEl.value) { nameEl.value = info.name;  nameEl.closest('.field')?.classList.add('ai-filled'); }
+        if (empEl)                   { empEl.value  = info.empNo; empEl.closest('.field')?.classList.add('ai-filled'); }
+      }
+    }
+  }
+
   renderFileList();
   document.getElementById('ai-status').textContent = '';
   document.getElementById('ai-status').className = 'ai-status';
@@ -702,11 +725,12 @@ async function runAIParse() {
       reader.readAsDataURL(f);
     })));
 
+    const fnInfo = selectedFiles.length ? parseFilename(selectedFiles[0].name) : null;
     const res  = await fetch(API, {
       method: 'POST',
       redirect: 'follow',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ action: 'ai-parse', files }),
+      body: JSON.stringify({ action: 'ai-parse', files, ...(fnInfo || {}) }),
     });
     const json = await res.json();
     if (!json.ok) throw new Error(json.error);
