@@ -252,12 +252,14 @@ tbody tr.active { background: var(--accent-soft); }
 .drop-icon { font-size: 28px; margin-bottom: 6px; }
 .drop-text { font-size: 13px; font-weight: 600; color: var(--accent-dk); }
 .drop-hint { font-size: 11px; color: var(--sub); margin-top: 3px; }
-.file-info-row {
+.file-list { display: flex; flex-direction: column; gap: 6px; }
+.file-item {
   display: flex; align-items: center; gap: 8px;
   background: #fff; border: 1px solid var(--border);
   border-radius: 8px; padding: 8px 12px;
 }
-.file-info-name { flex: 1; font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.file-item-name { flex: 1; font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.file-list-actions { display: flex; justify-content: flex-end; margin-top: 2px; }
 .ai-parse-btn {
   padding: 6px 14px; border-radius: 6px; border: none;
   background: var(--accent); color: #fff;
@@ -590,16 +592,11 @@ function openModal(data) {
            onclick="document.getElementById('file-input').click()">
         <div class="drop-icon">📄</div>
         <div class="drop-text">點擊或拖曳體檢表（PDF / JPG / PNG）</div>
-        <div class="drop-sub">上傳後 AI 將自動填寫相關欄位</div>
+        <div class="drop-hint">可選取多張，AI 將統合判讀所有頁面</div>
       </div>
       <input type="file" id="file-input" accept="application/pdf,image/jpeg,image/png"
-             style="display:none" onchange="fileSelected(this.files[0])">
-      <div class="file-info-row" id="file-info-row" style="display:none">
-        <span>📎</span>
-        <span class="file-info-name" id="file-info-name"></span>
-        <button class="ai-parse-btn" id="ai-parse-btn" onclick="runAIParse()">AI 判讀</button>
-        <button class="ai-clear-btn" onclick="clearFile()" title="移除">✕</button>
-      </div>
+             multiple style="display:none" onchange="addFiles(this.files);this.value=''">
+      <div class="file-list" id="file-list"></div>
       <div class="ai-status" id="ai-status"></div>
       <div class="ai-result-box" id="ai-result-box" style="display:none"></div>
     </div>`;
@@ -633,56 +630,75 @@ function closeModal() { document.getElementById('modal-mask').classList.remove('
 function maskClick(e) { if (e.target === e.currentTarget) closeModal(); }
 
 // ── AI Upload ──
-let selectedFile = null;
+let selectedFiles = [];
 
-function fileSelected(file) {
-  if (!file) return;
-  selectedFile = file;
-  document.getElementById('file-info-name').textContent = file.name;
-  document.getElementById('file-info-row').style.display = 'flex';
-  document.getElementById('drop-zone').style.display = 'none';
+function addFiles(fileList) {
+  const allowed = ['application/pdf', 'image/jpeg', 'image/png'];
+  for (const f of fileList) {
+    if (allowed.includes(f.type)) selectedFiles.push(f);
+  }
+  renderFileList();
   document.getElementById('ai-status').textContent = '';
   document.getElementById('ai-status').className = 'ai-status';
   document.getElementById('ai-result-box').style.display = 'none';
 }
 
+function removeFile(idx) {
+  selectedFiles.splice(idx, 1);
+  renderFileList();
+}
+
+function renderFileList() {
+  const list = document.getElementById('file-list');
+  if (!list) return;
+  if (!selectedFiles.length) { list.innerHTML = ''; return; }
+  const items = selectedFiles.map((f, i) => `
+    <div class="file-item">
+      <span>${f.type === 'application/pdf' ? '📄' : '🖼️'}</span>
+      <span class="file-item-name">${escHtml(f.name)}</span>
+      <button class="ai-clear-btn" onclick="removeFile(${i})" title="移除">✕</button>
+    </div>`).join('');
+  const label = selectedFiles.length > 1 ? `AI 判讀（${selectedFiles.length} 張）` : 'AI 判讀';
+  list.innerHTML = items + `<div class="file-list-actions"><button class="ai-parse-btn" id="ai-parse-btn" onclick="runAIParse()">${label}</button></div>`;
+}
+
 function dropFile(e) {
   e.preventDefault();
   document.getElementById('drop-zone').classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if (file) fileSelected(file);
+  addFiles(e.dataTransfer.files);
 }
 
 function clearFile() {
-  selectedFile = null;
+  selectedFiles = [];
   const fi = document.getElementById('file-input');
   if (fi) fi.value = '';
-  document.getElementById('file-info-row').style.display = 'none';
-  document.getElementById('drop-zone').style.display = '';
+  renderFileList();
   document.getElementById('ai-status').textContent = '';
   document.getElementById('ai-status').className = 'ai-status';
   document.getElementById('ai-result-box').style.display = 'none';
 }
 
 async function runAIParse() {
-  if (!selectedFile) return;
+  if (!selectedFiles.length) return;
   const btn    = document.getElementById('ai-parse-btn');
   const status = document.getElementById('ai-status');
-  btn.disabled = true;
+  if (btn) btn.disabled = true;
   status.className = 'ai-status';
-  status.textContent = '⏳ AI 判讀中，請稍候…';
+  status.textContent = `⏳ AI 判讀中（${selectedFiles.length} 張）…`;
 
   try {
-    const fileData = await new Promise((resolve, reject) => {
+    const files = await Promise.all(selectedFiles.map(f => new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload  = e => resolve(e.target.result.split(',')[1]);
+      reader.onload  = e => resolve({ fileData: e.target.result.split(',')[1], fileType: f.type, fileName: f.name });
       reader.onerror = reject;
-      reader.readAsDataURL(selectedFile);
-    });
+      reader.readAsDataURL(f);
+    })));
 
     const res  = await fetch(API, {
       method: 'POST',
-      body:   JSON.stringify({ action: 'ai-parse', fileData, fileType: selectedFile.type, fileName: selectedFile.name }),
+      redirect: 'follow',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'ai-parse', files }),
     });
     const json = await res.json();
     if (!json.ok) throw new Error(json.error);
@@ -694,7 +710,7 @@ async function runAIParse() {
     status.className = 'ai-status error';
     status.textContent = '❌ 判讀失敗：' + e.message;
   } finally {
-    btn.disabled = false;
+    if (btn) btn.disabled = false;
   }
 }
 

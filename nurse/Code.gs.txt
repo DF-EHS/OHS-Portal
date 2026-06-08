@@ -185,13 +185,20 @@ const IT_MODEL   = 'google/gemini-2.5-flash';
 // ── AI 體檢表判讀 ──────────────────────────────────────
 
 function aiParse(b) {
-  const fileType = b.fileType || '';
-  const isImage = fileType.startsWith('image/');
-  const isPdf   = fileType === 'application/pdf';
-  if (!isPdf && !isImage) throw new Error('僅支援 PDF 及圖片格式（JPG、PNG）');
+  // 支援多檔：b.files = [{fileData, fileType, fileName}, ...]
+  // 向下相容舊版單檔格式：b.fileData / b.fileType
+  const fileList = b.files && b.files.length
+    ? b.files
+    : (b.fileData ? [{ fileData: b.fileData, fileType: b.fileType, fileName: b.fileName }] : []);
 
-  // 組合圖片 data URI，Gemini 以 images 陣列傳入
-  const dataUri = 'data:' + fileType + ';base64,' + b.fileData;
+  if (!fileList.length) throw new Error('未提供任何檔案');
+
+  const images = fileList.map(f => {
+    const ft = f.fileType || '';
+    if (!ft.startsWith('image/') && ft !== 'application/pdf')
+      throw new Error('僅支援 PDF 及圖片格式（JPG、PNG）：' + ft);
+    return 'data:' + ft + ';base64,' + f.fileData;
+  });
 
   // 呼叫公司 IT OpenRouter Dispatch API（Gemini 2.5 Flash）
   const resp = UrlFetchApp.fetch(IT_URL, {
@@ -205,7 +212,7 @@ function aiParse(b) {
     payload: JSON.stringify({
       model:  IT_MODEL,
       text:   PARSE_PROMPT,
-      images: [dataUri],
+      images: images,
     }),
     muteHttpExceptions: true,
   });
