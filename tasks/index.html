@@ -249,12 +249,17 @@ main { flex: 1; max-width: 900px; margin: 0 auto; width: 100%; padding: 28px 24p
 .notif-items     { max-height: 300px; overflow-y: auto; }
 .notif-row {
   padding: 10px 16px; border-bottom: 1px solid var(--border);
-  font-size: 12px; cursor: pointer; transition: background .15s;
+  font-size: 13px; cursor: pointer; transition: background .15s;
+  display: flex; flex-direction: column; gap: 3px;
 }
 .notif-row:last-child { border-bottom: none; }
 .notif-row:hover { background: var(--bg); }
-.notif-row-title { font-weight: 600; margin-bottom: 2px; }
-.notif-row-sub   { color: var(--sub); }
+.notif-row-title {
+  font-weight: 700; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%;
+}
+.notif-row-sub   { color: var(--sub); font-size: 11px; }
 .notif-empty     { padding: 24px; text-align: center; color: var(--sub); font-size: 13px; }
 
 /* ── States ── */
@@ -291,7 +296,7 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
     </div>
   </div>
   <div class="hdr-brand" style="margin-left:0">
-    <img src="../上地球logo.png" alt="大豐環保科技">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
     <span>大豐環保科技</span>
   </div>
 </header>
@@ -737,8 +742,8 @@ function renderNotifList() {
   }
   el.innerHTML = urgent.map(t => `
     <div class="notif-row" onclick="V('notif-drop').classList.remove('open');openPanel('${t.id}')">
-      <div class="notif-row-title">${esc(t.title)}</div>
-      <div class="notif-row-sub">${isOverdue(t) ? '⚠ 已逾期' : '⏰ 3天內到期'} · ${t.dueAt ? t.dueAt.slice(0,10) : ''} · ${esc(t.category || '')}</div>
+      <div class="notif-row-title">${esc(t.title) || '（無標題）'}</div>
+      <div class="notif-row-sub">${isOverdue(t) ? '⚠ 已逾期' : '⏰ 3天內到期'} &nbsp;${formatDueDate(t.dueAt)} &nbsp;${esc(t.category || '')}</div>
     </div>`).join('');
 }
 
@@ -753,6 +758,12 @@ function isOverdue(t) {
 }
 function isNoDue(t) {
   return t.noDueDate === true || t.noDueDate === 'TRUE' || t.noDueDate === 'true';
+}
+function formatDueDate(d) {
+  if (!d) return '';
+  const dt = new Date(d);
+  if (isNaN(dt.getTime())) return String(d).slice(0,10);
+  return dt.toLocaleDateString('zh-TW', {year:'numeric', month:'2-digit', day:'2-digit'});
 }
 function esc(s) {
   return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
