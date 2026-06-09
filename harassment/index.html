@@ -2192,6 +2192,9 @@ async function sendBully() {
     inp.focus();
   }
 }
+if (new URLSearchParams(location.search).get('chat') === '1') {
+  setTimeout(toggleBully, 300);
+}
 </script>
 </body>
 </html>
