@@ -430,6 +430,31 @@ body.dark .ai-result { background: rgba(15,23,42,.7); }
 body.dark .case-summary:hover { background: #1e2d42; }
 body.dark .landing-hero { background: linear-gradient(135deg, #1e1035, #2e1065); }
 
+/* ── Pattern alerts ── */
+#pattern-alerts { margin: 12px 0 4px; }
+.pattern-alert {
+  border-radius: 12px; padding: 14px 18px;
+  margin-bottom: 10px; font-size: 13px;
+  border-left: 4px solid #fb923c;
+  background: #fff7ed; border-top: 1px solid #fed7aa;
+  border-right: 1px solid #fed7aa; border-bottom: 1px solid #fed7aa;
+}
+.pattern-alert.high {
+  border-left-color: #dc2626;
+  background: #fef2f2; border-top-color: #fca5a5;
+  border-right-color: #fca5a5; border-bottom-color: #fca5a5;
+}
+.pattern-alert-hd { font-weight: 700; color: #c2410c; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+.pattern-alert.high .pattern-alert-hd { color: #991b1b; }
+.pattern-alert-cases { color: var(--sub); font-size: 11.5px; line-height: 1.7; }
+.pattern-tag {
+  display: inline-flex; align-items: center; gap: 3px;
+  background: #fef2f2; color: #dc2626;
+  border: 1px solid #fca5a5; border-radius: 4px;
+  font-size: 10px; font-weight: 700; padding: 1px 6px;
+  margin-left: 6px; vertical-align: middle; flex-shrink: 0;
+}
+
 /* ── Assessment ── */
 .assess-section { background: var(--card); border-radius: 14px; padding: 22px 26px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
 .assess-sec-hd  { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
@@ -807,6 +832,7 @@ footer {
       <button class="logout-btn" onclick="doAdminLogout()">登出</button>
     </div>
     <div class="stats-row" id="admin-stats"></div>
+    <div id="pattern-alerts"></div>
     <div class="sec-label">案件列表</div>
     <div id="case-list"><div style="text-align:center;padding:30px;color:var(--sub)">載入中…</div></div>
   </div>
@@ -1080,10 +1106,63 @@ function doAdminLogout() {
   showView('home');
 }
 
+/* ── Pattern detection ── */
+function detectPatterns(cases) {
+  const alertsEl = document.getElementById('pattern-alerts');
+  alertsEl.innerHTML = '';
+
+  const cutoff = new Date();
+  cutoff.setFullYear(cutoff.getFullYear() - 1);
+  const recent = cases.filter(c => { const d = new Date(c['通報日期']); return !isNaN(d) && d >= cutoff; });
+
+  const byPerson = {}, byDept = {};
+  recent.forEach(c => {
+    const name = (c['被申訴人姓名'] || '').trim();
+    if (name && name !== '—') { byPerson[name] = byPerson[name] || []; byPerson[name].push(c['案件編號']); }
+    const dept = (c['被申訴人部門'] || '').trim();
+    if (dept && dept !== '—') { byDept[dept] = byDept[dept] || []; byDept[dept].push(c['案件編號']); }
+  });
+
+  // Persist flagged sets for badge rendering
+  window._patternFlagged = {
+    persons: new Set(Object.entries(byPerson).filter(([,n]) => n.length >= 2).map(([k]) => k)),
+    depts:   new Set(Object.entries(byDept).filter(([,n]) => n.length >= 3).map(([k]) => k))
+  };
+
+  const alerts = [];
+  Object.entries(byPerson).forEach(([name, nos]) => {
+    if (nos.length >= 2) alerts.push({
+      level: nos.length >= 3 ? 'high' : '',
+      icon:  nos.length >= 3 ? '🚨' : '⚠️',
+      title: `被申訴人「${name}」近 12 個月累積 ${nos.length} 件通報`,
+      cases: nos
+    });
+  });
+  Object.entries(byDept).forEach(([dept, nos]) => {
+    if (nos.length >= 3) alerts.push({
+      level: nos.length >= 5 ? 'high' : '',
+      icon:  '⚠️',
+      title: `「${dept}」部門近 12 個月累積 ${nos.length} 件通報`,
+      cases: nos
+    });
+  });
+
+  if (!alerts.length) return;
+
+  alertsEl.innerHTML =
+    `<div class="sec-label" style="color:#c2410c;margin-top:18px">⚠ 模式偵測警示</div>` +
+    alerts.map(a => `
+      <div class="pattern-alert ${a.level}">
+        <div class="pattern-alert-hd">${a.icon} ${a.title}</div>
+        <div class="pattern-alert-cases">相關案件：${a.cases.join('、')}</div>
+      </div>`).join('');
+}
+
 /* ── Admin: load cases ── */
 async function loadAdminCases() {
   document.getElementById('case-list').innerHTML = '<div style="text-align:center;padding:30px;color:var(--sub)">載入中…</div>';
   document.getElementById('admin-stats').innerHTML = '';
+  document.getElementById('pattern-alerts').innerHTML = '';
   try {
     const res  = await fetch(API + '?token=' + encodeURIComponent(ADMIN_PASS), { redirect: 'follow' });
     const data = await res.json();
@@ -1108,15 +1187,22 @@ async function loadAdminCases() {
       return;
     }
 
+    detectPatterns(cases);
+
     document.getElementById('case-list').innerHTML = cases.map(c => {
       const cls = { '待處理':'s-pending','調查中':'s-investigating','已結案':'s-resolved','不受理':'s-dismissed' }[c['案件狀態']]||'s-pending';
       const id  = c['案件編號'].replace(/[^a-zA-Z0-9]/g, '_');
+      const fp  = window._patternFlagged;
+      const flagged = (fp && c['被申訴人姓名'] && fp.persons.has(c['被申訴人姓名'].trim()))
+                   || (fp && c['被申訴人部門'] && fp.depts.has(c['被申訴人部門'].trim()));
+      const patternBadge = flagged ? '<span class="pattern-tag">⚠ 模式警示</span>' : '';
       return `
       <div class="case-item" id="ci-${id}">
         <div class="case-summary" onclick="toggleCase('${id}')">
           <span class="case-no-tag">${c['案件編號']}</span>
           <span class="case-type">${c['事件類型']||'（未分類）'}</span>
           <span class="status-badge ${cls}">${c['案件狀態']}</span>
+          ${patternBadge}
           <span class="case-date">${String(c['通報日期']).slice(0,10)}</span>
           <span class="chevron">›</span>
         </div>
