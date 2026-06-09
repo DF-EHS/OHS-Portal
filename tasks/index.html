@@ -475,6 +475,13 @@ async function loadTasks() {
     tasks = (data.tasks || []).filter(t => {
       if (!t.id || seen.has(t.id)) return false;
       seen.add(t.id); return true;
+    }).map(t => {
+      // Sheets 把日期字串轉成 Date 物件，讀回後變冗長字串，在此正規化
+      if (t.dueAt) {
+        const d = new Date(t.dueAt);
+        if (!isNaN(d.getTime())) t.dueAt = localYMD(d);
+      }
+      return t;
     });
     renderAll();
   } catch(e) {
@@ -636,7 +643,7 @@ function taskCard(t) {
       : '';
 
   const doneBtn = done ? ''
-    : t.recur
+    : t.repeatRule
       ? `<button class="ta-btn btn-done" onclick="completeTask('${t.id}')">✓ 完成 🔄</button>`
       : `<button class="ta-btn btn-done" onclick="completeTask('${t.id}')">✓ 完成</button>`;
 
@@ -648,7 +655,7 @@ function taskCard(t) {
         <span class="badge b-cat">${esc(t.category || '其他')}</span>
         <span class="badge ${PRI_BADGE[t.priority] || 'b-pmid'}">${esc(t.priority || '中')}</span>
         <span class="badge ${STA_BADGE[t.status]   || 'b-todo'}">${STATUS_LABEL[t.status] || t.status}</span>
-        ${t.recur ? `<span class="badge" style="background:#f3e8ff;color:#7c3aed;border:1px solid #ddd6fe">🔄 ${RECUR_LABEL[t.recur] || t.recur}</span>` : ''}
+        ${t.repeatRule ? `<span class="badge" style="background:#f3e8ff;color:#7c3aed;border:1px solid #ddd6fe">🔄 ${RECUR_LABEL[t.repeatRule] || t.repeatRule}</span>` : ''}
         ${t.owner ? `<span style="font-size:12px;color:var(--sub)">👤 ${esc(t.owner)}</span>` : ''}
         ${dueHtml}
       </div>
@@ -676,7 +683,7 @@ function openPanel(id) {
     V('f-status').value   = t.status      || 'todo';
     V('f-due').value      = t.dueAt       ? t.dueAt.slice(0,10) : '';
     V('f-no-due').checked = isNoDue(t);
-    V('f-recur').value    = t.recur       || '';
+    V('f-recur').value    = t.repeatRule  || '';
     V('f-owner').value    = t.owner       || '';
     V('f-desc').value     = t.description || '';
   } else {
@@ -725,7 +732,7 @@ async function saveTask() {
     status:      V('f-status').value,
     dueAt:       noDue ? '' : (V('f-due').value || ''),
     noDueDate:   noDue,
-    recur:       V('f-recur').value,
+    repeatRule:  V('f-recur').value,
     owner:       V('f-owner').value.trim(),
     description: V('f-desc').value.trim(),
     updatedAt:   now,
@@ -760,7 +767,7 @@ async function saveTask() {
 async function completeTask(id) {
   const t = tasks.find(t => t.id === id);
   if (!t) return;
-  const recurVal = t.recur;
+  const recurVal = t.repeatRule;
   t.status = 'done'; t.updatedAt = new Date().toISOString();
   try {
     await apiPost({ action: 'update', task: t });
@@ -782,13 +789,19 @@ async function completeTask(id) {
 
 function calcNextDue(dueAt, recur) {
   const base = dueAt ? new Date(dueAt) : new Date();
-  if (isNaN(base.getTime())) return new Date().toISOString().slice(0, 10);
+  if (isNaN(base.getTime())) return localYMD(new Date());
   const DAYS = { daily: 1, weekly: 7, biweekly: 14 };
   if (DAYS[recur] != null) base.setDate(base.getDate() + DAYS[recur]);
   else if (recur === 'monthly')   base.setMonth(base.getMonth() + 1);
   else if (recur === 'quarterly') base.setMonth(base.getMonth() + 3);
   else if (recur === 'biannual')  base.setMonth(base.getMonth() + 6);
-  return base.toISOString().slice(0, 10);
+  return localYMD(base);
+}
+
+function localYMD(d) {
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
 }
 
 async function deleteTask(id) {
