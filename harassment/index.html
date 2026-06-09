@@ -1039,10 +1039,12 @@ ${c['目擊者說明'] ? '- 目擊者說明：' + c['目擊者說明'] : ''}
     const res = await fetch(WORKER, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'google/gemini-2.5-flash', messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({ text: prompt })
     });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
-    const text = data.choices?.[0]?.message?.content || data.data || data.text || '分析失敗，請稍後再試。';
+    const text = data?.data || data?.choices?.[0]?.message?.content || data?.text || '';
+    if (!text) throw new Error('AI 回應為空，請稍後再試');
     resDiv.textContent = text;
     resDiv.style.display = 'block';
     btn.disabled = false;
