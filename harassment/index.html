@@ -468,7 +468,7 @@ footer {
       <div class="action-card" onclick="showView('report')">
         <div class="ac-icon">📝</div>
         <div class="ac-title">提出通報</div>
-        <div class="ac-desc">填寫事件通報表單，可選擇匿名或具名提交。AI 將協助您判斷事件類型及參考法條。</div>
+        <div class="ac-desc">填寫事件通報表單，可選擇匿名或具名提交，系統自動產生案件編號供後續查詢。</div>
         <button class="ac-btn">開始通報 →</button>
       </div>
 
@@ -605,8 +605,7 @@ footer {
       <div class="field">
         <label>事件詳細描述 <span class="req">*</span></label>
         <textarea id="incident-desc"
-          placeholder="請詳細描述事件的經過、發生頻率（若持續發生）、以及對您造成的影響。&#10;描述越詳細，AI 分析越準確，也越有助於後續調查。"
-          oninput="onDescInput()"></textarea>
+          placeholder="請詳細描述事件的經過、發生頻率（若持續發生）、以及對您造成的影響。&#10;描述越詳細，越有助於後續調查。"></textarea>
       </div>
     </div>
 
@@ -634,23 +633,6 @@ footer {
         <div id="injury-detail" style="display:none;margin-top:10px">
           <textarea id="injury-desc" style="min-height:70px" placeholder="身體傷害、心理影響、工作表現影響等"></textarea>
         </div>
-      </div>
-    </div>
-
-    <!-- AI 輔助分析 -->
-    <div class="form-card">
-      <div class="sec-label">AI 輔助分析（選用）</div>
-      <p style="font-size:13px;color:var(--sub);margin-bottom:14px;line-height:1.7">
-        填寫事件描述後，可讓 AI 協助分析事件類型、適用法條及初步建議行動。<br>
-        <strong style="color:var(--text)">AI 分析僅供參考，不作為法律判斷依據。</strong>
-      </p>
-      <div class="ai-box">
-        <div class="ai-box-title">🤖 Gemini AI 分析</div>
-        <button class="ai-analyze-btn" id="ai-btn" onclick="runAnalysis()" disabled>
-          輸入事件描述後可啟用分析
-        </button>
-        <div class="ai-status" id="ai-status"></div>
-        <div class="ai-result" id="ai-result"></div>
       </div>
     </div>
 
@@ -744,7 +726,8 @@ const ADMIN_PASS = 'admin'; // ← 請修改（同步修改 apps-script.gs 的 A
 // ──────────────────────────────────────────────────────────────────────
 
 let isAnon = true, accusedType = '', hasWitness = null, hasInjury = null;
-let aiResultText = '', submitting = false;
+let submitting = false;
+let adminCases = [];
 
 /* ── View ── */
 function showView(id) {
@@ -783,14 +766,6 @@ function getTypes() {
   return Array.from(document.querySelectorAll('#type-grid input:checked')).map(cb => cb.value);
 }
 
-/* ── Section 3: description ── */
-function onDescInput() {
-  const len = document.getElementById('incident-desc').value.trim().length;
-  const btn = document.getElementById('ai-btn');
-  btn.disabled = len < 20;
-  btn.textContent = len < 20 ? '輸入事件描述後可啟用分析' : '✨ AI 輔助分析事件';
-}
-
 /* ── Section 4 ── */
 function setWitness(v) {
   hasWitness = v;
@@ -803,61 +778,6 @@ function setInjury(v) {
   document.getElementById('inj-yes').classList.toggle('active', v);
   document.getElementById('inj-no').classList.toggle('active', !v);
   document.getElementById('injury-detail').style.display = v ? 'block' : 'none';
-}
-
-/* ── AI Analysis ── */
-async function runAnalysis() {
-  const desc  = document.getElementById('incident-desc').value.trim();
-  const types = getTypes();
-  const btn    = document.getElementById('ai-btn');
-  const status = document.getElementById('ai-status');
-  const result = document.getElementById('ai-result');
-
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> AI 分析中…';
-  status.textContent = ''; result.style.display = 'none';
-
-  const prompt = `你是一位職業安全衛生顧問，協助辨識職場不法侵害事件類型。
-
-以下是通報者的描述：
-「${desc}」
-${types.length ? '\n通報者自述類型：' + types.join('、') : ''}
-
-請根據台灣法規（職業安全衛生法、性別平等工作法、跟蹤騷擾防制法，及即將實施的職場霸凌相關法規），以繁體中文提供：
-
-**一、事件類型判斷**
-最可能符合的不法侵害類型，並簡述判斷依據。
-
-**二、相關法條參考**
-適用的法規條文（條文名稱＋條號即可）。
-
-**三、急迫性評估**
-一般 / 緊急（需盡快處理）/ 極度緊急（涉及人身安全）。
-
-**四、建議初步行動**
-通報者現在可採取的 2-3 個具體步驟。
-
-請以客觀、支持的語氣，清晰條列作答。最後附上說明：本分析僅供參考，最終認定由調查結果決定。`;
-
-  try {
-    const res  = await fetch(WORKER, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'google/gemini-2.5-flash', messages: [{ role: 'user', content: prompt }] })
-    });
-    const data = await res.json();
-    const text = data.choices?.[0]?.message?.content || data.data || data.text || '分析失敗，請稍後再試。';
-    aiResultText = text;
-    result.textContent = text;
-    result.style.display = 'block';
-    btn.disabled = false;
-    btn.textContent = '✨ 重新分析';
-    status.textContent = '';
-  } catch(e) {
-    btn.disabled = false;
-    btn.textContent = '✨ AI 輔助分析事件';
-    status.textContent = '❌ 分析失敗：' + e.message;
-  }
 }
 
 /* ── Submit ── */
@@ -892,8 +812,7 @@ async function submitReport() {
     hasWitness:   hasWitness === true,
     witnessDesc:  (hasWitness && document.getElementById('witness-desc').value) || '',
     hasInjury:    hasInjury === true,
-    injuryDesc:   (hasInjury && document.getElementById('injury-desc').value) || '',
-    aiAnalysis:   aiResultText
+    injuryDesc:   (hasInjury && document.getElementById('injury-desc').value) || ''
   };
 
   try {
@@ -995,6 +914,7 @@ async function loadAdminCases() {
     const cases = (data.cases || []).sort((a, b) =>
       String(b['通報日期']).localeCompare(String(a['通報日期']))
     );
+    adminCases = cases;
 
     // Stats
     const cnt = { '待處理':0, '調查中':0, '已結案':0, '不受理':0 };
@@ -1033,7 +953,17 @@ async function loadAdminCases() {
             <div class="detail-item detail-full"><div class="dl">事件描述</div><div class="dv" style="line-height:1.7;white-space:pre-wrap">${c['事件描述']||'—'}</div></div>
             ${c['目擊者說明'] ? `<div class="detail-item detail-full"><div class="dl">目擊者說明</div><div class="dv">${c['目擊者說明']}</div></div>` : ''}
             ${c['傷害情形'] ? `<div class="detail-item detail-full"><div class="dl">傷害情形</div><div class="dv">${c['傷害情形']}</div></div>` : ''}
-            ${c['AI分析結果'] ? `<div class="detail-item detail-full"><div class="dl">AI 分析結果</div><div class="dv" style="line-height:1.7;white-space:pre-wrap;font-size:12px;color:var(--sub)">${c['AI分析結果']}</div></div>` : ''}
+          </div>
+          <div style="margin:0 0 14px;background:var(--accent-bg);border-radius:10px;padding:14px 16px;border:1px solid var(--accent-bd)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+              <span style="font-size:12px;font-weight:700;color:var(--accent)">✨ AI 輔助分析（職安人員專用）</span>
+              <button class="save-btn" style="padding:5px 13px;font-size:12px" id="aib-${id}"
+                      onclick="runAdminAnalysis('${c['案件編號']}','${id}')">
+                ${c['AI分析結果'] ? '↻ 重新分析' : '執行 AI 分析'}
+              </button>
+            </div>
+            <div id="aix-${id}" class="ai-result"
+                 style="display:${c['AI分析結果'] ? 'block' : 'none'};background:rgba(255,255,255,.75);border-radius:8px;padding:14px;font-size:12px;line-height:1.8;white-space:pre-wrap">${c['AI分析結果'] || ''}</div>
           </div>
           <div class="admin-actions">
             <label>更新處理狀態</label>
@@ -1059,6 +989,78 @@ async function loadAdminCases() {
 
 function toggleCase(id) {
   document.getElementById('ci-' + id).classList.toggle('open');
+}
+
+/* ── Admin: AI analysis ── */
+async function runAdminAnalysis(caseNo, id) {
+  const c = adminCases.find(x => x['案件編號'] === caseNo);
+  if (!c) return;
+  const btn    = document.getElementById('aib-' + id);
+  const resDiv = document.getElementById('aix-' + id);
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+  resDiv.style.display = 'none';
+
+  const prompt = `你是一位職業安全衛生管理人員，正在審閱一份職場不法侵害通報案件。
+
+案件資訊：
+- 事件類型：${c['事件類型'] || '（未填）'}
+- 事件日期：${c['事件日期'] || '（未填）'} ${c['事件時間'] || ''}
+- 發生地點：${c['發生地點'] || '（未填）'}
+- 被申訴人類別：${c['被申訴人類別'] || '（未填）'}
+- 是否有目擊者：${c['是否有目擊者'] || '（未填）'}
+- 是否有傷害：${c['是否有傷害'] || '（未填）'}
+${c['傷害情形'] ? '- 傷害情形：' + c['傷害情形'] : ''}
+${c['目擊者說明'] ? '- 目擊者說明：' + c['目擊者說明'] : ''}
+
+事件描述：
+「${c['事件描述'] || '（未填）'}」
+
+請以繁體中文，依台灣現行法規（職業安全衛生法、性別平等工作法、跟蹤騷擾防制法，及即將實施的職場霸凌專章）提供：
+
+**一、事件性質研判**
+判斷最可能符合的不法侵害類型及法律要件分析。
+
+**二、相關法條依據**
+列出適用法規名稱及條號。
+
+**三、急迫性評估**
+一般 / 緊急（須盡快處理）/ 極度緊急（涉及人身安全）。
+
+**四、建議調查步驟**
+職安管理人員應採取的具體行動（2-4 步）。
+
+**五、注意事項**
+調查程序、保密義務或其他需注意之事項。
+
+本分析僅供參考，最終認定由完整調查結果決定。`;
+
+  try {
+    const res = await fetch(WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'google/gemini-2.5-flash', messages: [{ role: 'user', content: prompt }] })
+    });
+    const data = await res.json();
+    const text = data.choices?.[0]?.message?.content || data.data || data.text || '分析失敗，請稍後再試。';
+    resDiv.textContent = text;
+    resDiv.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = '↻ 重新分析';
+    // 自動回存至試算表
+    await fetch(API, {
+      method: 'POST', redirect: 'follow',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'update', token: ADMIN_PASS, caseNo, aiAnalysis: text })
+    });
+    const cached = adminCases.find(x => x['案件編號'] === caseNo);
+    if (cached) cached['AI分析結果'] = text;
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = '執行 AI 分析';
+    resDiv.textContent = '❌ 分析失敗：' + e.message;
+    resDiv.style.display = 'block';
+  }
 }
 
 async function updateCase(caseNo, id, btn) {

@@ -143,6 +143,7 @@ function _updateCase(b) {
   for (var i = 1; i < data.length; i++) {
     if (String(data[i][0]).trim() === String(b.caseNo).trim()) {
       const row = i + 1;
+      if (b.aiAnalysis !== undefined) sh.getRange(row, 19).setValue(b.aiAnalysis);
       if (b.status     !== undefined) sh.getRange(row, 20).setValue(b.status);
       if (b.hrNotes    !== undefined) sh.getRange(row, 21).setValue(b.hrNotes);
       if (b.resolution !== undefined) sh.getRange(row, 22).setValue(b.resolution);
