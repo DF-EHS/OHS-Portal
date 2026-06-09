@@ -143,6 +143,35 @@ function doGet() {
   }
 }
 
+function doPost(e) {
+  try {
+    var b = JSON.parse(e.postData.contents);
+    if (b.action === 'append') return _resp(_appendRows(b.rows || []));
+    return _resp({ error: '未知的 action: ' + b.action });
+  } catch(err) {
+    return _resp({ error: err.toString() });
+  }
+}
+
+function _appendRows(rows) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheets()[0];
+
+  // 從標題列建立 欄名→欄序 對應
+  var lastCol  = sh.getLastColumn();
+  var rawHdrs  = sh.getRange(1, 1, 1, lastCol).getValues()[0];
+  var headers  = rawHdrs.map(function(h){ return String(h).trim(); });
+
+  var added = 0;
+  rows.forEach(function(row) {
+    var newRow = headers.map(function(h){ return (row[h] !== undefined && row[h] !== null) ? row[h] : ''; });
+    sh.appendRow(newRow);
+    added++;
+  });
+
+  return { added: added };
+}
+
 function _resp(data) {
   return ContentService
     .createTextOutput(JSON.stringify(data))
