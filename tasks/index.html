@@ -272,6 +272,44 @@ main { flex: 1; max-width: 900px; margin: 0 auto; width: 100%; padding: 28px 24p
 /* ── Footer ── */
 footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); border-top: 1px solid var(--border); }
 
+/* ── Login page ── */
+#login-page {
+  position: fixed; inset: 0; z-index: 1000;
+  background: var(--bg); display: flex; flex-direction: column;
+}
+.login-hdr {
+  background: linear-gradient(135deg, #431407 0%, #c2410c 50%, #f59840 100%);
+  color: #fff; padding: 14px 24px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 16px rgba(0,0,0,.35);
+}
+.login-hdr h1 { font-size: 17px; font-weight: 700; }
+.login-wrap { display: flex; align-items: center; justify-content: center; flex: 1; padding: 24px; }
+.login-card {
+  background: #fff; border-radius: 16px; padding: 44px 36px 36px;
+  box-shadow: 0 4px 32px rgba(0,0,0,.12); width: 100%; max-width: 360px; text-align: center;
+}
+.login-logo { margin-bottom: 14px; }
+.login-logo img { height: 140px; object-fit: contain; }
+.login-card h2 { font-size: 18px; color: var(--text); font-weight: 800; margin-bottom: 4px; }
+.login-card > p { font-size: 12px; color: var(--sub); margin-bottom: 28px; line-height: 1.7; }
+.login-fi {
+  width: 100%; border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 12px 14px; font-size: 16px; outline: none; font-family: inherit;
+  margin-bottom: 12px; background: #fff; box-sizing: border-box;
+  transition: border-color .15s, box-shadow .15s;
+}
+.login-fi:focus { border-color: #c2410c; box-shadow: 0 0 0 3px rgba(194,65,12,.08); }
+.login-err { color: var(--red); font-size: 13px; margin-bottom: 10px; display: none; }
+.login-btn {
+  width: 100%; padding: 13px;
+  background: linear-gradient(135deg, #c2410c, #f59840);
+  color: #fff; border: none; border-radius: 8px;
+  font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit;
+  transition: opacity .15s; margin-top: 4px;
+}
+.login-btn:hover { opacity: .88; }
+
 /* ── Responsive ── */
 @media (max-width: 600px) {
   .stats-row { grid-template-columns: repeat(2, 1fr); }
@@ -417,18 +455,28 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
   </div>
 </div>
 
-<!-- ── Login screen ── -->
-<div id="login-screen" style="display:none;position:fixed;inset:0;background:linear-gradient(135deg,#431407 0%,#c2410c 50%,#f59840 100%);z-index:1000;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:16px;padding:40px 36px;width:min(340px,90vw);text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.25)">
-    <div style="font-size:36px;margin-bottom:10px">🔒</div>
-    <h2 style="font-size:18px;font-weight:800;color:#1e293b;margin-bottom:4px">職安工作中樞</h2>
-    <p style="font-size:13px;color:#64748b;margin-bottom:24px">大豐環保科技</p>
-    <input type="password" id="login-pw"
-      style="width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:8px;text-align:center;outline:none;box-sizing:border-box"
-      placeholder="輸入密碼"
-      onkeydown="if(event.key==='Enter')doLogin()">
-    <div id="login-err" style="color:#dc2626;font-size:12px;margin-bottom:10px;display:none">密碼錯誤，請再試一次</div>
-    <button onclick="doLogin()" style="width:100%;padding:12px;background:linear-gradient(135deg,#c2410c,#f59840);border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">進入系統</button>
+<!-- ── Login page ── -->
+<div id="login-page">
+  <div class="login-hdr">
+    <h1>✅ 職安工作中樞</h1>
+    <div class="hdr-brand">
+      <img src="../dafon-logo.png" alt="大豐環保科技">
+      <span>大豐環保科技</span>
+    </div>
+  </div>
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="../contract/logo-login.png" alt="大豐環保科技">
+      </div>
+      <h2>職安工作中樞</h2>
+      <p>大豐環保科技股份有限公司<br>請輸入密碼以繼續</p>
+      <input class="login-fi" id="login-pw" type="password"
+             placeholder="請輸入密碼" autocomplete="off"
+             onkeydown="if(event.key==='Enter')doLogin()">
+      <div class="login-err" id="login-err">密碼錯誤，請重新輸入</div>
+      <button class="login-btn" onclick="doLogin()">登入</button>
+    </div>
   </div>
 </div>
 
@@ -446,17 +494,12 @@ let saving    = false;
 let viewMode  = 'list';
 
 /* ── Init ── */
-if (sessionStorage.getItem('task_auth')) {
-  loadTasks();
-} else {
-  V('login-screen').style.display = 'flex';
-}
+// 每次頁面載入（含重新整理）都需重新登入，不使用 sessionStorage
 
 function doLogin() {
   const pw = V('login-pw').value;
   if (pw === 'gloomy') {
-    sessionStorage.setItem('task_auth', '1');
-    V('login-screen').style.display = 'none';
+    V('login-page').style.display = 'none';
     loadTasks();
   } else {
     V('login-err').style.display = 'block';
