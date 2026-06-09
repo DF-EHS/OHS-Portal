@@ -867,7 +867,7 @@ footer {
         <div class="ac-desc">員工針對個人工作環境安全感、人際關係、管理行為感受及權益認知的自主評估，共 16 題。</div>
         <button class="ac-btn">開始評估 →</button>
       </div>
-      <div class="action-card" onclick="loadAssessHistory()">
+      <div class="action-card" onclick="requireAdmin('assess-history')">
         <div class="ac-icon">📈</div>
         <div class="ac-title">歷次評估紀錄</div>
         <div class="ac-desc">查閱所有歷次評估結果（含三種評估表），追蹤各面向分數的改善趨勢。</div>
@@ -1097,6 +1097,7 @@ function doAdminLogin() {
     _adminRedirectAfterLogin = null;
     showView(dest);
     if (dest === 'admin') loadAdminCases();
+    if (dest === 'assess-history') loadAssessHistory();
   } else {
     document.getElementById('admin-err').style.display = 'block';
   }
