@@ -1972,5 +1972,226 @@ async function loadAssessHistory() {
   }
 }
 </script>
+
+<!-- ══════════ 霸凌諮詢浮動視窗 ══════════ -->
+<style>
+#bully-fab {
+  position: fixed; bottom: 76px; right: 24px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 28px; padding: 13px 22px;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 4px 18px rgba(91,33,182,.45); z-index: 1000;
+  display: flex; align-items: center; gap: 8px;
+  transition: background .15s, transform .15s;
+  font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+}
+#bully-fab:hover { background: var(--accent-h); transform: translateY(-2px); }
+
+#bully-panel {
+  position: fixed; bottom: 136px; right: 24px;
+  width: min(400px, calc(100vw - 32px));
+  background: #fff; border-radius: 16px;
+  box-shadow: 0 8px 36px rgba(91,33,182,.22);
+  z-index: 1001; display: none; flex-direction: column;
+  overflow: hidden; max-height: 560px;
+}
+#bully-header {
+  background: linear-gradient(135deg, #1e1035, #4c1d95);
+  color: #fff; padding: 13px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-weight: 700; font-size: 15px; flex-shrink: 0;
+}
+#bully-close {
+  background: none; border: none; color: rgba(255,255,255,.8);
+  font-size: 18px; cursor: pointer; line-height: 1;
+}
+#bully-close:hover { color: #fff; }
+#bully-messages {
+  flex: 1; overflow-y: auto; padding: 14px;
+  display: flex; flex-direction: column; gap: 10px; min-height: 0;
+}
+.bmsg-user {
+  align-self: flex-end; background: var(--accent); color: #fff;
+  padding: 8px 14px; border-radius: 18px 18px 4px 18px;
+  max-width: 82%; font-size: 13px; word-break: break-word;
+}
+.bmsg-bot { align-self: flex-start; max-width: 100%; font-size: 13px; width: 100%; }
+.bully-bubble {
+  background: #f5f3ff; border: 1px solid var(--accent-bd);
+  border-radius: 8px; padding: 10px 14px;
+  font-size: 13px; line-height: 1.75; word-break: break-word;
+}
+.bully-bubble strong { color: var(--accent); }
+.bully-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.bully-chip {
+  background: var(--accent-bg); color: var(--accent);
+  border: 1px solid var(--accent-bd); border-radius: 16px;
+  padding: 4px 12px; font-size: 12px; cursor: pointer;
+  transition: background .15s;
+}
+.bully-chip:hover { background: #ddd6fe; }
+.bully-typing { display: flex; gap: 5px; align-items: center; padding: 8px 2px; }
+.bully-typing span {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+  animation: bully-bounce 1.2s ease-in-out infinite;
+}
+.bully-typing span:nth-child(2) { animation-delay: .2s; }
+.bully-typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes bully-bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-7px)} }
+#bully-input-area {
+  display: flex; gap: 8px; padding: 10px 14px;
+  border-top: 1px solid var(--border); flex-shrink: 0;
+}
+#bully-input {
+  flex: 1; border: 1px solid var(--border); border-radius: 20px;
+  padding: 7px 14px; font-size: 13px; outline: none; font-family: inherit;
+}
+#bully-input:focus { border-color: var(--accent); }
+#bully-send {
+  background: var(--accent); color: #fff; border: none;
+  border-radius: 20px; padding: 7px 16px; font-size: 13px;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+#bully-send:hover { background: var(--accent-h); }
+</style>
+
+<button id="bully-fab" onclick="toggleBully()">🤝 霸凌行為諮詢</button>
+<div id="bully-panel">
+  <div id="bully-header">
+    <span>🤝 職場霸凌行為辨識諮詢</span>
+    <button id="bully-close" onclick="toggleBully()">✕</button>
+  </div>
+  <div id="bully-messages">
+    <div class="bmsg-bot">
+      <div class="bully-bubble">
+        您好，我是職場霸凌行為辨識輔助顧問。<br><br>
+        請用自然語言描述您遇到的職場狀況，我將協助您釐清該行為是否符合職場霸凌或不法侵害的定義，並說明相關法律性質。<br><br>
+        <strong>本工具為輔助諮詢用途，不作為正式法律意見。</strong>
+      </div>
+      <div class="bully-chips">
+        <span class="bully-chip" onclick="bullyQuickSend('主管一直在公開場合罵我，這算霸凌嗎？')">主管公開辱罵</span>
+        <span class="bully-chip" onclick="bullyQuickSend('我被同事集體孤立排擠，不知道怎麼辦')">孤立排擠</span>
+        <span class="bully-chip" onclick="bullyQuickSend('什麼行為構成職場霸凌？')">霸凌定義</span>
+        <span class="bully-chip" onclick="bullyQuickSend('我可以怎麼通報或申訴？')">通報申訴</span>
+      </div>
+    </div>
+  </div>
+  <div id="bully-input-area">
+    <input id="bully-input" type="text" placeholder="請描述您遇到的狀況…"
+           onkeydown="if(event.key==='Enter')sendBully()">
+    <button id="bully-send" onclick="sendBully()">送出</button>
+  </div>
+</div>
+
+<script>
+const BULLY_SYSTEM = `你是大豐環保科技職業安全衛生管理系統的「職場霸凌行為辨識輔助顧問」。
+
+【角色與目的】
+協助員工或 HR 人員辨識職場事件是否符合職場霸凌或不法侵害定義，幫助雙方建立共同語言，降低認知落差。不作為最終法律判斷，以輔助諮詢為目的。
+
+【回應原則】
+1. 語氣溫和、具支持性，讓使用者感到被理解與重視
+2. 針對描述的行為，具體說明哪些要素符合或不符合霸凌定義（持續性、故意性、權力不對等、造成身心損害）
+3. 區分職場霸凌與一般管理行為（如合理指導、績效管理）的差異
+4. 引用具體法條時，標明「法律名稱第X條」
+5. 結尾建議使用者如有需要可透過本系統提出正式通報
+
+【相關法規摘要】
+- 職業安全衛生法第6條第2項：雇主對執行職務因他人行為遭受身體或精神不法侵害，應妥為預防及危害評估，並採取適當措施
+- 性別平等工作法：職場性騷擾防治義務（50人以上事業單位需訂定措施）
+- 勞動基準法第14條：雇主有重大侮辱勞工情形，勞工得不經預告終止契約並請求資遣費
+- 職場霸凌防治法草案（預計修入職安法）：明確定義職場霸凌為持續或反覆性的不當行為，造成勞工心理或身體傷害
+
+【霸凌行為類型（依勞動部指引）】
+- 言語貶損：公開羞辱、人身攻擊、不實指控
+- 工作妨礙：刻意不給工作、給予不合理工作量、剝奪資源
+- 孤立排擠：拒絕溝通、散播謠言、排除於團隊活動外
+- 過度監控：不合理監視、要求逐分鐘回報
+- 肢體威脅：跟蹤、侵入個人空間、恐嚇
+
+使用繁體中文回答，結構清晰，適當使用換行。`;
+
+let bullyOpen = false;
+const bullyHistory = [];
+
+function toggleBully() {
+  bullyOpen = !bullyOpen;
+  document.getElementById('bully-panel').style.display = bullyOpen ? 'flex' : 'none';
+  if (bullyOpen) document.getElementById('bully-input').focus();
+}
+
+function bullyAppendMsg(html, isUser) {
+  const msgs = document.getElementById('bully-messages');
+  const div = document.createElement('div');
+  div.className = isUser ? 'bmsg-user' : 'bmsg-bot';
+  div.innerHTML = html;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function bullyShowTyping() {
+  return bullyAppendMsg(`<div class="bully-typing"><span></span><span></span><span></span></div>`, false);
+}
+
+function bullyQuickSend(text) {
+  document.getElementById('bully-input').value = text;
+  sendBully();
+}
+
+function bullyMdToHtml(t) {
+  const e = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return e(t)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^#{1,3}\s*(.+)$/gm, '<div style="font-weight:800;color:var(--accent);margin:8px 0 4px">$1</div>')
+    .replace(/^---+$/gm, '<hr style="border:none;border-top:1px solid var(--accent-bd);margin:8px 0">')
+    .replace(/^(\d+)\.\s+(.+)$/gm, '<div style="display:flex;gap:6px;margin:2px 0"><span style="color:var(--accent);font-weight:700;flex-shrink:0">$1.</span><span>$2</span></div>')
+    .replace(/^[*\-]\s+(.+)$/gm, '<div style="display:flex;gap:6px;margin:2px 0"><span style="color:var(--accent);flex-shrink:0">•</span><span>$1</span></div>')
+    .replace(/\n\n+/g, '<br>').replace(/\n/g, '<br>');
+}
+
+async function sendBully() {
+  const inp = document.getElementById('bully-input');
+  const btn = document.getElementById('bully-send');
+  const q = inp.value.trim();
+  if (!q) return;
+
+  inp.value = '';
+  inp.disabled = true;
+  btn.disabled = true;
+
+  bullyAppendMsg(q.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'), true);
+  bullyHistory.push({ role: 'user', content: q });
+
+  const typingEl = bullyShowTyping();
+
+  try {
+    const history = bullyHistory.slice(0, -1);
+    const historyText = history.length
+      ? history.map(m => (m.role === 'user' ? '使用者：' : '顧問：') + m.content).join('\n') + '\n'
+      : '';
+    const prompt = BULLY_SYSTEM + '\n\n' + historyText + '使用者：' + q + '\n顧問：';
+
+    const resp = await fetch(WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt })
+    });
+    const data = await resp.json();
+    const text = data?.data || data?.choices?.[0]?.message?.content || data?.text || '（無回應）';
+
+    typingEl.remove();
+    bullyHistory.push({ role: 'assistant', content: text });
+    bullyAppendMsg(`<div class="bully-bubble">${bullyMdToHtml(text)}</div>`, false);
+  } catch(err) {
+    typingEl.remove();
+    bullyAppendMsg(`<div class="bully-bubble">⚠️ 連線失敗：${err.message}</div>`, false);
+  } finally {
+    inp.disabled = false;
+    btn.disabled = false;
+    inp.focus();
+  }
+}
+</script>
 </body>
 </html>
