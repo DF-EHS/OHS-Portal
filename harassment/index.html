@@ -792,19 +792,32 @@ footer {
     </div>
     <div class="notice info">
       <span class="notice-icon">ℹ️</span>
-      <div>本評估表供職安管理人員定期（建議每年至少一次）評估職場不法侵害整體風險狀況，評估結果將自動儲存並可追蹤歷年趨勢。</div>
+      <div>請依使用者身分選擇對應的評估表，評估結果將自動儲存並可追蹤歷次趨勢。</div>
     </div>
-    <div class="action-cards" style="margin-top:20px">
-      <div class="action-card" onclick="initAssessment()">
-        <div class="ac-icon">📝</div>
-        <div class="ac-title">開始新評估</div>
-        <div class="ac-desc">填寫 21 題五面向評估問卷，完成後自動計算風險等級並由 AI 生成預防建議。</div>
-        <button class="ac-btn">開始填寫 →</button>
+    <div class="sec-label" style="margin-top:20px">選擇評估表類型</div>
+    <div class="action-cards">
+      <div class="action-card" onclick="initAssessment('ohs')">
+        <div class="ac-icon">🔍</div>
+        <div class="ac-title">職安人員評核表</div>
+        <div class="ac-desc">職安人員對各部門主管進行評核，涵蓋政策落實、管理行為、人際環境、工作負荷及應變能力，共 20 題。</div>
+        <button class="ac-btn">開始評核 →</button>
+      </div>
+      <div class="action-card" onclick="initAssessment('supervisor')">
+        <div class="ac-icon">👷</div>
+        <div class="ac-title">現場主管評核表</div>
+        <div class="ac-desc">分兩大部分：現場作業區域環境評估（A部分）+ 主管自我行為檢視（B部分），共 21 題。</div>
+        <button class="ac-btn">開始評核 →</button>
+      </div>
+      <div class="action-card" onclick="initAssessment('employee')">
+        <div class="ac-icon">👤</div>
+        <div class="ac-title">員工自主評估表</div>
+        <div class="ac-desc">員工針對個人工作環境安全感、人際關係、管理行為感受及權益認知的自主評估，共 16 題。</div>
+        <button class="ac-btn">開始評估 →</button>
       </div>
       <div class="action-card" onclick="loadAssessHistory()">
         <div class="ac-icon">📈</div>
         <div class="ac-title">歷次評估紀錄</div>
-        <div class="ac-desc">查閱所有歷次評估結果，追蹤各面向風險分數的改善趨勢。</div>
+        <div class="ac-desc">查閱所有歷次評估結果（含三種評估表），追蹤各面向分數的改善趨勢。</div>
         <button class="ac-btn outline">查閱紀錄 →</button>
       </div>
     </div>
@@ -822,15 +835,8 @@ footer {
     </div>
     <div id="assess-form-body"></div>
     <div class="form-card" style="margin-top:4px">
-      <div class="sec-label">補充說明</div>
-      <div class="field">
-        <label>評估人員姓名</label>
-        <input type="text" id="assess-assessor" placeholder="填寫評估人員姓名（選填）">
-      </div>
-      <div class="field">
-        <label>本次評估備註</label>
-        <textarea id="assess-note" style="min-height:80px" placeholder="可記錄本次評估的特殊背景或說明（選填）"></textarea>
-      </div>
+      <div class="sec-label">補充資訊</div>
+      <div id="assess-extra-card"></div>
     </div>
     <div id="assess-submit-err" class="notice err" style="display:none">
       <span class="notice-icon">❌</span>
@@ -1267,73 +1273,189 @@ if (sessionStorage.getItem('harassment_admin') === '1') {
 }
 
 // ════════════════════════════════════════════════════════════════
-// 構想一：年度風險評估
+// 構想一：年度風險評估（三種評估表）
 // ════════════════════════════════════════════════════════════════
 
-/* ── 評估問卷題目資料 ── */
-const ASSESS_SECTIONS = [
-  {
-    title: '政策與管理', icon: '📋',
-    desc: '公司是否建立完善的防治政策、管理機制與教育訓練',
-    qs: [
-      '公司已訂有明確的職場不法侵害防治政策，並公告周知全體員工',
-      '主管人員具備識別與處理職場不法侵害事件的知識與能力',
-      '工作量分配合理，員工不致因過度工作壓力產生負面情緒',
-      '績效評估與獎懲制度公平透明，員工普遍認同',
-      '已定期辦理職場不法侵害防治相關教育訓練'
+const ASSESS_FORMS = {
+  ohs: {
+    id: 'ohs', title: '職安人員評核表', badge: '職安人員版', icon: '🔍',
+    desc: '職安人員對各部門主管進行評核',
+    extraFields: [
+      { id: 'target-dept', label: '受評部門名稱', placeholder: '請填寫受評部門', required: true }
+    ],
+    sections: [
+      { title: '政策落實與宣導', icon: '📋',
+        desc: '部門主管對防治政策的落實及宣導情形',
+        qs: [
+          '部門主管已完成不法侵害防治相關教育訓練',
+          '部門已公告防治政策及申訴窗口資訊',
+          '主管能正確說明公司的通報流程與申訴管道',
+          '部門已依規定完成本年度相關教育訓練場次',
+          '主管對現行相關法規具備基本認知（職安法、性平法等）'
+        ]
+      },
+      { title: '主管管理行為', icon: '👔',
+        desc: '主管對部屬的管理方式及言行舉止',
+        qs: [
+          '主管對部屬的管理方式公平，未有偏袒或歧視情形',
+          '主管指派工作或要求時，措辭適當，無貶低或威嚇言語',
+          '主管對部門內人際衝突能適當介入並妥善處理',
+          '主管不以考績或考勤為由，對特定員工施加不當壓力'
+        ]
+      },
+      { title: '部門人際環境', icon: '🤝',
+        desc: '部門內整體人際互動及環境氛圍',
+        qs: [
+          '部門員工之間整體相處和諧，無明顯對立或敵意',
+          '部門內無明顯的排擠、孤立或集體霸凌現象',
+          '員工能透過適當管道表達工作困難或不滿',
+          '過去一年內未有不法侵害相關申訴積壓未處理情形'
+        ]
+      },
+      { title: '工作負荷管理', icon: '⚖️',
+        desc: '工作量、工時安排及員工身心健康關注',
+        qs: [
+          '部門工作量分配均衡，無不合理的超量指派',
+          '加班或值班安排合理，無強制超時工作情形',
+          '主管會定期關心員工的工作情緒與心理狀態',
+          '部門未出現刻意孤立或剝奪工作機會等情形'
+        ]
+      },
+      { title: '事件應變能力', icon: '🚨',
+        desc: '主管的緊急應變知能與流程掌握',
+        qs: [
+          '主管知道如何在第一時間處理員工通報的不法侵害事件',
+          '部門有明確的緊急聯絡及轉介職安人員的流程',
+          '主管遇到相關事件時，能保持中立並維護當事人隱私'
+        ]
+      }
     ]
   },
-  {
-    title: '工作環境', icon: '🏢',
-    desc: '實體工作場所的安全性、隱私保護與設施完善程度',
-    qs: [
-      '工作場所整潔舒適，員工有足夠的個人空間',
-      '夜間或獨立作業的場所具備適當安全保護措施',
-      '監視設備的設置兼顧安全需求與員工隱私',
-      '員工的個人物品及財物能得到妥善保護'
+
+  supervisor: {
+    id: 'supervisor', title: '現場主管評核表', badge: '現場主管版', icon: '👷',
+    desc: '作業區域評核（A）+ 主管自我行為檢視（B）',
+    extraFields: [
+      { id: 'work-area', label: '作業區域 / 班別', placeholder: '請填寫所屬作業區域或班別', required: true }
+    ],
+    sections: [
+      { title: '【A】物理作業環境', icon: '🏭',
+        desc: '作業場所的實體環境安全性與舒適性',
+        qs: [
+          '作業場所整潔，空間配置不致造成員工壓迫感或不安',
+          '員工休息空間及個人物品存放區域充足且具有隱私',
+          '作業場所照明、設備及環境狀態良好，不影響員工情緒',
+          '獨立作業或夜班情境已有適當的安全配套措施'
+        ]
+      },
+      { title: '【A】班組人員互動', icon: '👥',
+        desc: '班組成員之間的互動狀況觀察',
+        qs: [
+          '班組成員之間整體互動和諧，無明顯衝突或對立',
+          '未觀察到特定員工被孤立、排擠或遭受貶低',
+          '員工在工作中能自在表達意見，不因表達而遭受壓制',
+          '新進或調任員工能順利融入，無明顯排斥現象'
+        ]
+      },
+      { title: '【A】工作壓力狀況', icon: '📉',
+        desc: '班組整體工作負荷與壓力觀察',
+        qs: [
+          '班組工作量安排合理，員工不致長期處於過度壓力狀態',
+          '員工超時工作頻率合理，無強制性的長期加班',
+          '緊急任務或臨時調動的處理方式，員工普遍能接受'
+        ]
+      },
+      { title: '【B】溝通方式自評', icon: '💬',
+        desc: '自我評估日常與員工的溝通模式',
+        qs: [
+          '我指派工作或糾正部屬時，能以尊重語氣表達，不使用貶低言詞',
+          '我對所有員工的態度一致，不因個人喜好而有明顯差別對待',
+          '我在壓力情境下（異常、趕工）仍能控制情緒，不遷怒員工',
+          '我在批評或要求改進時，針對事情而非針對個人'
+        ]
+      },
+      { title: '【B】員工關係自評', icon: '🫱',
+        desc: '自我評估對員工的關注與支持程度',
+        qs: [
+          '我會主動了解員工的工作困難及身心狀態',
+          '我的管理方式讓員工感到被尊重，而非被監控或壓制',
+          '當員工反映問題時，我會認真傾聽並給予適當回應'
+        ]
+      },
+      { title: '【B】事件認知自評', icon: '🧠',
+        desc: '自我評估對不法侵害防治的認知與應變能力',
+        qs: [
+          '我了解職場不法侵害的定義及常見行為樣態',
+          '當我觀察到可能的不法侵害行為時，我知道如何適當介入或通報',
+          '我清楚公司的通報流程，並會主動引導員工使用申訴管道'
+        ]
+      }
     ]
   },
-  {
-    title: '人際關係與溝通', icon: '🤝',
-    desc: '組織內部人際互動健康程度與溝通管道暢通性',
-    qs: [
-      '員工之間相互尊重，少有言語衝突或敵對行為',
-      '主管與部屬之間溝通良好，員工意見能被充分傾聽',
-      '跨部門合作順暢，少有明顯的衝突或排他情形',
-      '新進員工能順利融入職場，無明顯孤立或排擠現象',
-      '員工普遍感到心理安全，能自在表達意見或疑慮'
-    ]
-  },
-  {
-    title: '外部人員接觸管理', icon: '🚪',
-    desc: '員工接觸外部客戶、廠商或訪客所衍生風險之管控',
-    qs: [
-      '接觸外部人員的工作場合設有適當安全措施或陪同機制',
-      '外部人員（客戶、廠商、訪客）進場管理制度完善',
-      '發生客戶投訴或人員衝突時，有明確的處理程序與支援'
-    ]
-  },
-  {
-    title: '現況與應變機制', icon: '📊',
-    desc: '目前事件現況、申訴管道完備程度與員工整體狀態',
-    qs: [
-      '員工清楚了解不法侵害的通報管道與申訴流程',
-      '過去一年無通報積壓或申訴案件未獲妥善處理',
-      '員工整體心理健康及工作滿意度狀態良好',
-      '部門人員穩定，離職率無異常上升'
+
+  employee: {
+    id: 'employee', title: '員工自主評估表', badge: '員工版', icon: '👤',
+    desc: '員工針對個人工作環境安全感與管理行為的自評',
+    extraFields: [
+      { id: 'emp-dept', label: '所屬部門（選填）', placeholder: '填寫有助統計分析，可不填', required: false },
+      { id: 'emp-tenure', label: '年資（選填）', type: 'select', required: false,
+        options: ['不填寫', '1年以下', '1–3年', '3–5年', '5–10年', '10年以上'] }
+    ],
+    sections: [
+      { title: '工作環境感受', icon: '🏢',
+        desc: '對目前工作場所物理環境的個人感受',
+        qs: [
+          '我的工作場所讓我感到舒適、安全，不會有壓迫感',
+          '我的工作量合理，不會因超量工作而長期處於極度壓力',
+          '我的個人物品及隱私能得到尊重與保護',
+          '我在工作時有足夠個人空間，不受過度監視或干擾'
+        ]
+      },
+      { title: '人際關係狀況', icon: '🤝',
+        desc: '與同事及主管之間的互動感受',
+        qs: [
+          '我與同事之間的相處讓我感到受尊重且自在',
+          '我在工作中未曾遭受言語貶低、嘲弄或孤立排擠',
+          '我在提出意見或疑問時，不會感到被忽視或遭受壓制',
+          '我與直屬主管的互動讓我感到被尊重，而非被威嚇或操控'
+        ]
+      },
+      { title: '主管管理感受', icon: '👔',
+        desc: '對直屬主管管理方式的個人感受',
+        qs: [
+          '我的直屬主管在工作安排及績效考核上，態度公平一致',
+          '我的直屬主管不會以言語或行動讓我感到被霸凌或歧視',
+          '當我遇到困難時，主管能提供適當的協助與支持'
+        ]
+      },
+      { title: '權益認知與保護', icon: '🔒',
+        desc: '對職場權益及申訴管道的了解程度',
+        qs: [
+          '我清楚了解什麼行為屬於職場不法侵害（霸凌、騷擾等）',
+          '我知道公司有通報管道及申訴流程，且清楚如何使用',
+          '我相信若發生不法侵害，公司能提供妥善保護且保密'
+        ]
+      },
+      { title: '整體職場安全感', icon: '🛡️',
+        desc: '對整體職場環境的安全感與信心',
+        qs: [
+          '整體而言，我對目前的工作環境感到安全、有保障',
+          '如我或他人遭受職場不法侵害，我願意（或會鼓勵）使用通報管道'
+        ]
+      }
     ]
   }
-];
+};
 
 const RATING_LABELS = ['完全不符', '大致不符', '部分符合', '大致符合', '完全符合'];
-let assessAnswers = {}; // key: "s{secIdx}_q{qIdx}", value: 1-5
+let assessAnswers = {};
+let assessFormId  = 'ohs';
+let _adminRedirectAfterLogin = null;
 
 /* ── Admin gate ── */
-let _adminRedirectAfterLogin = null;
 function requireAdmin(dest) {
   if (sessionStorage.getItem('harassment_admin') === '1') {
     showView(dest);
-    if (dest === 'assess-menu') { /* nothing extra */ }
   } else {
     _adminRedirectAfterLogin = dest;
     showView('admin-login');
@@ -1341,22 +1463,48 @@ function requireAdmin(dest) {
 }
 
 /* ── Build form ── */
-function initAssessment() {
+function initAssessment(formType) {
+  assessFormId  = formType || 'ohs';
   assessAnswers = {};
+  const form = ASSESS_FORMS[assessFormId];
+  const totalQ = form.sections.reduce((a, s) => a + s.qs.length, 0);
+
+  // Extra fields HTML
+  const extraHtml = form.extraFields.map(f => {
+    if (f.type === 'select') {
+      return `<div class="field">
+        <label>${f.label}</label>
+        <select id="assess-extra-${f.id}">
+          ${f.options.map(o => `<option value="${o}">${o}</option>`).join('')}
+        </select>
+      </div>`;
+    }
+    return `<div class="field">
+      <label>${f.label}${f.required ? '<span class="req">*</span>' : ''}</label>
+      <input type="text" id="assess-extra-${f.id}" placeholder="${f.placeholder}">
+    </div>`;
+  }).join('');
+
+  // Update form header notice
+  document.querySelector('#view-assess .notice.warn div').innerHTML =
+    `<strong>${form.icon} ${form.title}</strong>（${form.badge}）<br>
+    請依<strong>實際情況</strong>評估，每題選擇最符合的程度。共 ${totalQ} 題，約需 5-10 分鐘。`;
+
+  // Section questions HTML
   const container = document.getElementById('assess-form-body');
-  container.innerHTML = ASSESS_SECTIONS.map((sec, si) => `
+  container.innerHTML = form.sections.map((sec, si) => `
     <div class="assess-section">
       <div class="assess-sec-hd">
         <span class="assess-sec-icon">${sec.icon}</span>
         <div class="assess-sec-info">
-          <div class="assess-sec-title">第 ${si+1} 面向：${sec.title}</div>
+          <div class="assess-sec-title">${sec.title}</div>
           <div class="assess-sec-desc">${sec.desc}</div>
         </div>
         <div class="assess-sec-score" id="sec-score-${si}">0 / ${sec.qs.length * 5}</div>
       </div>
       ${sec.qs.map((q, qi) => `
         <div class="assess-q">
-          <div class="assess-q-num">第 ${si+1} 面向 · 問題 ${qi+1}</div>
+          <div class="assess-q-num">Q${qi + 1}</div>
           <div class="assess-q-text">${q}</div>
           <div class="rating-group" id="rg-${si}-${qi}">
             ${[1,2,3,4,5].map(v => `
@@ -1368,40 +1516,44 @@ function initAssessment() {
       `).join('')}
     </div>
   `).join('');
-  document.getElementById('assess-assessor').value = '';
-  document.getElementById('assess-note').value = '';
+
+  // Extra info card
+  const extraCard = document.getElementById('assess-extra-card');
+  if (extraCard) extraCard.innerHTML = extraHtml +
+    `<div class="field">
+      <label>評估人員姓名</label>
+      <input type="text" id="assess-assessor" placeholder="填寫評估人員姓名（選填）">
+    </div>
+    <div class="field">
+      <label>本次評估備註</label>
+      <textarea id="assess-note" style="min-height:80px" placeholder="可記錄特殊背景或說明（選填）"></textarea>
+    </div>`;
+
   document.getElementById('assess-submit-err').style.display = 'none';
   showView('assess');
 }
 
 function setRating(si, qi, v) {
   assessAnswers[`${si}_${qi}`] = v;
-  // Update button styles
-  const group = document.getElementById(`rg-${si}-${qi}`);
-  group.querySelectorAll('.rating-btn').forEach((btn, idx) => {
+  document.getElementById(`rg-${si}-${qi}`).querySelectorAll('.rating-btn').forEach((btn, idx) => {
     btn.classList.toggle('sel', idx + 1 === v);
   });
-  // Update section score display
   updateSecScore(si);
 }
 
 function updateSecScore(si) {
-  const sec = ASSESS_SECTIONS[si];
+  const sec = ASSESS_FORMS[assessFormId].sections[si];
   let sum = 0;
-  for (let qi = 0; qi < sec.qs.length; qi++) {
-    sum += assessAnswers[`${si}_${qi}`] || 0;
-  }
+  for (let qi = 0; qi < sec.qs.length; qi++) sum += assessAnswers[`${si}_${qi}`] || 0;
   document.getElementById(`sec-score-${si}`).textContent = `${sum} / ${sec.qs.length * 5}`;
 }
 
 /* ── Calculate & Submit ── */
 function submitAssessment() {
-  // Validation
+  const form = ASSESS_FORMS[assessFormId];
   const missing = [];
-  ASSESS_SECTIONS.forEach((sec, si) => {
-    sec.qs.forEach((_, qi) => {
-      if (!assessAnswers[`${si}_${qi}`]) missing.push(`第${si+1}面向 Q${qi+1}`);
-    });
+  form.sections.forEach((sec, si) => {
+    sec.qs.forEach((_, qi) => { if (!assessAnswers[`${si}_${qi}`]) missing.push(1); });
   });
   if (missing.length) {
     const err = document.getElementById('assess-submit-err');
@@ -1411,21 +1563,27 @@ function submitAssessment() {
     return;
   }
 
-  // Calculate scores
-  const scores = ASSESS_SECTIONS.map((sec, si) => {
+  const scores   = form.sections.map((sec, si) => {
     let sum = 0;
     for (let qi = 0; qi < sec.qs.length; qi++) sum += assessAnswers[`${si}_${qi}`] || 0;
     return sum;
   });
   const total    = scores.reduce((a, b) => a + b, 0);
-  const maxScore = ASSESS_SECTIONS.reduce((a, s) => a + s.qs.length * 5, 0); // 105
+  const maxScore = form.sections.reduce((a, s) => a + s.qs.length * 5, 0);
   const pct      = Math.round((total / maxScore) * 100);
   const { level, cls } = riskLevel(pct);
 
-  // Show result
-  showAssessResult({ scores, total, maxScore, pct, level, cls,
-    assessor: document.getElementById('assess-assessor').value,
-    note:     document.getElementById('assess-note').value });
+  // Collect extra fields
+  const extraVals = {};
+  form.extraFields.forEach(f => {
+    const el = document.getElementById(`assess-extra-${f.id}`);
+    if (el) extraVals[f.id] = el.value || '';
+  });
+  const assessor   = document.getElementById('assess-assessor') ? document.getElementById('assess-assessor').value : '';
+  const note       = document.getElementById('assess-note')     ? document.getElementById('assess-note').value     : '';
+  const targetInfo = Object.values(extraVals).filter(Boolean).join(' / ');
+
+  showAssessResult({ scores, total, maxScore, pct, level, cls, assessor, note, targetInfo });
 }
 
 function riskLevel(pct) {
@@ -1446,29 +1604,31 @@ function progressColor(pct) {
 
 /* ── Show Result ── */
 function showAssessResult(data) {
-  const { scores, total, maxScore, pct, level, cls, assessor, note } = data;
+  const form = ASSESS_FORMS[assessFormId];
+  const { scores, total, maxScore, pct, level, cls, assessor, note, targetInfo } = data;
   const color = progressColor(pct);
-  const secCards = ASSESS_SECTIONS.map((sec, si) => {
-    const sp    = Math.round((scores[si] / (sec.qs.length * 5)) * 100);
-    const scls  = riskLevel(sp).cls;
-    const scol  = progressColor(sp);
+
+  const secCards = form.sections.map((sec, si) => {
+    const sp   = Math.round((scores[si] / (sec.qs.length * 5)) * 100);
+    const scol = progressColor(sp);
     return `
       <div class="score-card">
         <div class="score-card-label">${sec.icon} ${sec.title}</div>
         <div class="score-card-val">${scores[si]}<span style="font-size:13px;font-weight:400;color:var(--sub)">/${sec.qs.length*5}</span></div>
         <div class="progress-track"><div class="progress-fill" style="width:${sp}%;background:${scol}"></div></div>
-        <div class="score-card-sub"><span class="risk-badge ${scls}" style="font-size:10px;padding:2px 8px">${riskLevel(sp).level}</span></div>
+        <div class="score-card-sub"><span class="risk-badge ${riskLevel(sp).cls}" style="font-size:10px;padding:2px 8px">${riskLevel(sp).level}</span></div>
       </div>`;
   }).join('');
 
-  const weakSections = ASSESS_SECTIONS
-    .map((sec, si) => ({ sec, si, pct: Math.round((scores[si] / (sec.qs.length*5))*100) }))
+  const weakSections = form.sections
+    .map((sec, si) => ({ sec, si, pct: Math.round((scores[si]/(sec.qs.length*5))*100) }))
     .filter(x => x.pct < 70)
     .map(x => `${x.sec.icon}${x.sec.title}（${x.pct}%）`)
     .join('、') || '無明顯弱項';
 
   document.getElementById('assess-result-body').innerHTML = `
     <div class="result-hero">
+      <div style="font-size:12px;color:var(--sub);margin-bottom:4px">${form.icon} ${form.badge}${targetInfo ? '・' + targetInfo : ''}</div>
       <div style="font-size:13px;color:var(--sub);margin-bottom:6px">整體風險評分</div>
       <div class="result-total-score">${total}</div>
       <div class="result-total-max">/ ${maxScore} 分</div>
@@ -1487,72 +1647,74 @@ function showAssessResult(data) {
     <div style="background:var(--accent-bg);border-radius:14px;padding:20px;margin-bottom:16px;border:1px solid var(--accent-bd)">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
         <span style="font-size:13px;font-weight:700;color:var(--accent)">✨ AI 改善建議</span>
-        <button class="save-btn" style="padding:5px 13px;font-size:12px" id="assess-ai-btn"
-                onclick="runAssessAI(${JSON.stringify({scores, total, maxScore, pct, level, weakSections, assessor, note}).replace(/"/g,'&quot;')})">
-          執行 AI 分析
-        </button>
+        <button class="save-btn" style="padding:5px 13px;font-size:12px" id="assess-ai-btn" onclick="runAssessAI()">執行 AI 分析</button>
       </div>
       <div id="assess-ai-result" class="ai-result" style="background:rgba(255,255,255,.75);border-radius:8px;padding:14px;font-size:12px;line-height:1.8;display:none;max-height:360px;overflow-y:auto"></div>
     </div>
 
     <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <button class="submit-btn" id="assess-save-btn" onclick="saveAssessmentToSheet(${JSON.stringify({scores, total, maxScore, pct, level, assessor, note}).replace(/"/g,'&quot;')})" style="flex:1;min-width:160px">
-        💾 儲存至試算表
-      </button>
-      <button class="back-btn" onclick="initAssessment()" style="flex:1;min-width:120px;padding:14px;font-size:15px;font-weight:700">
-        ↺ 重新評估
-      </button>
+      <button class="submit-btn" id="assess-save-btn" onclick="saveAssessmentToSheet()" style="flex:1;min-width:160px">💾 儲存至試算表</button>
+      <button class="back-btn" onclick="initAssessment(assessFormId)" style="flex:1;min-width:120px;padding:14px;font-size:15px;font-weight:700">↺ 重新評估</button>
     </div>
     <p style="font-size:11px;color:var(--sub);margin-top:10px;text-align:center">建議先執行 AI 分析後再儲存，分析結果將一併存入試算表</p>
   `;
 
-  // Store for later save
-  window._currentAssess = { scores, total, maxScore, pct, level, assessor, note };
+  window._currentAssess = { scores, total, maxScore, pct, level, assessor, note, targetInfo, formId: assessFormId, weakSections };
   showView('assess-result');
   window.scrollTo(0, 0);
 }
 
-/* ── AI Analysis for assessment ── */
-async function runAssessAI(data) {
-  if (typeof data === 'string') data = JSON.parse(data.replace(/&quot;/g, '"'));
+/* ── AI Analysis ── */
+async function runAssessAI() {
+  const d    = window._currentAssess;
+  if (!d) return;
+  const form = ASSESS_FORMS[d.formId];
   const btn    = document.getElementById('assess-ai-btn');
   const resDiv = document.getElementById('assess-ai-result');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>';
   resDiv.style.display = 'none';
 
-  const secDetail = ASSESS_SECTIONS.map((sec, si) => {
-    const sp = Math.round((data.scores[si] / (sec.qs.length * 5)) * 100);
-    return `- ${sec.icon} ${sec.title}：${data.scores[si]}/${sec.qs.length*5} 分（${sp}%）`;
+  const secDetail = form.sections.map((sec, si) => {
+    const sp = Math.round((d.scores[si] / (sec.qs.length * 5)) * 100);
+    return `- ${sec.icon} ${sec.title}：${d.scores[si]}/${sec.qs.length*5} 分（${sp}%）`;
   }).join('\n');
+
+  const formContext = {
+    ohs:      '職安人員評核各部門主管',
+    supervisor:'現場主管進行作業區域評核與自我行為檢視',
+    employee:  '員工自主評估個人工作環境安全感'
+  }[d.formId];
 
   const prompt = `你是一位職業安全衛生管理顧問，請分析以下職場不法侵害年度風險評估結果，並提供具體改善建議。
 
-## 評估結果摘要
-- 整體得分：${data.total} / ${data.maxScore} 分（${data.pct}%）
-- 風險等級：${data.level}
-- 需加強面向：${data.weakSections}
+## 評估背景
+- 評估類型：${form.title}（${formContext}）
+${d.targetInfo ? '- 受評對象 / 區域：' + d.targetInfo : ''}
+- 整體得分：${d.total} / ${d.maxScore} 分（${d.pct}%）
+- 風險等級：${d.level}
+- 需加強面向：${d.weakSections}
 
 ## 各面向得分
 ${secDetail}
-${data.note ? '\n## 評估備註\n' + data.note : ''}
+${d.note ? '\n## 備註\n' + d.note : ''}
 
-請以繁體中文，站在職安管理人員角度提供：
+請以繁體中文提供：
 
-**一、整體風險狀況評析**
+**一、整體風險評析**
 說明目前風險等級的意涵及主要成因（2-3 段）。
 
-**二、優先改善面向**
+**二、優先改善建議**
 針對得分較低的面向，各提出 2-3 個具體可執行的改善措施。
 
-**三、維持優勢建議**
+**三、維持優勢**
 針對表現良好的面向，說明如何持續維持。
 
-**四、年度行動計畫建議**
+**四、年度行動計畫**
 建議本年度優先推動的 3-5 項具體行動（含預計時程）。
 
-**五、追蹤指標建議**
-建議可追蹤的 2-3 個量化指標，用以衡量下次評估的改善成效。
+**五、追蹤指標**
+建議 2-3 個量化指標，用以衡量下次評估的改善成效。
 
 本分析僅供參考，請結合公司實際狀況判斷。`;
 
@@ -1563,14 +1725,14 @@ ${data.note ? '\n## 評估備註\n' + data.note : ''}
       body: JSON.stringify({ text: prompt })
     });
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    const d = await res.json();
-    const text = d?.data || d?.choices?.[0]?.message?.content || d?.text || '';
+    const rd   = await res.json();
+    const text = rd?.data || rd?.choices?.[0]?.message?.content || rd?.text || '';
     if (!text) throw new Error('AI 回應為空');
     resDiv.innerHTML = mdToHtml(text);
     resDiv.style.display = 'block';
     btn.disabled = false;
     btn.textContent = '↻ 重新分析';
-    if (window._currentAssess) window._currentAssess.aiAnalysis = text;
+    window._currentAssess.aiAnalysis = text;
   } catch(e) {
     btn.disabled = false;
     btn.textContent = '執行 AI 分析';
@@ -1580,37 +1742,39 @@ ${data.note ? '\n## 評估備註\n' + data.note : ''}
 }
 
 /* ── Save to Sheet ── */
-async function saveAssessmentToSheet(data) {
-  if (typeof data === 'string') data = JSON.parse(data.replace(/&quot;/g, '"'));
-  const btn = document.getElementById('assess-save-btn');
+async function saveAssessmentToSheet() {
+  const btn  = document.getElementById('assess-save-btn');
+  const d    = window._currentAssess;
+  if (!d) return;
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> 儲存中…';
 
-  const curr = window._currentAssess || data;
   try {
     const res = await fetch(API, {
       method: 'POST', redirect: 'follow',
       headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({
-        action: 'saveAssessment',
-        token:   ADMIN_PASS,
-        scores:  curr.scores,
-        total:   curr.total,
-        maxScore:curr.maxScore,
-        pct:     curr.pct,
-        level:   curr.level,
-        assessor:curr.assessor || '',
-        note:    curr.note    || '',
-        aiAnalysis: curr.aiAnalysis || '',
-        answers: assessAnswers
+        action:    'saveAssessment',
+        token:     ADMIN_PASS,
+        formType:  d.formId,
+        assessor:  d.assessor  || '',
+        targetInfo:d.targetInfo|| '',
+        note:      d.note      || '',
+        scores:    d.scores,
+        total:     d.total,
+        maxScore:  d.maxScore,
+        pct:       d.pct,
+        level:     d.level,
+        aiAnalysis:d.aiAnalysis|| '',
+        answers:   assessAnswers
       })
     });
-    const d = await res.json();
-    if (d.id) {
-      btn.textContent = '✅ 已儲存（' + d.id + '）';
+    const rd = await res.json();
+    if (rd.id) {
+      btn.textContent = '✅ 已儲存（' + rd.id + '）';
       btn.style.background = '#16a34a';
     } else {
-      throw new Error(d.error || '儲存失敗');
+      throw new Error(rd.error || '儲存失敗');
     }
   } catch(e) {
     btn.disabled = false;
@@ -1636,31 +1800,42 @@ async function loadAssessHistory() {
       return;
     }
 
+    const FORM_BADGES = { ohs: '職安人員版', supervisor: '現場主管版', employee: '員工版' };
+
     body.innerHTML = list.map(a => {
-      const pct = parseInt(a['百分比']) || 0;
+      const pct   = parseInt(a['百分比']) || 0;
       const { level, cls } = riskLevel(pct);
       const color = progressColor(pct);
-      const id = a['評估編號'].replace(/[^a-zA-Z0-9]/g,'_');
+      const fid   = a['評估類型'] || 'ohs';
+      const form  = ASSESS_FORMS[fid] || ASSESS_FORMS.ohs;
+      const badge = FORM_BADGES[fid] || fid;
+      const uid   = a['評估編號'].replace(/[^a-zA-Z0-9]/g,'_');
+      let scoresData = [];
+      try { scoresData = JSON.parse(a['各面向分數'] || '[]'); } catch(e) { scoresData = []; }
+
       return `
-        <div class="assess-hist-item" id="ah-${id}">
-          <div class="assess-hist-summary" onclick="document.getElementById('ah-${id}').classList.toggle('open')">
+        <div class="assess-hist-item" id="ah-${uid}">
+          <div class="assess-hist-summary" onclick="document.getElementById('ah-${uid}').classList.toggle('open')">
             <span class="assess-id-tag">${a['評估編號']}</span>
-            <span style="flex:1;font-size:13px;font-weight:600">${a['評估日期'].slice(0,10)}
-              ${a['評估人員'] ? '・' + a['評估人員'] : ''}</span>
+            <span style="flex:1;font-size:13px">
+              <strong>${badge}</strong>
+              ${a['受評對象'] ? '・' + a['受評對象'] : ''}
+              <span style="color:var(--sub);font-size:11px;margin-left:6px">${String(a['評估日期']).slice(0,10)}</span>
+            </span>
             <span class="risk-badge ${cls}" style="font-size:11px">${pct}% ${a['風險等級'] || level}</span>
-            <span class="chevron" style="color:var(--sub);font-size:14px;flex-shrink:0">›</span>
+            <span class="chevron" style="color:var(--sub);font-size:14px;flex-shrink:0;margin-left:8px">›</span>
           </div>
           <div class="assess-hist-detail">
             <div style="margin-bottom:14px">
-              <div style="font-size:12px;color:var(--sub);margin-bottom:6px">整體得分</div>
               <div style="font-size:22px;font-weight:800;color:var(--accent)">${a['總分']} / ${a['滿分']} 分</div>
               <div class="progress-track" style="margin-top:6px">
                 <div class="progress-fill" style="width:${pct}%;background:${color}"></div>
               </div>
             </div>
+            ${scoresData.length ? `
             <div class="score-cards" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr))">
-              ${ASSESS_SECTIONS.map((sec,si) => {
-                const sc = parseInt(a[['政策管理分','工作環境分','人際關係分','外部接觸分','現況應變分'][si]]) || 0;
+              ${form.sections.map((sec, si) => {
+                const sc = scoresData[si] || 0;
                 const sp = Math.round((sc/(sec.qs.length*5))*100);
                 return `<div class="score-card">
                   <div class="score-card-label" style="font-size:10px">${sec.icon} ${sec.title}</div>
@@ -1668,10 +1843,10 @@ async function loadAssessHistory() {
                   <div class="progress-track"><div class="progress-fill" style="width:${sp}%;background:${progressColor(sp)}"></div></div>
                 </div>`;
               }).join('')}
-            </div>
+            </div>` : ''}
             ${a['AI建議'] ? `
               <div style="margin-top:12px">
-                <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px">✨ AI 建議摘要</div>
+                <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px">✨ AI 建議</div>
                 <div class="ai-result" style="display:block;background:rgba(255,255,255,.75);border-radius:8px;padding:12px;font-size:12px;line-height:1.8;max-height:280px;overflow-y:auto">${mdToHtml(a['AI建議'])}</div>
               </div>` : ''}
             ${a['備註'] ? `<div style="margin-top:10px;font-size:12px;color:var(--sub)">備註：${a['備註']}</div>` : ''}
