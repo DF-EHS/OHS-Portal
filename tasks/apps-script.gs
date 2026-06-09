@@ -73,6 +73,7 @@ function _taskToRow(task) {
 }
 
 function _rowToTask(headers, row) {
+  var tz = Session.getScriptTimeZone();
   var obj = {};
   headers.forEach(function(h, i) {
     var v = row[i];
@@ -82,6 +83,13 @@ function _rowToTask(headers, row) {
       obj[h] = v === true || v === "TRUE" || v === "true";
     } else if (h === "reminderDays") {
       obj[h] = (v === "" || v === null || v === undefined) ? 7 : Number(v);
+    } else if (v instanceof Date) {
+      // Sheets 會自動把 "2026-07-10" 這類字串轉成 Date 物件，讀回時需還原成字串
+      if (h === "dueAt") {
+        obj[h] = Utilities.formatDate(v, tz, "yyyy-MM-dd");
+      } else {
+        obj[h] = Utilities.formatDate(v, tz, "yyyy-MM-dd'T'HH:mm:ss");
+      }
     } else {
       obj[h] = (v === null || v === undefined) ? "" : String(v);
     }
