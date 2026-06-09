@@ -17,6 +17,7 @@ function doGet(e) {
   if (token !== ADMIN_TOKEN) {
     return _resp({ error: '無效的管理員憑證' });
   }
+  if (e.parameter.type === 'assessments') return _resp(_getAssessments());
   return _resp(_getAllCases());
 }
 
@@ -28,6 +29,10 @@ function doPost(e) {
     if (b.action === 'update') {
       if (b.token !== ADMIN_TOKEN) return _resp({ error: '無效的管理員憑證' });
       return _resp(_updateCase(b));
+    }
+    if (b.action === 'saveAssessment') {
+      if (b.token !== ADMIN_TOKEN) return _resp({ error: '無效的管理員憑證' });
+      return _resp(_saveAssessment(b));
     }
     return _resp({ error: '未知的 action: ' + b.action });
   } catch(err) {
@@ -153,6 +158,55 @@ function _updateCase(b) {
     }
   }
   return { error: '案件不存在' };
+}
+
+// ── 風險評估 ──────────────────────────────────────────────────────────
+function _assessSh() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheets = ss.getSheets();
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].getName() === '風險評估') return sheets[i];
+  }
+  const sh = ss.insertSheet('風險評估');
+  sh.appendRow([
+    '評估編號', '評估日期', '評估人員', '備註',
+    '政策管理分', '工作環境分', '人際關係分', '外部接觸分', '現況應變分',
+    '總分', '滿分', '百分比', '風險等級', 'AI建議', '各題作答'
+  ]);
+  return sh;
+}
+
+function _saveAssessment(b) {
+  const sh  = _assessSh();
+  const now = _fmt(new Date());
+  const id  = 'ASSESS-' + Utilities.formatDate(new Date(), 'Asia/Taipei', 'yyyyMM') + '-' +
+              String(Math.floor(Math.random() * 9000) + 1000);
+  sh.appendRow([
+    id, now,
+    b.assessor  || '',
+    b.note      || '',
+    b.scores[0], b.scores[1], b.scores[2], b.scores[3], b.scores[4],
+    b.total, b.maxScore, b.pct, b.level,
+    b.aiAnalysis || '',
+    JSON.stringify(b.answers || {})
+  ]);
+  return { id: id, date: now };
+}
+
+function _getAssessments() {
+  const sh   = _assessSh();
+  const data = sh.getDataRange().getValues();
+  if (data.length < 2) return { assessments: [] };
+  const headers = data[0];
+  const list = data.slice(1)
+    .filter(function(r){ return r[0]; })
+    .map(function(row){
+      var obj = {};
+      headers.forEach(function(h, i){ obj[h] = _fmt(row[i]); });
+      return obj;
+    })
+    .sort(function(a, b){ return String(b['評估日期']).localeCompare(String(a['評估日期'])); });
+  return { assessments: list };
 }
 
 function _resp(data) {

@@ -430,6 +430,68 @@ body.dark .ai-result { background: rgba(15,23,42,.7); }
 body.dark .case-summary:hover { background: #1e2d42; }
 body.dark .landing-hero { background: linear-gradient(135deg, #1e1035, #2e1065); }
 
+/* ── Assessment ── */
+.assess-section { background: var(--card); border-radius: 14px; padding: 22px 26px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+.assess-sec-hd  { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.assess-sec-icon{ font-size: 22px; }
+.assess-sec-info .assess-sec-title { font-size: 15px; font-weight: 700; }
+.assess-sec-info .assess-sec-desc  { font-size: 11px; color: var(--sub); margin-top: 2px; }
+.assess-sec-score { margin-left: auto; font-size: 13px; font-weight: 700; color: var(--accent); flex-shrink: 0; }
+
+.assess-q { margin-bottom: 20px; }
+.assess-q:last-child { margin-bottom: 0; }
+.assess-q-num  { font-size: 10px; font-weight: 700; color: var(--sub); margin-bottom: 4px; }
+.assess-q-text { font-size: 13px; font-weight: 600; margin-bottom: 10px; line-height: 1.5; }
+
+.rating-group  { display: flex; gap: 5px; }
+.rating-btn {
+  flex: 1; padding: 8px 2px; border-radius: 8px;
+  border: 1.5px solid var(--border);
+  font-size: 11px; font-weight: 600; cursor: pointer;
+  transition: border-color .15s, background .15s; font-family: inherit;
+  background: transparent; text-align: center; line-height: 1.3; color: var(--sub);
+}
+.rating-btn:hover { border-color: #aaa; }
+.rating-btn.r1.sel { border-color: #dc2626; background: #fee2e2; color: #991b1b; }
+.rating-btn.r2.sel { border-color: #d97706; background: #ffedd5; color: #92400e; }
+.rating-btn.r3.sel { border-color: #ca8a04; background: #fef9c3; color: #854d0e; }
+.rating-btn.r4.sel { border-color: #16a34a; background: #dcfce7; color: #15803d; }
+.rating-btn.r5.sel { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
+.rating-end-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--sub); margin-top: 4px; padding: 0 2px; }
+
+.progress-track { height: 8px; border-radius: 4px; background: var(--border); overflow: hidden; margin: 6px 0; }
+.progress-fill  { height: 100%; border-radius: 4px; transition: width .6s ease; }
+
+.risk-badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+.risk-low      { background: #dcfce7; color: #15803d; }
+.risk-med-low  { background: #d1fae5; color: #065f46; }
+.risk-med      { background: #fef9c3; color: #854d0e; }
+.risk-high     { background: #ffedd5; color: #9a3412; }
+.risk-critical { background: #fee2e2; color: #991b1b; }
+body.dark .risk-low      { background: #052e16; color: #86efac; }
+body.dark .risk-med-low  { background: #042f2e; color: #5eead4; }
+body.dark .risk-med      { background: #422006; color: #fde68a; }
+body.dark .risk-high     { background: #431407; color: #fdba74; }
+body.dark .risk-critical { background: #450a0a; color: #fca5a5; }
+
+.score-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin: 16px 0; }
+.score-card  { background: var(--card); border-radius: 10px; padding: 14px 10px; text-align: center; box-shadow: 0 1px 6px rgba(0,0,0,.06); border: 1px solid var(--border); }
+.score-card-label { font-size: 11px; color: var(--sub); margin-bottom: 6px; }
+.score-card-val   { font-size: 22px; font-weight: 800; color: var(--accent); }
+.score-card-sub   { font-size: 10px; color: var(--sub); }
+
+.result-hero { text-align: center; padding: 28px 20px 24px; background: linear-gradient(135deg, #f5f3ff, #ede9fe); border-radius: 16px; margin-bottom: 20px; border: 1px solid var(--accent-bd); }
+.result-total-score { font-size: 52px; font-weight: 800; color: var(--accent); line-height: 1; }
+.result-total-max   { font-size: 16px; color: var(--sub); margin-bottom: 10px; }
+
+.assess-hist-item { background: var(--card); border-radius: 12px; box-shadow: 0 1px 6px rgba(0,0,0,.06); margin-bottom: 10px; overflow: hidden; }
+.assess-hist-summary { padding: 14px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer; }
+.assess-hist-summary:hover { background: #f8fafc; }
+body.dark .assess-hist-summary:hover { background: #1e2d42; }
+.assess-id-tag { font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-bg); padding: 3px 9px; border-radius: 20px; flex-shrink: 0; }
+.assess-hist-detail { max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s; border-top: 0px solid var(--border); }
+.assess-hist-item.open .assess-hist-detail { max-height: 1200px; padding: 16px 20px 20px; border-top: 1px solid var(--border); }
+
 footer {
   text-align: center; padding: 18px;
   font-size: 12px; color: var(--sub);
@@ -485,6 +547,13 @@ footer {
         <div class="ac-title">管理後台</div>
         <div class="ac-desc">職安管理人員專用，輸入管理密碼後可查閱所有案件並更新處理狀態。</div>
         <button class="ac-btn outline">進入後台 →</button>
+      </div>
+
+      <div class="action-card" onclick="requireAdmin('assess-menu')">
+        <div class="ac-icon">📊</div>
+        <div class="ac-title">年度風險評估</div>
+        <div class="ac-desc">定期評估職場不法侵害風險因子，自動計算風險等級，AI 生成預防建議，並追蹤歷年改善趨勢。</div>
+        <button class="ac-btn outline">開始評估 →</button>
       </div>
     </div>
 
@@ -715,6 +784,79 @@ footer {
     <div id="case-list"><div style="text-align:center;padding:30px;color:var(--sub)">載入中…</div></div>
   </div>
 
+  <!-- ══════════ ASSESS MENU ══════════ -->
+  <div class="view" id="view-assess-menu">
+    <div class="form-nav">
+      <button class="back-btn" onclick="showView('landing')">← 返回</button>
+      <h2>📊 年度風險評估</h2>
+    </div>
+    <div class="notice info">
+      <span class="notice-icon">ℹ️</span>
+      <div>本評估表供職安管理人員定期（建議每年至少一次）評估職場不法侵害整體風險狀況，評估結果將自動儲存並可追蹤歷年趨勢。</div>
+    </div>
+    <div class="action-cards" style="margin-top:20px">
+      <div class="action-card" onclick="initAssessment()">
+        <div class="ac-icon">📝</div>
+        <div class="ac-title">開始新評估</div>
+        <div class="ac-desc">填寫 21 題五面向評估問卷，完成後自動計算風險等級並由 AI 生成預防建議。</div>
+        <button class="ac-btn">開始填寫 →</button>
+      </div>
+      <div class="action-card" onclick="loadAssessHistory()">
+        <div class="ac-icon">📈</div>
+        <div class="ac-title">歷次評估紀錄</div>
+        <div class="ac-desc">查閱所有歷次評估結果，追蹤各面向風險分數的改善趨勢。</div>
+        <button class="ac-btn outline">查閱紀錄 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ ASSESS FORM ══════════ -->
+  <div class="view" id="view-assess">
+    <div class="form-nav">
+      <button class="back-btn" onclick="showView('assess-menu')">← 返回</button>
+      <h2>📝 風險評估問卷</h2>
+    </div>
+    <div class="notice warn">
+      <span class="notice-icon">📋</span>
+      <div>請依公司<strong>目前實際狀況</strong>進行評估，每題選擇最符合的程度。共 21 題，約需 5-10 分鐘。</div>
+    </div>
+    <div id="assess-form-body"></div>
+    <div class="form-card" style="margin-top:4px">
+      <div class="sec-label">補充說明</div>
+      <div class="field">
+        <label>評估人員姓名</label>
+        <input type="text" id="assess-assessor" placeholder="填寫評估人員姓名（選填）">
+      </div>
+      <div class="field">
+        <label>本次評估備註</label>
+        <textarea id="assess-note" style="min-height:80px" placeholder="可記錄本次評估的特殊背景或說明（選填）"></textarea>
+      </div>
+    </div>
+    <div id="assess-submit-err" class="notice err" style="display:none">
+      <span class="notice-icon">❌</span>
+      <span id="assess-err-msg"></span>
+    </div>
+    <button class="submit-btn" id="assess-submit-btn" onclick="submitAssessment()">計算風險評分 →</button>
+  </div>
+
+  <!-- ══════════ ASSESS RESULT ══════════ -->
+  <div class="view" id="view-assess-result">
+    <div class="form-nav">
+      <button class="back-btn" onclick="showView('assess-menu')">← 返回</button>
+      <h2>📊 評估結果</h2>
+    </div>
+    <div id="assess-result-body"></div>
+  </div>
+
+  <!-- ══════════ ASSESS HISTORY ══════════ -->
+  <div class="view" id="view-assess-history">
+    <div class="form-nav">
+      <button class="back-btn" onclick="showView('assess-menu')">← 返回</button>
+      <h2>📈 歷次評估紀錄</h2>
+    </div>
+    <div id="assess-history-body"><div style="text-align:center;padding:30px;color:var(--sub)">載入中…</div></div>
+  </div>
+
 </main>
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統 &nbsp;·&nbsp; 通報內容保密處理</footer>
@@ -892,8 +1034,10 @@ function doAdminLogin() {
     document.getElementById('admin-err').style.display = 'none';
     document.getElementById('admin-pass').value = '';
     sessionStorage.setItem('harassment_admin', '1');
-    showView('admin');
-    loadAdminCases();
+    const dest = _adminRedirectAfterLogin || 'admin';
+    _adminRedirectAfterLogin = null;
+    showView(dest);
+    if (dest === 'admin') loadAdminCases();
   } else {
     document.getElementById('admin-err').style.display = 'block';
   }
@@ -1120,6 +1264,423 @@ if (localStorage.getItem('portal-dark') === '1') {
 if (sessionStorage.getItem('harassment_admin') === '1') {
   showView('admin');
   loadAdminCases();
+}
+
+// ════════════════════════════════════════════════════════════════
+// 構想一：年度風險評估
+// ════════════════════════════════════════════════════════════════
+
+/* ── 評估問卷題目資料 ── */
+const ASSESS_SECTIONS = [
+  {
+    title: '政策與管理', icon: '📋',
+    desc: '公司是否建立完善的防治政策、管理機制與教育訓練',
+    qs: [
+      '公司已訂有明確的職場不法侵害防治政策，並公告周知全體員工',
+      '主管人員具備識別與處理職場不法侵害事件的知識與能力',
+      '工作量分配合理，員工不致因過度工作壓力產生負面情緒',
+      '績效評估與獎懲制度公平透明，員工普遍認同',
+      '已定期辦理職場不法侵害防治相關教育訓練'
+    ]
+  },
+  {
+    title: '工作環境', icon: '🏢',
+    desc: '實體工作場所的安全性、隱私保護與設施完善程度',
+    qs: [
+      '工作場所整潔舒適，員工有足夠的個人空間',
+      '夜間或獨立作業的場所具備適當安全保護措施',
+      '監視設備的設置兼顧安全需求與員工隱私',
+      '員工的個人物品及財物能得到妥善保護'
+    ]
+  },
+  {
+    title: '人際關係與溝通', icon: '🤝',
+    desc: '組織內部人際互動健康程度與溝通管道暢通性',
+    qs: [
+      '員工之間相互尊重，少有言語衝突或敵對行為',
+      '主管與部屬之間溝通良好，員工意見能被充分傾聽',
+      '跨部門合作順暢，少有明顯的衝突或排他情形',
+      '新進員工能順利融入職場，無明顯孤立或排擠現象',
+      '員工普遍感到心理安全，能自在表達意見或疑慮'
+    ]
+  },
+  {
+    title: '外部人員接觸管理', icon: '🚪',
+    desc: '員工接觸外部客戶、廠商或訪客所衍生風險之管控',
+    qs: [
+      '接觸外部人員的工作場合設有適當安全措施或陪同機制',
+      '外部人員（客戶、廠商、訪客）進場管理制度完善',
+      '發生客戶投訴或人員衝突時，有明確的處理程序與支援'
+    ]
+  },
+  {
+    title: '現況與應變機制', icon: '📊',
+    desc: '目前事件現況、申訴管道完備程度與員工整體狀態',
+    qs: [
+      '員工清楚了解不法侵害的通報管道與申訴流程',
+      '過去一年無通報積壓或申訴案件未獲妥善處理',
+      '員工整體心理健康及工作滿意度狀態良好',
+      '部門人員穩定，離職率無異常上升'
+    ]
+  }
+];
+
+const RATING_LABELS = ['完全不符', '大致不符', '部分符合', '大致符合', '完全符合'];
+let assessAnswers = {}; // key: "s{secIdx}_q{qIdx}", value: 1-5
+
+/* ── Admin gate ── */
+let _adminRedirectAfterLogin = null;
+function requireAdmin(dest) {
+  if (sessionStorage.getItem('harassment_admin') === '1') {
+    showView(dest);
+    if (dest === 'assess-menu') { /* nothing extra */ }
+  } else {
+    _adminRedirectAfterLogin = dest;
+    showView('admin-login');
+  }
+}
+
+/* ── Build form ── */
+function initAssessment() {
+  assessAnswers = {};
+  const container = document.getElementById('assess-form-body');
+  container.innerHTML = ASSESS_SECTIONS.map((sec, si) => `
+    <div class="assess-section">
+      <div class="assess-sec-hd">
+        <span class="assess-sec-icon">${sec.icon}</span>
+        <div class="assess-sec-info">
+          <div class="assess-sec-title">第 ${si+1} 面向：${sec.title}</div>
+          <div class="assess-sec-desc">${sec.desc}</div>
+        </div>
+        <div class="assess-sec-score" id="sec-score-${si}">0 / ${sec.qs.length * 5}</div>
+      </div>
+      ${sec.qs.map((q, qi) => `
+        <div class="assess-q">
+          <div class="assess-q-num">第 ${si+1} 面向 · 問題 ${qi+1}</div>
+          <div class="assess-q-text">${q}</div>
+          <div class="rating-group" id="rg-${si}-${qi}">
+            ${[1,2,3,4,5].map(v => `
+              <button class="rating-btn r${v}" onclick="setRating(${si},${qi},${v})">${v}<br><span style="font-size:9px">${RATING_LABELS[v-1]}</span></button>
+            `).join('')}
+          </div>
+          <div class="rating-end-labels"><span>← 低保護性</span><span>高保護性 →</span></div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+  document.getElementById('assess-assessor').value = '';
+  document.getElementById('assess-note').value = '';
+  document.getElementById('assess-submit-err').style.display = 'none';
+  showView('assess');
+}
+
+function setRating(si, qi, v) {
+  assessAnswers[`${si}_${qi}`] = v;
+  // Update button styles
+  const group = document.getElementById(`rg-${si}-${qi}`);
+  group.querySelectorAll('.rating-btn').forEach((btn, idx) => {
+    btn.classList.toggle('sel', idx + 1 === v);
+  });
+  // Update section score display
+  updateSecScore(si);
+}
+
+function updateSecScore(si) {
+  const sec = ASSESS_SECTIONS[si];
+  let sum = 0;
+  for (let qi = 0; qi < sec.qs.length; qi++) {
+    sum += assessAnswers[`${si}_${qi}`] || 0;
+  }
+  document.getElementById(`sec-score-${si}`).textContent = `${sum} / ${sec.qs.length * 5}`;
+}
+
+/* ── Calculate & Submit ── */
+function submitAssessment() {
+  // Validation
+  const missing = [];
+  ASSESS_SECTIONS.forEach((sec, si) => {
+    sec.qs.forEach((_, qi) => {
+      if (!assessAnswers[`${si}_${qi}`]) missing.push(`第${si+1}面向 Q${qi+1}`);
+    });
+  });
+  if (missing.length) {
+    const err = document.getElementById('assess-submit-err');
+    document.getElementById('assess-err-msg').textContent = `請完整作答所有題目（尚有 ${missing.length} 題未填）`;
+    err.style.display = 'flex';
+    err.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  // Calculate scores
+  const scores = ASSESS_SECTIONS.map((sec, si) => {
+    let sum = 0;
+    for (let qi = 0; qi < sec.qs.length; qi++) sum += assessAnswers[`${si}_${qi}`] || 0;
+    return sum;
+  });
+  const total    = scores.reduce((a, b) => a + b, 0);
+  const maxScore = ASSESS_SECTIONS.reduce((a, s) => a + s.qs.length * 5, 0); // 105
+  const pct      = Math.round((total / maxScore) * 100);
+  const { level, cls } = riskLevel(pct);
+
+  // Show result
+  showAssessResult({ scores, total, maxScore, pct, level, cls,
+    assessor: document.getElementById('assess-assessor').value,
+    note:     document.getElementById('assess-note').value });
+}
+
+function riskLevel(pct) {
+  if (pct >= 85) return { level: '低風險',    cls: 'risk-low' };
+  if (pct >= 70) return { level: '中低風險',  cls: 'risk-med-low' };
+  if (pct >= 50) return { level: '中風險',    cls: 'risk-med' };
+  if (pct >= 30) return { level: '高風險',    cls: 'risk-high' };
+  return               { level: '極高風險',   cls: 'risk-critical' };
+}
+
+function progressColor(pct) {
+  if (pct >= 85) return '#16a34a';
+  if (pct >= 70) return '#0d9488';
+  if (pct >= 50) return '#ca8a04';
+  if (pct >= 30) return '#d97706';
+  return '#dc2626';
+}
+
+/* ── Show Result ── */
+function showAssessResult(data) {
+  const { scores, total, maxScore, pct, level, cls, assessor, note } = data;
+  const color = progressColor(pct);
+  const secCards = ASSESS_SECTIONS.map((sec, si) => {
+    const sp    = Math.round((scores[si] / (sec.qs.length * 5)) * 100);
+    const scls  = riskLevel(sp).cls;
+    const scol  = progressColor(sp);
+    return `
+      <div class="score-card">
+        <div class="score-card-label">${sec.icon} ${sec.title}</div>
+        <div class="score-card-val">${scores[si]}<span style="font-size:13px;font-weight:400;color:var(--sub)">/${sec.qs.length*5}</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:${sp}%;background:${scol}"></div></div>
+        <div class="score-card-sub"><span class="risk-badge ${scls}" style="font-size:10px;padding:2px 8px">${riskLevel(sp).level}</span></div>
+      </div>`;
+  }).join('');
+
+  const weakSections = ASSESS_SECTIONS
+    .map((sec, si) => ({ sec, si, pct: Math.round((scores[si] / (sec.qs.length*5))*100) }))
+    .filter(x => x.pct < 70)
+    .map(x => `${x.sec.icon}${x.sec.title}（${x.pct}%）`)
+    .join('、') || '無明顯弱項';
+
+  document.getElementById('assess-result-body').innerHTML = `
+    <div class="result-hero">
+      <div style="font-size:13px;color:var(--sub);margin-bottom:6px">整體風險評分</div>
+      <div class="result-total-score">${total}</div>
+      <div class="result-total-max">/ ${maxScore} 分</div>
+      <div style="max-width:280px;margin:0 auto 12px">
+        <div class="progress-track" style="height:12px">
+          <div class="progress-fill" style="width:${pct}%;background:${color}"></div>
+        </div>
+      </div>
+      <span class="risk-badge ${cls}" style="font-size:15px">${pct}%　${level}</span>
+      ${assessor ? `<div style="font-size:11px;color:var(--sub);margin-top:8px">評估人員：${assessor}</div>` : ''}
+    </div>
+
+    <div class="sec-label">各面向分析</div>
+    <div class="score-cards">${secCards}</div>
+
+    <div style="background:var(--accent-bg);border-radius:14px;padding:20px;margin-bottom:16px;border:1px solid var(--accent-bd)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span style="font-size:13px;font-weight:700;color:var(--accent)">✨ AI 改善建議</span>
+        <button class="save-btn" style="padding:5px 13px;font-size:12px" id="assess-ai-btn"
+                onclick="runAssessAI(${JSON.stringify({scores, total, maxScore, pct, level, weakSections, assessor, note}).replace(/"/g,'&quot;')})">
+          執行 AI 分析
+        </button>
+      </div>
+      <div id="assess-ai-result" class="ai-result" style="background:rgba(255,255,255,.75);border-radius:8px;padding:14px;font-size:12px;line-height:1.8;display:none;max-height:360px;overflow-y:auto"></div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="submit-btn" id="assess-save-btn" onclick="saveAssessmentToSheet(${JSON.stringify({scores, total, maxScore, pct, level, assessor, note}).replace(/"/g,'&quot;')})" style="flex:1;min-width:160px">
+        💾 儲存至試算表
+      </button>
+      <button class="back-btn" onclick="initAssessment()" style="flex:1;min-width:120px;padding:14px;font-size:15px;font-weight:700">
+        ↺ 重新評估
+      </button>
+    </div>
+    <p style="font-size:11px;color:var(--sub);margin-top:10px;text-align:center">建議先執行 AI 分析後再儲存，分析結果將一併存入試算表</p>
+  `;
+
+  // Store for later save
+  window._currentAssess = { scores, total, maxScore, pct, level, assessor, note };
+  showView('assess-result');
+  window.scrollTo(0, 0);
+}
+
+/* ── AI Analysis for assessment ── */
+async function runAssessAI(data) {
+  if (typeof data === 'string') data = JSON.parse(data.replace(/&quot;/g, '"'));
+  const btn    = document.getElementById('assess-ai-btn');
+  const resDiv = document.getElementById('assess-ai-result');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+  resDiv.style.display = 'none';
+
+  const secDetail = ASSESS_SECTIONS.map((sec, si) => {
+    const sp = Math.round((data.scores[si] / (sec.qs.length * 5)) * 100);
+    return `- ${sec.icon} ${sec.title}：${data.scores[si]}/${sec.qs.length*5} 分（${sp}%）`;
+  }).join('\n');
+
+  const prompt = `你是一位職業安全衛生管理顧問，請分析以下職場不法侵害年度風險評估結果，並提供具體改善建議。
+
+## 評估結果摘要
+- 整體得分：${data.total} / ${data.maxScore} 分（${data.pct}%）
+- 風險等級：${data.level}
+- 需加強面向：${data.weakSections}
+
+## 各面向得分
+${secDetail}
+${data.note ? '\n## 評估備註\n' + data.note : ''}
+
+請以繁體中文，站在職安管理人員角度提供：
+
+**一、整體風險狀況評析**
+說明目前風險等級的意涵及主要成因（2-3 段）。
+
+**二、優先改善面向**
+針對得分較低的面向，各提出 2-3 個具體可執行的改善措施。
+
+**三、維持優勢建議**
+針對表現良好的面向，說明如何持續維持。
+
+**四、年度行動計畫建議**
+建議本年度優先推動的 3-5 項具體行動（含預計時程）。
+
+**五、追蹤指標建議**
+建議可追蹤的 2-3 個量化指標，用以衡量下次評估的改善成效。
+
+本分析僅供參考，請結合公司實際狀況判斷。`;
+
+  try {
+    const res = await fetch(WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const d = await res.json();
+    const text = d?.data || d?.choices?.[0]?.message?.content || d?.text || '';
+    if (!text) throw new Error('AI 回應為空');
+    resDiv.innerHTML = mdToHtml(text);
+    resDiv.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = '↻ 重新分析';
+    if (window._currentAssess) window._currentAssess.aiAnalysis = text;
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = '執行 AI 分析';
+    resDiv.innerHTML = '<span style="color:var(--red)">❌ 分析失敗：' + e.message + '</span>';
+    resDiv.style.display = 'block';
+  }
+}
+
+/* ── Save to Sheet ── */
+async function saveAssessmentToSheet(data) {
+  if (typeof data === 'string') data = JSON.parse(data.replace(/&quot;/g, '"'));
+  const btn = document.getElementById('assess-save-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> 儲存中…';
+
+  const curr = window._currentAssess || data;
+  try {
+    const res = await fetch(API, {
+      method: 'POST', redirect: 'follow',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        action: 'saveAssessment',
+        token:   ADMIN_PASS,
+        scores:  curr.scores,
+        total:   curr.total,
+        maxScore:curr.maxScore,
+        pct:     curr.pct,
+        level:   curr.level,
+        assessor:curr.assessor || '',
+        note:    curr.note    || '',
+        aiAnalysis: curr.aiAnalysis || '',
+        answers: assessAnswers
+      })
+    });
+    const d = await res.json();
+    if (d.id) {
+      btn.textContent = '✅ 已儲存（' + d.id + '）';
+      btn.style.background = '#16a34a';
+    } else {
+      throw new Error(d.error || '儲存失敗');
+    }
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = '❌ 儲存失敗，請重試';
+    btn.style.background = '';
+  }
+}
+
+/* ── Load History ── */
+async function loadAssessHistory() {
+  showView('assess-history');
+  const body = document.getElementById('assess-history-body');
+  body.innerHTML = '<div style="text-align:center;padding:30px;color:var(--sub)">載入中…</div>';
+
+  try {
+    const res = await fetch(API + '?token=' + encodeURIComponent(ADMIN_PASS) + '&type=assessments', { redirect: 'follow' });
+    const d   = await res.json();
+    if (d.error) throw new Error(d.error);
+
+    const list = d.assessments || [];
+    if (!list.length) {
+      body.innerHTML = '<div style="text-align:center;padding:40px;color:var(--sub)">尚無評估紀錄</div>';
+      return;
+    }
+
+    body.innerHTML = list.map(a => {
+      const pct = parseInt(a['百分比']) || 0;
+      const { level, cls } = riskLevel(pct);
+      const color = progressColor(pct);
+      const id = a['評估編號'].replace(/[^a-zA-Z0-9]/g,'_');
+      return `
+        <div class="assess-hist-item" id="ah-${id}">
+          <div class="assess-hist-summary" onclick="document.getElementById('ah-${id}').classList.toggle('open')">
+            <span class="assess-id-tag">${a['評估編號']}</span>
+            <span style="flex:1;font-size:13px;font-weight:600">${a['評估日期'].slice(0,10)}
+              ${a['評估人員'] ? '・' + a['評估人員'] : ''}</span>
+            <span class="risk-badge ${cls}" style="font-size:11px">${pct}% ${a['風險等級'] || level}</span>
+            <span class="chevron" style="color:var(--sub);font-size:14px;flex-shrink:0">›</span>
+          </div>
+          <div class="assess-hist-detail">
+            <div style="margin-bottom:14px">
+              <div style="font-size:12px;color:var(--sub);margin-bottom:6px">整體得分</div>
+              <div style="font-size:22px;font-weight:800;color:var(--accent)">${a['總分']} / ${a['滿分']} 分</div>
+              <div class="progress-track" style="margin-top:6px">
+                <div class="progress-fill" style="width:${pct}%;background:${color}"></div>
+              </div>
+            </div>
+            <div class="score-cards" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr))">
+              ${ASSESS_SECTIONS.map((sec,si) => {
+                const sc = parseInt(a[['政策管理分','工作環境分','人際關係分','外部接觸分','現況應變分'][si]]) || 0;
+                const sp = Math.round((sc/(sec.qs.length*5))*100);
+                return `<div class="score-card">
+                  <div class="score-card-label" style="font-size:10px">${sec.icon} ${sec.title}</div>
+                  <div class="score-card-val" style="font-size:18px">${sc}<span style="font-size:11px;color:var(--sub)">/${sec.qs.length*5}</span></div>
+                  <div class="progress-track"><div class="progress-fill" style="width:${sp}%;background:${progressColor(sp)}"></div></div>
+                </div>`;
+              }).join('')}
+            </div>
+            ${a['AI建議'] ? `
+              <div style="margin-top:12px">
+                <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px">✨ AI 建議摘要</div>
+                <div class="ai-result" style="display:block;background:rgba(255,255,255,.75);border-radius:8px;padding:12px;font-size:12px;line-height:1.8;max-height:280px;overflow-y:auto">${mdToHtml(a['AI建議'])}</div>
+              </div>` : ''}
+            ${a['備註'] ? `<div style="margin-top:10px;font-size:12px;color:var(--sub)">備註：${a['備註']}</div>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+  } catch(e) {
+    body.innerHTML = `<div class="notice err"><span class="notice-icon">❌</span><span>載入失敗：${e.message}</span></div>`;
+  }
 }
 </script>
 </body>
