@@ -346,7 +346,11 @@ async function loadTasks() {
     const res  = await fetch(API + '?t=' + Date.now(), { redirect: 'follow' });
     const data = await res.json();
     if (data.error) throw new Error(data.error);
-    tasks = data.tasks || [];
+    const seen = new Set();
+    tasks = (data.tasks || []).filter(t => {
+      if (!t.id || seen.has(t.id)) return false;
+      seen.add(t.id); return true;
+    });
     renderAll();
   } catch(e) {
     setList(`<div class="notice err">❌ 載入失敗：${esc(e.message)}<br>
