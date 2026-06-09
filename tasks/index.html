@@ -201,6 +201,62 @@ main { flex: 1; max-width: 900px; margin: 0 auto; width: 100%; padding: 28px 24p
 }
 .btn-cancel:hover { background: var(--bg); }
 
+/* ── Grid view ── */
+.task-list.grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+.grid-view .task-card   { flex-direction: column; }
+.grid-view .task-actions { flex-direction: row; flex-wrap: wrap; margin-top: 10px; }
+
+/* ── View toggle ── */
+.view-toggle { display: flex; gap: 4px; flex-shrink: 0; }
+.vt-btn {
+  padding: 7px 10px; border-radius: 7px;
+  border: 1.5px solid var(--border); background: var(--card);
+  cursor: pointer; font-size: 15px; line-height: 1;
+  color: var(--sub); transition: all .15s;
+}
+.vt-btn.active { background: var(--accent-bg); border-color: var(--accent-bd); color: var(--accent); }
+
+/* ── Notification ── */
+.notif-wrap { position: relative; flex-shrink: 0; }
+.notif-btn {
+  padding: 6px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(255,255,255,.1);
+  color: #fff; font-size: 16px; cursor: pointer;
+  transition: background .15s; position: relative;
+  font-family: inherit;
+}
+.notif-btn:hover { background: rgba(255,255,255,.2); }
+.notif-badge {
+  position: absolute; top: -5px; right: -5px;
+  background: var(--red); color: #fff;
+  font-size: 10px; font-weight: 700; border-radius: 10px;
+  padding: 1px 5px; line-height: 1.4; display: none; pointer-events: none;
+}
+.notif-badge.show { display: block; }
+.notif-drop {
+  position: absolute; top: calc(100% + 10px); right: 0;
+  width: 300px; background: var(--card);
+  border-radius: 12px; box-shadow: 0 8px 28px rgba(0,0,0,.18);
+  border: 1px solid var(--border); z-index: 400;
+  display: none; overflow: hidden;
+}
+.notif-drop.open { display: block; }
+.notif-drop-hd   { padding: 12px 16px; font-size: 13px; font-weight: 700; border-bottom: 1px solid var(--border); }
+.notif-items     { max-height: 300px; overflow-y: auto; }
+.notif-row {
+  padding: 10px 16px; border-bottom: 1px solid var(--border);
+  font-size: 12px; cursor: pointer; transition: background .15s;
+}
+.notif-row:last-child { border-bottom: none; }
+.notif-row:hover { background: var(--bg); }
+.notif-row-title { font-weight: 600; margin-bottom: 2px; }
+.notif-row-sub   { color: var(--sub); }
+.notif-empty     { padding: 24px; text-align: center; color: var(--sub); font-size: 13px; }
+
 /* ── States ── */
 .notice { border-radius: 10px; padding: 12px 16px; font-size: 13px; display: flex; gap: 8px; align-items: flex-start; margin-bottom: 16px; line-height: 1.6; }
 .notice.err { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
@@ -225,7 +281,16 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
 <header>
   <a href="../" class="hdr-btn">← 返回入口</a>
   <h1>✅ 職安工作中樞</h1>
-  <div class="hdr-brand">
+  <div class="notif-wrap" style="margin-left:auto">
+    <button class="notif-btn" onclick="toggleNotif(event)">
+      🔔<span class="notif-badge" id="notif-badge"></span>
+    </button>
+    <div class="notif-drop" id="notif-drop">
+      <div class="notif-drop-hd">⏰ 逾期 / 即將到期</div>
+      <div class="notif-items" id="notif-items"></div>
+    </div>
+  </div>
+  <div class="hdr-brand" style="margin-left:0">
     <img src="../上地球logo.png" alt="大豐環保科技">
     <span>大豐環保科技</span>
   </div>
@@ -254,6 +319,15 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
       <option value="waiting">等待中</option>
       <option value="done">已完成</option>
     </select>
+    <select id="sort-by" onchange="renderList()">
+      <option value="due">按到期日</option>
+      <option value="priority">按優先度</option>
+      <option value="created">按建立時間</option>
+    </select>
+    <div class="view-toggle">
+      <button class="vt-btn active" id="btn-list" onclick="setView('list')" title="列表">☰</button>
+      <button class="vt-btn"        id="btn-grid" onclick="setView('grid')" title="格狀">⊞</button>
+    </div>
     <button class="new-btn" onclick="openPanel()">＋ 新增任務</button>
   </div>
 
@@ -336,6 +410,7 @@ const STA_BADGE    = { todo:'b-todo', doing:'b-doing', waiting:'b-waiting', done
 let tasks     = [];
 let editingId = null;
 let saving    = false;
+let viewMode  = 'list';
 
 /* ── Init ── */
 loadTasks();
@@ -361,7 +436,7 @@ async function loadTasks() {
 async function apiPost(payload) {
   const res = await fetch(API, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify(payload),
     redirect: 'follow'
   });
@@ -370,8 +445,24 @@ async function apiPost(payload) {
   return data;
 }
 
+function genId() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+/* ── View toggle ── */
+function setView(mode) {
+  viewMode = mode;
+  V('btn-list').classList.toggle('active', mode === 'list');
+  V('btn-grid').classList.toggle('active', mode === 'grid');
+  renderList();
+}
+
 /* ── Render ── */
-function renderAll() { renderStats(); renderList(); }
+function renderAll() { renderStats(); renderList(); updateNotifBadge(); }
 
 function renderStats() {
   const total = tasks.length;
@@ -407,9 +498,10 @@ function setFilter(type) {
 }
 
 function filteredTasks() {
-  const q   = document.getElementById('search').value.trim().toLowerCase();
-  const cat = document.getElementById('filter-cat').value;
-  const sta = document.getElementById('filter-status').value;
+  const q      = document.getElementById('search').value.trim().toLowerCase();
+  const cat    = document.getElementById('filter-cat').value;
+  const sta    = document.getElementById('filter-status').value;
+  const sortBy = document.getElementById('sort-by').value;
   const priOrder = { '高':0, '中':1, '低':2 };
 
   return tasks
@@ -420,8 +512,21 @@ function filteredTasks() {
       return true;
     })
     .sort((a, b) => {
+      // 已完成永遠排最後
       if (a.status === 'done' && b.status !== 'done') return 1;
       if (b.status === 'done' && a.status !== 'done') return -1;
+
+      if (sortBy === 'priority') {
+        const pd = (priOrder[a.priority] ?? 1) - (priOrder[b.priority] ?? 1);
+        if (pd !== 0) return pd;
+        // 相同優先度再依到期日
+        if (a.dueAt && b.dueAt) return a.dueAt.localeCompare(b.dueAt);
+        return 0;
+      }
+      if (sortBy === 'created') {
+        return (b.createdAt || '').localeCompare(a.createdAt || '');
+      }
+      // 預設：按到期日（逾期優先，無到期日排後）
       const ao = isOverdue(a), bo = isOverdue(b);
       if (ao && !bo) return -1;
       if (!ao && bo) return 1;
@@ -439,7 +544,8 @@ function renderList() {
     setList('<div class="empty-state"><div class="empty-icon">✅</div><p>沒有符合條件的任務</p></div>');
     return;
   }
-  setList('<div class="task-list">' + list.map(taskCard).join('') + '</div>');
+  const cls = viewMode === 'grid' ? 'task-list grid-view' : 'task-list';
+  setList(`<div class="${cls}">` + list.map(taskCard).join('') + '</div>');
 }
 
 function setList(html) { document.getElementById('task-list').innerHTML = html; }
@@ -538,7 +644,7 @@ async function saveTask() {
   const noDue = V('f-no-due').checked;
   const now   = new Date().toISOString();
   const task  = {
-    id:          editingId || crypto.randomUUID(),
+    id:          editingId || genId(),
     title,
     category,
     priority:    V('f-priority').value,
@@ -594,6 +700,51 @@ async function deleteTask(id) {
     renderAll();
   } catch(e) { alert('刪除失敗：' + e.message); }
 }
+
+/* ── Notifications ── */
+function isDueSoon(t) {
+  if (t.status === 'done' || isNoDue(t) || !t.dueAt) return false;
+  const days = (new Date(t.dueAt) - new Date(new Date().toDateString())) / 86400000;
+  return days >= 0 && days <= 3;
+}
+
+function updateNotifBadge() {
+  const n = tasks.filter(t => isOverdue(t) || isDueSoon(t)).length;
+  const el = V('notif-badge');
+  el.textContent = n > 9 ? '9+' : n;
+  el.classList.toggle('show', n > 0);
+}
+
+function toggleNotif(e) {
+  e.stopPropagation();
+  const dd = V('notif-drop');
+  if (!dd.classList.contains('open')) renderNotifList();
+  dd.classList.toggle('open');
+}
+
+function renderNotifList() {
+  const urgent = tasks
+    .filter(t => isOverdue(t) || isDueSoon(t))
+    .sort((a, b) => {
+      if (isOverdue(a) && !isOverdue(b)) return -1;
+      if (!isOverdue(a) && isOverdue(b)) return 1;
+      return (a.dueAt || '').localeCompare(b.dueAt || '');
+    });
+  const el = V('notif-items');
+  if (!urgent.length) {
+    el.innerHTML = '<div class="notif-empty">🎉 沒有逾期或即將到期的任務</div>';
+    return;
+  }
+  el.innerHTML = urgent.map(t => `
+    <div class="notif-row" onclick="V('notif-drop').classList.remove('open');openPanel('${t.id}')">
+      <div class="notif-row-title">${esc(t.title)}</div>
+      <div class="notif-row-sub">${isOverdue(t) ? '⚠ 已逾期' : '⏰ 3天內到期'} · ${t.dueAt ? t.dueAt.slice(0,10) : ''} · ${esc(t.category || '')}</div>
+    </div>`).join('');
+}
+
+document.addEventListener('click', () => {
+  V('notif-drop')?.classList.remove('open');
+});
 
 /* ── Utils ── */
 function isOverdue(t) {
