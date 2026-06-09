@@ -437,6 +437,7 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
         <option value="monthly">每月</option>
         <option value="quarterly">每季（3個月）</option>
         <option value="biannual">每半年（6個月）</option>
+        <option value="yearly">每年</option>
         <option value="daily">每日</option>
       </select>
     </div>
@@ -486,7 +487,7 @@ const API = 'https://script.google.com/macros/s/AKfycbzkDcRv1jwyvIXGJ0Y07oOULXv0
 const STATUS_LABEL = { todo:'待處理', doing:'進行中', waiting:'等待中', done:'已完成' };
 const PRI_BADGE    = { '高':'b-phi', '中':'b-pmid', '低':'b-plow' };
 const STA_BADGE    = { todo:'b-todo', doing:'b-doing', waiting:'b-waiting', done:'b-done' };
-const RECUR_LABEL  = { daily:'每日', weekly:'每週', biweekly:'每兩週', monthly:'每月', quarterly:'每季', biannual:'每半年' };
+const RECUR_LABEL  = { daily:'每日', weekly:'每週', biweekly:'每兩週', monthly:'每月', quarterly:'每季', biannual:'每半年', yearly:'每年' };
 
 let tasks     = [];
 let editingId = null;
@@ -838,6 +839,7 @@ function calcNextDue(dueAt, recur) {
   else if (recur === 'monthly')   base.setMonth(base.getMonth() + 1);
   else if (recur === 'quarterly') base.setMonth(base.getMonth() + 3);
   else if (recur === 'biannual')  base.setMonth(base.getMonth() + 6);
+  else if (recur === 'yearly')    base.setFullYear(base.getFullYear() + 1);
   return localYMD(base);
 }
 
