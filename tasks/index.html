@@ -313,7 +313,7 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
     <input type="text" id="search" placeholder="搜尋任務標題…" oninput="renderList()">
     <select id="filter-cat" onchange="renderList()">
       <option value="">全部類別</option>
-      <option>法規符合</option><option>風險評估</option><option>教育訓練</option>
+      <option>固定工作</option><option>法規符合</option><option>風險評估</option><option>教育訓練</option>
       <option>健康管理</option><option>設備巡檢</option><option>調查追蹤</option>
       <option>行政事務</option><option>其他</option>
     </select>
@@ -358,7 +358,7 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
       <label>類別 <span class="req">*</span></label>
       <select id="f-category">
         <option value="">請選擇類別</option>
-        <option>法規符合</option><option>風險評估</option><option>教育訓練</option>
+        <option>固定工作</option><option>法規符合</option><option>風險評估</option><option>教育訓練</option>
         <option>健康管理</option><option>設備巡檢</option><option>調查追蹤</option>
         <option>行政事務</option><option>其他</option>
       </select>
@@ -391,6 +391,16 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
       </div>
     </div>
     <div class="field">
+      <label>重複週期</label>
+      <select id="f-recur">
+        <option value="">不重複（單次）</option>
+        <option value="weekly">每週</option>
+        <option value="biweekly">每兩週</option>
+        <option value="monthly">每月</option>
+        <option value="daily">每日</option>
+      </select>
+    </div>
+    <div class="field">
       <label>負責人</label>
       <input type="text" id="f-owner" placeholder="選填">
     </div>
@@ -405,12 +415,28 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
   </div>
 </div>
 
+<!-- ── Login screen ── -->
+<div id="login-screen" style="display:none;position:fixed;inset:0;background:linear-gradient(135deg,#431407 0%,#c2410c 50%,#f59840 100%);z-index:1000;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:16px;padding:40px 36px;width:min(340px,90vw);text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.25)">
+    <div style="font-size:36px;margin-bottom:10px">🔒</div>
+    <h2 style="font-size:18px;font-weight:800;color:#1e293b;margin-bottom:4px">職安工作中樞</h2>
+    <p style="font-size:13px;color:#64748b;margin-bottom:24px">大豐環保科技</p>
+    <input type="password" id="login-pw"
+      style="width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:8px;text-align:center;outline:none;box-sizing:border-box"
+      placeholder="輸入密碼"
+      onkeydown="if(event.key==='Enter')doLogin()">
+    <div id="login-err" style="color:#dc2626;font-size:12px;margin-bottom:10px;display:none">密碼錯誤，請再試一次</div>
+    <button onclick="doLogin()" style="width:100%;padding:12px;background:linear-gradient(135deg,#c2410c,#f59840);border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">進入系統</button>
+  </div>
+</div>
+
 <script>
 const API = 'https://script.google.com/macros/s/AKfycbzkDcRv1jwyvIXGJ0Y07oOULXv0hhNx78501Z1EjJUOBo766ZAq_Rh4DGzFVwCY3wFW/exec';
 
 const STATUS_LABEL = { todo:'待處理', doing:'進行中', waiting:'等待中', done:'已完成' };
 const PRI_BADGE    = { '高':'b-phi', '中':'b-pmid', '低':'b-plow' };
 const STA_BADGE    = { todo:'b-todo', doing:'b-doing', waiting:'b-waiting', done:'b-done' };
+const RECUR_LABEL  = { daily:'每日', weekly:'每週', biweekly:'每兩週', monthly:'每月' };
 
 let tasks     = [];
 let editingId = null;
@@ -418,7 +444,24 @@ let saving    = false;
 let viewMode  = 'list';
 
 /* ── Init ── */
-loadTasks();
+if (sessionStorage.getItem('task_auth')) {
+  loadTasks();
+} else {
+  V('login-screen').style.display = 'flex';
+}
+
+function doLogin() {
+  const pw = V('login-pw').value;
+  if (pw === 'gloomy') {
+    sessionStorage.setItem('task_auth', '1');
+    V('login-screen').style.display = 'none';
+    loadTasks();
+  } else {
+    V('login-err').style.display = 'block';
+    V('login-pw').value = '';
+    V('login-pw').focus();
+  }
+}
 
 async function loadTasks() {
   setList('<div class="loading">載入中…</div>');
@@ -525,11 +568,11 @@ function filteredTasks() {
         const pd = (priOrder[a.priority] ?? 1) - (priOrder[b.priority] ?? 1);
         if (pd !== 0) return pd;
         // 相同優先度再依到期日
-        if (a.dueAt && b.dueAt) return a.dueAt.localeCompare(b.dueAt);
+        if (a.dueAt && b.dueAt) return new Date(a.dueAt) - new Date(b.dueAt);
         return 0;
       }
       if (sortBy === 'created') {
-        return (b.createdAt || '').localeCompare(a.createdAt || '');
+        return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
       }
       // 預設：按到期日（逾期優先，無到期日排後）
       const ao = isOverdue(a), bo = isOverdue(b);
@@ -549,8 +592,27 @@ function renderList() {
     setList('<div class="empty-state"><div class="empty-icon">✅</div><p>沒有符合條件的任務</p></div>');
     return;
   }
-  const cls = viewMode === 'grid' ? 'task-list grid-view' : 'task-list';
-  setList(`<div class="${cls}">` + list.map(taskCard).join('') + '</div>');
+  const cls      = viewMode === 'grid' ? 'task-list grid-view' : 'task-list';
+  const activeDue = list.filter(t => t.status !== 'done' && !isNoDue(t) && t.dueAt);
+  const noDueAct  = list.filter(t => t.status !== 'done' && (isNoDue(t) || !t.dueAt));
+  const doneAll   = list.filter(t => t.status === 'done');
+
+  let html = '';
+  if (activeDue.length) {
+    html += `<div class="${cls}">` + activeDue.map(taskCard).join('') + '</div>';
+  }
+  if (noDueAct.length) {
+    html += `<div class="sec-label" style="margin-top:28px">隨時待辦（無截止日期）<span style="font-size:11px;font-weight:400;letter-spacing:0;margin-left:8px">${noDueAct.length} 項</span></div>`;
+    html += `<div class="${cls}">` + noDueAct.map(taskCard).join('') + '</div>';
+  }
+  if (doneAll.length) {
+    html += `<div class="sec-label" style="margin-top:28px">已完成<span style="font-size:11px;font-weight:400;letter-spacing:0;margin-left:8px">${doneAll.length} 項</span></div>`;
+    html += `<div class="${cls}">` + doneAll.map(taskCard).join('') + '</div>';
+  }
+  if (!html) {
+    html = '<div class="empty-state"><div class="empty-icon">✅</div><p>沒有符合條件的任務</p></div>';
+  }
+  setList(html);
 }
 
 function setList(html) { document.getElementById('task-list').innerHTML = html; }
@@ -572,7 +634,9 @@ function taskCard(t) {
       : '';
 
   const doneBtn = done ? ''
-    : `<button class="ta-btn btn-done" onclick="completeTask('${t.id}')">✓ 完成</button>`;
+    : t.recur
+      ? `<button class="ta-btn btn-done" onclick="completeTask('${t.id}')">✓ 完成 🔄</button>`
+      : `<button class="ta-btn btn-done" onclick="completeTask('${t.id}')">✓ 完成</button>`;
 
   return `
   <div class="task-card ${cardCls}">
@@ -582,6 +646,7 @@ function taskCard(t) {
         <span class="badge b-cat">${esc(t.category || '其他')}</span>
         <span class="badge ${PRI_BADGE[t.priority] || 'b-pmid'}">${esc(t.priority || '中')}</span>
         <span class="badge ${STA_BADGE[t.status]   || 'b-todo'}">${STATUS_LABEL[t.status] || t.status}</span>
+        ${t.recur ? `<span class="badge" style="background:#f3e8ff;color:#7c3aed;border:1px solid #ddd6fe">🔄 ${RECUR_LABEL[t.recur] || t.recur}</span>` : ''}
         ${t.owner ? `<span style="font-size:12px;color:var(--sub)">👤 ${esc(t.owner)}</span>` : ''}
         ${dueHtml}
       </div>
@@ -609,6 +674,7 @@ function openPanel(id) {
     V('f-status').value   = t.status      || 'todo';
     V('f-due').value      = t.dueAt       ? t.dueAt.slice(0,10) : '';
     V('f-no-due').checked = isNoDue(t);
+    V('f-recur').value    = t.recur       || '';
     V('f-owner').value    = t.owner       || '';
     V('f-desc').value     = t.description || '';
   } else {
@@ -618,6 +684,7 @@ function openPanel(id) {
     V('f-status').value   = 'todo';
     V('f-due').value      = '';
     V('f-no-due').checked = false;
+    V('f-recur').value    = '';
     V('f-owner').value    = '';
     V('f-desc').value     = '';
   }
@@ -656,6 +723,7 @@ async function saveTask() {
     status:      V('f-status').value,
     dueAt:       noDue ? '' : (V('f-due').value || ''),
     noDueDate:   noDue,
+    recur:       V('f-recur').value,
     owner:       V('f-owner').value.trim(),
     description: V('f-desc').value.trim(),
     updatedAt:   now,
@@ -690,11 +758,33 @@ async function saveTask() {
 async function completeTask(id) {
   const t = tasks.find(t => t.id === id);
   if (!t) return;
+  const recurVal = t.recur;
   t.status = 'done'; t.updatedAt = new Date().toISOString();
   try {
     await apiPost({ action: 'update', task: t });
+    if (recurVal) {
+      const next = {
+        ...t,
+        id:        genId(),
+        status:    'todo',
+        dueAt:     calcNextDue(t.dueAt, recurVal),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      await apiPost({ action: 'add', task: next });
+      tasks.unshift(next);
+    }
     renderAll();
   } catch(e) { alert('更新失敗：' + e.message); }
+}
+
+function calcNextDue(dueAt, recur) {
+  const base = dueAt ? new Date(dueAt) : new Date();
+  if (isNaN(base.getTime())) return new Date().toISOString().slice(0, 10);
+  const DAYS = { daily: 1, weekly: 7, biweekly: 14 };
+  if (DAYS[recur] != null) base.setDate(base.getDate() + DAYS[recur]);
+  else if (recur === 'monthly') base.setMonth(base.getMonth() + 1);
+  return base.toISOString().slice(0, 10);
 }
 
 async function deleteTask(id) {
@@ -733,7 +823,7 @@ function renderNotifList() {
     .sort((a, b) => {
       if (isOverdue(a) && !isOverdue(b)) return -1;
       if (!isOverdue(a) && isOverdue(b)) return 1;
-      return (a.dueAt || '').localeCompare(b.dueAt || '');
+      return new Date(a.dueAt || 0) - new Date(b.dueAt || 0);
     });
   const el = V('notif-items');
   if (!urgent.length) {
