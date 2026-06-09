@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""OHS Portal — 法規更新與職災情報自動化收集腳本"""
+"""OHS Portal — 職災情報與安衛動態自動化收集腳本"""
 from __future__ import annotations
 
 import hashlib
@@ -278,7 +278,7 @@ def generate_html(items: list, updated_at: str) -> str:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>法規更新與職災情報 — 大豐環保科技</title>
+<title>職災情報與安衛動態 — 大豐環保科技</title>
 <style>
 html{{scroll-behavior:smooth}}
 :root{{--navy:#1e3a5f;--bg:#f1f5f9;--card:#fff;--border:#e2e8f0;--text:#1e293b;--sub:#64748b;--blue:#2563eb;--green:#16a34a;--red:#dc2626;--purple:#7c3aed;--teal:#0891b2}}
@@ -388,7 +388,7 @@ footer{{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);bord
 
 <header>
   <button class="hdr-btn" onclick="location.href='../'" title="回到系統入口">← 系統入口</button>
-  <h1>📰 法規更新與職災情報</h1>
+  <h1>📰 職災情報與安衛動態</h1>
   <div class="hdr-brand">
     <img src="../dafon-logo.png" alt="大豐環保科技">
     <span>大豐環保科技</span>

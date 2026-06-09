@@ -12,7 +12,7 @@
 | 📄 承攬商安全衛生協議書 | 線上填寫並列印承攬商協議書，支援多工作區域 |
 | ⚠️ AI 風險評估 | 上傳現場照片，由 Gemini AI 辨識危害並給出改善建議 |
 | ⚖️ 法規問答機器人 | 整合公司法規鑑別資料庫＋Gemini AI 知識，回答台灣職安法規問題 |
-| 📰 法規更新與職災情報 | 自動彙整職安署公告、重大職災新聞、法規動態；每週一 AI 自動產生職安週報 |
+| 📰 職災情報與安衛動態 | 自動彙整職安署公告、重大職災新聞、法規動態；每週一 AI 自動產生職安週報 |
 | 📋 職安衛委員會 | 歷次委員會會議記錄與附件 |
 | 🎓 教育訓練 | 教育訓練教材線上瀏覽 |
 
@@ -26,7 +26,7 @@
 | 承攬商協議書 | https://df-ehs.github.io/OHS-Portal/contract/ |
 | AI 風險評估 | https://df-ehs.github.io/OHS-Portal/risk/ |
 | 法規問答機器人 | https://df-ehs.github.io/OHS-Portal/law/ |
-| 法規更新與職災情報 | https://df-ehs.github.io/OHS-Portal/news/ |
+| 職災情報與安衛動態 | https://df-ehs.github.io/OHS-Portal/news/ |
 | 職安衛委員會 | https://df-ehs.github.io/OHS-Portal/committee/ |
 
 ---
