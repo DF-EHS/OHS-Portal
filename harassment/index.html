@@ -515,12 +515,46 @@ footer {
 
 <main>
 
-  <!-- ══════════ LANDING ══════════ -->
-  <div class="view active" id="view-landing">
+  <!-- ══════════ HOME ══════════ -->
+  <div class="view active" id="view-home">
 
     <div class="landing-hero">
       <div class="hero-icon">🛡️</div>
-      <h2>職場安全，從通報開始</h2>
+      <h2>執行職務遭受不法侵害防治系統</h2>
+      <p>大豐環保科技職業安全衛生管理系統 · 職場安全從預防與通報開始<br>
+         請選擇您要使用的功能模組</p>
+    </div>
+
+    <div class="sec-label">功能模組</div>
+
+    <div class="action-cards" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+      <div class="action-card" onclick="showView('landing')">
+        <div class="ac-icon">📋</div>
+        <div class="ac-title">通報系統</div>
+        <div class="ac-desc">提出不法侵害事件通報、查詢案件處理進度，或進入管理後台查閱與更新案件狀態。</div>
+        <button class="ac-btn">進入通報系統 →</button>
+      </div>
+
+      <div class="action-card" onclick="showView('assess-menu')">
+        <div class="ac-icon">📊</div>
+        <div class="ac-title">年度風險評估</div>
+        <div class="ac-desc">定期評估職場不法侵害風險因子，支援職安人員、現場主管及員工三種評估表，自動計算風險等級並追蹤趨勢。</div>
+        <button class="ac-btn outline">進入評估系統 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ LANDING (通報系統子選單) ══════════ -->
+  <div class="view" id="view-landing">
+
+    <div class="form-nav">
+      <button class="back-btn" onclick="showView('home')">← 返回首頁</button>
+      <h2>📋 通報系統</h2>
+    </div>
+
+    <div class="landing-hero" style="padding:28px 24px 24px; margin-bottom:24px;">
+      <div class="hero-icon" style="font-size:40px;">📝</div>
+      <h2 style="font-size:18px;">職場安全，從通報開始</h2>
       <p>任何形式的職場霸凌、肢體或語言暴力、性騷擾、就業歧視，均可在此安全通報。<br>
          本系統支援完全匿名提交，所有通報內容僅職安管理人員可查閱。</p>
     </div>
@@ -547,13 +581,6 @@ footer {
         <div class="ac-title">管理後台</div>
         <div class="ac-desc">職安管理人員專用，輸入管理密碼後可查閱所有案件並更新處理狀態。</div>
         <button class="ac-btn outline">進入後台 →</button>
-      </div>
-
-      <div class="action-card" onclick="requireAdmin('assess-menu')">
-        <div class="ac-icon">📊</div>
-        <div class="ac-title">年度風險評估</div>
-        <div class="ac-desc">定期評估職場不法侵害風險因子，自動計算風險等級，AI 生成預防建議，並追蹤歷年改善趨勢。</div>
-        <button class="ac-btn outline">開始評估 →</button>
       </div>
     </div>
 
@@ -733,7 +760,7 @@ footer {
         若您留有聯絡方式，職安人員也可能主動與您聯繫。
       </p>
     </div>
-    <button class="submit-btn" onclick="showView('landing')">← 回到首頁</button>
+    <button class="submit-btn" onclick="showView('home')">← 回到首頁</button>
   </div>
 
   <!-- ══════════ QUERY ══════════ -->
@@ -787,7 +814,7 @@ footer {
   <!-- ══════════ ASSESS MENU ══════════ -->
   <div class="view" id="view-assess-menu">
     <div class="form-nav">
-      <button class="back-btn" onclick="showView('landing')">← 返回</button>
+      <button class="back-btn" onclick="showView('home')">← 返回首頁</button>
       <h2>📊 年度風險評估</h2>
     </div>
     <div class="notice info">
@@ -1050,7 +1077,7 @@ function doAdminLogin() {
 }
 function doAdminLogout() {
   sessionStorage.removeItem('harassment_admin');
-  showView('landing');
+  showView('home');
 }
 
 /* ── Admin: load cases ── */
