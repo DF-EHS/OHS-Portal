@@ -237,6 +237,10 @@
   .tg-nurse   { background: #ccfbf1; color: #0f766e; }
   .btn-rose   { background: var(--rose); color: #fff; }
   .btn-rose:hover   { background: #be185d; }
+  .btn-violet { background: #5b21b6; color: #fff; }
+  .btn-violet:hover { background: #4c1d95; }
+  .ci-violet  { background: #f5f3ff; }
+  .tg-violet  { background: #ede9fe; color: #5b21b6; }
 
   /* ── placeholder card ── */
   .placeholder-card {
@@ -305,6 +309,10 @@
   body.dark .tg-rose    { background: #4c0519; color: #fda4af; }
   body.dark .btn-rose   { background: #9f1239; }
   body.dark .btn-rose:hover { background: #881337; }
+  body.dark .ci-violet  { background: #2e1065; }
+  body.dark .tg-violet  { background: #2e1065; color: #c4b5fd; }
+  body.dark .btn-violet { background: #6d28d9; }
+  body.dark .btn-violet:hover { background: #5b21b6; }
   body.dark .placeholder-card { background: #1e293b; border-color: #334155; }
   body.dark .content-topbar   { background: #1e293b; border-color: #334155; }
 
@@ -396,6 +404,9 @@
       </a>
       <a class="nav-item" href="./nurse/">
         <span class="nav-icon">🏥</span>職護臨場服務
+      </a>
+      <a class="nav-item" href="./harassment/">
+        <span class="nav-icon">🛡️</span>不法侵害防制系統
       </a>
       <a class="nav-item" href="https://hr-corptraining.zerozero.tw/certificates" target="_blank">
         <span class="nav-icon">🪪</span>證照管理
@@ -676,10 +687,24 @@
           </div>
         </div>
 
-        <div class="placeholder-card">
-          <div class="ph-icon">＋</div>
-          <div class="ph-title">預留擴充位置</div>
-          <div class="ph-sub">如：承攬商評核…</div>
+        <div class="sys-card" onclick="location.href='./harassment/'">
+          <div class="card-header">
+            <div class="card-icon ci-violet">🛡️</div>
+            <div>
+              <div class="card-title">不法侵害防制系統</div>
+              <div class="card-desc">提供匿名或具名通報職場不法侵害事件，含 AI 輔助分析、案件進度查詢及 HR 後台管理，保障申訴人隱私。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-violet">職場霸凌</span>
+            <span class="tag tg-violet">匿名通報</span>
+            <span class="tag tg-navy">AI 分析</span>
+            <span class="tag tg-blue">案件追蹤</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-violet" onclick="event.stopPropagation();location.href='./harassment/'">開啟系統 ›</button>
+          </div>
         </div>
 
       </div>
