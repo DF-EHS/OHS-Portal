@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>職業災害分析系統 — 資料匯入教學</title>
+<style>
+:root {
+  --navy:   #1e3a5f;
+  --bg:     #f1f5f9;
+  --card:   #ffffff;
+  --border: #e2e8f0;
+  --text:   #1e293b;
+  --sub:    #64748b;
+  --green:  #16a34a;
+  --red:    #dc2626;
+  --blue:   #1d4ed8;
+  --yellow: #d97706;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh;
+}
+
+header {
+  background: var(--navy); color: #fff;
+  padding: 18px 32px;
+  display: flex; align-items: center; gap: 14px;
+}
+header h1 { font-size: 18px; font-weight: 700; }
+header .badge {
+  background: rgba(255,255,255,.15);
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 600; letter-spacing: 1px;
+}
+
+main {
+  max-width: 860px; margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* ── section heading ── */
+.sec-title {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: 4px; text-transform: uppercase;
+  margin: 40px 0 18px;
+  display: flex; align-items: center; gap: 12px;
+}
+.sec-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.sec-title:first-of-type { margin-top: 0; }
+
+/* ── card ── */
+.card {
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.07);
+  padding: 28px 32px;
+  margin-bottom: 18px;
+}
+
+/* ── step blocks ── */
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step {
+  display: flex; gap: 20px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
+}
+.step:last-child { border-bottom: none; padding-bottom: 0; }
+.step:first-child { padding-top: 0; }
+
+.step-num {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  background: var(--navy); color: #fff;
+  font-size: 15px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.step-num.done  { background: var(--green); }
+.step-num.once  { background: var(--yellow); }
+
+.step-body { flex: 1; }
+.step-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.step-desc  { font-size: 13px; color: var(--sub); line-height: 1.7; }
+
+.tag {
+  display: inline-block;
+  padding: 1px 8px; border-radius: 20px;
+  font-size: 11px; font-weight: 700;
+  margin-left: 6px; vertical-align: middle;
+}
+.tag-once { background: #fef3c7; color: #92400e; }
+.tag-every { background: #dcfce7; color: #166534; }
+
+/* ── code block ── */
+.code-wrap {
+  background: #0f172a;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 12px 0 4px;
+  position: relative;
+  overflow-x: auto;
+}
+.code-wrap code {
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 13px; color: #e2e8f0;
+  white-space: pre;
+}
+.code-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  color: var(--sub); margin-bottom: 4px;
+}
+
+/* ── copy button ── */
+.copy-btn {
+  position: absolute; top: 10px; right: 12px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #94a3b8; border-radius: 6px;
+  font-size: 11px; padding: 4px 10px;
+  cursor: pointer; transition: background .15s;
+}
+.copy-btn:hover { background: rgba(255,255,255,.2); }
+
+/* ── notice ── */
+.notice {
+  border-radius: 10px; padding: 14px 18px;
+  font-size: 13px; line-height: 1.7;
+  display: flex; gap: 12px; align-items: flex-start;
+  margin: 12px 0;
+}
+.notice-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.notice.info  { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+.notice.warn  { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+.notice.ok    { background: #f0fdf4; color: #14532d; border: 1px solid #bbf7d0; }
+
+/* ── folder path ── */
+.folder-path {
+  background: #f8fafc; border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 16px;
+  font-family: "Consolas", monospace; font-size: 13px;
+  color: var(--navy); margin: 8px 0;
+  word-break: break-all;
+}
+
+/* ── table ── */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  background: #f8fafc; text-align: left;
+  padding: 10px 14px; font-weight: 700; font-size: 12px;
+  border-bottom: 2px solid var(--border);
+}
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+td:first-child { font-weight: 600; white-space: nowrap; }
+
+/* ── flow chart ── */
+.flow {
+  display: flex; align-items: center; gap: 0;
+  flex-wrap: wrap; margin: 14px 0;
+}
+.flow-box {
+  background: #f0f9ff; border: 1.5px solid #bae6fd;
+  border-radius: 8px; padding: 8px 14px;
+  font-size: 12px; font-weight: 600; color: #0369a1;
+  text-align: center; min-width: 100px;
+}
+.flow-arr {
+  color: var(--sub); font-size: 18px;
+  padding: 0 6px; flex-shrink: 0;
+}
+
+footer {
+  text-align: center; padding: 20px;
+  font-size: 12px; color: var(--sub);
+  border-top: 1px solid var(--border);
+  background: var(--card);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>職業災害分析系統 — 資料匯入教學</h1>
+  <span class="badge">import_accidents.py</span>
+</header>
+
+<main>
+
+  <!-- ── 概覽 ── -->
+  <div class="sec-title">系統概覽</div>
+
+  <div class="card">
+    <p style="font-size:14px;line-height:1.8;color:var(--sub)">
+      此腳本可將您從公司內部工傷事故系統匯出的 Excel 檔，<strong style="color:var(--text)">自動比對去重後上傳</strong>至
+      OHS Portal 職業災害分析系統的 Google Sheets 資料庫。<br>
+      已存在的記錄不會重複新增，只會寫入新資料。
+    </p>
+    <div style="margin-top:18px">
+      <div class="flow">
+        <div class="flow-box">公司系統<br>匯出 Excel</div>
+        <div class="flow-arr">→</div>
+        <div class="flow-box">放入指定<br>資料夾</div>
+        <div class="flow-arr">→</div>
+        <div class="flow-box">執行<br>Python 腳本</div>
+        <div class="flow-arr">→</div>
+        <div class="flow-box">確認預覽<br>輸入 y</div>
+        <div class="flow-arr">→</div>
+        <div class="flow-box" style="background:#f0fdf4;border-color:#bbf7d0;color:#14532d">資料自動<br>寫入系統</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 事前準備（只需一次）── -->
+  <div class="sec-title">事前準備 <span class="tag tag-once">只需做一次</span></div>
+
+  <div class="card">
+    <div class="steps">
+
+      <!-- Step 1 -->
+      <div class="step">
+        <div class="step-num once">1</div>
+        <div class="step-body">
+          <div class="step-title">確認 Python 已安裝</div>
+          <div class="step-desc">
+            開啟 PowerShell 或終端機，輸入下方指令。若顯示版本號（如 <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px">Python 3.x.x</code>）即代表已安裝。
+          </div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            <code>python --version</code>
+          </div>
+          <div class="notice warn" style="margin-top:10px">
+            <span class="notice-icon">⚠️</span>
+            <span>若顯示「不是可辨識的命令」，請至 <strong>python.org</strong> 下載安裝 Python 3，安裝時勾選「Add to PATH」。</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step">
+        <div class="step-num once">2</div>
+        <div class="step-body">
+          <div class="step-title">安裝必要套件</div>
+          <div class="step-desc">在終端機執行以下指令，安裝 Excel 讀取與網路請求所需的套件。</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            <code>pip install pandas openpyxl requests</code>
+          </div>
+          <div class="notice ok" style="margin-top:10px">
+            <span class="notice-icon">✅</span>
+            <span>安裝完成後可用以下指令驗證，印出 <strong>OK</strong> 表示成功：</span>
+          </div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            <code>python -c "import pandas, openpyxl, requests; print('OK')"</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step">
+        <div class="step-num once">3</div>
+        <div class="step-body">
+          <div class="step-title">更新 Google Apps Script（職災系統後端）</div>
+          <div class="step-desc">
+            此步驟讓後端開放接收新增資料的功能。
+          </div>
+          <ol style="font-size:13px;color:var(--sub);line-height:2;margin-top:8px;padding-left:20px">
+            <li>開啟職災系統的 Google 試算表</li>
+            <li>點選上方選單 <strong>擴充功能 → Apps Script</strong></li>
+            <li>將 <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px">accident/apps-script.gs</code> 的全部內容貼上覆蓋現有程式碼</li>
+            <li>按 <strong>儲存（Ctrl+S）</strong></li>
+            <li>點選 <strong>部署 → 管理部署 → 編輯（鉛筆圖示）→ 版本選「建立新版本」→ 部署</strong></li>
+          </ol>
+          <div class="notice info" style="margin-top:10px">
+            <span class="notice-icon">ℹ️</span>
+            <span>部署網址不會改變，前端 index.html 不需要修改。</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 每次使用 ── -->
+  <div class="sec-title">每次使用流程 <span class="tag tag-every">每次匯入</span></div>
+
+  <div class="card">
+    <div class="steps">
+
+      <!-- Step 1 -->
+      <div class="step">
+        <div class="step-num done">1</div>
+        <div class="step-body">
+          <div class="step-title">從公司系統匯出 Excel</div>
+          <div class="step-desc">
+            從公司內部工傷事故系統將資料匯出為 <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px">.xlsx</code> 格式。
+            <strong>檔名不限</strong>，腳本會自動抓取資料夾中最新的 Excel 檔。
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step">
+        <div class="step-num done">2</div>
+        <div class="step-body">
+          <div class="step-title">將 Excel 放入指定資料夾</div>
+          <div class="step-desc">將匯出的 Excel 檔存放至以下路徑：</div>
+          <div class="folder-path">C:\Users\gloom.lai\Documents\職安\職業災害分析\</div>
+          <div class="notice info" style="margin-top:10px">
+            <span class="notice-icon">ℹ️</span>
+            <span>資料夾中可以有多個 Excel，腳本會自動選取<strong>修改日期最新的那份</strong>。</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step">
+        <div class="step-num done">3</div>
+        <div class="step-body">
+          <div class="step-title">開啟終端機，執行匯入腳本</div>
+          <div class="step-desc">在 PowerShell 或終端機中輸入以下指令並按 Enter：</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            <code>python C:\Users\gloom.lai\OHS-Portal\accident\import_accidents.py</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step">
+        <div class="step-num done">4</div>
+        <div class="step-body">
+          <div class="step-title">確認預覽清單，輸入 y 新增</div>
+          <div class="step-desc">
+            腳本會自動比對現有資料，列出<strong>尚未存在的新記錄</strong>，等待您確認後才寫入：
+          </div>
+          <div class="code-wrap" style="margin-top:10px">
+            <code style="color:#94a3b8">📂  讀取：Workbook2026-06-09.xlsx
+    共 3 筆
+🔍  取得系統現有資料…
+    已存在（略過） 0 筆
+
+📋  待新增 3 筆：
+  • 2026-05-06  張秀妃  其他及無法歸類者  [五股分選廠]
+  • 2026-05-13  蘇密    被切，割，挫傷    [全興場造粒課]
+  • 2026-05-22  魏嘉葦  其他及無法歸類者  [矽品二林廠]
+
+確定要新增以上 3 筆到 Google Sheets？(y/N) </code>
+          </div>
+          <div class="step-desc" style="margin-top:10px">
+            確認無誤後輸入 <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px">y</code> 並按 Enter，即可完成上傳。
+          </div>
+          <div class="notice ok" style="margin-top:10px">
+            <span class="notice-icon">✅</span>
+            <span>成功後前往 <strong>https://df-ehs.github.io/OHS-Portal/accident/</strong> 重新整理頁面，即可看到新增的資料。</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 進階用法 ── -->
+  <div class="sec-title">進階用法</div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>指令</th>
+          <th>說明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>python import_accidents.py</code></td>
+          <td>自動抓取資料夾中最新的 Excel 執行匯入（最常用）</td>
+        </tr>
+        <tr>
+          <td><code>python import_accidents.py --dry-run</code></td>
+          <td>預覽模式：列出待新增清單，<strong>不實際寫入</strong>，可用於確認資料是否正確</td>
+        </tr>
+        <tr>
+          <td><code>python import_accidents.py "C:\...\檔案名稱.xlsx"</code></td>
+          <td>指定特定 Excel 檔案路徑，不使用自動偵測</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── 欄位對應 ── -->
+  <div class="sec-title">Excel 欄位對應說明</div>
+
+  <div class="card">
+    <p style="font-size:13px;color:var(--sub);margin-bottom:16px">
+      Excel 的欄位標題須與以下名稱<strong>完全一致</strong>（系統已依此格式設定，一般無需修改）：
+    </p>
+    <table>
+      <thead>
+        <tr><th>Excel 欄位名稱</th><th>說明</th><th>範例</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>發生日期</td><td>事故發生日期，支援 YYYYMMDD 或 YYYY-MM-DD 格式</td><td>20260506 / 2026-05-06</td></tr>
+        <tr><td>改善完成日期</td><td>改善措施完成日期</td><td>2026-05-09</td></tr>
+        <tr><td>事發地點</td><td>發生地點（含廠區地址）</td><td>五股分選廠</td></tr>
+        <tr><td>事故分類</td><td>工安事故 / 職業病等</td><td>工安事故</td></tr>
+        <tr><td>事故類型</td><td>依職安署分類</td><td>被切，割，挫傷</td></tr>
+        <tr><td>事發單位部門</td><td>當事人所屬部門</td><td>全興造粒課</td></tr>
+        <tr><td>員工姓名</td><td>當事人姓名</td><td>王小明</td></tr>
+        <tr><td>員工工號</td><td>當事人員工編號</td><td>3897</td></tr>
+        <tr><td>預估休息天數</td><td>因傷休養天數（0 代表無需休養）</td><td>3</td></tr>
+        <tr><td>事故描述及處理狀況或受傷情形</td><td>詳細事故經過</td><td>（長文字）</td></tr>
+        <tr><td>不安全行為</td><td>當事人的不安全行為</td><td>未依安全作業程序操作</td></tr>
+        <tr><td>不安全狀況</td><td>環境的不安全狀態</td><td>地面潮濕</td></tr>
+        <tr><td>基本原因</td><td>事故根本原因</td><td>不符合工作標準</td></tr>
+        <tr><td>本案責任初步判定</td><td>責任判定說明</td><td>（長文字）</td></tr>
+        <tr><td>是否懲處</td><td>是 / 否</td><td>否</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── 常見問題 ── -->
+  <div class="sec-title">常見問題</div>
+
+  <div class="card">
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num" style="background:#e2e8f0;color:var(--text);font-size:18px">?</div>
+        <div class="step-body">
+          <div class="step-title">執行後顯示「❌ 錯誤：你沒有呼叫 UrlFetchApp 的權限」</div>
+          <div class="step-desc">
+            Apps Script 尚未重新授權。請至 Apps Script 編輯器新增以下測試函式，執行一次後刪除，再重新部署：
+          </div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            <code>function _testFetch(){ UrlFetchApp.fetch('https://www.google.com'); }</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num" style="background:#e2e8f0;color:var(--text);font-size:18px">?</div>
+        <div class="step-body">
+          <div class="step-title">腳本顯示「找不到 Excel 檔案」</div>
+          <div class="step-desc">
+            請確認 Excel 已放在以下資料夾，且副檔名為 <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px">.xlsx</code>（不可為 .xls 或 .csv）：
+          </div>
+          <div class="folder-path">C:\Users\gloom.lai\Documents\職安\職業災害分析\</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num" style="background:#e2e8f0;color:var(--text);font-size:18px">?</div>
+        <div class="step-body">
+          <div class="step-title">資料全部顯示「已存在（略過）」，沒有新增任何記錄</div>
+          <div class="step-desc">
+            腳本以「<strong>發生日期 + 員工工號</strong>」作為判斷依據。若 Excel 中的資料與系統已有記錄完全相符，即視為重複而略過。
+            確認 Excel 是否包含新的事故記錄，或改以 <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px">--dry-run</code> 模式確認比對結果。
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num" style="background:#e2e8f0;color:var(--text);font-size:18px">?</div>
+        <div class="step-body">
+          <div class="step-title">上傳成功但系統頁面看不到新資料</div>
+          <div class="step-desc">
+            請在瀏覽器按 <strong>Ctrl + Shift + R</strong>（強制重新整理，清除快取），確保頁面讀取最新資料。
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統 &nbsp;·&nbsp; 維護人員：賴佑毓</footer>
+
+<script>
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = '已複製';
+    setTimeout(() => btn.textContent = '複製', 1800);
+  });
+}
+</script>
+</body>
+</html>
