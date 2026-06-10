@@ -9,7 +9,7 @@ html{scroll-behavior:smooth}
 :root{--navy:#1e3a5f;--bg:#f1f5f9;--card:#fff;--border:#e2e8f0;--text:#1e293b;--sub:#64748b;--blue:#2563eb;--green:#16a34a;--red:#dc2626;--purple:#7c3aed;--teal:#0891b2}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
-header{background:linear-gradient(135deg,#070d15 0%,#1e3a5f 50%,#1e4d8c 100%);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35)}
+header{background:var(--navy);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
 header h1{font-size:17px;font-weight:700;flex:1}
 .hdr-btn{padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:12px;cursor:pointer;transition:background .15s;font-family:inherit}
 .hdr-btn:hover{background:rgba(255,255,255,.2)}
@@ -126,9 +126,9 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
     <div class="sidebar-inner">
       <div class="nav-label">快速跳轉</div>
       <a class="nav-btn" href="#today-section" data-id="today-section" id="today-nav" style="display:none"><span class="nav-dot" style="background:#e11d48"></span><span class="nav-name">📌 今日情報</span><span class="nav-count" id="today-count">0</span></a><a class="nav-btn" href="#weekly-report" data-id="weekly-report"><span class="nav-dot" style="background:#f59e0b"></span><span class="nav-name">📊 職安週報</span><span class="nav-count" style="background:#fef3c7;color:#92400e">AI</span></a><div style="height:1px;background:var(--border);margin:6px 4px 10px"></div>
-    <a class="nav-btn" href="#osha_announce" data-id="osha_announce"><span class="nav-dot" style="background:#16a34a"></span><span class="nav-name">職安署公告</span><span class="nav-count">10</span></a>
-    <a class="nav-btn" href="#gnews_incident" data-id="gnews_incident"><span class="nav-dot" style="background:#dc2626"></span><span class="nav-name">重大職災新聞</span><span class="nav-count">91</span></a>
-    <a class="nav-btn" href="#gnews_ohs" data-id="gnews_ohs"><span class="nav-dot" style="background:#7c3aed"></span><span class="nav-name">職安衛動態</span><span class="nav-count">51</span></a>
+    <a class="nav-btn" href="#osha_announce" data-id="osha_announce"><span class="nav-dot" style="background:#16a34a"></span><span class="nav-name">職安署公告</span><span class="nav-count">11</span></a>
+    <a class="nav-btn" href="#gnews_incident" data-id="gnews_incident"><span class="nav-dot" style="background:#dc2626"></span><span class="nav-name">重大職災新聞</span><span class="nav-count">85</span></a>
+    <a class="nav-btn" href="#gnews_ohs" data-id="gnews_ohs"><span class="nav-dot" style="background:#7c3aed"></span><span class="nav-name">職安衛動態</span><span class="nav-count">47</span></a>
     <a class="nav-btn" href="#gnews_law" data-id="gnews_law"><span class="nav-dot" style="background:#0891b2"></span><span class="nav-name">法規更新</span><span class="nav-count">3</span></a>
     </div>
   </aside>
@@ -145,7 +145,7 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
           <button class="toggle-btn" onclick="toggleAll(false)">全部收起</button>
         </div>
       </div>
-      <div class="updated-at">🕐 最後更新：2026-06-09 12:56</div>
+      <div class="updated-at">🕐 最後更新：2026-06-10 13:08</div>
     </div>
     
   <section class="n-section" id="weekly-report">
@@ -190,10 +190,18 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
       <summary class="sec-title">
         <span class="sec-bar"></span>
         <span class="sec-name">職安署公告</span>
-        <span class="sec-count">10</span>
+        <span class="sec-count">11</span>
         <span class="sec-arrow">▾</span>
       </summary>
       <div class="sec-body">
+        <div class="n-card" data-date="2026-06-10">
+          <div class="n-meta">
+            <span class="badge b-green">職安署公告</span>
+            <span class="n-date">2026-06-10</span>
+          </div>
+          <a class="n-title" href="https://www.osha.gov.tw/48110/48417/48423/204550/" target="_blank" rel="noopener">職安署強化列管產品線上審核流程，縮短民眾申辦案件時程</a>
+          <p class="n-desc">依職業安全衛生法第7條及第8條規定，製造者或輸入者針對本部列管產品，應取得測試合格文件，於機械設備器具安全資訊網實施申報登錄及張貼安全標示或合格標章後，始得產製運出廠場及輸入。本署透過邊境管制，阻絕不合格產品流入市場。 輸入者欲進口之列管產品如擬至國內實施檢定或驗證，得向本署申辦先行放行，以避免產品…</p>
+        </div>
         <div class="n-card" data-date="2026-06-05">
           <div class="n-meta">
             <span class="badge b-green">職安署公告</span>
@@ -281,7 +289,7 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
       <summary class="sec-title">
         <span class="sec-bar"></span>
         <span class="sec-name">重大職災新聞</span>
-        <span class="sec-count">91</span>
+        <span class="sec-count">85</span>
         <span class="sec-arrow">▾</span>
       </summary>
       <div class="sec-body">
@@ -290,8 +298,8 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
             <span class="badge b-red">重大職災新聞</span>
             <span class="n-date">2026-06-09</span>
           </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTFBPSE1JbndhVUFSclliXzVPNlZtMEhKWjE0cnU2WTJHLU9NLUJydC0xTUlucEZYVHdJX3JSN1YyM29BNUlUdXdCODJRY3JETXNCUlZfZUx6OElWRzZyMGc?oc=5" target="_blank" rel="noopener">縣府加強職安稽查 打造健康工作環境 - matsu-news.gov.tw</a>
-          <p class="n-desc">縣府加強職安稽查 打造健康工作環境&nbsp;&nbsp;matsu-news.gov.tw</p>
+          <a class="n-title" href="https://news.google.com/rss/articles/CBMiVkFVX3lxTE5vREJicndSR2gxMGtDSlU1eEY0ZW81Um1ucXFnMXlpVklIRzhYYlh6MVB4Q2c4cUptNDBHYnhkLWlQUGZNUkk2UklTYW1zeVZSQ2VCampR?oc=5" target="_blank" rel="noopener">北市工安意外！男跌落砂石場水坑 救起已明顯死亡</a>
+          <p class="n-desc">北市工安意外！男跌落砂石場水坑 救起已明顯死亡&nbsp;&nbsp;東森新聞</p>
         </div>
         <div class="n-card" data-date="2026-06-08">
           <div class="n-meta">
@@ -348,6 +356,14 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
           </div>
           <a class="n-title" href="https://news.google.com/rss/articles/CBMiUEFVX3lxTE1fNXFGSU85YWxYWDFFX3RZMk14SlZiSm5Ca29DOXBxcUtlNThqTWdCWlVoa2F2d3p0c3VmSUVDZFdMQk1mMXVkRVl2cnNmMzFR0gFWQVVfeXFMT2YyUHBIcjVzUXZZTUF1cWdZOFlvYzlvaC0tMTQydEZoNEVmczVtQ1FpaUktbzkzcTctNG53RVFjNUIzbEk3b2psTE5zaHN1RkhtSkMwQXc?oc=5" target="_blank" rel="noopener">高雄新建大樓傳工安意外 30歲工人17樓墜6樓頭撕裂傷送醫搶救</a>
           <p class="n-desc">高雄新建大樓傳工安意外 30歲工人17樓墜6樓頭撕裂傷送醫搶救&nbsp;&nbsp;UDN</p>
+        </div>
+        <div class="n-card" data-date="2026-06-07">
+          <div class="n-meta">
+            <span class="badge b-red">重大職災新聞</span>
+            <span class="n-date">2026-06-07</span>
+          </div>
+          <a class="n-title" href="https://news.google.com/rss/articles/CBMiUEFVX3lxTE1fNXFGSU85YWxYWDFFX3RZMk14SlZiSm5Ca29DOXBxcUtlNThqTWdCWlVoa2F2d3p0c3VmSUVDZFdMQk1mMXVkRVl2cnNmMzFR?oc=5" target="_blank" rel="noopener">高雄新建大樓傳工安意外30歲工人17樓墜6樓頭撕裂傷送醫搶救| 社會萬象| 社會</a>
+          <p class="n-desc">高雄新建大樓傳工安意外30歲工人17樓墜6樓頭撕裂傷送醫搶救| 社會萬象| 社會&nbsp;&nbsp;UDN</p>
         </div>
         <div class="n-card" data-date="2026-06-07">
           <div class="n-meta">
@@ -778,6 +794,14 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
             <span class="badge b-red">重大職災新聞</span>
             <span class="n-date">2026-05-28</span>
           </div>
+          <a class="n-title" href="https://news.google.com/rss/articles/CBMiU0FVX3lxTE16VWp3SWtXSWlNejJJbVQzOW1vekI5Nmd5ellSaVd1Z1JRaHQ3UDBENWV4eVFvRXZqeXg5dVV3ZHZhVHN6amtkcXpQVUgxSVgzMnRB?oc=5" target="_blank" rel="noopener">投縣府辦協助職業災害勞工重返職場說明會</a>
+          <p class="n-desc">投縣府辦協助職業災害勞工重返職場說明會&nbsp;&nbsp;臺灣導報</p>
+        </div>
+        <div class="n-card" data-date="2026-05-28">
+          <div class="n-meta">
+            <span class="badge b-red">重大職災新聞</span>
+            <span class="n-date">2026-05-28</span>
+          </div>
           <a class="n-title" href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9pcTUyUU9fdnRKZXBiSFZhS1lXQlM3Mk9xTW1DelRJZVBYSnhKMVlmWl9pR2pjaXhlTldxeTRFOXp4OU1kRVZ5cHhEUnhrMWFDNkpidmxEYUx1Yl90?oc=5" target="_blank" rel="noopener">桃園機捷工地爆嚴重工安事故！泰籍移工遭怪手擊中頭部亡| 社會焦點</a>
           <p class="n-desc">桃園機捷工地爆嚴重工安事故！泰籍移工遭怪手擊中頭部亡| 社會焦點&nbsp;&nbsp;太報 TaiSounds</p>
         </div>
@@ -874,16 +898,16 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
             <span class="badge b-red">重大職災新聞</span>
             <span class="n-date">2026-05-28</span>
           </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiQkFVX3lxTFBJVS1BcnBaNmRHci12QUtOazFfckIxazhPRGstUXV1OWxhSURFSXhTMkYxWlZiODNGX253dGpmVmVwQQ?oc=5" target="_blank" rel="noopener">跨出復工第一步 投縣府辦理3場次協助職業災害勞工重返職場說明會 - 墨新聞-MORE News</a>
-          <p class="n-desc">跨出復工第一步 投縣府辦理3場次協助職業災害勞工重返職場說明會&nbsp;&nbsp;墨新聞-MORE News</p>
+          <a class="n-title" href="https://news.google.com/rss/articles/CBMibkFVX3lxTE1EaU1CMGJYVlE3Q1lhaVd3RFJHTm81QmtTMExtOUFBQklrbmhQd0p1WHdmNEdrTUNUS2cxeDF1VENoOG1PUmk3UW5TZEdGaW0zZWJBbnJzUDYzc1dHSjEwa1ptNkhtUThfV0VpUXNR?oc=5" target="_blank" rel="noopener">桃捷工程工安意外 50歲泰籍移工遭怪手猛擊頭部身亡</a>
+          <p class="n-desc">桃捷工程工安意外 50歲泰籍移工遭怪手猛擊頭部身亡&nbsp;&nbsp;中時新聞網</p>
         </div>
         <div class="n-card" data-date="2026-05-28">
           <div class="n-meta">
             <span class="badge b-red">重大職災新聞</span>
             <span class="n-date">2026-05-28</span>
           </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMibkFVX3lxTE1EaU1CMGJYVlE3Q1lhaVd3RFJHTm81QmtTMExtOUFBQklrbmhQd0p1WHdmNEdrTUNUS2cxeDF1VENoOG1PUmk3UW5TZEdGaW0zZWJBbnJzUDYzc1dHSjEwa1ptNkhtUThfV0VpUXNR?oc=5" target="_blank" rel="noopener">桃捷工程工安意外 50歲泰籍移工遭怪手猛擊頭部身亡</a>
-          <p class="n-desc">桃捷工程工安意外 50歲泰籍移工遭怪手猛擊頭部身亡&nbsp;&nbsp;中時新聞網</p>
+          <a class="n-title" href="https://news.google.com/rss/articles/CBMiQkFVX3lxTFBJVS1BcnBaNmRHci12QUtOazFfckIxazhPRGstUXV1OWxhSURFSXhTMkYxWlZiODNGX253dGpmVmVwQQ?oc=5" target="_blank" rel="noopener">跨出復工第一步 投縣府辦理3場次協助職業災害勞工重返職場說明會 - 墨新聞-MORE News</a>
+          <p class="n-desc">跨出復工第一步 投縣府辦理3場次協助職業災害勞工重返職場說明會&nbsp;&nbsp;墨新聞-MORE News</p>
         </div>
         <div class="n-card" data-date="2026-05-27">
           <div class="n-meta">
@@ -949,70 +973,6 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
           <a class="n-title" href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE9JU1RmUkdQLVlpSEl1U0xhX0FrS19zZUhNdHFDVGlmczBNd3JBU1BhUGh6RVByNVFSSXlWd0F2SnAzdE1Ua1N0dHZ1UTVNSVU?oc=5" target="_blank" rel="noopener">韓國首爾又爆工安意外！施工現場突土石崩塌 1人遭活埋</a>
           <p class="n-desc">韓國首爾又爆工安意外！施工現場突土石崩塌 1人遭活埋&nbsp;&nbsp;TVBS新聞網</p>
         </div>
-        <div class="n-card" data-date="2026-05-27">
-          <div class="n-meta">
-            <span class="badge b-red">重大職災新聞</span>
-            <span class="n-date">2026-05-27</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTE1aTjBlNjM4TmNkMnE4UVQ3dnoweEl6SFU3SFd4Nm9nN19Ha0dRWl83dUVUTjlhWEJoNXBmNDJEMkpyb01rYUtkdDd6dzZ6cEpyeXRLMU5xbEt5TF9LSEHSAWhBVV95cUxNRmV1R09IRHJBRmM2cGRHMEUzZUllWk53LTlVSVBNaHhQSWdiMFhpc2E3NnUyVUhlc1FHaTlnWmNSanNLbTdwTzQ1RjZ5eUpONWxtMHJCeEdpQVpIemRBQkhlWUNaQmdUWg?oc=5" target="_blank" rel="noopener">快訊／南韓首爾再爆「工安意外」 3人慘遭活埋！</a>
-          <p class="n-desc">快訊／南韓首爾再爆「工安意外」 3人慘遭活埋！&nbsp;&nbsp;ETtoday新聞雲</p>
-        </div>
-        <div class="n-card" data-date="2026-05-27">
-          <div class="n-meta">
-            <span class="badge b-red">重大職災新聞</span>
-            <span class="n-date">2026-05-27</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMisAFBVV95cUxQS2c4MWFrNmloV19UOFJ2LWV4Y2NmWGg1eDAtbk9wS2J6c2RwMF9NNzhrTjVFcjV2aVVwUlhkN2g4T3YzbEttMDZrckRyT1JkRG9tbmxGaGxuaDZjYzF6RkkyWFBMWkFLdGl2TGZSTkx2YWp6VU5Ic1NmaGxYeFRvaXZBV1E0dHVTUHV5M2RhR1V1Mlk4d2ZkWUhUeS1ybmgwSGlxeHRpRS1wb25RbVRzQw?oc=5" target="_blank" rel="noopener">影／印度恐怖工安意外！重達1噸大理石板突倒塌 工人遭活活壓死畫面曝光</a>
-          <p class="n-desc">影／印度恐怖工安意外！重達1噸大理石板突倒塌 工人遭活活壓死畫面曝光&nbsp;&nbsp;商傳媒</p>
-        </div>
-        <div class="n-card" data-date="2026-05-27">
-          <div class="n-meta">
-            <span class="badge b-red">重大職災新聞</span>
-            <span class="n-date">2026-05-27</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMihgNBVV95cUxPcDFSWjlEOGJDWHhLRzc0NE10NFpVV1hnTUlkOUhHQ2UtazRtaUtESExCcGJlX3FkYXlPRXFvNlJVRXo2Y0xoWU5xQ1RpeHFaVUl3dVNKM2ViVTU5MnlVOWVZMk00MUs4d3o1LUxsdHMxOFE5R3ZxYndfbTRSWkdicnc4el9yWloyZlNPcEp2RjNYTGd3RlpJUVJiblRDNHN5Z1dEaUcwa2FHbXB1YkxuSXRFRGlqOFo2Zll4OWo5a005YjJQNV95NG9ZTTJwWFByUWUwSktRb1hTbUdWSWs4UHNmd28yT0lWSG9zdjgtbVRKckVmb2NxaHhCWVpkMnhScUo1STQ4R2ZZZXBSN0VUZVJqYmdLUTdDQ0ItbXc5ZEVGalVVVjdzb3pPc2F4MG5faTFhY1dtMV9tYXhzYmRBVkFTX1k3aVkwSVdFTnkxcXplRGwtQXZPc0dWZWQ2c2RoMzVUOHhrbXdDRERyNHREVEdQb1ZFSzNpOWxfRG5oOVhwSmNIdUE?oc=5" target="_blank" rel="noopener">美再傳工安事件！華州造紙廠「腐蝕性液體化學槽」內爆1死9失聯</a>
-          <p class="n-desc">美再傳工安事件！華州造紙廠「腐蝕性液體化學槽」內爆1死9失聯&nbsp;&nbsp;Yahoo新聞</p>
-        </div>
-        <div class="n-card" data-date="2026-05-27">
-          <div class="n-meta">
-            <span class="badge b-red">重大職災新聞</span>
-            <span class="n-date">2026-05-27</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiU0FVX3lxTE1maE5CQkRVQVpfYXpLTm8tandNdHZYRndHUDZkc2RIQVh1VTFlMG1VcnM2ZXZRTkR2bWVfN2pTMWE2UnV0a0M3dG1NSWNGUWp5S2Fr?oc=5" target="_blank" rel="noopener">首爾工安意外 高架橋坍塌釀3死3傷｜中央社影音新聞</a>
-          <p class="n-desc">首爾工安意外 高架橋坍塌釀3死3傷｜中央社影音新聞&nbsp;&nbsp;中央社 CNA</p>
-        </div>
-        <div class="n-card" data-date="2026-05-26">
-          <div class="n-meta">
-            <span class="badge b-red">重大職災新聞</span>
-            <span class="n-date">2026-05-26</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiggFBVV95cUxQQnptM0phRGhEQnd4UUlwSzlkNk5aS25UNHNsTUl0Q1lrb0ZXaWhEQU5NYWs2RGt3VHRGYjVHTFhlWWhvSUszenRSMHF6ZzktR2c1dEpzVVlMRFNyQUo1Q3duYXJqNXNTQlB4bmdDZ0xieXpjVnc1bnZ4bW1WaFE0d053?oc=5" target="_blank" rel="noopener">韓國首爾傳嚴重工安意外 高架橋崩塌釀3死3傷</a>
-          <p class="n-desc">韓國首爾傳嚴重工安意外 高架橋崩塌釀3死3傷&nbsp;&nbsp;壹電視</p>
-        </div>
-        <div class="n-card" data-date="2026-05-26">
-          <div class="n-meta">
-            <span class="badge b-red">重大職災新聞</span>
-            <span class="n-date">2026-05-26</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE5WSHhOOWpBS2JkNUFxSFBjWjE0Z1d5cHpGUS02S3BQcW9BaUFBekowMWpkaEgtOFl5R2dIX0syZ2NLZlFBYmV0TGdlNENsMzjSAVRBVV95cUxPRmlPOE05T2V3OER3LU9ha0c1ZDZ3MjBIb081MEN5aU5SVU9zQ0NvcTB1NEtUR2xJaDBUX1hZNHhPRzUwcjJsRTZVZjVfQzhLMFBmdkE?oc=5" target="_blank" rel="noopener">高架橋拆到一半突崩塌 韓國首爾爆工安意外3死3傷 | 國際 | CTWANT</a>
-          <p class="n-desc">高架橋拆到一半突崩塌 韓國首爾爆工安意外3死3傷 | 國際 | CTWANT&nbsp;&nbsp;CTWANT</p>
-        </div>
-        <div class="n-card" data-date="2026-05-26">
-          <div class="n-meta">
-            <span class="badge b-red">重大職災新聞</span>
-            <span class="n-date">2026-05-26</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiYEFVX3lxTE9xOTc3UWt4TWdqUjFtdHppRTlmTzBYWFdNRTNPWlJVaFdVck90ZGJXX2JTc2pVYjJlNW5kLXdSUXV5SXlWc0toVDdFczNQZDVkX0QtWXN6SFlOZllfVDJLTg?oc=5" target="_blank" rel="noopener">南韓驚傳工安意外！拆除中陸橋突坍塌 傳多人受傷受困</a>
-          <p class="n-desc">南韓驚傳工安意外！拆除中陸橋突坍塌 傳多人受傷受困&nbsp;&nbsp;民視新聞網</p>
-        </div>
-        <div class="n-card" data-date="2026-05-26">
-          <div class="n-meta">
-            <span class="badge b-red">重大職災新聞</span>
-            <span class="n-date">2026-05-26</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiVkFVX3lxTFBhZTFXRXpyM2M0UFlBb0M2bldJOGtuSnF6bEZxNTVSczkzMzlMS3dkdGRBaFk5SXplVm5QQ0Q1Z3k1cmExdXVJbkVNTkUzZGFibzlLQUhn?oc=5" target="_blank" rel="noopener">很多人犯！職場「未做1事」最重罰10萬 政府全台追償逾4.3億 | 三立新聞網</a>
-          <p class="n-desc">很多人犯！職場「未做1事」最重罰10萬 政府全台追償逾4.3億 | 三立新聞網&nbsp;&nbsp;LINE TODAY</p>
-        </div>
       </div>
     </details>
   </section>
@@ -1021,10 +981,42 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
       <summary class="sec-title">
         <span class="sec-bar"></span>
         <span class="sec-name">職安衛動態</span>
-        <span class="sec-count">51</span>
+        <span class="sec-count">47</span>
         <span class="sec-arrow">▾</span>
       </summary>
       <div class="sec-body">
+        <div class="n-card" data-date="2026-06-10">
+          <div class="n-meta">
+            <span class="badge b-purple">職安衛動態</span>
+            <span class="n-date">2026-06-10</span>
+          </div>
+          <a class="n-title" href="https://news.google.com/rss/articles/CBMickFVX3lxTE16dFZGLTFNbzhjcWtrRFY1ay13UGs1emo0R3VYZ3RBelJvb3kxNjRLbEhaQUJ5elhDd3VCbkc3WVZ6OFhnU0pVVUU0UHhfcHZScGtBTjgwbEtCT2RRaHR4QS0yV0tIZFhGVjBnZTB1eVZLQQ?oc=5" target="_blank" rel="noopener">落實職安衛教育訓練 勞工局辦訓練保障職場安心又順利</a>
+          <p class="n-desc">落實職安衛教育訓練 勞工局辦訓練保障職場安心又順利&nbsp;&nbsp;wennan.org.tw</p>
+        </div>
+        <div class="n-card" data-date="2026-06-09">
+          <div class="n-meta">
+            <span class="badge b-purple">職安衛動態</span>
+            <span class="n-date">2026-06-09</span>
+          </div>
+          <a class="n-title" href="https://news.google.com/rss/articles/CBMiTEFVX3lxTE9CYkpzaDI2MWFjUWhmWVBXRmZ3VEFIZUdFRDZxMzFSQ0tySndUZDdhUDMyTk42VzZ1ZjhVOUNhU3hpVE1nVFpudkpERWc?oc=5" target="_blank" rel="noopener">勞檢處攜手台電辦職安座談 強化工程源頭防災</a>
+          <p class="n-desc">勞檢處攜手台電辦職安座談 強化工程源頭防災&nbsp;&nbsp;樂上新聞網</p>
+        </div>
+        <div class="n-card" data-date="2026-06-09">
+          <div class="n-meta">
+            <span class="badge b-purple">職安衛動態</span>
+            <span class="n-date">2026-06-09</span>
+          </div>
+          <a class="n-title" href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE5VbGMza2Y1Q1doV09LTUo3d2kxZWY5UXE5WTQ4NGQ1VThaWmNVX2tpTGNCbVVmVlpHY09oWHg5R3pQZk04ODVjQ3FDTkIxaHdISGFVV1h4bFBrRGE5WF9v?oc=5" target="_blank" rel="noopener">密室逃脫員工窒息過世沉浸式體驗協會編職安指引| 政治</a>
+          <p class="n-desc">密室逃脫員工窒息過世沉浸式體驗協會編職安指引| 政治&nbsp;&nbsp;中央社 CNA</p>
+        </div>
+        <div class="n-card" data-date="2026-06-09">
+          <div class="n-meta">
+            <span class="badge b-purple">職安衛動態</span>
+            <span class="n-date">2026-06-09</span>
+          </div>
+          <a class="n-title" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTFBPSE1JbndhVUFSclliXzVPNlZtMEhKWjE0cnU2WTJHLU9NLUJydC0xTUlucEZYVHdJX3JSN1YyM29BNUlUdXdCODJRY3JETXNCUlZfZUx6OElWRzZyMGc?oc=5" target="_blank" rel="noopener">縣府加強職安稽查 打造健康工作環境 - matsu-news.gov.tw</a>
+          <p class="n-desc">縣府加強職安稽查 打造健康工作環境&nbsp;&nbsp;matsu-news.gov.tw</p>
+        </div>
         <div class="n-card" data-date="2026-06-07">
           <div class="n-meta">
             <span class="badge b-purple">職安衛動態</span>
@@ -1368,70 +1360,6 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
           </div>
           <a class="n-title" href="https://news.google.com/rss/articles/CBMigwFBVV95cUxQSnRRWC0xMjhzOWwyQVVyaHk2bkxjbFlmSmdmTGRLQ1g1TWZnZkhFV2t3bVpUZG5yWjRSOGVhaXRFRkJLV3dYaTY2XzAxZGstTDQ5RXhJVnpvTzU0dFhaMFgzRmNqZE55bzV2MGJtSEg1TmdjcDhQMTlHanVEdzJrOHhZUQ?oc=5" target="_blank" rel="noopener">終極懶人包：職場霸凌新法7月上路，從制度、培訓到舉證，HR合規行動圖解</a>
           <p class="n-desc">終極懶人包：職場霸凌新法7月上路，從制度、培訓到舉證，HR合規行動圖解&nbsp;&nbsp;104職場力</p>
-        </div>
-        <div class="n-card" data-date="2026-05-27">
-          <div class="n-meta">
-            <span class="badge b-purple">職安衛動態</span>
-            <span class="n-date">2026-05-27</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiUkFVX3lxTE1RMnZDMUZmbUY2U2JDSU1MaEVUSXFRSXdMMzM3dGJJeGFvWEJkSWhObTduVldrQ291MlZYSFBuYmhKVEhZZEx5MXRQOVVvYTJMc1E?oc=5" target="_blank" rel="noopener">港務公司通過ISO/CNS 45001追查稽核 職安管理成效獲肯定</a>
-          <p class="n-desc">港務公司通過ISO/CNS 45001追查稽核 職安管理成效獲肯定&nbsp;&nbsp;中華新聞雲／中華日報</p>
-        </div>
-        <div class="n-card" data-date="2026-05-26">
-          <div class="n-meta">
-            <span class="badge b-purple">職安衛動態</span>
-            <span class="n-date">2026-05-26</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTFA5WjlMSlhzX2lzS1B4WUlmSXVqTWdFajgyRFZqX3ZUbFRjZ2lEaUdVZjRLdzdOSTl2LTRCT01jWWp0MFhadUhnMVdyZjV2dw?oc=5" target="_blank" rel="noopener">職安管理成效獲肯定！臺灣港務公司通過115年度職業安全衛生管理系統追查稽核| 徐炳文 | 地方新聞</a>
-          <p class="n-desc">職安管理成效獲肯定！臺灣港務公司通過115年度職業安全衛生管理系統追查稽核| 徐炳文 | 地方新聞&nbsp;&nbsp;風傳媒</p>
-        </div>
-        <div class="n-card" data-date="2026-05-26">
-          <div class="n-meta">
-            <span class="badge b-purple">職安衛動態</span>
-            <span class="n-date">2026-05-26</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMi_ANBVV95cUxNRW1OWlZiWlpDazdFMUxCM2hsSlBBMVQwZU9xYjZaTXJNS0x0RUdkV1VWLVhXMDNydkRFRVZ3dG5nZTJXeTczZzhVckNuTlphb3Fua0hTZWhoZ1lWTk9mYUlrZk56ejNrbURaTVN0QUtDWDJoTHpRcUNOcEVmRERTcjNTRUZDMTloUzgzT2RMd3kyYnRab0ZUbmFQOEJZS0xMT0J1c09NWTdXU2FNSXZfRmtDU3laQnJYcXRLQWs5UndyVkVJTUdvRWd3b0dfaENjbG9HbkZ2ODBPZzA0S0VXTmRUN2pkZmdxNlhvZFN6QjFjQjc2bXVCQmNiX1ZGUThoOGZwUDNsYm9HWXdzbmdUUGFXdnAzb1ExUDdCVmUzMWNNb3h0Y09WbVEzMmZxVjlMVEFlYmQwZ3BnLWZCZHZNZUNKaWhuZmVTUnkzX0RuajhaRE03MFZzdGlpUWJaMGN6M0JpYnRkUElLNEJPS2ZFNzRkNDVIaG5rWk1ZQ1pvXzkyQkJPX21pZW83Sm9YcW81YURwT2RjeWdFOXR2NG8yZVJLc1hzdjFxSGVOX0psSzMtR1Z5Qk1heWNXT1FQWlhFVzNOdHR4YjhzSW84encxdGZENWJxWkJ5LUZWLUVSNW1QVXRjeFF3VHpLcy1PQ241eHNDWjlfNGEyR21I?oc=5" target="_blank" rel="noopener">臺灣港務公司職安管理成效獲肯定 順利通過115年度職業安全衛生管理系統追查稽核</a>
-          <p class="n-desc">臺灣港務公司職安管理成效獲肯定 順利通過115年度職業安全衛生管理系統追查稽核&nbsp;&nbsp;Yahoo新聞</p>
-        </div>
-        <div class="n-card" data-date="2026-05-26">
-          <div class="n-meta">
-            <span class="badge b-purple">職安衛動態</span>
-            <span class="n-date">2026-05-26</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiVkFVX3lxTFBSZXZEYlVPMlhoTS1XdG1qUnZPS3dCS01SUmMxSXBZVjdUX1B2ZExZX0dvdGpDUVpMc3lKakxjbjN3amdSSGhkUTBfTVJHTXFMUzk0djln?oc=5" target="_blank" rel="noopener">港務公司通過ISO/CNS 45001追查稽核職安管理成效獲肯定| 中華日報</a>
-          <p class="n-desc">港務公司通過ISO/CNS 45001追查稽核職安管理成效獲肯定| 中華日報&nbsp;&nbsp;LINE TODAY</p>
-        </div>
-        <div class="n-card" data-date="2026-05-26">
-          <div class="n-meta">
-            <span class="badge b-purple">職安衛動態</span>
-            <span class="n-date">2026-05-26</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiUkFVX3lxTE9yMDA3TnhTXzBmRnRSY1R6QmQ5OWVzN180UkVOZ0doMHV3R0dPWTAzZDVQdVRaWVk5Z282WmhTOWpGdnN5dnBzMFNxdEltdUJyV0E?oc=5" target="_blank" rel="noopener">臺灣港務公司職安管理成效獲肯定，順利通過115年度職業安全衛生管理系統追查稽核</a>
-          <p class="n-desc">臺灣港務公司職安管理成效獲肯定，順利通過115年度職業安全衛生管理系統追查稽核&nbsp;&nbsp;【飛揚新聞】</p>
-        </div>
-        <div class="n-card" data-date="2026-05-26">
-          <div class="n-meta">
-            <span class="badge b-purple">職安衛動態</span>
-            <span class="n-date">2026-05-26</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiRkFVX3lxTE1aX09xaWVTSy1vMlVEQ3E1Mkh0aE1IVElRRDY4LXhtWWxvQjJaQUZqcFBqWVd6em12MmpyS2c2WE9POTZlbUE?oc=5" target="_blank" rel="noopener">高雄港區新聞網 / 港務公司職安管理再獲國際認證！七大商港全面通過ISO 45001稽核</a>
-          <p class="n-desc">高雄港區新聞網 / 港務公司職安管理再獲國際認證！七大商港全面通過ISO 45001稽核&nbsp;&nbsp;台灣新聞雲報</p>
-        </div>
-        <div class="n-card" data-date="2026-05-26">
-          <div class="n-meta">
-            <span class="badge b-purple">職安衛動態</span>
-            <span class="n-date">2026-05-26</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMiUkFVX3lxTE1XR3MxbU5Wdl8xUG02SUtmUV9Cdy1pVDZWR3B5TWZzekc3cW5PXzBDVll4UU14dFREX1lSc1NkeWJmV0tyODVkZkNPYmhMYlFFdUHSAW5BVV95cUxNNUdjRE5TaHFVODljWEkwcXdJMWU4TERyeWdqaHFhMlFNNy10M2ZpbTFCdFdVZUUzYWJaMWphVHgwRExhSXdpT1FDZnowdGtFYW5PTnE3aVZFdzc5LUdsbFg0cjFXME1RdlRZRnBkZw?oc=5" target="_blank" rel="noopener">港務公司職安管理成效獲肯定 順利通過今年職安與衛生管理稽核</a>
-          <p class="n-desc">港務公司職安管理成效獲肯定 順利通過今年職安與衛生管理稽核&nbsp;&nbsp;ETtoday財經雲</p>
-        </div>
-        <div class="n-card" data-date="2026-05-26">
-          <div class="n-meta">
-            <span class="badge b-purple">職安衛動態</span>
-            <span class="n-date">2026-05-26</span>
-          </div>
-          <a class="n-title" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE0wZzlmdzhkdHFqaWQ5NGFIVTJYOGtYd3ItVVBqSlRRODE3SWpyaTB2NHQxb2IwWFVIUWI4WXRXN3RSSlBvWDFfN1VfSzhnRHRrTXVZeW1YWmUxb2plZUlZZlF4S1NCSzFTUEJNb0QzQXA?oc=5" target="_blank" rel="noopener">落實職安管理 臺灣港務公司全數通過ISO/CNS 45001追查稽核</a>
-          <p class="n-desc">落實職安管理 臺灣港務公司全數通過ISO/CNS 45001追查稽核&nbsp;&nbsp;大成報</p>
         </div>
       </div>
     </details>
