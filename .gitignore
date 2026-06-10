@@ -1,0 +1,2 @@
+# 法規備份（每次 build.py 自動產生，不需 git 版控）
+law/backups/
