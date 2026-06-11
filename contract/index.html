@@ -401,7 +401,19 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
           <select class="fi" id="f-area" style="max-width:280px">
             <option value="">— 請選擇 —</option>
             <option value="總部">總部</option>
-            <option value="其他">其他</option>
+            <option value="北一">北一</option>
+            <option value="北二">北二</option>
+            <option value="中一">中一</option>
+            <option value="南一">南一</option>
+            <option value="南二">南二</option>
+            <option value="全興">全興</option>
+            <option value="五股">五股</option>
+            <option value="神岡站">神岡站</option>
+            <option value="和美站">和美站</option>
+            <option value="金馬站">金馬站</option>
+            <option value="員林站">員林站</option>
+            <option value="草屯站">草屯站</option>
+            <option value="斗六站">斗六站</option>
           </select>
         </div>
         <div class="fg">
@@ -752,7 +764,7 @@ const WORK_HAZARDS = [
   {t:'切割研磨作業', h:'燃燒、火災、爆炸、粉塵吸入、環境污染', m:'安全眼鏡、污染防治措施、警報系統隔離或中斷及其他必要個人防護具'},
   {t:'電氣作業', h:'感電、火災、爆炸、燃燒', m:'靜電偵測器、活電感知器、必要個人防護具、自備消防設備'},
   {t:'機台裝設、維修、保養', h:'上述危害因素及撞擊、刺傷、絆倒、滑倒等', m:'上述之適當防護具'},
-  {t:'其他', h:'撞擊、刺傷、絆倒、滑倒等', m:'必要個人防護器具'},
+  {t:'一般作業/其他', h:'撞擊、刺傷、絆倒、滑倒等', m:'必要個人防護器具'},
 ];
 
 const COMMITMENTS = [
@@ -772,7 +784,7 @@ const WORK_TYPES_A = [
   '6. 有機溶劑/特用化學品/毒化物之運作','7. 水電設備操控工程','8. 作業環境/污染檢測',
   '9. 高壓氣體供應(輸配管、灌裝或搬運等)','10. 原物料之裝卸','11. 冷凍空調設備操控工程',
   '12. 環境清潔及消毒','13. 發塵作業','14. 密閉空間或通風不良場所作業',
-  '15. 消防/機械設備檢查或維修測試','16. 其它',
+  '15. 消防/機械設備檢查或維修測試','16. 一般作業/其他',
 ];
 
 const TOOLS_B = [
@@ -892,6 +904,13 @@ function showView(name){
   document.getElementById('step-bar').style.display = name==='wizard' ? 'block' : 'none';
   if(name==='records') renderRecords().catch(()=>{});
   if(name==='eval-overview') renderEvalOverview().catch(()=>{});
+  if(name==='wizard'){
+    const t=new Date().toLocaleDateString('sv');
+    const sd=document.getElementById('f-date-start');
+    const ed=document.getElementById('f-date-end');
+    if(sd&&!sd.value)sd.value=t;
+    if(ed&&!ed.value)ed.value=t;
+  }
 }
 
 // ════════════════════════════════════════════════
@@ -2999,7 +3018,7 @@ th{background:#d1d5db;font-weight:700;text-align:center;white-space:nowrap}
     ['切割研磨作業','燃燒、火災、爆炸、粉塵吸入、環境(或潔淨室)污染','安全眼鏡、污染防治措(設)施、警報系統隔離或中斷及其他必要個人防護具'],
     ['電氣作業','感電、火災、爆炸、燃燒','靜電偵測器、活電感知器、必要個人防護具、自備消防設備'],
     ['機台裝設、維修、保養','上述之危害因素及撞擊、刺傷、拌倒、滑倒等','上述之適當防護具'],
-    ['其他','撞擊、刺傷、拌倒、滑倒等','必要個人防護器具'],
+    ['一般作業/其他','撞擊、刺傷、拌倒、滑倒等','必要個人防護器具'],
   ];
   let d2=`<div class="page">
 <div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div><div class="co-name">大豐環保科技股份有限公司</div><div class="co-sub">Dafon Environmental Technology Co., Ltd.</div></div></div>
@@ -3115,7 +3134,7 @@ th{background:#d1d5db;font-weight:700;text-align:center;white-space:nowrap}
   </tr>
   <tr>
     <td colspan="2" style="font-size:11px"><span class="ck">${ck(selA,'15. 消防/機械設備檢查或維修測試')}</span> 15. 消防/機械設備檢查或維修測試</td>
-    <td style="font-size:11px"><span class="ck">${ck(selA,'16. 其它')}</span> 16. 其它</td>
+    <td style="font-size:11px"><span class="ck">${ck(selA,'16. 一般作業/其他')}</span> 16. 一般作業/其他</td>
   </tr>
 </table>
 
