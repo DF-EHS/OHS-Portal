@@ -9,10 +9,16 @@
 | 模組 | 說明 |
 |------|------|
 | 🏠 系統入口 | 各功能頁面統一入口，含公告欄 |
-| 📄 承攬商安全衛生協議書 | 線上填寫並列印承攬商協議書，支援多工作區域 |
+| 📋 職安工作中樞 | 職安日常工作任務追蹤與管理 |
+| 📄 承攬商管理系統 | 線上填寫並列印承攬商安全衛生協議書及作業許可申請書，支援多工作區域 |
+| 🌡️ 熱危害風險即時查詢 | 依 GPS 定位自動抓取最近氣象站資料，即時計算 WBGT 與熱指數並給出防護建議 |
+| 🏥 職護臨場服務 | 職護門診健康紀錄登錄與查詢，個資保護登入機制 |
+| 🚨 職業災害分析系統 | 職災案件登錄、統計分析與改善追蹤 |
+| 🛡️ 不法侵害防治系統 | 職場暴力與騷擾事件申報、調查追蹤 |
 | ⚠️ AI 風險評估 | 上傳現場照片，由 Gemini AI 辨識危害並給出改善建議 |
 | ⚖️ 法規問答機器人 | 整合公司法規鑑別資料庫＋Gemini AI 知識，回答台灣職安法規問題 |
 | 📰 職災情報與安衛動態 | 自動彙整職安署公告、重大職災新聞、法規動態；每週一 AI 自動產生職安週報 |
+| 📁 職業安全衛生計畫書 | 公司各項職安計畫書線上瀏覽與下載 |
 | 📋 職安衛委員會 | 歷次委員會會議記錄與附件 |
 | 🎓 教育訓練 | 教育訓練教材線上瀏覽 |
 
@@ -23,11 +29,18 @@
 | 頁面 | 網址 |
 |------|------|
 | 系統入口 | https://df-ehs.github.io/OHS-Portal/ |
-| 承攬商協議書 | https://df-ehs.github.io/OHS-Portal/contract/ |
+| 職安工作中樞 | https://df-ehs.github.io/OHS-Portal/tasks/ |
+| 承攬商管理系統 | https://df-ehs.github.io/OHS-Portal/contract/ |
+| 熱危害風險即時查詢 | https://df-ehs.github.io/OHS-Portal/heat/ |
+| 職護臨場服務 | https://df-ehs.github.io/OHS-Portal/nurse/ |
+| 職業災害分析系統 | https://df-ehs.github.io/OHS-Portal/accident/ |
+| 不法侵害防治系統 | https://df-ehs.github.io/OHS-Portal/harassment/ |
 | AI 風險評估 | https://df-ehs.github.io/OHS-Portal/risk/ |
 | 法規問答機器人 | https://df-ehs.github.io/OHS-Portal/law/ |
 | 職災情報與安衛動態 | https://df-ehs.github.io/OHS-Portal/news/ |
+| 職業安全衛生計畫書 | https://df-ehs.github.io/OHS-Portal/plans/ |
 | 職安衛委員會 | https://df-ehs.github.io/OHS-Portal/committee/ |
+| 教育訓練 | https://df-ehs.github.io/OHS-Portal/training/ |
 
 ---
 
@@ -117,15 +130,23 @@ npx wrangler deploy workers/law-chatbot.js --name ohs-law-chatbot
 ```
 OHS-Portal/
 ├── index.html              # 系統入口
-├── contract/               # 承攬商安全衛生協議書
+├── tasks/                  # 職安工作中樞
+├── contract/               # 承攬商管理系統
+├── heat/                   # 熱危害風險即時查詢
+├── nurse/                  # 職護臨場服務
+├── accident/               # 職業災害分析系統
+├── harassment/             # 不法侵害防治系統
 ├── risk/                   # AI 風險評估
 ├── law/                    # 法規問答機器人
 ├── news/
 │   ├── fetch_news.py       # 新聞抓取與 HTML 產生腳本
 │   ├── index.html          # 自動產生，勿手動編輯
 │   └── cache.json          # 新聞快取（14 天）
+├── plans/                  # 職業安全衛生計畫書
 ├── committee/              # 職安衛委員會
 ├── training/               # 教育訓練教材
+├── shared/
+│   └── sidebar.js          # 共用側邊欄（所有子頁面載入）
 ├── workers/
 │   └── law-chatbot.js      # Cloudflare Worker 原始碼
 ├── send_weekly_report.py   # 職安週報自動寄信腳本
