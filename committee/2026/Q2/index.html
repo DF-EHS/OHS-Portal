@@ -1482,7 +1482,7 @@ tr:hover { background: #e3f2fd; }
       <a class="quick-nav-btn" href="#s8">八 機械設備</a>
       <a class="quick-nav-btn" href="#s9">九 職業災害</a>
       <a class="quick-nav-btn" href="#s10">十 KPI</a>
-      <a class="quick-nav-btn no-content" href="#s11">十一 承攬</a>
+      <a class="quick-nav-btn" href="#s11">十一 承攬</a>
       <a class="quick-nav-btn" href="#s12">十二 其他</a>
     </div>
   </div>
@@ -1513,7 +1513,7 @@ tr:hover { background: #e3f2fd; }
   </div>
 
   <div class="kpi-grid">
-    <div class="kpi-card accent"><div class="big-number">0</div><div class="kpi-label">本季職業災害</div></div>
+    <div class="kpi-card danger"><div class="big-number">3</div><div class="kpi-label">本季職業災害</div></div>
     <div class="kpi-card warning"><div class="big-number">5</div><div class="kpi-label">地下室高風險改善項目</div></div>
     <div class="kpi-card info"><div class="big-number">50%</div><div class="kpi-label">教育訓練年度進度</div></div>
     <div class="kpi-card"><div class="big-number">11</div><div class="kpi-label">年度列管安全衛生提案</div></div>
@@ -1909,10 +1909,42 @@ tr:hover { background: #e3f2fd; }
     <div class="chapter-subtitle">115年第二季職災調查</div>
   </div>
   <div class="card">
-    <div class="card-header accent-header">九、職業災害調查（115年Q2）</div>
+    <div class="card-header warning-header">九、職業災害調查（115年Q2）</div>
     <div class="card-body">
-    <div class="highlight-card"><strong>日期：本季無職業災害紀錄</strong><br>115年第二季（2026年4月至6月）期間，公司無職業災害、交通事故及上下班交通事故紀錄，本季職安管理績效良好。</div>
-    <div class="kpi-grid"><div class="kpi-card accent"><div class="big-number">0</div><div class="kpi-label">職災事件</div></div><div class="kpi-card accent"><div class="big-number">0</div><div class="kpi-label">交通事故</div></div><div class="kpi-card accent"><div class="big-number">0</div><div class="kpi-label">上下班交通事故</div></div></div>
+    <div class="highlight-card" style="border-left-color:var(--warning);background:#fff8e1"><strong>115年第二季共發生 3 件工安事故</strong>（2026年4月至6月），均已完成改善追蹤；本季無交通事故及上下班交通事故紀錄。</div>
+    <div class="kpi-grid">
+      <div class="kpi-card danger"><div class="big-number">3</div><div class="kpi-label">工安事故</div></div>
+      <div class="kpi-card warning"><div class="big-number">1</div><div class="kpi-label">失能傷害（≥1天）</div></div>
+      <div class="kpi-card accent"><div class="big-number">0</div><div class="kpi-label">交通事故</div></div>
+      <div class="kpi-card accent"><div class="big-number">0</div><div class="kpi-label">上下班交通事故</div></div>
+    </div>
+    <table style="margin-top:16px">
+      <thead><tr><th>#</th><th>日期</th><th>地點／部門</th><th>傷者</th><th>事故類型</th><th>事故描述摘要</th><th>休息天數</th><th>改善完成</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>1</td><td>2026-05-06</td><td>五股分選廠<br><span class="muted small">五股分選課</span></td>
+          <td>張秀妃（4139）</td>
+          <td><span class="badge badge-warning">過度負荷</span></td>
+          <td>分選作業中搬重物至輸送帶，反覆推拉翻找導致左手臂疼痛；判定為職業傷害</td>
+          <td class="kpi-bad">1天</td><td>2026-05-09</td>
+        </tr>
+        <tr>
+          <td>2</td><td>2026-05-13</td><td>全興場造粒課<br><span class="muted small">全興造粒課</span></td>
+          <td>蘇密（3897）</td>
+          <td><span class="badge badge-danger">被切割</span></td>
+          <td>更換ETT過濾器時，手部伸入出料處查看，退出時遭切粒刀片割傷，當日就醫縫針；未依安全程序完成危險隔離確認</td>
+          <td class="kpi-good">0天</td><td>2026-05-29</td>
+        </tr>
+        <tr>
+          <td>3</td><td>2026-05-22</td><td>矽品二林廠<br><span class="muted small">中區業務一課</span></td>
+          <td>魏嘉葦（3973）</td>
+          <td><span class="badge badge-warning">刺傷</span></td>
+          <td>分選四合一物料時，魚刺掉入鞋內致腳部刺傷流血，自行就醫打破傷風；未採取防止尖銳異物掉入鞋內之保護措施</td>
+          <td class="kpi-good">0天</td><td>2026-05-22</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="law-ref" style="margin-top:14px"><strong>共同根本原因：</strong>作業標準執行不足，三案均無懲處，責任判定以強化教育宣導及現場查核為主要改善方向。</div>
   </div>
   </div>
 
@@ -1964,7 +1996,26 @@ tr:hover { background: #e3f2fd; }
     <div class="chapter-title">十一、審議承攬業務安全衛生管理事項</div>
     <div class="chapter-subtitle">本季承攬業務管理</div>
   </div>
-  <div class="no-action"><div class="no-action-icon">本期無異動</div><p><strong>本季無新增承攬業務安全衛生審議事項</strong></p><p style="margin-top:8px;font-size:0.88em;">如 Q3 涉及設備櫃安裝、電工改善或環境設備施工，建議納入承攬商危害告知與施工前安全確認。</p></div>
+  <div class="card">
+    <div class="card-header info-header">十一、承攬業務安全衛生管理（115年Q2）</div>
+    <div class="card-body">
+    <div class="highlight-card" style="border-left-color:var(--info);background:#e3f2fd">115年第二季共有 <strong>4 件</strong>承攬商進場作業，均已完成危害告知及安全衛生協議，作業期間無異常事件。</div>
+    <div class="kpi-grid">
+      <div class="kpi-card info"><div class="big-number">4</div><div class="kpi-label">本季進場廠商</div></div>
+      <div class="kpi-card accent"><div class="big-number">0</div><div class="kpi-label">異常事件</div></div>
+    </div>
+    <table style="margin-top:16px">
+      <thead><tr><th>#</th><th>承攬商</th><th>工程名稱</th><th>作業期間</th><th>監督人</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>馥珽國際</td><td>馬桶維修</td><td>2026-05-28</td><td>施仲澤</td></tr>
+        <tr><td>2</td><td>鎖有科技</td><td>換鎖</td><td>2026-05-29 ～ 2026-06-01</td><td>林正暄</td></tr>
+        <tr><td>3</td><td>旭馳</td><td>排水暗管</td><td>2026-06-01</td><td>張清丞</td></tr>
+        <tr><td>4</td><td>丞奕</td><td>公務車車貼施工</td><td>2026-06-11</td><td>蘇宥坦</td></tr>
+      </tbody>
+    </table>
+    <div class="law-ref" style="margin-top:14px"><strong>Q3 建議：</strong>若涉及設備櫃安裝、電工改善或環境設備施工，應於進場前完成承攬商危害告知、施工前安全確認及緊急應變說明。</div>
+  </div>
+  </div>
 
   <div class="chapter" id="s12">
     <div class="chapter-title">十二、其他有關職業安全衛生管理事項</div>
