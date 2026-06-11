@@ -308,6 +308,37 @@ html,body{width:100%;height:100%;overflow:hidden;
   width:8px;height:8px;border-radius:50%;flex-shrink:0
 }
 
+/* ── Password Gate ── */
+#pw-gate{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(148deg,#f2c4cc 0%,#fde8ec 100%);
+  display:flex;align-items:center;justify-content:center
+}
+#pw-box{
+  background:rgba(255,255,255,.92);backdrop-filter:blur(14px);
+  border-radius:22px;padding:44px 52px;
+  box-shadow:0 8px 48px rgba(190,24,93,.18);
+  text-align:center;max-width:360px;width:90%
+}
+#pw-icon{font-size:52px;margin-bottom:18px}
+#pw-title{font-size:21px;font-weight:800;color:#1c3c52;margin-bottom:6px}
+#pw-sub{font-size:13px;color:#64748b;margin-bottom:26px;line-height:1.6}
+#pw-input{
+  width:100%;padding:11px 16px;border-radius:11px;
+  border:1.5px solid #f2c4cc;font-size:15px;
+  font-family:inherit;outline:none;margin-bottom:13px;
+  transition:border-color .15s;text-align:center;letter-spacing:2px
+}
+#pw-input:focus{border-color:#be185d}
+#pw-btn{
+  width:100%;padding:11px 0;border-radius:11px;
+  background:#be185d;color:#fff;border:none;
+  font-size:15px;font-weight:700;cursor:pointer;
+  font-family:inherit;transition:background .15s
+}
+#pw-btn:hover{background:#9d174d}
+#pw-err{font-size:12px;color:#be185d;margin-top:10px;min-height:18px;font-weight:600}
+
 /* ── Responsive ── */
 @media(max-width:768px){
   .s-sec,.s-ctn{padding:28px 22px 80px}
@@ -321,6 +352,18 @@ html,body{width:100%;height:100%;overflow:hidden;
 </style>
 </head>
 <body>
+
+<!-- ── Password Gate ── -->
+<div id="pw-gate">
+  <div id="pw-box">
+    <div id="pw-icon">🔒</div>
+    <div id="pw-title">職場霸凌防治教育訓練</div>
+    <div id="pw-sub">此課程教材受密碼保護<br>請輸入存取密碼以繼續</div>
+    <input type="password" id="pw-input" placeholder="輸入密碼" autocomplete="off">
+    <button id="pw-btn" onclick="checkPw()">確認進入</button>
+    <div id="pw-err"></div>
+  </div>
+</div>
 
 <div id="prog"></div>
 
@@ -652,7 +695,7 @@ html,body{width:100%;height:100%;overflow:hidden;
     <button class="ul-btn" onclick="jumpTo(11)"><span class="ul-dot" style="background:#8a8ccc"></span>04 申訴調查</button>
     <button class="ul-btn" onclick="jumpTo(13)"><span class="ul-dot" style="background:#e8a87e"></span>05 情境演練</button>
     <button class="ul-btn" onclick="jumpTo(19)"><span class="ul-dot" style="background:#c9a042"></span>06 課後確認</button>
-    <button class="ul-btn" onclick="jumpTo(20)"><span class="ul-dot" style="background:#c9a042"></span>結語</button>
+    <button class="ul-btn" onclick="jumpTo(20)"><span class="ul-dot" style="background:#f43f5e"></span>結語</button>
   </div>
   <button id="unit-toggle" onclick="toggleUnitNav()">☰ 單元</button>
 </div>
@@ -701,6 +744,25 @@ document.addEventListener('touchend',   e => {
 
 // init progress
 document.getElementById('prog').style.width = (1 / total * 100) + '%';
+
+// Password gate
+function checkPw() {
+  const val = document.getElementById('pw-input').value;
+  if (val === 'Da0701fon2026%') {
+    document.getElementById('pw-gate').style.display = 'none';
+    sessionStorage.setItem('bullying2026-auth', '1');
+  } else {
+    document.getElementById('pw-err').textContent = '密碼錯誤，請重新輸入';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPw();
+});
+if (sessionStorage.getItem('bullying2026-auth') === '1') {
+  document.getElementById('pw-gate').style.display = 'none';
+}
 
 // Unit quick nav
 const unitList = document.getElementById('unit-list');
