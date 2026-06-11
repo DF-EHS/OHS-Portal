@@ -50,7 +50,7 @@ main { flex: 1; max-width: 980px; margin: 0 auto; width: 100%; padding: 36px 24p
 /* ── course cards ── */
 .course-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
 }
 
@@ -85,11 +85,14 @@ main { flex: 1; max-width: 980px; margin: 0 auto; width: 100%; padding: 36px 24p
   padding: 0 22px 14px;
   display: flex; flex-wrap: wrap; gap: 5px;
   flex: 1;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 .cc-tag {
   padding: 2px 9px; border-radius: 20px;
   font-size: 11px; font-weight: 600;
   background: #dcfce7; color: #15803d;
+  flex: 0 0 auto;
 }
 .cc-tag.orange { background: #ffedd5; color: #c2410c; }
 .cc-tag.blue   { background: #dbeafe; color: #1d4ed8; }
