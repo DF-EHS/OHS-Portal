@@ -1,6 +1,28 @@
 {
   "items": [
     {
+      "key": "34c10d459e3fe5b9",
+      "title": "滯留鋒面及西南氣流造成豪雨，職安署呼籲加強戶外及鄰水作業安全",
+      "link": "https://www.osha.gov.tw/48110/48417/48419/204576/",
+      "pubDate": "Wed, 10 Jun 2026 18:24:23 GMT",
+      "pubTs": 1781115863.0,
+      "desc": "據氣象局報導，受滯留鋒面及西南氣流影響，全台多地已降下致災性暴雨，中南部及東半部山區陸續傳出多起營造工地與濱溪工程因溪水暴漲，造成施工人員受困。勞動部職安署提醒，勞工於鄰近溪水、河川、海岸、其他水域場所及邊坡作業時，易因溪水暴漲或土石流造成撤離不及，致發生溺斃及遭土石掩埋等之重大職業災害，因此，雇主…",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "2d97aed87e483e0b",
+      "title": "連江縣政府執行職業安全稽查 現場查核、督導業者強化職場安全",
+      "link": "https://news.google.com/rss/articles/CBMiR0FVX3lxTFA1SXZxczNvRHQxR0Nza3VWUV8zd2pBbzZuajI3eGRla2N3Wll2QzlfNklnWWxRQmxVaExNNTFvUnpJeWx6OFRR?oc=5",
+      "pubDate": "Wed, 10 Jun 2026 18:00:18 GMT",
+      "pubTs": 1781114418.0,
+      "desc": "連江縣政府執行職業安全稽查 現場查核、督導業者強化職場安全&nbsp;&nbsp;台灣新聞雲",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "a18a9737287616c9",
       "title": "職安署強化列管產品線上審核流程，縮短民眾申辦案件時程",
       "link": "https://www.osha.gov.tw/48110/48417/48423/204550/",
@@ -10,6 +32,28 @@
       "source_id": "osha_announce",
       "source_name": "職安署公告",
       "badge": "green"
+    },
+    {
+      "key": "85a21ff08317bd2e",
+      "title": "工業意外｜旺角六旬男工人工作期間暈倒 送院不治",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5uNWdEMGg3ajdaT3NITXdDVGIydURGa05abDFhNVdCWE4zaFBsLWtHVjd6bzN1Ql9HdGtsbVBPV29tY0tCYzh0dzJLbGxHZzdZY0xkeGdwR0FRNlpQSDlF?oc=5",
+      "pubDate": "Wed, 10 Jun 2026 10:44:54 GMT",
+      "pubTs": 1781088294.0,
+      "desc": "工業意外｜旺角六旬男工人工作期間暈倒 送院不治&nbsp;&nbsp;大紀元時報 香港",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "404140061be29549",
+      "title": "力推科技降災守護勞工安全 北市表揚27組勞動安全獎得主",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBRTERPeHF6OTFYcU9uS1RpWk5PaFVVUU9zVzdnQmYzZDFUYWxkNmhPSXdZTTlEcTVUOHpWTTlrSHN3dEJDNnZNRHlnajJQaHAz0gFWQVVfeXFMT29sdU5JbVd4ekEtWkVDUGlZb1pGUzZDemxRMWZFQ3J1ZjlLLUZINzBYT1RsUTY2Nkw4SU4wamx2ZlN2MjhlMkRMRERrWEozOEcyMDd0OVE?oc=5",
+      "pubDate": "Wed, 10 Jun 2026 09:04:48 GMT",
+      "pubTs": 1781082288.0,
+      "desc": "力推科技降災守護勞工安全 北市表揚27組勞動安全獎得主&nbsp;&nbsp;UDN",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "81c3250ef915c1f6",
@@ -62,9 +106,9 @@
       "pubDate": "Mon, 08 Jun 2026 16:14:21 GMT",
       "pubTs": 1780935261.0,
       "desc": "縣府加強職安稽查 打造健康工作環境&nbsp;&nbsp;matsu-news.gov.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "020ffa635ddbfd74",
@@ -1090,17 +1134,6 @@
       "badge": "red"
     },
     {
-      "key": "5ceb737e0478693b",
-      "title": "嘉市校園球場工安意外 繩索突斷裂 工人遭烤漆板砸中不治",
-      "link": "https://news.google.com/rss/articles/CBMiggNBVV95cUxOQnhfZkZEaWxCQUZ2UUM5cS1Ed19sa2w2WkVxczE5WDAzVS1hZFNzd0owSWJFUkpiejFfUmk5TEs2RGJfaWlOQ25VWWo5ZC1rM19MRFRIMERyNGcyN05MdExJQWQ1SnlkakdTNGdVd2d0S2R2UHRqaWRyU2x6ZllJNHRDSTVfWDhOXzEtdkFVcEZkYUs3UjlabU9PRldOd0J4Q2JrV0lrQTFOUlFQbmFGcENoanNDV2xNNGpQZUJZdm1ZUm5MTGtyY0l4ZTM2bUNoQkFaUmlGZWREbVNmdHg1dmc2QXlzRXdXeDRCMVF0ME9NSmpGc003Sl9jTzBVa3E1MzJnM29pUmctT2lWREVnTjlULUkyeGwtaVR1UTVHU2tTVTVSLWdTVHh4Mkhvc0dCTS1zdUl2QnpHQmNLWUhrVTRZa3lqWXpLNFpaOVVIWmc1cUF2bGVQQko4akdCckJBY3hKZWFHdk9EWEZlWGtPOC1sX20wd2s0ZkRVS2hldURTUQ?oc=5",
-      "pubDate": "Fri, 29 May 2026 06:48:19 GMT",
-      "pubTs": 1780037299.0,
-      "desc": "嘉市校園球場工安意外 繩索突斷裂 工人遭烤漆板砸中不治&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
       "key": "805c0eae94cee61e",
       "title": "工安意外添亡魂！校園「鋼板切腹」30歲工人破肚腸流亡 蘭潭國中發聲了",
       "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5HNUdRVmtNY0laeHlaczBRZURDNzFuUDRQbmFqU3daZlVLZzBVNGVGV1JGTzhjOUhSVUVwVWZPYnM4RTVIZTFsTGFjY05XNHZBakI4YjBFR0_SAV9BVV95cUxPWGw3LVUtaUk3U1M5NmtkcGJMdF9qUWcwMVJabGNnblBmNTJsZXU1elVUbml0SWVJTzUxbXpoUHNBWmhmMlJQNE45U2tMOGJ5RW1PdlN0VGZQUXVhNV93OA?oc=5",
@@ -1209,17 +1242,6 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
-    },
-    {
-      "key": "fdaa0af88da129c3",
-      "title": "跨出復工第一步!縣府辦理3場次協助職業災害勞工重返職場說明會",
-      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBiOVFMS2d1MDd3TmN3eVJOTkk1VnNZS1pxZmdRZ0d0bXVCbWhfbzJSUnBVeGdyWXpuLUY3T0duRkxyOW4ySS1CSzktUWN2am1YQWZRUmxhTWhMUkdBRUVwVXBrX0RndDItN0RN?oc=5",
-      "pubDate": "Thu, 28 May 2026 09:00:14 GMT",
-      "pubTs": 1779958814.0,
-      "desc": "跨出復工第一步!縣府辦理3場次協助職業災害勞工重返職場說明會&nbsp;&nbsp;台灣華報",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
     },
     {
       "key": "5f6fcc00805c71a3",
@@ -1365,6 +1387,28 @@
       "badge": "red"
     },
     {
+      "key": "5ceb737e0478693b",
+      "title": "嘉市校園球場工安意外 繩索突斷裂 工人遭烤漆板砸中不治",
+      "link": "https://news.google.com/rss/articles/CBMiggNBVV95cUxOQnhfZkZEaWxCQUZ2UUM5cS1Ed19sa2w2WkVxczE5WDAzVS1hZFNzd0owSWJFUkpiejFfUmk5TEs2RGJfaWlOQ25VWWo5ZC1rM19MRFRIMERyNGcyN05MdExJQWQ1SnlkakdTNGdVd2d0S2R2UHRqaWRyU2x6ZllJNHRDSTVfWDhOXzEtdkFVcEZkYUs3UjlabU9PRldOd0J4Q2JrV0lrQTFOUlFQbmFGcENoanNDV2xNNGpQZUJZdm1ZUm5MTGtyY0l4ZTM2bUNoQkFaUmlGZWREbVNmdHg1dmc2QXlzRXdXeDRCMVF0ME9NSmpGc003Sl9jTzBVa3E1MzJnM29pUmctT2lWREVnTjlULUkyeGwtaVR1UTVHU2tTVTVSLWdTVHh4Mkhvc0dCTS1zdUl2QnpHQmNLWUhrVTRZa3lqWXpLNFpaOVVIWmc1cUF2bGVQQko4akdCckJBY3hKZWFHdk9EWEZlWGtPOC1sX20wd2s0ZkRVS2hldURTUQ?oc=5",
+      "pubDate": "Thu, 28 May 2026 07:00:00 GMT",
+      "pubTs": 1779951600.0,
+      "desc": "嘉市校園球場工安意外 繩索突斷裂 工人遭烤漆板砸中不治&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "fdaa0af88da129c3",
+      "title": "跨出復工第一步!縣府辦理3場次協助職業災害勞工重返職場說明會",
+      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBiOVFMS2d1MDd3TmN3eVJOTkk1VnNZS1pxZmdRZ0d0bXVCbWhfbzJSUnBVeGdyWXpuLUY3T0duRkxyOW4ySS1CSzktUWN2am1YQWZRUmxhTWhMUkdBRUVwVXBrX0RndDItN0RN?oc=5",
+      "pubDate": "Thu, 28 May 2026 07:00:00 GMT",
+      "pubTs": 1779951600.0,
+      "desc": "跨出復工第一步!縣府辦理3場次協助職業災害勞工重返職場說明會&nbsp;&nbsp;台灣華報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "76faf88f8b580f20",
       "title": "大村 鄉公所",
       "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOOXoyNFdoX2w0ekpYOHVDaGs2eGRHaEZOdlNmcDZJNjhucDRPOWtLcG14YmJGLVF3NG1xS3BrWkpsX25xWU5md0NNQ3ZZTUgzMFhaR2k1Rzk4UkZNNlNaR1ItcGhSQmZseVhJMjgyaFUtMjJWS0ZCRGdzYzhaV2hfM2tmWEJJdw?oc=5",
@@ -1407,127 +1451,6 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
-    },
-    {
-      "key": "92f053723b1e4d5d",
-      "title": "台灣港務公司職安管理獲肯定 | 中華日報",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9XbkRFdzlacnhQOWpvMm5iWXQzTS1vRkExQ0ozaVBXbW5YVW9SSnp3VDVGQWExZGZsUHlzMXlORVdaRlVscXFzcjJLNHAwQWlwX3FNeTVn?oc=5",
-      "pubDate": "Wed, 27 May 2026 13:14:00 GMT",
-      "pubTs": 1779887640.0,
-      "desc": "台灣港務公司職安管理獲肯定 | 中華日報&nbsp;&nbsp;LINE TODAY",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "5f43b663fc6197a0",
-      "title": "終極懶人包：職場霸凌新法7月上路，從制度、培訓到舉證，HR合規行動圖解",
-      "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQSnRRWC0xMjhzOWwyQVVyaHk2bkxjbFlmSmdmTGRLQ1g1TWZnZkhFV2t3bVpUZG5yWjRSOGVhaXRFRkJLV3dYaTY2XzAxZGstTDQ5RXhJVnpvTzU0dFhaMFgzRmNqZE55bzV2MGJtSEg1TmdjcDhQMTlHanVEdzJrOHhZUQ?oc=5",
-      "pubDate": "Wed, 27 May 2026 08:52:25 GMT",
-      "pubTs": 1779871945.0,
-      "desc": "終極懶人包：職場霸凌新法7月上路，從制度、培訓到舉證，HR合規行動圖解&nbsp;&nbsp;104職場力",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "08111b09bf044e20",
-      "title": "瑞芳驚傳工安意外！2層樓高鷹架突倒塌 39歲工人摔落地面、下肢無知覺",
-      "link": "https://news.google.com/rss/articles/CBMiqwNBVV95cUxPdmFyaE1oaGVEcXk3dnZXSjU4cm5JSXVDMVNoejJQbVpRRDdnOV9hVmlKdnBNeE9ZRmJ1UEd0RVRTOVhiLThWMHhoNkJ1SHdmXzkyS21PQXc1U0tad0phTEQ2aENDZzQzQk84aGpPQzVzcDVvR3E0NGNzMHFZWkdYYlRDTDhQcGFsMjBQY0JPUXNmNkJaQUlxRGR4OExMSndTTlBXa1JkS3dwMGRxVlVGWF9NbkZvUUNPam93S3Y0UW1zYTI0dGo5RzkwYlpDSzB5NkxxaGhnNGJWRDd2LU9Mc0p5R1ZJeDZwRnl4ZWtvZF9QRDJlRTlMWnNMVGpqV041ZHY4dmhLYXpCTTBtYndpUWtVTlBaMGpMYXI1LVNubmZWYWw3YWh6aXRZOVNhcG41b1BtT1QyYUFReDBBNGxJY2FEY2lzZ3JwWXdyTUc5bXQ0QWx6NENVbW5hejhieDJCVmZUQ0Z1NWhyVVdlNGdWMy0tNE1fdV9QOE9qUldzY3F3UUh2SllHbGkxN3hVMkwyUzAwQ2pKZWlVekNNd1NscEt1Y0hFUV9GRUNB?oc=5",
-      "pubDate": "Wed, 27 May 2026 08:31:00 GMT",
-      "pubTs": 1779870660.0,
-      "desc": "瑞芳驚傳工安意外！2層樓高鷹架突倒塌 39歲工人摔落地面、下肢無知覺&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "a836fd7b407c78f7",
-      "title": "瑞芳驚傳工安意外！2層樓高鷹架突倒塌 39歲工人摔落地面、下肢無知覺",
-      "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5zSmwtRDBEM1k2eTJIcExSZnF1ci1LT0RhTTdmczlxTnJqeUJrVm9Qb1RBcXZ1TndZdmszRUFOcS0tbVNycTBYSTdaTS0wdnRyWFJXZVl5cjbSAV9BVV95cUxQV3NjMTI0ekphX3hVcHZHZVZ0anY2R3g0dGlzZG5uUmtRR3B6NVBIeklFZi1kUEJXVUJaanNkWnNyWWhTLVlKSUdUM3pYdlNSY3pFa0k5RHZRYzdMa3dSMA?oc=5",
-      "pubDate": "Wed, 27 May 2026 08:26:00 GMT",
-      "pubTs": 1779870360.0,
-      "desc": "瑞芳驚傳工安意外！2層樓高鷹架突倒塌 39歲工人摔落地面、下肢無知覺&nbsp;&nbsp;三立新聞網SETN.com",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "ff6ecc78c6f2dc7b",
-      "title": "快訊／瑞芳工安意外！3米高鷹架突倒塌 工人摔落「下肢無知覺」",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5FM1UycXVwREhEcWFLUGI4dnU1aHR4SGNjaXhmNjJWbUQzWjNuTGJ2bHFUZ2hVd0hKOFFUc0JYSzFvbW1lS3lZME5XMXJMa2dyZzB4YW0zZW9DRHFuREHSAWhBVV95cUxPM0RtMmxJZWZRRWMyVWNaU2RvS0FGS2RyQmZaaVFHS3NNNTJlaXhaQ0w5dWR0bjV5TzB5MnBYUUpBTGtNMnpoN0p3bXhtbnlFRVI3aU94Sy1ETTR4RndmZF9HTnFIM3JrMQ?oc=5",
-      "pubDate": "Wed, 27 May 2026 08:10:00 GMT",
-      "pubTs": 1779869400.0,
-      "desc": "快訊／瑞芳工安意外！3米高鷹架突倒塌 工人摔落「下肢無知覺」&nbsp;&nbsp;ETtoday新聞雲",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "a44a7caf37c6ef3a",
-      "title": "瑞芳驚傳工安意外！3層建物外牆整修 2層樓高鷹架倒塌1工人送醫",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5UUHlYNzZoeF9uQjVOQ1lQbTZiQ0wtd3d5dF9tSlNGUGs2SmZNSy1zM0hIVXFFeWVtOWVDX2NDclFwb1I1cl9EOEJfNmpHbHB50gFWQVVfeXFMT3FYd0JEVDgtcmVZbkUxblQwV0pHRHl2Z0ExcldSOTNGZV8yUmFLWkI3M3hsQ0c3MktBM2VJVHFuSDFqdXlOVEpwMFdCRzFnWXRMX1pLaXc?oc=5",
-      "pubDate": "Wed, 27 May 2026 07:21:18 GMT",
-      "pubTs": 1779866478.0,
-      "desc": "瑞芳驚傳工安意外！3層建物外牆整修 2層樓高鷹架倒塌1工人送醫&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "5a4d258897f45718",
-      "title": "美華盛頓州紙漿廠工安意外 化學儲槽破裂釀1死9傷",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9vVmlDVGw4YktKeXBHWmF6WVh0bFFqVnBUMk5iS2g5VnZ4NzlRVGlBOF9TT1U4OFFUdHZpdVp2bmI1MHJFajVRWmRsVEhjMUk?oc=5",
-      "pubDate": "Wed, 27 May 2026 07:09:27 GMT",
-      "pubTs": 1779865767.0,
-      "desc": "美華盛頓州紙漿廠工安意外 化學儲槽破裂釀1死9傷&nbsp;&nbsp;公視新聞網PNN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "7589aaa003319347",
-      "title": "賴推「育兒減工時」須雇主同意 現行法規不得拒絕！勞動部解釋差別",
-      "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE9OUlBOdFN6amtOYUVVY0lseXYxR3VJeTNmUE5XT3lwYjZRLWF0UTI1X18wRGJxU3l2V18zU2txTGZzQkRBeVhKaGVDNFdWcFUtanpFUW1NdW9SUlVmUHNnSXJldktqM05CamxqQUVRNA?oc=5",
-      "pubDate": "Wed, 27 May 2026 07:00:00 GMT",
-      "pubTs": 1779865200.0,
-      "desc": "賴推「育兒減工時」須雇主同意 現行法規不得拒絕！勞動部解釋差別&nbsp;&nbsp;知新聞",
-      "source_id": "gnews_law",
-      "source_name": "法規更新",
-      "badge": "teal"
-    },
-    {
-      "key": "f6b956dfcf97c868",
-      "title": "快訊／首爾又爆工安意外！ 工地坍塌「工人遭活埋」送醫身亡",
-      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5zNkhNV3dQVFBoWktlQjQ4WjYxcXhORGY5X0hqR0xmbExoNWxmN0tBX25TMHBNWTJTd2hEZlJ1THRWdk1BdkdtTTFIaHczZDY2XzB3NXhrYTA0VUU?oc=5",
-      "pubDate": "Wed, 27 May 2026 05:56:00 GMT",
-      "pubTs": 1779861360.0,
-      "desc": "快訊／首爾又爆工安意外！ 工地坍塌「工人遭活埋」送醫身亡&nbsp;&nbsp;鏡週刊Mirror Media",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "2355e2ad8f1dddad",
-      "title": "快訊／首爾又爆工安意外！ 工地坍塌「工人遭活埋」送醫身亡",
-      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5zNkhNV3dQVFBoWktlQjQ4WjYxcXhORGY5X0hqR0xmbExoNWxmN0tBX25TMHBNWTJTd2hEZlJ1THRWdk1BdkdtTTFIaHczZDY2XzB3NXhrYTA0VUXSAWBBVV95cUxON2ltSDZuSG0yZmVMR21BMlVEcnU0a0w2NXNLaXFTR0ppS1ZweVJ4aUlGeEZIVTRFTFBTSEFzdjd6OFd6ckNWUEJSSDFPWFE0MTJNTHZ0TThJV3NBdFdyRmE?oc=5",
-      "pubDate": "Wed, 27 May 2026 05:56:00 GMT",
-      "pubTs": 1779861360.0,
-      "desc": "快訊／首爾又爆工安意外！ 工地坍塌「工人遭活埋」送醫身亡&nbsp;&nbsp;鏡週刊Mirror Media",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "d9691fcd7fba1f6b",
-      "title": "韓國首爾又爆工安意外！施工現場突土石崩塌 1人遭活埋",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9JU1RmUkdQLVlpSEl1U0xhX0FrS19zZUhNdHFDVGlmczBNd3JBU1BhUGh6RVByNVFSSXlWd0F2SnAzdE1Ua1N0dHZ1UTVNSVU?oc=5",
-      "pubDate": "Wed, 27 May 2026 05:42:00 GMT",
-      "pubTs": 1779860520.0,
-      "desc": "韓國首爾又爆工安意外！施工現場突土石崩塌 1人遭活埋&nbsp;&nbsp;TVBS新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
     },
     {
       "key": "54057c598cdf3d40",
@@ -1607,5 +1530,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-06-10T05:08:45.238384+00:00"
+  "lastUpdated": "2026-06-11T05:18:12.431285+00:00"
 }
