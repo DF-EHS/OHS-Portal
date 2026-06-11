@@ -172,7 +172,7 @@
         <span class="nav-icon">🪪</span>證照管理
       </a>
       <a class="nav-item" href="${BASE}contract/" data-match="/contract/">
-        <span class="nav-icon">🏗️</span>承攬商進場管理
+        <span class="nav-icon">🏗️</span>承攬商管理系統
       </a>
 
       <div class="nav-section">制度文件</div>
