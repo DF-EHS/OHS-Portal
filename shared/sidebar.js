@@ -100,9 +100,11 @@
     }
     #ohs-backdrop.show { display: block; }
 
-    /* Desktop: push content right */
+    /* Desktop: shrink content area to leave room for sidebar */
     @media (min-width: 769px) {
-      body { margin-left: var(--ohs-sidebar-w) !important; }
+      body { padding-left: var(--ohs-sidebar-w) !important; }
+      /* Hide per-page floating dark toggle if present (sidebar provides one) */
+      #dark-toggle { display: none !important; }
     }
 
     /* Mobile: sidebar slides in */
