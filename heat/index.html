@@ -47,13 +47,13 @@ header {
   padding: 5px 12px; border-radius: 6px;
   border: 1px solid rgba(255,255,255,.3);
   background: rgba(255,255,255,.1);
-  color: #fff; font-size: 12px; cursor: pointer;
+  color: #fff; font-size: 16px; cursor: pointer;
 }
 .hdr-back:hover { background: rgba(255,255,255,.2); }
-header h1 { font-size: 16px; font-weight: 700; }
+header h1 { font-size: 22px; font-weight: 700; }
 .hdr-brand { margin-left: auto; display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
 .hdr-brand img  { height: 24px; object-fit: contain; }
-.hdr-brand span { font-size: 11px; opacity: .65; white-space: nowrap; }
+.hdr-brand span { font-size: 15px; opacity: .65; white-space: nowrap; }
 
 /* ── Main layout ── */
 main {
@@ -103,8 +103,8 @@ main {
   display: flex; align-items: center; justify-content: center;
   font-size: 24px; flex-shrink: 0;
 }
-.wx-name   { font-size: 15px; font-weight: 700; }
-.wx-meta   { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.wx-name   { font-size: 20px; font-weight: 700; }
+.wx-meta   { font-size: 16px; color: var(--muted); margin-top: 3px; }
 .wx-vals   { display: flex; gap: 10px; }
 .wx-val-box {
   flex: 1;
@@ -113,13 +113,13 @@ main {
   padding: 12px 8px;
   text-align: center;
 }
-.wx-num   { font-size: 24px; font-weight: 800; color: var(--navy); }
-.wx-unit  { font-size: 11px; color: var(--muted); }
-.wx-label { font-size: 11px; color: var(--sub); margin-top: 4px; }
+.wx-num   { font-size: 32px; font-weight: 800; color: var(--navy); }
+.wx-unit  { font-size: 15px; color: var(--muted); }
+.wx-label { font-size: 15px; color: var(--sub); margin-top: 4px; }
 
 /* ── Section label ── */
 .sec-label {
-  font-size: 11px; font-weight: 700; color: var(--sub);
+  font-size: 15px; font-weight: 700; color: var(--sub);
   letter-spacing: 3px; text-transform: uppercase;
   display: flex; align-items: center; gap: 10px;
 }
@@ -141,17 +141,17 @@ main {
   text-align: center;
   transition: border-color .3s;
 }
-.mc-head   { font-size: 10px; font-weight: 700; color: var(--sub);
+.mc-head   { font-size: 14px; font-weight: 700; color: var(--sub);
              letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
-.mc-value  { font-size: 40px; font-weight: 900; line-height: 1; }
-.mc-unit   { font-size: 13px; color: var(--muted); margin-top: 2px; margin-bottom: 12px; }
+.mc-value  { font-size: 54px; font-weight: 900; line-height: 1; }
+.mc-unit   { font-size: 18px; color: var(--muted); margin-top: 2px; margin-bottom: 12px; }
 .mc-badge  {
   display: inline-flex; align-items: center; gap: 5px;
   padding: 5px 14px; border-radius: 20px;
-  font-size: 14px; font-weight: 700; margin-bottom: 10px;
+  font-size: 19px; font-weight: 700; margin-bottom: 10px;
 }
-.mc-sub    { font-size: 11px; color: var(--sub); line-height: 1.55; }
-.mc-range  { font-size: 10px; color: var(--muted); margin-top: 6px; }
+.mc-sub    { font-size: 15px; color: var(--sub); line-height: 1.55; }
+.mc-range  { font-size: 14px; color: var(--muted); margin-top: 6px; }
 
 /* level colour bindings */
 .lv-low  { border-color: var(--c-low-bd);  }
@@ -173,7 +173,7 @@ main {
 .advice-card {
   border-radius: 14px;
   padding: 16px 18px;
-  font-size: 13px;
+  font-size: 18px;
   line-height: 1.8;
   font-weight: 500;
   border-left: 5px solid;
@@ -184,12 +184,12 @@ main {
 .refresh-btn {
   padding: 10px 28px; border-radius: 10px;
   border: none; background: var(--navy);
-  color: #fff; font-size: 13px; font-weight: 600;
+  color: #fff; font-size: 18px; font-weight: 600;
   cursor: pointer; transition: opacity .15s;
 }
 .refresh-btn:hover { opacity: .85; }
 .refresh-btn:disabled { opacity: .45; cursor: not-allowed; }
-.note-txt { font-size: 11px; color: var(--muted); line-height: 1.6; flex: 1; }
+.note-txt { font-size: 15px; color: var(--muted); line-height: 1.6; flex: 1; }
 
 /* ── Legend ── */
 .legend {
@@ -198,10 +198,10 @@ main {
   padding: 14px 18px;
   border: 1px solid var(--border);
 }
-.legend-title { font-size: 10px; font-weight: 700; color: var(--sub);
+.legend-title { font-size: 14px; font-weight: 700; color: var(--sub);
                 letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
 .legend-cols  { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; }
-.lg-row       { display: flex; align-items: center; gap: 7px; font-size: 11px; }
+.lg-row       { display: flex; align-items: center; gap: 7px; font-size: 15px; padding: 4px 0; }
 .lg-dot       { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 .lg-name      { font-weight: 700; width: 4.5em; flex-shrink: 0; word-break: keep-all; line-height: 1.4; }
 .lg-range     { color: var(--muted); }
@@ -214,7 +214,7 @@ main {
   gap: 14px; text-align: center; padding: 40px 20px;
 }
 .state-icon { font-size: 44px; }
-.state-msg  { font-size: 14px; color: var(--sub); line-height: 1.7; max-width: 300px; }
+.state-msg  { font-size: 19px; color: var(--sub); line-height: 1.7; max-width: 300px; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 .spinner {
@@ -229,7 +229,7 @@ main {
 /* ── Footer ── */
 footer {
   text-align: center; padding: 14px;
-  font-size: 11px; color: var(--muted);
+  font-size: 15px; color: var(--muted);
   border-top: 1px solid var(--border);
   background: var(--card);
   flex-shrink: 0;
@@ -468,11 +468,11 @@ function renderResult(s) {
         <div class="legend-title">風險等級對照</div>
         <div class="legend-cols">
           <div>
-            <div style="font-size:10px;color:var(--sub);margin-bottom:6px;font-weight:700">WBGT（勞動部熱危害預防指引）</div>
+            <div style="font-size:14px;color:var(--sub);margin-bottom:6px;font-weight:700">WBGT（勞動部熱危害預防指引）</div>
             ${legendRows(WBGT_LEVELS)}
           </div>
           <div>
-            <div style="font-size:10px;color:var(--sub);margin-bottom:6px;font-weight:700">熱指數 / 體感溫度（勞動部）</div>
+            <div style="font-size:14px;color:var(--sub);margin-bottom:6px;font-weight:700">熱指數 / 體感溫度（勞動部）</div>
             ${legendRows(HI_LEVELS)}
           </div>
         </div>
