@@ -32,14 +32,17 @@ Get-ChildItem law\sources\{QUARTER}\   # 確認來源文件存在
 python law\extract.py
 ```
 
+**PDF 萃取**：將來源資料夾內所有 PDF 轉為 TXT（已有同名 TXT 者略過）：
+```powershell
+python law\pdf_extract.py law\sources\{QUARTER}\
+```
+
 ---
 
 ## Step 1：讀取本季新法規
 
-1. 列出 `law\sources\{QUARTER}\` 內所有 `.txt` 和 `.pdf` 檔案
-2. 逐一讀取：
-   - `.txt`：UTF-8 讀取，若亂碼改 BIG5
-   - `.pdf`：用 Read 工具直接讀取
+1. 列出 `law\sources\{QUARTER}\` 內所有 `.txt` 檔案（PDF 已在 Step 0 轉換）
+2. 逐一讀取：UTF-8 讀取，若亂碼改 BIG5
 3. 從每個文件中提取：
    - **法規名稱**（通常在前兩行）
    - **修正日期**（格式：`中華民國 XXX 年 XX 月 XX 日修正`）
@@ -130,7 +133,7 @@ python law\build.py
 標記為「未標記」的條文：{X} 條
 
 各廠區符合率：
-  總部：{符合數} / {總條數}（{%}）
+  總部：{符合數} / {總條數}（{符合率%}）
   全興廠/職安：...
   全興廠/消防：...
 
@@ -142,23 +145,23 @@ python law\build.py
   （若有）
 
 下一步：
-  1. 開啟 law\index.html 確認顯示正常
-  2. 找「未標記」條文，填寫 current 欄位（現況說明）
-  3. 確認後執行：git push origin main
+  → 法規已自動更新並部署上線
+  → 請開啟 law\index.html 複核「未標記」條文，填寫現況說明（current 欄位）
 ═══════════════════════════════════════════
 ```
 
 ---
 
-## Step 6：Git 提交（不 push）
+## Step 6：Git 提交並推送上線
 
 ```powershell
 cd C:\Users\gloom.lai\OHS-Portal
 git add law/law-data.json law/index.html
 git commit -m "feat(law): {QUARTER} 季度法規更新，{X} 條條文異動"
+git push origin main
 ```
 
-**不執行 git push**，由使用者確認摘要後手動 push。
+push 完成後 GitHub Pages 自動部署，無需人工介入。
 
 ---
 
