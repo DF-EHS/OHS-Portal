@@ -454,33 +454,13 @@
     <div class="content-topbar">
       <button class="menu-btn" onclick="openSidebar()">☰</button>
       <h2>🏠 首頁</h2>
-      <span class="topbar-sub">— 系統模組總覽</span>
+      <span class="topbar-sub">— 職安衛系統總覽</span>
     </div>
 
     <main>
-      <div class="section-label">系統模組</div>
 
+      <div class="section-label">法規合規</div>
       <div class="card-grid">
-
-        <div class="sys-card" onclick="location.href='risk/'">
-          <div class="card-header">
-            <div class="card-icon ci-purple">⚠️</div>
-            <div>
-              <div class="card-title">危害鑑別及風險評估</div>
-              <div class="card-desc">查詢各廠區作業危害鑑別表，含風險等級評分、管制措施及不可接受風險清單。</div>
-            </div>
-          </div>
-          <div class="card-tags">
-            <span class="tag tg-navy">總公司</span>
-            <span class="tag tg-orange">全興廠</span>
-            <span class="tag tg-purple">285 筆記錄</span>
-            <span class="tag tg-blue">21 作業表</span>
-          </div>
-          <div class="card-footer">
-            <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-purple" onclick="event.stopPropagation();location.href='risk/'">開啟系統 ›</button>
-          </div>
-        </div>
 
         <div class="sys-card" onclick="location.href='./law/'">
           <div class="card-header">
@@ -503,102 +483,28 @@
           </div>
         </div>
 
-        <div class="sys-card" onclick="location.href='./contract/'">
-          <div class="card-header">
-            <div class="card-icon ci-teal">🏗️</div>
-            <div>
-              <div class="card-title">承攬商管理系統</div>
-              <div class="card-desc">承攬商進場前依序完成危害告知確認、安全承諾書及工作許可證申請，全程電子化存檔供職安人員審核。</div>
-            </div>
-          </div>
-          <div class="card-tags">
-            <span class="tag tg-teal">承攬商管理</span>
-            <span class="tag tg-teal">工作許可證</span>
-            <span class="tag tg-navy">電子簽名</span>
-            <span class="tag tg-blue">五步驟流程</span>
-          </div>
-          <div class="card-footer">
-            <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-teal" onclick="event.stopPropagation();location.href='./contract/'">開啟系統 ›</button>
-          </div>
-        </div>
+      </div>
 
-        <div class="sys-card" onclick="location.href='./committee/'">
-          <div class="card-header">
-            <div class="card-icon ci-blue">📊</div>
-            <div>
-              <div class="card-title">安全衛生委員會報告</div>
-              <div class="card-desc">依年度與季度快速調閱職安衛委員會季報，包含安全改善成果、管理數據與各項決議追蹤。</div>
-            </div>
-          </div>
-          <div class="card-tags">
-            <span class="tag tg-blue">2026 Q1 完成</span>
-            <span class="tag tg-orange">2026 Q2 製作中</span>
-            <span class="tag tg-navy">年度追蹤</span>
-          </div>
-          <div class="card-footer">
-            <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-blue" onclick="event.stopPropagation();location.href='./committee/'">開啟系統 ›</button>
-          </div>
-        </div>
+      <div class="section-label">安全衛生</div>
+      <div class="card-grid">
 
-        <div class="sys-card" onclick="location.href='./tasks/'">
+        <div class="sys-card" onclick="location.href='risk/'">
           <div class="card-header">
-            <div class="card-icon ci-orange">✅</div>
+            <div class="card-icon ci-purple">⚠️</div>
             <div>
-              <div class="card-title">職安工作中樞</div>
-              <div class="card-desc">個人工作任務管理，支援重複排程、到期提醒、優先順序分類，並雲端同步至 Google Sheets。</div>
+              <div class="card-title">危害鑑別及風險評估</div>
+              <div class="card-desc">查詢各廠區作業危害鑑別表，含風險等級評分、管制措施及不可接受風險清單。</div>
             </div>
           </div>
           <div class="card-tags">
-            <span class="tag tg-orange">任務管理</span>
-            <span class="tag tg-orange">重複排程</span>
-            <span class="tag tg-navy">到期提醒</span>
-            <span class="tag tg-green">雲端同步</span>
+            <span class="tag tg-navy">總公司</span>
+            <span class="tag tg-orange">全興廠</span>
+            <span class="tag tg-purple">285 筆記錄</span>
+            <span class="tag tg-blue">21 作業表</span>
           </div>
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-orange" onclick="event.stopPropagation();location.href='./tasks/'">開啟系統 ›</button>
-          </div>
-        </div>
-
-        <div class="sys-card" onclick="location.href='./news/'">
-          <div class="card-header">
-            <div class="card-icon ci-red">📰</div>
-            <div>
-              <div class="card-title">職災情報與安衛動態</div>
-              <div class="card-desc">自動彙整職安署公告、重大職災新聞及法規更新，工作日每四小時由 AI 自動摘要更新。</div>
-            </div>
-          </div>
-          <div class="card-tags">
-            <span class="tag tg-red">法規更新</span>
-            <span class="tag tg-red">重大職災</span>
-            <span class="tag tg-navy">AI 摘要</span>
-            <span class="tag tg-blue">每日自動更新</span>
-          </div>
-          <div class="card-footer">
-            <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-sky" onclick="event.stopPropagation();location.href='./news/'">開啟系統 ›</button>
-          </div>
-        </div>
-
-        <div class="sys-card" onclick="location.href='./training/'">
-          <div class="card-header">
-            <div class="card-icon ci-green">🎓</div>
-            <div>
-              <div class="card-title">教育訓練教材庫</div>
-              <div class="card-desc">存放各期教育訓練互動簡報，上課時直接在瀏覽器開啟播放，含示範影片與圖表說明。</div>
-            </div>
-          </div>
-          <div class="card-tags">
-            <span class="tag tg-green">辦公室職安</span>
-            <span class="tag tg-orange">全員必訓</span>
-            <span class="tag tg-navy">互動簡報</span>
-            <span class="tag tg-blue">示範影片</span>
-          </div>
-          <div class="card-footer">
-            <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-amber" onclick="event.stopPropagation();location.href='./training/'">開啟教材 ›</button>
+            <button class="open-btn btn-purple" onclick="event.stopPropagation();location.href='risk/'">開啟系統 ›</button>
           </div>
         </div>
 
@@ -622,22 +528,23 @@
           </div>
         </div>
 
-        <div class="sys-card" onclick="location.href='./plans/'">
+        <div class="sys-card" onclick="location.href='./harassment/'">
           <div class="card-header">
-            <div class="card-icon ci-blue">🗂️</div>
+            <div class="card-icon ci-violet">🛡️</div>
             <div>
-              <div class="card-title">職業安全衛生計畫書</div>
-              <div class="card-desc">彙整年度職安衛計畫書及各項專項計畫，包含高氣溫熱危害預防、特殊作業等計畫文件。</div>
+              <div class="card-title">不法侵害防治系統</div>
+              <div class="card-desc">提供匿名或具名通報職場不法侵害事件，含 AI 輔助分析、案件進度查詢及 HR 後台管理，保障申訴人隱私。</div>
             </div>
           </div>
           <div class="card-tags">
-            <span class="tag tg-blue">年度計畫</span>
-            <span class="tag tg-red">專項計畫</span>
-            <span class="tag tg-navy">計畫文件</span>
+            <span class="tag tg-violet">職場霸凌</span>
+            <span class="tag tg-violet">匿名通報</span>
+            <span class="tag tg-navy">AI 分析</span>
+            <span class="tag tg-blue">案件追蹤</span>
           </div>
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-indigo" onclick="event.stopPropagation();location.href='./plans/'">開啟系統 ›</button>
+            <button class="open-btn btn-violet" onclick="event.stopPropagation();location.href='./harassment/'">開啟系統 ›</button>
           </div>
         </div>
 
@@ -661,23 +568,28 @@
           </div>
         </div>
 
-        <div class="sys-card" onclick="window.open('https://hr-corptraining.zerozero.tw/certificates','_blank')">
+      </div>
+
+      <div class="section-label">人員管理</div>
+      <div class="card-grid">
+
+        <div class="sys-card" onclick="location.href='./training/'">
           <div class="card-header">
-            <div class="card-icon ci-rose">🪪</div>
+            <div class="card-icon ci-green">🎓</div>
             <div>
-              <div class="card-title">證照管理系統</div>
-              <div class="card-desc">統一管理員工職業安全衛生相關證照，追蹤有效期限與到期提醒，支援證照種類分類與查詢。</div>
+              <div class="card-title">教育訓練教材庫</div>
+              <div class="card-desc">存放各期教育訓練互動簡報，上課時直接在瀏覽器開啟播放，含示範影片與圖表說明。</div>
             </div>
           </div>
           <div class="card-tags">
-            <span class="tag tg-rose">技術士</span>
-            <span class="tag tg-rose">工安證照</span>
-            <span class="tag tg-navy">到期提醒</span>
-            <span class="tag tg-blue">人資管理</span>
+            <span class="tag tg-green">辦公室職安</span>
+            <span class="tag tg-orange">全員必訓</span>
+            <span class="tag tg-navy">互動簡報</span>
+            <span class="tag tg-blue">示範影片</span>
           </div>
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-rose" onclick="event.stopPropagation();window.open('https://hr-corptraining.zerozero.tw/certificates','_blank')">開啟系統 ›</button>
+            <button class="open-btn btn-amber" onclick="event.stopPropagation();location.href='./training/'">開啟教材 ›</button>
           </div>
         </div>
 
@@ -700,27 +612,136 @@
           </div>
         </div>
 
-        <div class="sys-card" onclick="location.href='./harassment/'">
+        <div class="sys-card" onclick="window.open('https://hr-corptraining.zerozero.tw/certificates','_blank')">
           <div class="card-header">
-            <div class="card-icon ci-violet">🛡️</div>
+            <div class="card-icon ci-rose">🪪</div>
             <div>
-              <div class="card-title">不法侵害防治系統</div>
-              <div class="card-desc">提供匿名或具名通報職場不法侵害事件，含 AI 輔助分析、案件進度查詢及 HR 後台管理，保障申訴人隱私。</div>
+              <div class="card-title">證照管理系統</div>
+              <div class="card-desc">統一管理員工職業安全衛生相關證照，追蹤有效期限與到期提醒，支援證照種類分類與查詢。</div>
             </div>
           </div>
           <div class="card-tags">
-            <span class="tag tg-violet">職場霸凌</span>
-            <span class="tag tg-violet">匿名通報</span>
-            <span class="tag tg-navy">AI 分析</span>
-            <span class="tag tg-blue">案件追蹤</span>
+            <span class="tag tg-rose">技術士</span>
+            <span class="tag tg-rose">工安證照</span>
+            <span class="tag tg-navy">到期提醒</span>
+            <span class="tag tg-blue">人資管理</span>
           </div>
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-violet" onclick="event.stopPropagation();location.href='./harassment/'">開啟系統 ›</button>
+            <button class="open-btn btn-rose" onclick="event.stopPropagation();window.open('https://hr-corptraining.zerozero.tw/certificates','_blank')">開啟系統 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./contract/'">
+          <div class="card-header">
+            <div class="card-icon ci-teal">🏗️</div>
+            <div>
+              <div class="card-title">承攬商管理系統</div>
+              <div class="card-desc">承攬商進場前依序完成危害告知確認、安全承諾書及工作許可證申請，全程電子化存檔供職安人員審核。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-teal">承攬商管理</span>
+            <span class="tag tg-teal">工作許可證</span>
+            <span class="tag tg-navy">電子簽名</span>
+            <span class="tag tg-blue">五步驟流程</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-teal" onclick="event.stopPropagation();location.href='./contract/'">開啟系統 ›</button>
           </div>
         </div>
 
       </div>
+
+      <div class="section-label">制度文件</div>
+      <div class="card-grid">
+
+        <div class="sys-card" onclick="location.href='./committee/'">
+          <div class="card-header">
+            <div class="card-icon ci-blue">📊</div>
+            <div>
+              <div class="card-title">安全衛生委員會報告</div>
+              <div class="card-desc">依年度與季度快速調閱職安衛委員會季報，包含安全改善成果、管理數據與各項決議追蹤。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-blue">2026 Q1 完成</span>
+            <span class="tag tg-orange">2026 Q2 製作中</span>
+            <span class="tag tg-navy">年度追蹤</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-blue" onclick="event.stopPropagation();location.href='./committee/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./plans/'">
+          <div class="card-header">
+            <div class="card-icon ci-blue">🗂️</div>
+            <div>
+              <div class="card-title">職業安全衛生計畫書</div>
+              <div class="card-desc">彙整年度職安衛計畫書及各項專項計畫，包含高氣溫熱危害預防、特殊作業等計畫文件。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-blue">年度計畫</span>
+            <span class="tag tg-red">專項計畫</span>
+            <span class="tag tg-navy">計畫文件</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-indigo" onclick="event.stopPropagation();location.href='./plans/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./news/'">
+          <div class="card-header">
+            <div class="card-icon ci-red">📰</div>
+            <div>
+              <div class="card-title">職災情報與安衛動態</div>
+              <div class="card-desc">自動彙整職安署公告、重大職災新聞及法規更新，工作日每四小時由 AI 自動摘要更新。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-red">法規更新</span>
+            <span class="tag tg-red">重大職災</span>
+            <span class="tag tg-navy">AI 摘要</span>
+            <span class="tag tg-blue">每日自動更新</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-sky" onclick="event.stopPropagation();location.href='./news/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="section-label">個人工具</div>
+      <div class="card-grid">
+
+        <div class="sys-card" onclick="location.href='./tasks/'">
+          <div class="card-header">
+            <div class="card-icon ci-orange">✅</div>
+            <div>
+              <div class="card-title">職安工作中樞</div>
+              <div class="card-desc">個人工作任務管理，支援重複排程、到期提醒、優先順序分類，並雲端同步至 Google Sheets。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-orange">任務管理</span>
+            <span class="tag tg-orange">重複排程</span>
+            <span class="tag tg-navy">到期提醒</span>
+            <span class="tag tg-green">雲端同步</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-orange" onclick="event.stopPropagation();location.href='./tasks/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+      </div>
+
     </main>
 
     <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
