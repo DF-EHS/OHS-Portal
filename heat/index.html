@@ -288,19 +288,19 @@ const WBGT_LEVELS = [
 ════════════════════════════════════════ */
 const HI_LEVELS = [
   { key:'safe', label:'安全', dot:'#16a34a', lv:'lv-low',  bv:'bv-low',  tv:'tv-low',
-    range:'< 26.7°C（< 80°F）', min:-Infinity, max:26.7,
+    range:'< 26.7°C<br>（< 80°F）', min:-Infinity, max:26.7,
     advice:'體感溫度安全，維持一般作業，保持補水習慣。' },
   { key:'low',  label:'第一級 注意', dot:'#84cc16', lv:'lv-low',  bv:'bv-low',  tv:'tv-low',
-    range:'26.7–32.2°C（80–90°F）', min:26.7, max:32.2,
+    range:'26.7–32.2°C<br>（80–90°F）', min:26.7, max:32.2,
     advice:'長時間暴露或體力活動可能導致疲勞，加強補水，注意個人狀況。' },
   { key:'mid',  label:'第二級 格外注意', dot:'#ca8a04', lv:'lv-mid',  bv:'bv-mid',  tv:'tv-mid',
-    range:'32.2–40.6°C（90–105°F）', min:32.2, max:40.6,
+    range:'32.2–40.6°C<br>（90–105°F）', min:32.2, max:40.6,
     advice:'長時間暴露或體力活動可能引起熱痙攣和熱衰竭，縮短連續作業時間，強制補水休息。' },
   { key:'high', label:'第三級 危險', dot:'#ea580c', lv:'lv-high', bv:'bv-high', tv:'tv-high',
-    range:'40.6–54.4°C（105–130°F）', min:40.6, max:54.4,
+    range:'40.6–54.4°C<br>（105–130°F）', min:40.6, max:54.4,
     advice:'熱痙攣和熱衰竭可能性極高，長時間暴露可能引發熱中暑，立即停止高強度作業並採取降溫措施。' },
   { key:'ext',  label:'第四級 極度危險', dot:'#dc2626', lv:'lv-ext',  bv:'bv-ext',  tv:'tv-ext',
-    range:'≥ 54.4°C（≥ 130°F）', min:54.4, max:Infinity,
+    range:'≥ 54.4°C<br>（≥ 130°F）', min:54.4, max:Infinity,
     advice:'熱中暑極度危險，立即停止所有戶外作業，緊急送至陰涼處降溫，出現症狀立即送醫。' },
 ];
 
@@ -445,8 +445,8 @@ function renderResult(s) {
 
       <div class="sec-label">風險評估</div>
       <div class="method-grid">
-        ${methodCard('WBGT 估算值', wbgt, '°C（WBGT）', wbgtLv, '閾值')}
-        ${methodCard('熱指數（體感溫度）', hi, '°C（HI）', hiLv, '閾值')}
+        ${methodCard('WBGT 估算值', wbgt, '°C<br>（WBGT）', wbgtLv, '閾值')}
+        ${methodCard('熱指數（體感溫度）', hi, '°C<br>（HI）', hiLv, '閾值')}
       </div>
 
     </div>
