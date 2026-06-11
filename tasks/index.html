@@ -277,6 +277,9 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
   position: fixed; inset: 0; z-index: 1000;
   background: var(--bg); display: flex; flex-direction: column;
 }
+@media (min-width: 769px) {
+  #login-page { left: 260px; }
+}
 .login-hdr {
   background: linear-gradient(135deg, #431407 0%, #c2410c 50%, #f59840 100%);
   color: #fff; padding: 14px 24px; flex-shrink: 0;
@@ -459,6 +462,7 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
 <!-- ── Login page ── -->
 <div id="login-page">
   <div class="login-hdr">
+    <a href="../" class="hdr-btn">← 系統入口</a>
     <h1>✅ 職安工作中樞</h1>
     <div class="hdr-brand">
       <img src="../dafon-logo.png" alt="大豐環保科技">
