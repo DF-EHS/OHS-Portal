@@ -50,7 +50,7 @@ main { flex: 1; max-width: 980px; margin: 0 auto; width: 100%; padding: 36px 24p
 /* ── course cards ── */
 .course-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 20px;
 }
 
@@ -74,6 +74,9 @@ main { flex: 1; max-width: 980px; margin: 0 auto; width: 100%; padding: 36px 24p
   display: flex; align-items: center; justify-content: center;
   font-size: 26px;
 }
+.cc-icon.orange { background: #ffedd5; font-size: 28px; }
+.cc-icon.blue   { background: #dbeafe; }
+.cc-icon.rose   { background: #fce7f3; }
 .cc-date  { font-size: 11px; font-weight: 700; color: var(--green); letter-spacing: 1px; margin-bottom: 4px; }
 .cc-title { font-size: 16px; font-weight: 700; line-height: 1.35; }
 .cc-desc  { font-size: 12px; color: var(--sub); margin-top: 6px; line-height: 1.6; }
@@ -138,7 +141,10 @@ body.dark {
   --text:   #f1f5f9;
   --sub:    #94a3b8;
 }
-body.dark .cc-icon  { background: #052e16; }
+body.dark .cc-icon        { background: #052e16 !important; }
+body.dark .cc-icon.orange { background: #431407 !important; }
+body.dark .cc-icon.blue   { background: #1e3054 !important; }
+body.dark .cc-icon.rose   { background: #4c0519 !important; }
 body.dark .cc-tag   { background: #052e16; color: #86efac; }
 body.dark .cc-tag.orange { background: #431407; color: #fdba74; }
 body.dark .cc-tag.blue   { background: #1e3054; color: #93c5fd; }
@@ -203,7 +209,7 @@ body.dark .ph-card  { background: #1e293b; border-color: #334155; }
     <!-- 下班前電器使用安全海報 -->
     <div class="course-card">
       <div class="cc-head">
-        <div class="cc-icon" style="background:#ffedd5;font-size:28px">🖼️</div>
+        <div class="cc-icon orange">🖼️</div>
         <div>
           <div class="cc-date" style="color:var(--orange)">宣導海報</div>
           <div class="cc-title">下班前電器使用安全海報</div>
@@ -224,7 +230,7 @@ body.dark .ph-card  { background: #1e293b; border-color: #334155; }
     <!-- 外站承攬商教育訓練 -->
     <div class="course-card">
       <div class="cc-head">
-        <div class="cc-icon" style="background:#dbeafe;font-size:26px">🏭</div>
+        <div class="cc-icon blue">🏭</div>
         <div>
           <div class="cc-date">2026 年度</div>
           <div class="cc-title">一般安全衛生教育訓練（外站）</div>
@@ -247,7 +253,7 @@ body.dark .ph-card  { background: #1e293b; border-color: #334155; }
     <!-- 職場霸凌防治教育訓練 -->
     <div class="course-card">
       <div class="cc-head">
-        <div class="cc-icon" style="background:#fce7f3;font-size:26px">🕊️</div>
+        <div class="cc-icon rose">🕊️</div>
         <div>
           <div class="cc-date">2026 年度</div>
           <div class="cc-title">職場霸凌防治教育訓練</div>
