@@ -2867,7 +2867,8 @@ ${ev.remark?`<div style="margin-top:10px;padding:7px 10px;background:#f8fafc;bor
 <meta charset="UTF-8"><base href="${baseHref}">
 <title>承攬商評鑑表 — ${X(company)}</title>
 <style>${css}</style>
-</head><body>${page1}${page2}</body></html>`;
+</head><body>${page1}${page2}<script src="../shared/sidebar.js"></script>
+</body></html>`;
 }
 
 window.addEventListener('DOMContentLoaded', ()=>{
@@ -3221,7 +3222,8 @@ th{background:#d1d5db;font-weight:700;text-align:center;white-space:nowrap}
 <div class="footer">FM-D2-EM-006-03D ／ 大豐環保科技股份有限公司</div>
 </div>`;
 
-  return `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><base href="${baseHref}"><title>承攬商進場文件 — ${X(b.company)}</title><style>${css}</style></head><body>${d1}${d2}${d3}</body></html>`;
+  return `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><base href="${baseHref}"><title>承攬商進場文件 — ${X(b.company)}</title><style>${css}</style></head><body>${d1}${d2}${d3}<script src="../shared/sidebar.js"></script>
+</body></html>`;
 }
 </script>
 
@@ -3240,5 +3242,6 @@ th{background:#d1d5db;font-weight:700;text-align:center;white-space:nowrap}
     <div class="sig-hint" id="sig-fs-hint" style="font-size:15px;line-height:2.5">請在此處簽名</div>
   </div>
 </div>
+<script src="../shared/sidebar.js"></script>
 </body>
 </html>
