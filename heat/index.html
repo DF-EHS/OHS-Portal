@@ -58,13 +58,29 @@ header h1 { font-size: 16px; font-weight: 700; }
 /* ── Main layout ── */
 main {
   flex: 1;
-  max-width: 660px;
+  max-width: 1160px;
   width: 100%;
   margin: 0 auto;
-  padding: 24px 16px 48px;
+  padding: 24px 20px 48px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+/* ── Two-column horizontal layout ── */
+.layout-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.col-left, .col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+@media (max-width: 800px) {
+  .layout-cols { grid-template-columns: 1fr; }
 }
 
 /* ── Station / weather card ── */
@@ -400,63 +416,71 @@ function renderResult(s) {
   const ts      = timeStr(s.time);
 
   document.getElementById('app').innerHTML = `
+  <div class="layout-cols">
 
-    <!-- 氣象站資料 -->
-    <div class="wx-card">
-      <div class="wx-top">
-        <div class="wx-icon">📡</div>
-        <div>
-          <div class="wx-name">${s.name} 氣象站</div>
-          <div class="wx-meta">距您 ${distStr(s.dist)}${ts ? '　·　觀測時間 ' + ts : ''}</div>
+    <!-- 左欄：氣象站資料 + 風險評估 -->
+    <div class="col-left">
+
+      <div class="wx-card">
+        <div class="wx-top">
+          <div class="wx-icon">📡</div>
+          <div>
+            <div class="wx-name">${s.name} 氣象站</div>
+            <div class="wx-meta">距您 ${distStr(s.dist)}${ts ? '　·　觀測時間 ' + ts : ''}</div>
+          </div>
+        </div>
+        <div class="wx-vals">
+          <div class="wx-val-box">
+            <div class="wx-num" style="color:#2563eb">${s.T.toFixed(1)}</div>
+            <div class="wx-unit">°C</div>
+            <div class="wx-label">氣溫</div>
+          </div>
+          <div class="wx-val-box">
+            <div class="wx-num" style="color:#0891b2">${Math.round(s.RH)}</div>
+            <div class="wx-unit">%</div>
+            <div class="wx-label">相對濕度</div>
+          </div>
         </div>
       </div>
-      <div class="wx-vals">
-        <div class="wx-val-box">
-          <div class="wx-num" style="color:#2563eb">${s.T.toFixed(1)}</div>
-          <div class="wx-unit">°C</div>
-          <div class="wx-label">氣溫</div>
-        </div>
-        <div class="wx-val-box">
-          <div class="wx-num" style="color:#0891b2">${Math.round(s.RH)}</div>
-          <div class="wx-unit">%</div>
-          <div class="wx-label">相對濕度</div>
+
+      <div class="sec-label">風險評估</div>
+      <div class="method-grid">
+        ${methodCard('WBGT 估算值', wbgt, '°C（WBGT）', wbgtLv, '閾值')}
+        ${methodCard('熱指數（體感溫度）', hi, '°C（HI）', hiLv, '閾值')}
+      </div>
+
+    </div>
+
+    <!-- 右欄：防護建議 + 操作 + 等級對照 -->
+    <div class="col-right">
+
+      ${adviceCard(worst)}
+
+      <div class="actions">
+        <button type="button" class="refresh-btn" onclick="startFetch()">🔄 重新整理</button>
+        <div class="note-txt">
+          WBGT 為遮蔭估算值，戶外直射陽光下實際值更高。<br>
+          精確量測請使用 WBGT 實測計。
         </div>
       </div>
-    </div>
 
-    <!-- 兩種計算方法 -->
-    <div class="sec-label">風險評估</div>
-    <div class="method-grid">
-      ${methodCard('WBGT 估算值', wbgt, '°C（WBGT）', wbgtLv, '閾值')}
-      ${methodCard('熱指數（體感溫度）', hi, '°C（HI）', hiLv, '閾值')}
-    </div>
-
-    <!-- 建議（取兩者較嚴格） -->
-    ${adviceCard(worst)}
-
-    <!-- 操作列 -->
-    <div class="actions">
-      <button type="button" class="refresh-btn" onclick="startFetch()">🔄 重新整理</button>
-      <div class="note-txt">
-        WBGT 為遮蔭估算值，戶外直射陽光下實際值更高。<br>
-        精確量測請使用 WBGT 實測計。
-      </div>
-    </div>
-
-    <!-- 風險等級對照表 -->
-    <div class="legend">
-      <div class="legend-title">風險等級對照</div>
-      <div class="legend-cols">
-        <div>
-          <div style="font-size:10px;color:var(--sub);margin-bottom:6px;font-weight:700">WBGT（勞動部熱危害預防指引）</div>
-          ${legendRows(WBGT_LEVELS)}
-        </div>
-        <div>
-          <div style="font-size:10px;color:var(--sub);margin-bottom:6px;font-weight:700">熱指數 / 體感溫度（勞動部）</div>
-          ${legendRows(HI_LEVELS)}
+      <div class="legend">
+        <div class="legend-title">風險等級對照</div>
+        <div class="legend-cols">
+          <div>
+            <div style="font-size:10px;color:var(--sub);margin-bottom:6px;font-weight:700">WBGT（勞動部熱危害預防指引）</div>
+            ${legendRows(WBGT_LEVELS)}
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--sub);margin-bottom:6px;font-weight:700">熱指數 / 體感溫度（勞動部）</div>
+            ${legendRows(HI_LEVELS)}
+          </div>
         </div>
       </div>
+
     </div>
+
+  </div>
   `;
 }
 
