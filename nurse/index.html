@@ -939,22 +939,16 @@ function doLogin() {
     return;
   }
   errEl.style.display = 'none';
-  sessionStorage.setItem('nurse_auth', '1');
   setLoggedIn(true);
   loadData();
 }
 
 function doLogout() {
-  sessionStorage.removeItem('nurse_auth');
   document.getElementById('login-pass').value = '';
   setLoggedIn(false);
 }
 
-// ── Init ──
-if (sessionStorage.getItem('nurse_auth') === '1') {
-  setLoggedIn(true);
-  loadData();
-}
+// ── Init ── 每次頁面載入都需重新登入，不使用 sessionStorage
 </script>
 <script src="../shared/sidebar.js"></script>
 </body>
