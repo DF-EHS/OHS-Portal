@@ -925,8 +925,7 @@ function showToast(msg, ms=2200) {
 const PASS = 'admin';  // ← 可在此修改登入密碼
 
 function setLoggedIn(on) {
-  document.getElementById('hdr-portal').style.display = on ? 'none' : '';
-  document.getElementById('hdr-logout').style.display = on ? ''     : 'none';
+  document.getElementById('hdr-logout').style.display = on ? '' : 'none';
   document.getElementById('login-overlay').style.display = on ? 'none' : 'flex';
 }
 
