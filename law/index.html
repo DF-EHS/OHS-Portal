@@ -416,9 +416,11 @@ function initSites() {
     </div>`;
     if (group.items.length === 1) {
       const src = group.items[0];
-      const totalArts = src.summary.reduce((a,l) => a + (l.stats?.total||0), 0);
-      const conform   = src.summary.reduce((a,l) => a + (l.stats?.conform||0), 0);
-      const rate = totalArts ? Math.round(conform/totalArts*100) : 0;
+      const totalArts  = src.summary.reduce((a,l) => a + (l.stats?.total||0), 0);
+      const conform    = src.summary.reduce((a,l) => a + (l.stats?.conform||0), 0);
+      const irrelevant = src.summary.reduce((a,l) => a + (l.stats?.irrelevant||0), 0);
+      const denom = totalArts - irrelevant;
+      const rate = denom > 0 ? Math.round(conform/denom*100) : 0;
       const card = document.createElement('div');
       card.className = 'site-card-solo';
       card.innerHTML = `
@@ -432,9 +434,11 @@ function initSites() {
       div.appendChild(card);
     } else {
       group.items.forEach(src => {
-        const totalArts = src.summary.reduce((a,l) => a + (l.stats?.total||0), 0);
-        const conform   = src.summary.reduce((a,l) => a + (l.stats?.conform||0), 0);
-        const rate = totalArts ? Math.round(conform/totalArts*100) : 0;
+        const totalArts  = src.summary.reduce((a,l) => a + (l.stats?.total||0), 0);
+        const conform    = src.summary.reduce((a,l) => a + (l.stats?.conform||0), 0);
+        const irrelevant = src.summary.reduce((a,l) => a + (l.stats?.irrelevant||0), 0);
+        const denom = totalArts - irrelevant;
+        const rate = denom > 0 ? Math.round(conform/denom*100) : 0;
         const subIcons  = { '職安': '⛑️', '消防': '🔥', '道交': '🚗' };
         const subColors = { '職安': 'icon-orange', '消防': 'icon-red', '道交': 'icon-blue' };
         const card = document.createElement('div');
@@ -542,8 +546,8 @@ function renderSummary() {
       av = a.id; bv = b.id;
     } else {
       const as = a.stats || {}; const bs = b.stats || {};
-      av = as.total ? as.conform / as.total : 0;
-      bv = bs.total ? bs.conform / bs.total : 0;
+      const ad = as.total - (as.irrelevant||0); av = ad > 0 ? as.conform / ad : 0;
+      const bd = bs.total - (bs.irrelevant||0); bv = bd > 0 ? bs.conform / bd : 0;
     }
     return sortState.dir === 'asc' ? av - bv : bv - av;
   });
@@ -556,7 +560,8 @@ function renderSummary() {
 
   filtered.forEach(law => {
     const s    = law.stats || {total:0,conform:0,nonconform:0,irrelevant:0};
-    const rate = s.total ? Math.round(s.conform/s.total*100) : 0;
+    const _d   = s.total - (s.irrelevant||0);
+    const rate = _d > 0 ? Math.round(s.conform/_d*100) : 0;
     // Feature C: rate color
     const rc   = rateColor(rate);
     const levelBadge = law.level === '法律'
@@ -630,7 +635,8 @@ function showDetail(id, noPush) {
 
   // meta box
   const s    = lawData.stats;
-  const rate = s.total ? Math.round(s.conform/s.total*100) : 0;
+  const _rd  = s.total - (s.irrelevant||0);
+  const rate = _rd > 0 ? Math.round(s.conform/_rd*100) : 0;
   document.getElementById('law-meta-box').innerHTML = `
     <h2>${esc(lawInfo.name)}</h2>
     <div class="meta-grid">
