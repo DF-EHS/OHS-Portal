@@ -58,6 +58,7 @@
   #view-home{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;padding:28px 0;}
   .dept-group{background:var(--card);border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.09);
               overflow:hidden;min-width:300px;max-width:480px;flex:1;}
+  .dept-group-sep{width:100%;height:1px;background:var(--border);margin:4px 0;}
   .dept-hdr{background:var(--navy);color:#fff;padding:24px 26px 18px;}
   .dept-hdr .big-icon{font-size:40px;margin-bottom:6px;display:block;}
   .dept-hdr h2{font-size:20px;font-weight:700;}
@@ -5683,7 +5684,39 @@ function showHome(noPush) {
 function initHome() {
   const wrap = document.getElementById('view-home');
   wrap.innerHTML = '';
-  ALL_DATA.forEach(dept => {
+  // 顯示順序：null 代表換行分隔
+  const ORDER = [
+    'hq','qx', null,
+    'n1','n2','z1','s1','s2', null,
+    'sg','hm','yl','dl', null,
+    'jm','ct'
+  ];
+  const deptMap = Object.fromEntries(ALL_DATA.map(d => [d.dept_id, d]));
+  // 依 ORDER 建立序列（跳過不存在的站點）
+  const seq = [];
+  ORDER.forEach(id => {
+    if (id === null) {
+      if (seq.length && seq[seq.length-1] !== null) seq.push(null);
+    } else if (deptMap[id]) {
+      seq.push(deptMap[id]);
+    }
+  });
+  // 未列在 ORDER 的站點追加到最後
+  const listed = new Set(ORDER.filter(Boolean));
+  ALL_DATA.filter(d => !listed.has(d.dept_id)).forEach(d => {
+    if (!seq.length || seq[seq.length-1] !== null) seq.push(null);
+    seq.push(d);
+  });
+  while (seq.length && seq[seq.length-1] === null) seq.pop();
+
+  seq.forEach(item => {
+    if (item === null) {
+      const sep = document.createElement('div');
+      sep.className = 'dept-group-sep';
+      wrap.appendChild(sep);
+      return;
+    }
+    const dept = item;
     const allItems = dept.sheets.flatMap(s => s.items);
     const hi = allItems.filter(i => i.level===4).length;
     const group = document.createElement('div');
