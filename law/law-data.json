@@ -18311,9 +18311,9 @@
         "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040012",
         "stats": {
           "total": 134,
-          "conform": 0,
+          "conform": 60,
           "nonconform": 0,
-          "irrelevant": 0
+          "irrelevant": 74
         }
       },
       {
@@ -18328,7 +18328,7 @@
         "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040001",
         "stats": {
           "total": 185,
-          "conform": 0,
+          "conform": 185,
           "nonconform": 0,
           "irrelevant": 0
         }
@@ -41095,9 +41095,9 @@
         "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040012",
         "stats": {
           "total": 134,
-          "conform": 0,
+          "conform": 60,
           "nonconform": 0,
-          "irrelevant": 0
+          "irrelevant": 74
         }
       },
       {
@@ -41112,7 +41112,7 @@
         "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040001",
         "stats": {
           "total": 185,
-          "conform": 0,
+          "conform": 185,
           "nonconform": 0,
           "irrelevant": 0
         }
