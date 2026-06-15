@@ -1153,7 +1153,7 @@ function renderAuditPanel(src) {
 
   const latestInfo = latest
     ? `<span class="audit-quarter-badge">${latest.quarter}</span>
-       <span style="font-size:12px;color:#888">盤點於 ${new Date(latest.ts).toLocaleString('zh-TW')}</span>
+       <span style="font-size:12px;color:#888">鑑別於 ${new Date(latest.ts).toLocaleString('zh-TW')}</span>
        <span style="font-size:12px;margin-left:8px">
          <span class="audit-status ok" style="margin-right:4px">未變更 ${latest.summary.ok}</span>
          <span class="audit-status changed" style="margin-right:4px">有更新 ${latest.summary.changed}</span>
@@ -1171,7 +1171,7 @@ function renderAuditPanel(src) {
        </div>`
     ).join('');
     historyHtml = `<details class="audit-history-panel">
-      <summary>歷史盤點紀錄（共 ${history.length} 次）</summary>
+      <summary>歷史更新紀錄（共 ${history.length} 次）</summary>
       ${hRows}
     </details>`;
   }
