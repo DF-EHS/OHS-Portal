@@ -5609,7 +5609,7 @@ const DEFAULT_DATA = [
           "step": "檢查管線",
           "hazard": "氣體外漏",
           "cause": "引發火花",
-          "consequence": "燒燙",
+          "consequence": "身體燒燙",
           "code": "PH11",
           "control": "使用前檢查",
           "freq": 4.0,
@@ -5622,89 +5622,6 @@ const DEFAULT_DATA = [
           "id": "DL00NC02",
           "process": "乙炔切割",
           "step": "切割物料",
-          "hazard": "切割火花",
-          "cause": "噴發",
-          "consequence": "手部燒燙",
-          "code": "AH11",
-          "control": "切割前穿戴防護具",
-          "freq": 4.0,
-          "prob": 2.0,
-          "severity": "E",
-          "level": 1,
-          "plan": ""
-        },
-        {
-          "id": "DL00NC03",
-          "process": "夾子車清運",
-          "step": "操作夾子",
-          "hazard": "夾子桿子旋轉上下作業",
-          "cause": "人員在夾子車作業區域走動",
-          "consequence": "物體掉落",
-          "code": "PH1",
-          "control": "作業區域管制",
-          "freq": 8.0,
-          "prob": 3.0,
-          "severity": "C",
-          "level": 3,
-          "plan": ""
-        },
-        {
-          "id": "DL00NC04",
-          "process": "客人",
-          "step": "走動",
-          "hazard": "地面濕滑",
-          "cause": "不慎跌倒",
-          "consequence": "滑倒",
-          "code": "PH5",
-          "control": "入廠危害告知",
-          "freq": 6.0,
-          "prob": 2.0,
-          "severity": "E",
-          "level": 1,
-          "plan": ""
-        },
-        {
-          "id": "DL00NC05",
-          "process": "小貨車",
-          "step": "上下貨",
-          "hazard": "其他人員",
-          "cause": "碰撞",
-          "consequence": "骨折",
-          "code": "PH7",
-          "control": "人員監管現場",
-          "freq": 8.0,
-          "prob": 3.0,
-          "severity": "C",
-          "level": 3,
-          "plan": ""
-        }
-      ]
-    },
-    {
-      "id": "DL01",
-      "name": "乙炔切割",
-      "icon": "🔥",
-      "ic": "ic-orange",
-      "items": [
-        {
-          "id": "DL01NC01",
-          "process": "乙炔切割",
-          "step": "檢查管線",
-          "hazard": "氣體外漏",
-          "cause": "引發火花",
-          "consequence": "身體燒燙",
-          "code": "PH11",
-          "control": "使用前檢查",
-          "freq": 4.0,
-          "prob": 2.0,
-          "severity": "B",
-          "level": 3,
-          "plan": ""
-        },
-        {
-          "id": "DL01NC02",
-          "process": "乙炔切割",
-          "step": "切割物料的品項",
           "hazard": "切割時火花",
           "cause": "噴發",
           "consequence": "手部燒燙",
@@ -5715,29 +5632,45 @@ const DEFAULT_DATA = [
           "severity": "E",
           "level": 1,
           "plan": ""
-        },
+        }
+      ]
+    },
+    {
+      "id": "DL01",
+      "name": "夾子車清運",
+      "icon": "🚛",
+      "ic": "ic-blue",
+      "items": [
         {
-          "id": "DL01NC03",
+          "id": "DL01NC01",
           "process": "夾子車清運",
           "step": "操作夾子",
           "hazard": "夾子之提升、旋轉動作",
           "cause": "人員在夾子車作業區域走動",
-          "consequence": "物體飛落,掉落 衝撞,被撞",
-          "code": "PH1PH6",
-          "control": "1.個人防護具配戴 2.作業區域管制",
+          "consequence": "物體飛落；衝撞、被撞",
+          "code": "PH1；PH6",
+          "control": "個人防護具配戴；作業區域管制",
           "freq": 8.0,
           "prob": 3.0,
           "severity": "C",
           "level": 3,
           "plan": ""
-        },
+        }
+      ]
+    },
+    {
+      "id": "DL02",
+      "name": "訪客",
+      "icon": "👥",
+      "ic": "ic-blue",
+      "items": [
         {
-          "id": "DL01NC04",
-          "process": "小販",
+          "id": "DL02NC01",
+          "process": "訪客",
           "step": "走動",
           "hazard": "地面濕滑",
           "cause": "不慎跌倒",
-          "consequence": "滑倒 擦傷",
+          "consequence": "滑倒；擦傷",
           "code": "PH5",
           "control": "入廠危害告知",
           "freq": 6.0,
@@ -5745,12 +5678,20 @@ const DEFAULT_DATA = [
           "severity": "E",
           "level": 1,
           "plan": ""
-        },
+        }
+      ]
+    },
+    {
+      "id": "DL03",
+      "name": "上下貨",
+      "icon": "📦",
+      "ic": "ic-purple",
+      "items": [
         {
-          "id": "DL01NC05",
-          "process": "貨車開車",
+          "id": "DL03NC01",
+          "process": "上下貨",
           "step": "上下貨",
-          "hazard": "其他人員",
+          "hazard": "其他人員遭碰撞",
           "cause": "碰撞",
           "consequence": "骨折",
           "code": "PH7",
