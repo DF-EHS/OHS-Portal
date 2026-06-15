@@ -32,7 +32,7 @@ function buildLawPrompt(question, ragContext) {
     '2. 引用條文時標明《法規名稱》第X條\n' +
     '3. 公司鑑別表合規狀態「不符」的條文請加粗提醒\n' +
     '4. 若鑑別表找不到相關條文，請直接依你的法規知識回答，並說明「鑑別表未收錄，以下依法規知識回覆」\n' +
-    '5. 若法規可能在近期有修訂，請提醒使用者確認最新版本\n' +
+    '5. 若問題涉及最新修法動態、施行日期或條文現況，請主動使用網路搜尋確認最新版本，並標註來源與查詢時間\n' +
     '6. 語氣專業親切，適合職安管理師參考\n\n' +
     '【公司法規鑑別表摘錄】\n' + ragContext +
     '\n\n使用者問題：' + question
@@ -72,7 +72,11 @@ export default {
         ? buildLawPrompt(text, context)
         : text;
 
-      const payload = { model: MODEL, text: finalText };
+      const payload = {
+        model: MODEL,
+        text: finalText,
+        tools: [{ type: 'openrouter:web_search' }],
+      };
       if (Array.isArray(images) && images.length) payload.images = images;
 
       const upstream = await fetch(IT_URL, {
