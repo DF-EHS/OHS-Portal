@@ -233,6 +233,31 @@
                  transition: background .15s; z-index: 999; }
   #scroll-top.visible { display: flex; }
   #scroll-top:hover { background: #16305a; }
+
+/* ── 季度盤點 ─────────────────────────────────────────── */
+#audit-panel { margin-top: 24px; }
+.audit-hdr { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.audit-hdr h3 { margin: 0; font-size: 15px; color: #1a3a6a; white-space: nowrap; }
+.audit-quarter-badge { background: #e8eef8; color: #1a3a6a; font-size: 12px; padding: 2px 8px; border-radius: 10px; }
+#btn-run-audit { background: #1a3a6a; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-size: 13px; cursor: pointer; transition: background .15s; margin-left: auto; white-space: nowrap; }
+#btn-run-audit:hover { background: #16305a; }
+#btn-run-audit:disabled { background: #aaa; cursor: default; }
+.audit-progress { font-size: 12px; color: #888; margin-bottom: 6px; min-height: 16px; }
+.audit-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+.audit-table th { background: #f0f4fb; color: #555; font-weight: 600; padding: 6px 10px; text-align: left; border-bottom: 1px solid #d5dce9; }
+.audit-table td { padding: 6px 10px; border-bottom: 1px solid #edf0f7; vertical-align: middle; }
+.audit-table tr:last-child td { border-bottom: none; }
+.audit-table tbody tr:hover { background: #f7f9fd; }
+.audit-status { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+.audit-status.ok      { background: #e4f5ec; color: #1d7a45; }
+.audit-status.changed { background: #fff3e0; color: #c85a00; }
+.audit-status.fail    { background: #fde8e8; color: #c0392b; }
+.audit-detail-row td { background: #fafbfe; font-size: 12px; color: #555; padding: 4px 10px 8px 26px; }
+.audit-history-panel { margin-top: 12px; border: 1px solid #d5dce9; border-radius: 6px; overflow: hidden; }
+.audit-history-panel summary { padding: 8px 12px; background: #f0f4fb; cursor: pointer; font-size: 13px; font-weight: 600; color: #1a3a6a; }
+.audit-history-row { display: flex; gap: 12px; padding: 6px 12px; border-top: 1px solid #edf0f7; font-size: 12px; }
+.audit-history-row .ah-date { color: #888; flex-shrink: 0; width: 140px; }
+.audit-history-row .ah-stats { flex: 1; }
 </style>
 </head>
 <body>
@@ -296,6 +321,9 @@
       </table>
     </div>
   </div>
+
+  <!-- 季度盤點面板 -->
+  <div id="audit-panel" style="display:none"></div>
 
   <!-- VIEW 2: 條文明細 -->
   <div id="view-detail">
@@ -491,6 +519,7 @@ function showSummary(noPush) {
   updateSortIndicators();
   renderSummary();
   renderStatsBar();
+  renderAuditPanel(curSource);
   if (!noPush) pushHash('summary');
 }
 
@@ -748,6 +777,8 @@ function setView(name) {
   document.getElementById('view-detail').style.display  = name === 'detail'  ? 'block' : 'none';
   document.getElementById('toolbar').style.display      = name !== 'sites'   ? 'flex'  : 'none';
   document.getElementById('stats-bar').style.display    = name !== 'sites'   ? 'flex'  : 'none';
+  const ap = document.getElementById('audit-panel');
+  if (ap) ap.style.display = name === 'summary' ? 'block' : 'none';
 }
 
 // ── search / filter ───────────────────────────────────────────
@@ -1012,6 +1043,177 @@ function jumpToLaw(siteId, sub, lawId, query) {
 }
 
 buildChatIndex();
+
+// ── 季度盤點 ──────────────────────────────────────────────────
+
+function extractPcode(url) {
+  const m = (url || '').match(/[?&]pcode=([A-Z0-9]+)/i);
+  return m ? m[1] : null;
+}
+
+function normAuditDate(roc) {
+  const m = String(roc || '').match(/(\d+)\s*年\s*(\d+)\s*月\s*(\d+)\s*日/);
+  if (!m) return roc;
+  const y = parseInt(m[1]) + 1911;
+  return `${y}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;
+}
+
+async function fetchWithProxy(url) {
+  const proxies = [
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    `https://corsproxy.io/?${encodeURIComponent(url)}`
+  ];
+  for (const p of proxies) {
+    try {
+      const r = await fetch(p, { signal: AbortSignal.timeout(12000) });
+      if (r.ok) return await r.text();
+    } catch {}
+  }
+  return null;
+}
+
+async function fetchLawModDate(lawUrl) {
+  const html = await fetchWithProxy(lawUrl);
+  if (!html) return null;
+  const m = html.match(/修正日期[：:]\s*民國\s*(\d+\s*年\s*\d+\s*月\s*\d+\s*日)/);
+  if (!m) return null;
+  return normAuditDate(m[1]);
+}
+
+function auditKey(src) {
+  return `lex_audit_${src.site_id}_${src.sub || ''}`;
+}
+
+function loadAudits(src) {
+  try { return JSON.parse(localStorage.getItem(auditKey(src)) || '[]'); }
+  catch { return []; }
+}
+
+function saveAudit(src, record) {
+  const list = loadAudits(src);
+  list.unshift(record);
+  if (list.length > 20) list.length = 20;
+  localStorage.setItem(auditKey(src), JSON.stringify(list));
+}
+
+function curAuditQuarter() {
+  const now = new Date();
+  const q = Math.ceil((now.getMonth() + 1) / 3);
+  return `${now.getFullYear()} Q${q}`;
+}
+
+async function runAudit(src) {
+  const btn = document.getElementById('btn-run-audit');
+  const prog = document.getElementById('audit-progress');
+  btn.disabled = true;
+  const laws = src.summary.filter(l => l.url);
+  const results = [];
+  for (let i = 0; i < laws.length; i++) {
+    const law = laws[i];
+    prog.textContent = `檢查中… ${i + 1} / ${laws.length}：${law.name || ''}`;
+    let status = 'fail', liveDate = null;
+    try {
+      liveDate = await fetchLawModDate(law.url);
+      if (liveDate) {
+        const stored = normAuditDate(law.amend || '');
+        status = (stored && liveDate === stored) ? 'ok' : 'changed';
+      }
+    } catch {}
+    results.push({ id: law.id, name: law.name, stored: law.amend || null, live: liveDate, status });
+  }
+  prog.textContent = '';
+  btn.disabled = false;
+  const record = {
+    quarter: curAuditQuarter(),
+    ts: new Date().toISOString(),
+    results,
+    summary: {
+      ok:      results.filter(r => r.status === 'ok').length,
+      changed: results.filter(r => r.status === 'changed').length,
+      fail:    results.filter(r => r.status === 'fail').length
+    }
+  };
+  saveAudit(src, record);
+  renderAuditPanel(src);
+}
+
+function renderAuditPanel(src) {
+  const panel = document.getElementById('audit-panel');
+  if (!panel) return;
+  const history = loadAudits(src);
+  const latest = history[0] || null;
+
+  let rows = '';
+  if (latest) {
+    for (const r of latest.results) {
+      const lblMap = { ok: '未變更', changed: '有更新', fail: '檢查失敗' };
+      const statusLabel = lblMap[r.status] || r.status;
+      const statusClass = r.status;
+      const detailId = `ad-${src.site_id}-${r.id}`;
+      const hasDetail = (r.status === 'changed' || r.status === 'fail');
+      const detailText = r.status === 'changed'
+        ? `系統記錄：${r.stored || '—'}　法規庫最新：${r.live || '—'}`
+        : '無法取得法規庫資料（可能為網路問題或代理逾時）';
+      rows += `<tr${hasDetail ? ` onclick="toggleAuditDetail('${detailId}')" style="cursor:pointer"` : ''}>
+        <td>${r.name || r.id}</td>
+        <td>${r.stored ? normAuditDate(r.stored) : '—'}</td>
+        <td>${r.live || '—'}</td>
+        <td><span class="audit-status ${statusClass}">${statusLabel}</span></td>
+      </tr>`;
+      if (hasDetail) {
+        rows += `<tr id="${detailId}" class="audit-detail-row" style="display:none"><td colspan="4">${detailText}</td></tr>`;
+      }
+    }
+  }
+
+  const latestInfo = latest
+    ? `<span class="audit-quarter-badge">${latest.quarter}</span>
+       <span style="font-size:12px;color:#888">盤點於 ${new Date(latest.ts).toLocaleString('zh-TW')}</span>
+       <span style="font-size:12px;margin-left:8px">
+         <span class="audit-status ok" style="margin-right:4px">未變更 ${latest.summary.ok}</span>
+         <span class="audit-status changed" style="margin-right:4px">有更新 ${latest.summary.changed}</span>
+         <span class="audit-status fail">失敗 ${latest.summary.fail}</span>
+       </span>`
+    : '<span style="font-size:12px;color:#888">尚未執行盤點</span>';
+
+  let historyHtml = '';
+  if (history.length > 1) {
+    const hRows = history.slice(1).map(h =>
+      `<div class="audit-history-row">
+        <span class="ah-date">${h.quarter} <span style="color:#aaa">${new Date(h.ts).toLocaleDateString('zh-TW')}</span></span>
+        <span class="ah-stats">未變更 ${h.summary.ok}　有更新 ${h.summary.changed}　失敗 ${h.summary.fail}</span>
+       </div>`
+    ).join('');
+    historyHtml = `<details class="audit-history-panel">
+      <summary>歷史盤點紀錄（共 ${history.length} 次）</summary>
+      ${hRows}
+    </details>`;
+  }
+
+  panel.innerHTML = `
+    <div class="audit-hdr">
+      <h3>季度法規盤點</h3>
+      ${latestInfo}
+      <button id="btn-run-audit" onclick="runAudit(curSource)">立即執行盤點</button>
+    </div>
+    <div id="audit-progress" class="audit-progress"></div>
+    ${latest ? `<table class="audit-table">
+      <thead><tr>
+        <th>法規名稱</th>
+        <th>系統版本日期</th>
+        <th>法規庫最新修正日期</th>
+        <th>狀態</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>` : ''}
+    ${historyHtml}
+  `;
+}
+
+function toggleAuditDetail(id) {
+  const row = document.getElementById(id);
+  if (row) row.style.display = row.style.display === 'none' ? '' : 'none';
+}
 
 // ── init ──────────────────────────────────────────────────────
 initSites();
