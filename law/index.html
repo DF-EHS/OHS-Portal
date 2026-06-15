@@ -252,6 +252,7 @@
 .audit-status.ok      { background: #e4f5ec; color: #1d7a45; }
 .audit-status.changed { background: #fff3e0; color: #c85a00; }
 .audit-status.fail    { background: #fde8e8; color: #c0392b; }
+.audit-status.anomaly { background: #f3e8ff; color: #7b2fa8; }
 .audit-detail-row td { background: #fafbfe; font-size: 12px; color: #555; padding: 4px 10px 8px 26px; }
 .audit-history-panel { margin-top: 12px; border: 1px solid #d5dce9; border-radius: 6px; overflow: hidden; }
 .audit-history-panel summary { padding: 8px 12px; background: #f0f4fb; cursor: pointer; font-size: 13px; font-weight: 600; color: #1a3a6a; }
@@ -1092,9 +1093,11 @@ function runAudit(src) {
     const liveDate  = law.live_amend  ? normAuditDate(law.live_amend)  : null;
     const storedDate = law.amend      ? normAuditDate(law.amend)        : null;
     let status;
-    if (!liveDate)                           status = 'fail';
-    else if (!storedDate || liveDate !== storedDate) status = 'changed';
-    else                                     status = 'ok';
+    if (!liveDate)                   status = 'fail';
+    else if (!storedDate)            status = 'changed';
+    else if (liveDate > storedDate)  status = 'changed';
+    else if (liveDate < storedDate)  status = 'anomaly';
+    else                             status = 'ok';
     results.push({ id: law.id, name: law.name, stored: law.amend || null, live: law.live_amend || null, status });
   }
   const record = {
@@ -1104,7 +1107,8 @@ function runAudit(src) {
     summary: {
       ok:      results.filter(r => r.status === 'ok').length,
       changed: results.filter(r => r.status === 'changed').length,
-      fail:    results.filter(r => r.status === 'fail').length
+      fail:    results.filter(r => r.status === 'fail').length,
+      anomaly: results.filter(r => r.status === 'anomaly').length
     }
   };
   saveAudit(src, record);
@@ -1120,13 +1124,15 @@ function renderAuditPanel(src) {
   let rows = '';
   if (latest) {
     for (const r of latest.results) {
-      const lblMap = { ok: '未變更', changed: '有更新', fail: '檢查失敗' };
+      const lblMap = { ok: '未變更', changed: '有更新', fail: '未取得', anomaly: '資料異常' };
       const statusLabel = lblMap[r.status] || r.status;
       const statusClass = r.status;
       const detailId = `ad-${src.site_id}-${r.id}`;
-      const hasDetail = (r.status === 'changed' || r.status === 'fail');
+      const hasDetail = (r.status !== 'ok');
       const detailText = r.status === 'changed'
-        ? `系統記錄：${r.stored ? normAuditDate(r.stored) : '—'}　　法規庫最新：${r.live ? normAuditDate(r.live) : '—'}`
+        ? `系統記錄：${r.stored ? normAuditDate(r.stored) : '—'}　　法規庫最新：${r.live ? normAuditDate(r.live) : '—'}　→ 請至法規庫確認修正內容後，執行 _mark_reviewed.py`
+        : r.status === 'anomaly'
+        ? `系統記錄 (${r.stored ? normAuditDate(r.stored) : '—'}) 比法規庫 (${r.live ? normAuditDate(r.live) : '—'}) 更新，請核實系統資料是否正確`
         : '法規庫未取得修正日期（可重新執行 _fetch_law_dates.py）';
       rows += `<tr${hasDetail ? ` onclick="toggleAuditDetail('${detailId}')" style="cursor:pointer"` : ''}>
         <td>${r.name || r.id}</td>
@@ -1151,7 +1157,8 @@ function renderAuditPanel(src) {
        <span style="font-size:12px;margin-left:8px">
          <span class="audit-status ok" style="margin-right:4px">未變更 ${latest.summary.ok}</span>
          <span class="audit-status changed" style="margin-right:4px">有更新 ${latest.summary.changed}</span>
-         <span class="audit-status fail">失敗 ${latest.summary.fail}</span>
+         ${latest.summary.anomaly ? `<span class="audit-status anomaly" style="margin-right:4px">資料異常 ${latest.summary.anomaly}</span>` : ''}
+         <span class="audit-status fail">未取得 ${latest.summary.fail}</span>
        </span>`
     : '<span style="font-size:12px;color:#888">尚未執行盤點</span>';
 
@@ -1160,7 +1167,7 @@ function renderAuditPanel(src) {
     const hRows = history.slice(1).map(h =>
       `<div class="audit-history-row">
         <span class="ah-date">${h.quarter} <span style="color:#aaa">${new Date(h.ts).toLocaleDateString('zh-TW')}</span></span>
-        <span class="ah-stats">未變更 ${h.summary.ok}　有更新 ${h.summary.changed}　失敗 ${h.summary.fail}</span>
+        <span class="ah-stats">未變更 ${h.summary.ok}　有更新 ${h.summary.changed}${h.summary.anomaly ? `　資料異常 ${h.summary.anomaly}` : ''}　未取得 ${h.summary.fail}</span>
        </div>`
     ).join('');
     historyHtml = `<details class="audit-history-panel">
