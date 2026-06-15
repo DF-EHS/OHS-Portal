@@ -6262,7 +6262,43 @@ function _setCatCrumb() {
 function initHome() {
   var wrap = document.getElementById('view-home');
   wrap.innerHTML = '';
-  ALL_DATA.forEach(function(dept) {
+  // 顯示順序：null 代表換行分隔
+  var ORDER = [
+    'hq','qx', null,
+    'n1','n2','z1','s1','s2', null,
+    'sg','hm','yl','dl', null,
+    'jm','ct'
+  ];
+  var deptMap = {};
+  ALL_DATA.forEach(function(d) { deptMap[d.dept_id] = d; });
+  // 依 ORDER 建立序列（跳過不存在的站點）
+  var seq = [];
+  ORDER.forEach(function(id) {
+    if (id === null) {
+      if (seq.length && seq[seq.length-1] !== null) seq.push(null);
+    } else if (deptMap[id]) {
+      seq.push(deptMap[id]);
+    }
+  });
+  // 未列在 ORDER 的站點追加到最後
+  var listed = {};
+  ORDER.forEach(function(id) { if (id) listed[id] = true; });
+  ALL_DATA.forEach(function(d) {
+    if (!listed[d.dept_id]) {
+      if (!seq.length || seq[seq.length-1] !== null) seq.push(null);
+      seq.push(d);
+    }
+  });
+  while (seq.length && seq[seq.length-1] === null) seq.pop();
+
+  seq.forEach(function(item) {
+    if (item === null) {
+      var sep = document.createElement('div');
+      sep.className = 'dept-group-sep';
+      wrap.appendChild(sep);
+      return;
+    }
+    var dept = item;
     var allItems = dept.sheets.reduce(function(a,s){return a.concat(s.items);}, []);
     var hi = allItems.filter(function(i){return i.level===4;}).length;
     var group = document.createElement('div');
