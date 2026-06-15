@@ -18328,9 +18328,9 @@
         "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040001",
         "stats": {
           "total": 185,
-          "conform": 185,
+          "conform": 54,
           "nonconform": 0,
-          "irrelevant": 0
+          "irrelevant": 131
         }
       }
     ],
@@ -19785,7 +19785,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "10",
@@ -19825,7 +19825,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "14",
@@ -19855,7 +19855,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "16-1",
@@ -19865,7 +19865,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "17",
@@ -19875,7 +19875,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "17-1",
@@ -19885,7 +19885,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "18",
@@ -19895,7 +19895,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "19",
@@ -19905,7 +19905,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "20",
@@ -19915,7 +19915,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "21",
@@ -19925,7 +19925,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "22",
@@ -19935,7 +19935,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "23",
@@ -19945,7 +19945,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "23-1",
@@ -19965,7 +19965,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "24-1",
@@ -19975,7 +19975,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "25",
@@ -19985,7 +19985,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "26",
@@ -19995,7 +19995,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "27",
@@ -20005,7 +20005,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "28",
@@ -20035,7 +20035,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "31",
@@ -20045,7 +20045,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "32",
@@ -20055,7 +20055,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "33",
@@ -20065,7 +20065,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "33-1",
@@ -20075,7 +20075,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "34",
@@ -20085,7 +20085,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "35",
@@ -20105,7 +20105,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "37",
@@ -20115,7 +20115,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "38",
@@ -20135,7 +20135,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "39-1",
@@ -20155,7 +20155,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "39-3",
@@ -20165,7 +20165,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "39-4",
@@ -20175,7 +20175,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "39-5",
@@ -20185,7 +20185,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "40",
@@ -20205,7 +20205,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "42",
@@ -20225,7 +20225,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "44",
@@ -20255,7 +20255,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "47",
@@ -20265,7 +20265,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "48",
@@ -20275,7 +20275,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "49",
@@ -20285,7 +20285,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "50",
@@ -20295,7 +20295,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "51",
@@ -20305,7 +20305,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "52",
@@ -20335,7 +20335,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "52-3",
@@ -20345,7 +20345,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "52-4",
@@ -20355,7 +20355,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "53",
@@ -20365,7 +20365,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "54",
@@ -20385,7 +20385,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "55-1",
@@ -20395,7 +20395,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "55-2",
@@ -20405,7 +20405,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "56",
@@ -20415,7 +20415,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "57",
@@ -20425,7 +20425,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "58",
@@ -20435,7 +20435,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "59",
@@ -20445,7 +20445,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "60",
@@ -20455,7 +20455,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "61",
@@ -20465,7 +20465,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "61-1",
@@ -20475,7 +20475,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "62",
@@ -20485,7 +20485,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "63",
@@ -20495,7 +20495,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "64",
@@ -20525,7 +20525,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "65-1",
@@ -20535,7 +20535,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "66",
@@ -20545,7 +20545,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "67",
@@ -20555,7 +20555,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "68",
@@ -20565,7 +20565,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "69",
@@ -20575,7 +20575,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "70",
@@ -20585,7 +20585,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "71",
@@ -20595,7 +20595,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "72",
@@ -20605,7 +20605,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "73",
@@ -20615,7 +20615,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "74",
@@ -20625,7 +20625,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "75",
@@ -20635,7 +20635,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "75-1",
@@ -20645,7 +20645,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "76",
@@ -20655,7 +20655,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "76-1",
@@ -20665,7 +20665,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "77",
@@ -20685,7 +20685,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "79",
@@ -20735,7 +20735,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "82",
@@ -20745,7 +20745,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "83",
@@ -20755,7 +20755,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "83-1",
@@ -20765,7 +20765,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "83-2",
@@ -20775,7 +20775,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "83-3",
@@ -20785,7 +20785,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "84",
@@ -20825,7 +20825,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "88",
@@ -20835,7 +20835,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "89",
@@ -20855,7 +20855,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "91",
@@ -20865,7 +20865,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "92",
@@ -20875,7 +20875,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "93",
@@ -20885,7 +20885,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "94",
@@ -20895,7 +20895,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "95",
@@ -20905,7 +20905,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "96",
@@ -20915,7 +20915,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "97",
@@ -20925,7 +20925,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "98",
@@ -20935,7 +20935,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "99",
@@ -20945,7 +20945,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "99-1",
@@ -20955,7 +20955,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "100",
@@ -20965,7 +20965,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "101",
@@ -20975,7 +20975,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "102",
@@ -20985,7 +20985,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "103",
@@ -20995,7 +20995,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "104",
@@ -21005,7 +21005,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "104-1",
@@ -21015,7 +21015,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "105",
@@ -21025,7 +21025,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "106",
@@ -21035,7 +21035,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "107",
@@ -21045,7 +21045,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "108",
@@ -21055,7 +21055,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "109",
@@ -21065,7 +21065,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "110",
@@ -21075,7 +21075,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "111",
@@ -21085,7 +21085,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "112",
@@ -21095,7 +21095,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "113",
@@ -21115,7 +21115,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "114",
@@ -21135,7 +21135,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-1",
@@ -21145,7 +21145,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-2",
@@ -21155,7 +21155,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-3",
@@ -21165,7 +21165,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-4",
@@ -21175,7 +21175,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-5",
@@ -21185,7 +21185,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-6",
@@ -21195,7 +21195,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-7",
@@ -21205,7 +21205,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "116",
@@ -21215,7 +21215,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "117",
@@ -21225,7 +21225,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "118",
@@ -21235,7 +21235,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "119",
@@ -21265,7 +21265,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "122",
@@ -21395,7 +21395,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "133",
@@ -21405,7 +21405,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "134",
@@ -21415,7 +21415,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "135",
@@ -21425,7 +21425,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "135-1",
@@ -21435,7 +21435,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "136",
@@ -21445,7 +21445,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "137",
@@ -21455,7 +21455,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "138",
@@ -21465,7 +21465,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "139",
@@ -21475,7 +21475,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "140",
@@ -21495,7 +21495,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "142",
@@ -21505,7 +21505,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "143",
@@ -21515,7 +21515,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "144",
@@ -21525,7 +21525,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "145",
@@ -21535,7 +21535,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "146",
@@ -21545,14 +21545,14 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           }
         ],
         "stats": {
           "total": 185,
-          "conform": 185,
+          "conform": 54,
           "nonconform": 0,
-          "irrelevant": 0
+          "irrelevant": 131
         }
       }
     }
@@ -41112,9 +41112,9 @@
         "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040001",
         "stats": {
           "total": 185,
-          "conform": 185,
+          "conform": 54,
           "nonconform": 0,
-          "irrelevant": 0
+          "irrelevant": 131
         }
       }
     ],
@@ -42569,7 +42569,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "10",
@@ -42609,7 +42609,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "14",
@@ -42639,7 +42639,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "16-1",
@@ -42649,7 +42649,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "17",
@@ -42659,7 +42659,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "17-1",
@@ -42669,7 +42669,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "18",
@@ -42679,7 +42679,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "19",
@@ -42689,7 +42689,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "20",
@@ -42699,7 +42699,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "21",
@@ -42709,7 +42709,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "22",
@@ -42719,7 +42719,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "23",
@@ -42729,7 +42729,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "23-1",
@@ -42749,7 +42749,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "24-1",
@@ -42759,7 +42759,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "25",
@@ -42769,7 +42769,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "26",
@@ -42779,7 +42779,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "27",
@@ -42789,7 +42789,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "28",
@@ -42819,7 +42819,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "31",
@@ -42829,7 +42829,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "32",
@@ -42839,7 +42839,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "33",
@@ -42849,7 +42849,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "33-1",
@@ -42859,7 +42859,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "34",
@@ -42869,7 +42869,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "35",
@@ -42889,7 +42889,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "37",
@@ -42899,7 +42899,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "38",
@@ -42919,7 +42919,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "39-1",
@@ -42939,7 +42939,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "39-3",
@@ -42949,7 +42949,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "39-4",
@@ -42959,7 +42959,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "39-5",
@@ -42969,7 +42969,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "40",
@@ -42989,7 +42989,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "42",
@@ -43009,7 +43009,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "44",
@@ -43039,7 +43039,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "47",
@@ -43049,7 +43049,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "48",
@@ -43059,7 +43059,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "49",
@@ -43069,7 +43069,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "50",
@@ -43079,7 +43079,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "51",
@@ -43089,7 +43089,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "52",
@@ -43119,7 +43119,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "52-3",
@@ -43129,7 +43129,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "52-4",
@@ -43139,7 +43139,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "53",
@@ -43149,7 +43149,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "54",
@@ -43169,7 +43169,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "55-1",
@@ -43179,7 +43179,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "55-2",
@@ -43189,7 +43189,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "56",
@@ -43199,7 +43199,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "57",
@@ -43209,7 +43209,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "58",
@@ -43219,7 +43219,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "59",
@@ -43229,7 +43229,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "60",
@@ -43239,7 +43239,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "61",
@@ -43249,7 +43249,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "61-1",
@@ -43259,7 +43259,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "62",
@@ -43269,7 +43269,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "63",
@@ -43279,7 +43279,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "64",
@@ -43309,7 +43309,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "65-1",
@@ -43319,7 +43319,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "66",
@@ -43329,7 +43329,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "67",
@@ -43339,7 +43339,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "68",
@@ -43349,7 +43349,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "69",
@@ -43359,7 +43359,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "70",
@@ -43369,7 +43369,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "71",
@@ -43379,7 +43379,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "72",
@@ -43389,7 +43389,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "73",
@@ -43399,7 +43399,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "74",
@@ -43409,7 +43409,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "75",
@@ -43419,7 +43419,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "75-1",
@@ -43429,7 +43429,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "76",
@@ -43439,7 +43439,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "76-1",
@@ -43449,7 +43449,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "77",
@@ -43469,7 +43469,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "79",
@@ -43519,7 +43519,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "82",
@@ -43529,7 +43529,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "83",
@@ -43539,7 +43539,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "83-1",
@@ -43549,7 +43549,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "83-2",
@@ -43559,7 +43559,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "83-3",
@@ -43569,7 +43569,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "84",
@@ -43609,7 +43609,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "88",
@@ -43619,7 +43619,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "89",
@@ -43639,7 +43639,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "91",
@@ -43649,7 +43649,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "92",
@@ -43659,7 +43659,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "93",
@@ -43669,7 +43669,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "94",
@@ -43679,7 +43679,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "95",
@@ -43689,7 +43689,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "96",
@@ -43699,7 +43699,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "97",
@@ -43709,7 +43709,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "98",
@@ -43719,7 +43719,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "99",
@@ -43729,7 +43729,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "99-1",
@@ -43739,7 +43739,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "100",
@@ -43749,7 +43749,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "101",
@@ -43759,7 +43759,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "102",
@@ -43769,7 +43769,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "103",
@@ -43779,7 +43779,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "104",
@@ -43789,7 +43789,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "104-1",
@@ -43799,7 +43799,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "105",
@@ -43809,7 +43809,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "106",
@@ -43819,7 +43819,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "107",
@@ -43829,7 +43829,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "108",
@@ -43839,7 +43839,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "109",
@@ -43849,7 +43849,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "110",
@@ -43859,7 +43859,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "111",
@@ -43869,7 +43869,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "112",
@@ -43879,7 +43879,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "113",
@@ -43899,7 +43899,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "114",
@@ -43919,7 +43919,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-1",
@@ -43929,7 +43929,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-2",
@@ -43939,7 +43939,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-3",
@@ -43949,7 +43949,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-4",
@@ -43959,7 +43959,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-5",
@@ -43969,7 +43969,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-6",
@@ -43979,7 +43979,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "115-7",
@@ -43989,7 +43989,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "116",
@@ -43999,7 +43999,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "117",
@@ -44009,7 +44009,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "118",
@@ -44019,7 +44019,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "119",
@@ -44049,7 +44049,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "122",
@@ -44179,7 +44179,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "133",
@@ -44189,7 +44189,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "134",
@@ -44199,7 +44199,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "135",
@@ -44209,7 +44209,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "135-1",
@@ -44219,7 +44219,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "136",
@@ -44229,7 +44229,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "137",
@@ -44239,7 +44239,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "138",
@@ -44249,7 +44249,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "139",
@@ -44259,7 +44259,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "140",
@@ -44279,7 +44279,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "142",
@@ -44289,7 +44289,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "143",
@@ -44299,7 +44299,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "144",
@@ -44309,7 +44309,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "145",
@@ -44319,7 +44319,7 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           },
           {
             "no": "146",
@@ -44329,14 +44329,14 @@
             "note": "",
             "date": "",
             "editor": "",
-            "status": "符合"
+            "status": "無關"
           }
         ],
         "stats": {
           "total": 185,
-          "conform": 185,
+          "conform": 54,
           "nonconform": 0,
-          "irrelevant": 0
+          "irrelevant": 131
         }
       }
     }
