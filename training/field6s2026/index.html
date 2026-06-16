@@ -1,0 +1,742 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>現場作業安全衛生及6S案例教育訓練</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+<style>
+  :root {
+    --font: 'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', sans-serif;
+    --card: rgba(255,255,255,0.92);
+    --shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+
+  html, body {
+    margin:0; padding:0; height:100%; font-family:var(--font);
+    background: linear-gradient(175deg, #cfe8d4 0%, #e4f5e8 25%, #f2faf4 60%, #fcfffd 100%);
+  }
+
+  .reveal {
+    font-family: var(--font) !important;
+  }
+  .reveal .slide-background { display:none !important; }
+  .reveal .slides section {
+    font-family: var(--font) !important;
+    top:0 !important; margin-top:0 !important;
+    padding:0 !important;
+    width:100% !important; height:100% !important;
+    text-align:left; overflow:hidden;
+    box-sizing:border-box;
+  }
+
+  /* ── Title slide ── */
+  .title-slide {
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    height:100%; text-align:center;
+  }
+  .title-card {
+    background:rgba(255,255,255,0.93);
+    border-radius:20px; padding:45px 80px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.2);
+    transform:scale(1.65);
+  }
+  .title-card .eyebrow {
+    font-size:0.78em; color:#e74c3c; font-weight:bold;
+    letter-spacing:3px; margin-bottom:10px;
+  }
+  .title-card h1 {
+    font-size:2.2em; color:#1a1a2e; margin:0 0 14px; line-height:1.4;
+  }
+  .title-card .sub { font-size:1.1em; color:#666; margin-bottom:28px; }
+  .title-card .meta { font-size:0.9em; color:#888; }
+  .title-vignette {
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background: radial-gradient(ellipse at center,
+      transparent 35%,
+      rgba(228,245,232,0.55) 60%,
+      rgba(207,232,212,0.92) 100%);
+  }
+  .title-slide { position: relative; z-index: 2; }
+
+  /* ── Info slides ── */
+  .info-slide {
+    display:flex; flex-direction:column;
+    padding:25px 35px 145px !important; height:100%; box-sizing:border-box;
+    position:relative; z-index:1;
+  }
+  .slide-title-bar {
+    background:rgba(26,115,232,0.88); color:white;
+    border-radius:10px 10px 0 0; padding:12px 22px;
+    font-size:1.3em; font-weight:bold; flex-shrink:0;
+  }
+  .slide-content {
+    background:var(--card); border-radius:0 0 10px 10px;
+    padding:18px 22px; flex:1; box-shadow:var(--shadow);
+    overflow:auto; box-sizing:border-box;
+  }
+
+  /* ── Open (no-card) info slides ── */
+  .info-open {
+    display: flex; flex-direction: column; gap: 22px;
+    padding: 40px 60px 145px !important;
+    height: 100%; box-sizing: border-box;
+    position: relative; z-index: 1;
+    font-size: 1.5em;
+  }
+  .open-title {
+    font-size: 1.7em; font-weight: bold; color: #1a3525;
+    padding-bottom: 12px; flex-shrink: 0;
+    border-bottom: 3px solid rgba(39,174,96,0.55);
+  }
+  .open-body {
+    flex: 1; overflow: auto;
+    color: #1e2d20;
+  }
+  .open-body p { font-size: 1.25em; line-height: 1.85; margin: 0 0 14px; }
+  .open-body ul {
+    font-size: 1.35em; line-height: 2.2;
+    margin: 0 0 0 1.4em; padding: 0;
+  }
+  .open-body .rtable { font-size: 1.12em; }
+  .open-body .open-note {
+    margin-top: 18px;
+    border-left: 4px solid #e74c3c;
+    padding: 10px 16px;
+    background: rgba(231,76,60,0.07);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.88em; line-height: 1.7;
+  }
+  .open-body .open-note strong { color: #c0392b; }
+  /* table inside open slide */
+  .open-body .rtable th { background: rgba(44,62,80,0.75); }
+  .open-body .rtable td { background: rgba(255,255,255,0.45); }
+  .open-body .rtable tr:nth-child(even) td { background: rgba(255,255,255,0.65); }
+  .open-body .focus-table td:first-child { background: rgba(52,152,219,0.12); }
+
+  /* ── Tags ── */
+  .tag {
+    display:inline-block; border-radius:20px;
+    padding:3px 12px; font-size:0.74em; font-weight:bold;
+    color:white; margin:2px;
+  }
+  .r-感電   { background:#e74c3c; }
+  .r-捲夾   { background:#e67e22; }
+  .r-誤闖   { background:#c0392b; }
+  .r-絆倒   { background:#f39c12; }
+  .r-碰撞   { background:#e67e22; }
+  .r-粉塵   { background:#7f8c8d; }
+  .r-防護   { background:#8e44ad; }
+  .r-傾倒   { background:#d35400; }
+  .r-動線   { background:#16a085; }
+  .s-整理   { background:#e74c3c; }
+  .s-整頓   { background:#e67e22; }
+  .s-清掃   { background:#27ae60; }
+  .s-清潔   { background:#16a085; }
+  .s-素養   { background:#3498db; }
+  .s-安全   { background:#2980b9; }
+
+  /* ── Discussion slide ── */
+  .case-disc {
+    display:grid !important;
+    grid-template-rows:auto 1fr;
+    height:100%; padding:15px 25px 145px !important;
+    box-sizing:border-box; gap:10px;
+    position:relative; z-index:1;
+  }
+  .case-header {
+    border-radius:10px; padding:10px 18px;
+    display:flex; align-items:center; gap:14px; flex-shrink:0;
+  }
+  .case-header.disc-hdr { background:rgba(231,76,60,0.88); color:white; }
+  .case-header.anal-hdr { background:rgba(39,174,96,0.88); color:white; }
+  .case-header .cnum {
+    background:rgba(255,255,255,0.28); border-radius:7px;
+    padding:3px 11px; font-size:0.85em; font-weight:bold; white-space:nowrap;
+  }
+  .case-header .ctitle { font-size:1.2em; font-weight:bold; }
+  .case-header .cright { margin-left:auto; font-size:0.78em; opacity:0.85; white-space:nowrap; }
+
+  .disc-body {
+    display:grid; grid-template-columns:1.9fr 1fr;
+    gap:12px; min-height:0;
+  }
+  .photo-box {
+    border-radius:10px; overflow:hidden;
+    box-shadow:0 4px 16px rgba(0,0,0,0.2); min-height:0;
+  }
+  .photo-box img {
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .questions {
+    display:flex; flex-direction:column;
+    gap:10px; justify-content:center;
+  }
+  .q-card {
+    background:rgba(255,255,255,0.94); border-radius:10px;
+    padding:12px 14px; box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    font-size:1.0em; font-weight:bold; color:#2c3e50;
+    line-height:1.5;
+  }
+  .q-label { font-size:0.85em; font-weight:bold; margin-bottom:4px; }
+  .reveal-hint {
+    text-align:center; color:rgba(255,255,255,0.9);
+    font-size:0.85em; background:rgba(0,0,0,0.28);
+    border-radius:8px; padding:7px; flex-shrink:0;
+  }
+
+  /* ── Analysis slide ── */
+  .case-anal {
+    display:grid !important;
+    grid-template-rows:auto 1fr;
+    height:100%; padding:15px 25px 145px !important;
+    box-sizing:border-box; gap:10px;
+    position:relative; z-index:1;
+  }
+  .anal-body {
+    display:grid; grid-template-columns:210px 1fr;
+    gap:12px; min-height:0;
+  }
+  .anal-photo { display:flex; flex-direction:column; gap:8px; }
+  .anal-photo img {
+    width:100%; height:185px; object-fit:cover;
+    border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  }
+  .analysis {
+    background:var(--card); border-radius:10px;
+    padding:14px 18px; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:10px;
+    overflow:auto; font-size:1.8em;
+  }
+  .a-row { display:flex; gap:10px; align-items:flex-start; }
+  .a-lbl {
+    color:white; border-radius:6px; padding:3px 9px;
+    font-size:0.72em; font-weight:bold; white-space:nowrap;
+    margin-top:2px; min-width:42px; text-align:center; flex-shrink:0;
+  }
+  .a-txt { font-size:0.8em; color:#2c3e50; line-height:1.65; }
+
+  /* ── Table ── */
+  .rtable { width:100%; border-collapse:collapse; font-size:0.82em; }
+  .rtable th {
+    background:#2c3e50; color:white;
+    padding:8px 12px; text-align:left;
+  }
+  .rtable td { border-bottom:1px solid #e8e8e8; padding:7px 12px; vertical-align:top; }
+  .rtable tr:nth-child(even) td { background:rgba(52,152,219,0.07); }
+  .focus-table td:first-child {
+    font-weight:bold; color:#2c3e50; white-space:nowrap;
+    background:rgba(52,152,219,0.1);
+  }
+
+  /* ── Conclusion ── */
+  .concl-slide {
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    height:100%; padding:30px 30px 145px !important; box-sizing:border-box;
+    position:relative; z-index:1;
+  }
+  .concl-card {
+    background:rgba(255,255,255,0.93); border-radius:16px;
+    padding:35px 50px; box-shadow:0 8px 32px rgba(0,0,0,0.15);
+    max-width:820px; width:100%; font-size:1.5em;
+  }
+  .concl-card h2 {
+    color:#1a1a2e; margin:0 0 22px; font-size:1.35em;
+    border-bottom:3px solid #e74c3c; padding-bottom:12px;
+  }
+  .act-list { list-style:none; margin:0; padding:0; }
+  .act-list li { display:flex; gap:14px; margin-bottom:18px; font-size:0.9em; line-height:1.65; }
+  .act-num {
+    background:#e74c3c; color:white; border-radius:50%;
+    width:28px; height:28px; display:flex; align-items:center; justify-content:center;
+    font-weight:bold; flex-shrink:0; font-size:0.88em;
+  }
+  .concl-foot {
+    margin-top:22px; padding-top:14px; border-top:1px solid #eee;
+    font-size:0.83em; color:#666; line-height:1.7;
+  }
+
+  /* Misc */
+  .reveal .progress { height:5px; }
+  .reveal .progress span { background:#e74c3c; }
+  .reveal .slide-number { display:none !important; }
+  .reveal .controls { display:none !important; }
+
+  /* ── Integrated nav pill ── */
+  #nav-pill {
+    position: fixed;
+    bottom: 16px; right: 16px;
+    display: flex; align-items: center;
+    background: rgba(255,255,255,0.88);
+    border-radius: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.13);
+    border: 1px solid rgba(255,255,255,0.65);
+    z-index: 200;
+    overflow: hidden;
+    font-family: var(--font);
+    font-size: 0.72em;
+    font-weight: bold;
+    color: #34495e;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(6px);
+  }
+  #nav-pill button {
+    background: none; border: none; cursor: pointer;
+    padding: 7px 13px; color: #34495e;
+    font-size: 1.15em; line-height: 1;
+    transition: background 0.15s;
+  }
+  #nav-pill button:hover { background: rgba(52,73,94,0.09); }
+  #nav-pill button:active { background: rgba(52,73,94,0.17); }
+  #nav-num {
+    padding: 7px 14px;
+    border-left: 1px solid rgba(52,73,94,0.12);
+    border-right: 1px solid rgba(52,73,94,0.12);
+    min-width: 54px; text-align: center;
+  }
+  #nav-num .sep { color: #b0bec5; margin: 0 4px; }
+  #nav-fs {
+    border-left: 1px solid rgba(52,73,94,0.12);
+    font-size: 1em !important;
+    padding: 7px 11px !important;
+  }
+
+  /* ── Password screen ── */
+  #pw-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: linear-gradient(175deg, #cfe8d4 0%, #e4f5e8 25%, #f2faf4 60%, #fcfffd 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font);
+    transition: opacity 0.5s ease;
+  }
+  #pw-screen.fade-out { opacity: 0; pointer-events: none; }
+  #pw-card {
+    background: rgba(255,255,255,0.93); border-radius: 20px;
+    padding: 48px 60px; box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+    min-width: 360px; text-align: center;
+  }
+  #pw-card .pw-logo { font-size: 1em; color: #e74c3c; font-weight: bold; letter-spacing: 3px; }
+  #pw-card h2 { font-size: 1.4em; color: #1a1a2e; margin: 0; }
+  #pw-card .pw-sub { font-size: 0.85em; color: #888; margin: 0; }
+  #pw-input {
+    width: 100%; box-sizing: border-box;
+    padding: 12px 16px; border: 2px solid #dce8dc;
+    border-radius: 10px; font-size: 1em; font-family: var(--font);
+    outline: none; transition: border 0.2s;
+    text-align: center; letter-spacing: 2px;
+  }
+  #pw-input:focus { border-color: #27ae60; }
+  #pw-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 10px;
+    background: #27ae60; color: white; font-size: 1em;
+    font-family: var(--font); font-weight: bold; cursor: pointer;
+    transition: background 0.2s;
+  }
+  #pw-btn:hover { background: #219a52; }
+  #pw-err {
+    font-size: 0.85em; color: #e74c3c;
+    min-height: 1.2em; font-weight: bold;
+  }
+
+  /* ── Bottom scenery strip ── */
+  .slide-scenery {
+    position:absolute;
+    top:50%; bottom:0; left:0; right:0;
+    background-size:100% auto;
+    background-position:bottom center;
+    background-repeat:no-repeat;
+    pointer-events:none;
+    z-index:0;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+  }
+</style>
+</head>
+<body>
+
+<div id="pw-screen">
+  <div id="pw-card">
+    <div class="pw-logo">職業安全衛生教育訓練</div>
+    <h2>現場作業安全衛生及6S案例分享</h2>
+    <p class="pw-sub">大豐環保科技股份有限公司</p>
+    <input id="pw-input" type="password" placeholder="請輸入密碼" autocomplete="off">
+    <button id="pw-btn">進入簡報</button>
+    <div id="pw-err"></div>
+  </div>
+</div>
+
+<div class="reveal">
+  <div class="slides" id="deck"></div>
+</div>
+
+<div id="nav-pill">
+  <button id="nav-prev">&#x2039;</button>
+  <span id="nav-num"><span id="nav-cur">1</span><span class="sep"> / </span><span id="nav-tot">—</span></span>
+  <button id="nav-next">&#x203A;</button>
+  <button id="nav-fs" title="全螢幕">&#x26F6;</button>
+</div>
+
+<script>
+(function () {
+  var PW = 'Da0616fon2026%';
+  var input = document.getElementById('pw-input');
+  var btn = document.getElementById('pw-btn');
+  var err = document.getElementById('pw-err');
+  var screen = document.getElementById('pw-screen');
+  function attempt() {
+    if (input.value === PW) {
+      screen.classList.add('fade-out');
+      setTimeout(function () { screen.style.display = 'none'; }, 500);
+    } else {
+      err.textContent = '密碼錯誤，請重新輸入。';
+      input.value = '';
+      input.focus();
+    }
+  }
+  btn.addEventListener('click', attempt);
+  input.addEventListener('keydown', function (e) { if (e.key === 'Enter') attempt(); });
+  input.focus();
+})();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+<script>
+/* ── Background image vars ── */
+var BG_FN = encodeURI('BG.png');
+var BG_STYLE = 'background-image:url(\'' + BG_FN + '\');background-size:contain;background-position:center;background-repeat:no-repeat;';
+var SCENERY = '<div class="slide-scenery" style="background-image:url(\'' + BG_FN + '\');"></div>';
+
+/* ── Risk / 6S tag helpers ── */
+var RISK_CLASS = {
+  '感電': 'r-感電',
+  '捲夾': 'r-捲夾',
+  '誤闖危害區': 'r-誤闖',
+  '絆倒': 'r-絆倒',
+  '碰撞': 'r-碰撞',
+  '粉塵危害': 'r-粉塵',
+  '防護失效': 'r-防護',
+  '傾倒壓傷': 'r-傾倒',
+  '動線受阻': 'r-動線'
+};
+
+function rTag(t) {
+  var cls = RISK_CLASS[t] || 'r-碰撞';
+  return '<span class="tag ' + cls + '">' + t + '</span>';
+}
+function sTag(t) {
+  return '<span class="tag s-' + t + '">' + t + '</span>';
+}
+
+/* ── Case data ── */
+var CASES = [
+  {
+    num: '001', title: '電線落地及潮濕作業環境',
+    photo: 'photos_only/001.jpg', date: '2026.5.21',
+    sit: '現場因作業需求會將地板及物料加濕，此時進行切割或其他作業直接將電線拉出。',
+    risk: '已產生嚴重的感電危害風險。若人員踩踏、拖拉電線或設備漏電，可能造成觸電、設備短路或火災。',
+    riskTags: ['感電'],
+    impr: '電線應改採架高、線槽或其他絕緣保護方式，不得直接落地。作業前應確認線材完整、接頭乾燥，作業後應將地面物料及積水清理乾淨。',
+    s6: '整理不必要物料，整頓線材走向，清掃地面水分與廢料，維持作業區乾淨可通行。',
+    s6tags: ['整理', '整頓', '清掃']
+  },
+  {
+    num: '002', title: '投料口警示及阻隔不足',
+    photo: 'photos_only/002.jpg', date: '2026.5.21',
+    sit: '投料口禁止進入之警告標語不足，現場人員可能無法立即判斷該區域的危害程度。',
+    risk: '仍有誤闖或無法辨識危害即進入之風險，可能造成墜落、捲夾、撞擊或被物料傷害。',
+    riskTags: ['誤闖危害區'],
+    impr: '改以鏈條加告示牌之阻隔，確保人員需要進入時，經由現場主管同意才能開啟。',
+    s6: '限制區應明確標示、固定位置、維持可辨識狀態，不可只依賴口頭提醒。',
+    s6tags: ['整頓', '安全']
+  },
+  {
+    num: '003', title: '輸送帶向外開口無防護',
+    photo: 'photos_only/003.jpeg', date: '2026.6.5',
+    sit: '輸送帶向外開口處無防護設備，作業人員可能在清理、排除異常或靠近觀察時接觸危險點。',
+    risk: '存在嚴重之捲夾風險，手部、衣物或工具都可能被捲入。',
+    riskTags: ['捲夾'],
+    impr: '立即增設護欄或護網，並貼上捲夾警告標示。清理維修時應先停止設備並確認安全。',
+    s6: '設備危險點應固定防護、清楚標示，周邊不可堆放會誘使人員伸手處理的雜物。',
+    s6tags: ['整頓', '安全']
+  },
+  {
+    num: '004', title: '輸送帶側邊輪軸無防護',
+    photo: 'photos_only/004.jpeg', date: '2026.6.5',
+    sit: '輸送帶側邊輪軸處無防護設備，側邊轉動部位容易被忽略，但只要是轉動部位就可能形成捲入點。',
+    risk: '存在嚴重之捲夾風險，可能造成夾傷、撕裂傷或更嚴重之肢體傷害。',
+    riskTags: ['捲夾'],
+    impr: '立即增設護欄或護網，並貼上捲夾警告標示。現場主管應加強宣導，禁止作業人員將手伸入防護設備內。',
+    s6: '設備側邊、底部及轉動部位皆應納入巡檢，不可只檢查正面操作區。',
+    s6tags: ['清掃', '安全']
+  },
+  {
+    num: '005', title: '走道堆放非必要工具及物料',
+    photo: 'photos_only/005.jpeg', date: '2026.6.5',
+    sit: '走道堆放非作業前、中、後會使用到之工具及物料，通道堆放物品讓走道變窄、視線受阻。',
+    risk: '易產生絆倒、碰撞之危害，緊急狀況時也可能影響人員避難或救援。',
+    riskTags: ['絆倒', '碰撞'],
+    impr: '若為需保留物，應移至倉庫等區域統一管理；非保留物品應清除。現場走道不得作為臨時堆置區。',
+    s6: '落實整理與整頓，物品定點、定量、定位，走道以「隨時可通行」為最低標準。',
+    s6tags: ['整理', '整頓']
+  },
+  {
+    num: '006', title: '機具設備線材暴露',
+    photo: 'photos_only/006.jpeg', date: '2026.6.5',
+    sit: '機具設備所需之線材暴露於現場，容易受到踩踏、摩擦、粉塵堆積或物料壓迫。',
+    risk: '有破損及粉塵所生之感電風險，也可能影響設備穩定與人員通行。',
+    riskTags: ['感電', '粉塵危害'],
+    impr: '進行線材覆蓋工程，並定期檢查電線外觀。發現破損、裸露、鬆脫或過熱，應立即停用並通報維修。',
+    s6: '線材應收納、保護及標示，設備周邊粉塵應定期清掃，避免小問題累積成重大事故。',
+    s6tags: ['整頓', '清掃']
+  },
+  {
+    num: '007', title: '個人防護具未正確配戴',
+    photo: 'photos_only/007.jpeg', date: '2026.6.5',
+    sit: '未依規定正確配戴個人防護具。防護具不是有戴就好，要依危害特性正確配戴才有效。',
+    risk: '緊急情況時個人防護具未能起保護作用，可能增加吸入粉塵、飛濺物傷害、眼部傷害或其他暴露風險。',
+    riskTags: ['防護失效'],
+    impr: '現場主管應嚴格要求作業人員正確佩戴個人防護具。防護具破損、不合身或不適合作業危害時，應立即更換。',
+    s6: '個人防護具應定位放置、保持清潔、定期檢查，作業人員應養成正確配戴的素養。',
+    s6tags: ['素養', '安全']
+  },
+  {
+    num: '008', title: '長時間堆放未使用物料',
+    photo: 'photos_only/008.jpeg', date: '2026.6.5',
+    sit: '長時間堆放未使用物料，容易變成現場死角，造成積塵、佔用空間，也讓後續清掃與檢查變得困難。',
+    risk: '可能產生粉塵引發之各種危害，也可能造成滑倒、絆倒、火災負荷增加或環境管理不良。',
+    riskTags: ['粉塵危害', '絆倒'],
+    impr: '將無須使用的物料清除，有需要留存者務必注意整潔，並分類、標示、定位管理。定期檢討堆置物是否仍有必要保留。',
+    s6: '整理是6S的起點。先移除不需要的物品，才能讓清掃、檢查與安全管理真正有效。',
+    s6tags: ['整理', '清掃']
+  },
+  {
+    num: '009', title: '未妥善收置個人防護具',
+    photo: 'photos_only/009.jpg', date: '2026.6.10',
+    sit: '安全帽等個人防護具未妥善收置，直接放置於現場物料或潮濕環境中，表面可見水珠。',
+    risk: '防護具可能受污染、變形、破損或劣化，導致實際作業時保護效果下降。也會降低自主管理的意識。',
+    riskTags: ['防護失效'],
+    impr: '個人防護具應設置固定收納位置，使用後清潔並放回指定區域。使用前應檢查外觀、帽帶、扣具，發現破損或髒污嚴重時應更換。',
+    s6: '個人防護具也是現場管理的一部分，應做到定位、定量、保持清潔，讓每位人員都能快速取得可正常使用的防護具。',
+    s6tags: ['整頓', '清潔', '素養']
+  },
+  {
+    num: '010', title: '棧板傾倒',
+    photo: 'photos_only/010.jpg', date: '2026.6.10',
+    sit: '現場棧板及物料堆置不穩，部分棧板已有傾倒情形，地面同時散落多項雜物。',
+    risk: '棧板或物料可能突然倒塌，造成壓傷、撞擊或割傷；地面散落物也會增加絆倒、滑倒及搬運碰撞風險。',
+    riskTags: ['傾倒壓傷', '絆倒'],
+    impr: '應立即扶正並重新堆放棧板，依材質及尺寸分類存放，必要時使用束帶、擋桿或棧板固定。地面散落物應清除。',
+    s6: '堆置物品不只要放得下，也要放得穩。整理時先清除不必要物品，整頓時再確認高度、重心、固定方式及周邊動線。',
+    s6tags: ['整理', '整頓']
+  },
+  {
+    num: '011', title: '堆高機未停放指定區域',
+    photo: 'photos_only/011.jpg', date: '2026.6.10',
+    sit: '堆高機未停放於指定區域，停放於現場作業空間，前方鏟頭突出，周邊物料與地面散落物較多。',
+    risk: '可能造成行人與車輛碰撞、作業動線受阻、緊急通道不暢通或設備遭誤觸移動。',
+    riskTags: ['碰撞', '動線受阻'],
+    impr: '堆高機使用後應停放於指定區域，貨叉應降至安全位置，完成熄火、拉手煞車及必要管制。停放區應明確標示，周邊不得堆置雜物。',
+    s6: '車輛及搬運設備也需要定置管理。現場應讓人一眼看得出停放區、通道及作業區，避免設備隨停造成新的危害。',
+    s6tags: ['整頓', '安全']
+  },
+  {
+    num: '012', title: '掃地用具隨意擺放',
+    photo: 'photos_only/012.jpg', date: '2026.6.10',
+    sit: '掃地用具未收回指定位置，隨意倚靠於物料旁並突出於作業動線，掃把靠在大型袋裝物上。',
+    risk: '掃具可能倒落造成絆倒、碰撞或影響搬運作業；若放在動線旁，也可能被車輛壓到或造成二次危害。',
+    riskTags: ['絆倒', '碰撞'],
+    impr: '掃地用具應設置固定收納架或指定放置區，使用後立即歸位。主管巡查時應一併確認清掃用具、廢棄物及通道是否維持整潔。',
+    s6: '清掃不是只把地面掃乾淨，還包含工具歸位。工具有定位，現場才不會因為「清掃後的工具」又形成新的危害。',
+    s6tags: ['整頓', '清掃'],
+    photoFit: 'contain'
+  }
+];
+
+/* ── Slide building ── */
+function buildSlides() {
+  var deck = document.getElementById('deck');
+  var html = '';
+
+  /* 1. Title */
+  html += '<section><div class="title-slide"><div class="title-card">' +
+    '<div class="eyebrow">職業安全衛生教育訓練</div>' +
+    '<h1>現場作業安全衛生<br>及6S案例分享</h1>' +
+    '<div class="sub">看見現象・辨識風險・討論改善</div>' +
+    '<div class="meta">大豐環保科技股份有限公司&ensp;｜&ensp;2026年6月</div>' +
+    '</div></div>' + SCENERY + '</section>';
+
+  /* 2. Purpose */
+  html += '<section><div class="info-open">' +
+    '<div class="open-title">為什麼要做案例分享？</div>' +
+    '<div class="open-body">' +
+    '<p>本次分享以現場實際照片與案例為主，透過「<strong>看見現象、辨識風險、討論改善</strong>」的方式，讓現場人員從日常作業情境中理解安全衛生與6S管理的重要性。案例內容不以法規條文說明為主，而是回到現場實際狀況，提醒同仁在作業前、中、後都能主動觀察危害並即時改善。</p>' +
+    '<p>分享時可先讓同仁觀察照片中的異常，再引導討論可能造成的危害，最後說明改善對策與6S重點。</p>' +
+    '<div class="open-note"><strong>分享原則：</strong>重點不是追究個案責任，而是把現場問題轉化為共同學習與改善的經驗。</div>' +
+    '</div></div>' + SCENERY + '</section>';
+
+  /* 3. Audience */
+  html += '<section><div class="info-open">' +
+    '<div class="open-title">適合哪些人參與？</div>' +
+    '<div class="open-body">' +
+    '<ul>' +
+    '<li>現場作業人員</li>' +
+    '<li>現場主管</li>' +
+    '<li>維修、清潔、投料、搬運及設備操作相關人員</li>' +
+    '<li>進入現場作業之承攬商人員</li>' +
+    '</ul>' +
+    '</div></div>' + SCENERY + '</section>';
+
+  /* 4. Focus points */
+  html += '<section><div class="info-open">' +
+    '<div class="open-title">分享重點</div>' +
+    '<div class="open-body">' +
+    '<table class="rtable focus-table">' +
+    '<thead><tr><th style="width:90px;">分享面向</th><th>說明</th></tr></thead>' +
+    '<tbody>' +
+    '<tr><td>現場現象</td><td>從照片觀察電線、設備、通道、物料、防護具及標示是否異常</td></tr>' +
+    '<tr><td>可能風險</td><td>說明可能造成感電、誤闖、捲夾、絆倒、碰撞、粉塵暴露或防護失效</td></tr>' +
+    '<tr><td>改善對策</td><td>以工程改善、阻隔標示、定置管理、清掃整頓及主管確認為主要方向</td></tr>' +
+    '<tr><td>6S連結</td><td>將案例連結到整理、整頓、清掃、清潔、素養與安全</td></tr>' +
+    '<tr><td>現場提醒</td><td>讓同仁知道遇到類似狀況時應停止、改善或通報</td></tr>' +
+    '</tbody></table>' +
+    '</div></div>' + SCENERY + '</section>';
+
+  /* 5. Overview */
+  function overviewTable(cases) {
+    var rows = cases.map(function(c) {
+      return '<tr><td>' + c.title + '</td><td>' + c.riskTags.map(rTag).join('') + '</td></tr>';
+    }).join('');
+    return '<table class="rtable" style="width:100%;">' +
+      '<thead><tr><th>案例主題</th><th style="width:160px;">主要風險</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table>';
+  }
+  html += '<section><div class="info-open">' +
+    '<div class="open-title">12個現場案例總覽</div>' +
+    '<div class="open-body" style="display:flex;gap:20px;padding:0;">' +
+    '<div style="flex:1;">' + overviewTable(CASES.slice(0,6)) + '</div>' +
+    '<div style="flex:1;">' + overviewTable(CASES.slice(6,12)) + '</div>' +
+    '</div></div>' + SCENERY + '</section>';
+
+  /* 6–17. Cases */
+  CASES.forEach(function(c, i) {
+    var n = i + 1;
+    var rTagsHtml = c.riskTags.map(rTag).join(' ');
+    var sTagsHtml = c.s6tags.map(sTag).join(' ');
+
+    /* Discussion slide */
+    var disc = '<section>' +
+      '<div class="case-disc">' +
+      '<div class="case-header disc-hdr">' +
+      '<span class="cnum">案例 ' + c.num + '</span>' +
+      '<span class="ctitle">' + c.title + '</span>' +
+      '<span class="cright">第 ' + n + '／12 案</span>' +
+      '</div>' +
+      '<div class="disc-body">' +
+      '<div class="photo-box"' + (c.photoFit ? ' style="display:flex;justify-content:center;align-items:center;"' : '') + '>' +
+      '<img src="' + c.photo + '" alt="' + c.title + '" style="' + (c.photoFit ? 'height:100%;width:auto;max-width:100%;display:block;' : 'width:100%;height:100%;object-fit:cover;') + '"></div>' +
+      '<div class="questions">' +
+      '<div class="q-card"><div class="q-label" style="color:#e74c3c;">❓ 問題一</div>你看到了什麼異常？</div>' +
+      '<div class="q-card"><div class="q-label" style="color:#e67e22;">❓ 問題二</div>這個異常可能造成什麼危害？</div>' +
+      '<div class="q-card"><div class="q-label" style="color:#27ae60;">❓ 問題三</div>如果今天你在現場，會怎麼處理？</div>' +
+      '<div class="reveal-hint">↓ 按方向鍵「下」揭曉分析</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>' + SCENERY + '</section>';
+
+    /* Analysis slide */
+    var anal = '<section>' +
+      '<div class="case-anal">' +
+      '<div class="case-header anal-hdr">' +
+      '<span class="cnum">案例 ' + c.num + '</span>' +
+      '<span class="ctitle">' + c.title + '</span>' +
+      '<span class="cright">' + c.date + '</span>' +
+      '</div>' +
+      '<div class="anal-body">' +
+      '<div class="anal-photo">' +
+      '<img src="' + c.photo + '" alt="' + c.title + '" style="' + (c.photoFit ? 'width:auto;height:185px;max-width:100%;display:block;' : 'object-fit:cover;') + '">' +
+      '<div>' + rTagsHtml + '</div>' +
+      '</div>' +
+      '<div class="analysis">' +
+      '<div class="a-row"><span class="a-lbl" style="background:#7f8c8d;">情境</span><span class="a-txt">' + c.sit + '</span></div>' +
+      '<div class="a-row"><span class="a-lbl" style="background:#e74c3c;">風險</span><div><div style="margin-bottom:5px;">' + rTagsHtml + '</div><span class="a-txt">' + c.risk + '</span></div></div>' +
+      '<div class="a-row"><span class="a-lbl" style="background:#27ae60;">改善</span><span class="a-txt">' + c.impr + '</span></div>' +
+      '<div class="a-row"><span class="a-lbl" style="background:#2980b9;">6S</span><div><div style="margin-bottom:5px;">' + sTagsHtml + '</div><span class="a-txt">' + c.s6 + '</span></div></div>' +
+      '</div>' +
+      '</div>' +
+      '</div>' + SCENERY + '</section>';
+
+    html += '<section>' + disc + anal + '</section>';
+  });
+
+  /* 18. Conclusion */
+  html += '<section><div class="concl-slide"><div class="concl-card">' +
+    '<h2>分享後，回到現場看三件事</h2>' +
+    '<ul class="act-list">' +
+    '<li><span class="act-num">1</span><span>是否有<strong>看得見但尚未處理</strong>的危害？</span></li>' +
+    '<li><span class="act-num">2</span><span>是否有因為方便而形成的<strong>臨時作法</strong>？</span></li>' +
+    '<li><span class="act-num">3</span><span>是否有需要<strong>主管或相關單位協助</strong>改善的事項？</span></li>' +
+    '</ul>' +
+    '<div class="concl-foot">安全與6S不是額外工作，而是把現場維持在可以安心作業的基本狀態。</div>' +
+    '</div></div>' + SCENERY + '</section>';
+
+  deck.innerHTML = html;
+}
+
+buildSlides();
+
+Reveal.initialize({
+  hash: true,
+  width: 1280,
+  height: 720,
+  margin: 0,
+  minScale: 0.2,
+  maxScale: 2.0,
+  progress: true,
+  slideNumber: false,
+  controls: false,
+  controlsTutorial: false,
+  transition: 'slide',
+  transitionSpeed: 'fast',
+  backgroundTransition: 'none',
+  center: false
+});
+
+function updateNavPill() {
+  var indices = Reveal.getIndices();
+  var hSlides = document.querySelectorAll('.reveal .slides > section');
+  var count = 0;
+  for (var i = 0; i < indices.h; i++) {
+    var vSlides = hSlides[i].querySelectorAll(':scope > section');
+    count += Math.max(vSlides.length, 1);
+  }
+  var curH = hSlides[indices.h];
+  var curV = curH ? curH.querySelectorAll(':scope > section') : [];
+  count += curV.length > 0 ? (indices.v + 1) : 1;
+  document.getElementById('nav-cur').textContent = count;
+  document.getElementById('nav-tot').textContent = Reveal.getTotalSlides();
+}
+Reveal.on('ready', updateNavPill);
+Reveal.on('slidechanged', updateNavPill);
+document.getElementById('nav-prev').addEventListener('click', function() { Reveal.prev(); });
+document.getElementById('nav-next').addEventListener('click', function() { Reveal.next(); });
+
+var fsBtn = document.getElementById('nav-fs');
+function updateFsIcon() {
+  fsBtn.innerHTML = document.fullscreenElement ? '&#x2715;' : '&#x26F6;';
+  fsBtn.title = document.fullscreenElement ? '離開全螢幕' : '全螢幕';
+}
+fsBtn.addEventListener('click', function() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+});
+document.addEventListener('fullscreenchange', updateFsIcon);
+</script>
+</body>
+</html>
