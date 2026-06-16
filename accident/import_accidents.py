@@ -36,6 +36,12 @@ DEDUP_KEYS = ("發生日期", "員工工號")
 # ────────────────────────────────────────────────────────────────────────
 
 
+def normalize_empid(v: str) -> str:
+    """去除工號前導零，統一比對格式。04139 → 4139"""
+    s = str(v).strip()
+    return str(int(s)) if s.isdigit() else s
+
+
 def normalize_date(v: str) -> str:
     """將各種日期格式統一為 YYYY-MM-DD；無法解析時原樣回傳。"""
     s = str(v).strip()
@@ -63,8 +69,7 @@ def fetch_existing() -> set[tuple]:
         data = r.json()
         existing = set()
         for acc in data.get("accidents", []):
-            # API 回傳的是英文鍵；轉回中文鍵比對
-            key = (acc.get("date", ""), acc.get("empId", ""))
+            key = (acc.get("date", ""), normalize_empid(acc.get("empId", "")))
             existing.add(key)
         return existing
     except Exception as e:
@@ -73,7 +78,7 @@ def fetch_existing() -> set[tuple]:
 
 
 def record_key(row: dict) -> tuple:
-    return (row.get("發生日期", ""), row.get("員工工號", ""))
+    return (row.get("發生日期", ""), normalize_empid(row.get("員工工號", "")))
 
 
 def post_rows(rows: list[dict]) -> dict:

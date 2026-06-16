@@ -146,11 +146,47 @@ function doGet() {
 function doPost(e) {
   try {
     var b = JSON.parse(e.postData.contents);
-    if (b.action === 'append') return _resp(_appendRows(b.rows || []));
+    if (b.action === 'append')        return _resp(_appendRows(b.rows || []));
+    if (b.action === 'deleteByKeys')  return _resp(_deleteByKeys(b.keys || []));
     return _resp({ error: '未知的 action: ' + b.action });
   } catch(err) {
     return _resp({ error: err.toString() });
   }
+}
+
+// 刪除指定 (date, empId) 的列（去除前導零比對）
+function _normalizeId(v) {
+  var s = String(v).trim();
+  return /^\d+$/.test(s) ? String(parseInt(s, 10)) : s;
+}
+
+function _deleteByKeys(keys) {
+  // keys = [{ date: "2026-05-06", empId: "04139" }, ...]
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheets()[0];
+  var data = sh.getDataRange().getValues();
+  var rawHeaders = data[0].map(function(h){ return String(h).trim(); });
+  var dateCol = rawHeaders.indexOf('發生日期');
+  var empCol  = rawHeaders.indexOf('員工工號');
+  if (dateCol < 0 || empCol < 0) return { error: '找不到欄位' };
+
+  // 建立待刪 set
+  var toDelete = {};
+  keys.forEach(function(k) {
+    toDelete[k.date + '|' + _normalizeId(k.empId)] = true;
+  });
+
+  // 從下往上刪，避免列號位移
+  var deleted = 0;
+  for (var i = data.length - 1; i >= 1; i--) {
+    var rowDate = _fmt(data[i][dateCol]);
+    var rowEmp  = _normalizeId(data[i][empCol]);
+    if (toDelete[rowDate + '|' + rowEmp]) {
+      sh.deleteRow(i + 1); // +1 因為 sheet 列號從 1 開始
+      deleted++;
+    }
+  }
+  return { deleted: deleted };
 }
 
 function _appendRows(rows) {
