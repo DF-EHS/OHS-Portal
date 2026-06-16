@@ -1,92 +1,163 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>安全衛生委員會報告 — 大豐環保科技</title>
+<title>安全衛生管理委員會 | 大豐環保科技</title>
 <style>
 :root {
-  --navy: #1e3a5f; --navy2: #162d4a; --bg: #f1f5f9; --card: #fff;
+  --navy: #1e3a5f; --bg: #f1f5f9; --card: #ffffff;
   --border: #e2e8f0; --text: #1e293b; --sub: #64748b;
-  --blue: #2563eb; --green: #16a34a; --orange: #d97706;
-  --purple: #7c3aed; --teal: #0891b2; --red: #dc2626;
+  --blue: #2563eb; --green: #16a34a; --orange: #d97706; --purple: #7c3aed;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+body {
+  font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; display: flex; flex-direction: column;
+}
 
 /* ── Header ── */
-header { background: linear-gradient(135deg, #0c1840 0%, #1e3a8a 50%, #2563eb 100%); color: #fff; padding: 12px 20px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 16px rgba(0,0,0,.35); }
+header {
+  background: linear-gradient(135deg, #0c1840 0%, #1e3a8a 50%, #2563eb 100%);
+  color: #fff; padding: 12px 20px;
+  display: flex; align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.35);
+}
 header h1 { font-size: 17px; font-weight: 700; flex: 1; }
-.hdr-btn { padding: 5px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1); color: #fff; font-size: 12px; cursor: pointer; transition: background .15s; font-family: inherit; }
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3);
+  background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer;
+  transition: background .15s; font-family: inherit; flex-shrink: 0;
+}
 .hdr-btn:hover { background: rgba(255,255,255,.2); }
 .hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
-.hdr-brand img { height: 24px; object-fit: contain; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
 .hdr-brand span { font-size: 12px; color: #94a3b8; font-weight: 600; white-space: nowrap; }
 
 /* ── Main ── */
-main { flex: 1; max-width: 900px; margin: 0 auto; width: 100%; padding: 36px 24px 60px; }
+main { flex: 1; max-width: 980px; margin: 0 auto; width: 100%; padding: 36px 24px 60px; }
 
-/* ── Hero ── */
-.hero { text-align: center; margin-bottom: 40px; }
-.hero h2 { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
-.hero p { font-size: 13px; color: var(--sub); }
-
-/* ── Year block ── */
-.year-block { margin-bottom: 40px; }
-.year-label {
+/* ── Section Label ── */
+.section-label {
   font-size: 11px; font-weight: 700; color: var(--sub);
   letter-spacing: 4px; text-transform: uppercase;
-  margin-bottom: 18px; display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
 }
-.year-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-/* ── Quarter grid ── */
-.q-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-@media (max-width: 600px) { .q-grid { grid-template-columns: repeat(2, 1fr); } }
+/* ── Year Block ── */
+.year-block { margin-bottom: 44px; }
 
+/* ── Quarter Grid ── */
+.q-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 600px) { .q-grid { grid-template-columns: 1fr; } }
+
+/* ── Quarter Card ── */
 .q-card {
-  background: var(--card); border-radius: 14px;
-  box-shadow: 0 2px 10px rgba(0,0,0,.07);
-  padding: 24px 20px; text-align: center;
-  border: 2px solid transparent;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  transition: transform .2s, box-shadow .2s, border-color .2s;
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  overflow: hidden;
+  transition: box-shadow .2s;
 }
-.q-card.available { cursor: pointer; }
-.q-card.available:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,.13); border-color: var(--blue); }
-.q-card.wip { border-color: var(--orange); cursor: pointer; }
-.q-card.wip:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,.13); }
-.q-card.placeholder { opacity: .45; }
+.q-card:not(.placeholder):hover { box-shadow: 0 6px 24px rgba(0,0,0,.12); }
+.q-card.placeholder { opacity: .5; }
 
-.q-num { font-size: 28px; font-weight: 900; color: var(--navy); line-height: 1; }
-.q-label { font-size: 11px; color: var(--sub); font-weight: 600; letter-spacing: 1px; }
+.q-top {
+  padding: 18px 20px 14px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.q-num  { font-size: 24px; font-weight: 900; color: var(--navy); line-height: 1; }
+.q-label { font-size: 12px; color: var(--sub); font-weight: 600; flex: 1; }
 
 .q-badge {
-  padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 700; white-space: nowrap;
 }
 .badge-done   { background: #dcfce7; color: #15803d; }
 .badge-wip    { background: #ffedd5; color: #c2410c; }
 .badge-future { background: #f1f5f9; color: #94a3b8; }
 
-.q-open {
-  margin-top: 4px; padding: 6px 18px; border-radius: 8px;
-  font-size: 12px; font-weight: 600; border: none; cursor: pointer;
-  font-family: inherit; transition: background .15s;
+/* ── Action Buttons ── */
+.q-actions {
+  display: flex; gap: 8px;
+  padding: 14px 16px 16px;
 }
-.btn-blue   { background: var(--blue); color: #fff; }
-.btn-blue:hover { background: #1d4ed8; }
-.btn-orange { background: var(--orange); color: #fff; }
-.btn-orange:hover { background: #b45309; }
+.q-btn {
+  flex: 1;
+  padding: 10px 8px; border-radius: 10px;
+  font-size: 12px; font-weight: 600; text-align: center;
+  border: none; cursor: pointer;
+  text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  transition: opacity .15s, transform .1s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.q-btn:hover  { opacity: .85; transform: translateY(-1px); }
+.q-btn:active { transform: scale(.97); }
+
+.btn-summary { background: #dbeafe; color: #1d4ed8; }
+.btn-report  { background: #dcfce7; color: #15803d; }
+.btn-members { background: #f3e8ff; color: #7c3aed; }
+
+/* ── Placeholder ── */
+.q-placeholder-note {
+  padding: 18px 20px;
+  font-size: 12px; color: var(--sub); font-style: italic;
+}
 
 /* ── Footer ── */
-footer { text-align: center; padding: 18px 24px; font-size: 12px; color: var(--sub); border-top: 1px solid var(--border); background: var(--card); }
+footer {
+  text-align: center; padding: 18px 24px;
+  font-size: 12px; color: var(--sub);
+  border-top: 1px solid var(--border); background: var(--card);
+}
+
+/* ── Dark Mode ── */
+#dark-toggle {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text); border-radius: 50%;
+  width: 44px; height: 44px; font-size: 20px;
+  cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  display: flex; align-items: center; justify-content: center;
+  transition: box-shadow .15s;
+}
+#dark-toggle:hover { box-shadow: 0 6px 22px rgba(0,0,0,.25); }
+
+body.dark {
+  --bg:     #0f172a;
+  --card:   #1e293b;
+  --border: #334155;
+  --text:   #f1f5f9;
+  --sub:    #94a3b8;
+}
+body.dark .q-num         { color: #93c5fd; }
+body.dark .badge-done    { background: #052e16; color: #86efac; }
+body.dark .badge-wip     { background: #431407; color: #fdba74; }
+body.dark .badge-future  { background: #1e293b; color: #64748b; }
+body.dark .btn-summary   { background: #1e3a6e; color: #93c5fd; }
+body.dark .btn-report    { background: #052e16; color: #86efac; }
+body.dark .btn-members   { background: #2e1065; color: #d8b4fe; }
 </style>
 </head>
 <body>
 
+<button id="dark-toggle" onclick="toggleDark()" title="切換深色／淺色模式">🌙</button>
+
 <header>
   <button class="hdr-btn" onclick="location.href='../'" title="回到職安管理系統入口">← 系統入口</button>
-  <h1>📊 安全衛生委員會報告</h1>
+  <h1>📊 安全衛生管理委員會</h1>
   <div class="hdr-brand">
     <img src="../dafon-logo.png" alt="大豐環保科技">
     <span>大豐環保科技</span>
@@ -94,68 +165,78 @@ footer { text-align: center; padding: 18px 24px; font-size: 12px; color: var(--s
 </header>
 
 <main>
-  <div class="hero">
-    <h2>安全衛生委員會報告查詢</h2>
-    <p>依年度與季度快速調閱職安衛委員會報告，包含各項安全改善成果與管理數據。</p>
-  </div>
 
-  <!-- 2026 年 -->
+  <!-- ── 2026 年 ── -->
   <div class="year-block">
-    <div class="year-label">2026 年</div>
+    <div class="section-label">2026 年</div>
     <div class="q-grid">
 
-      <!-- Q1 完成 -->
-      <div class="q-card available" onclick="location.href='2026/Q1/'">
-        <div class="q-num">Q1</div>
-        <div class="q-label">2026 第一季</div>
-        <span class="q-badge badge-done">✓ 已完成</span>
-        <button class="q-open btn-blue">開啟報告 ›</button>
+      <div class="q-card">
+        <div class="q-top">
+          <div class="q-num">Q1</div>
+          <div class="q-label">2026 第一季</div>
+          <span class="q-badge badge-done">✓ 已完成</span>
+        </div>
+        <div class="q-actions">
+          <a class="q-btn btn-summary" href="2026/Q1/summary.html">📋 本季摘要</a>
+          <a class="q-btn btn-report"  href="2026/Q1/" target="_blank">📊 會議報告</a>
+          <a class="q-btn btn-members" href="2026/Q1/members.html">👥 委員名單</a>
+        </div>
       </div>
 
-      <!-- Q2 進行中 -->
-      <div class="q-card wip" onclick="location.href='2026/Q2/'">
-        <div class="q-num">Q2</div>
-        <div class="q-label">2026 第二季</div>
-        <span class="q-badge badge-wip">⏳ 製作中</span>
-        <button class="q-open btn-orange">開啟草稿 ›</button>
+      <div class="q-card">
+        <div class="q-top">
+          <div class="q-num">Q2</div>
+          <div class="q-label">2026 第二季</div>
+          <span class="q-badge badge-wip">⏳ 製作中</span>
+        </div>
+        <div class="q-actions">
+          <a class="q-btn btn-summary" href="2026/Q2/summary.html">📋 本季摘要</a>
+          <a class="q-btn btn-report"  href="2026/Q2/" target="_blank">📊 會議報告</a>
+          <a class="q-btn btn-members" href="2026/Q2/members.html">👥 委員名單</a>
+        </div>
       </div>
 
-      <!-- Q3 待製作 -->
       <div class="q-card placeholder">
-        <div class="q-num">Q3</div>
-        <div class="q-label">2026 第三季</div>
-        <span class="q-badge badge-future">待製作</span>
+        <div class="q-top">
+          <div class="q-num">Q3</div>
+          <div class="q-label">2026 第三季</div>
+          <span class="q-badge badge-future">待製作</span>
+        </div>
+        <div class="q-placeholder-note">尚無資料</div>
       </div>
 
-      <!-- Q4 待製作 -->
       <div class="q-card placeholder">
-        <div class="q-num">Q4</div>
-        <div class="q-label">2026 第四季</div>
-        <span class="q-badge badge-future">待製作</span>
+        <div class="q-top">
+          <div class="q-num">Q4</div>
+          <div class="q-label">2026 第四季</div>
+          <span class="q-badge badge-future">待製作</span>
+        </div>
+        <div class="q-placeholder-note">尚無資料</div>
       </div>
 
     </div>
   </div>
 
-  <!-- 2027 年 -->
+  <!-- ── 2027 年 ── -->
   <div class="year-block">
-    <div class="year-label">2027 年</div>
+    <div class="section-label">2027 年</div>
     <div class="q-grid">
-      <div class="q-card placeholder"><div class="q-num">Q1</div><div class="q-label">2027 第一季</div><span class="q-badge badge-future">待製作</span></div>
-      <div class="q-card placeholder"><div class="q-num">Q2</div><div class="q-label">2027 第二季</div><span class="q-badge badge-future">待製作</span></div>
-      <div class="q-card placeholder"><div class="q-num">Q3</div><div class="q-label">2027 第三季</div><span class="q-badge badge-future">待製作</span></div>
-      <div class="q-card placeholder"><div class="q-num">Q4</div><div class="q-label">2027 第四季</div><span class="q-badge badge-future">待製作</span></div>
+      <div class="q-card placeholder"><div class="q-top"><div class="q-num">Q1</div><div class="q-label">2027 第一季</div><span class="q-badge badge-future">待製作</span></div><div class="q-placeholder-note">尚無資料</div></div>
+      <div class="q-card placeholder"><div class="q-top"><div class="q-num">Q2</div><div class="q-label">2027 第二季</div><span class="q-badge badge-future">待製作</span></div><div class="q-placeholder-note">尚無資料</div></div>
+      <div class="q-card placeholder"><div class="q-top"><div class="q-num">Q3</div><div class="q-label">2027 第三季</div><span class="q-badge badge-future">待製作</span></div><div class="q-placeholder-note">尚無資料</div></div>
+      <div class="q-card placeholder"><div class="q-top"><div class="q-num">Q4</div><div class="q-label">2027 第四季</div><span class="q-badge badge-future">待製作</span></div><div class="q-placeholder-note">尚無資料</div></div>
     </div>
   </div>
 
-  <!-- 2028 年 -->
+  <!-- ── 2028 年 ── -->
   <div class="year-block">
-    <div class="year-label">2028 年</div>
+    <div class="section-label">2028 年</div>
     <div class="q-grid">
-      <div class="q-card placeholder"><div class="q-num">Q1</div><div class="q-label">2028 第一季</div><span class="q-badge badge-future">待製作</span></div>
-      <div class="q-card placeholder"><div class="q-num">Q2</div><div class="q-label">2028 第二季</div><span class="q-badge badge-future">待製作</span></div>
-      <div class="q-card placeholder"><div class="q-num">Q3</div><div class="q-label">2028 第三季</div><span class="q-badge badge-future">待製作</span></div>
-      <div class="q-card placeholder"><div class="q-num">Q4</div><div class="q-label">2028 第四季</div><span class="q-badge badge-future">待製作</span></div>
+      <div class="q-card placeholder"><div class="q-top"><div class="q-num">Q1</div><div class="q-label">2028 第一季</div><span class="q-badge badge-future">待製作</span></div><div class="q-placeholder-note">尚無資料</div></div>
+      <div class="q-card placeholder"><div class="q-top"><div class="q-num">Q2</div><div class="q-label">2028 第二季</div><span class="q-badge badge-future">待製作</span></div><div class="q-placeholder-note">尚無資料</div></div>
+      <div class="q-card placeholder"><div class="q-top"><div class="q-num">Q3</div><div class="q-label">2028 第三季</div><span class="q-badge badge-future">待製作</span></div><div class="q-placeholder-note">尚無資料</div></div>
+      <div class="q-card placeholder"><div class="q-top"><div class="q-num">Q4</div><div class="q-label">2028 第四季</div><span class="q-badge badge-future">待製作</span></div><div class="q-placeholder-note">尚無資料</div></div>
     </div>
   </div>
 
@@ -163,6 +244,17 @@ footer { text-align: center; padding: 18px 24px; font-size: 12px; color: var(--s
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
 
+<script>
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('portal-dark', isDark ? '1' : '0');
+  document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
+}
+if (localStorage.getItem('portal-dark') === '1') {
+  document.body.classList.add('dark');
+  document.getElementById('dark-toggle').textContent = '☀️';
+}
+</script>
 <script src="../shared/sidebar.js"></script>
 </body>
 </html>
