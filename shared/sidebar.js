@@ -4,7 +4,16 @@
 
   if (document.getElementById('ohs-sidebar')) return; // idempotent
 
-  const BASE = window.OHS_SIDEBAR_BASE || '../'; // override with OHS_SIDEBAR_BASE for deep pages
+  // Auto-detect depth: count directory segments after the repo root (/OHS-Portal/)
+  const BASE = (function () {
+    var segs = location.pathname.replace(/^\//, '').split('/').filter(Boolean);
+    // last segment is a file (has extension) → remove it
+    if (segs.length > 0 && /\.[a-z0-9]+$/i.test(segs[segs.length - 1])) segs.pop();
+    // first segment is the GitHub Pages repo name → remove it
+    if (segs.length > 0) segs.shift();
+    var depth = segs.length; // directory levels below repo root
+    return depth > 0 ? new Array(depth + 1).join('../') : './';
+  }());
 
   // ── CSS ───────────────────────────────────────────────────────────────────
   const style = document.createElement('style');
