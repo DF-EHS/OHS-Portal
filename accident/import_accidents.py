@@ -90,6 +90,7 @@ def post_rows(rows: list[dict]) -> dict:
 
 def main():
     dry_run = "--dry-run" in sys.argv
+    auto_yes = "--yes" in sys.argv
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
 
     # 決定 Excel 路徑
@@ -133,10 +134,13 @@ def main():
         print("\n[dry-run] 預覽完畢，未實際寫入。")
         return
 
-    confirm = input(f"\n確定要新增以上 {len(new_rows)} 筆到 Google Sheets？(y/N) ").strip().lower()
-    if confirm != "y":
-        print("已取消")
-        return
+    if auto_yes:
+        print(f"\n[--yes] 自動確認，新增 {len(new_rows)} 筆…")
+    else:
+        confirm = input(f"\n確定要新增以上 {len(new_rows)} 筆到 Google Sheets？(y/N) ").strip().lower()
+        if confirm != "y":
+            print("已取消")
+            return
 
     print("⬆️   上傳中…")
     result = post_rows(new_rows)
