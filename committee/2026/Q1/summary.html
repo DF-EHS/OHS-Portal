@@ -269,6 +269,47 @@ function mdToHtml(md) {
   return html;
 }
 
+// 從報告 HTML 萃取重點文字（避免傳送整份 HTML）
+async function fetchReportText(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('無法讀取報告頁面（HTTP ' + r.status + '）');
+  const html = await r.text();
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  doc.querySelectorAll('script, style, svg').forEach(el => el.remove());
+
+  const parts = [];
+
+  // 封面標題
+  const h1 = doc.querySelector('h1, .cover-card h1');
+  if (h1) parts.push('# ' + h1.textContent.trim());
+
+  // KPI 卡片
+  doc.querySelectorAll('.kpi-card, .kpi').forEach(el => {
+    parts.push('[KPI] ' + el.textContent.trim().replace(/\s+/g, ' '));
+  });
+
+  // 各章節
+  doc.querySelectorAll('.chapter').forEach(ch => {
+    const title = ch.querySelector('.chapter-title')?.textContent.trim() || '';
+    const sub   = ch.querySelector('.chapter-subtitle')?.textContent.trim() || '';
+    if (title) parts.push('\n## ' + title);
+    if (sub)   parts.push(sub);
+
+    // 重點卡片與提案
+    ch.querySelectorAll('.highlight-card, .warning-card, .danger-card, .proposal-card, .policy-item').forEach(card => {
+      const t = card.textContent.trim().replace(/\s+/g, ' ');
+      if (t) parts.push('- ' + t.slice(0, 180));
+    });
+
+    // 表格第一行（狀態）
+    ch.querySelectorAll('table tr').forEach((row, i) => {
+      if (i < 8) parts.push(row.textContent.trim().replace(/\s+/g, '\t'));
+    });
+  });
+
+  return parts.join('\n').slice(0, 7000); // 限制 token 用量
+}
+
 async function generateSummary() {
   const btn     = document.getElementById('gen-btn');
   const spinner = document.getElementById('spinner');
@@ -282,10 +323,17 @@ async function generateSummary() {
   resArea.classList.remove('show');
 
   try {
+    // Step 1: 瀏覽器直接 fetch 報告頁面並萃取文字
+    const reportText = await fetchReportText(REPORT_URL);
+
+    // Step 2: 組裝完整 prompt
+    const prompt = AI_PROMPT + '\n\n【報告內容節錄】\n' + reportText;
+
+    // Step 3: 送給 AI Worker
     const resp = await fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: AI_PROMPT }),
+      body: JSON.stringify({ text: prompt }),
     });
 
     if (!resp.ok) {
