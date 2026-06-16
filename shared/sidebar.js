@@ -4,7 +4,7 @@
 
   if (document.getElementById('ohs-sidebar')) return; // idempotent
 
-  const BASE = '../'; // all sub-pages are exactly 1 level deep
+  const BASE = window.OHS_SIDEBAR_BASE || '../'; // override with OHS_SIDEBAR_BASE for deep pages
 
   // ── CSS ───────────────────────────────────────────────────────────────────
   const style = document.createElement('style');
