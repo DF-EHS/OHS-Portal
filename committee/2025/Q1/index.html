@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2025年Q1 職安衛委員會報告｜大豐環保</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/sidebar.css">
+  <link rel="stylesheet" href="../../css/dark.css">
+  <script src="../../js/theme.js"></script>
+  <style>
+    .cover-card {
+      background: linear-gradient(135deg, #0d2137 0%, #1B3A6B 50%, #1e5799 100%);
+    }
+    .sidebar-header { background: linear-gradient(135deg, #1B3A6B, #2a5298); }
+
+    .cover-meta {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center; margin-top: 22px;
+    }
+    .cover-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.28);
+      padding: 6px 16px; border-radius: 20px;
+      font-size: 0.84em; color: rgba(255,255,255,0.92);
+    }
+    .quick-nav {
+      background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 14px 20px 16px;
+      margin-bottom: 28px; border-top: 3px solid #1B3A6B;
+    }
+    .quick-nav-title {
+      font-size: 0.72em; color: var(--text-light);
+      margin-bottom: 10px; font-weight: 700;
+      letter-spacing: 0.8px; text-transform: uppercase;
+    }
+    .quick-nav-items { display: flex; flex-wrap: wrap; gap: 6px; }
+    .quick-nav-btn {
+      display: inline-flex; align-items: center;
+      height: 30px; padding: 0 13px; border-radius: 20px;
+      background: #f0f4f9; color: #1B3A6B;
+      text-decoration: none; font-size: 0.78em; font-weight: 600;
+      transition: all 0.15s;
+    }
+    .quick-nav-btn:hover { background: #1B3A6B; color: #fff; }
+    .quick-nav-btn.no-content { color: #94a3b8; background: #f8fafc; }
+
+    .summary-stats {
+      display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0;
+    }
+    .stat-box {
+      flex: 1; min-width: 90px; text-align: center;
+      border-radius: 12px; padding: 18px 12px 14px;
+      border: 1px solid var(--border); background: white;
+      box-shadow: var(--shadow);
+    }
+    .stat-box .stat-num { font-size: 2.4em; font-weight: 800; line-height: 1.1; }
+    .stat-box .stat-label { font-size: 0.78em; color: var(--text-light); margin-top: 6px; }
+    .stat-box.red { background: #fff5f5; border-color: #ffcdd2; border-top: 4px solid var(--danger); }
+    .stat-box.red .stat-num { color: var(--danger); }
+    .stat-box.green { background: #f1f8f1; border-color: #c8e6c9; border-top: 4px solid #4caf50; }
+    .stat-box.green .stat-num { color: #2e7d32; }
+    .stat-box.orange { background: #fffbeb; border-color: #fde68a; border-top: 4px solid #d97706; }
+    .stat-box.orange .stat-num { color: #d97706; }
+
+    .incident-header-row {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;
+    }
+    .incident-header-item {
+      display: flex; flex-direction: column;
+      background: #f8fafc; border-radius: 8px;
+      padding: 10px 14px; min-width: 100px; flex: 1;
+    }
+    .incident-header-item span:first-child {
+      font-size: 0.72em; color: var(--text-light); margin-bottom: 3px;
+    }
+    .incident-header-item span:last-child { font-weight: 600; font-size: 0.9em; }
+    .incident-desc {
+      background: #f8fafc; border-radius: 8px;
+      padding: 14px 16px; font-size: 0.9em; line-height: 1.75;
+    }
+
+    .proposal-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px; margin-top: 12px;
+    }
+    .proposal-card {
+      background: #f0f4f9; border-radius: 10px;
+      padding: 14px 16px; border-left: 4px solid #1B3A6B;
+    }
+    .proposal-card .p-title { font-weight: 700; font-size: 0.9em; margin-bottom: 6px; color: #1B3A6B; }
+    .proposal-card .p-detail { font-size: 0.82em; color: var(--text-light); line-height: 1.6; }
+
+    .defect-list { list-style: none; padding: 0; margin: 0; }
+    .defect-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.9em; line-height: 1.6;
+    }
+    .defect-list li:last-child { border-bottom: none; }
+    .defect-num {
+      flex-shrink: 0; width: 22px; height: 22px;
+      background: var(--danger); color: #fff;
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 0.75em; font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .nav-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .nav-footer a {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 22px; background: white; color: var(--primary);
+      border-radius: 8px; text-decoration: none; font-weight: 600;
+      font-size: 0.9em; box-shadow: var(--shadow);
+      border: 2px solid var(--primary); transition: all 0.2s;
+    }
+    .nav-footer a:hover { background: var(--primary); color: white; }
+
+    @media (max-width: 768px) {
+      .quick-nav { position: static; }
+      .quick-nav-btn { font-size: 0.72em; padding: 0 9px; height: 28px; }
+      .summary-stats { gap: 8px; }
+      .stat-box { min-width: 80px; padding: 14px 8px 10px; }
+      .stat-box .stat-num { font-size: 1.9em; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()" aria-label="開啟目錄">&#9776;</button>
+<div class="sidebar-trigger"></div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">2025年Q1 職安衛委員會報告<small>大豐環保｜法務及環安課</small></div>
+  <div class="toc-group"><a class="toc-chapter" href="#cover">封面</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s1">一、職業安全衛生政策</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s2">二、職安衛管理計畫</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s3">三、教育訓練計畫</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s4">四、作業環境監測</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s5">五、健康管理</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s6">六、安全衛生提案</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s7">七、自動檢查稽核</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s8">八、機械設備危害預防</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s9">九、職業災害調查</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s10">十、現場管理績效（KPI）</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s11">十一、承攬業務管理</a></div>
+  <div class="toc-group"><a class="toc-chapter" href="#s12">十二、其他事項</a></div>
+</nav>
+
+<div class="container">
+
+  <div class="top-nav">
+    <a class="back-link" href="../../">&#8592; 季報列表</a>
+    <a class="back-link" href="../../../">&#127968; 系統入口</a>
+  </div>
+
+  <!-- 封面 -->
+  <div class="cover-card" id="cover">
+    <div style="font-size:0.82em;opacity:0.75;margin-bottom:8px;letter-spacing:1px;">大豐環保科技股份有限公司</div>
+    <h1>2025年Q1 職安衛委員會報告</h1>
+    <div class="subtitle">依《職業安全衛生管理辦法》第12條</div>
+    <div class="cover-meta">
+      <span class="cover-badge">&#127970; 法務及環安課</span>
+      <span class="cover-badge">&#128197; 2025年第一季（1月～3月）</span>
+      <span class="cover-badge">&#128203; 會議日期：114年03月05日</span>
+      <span class="cover-badge">&#127979; 台中總部四樓會議室</span>
+    </div>
+  </div>
+
+  <!-- 快速導覽 -->
+  <div class="quick-nav">
+    <div class="quick-nav-title">快速跳轉 — 十二項辦理事項</div>
+    <div class="quick-nav-items">
+      <a class="quick-nav-btn" href="#s1">一 政策</a>
+      <a class="quick-nav-btn" href="#s2">二 管理計畫</a>
+      <a class="quick-nav-btn" href="#s3">三 教育訓練</a>
+      <a class="quick-nav-btn" href="#s4">四 環境監測</a>
+      <a class="quick-nav-btn" href="#s5">五 健康管理</a>
+      <a class="quick-nav-btn" href="#s6">六 安衛提案</a>
+      <a class="quick-nav-btn" href="#s7">七 稽核</a>
+      <a class="quick-nav-btn" href="#s8">八 機械設備</a>
+      <a class="quick-nav-btn" href="#s9">九 職業災害</a>
+      <a class="quick-nav-btn" href="#s10">十 KPI</a>
+      <a class="quick-nav-btn" href="#s11">十一 承攬</a>
+      <a class="quick-nav-btn" href="#s12">十二 其他</a>
+    </div>
+  </div>
+
+  <!-- 一、政策 -->
+  <div class="chapter" id="s1">
+    <div class="chapter-title">一、擬訂職業安全衛生政策</div>
+    <div class="chapter-subtitle">提出建議，宣示公司環安衛承諾</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="policy-item">
+        <span class="policy-tag">(1) 遵守法規 減少衝擊</span>
+        <span class="policy-desc">確保作業中對環境造成最低衝擊，承諾遵守相關環安衛法律、法規、標準及其他要求。</span>
+      </div>
+      <div class="policy-item">
+        <span class="policy-tag">(2) 節能減碳 推動綠能</span>
+        <span class="policy-desc">珍惜各項資產能源，提高污染防治效能，推動減碳減廢創造綠色能量。</span>
+      </div>
+      <div class="policy-item">
+        <span class="policy-tag">(3) 危害預防 促進健康</span>
+        <span class="policy-desc">推動風險管理、做好傷害疾病預防、健康檢查與促進，降低危害事故發生，確保員工與承攬商、訪客之安全，建構安全、健康、零災害之環境。</span>
+      </div>
+      <div class="policy-item">
+        <span class="policy-tag">(4) 落實溝通 持續改善</span>
+        <span class="policy-desc">將環保、安全衛生觀念融入員工、供應商、承攬商及利害關係者之訓練或告知，落實全員對環安衛的認知及緊急應變能力。</span>
+      </div>
+      <div class="policy-item">
+        <span class="policy-tag">(5) 永續經營 善盡責任</span>
+        <span class="policy-desc">持續改善環安衛系統，善盡對客戶、員工及其他利害關係者的責任。</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 二、管理計畫 -->
+  <div class="chapter" id="s2">
+    <div class="chapter-title">二、協調、建議職業安全衛生管理計畫</div>
+    <div class="chapter-subtitle">114年第一季執行重點</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>季別</th><th>執行重點</th><th>狀態</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:700;white-space:nowrap;">第一季</td>
+            <td>
+              道安講習（2月8日完成）<br>
+              全興廠消防教育訓練（1月9日完成）<br>
+              台中總部消防教育訓練（3月13日執行）<br>
+              全身背負式安全帶解說<br>
+              獎懲準則初稿設置中
+            </td>
+            <td><span class="badge badge-success">執行中</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;white-space:nowrap;">第二季規劃</td>
+            <td>
+              上半年作業環境監測（預計四、五月）<br>
+              危害鑑別與風險評估<br>
+              年度在職員工健檢（改為2年一次，項目更全面）<br>
+              職護臨場服務衛教（每月持續）
+            </td>
+            <td><span class="badge badge-warning">規劃中</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 三、教育訓練 -->
+  <div class="chapter" id="s3">
+    <div class="chapter-title">三、審議安全衛生教育訓練實施計畫</div>
+    <div class="chapter-subtitle">114年度年度訓練項目執行狀況</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>訓練項目</th><th>對象</th><th>日期</th><th>狀態</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>職業安全衛生講習 &amp; 道路安全宣導</td>
+            <td>全體司機</td>
+            <td>114年2月8日</td>
+            <td><span class="badge badge-done">✓ 完成</span></td>
+          </tr>
+          <tr>
+            <td>消防教育訓練</td>
+            <td>全興廠員工</td>
+            <td>114年1月9日</td>
+            <td><span class="badge badge-done">✓ 完成</span></td>
+          </tr>
+          <tr>
+            <td>消防教育訓練</td>
+            <td>台中總部員工</td>
+            <td>114年3月13日</td>
+            <td><span class="badge badge-success">進行中</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 四、環境監測 -->
+  <div class="chapter" id="s4">
+    <div class="chapter-title">四、審議作業環境監測計畫、監測結果及採行措施</div>
+    <div class="chapter-subtitle">114年度作業環境監測規劃</div>
+  </div>
+  <div class="card">
+    <div class="card-header">監測規劃</div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>場所</th><th>監測項目</th><th>預定時間</th><th>法規依據</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>台中總公司</td>
+            <td>二氧化碳、照度</td>
+            <td>上半年（預計四、五月）</td>
+            <td>勞工作業環境監測實施辦法</td>
+          </tr>
+          <tr>
+            <td>全興廠</td>
+            <td>噪音、照度、氫氧化鈉</td>
+            <td>上半年（預計四、五月）</td>
+            <td>職業安全衛生設施規則第313條</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header warning-header">113年監測結果追蹤</div>
+    <div class="card-body">
+      <p>全興廠噪音監測值超過勞工八小時日時量平均音壓級 <strong>85 分貝</strong>，持續要求同仁配戴耳塞耳罩，並落實聽力保護計畫。台中總公司各項監測結果均符合標準。</p>
+    </div>
+  </div>
+
+  <!-- 五、健康管理 -->
+  <div class="chapter" id="s5">
+    <div class="chapter-title">五、審議健康管理、職業病預防及健康促進事項</div>
+    <div class="chapter-subtitle">114年第一季職護臨場服務</div>
+  </div>
+  <div class="card">
+    <div class="card-header">Q1 職護臨場服務</div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>場所</th><th>臨場日期</th><th>時間</th><th>衛教重點</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>台中總公司</td>
+            <td>114年3月20日</td>
+            <td>13:00～15:00</td>
+            <td rowspan="2">規律健康生活宣導：飲食管理、規律運動（每週≥150分鐘中等強度）、戒菸減酒、壓力管理、定期健檢</td>
+          </tr>
+          <tr>
+            <td>全興廠</td>
+            <td>114年3月19日</td>
+            <td>13:00～15:00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">年度健檢制度調整</div>
+    <div class="card-body">
+      <p>自114年度起，為使健康檢查更有效發揮功用，將預算集中使用，更改健檢頻率為 <strong>2年一次</strong>，使同仁檢查項目更全面。服務對象：母性健康保護、中高齡員工衛教。</p>
+    </div>
+  </div>
+
+  <!-- 六、安全衛生提案 -->
+  <div class="chapter" id="s6">
+    <div class="chapter-title">六、審議各項安全衛生提案</div>
+    <div class="chapter-subtitle">114年度安全衛生目標管理方案</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="proposal-row">
+        <div class="proposal-card">
+          <div class="p-title">&#9888; 降低設備捲夾風險</div>
+          <div class="p-detail">清查各區輸送帶或機具，確認可接觸區域是否已做防護，降低同仁遭捲夾之危害。</div>
+        </div>
+        <div class="proposal-card">
+          <div class="p-title">&#9889; 降低感電風險</div>
+          <div class="p-detail">清查站區新購置堆高機所設置之變壓器位置是否合適，降低強降雨造成的感電危害。</div>
+        </div>
+        <div class="proposal-card">
+          <div class="p-title">&#128663; 降低碰撞風險</div>
+          <div class="p-detail">由業務部協助於挖掘機、堆高機增設輔助視角設備（神岡站評估中），降低機具碰撞危害。</div>
+        </div>
+        <div class="proposal-card">
+          <div class="p-title">&#128293; 降低火災爆炸風險</div>
+          <div class="p-detail">清查各區高壓鋼瓶使用情形，確認氣體集合裝置證照數量，減少不當使用情形。</div>
+        </div>
+      </div>
+      <p style="margin-top:14px;font-size:0.88em;color:var(--text-light);">此外，因全興廠後續有多項大型工程案，本年度另加強：降低人員滑倒危害（含外來人員）、承攬商要求機制建立、加強員工對交通法規遵守。</p>
+    </div>
+  </div>
+
+  <!-- 七、稽核 -->
+  <div class="chapter" id="s7">
+    <div class="chapter-title">七、審議事業單位自動檢查及安全衛生稽核事項</div>
+    <div class="chapter-subtitle">全興廠 114年2月21日 勞動檢查</div>
+  </div>
+  <div class="card">
+    <div class="card-header danger-header">勞動檢查缺失項目（共5項）</div>
+    <div class="card-body">
+      <ul class="defect-list">
+        <li>
+          <span class="defect-num">1</span>
+          <span>協議組織未有註明場所負責人。<strong style="color:var(--danger);">（罰款新臺幣6萬元）</strong></span>
+        </li>
+        <li>
+          <span class="defect-num">2</span>
+          <span>承攬商（昶穩）使用不合格機具（堆高機未有安全帶），且操作人員未有合適證照。</span>
+        </li>
+        <li>
+          <span class="defect-num">3</span>
+          <span>壓力容器未有標示使用區間。</span>
+        </li>
+        <li>
+          <span class="defect-num">4</span>
+          <span>壓力容器未有年度定期檢查。</span>
+        </li>
+        <li>
+          <span class="defect-num">5</span>
+          <span>化學品清冊未依照通識規則格式5要求欄位。</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 八、機械設備 -->
+  <div class="chapter" id="s8">
+    <div class="chapter-title">八、審議機械設備危害預防措施</div>
+    <div class="chapter-subtitle">堆高機作業安全指引</div>
+  </div>
+  <div class="card">
+    <div class="card-header">堆高機行駛安全規定</div>
+    <div class="card-body">
+      <p style="margin-bottom:10px;">載貨行駛時不得快速起步、緊急煞車與急轉彎，不得承載貨物倒車行駛。</p>
+      <p style="margin-bottom:8px;font-weight:600;">行駛前方視線不佳時，應採取下列措施：</p>
+      <ol style="padding-left:20px;font-size:0.9em;line-height:2;">
+        <li>下車查看周圍之安全</li>
+        <li>引導人隨車引導</li>
+        <li>反向前進</li>
+        <li>按喇叭示警慢行</li>
+        <li>確認堆高機倒車警鳴裝置正常運作</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 九、職業災害 -->
+  <div class="chapter" id="s9">
+    <div class="chapter-title">九、審議職業災害調查報告</div>
+    <div class="chapter-subtitle">114年第一季（2025年1月～3月）</div>
+  </div>
+
+  <div class="summary-stats">
+    <div class="stat-box green"><div class="stat-num">0</div><div class="stat-label">職業災害</div></div>
+    <div class="stat-box orange"><div class="stat-num">2</div><div class="stat-label">交通事故</div></div>
+    <div class="stat-box orange"><div class="stat-num">3</div><div class="stat-label">上下班交通事故</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header warning-header">交通事故紀錄（共5件，均為車損，無人員受傷）</div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>日期</th><th>部門</th><th>類別</th><th>摘要</th><th>損失</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1月25日</td>
+            <td>中區業務一課</td>
+            <td>交通事故</td>
+            <td>下交流道切換車道追撞右方車輛，已報警</td>
+            <td>車損</td>
+          </tr>
+          <tr>
+            <td>2月10日</td>
+            <td>中區業務一課</td>
+            <td>交通事故</td>
+            <td>湖口休息站車門尚未關閉，板台後移撞車門</td>
+            <td>車損</td>
+          </tr>
+          <tr>
+            <td>2月10日</td>
+            <td>南區業務一課</td>
+            <td>上下班交通事故</td>
+            <td>從停車格開車，遭後車機車追撞</td>
+            <td>車損</td>
+          </tr>
+          <tr>
+            <td>2月10日</td>
+            <td>廢車客服課</td>
+            <td>上下班交通事故</td>
+            <td>在台74上被撞</td>
+            <td>車損</td>
+          </tr>
+          <tr>
+            <td>2月12日</td>
+            <td>中區業務一課</td>
+            <td>上下班交通事故</td>
+            <td>下班騎車返家因下雨撞倒路樹，腦震盪及擦挫傷，醫囑休養3日</td>
+            <td>人損</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">改善措施</div>
+    <div class="card-body">
+      <p>上半年加強交通路權觀念宣導。提醒司機同仁遵守交通規則，並隨時保持警覺，不管路權在何方，仍應對往來車輛進行防備，避免交通事故肇生。</p>
+    </div>
+  </div>
+
+  <!-- 十、KPI -->
+  <div class="chapter" id="s10">
+    <div class="chapter-title">十、考核現場安全衛生管理績效（KPI）</div>
+    <div class="chapter-subtitle">114年第一季執行成效</div>
+  </div>
+  <div class="card">
+    <div class="card-header">KPI 達成狀況</div>
+    <div class="card-body" style="padding:0;">
+      <table>
+        <thead>
+          <tr><th>#</th><th>指標名稱</th><th>頻率</th><th>Q1 達成率</th><th>狀態</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>管理系統文件</td><td>不定期</td><td class="kpi-good">10%</td><td><span class="badge badge-success">進行中</span></td></tr>
+          <tr><td>2</td><td>消防檢修申報</td><td>1次／年</td><td class="kpi-na">0%</td><td><span class="badge badge-success">進行中</span></td></tr>
+          <tr><td>3</td><td>管理方案達成率</td><td>1次／年</td><td class="kpi-na">0%</td><td><span class="badge badge-success">進行中</span></td></tr>
+          <tr><td>4</td><td>內部稽核</td><td>1次／年</td><td class="kpi-na">0%</td><td><span class="badge badge-success">進行中</span></td></tr>
+          <tr><td>5</td><td>作業環境監測</td><td>2次／年</td><td class="kpi-na">0%</td><td><span class="badge badge-success">進行中</span></td></tr>
+          <tr><td>6</td><td>相關教育訓練</td><td>2次／年</td><td class="kpi-good">25%</td><td><span class="badge badge-success">進行中</span></td></tr>
+          <tr><td>7</td><td>辦理在職員工健檢</td><td>1次／年</td><td class="kpi-na">0%</td><td><span class="badge badge-success">進行中</span></td></tr>
+          <tr><td>8</td><td>職護臨場服務</td><td>12次／年</td><td class="kpi-good">16%</td><td><span class="badge badge-success">進行中</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 十一、承攬 -->
+  <div class="chapter" id="s11">
+    <div class="chapter-title">十一、審議承攬業務安全衛生管理事項</div>
+    <div class="chapter-subtitle">承攬商管理機制強化</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <p>已針對合約項目進行修正，將承攬應注意事項納入合約，避免現場管理責任無法釐清。持續溝通工程案件均應事先會知職安單位，確保協議組織、危害告知等法定義務落實到位。</p>
+    </div>
+  </div>
+
+  <!-- 十二、其他 -->
+  <div class="chapter" id="s12">
+    <div class="chapter-title">十二、其他有關職業安全衛生管理事項</div>
+    <div class="chapter-subtitle">高壓鋼瓶安全管理</div>
+  </div>
+  <div class="card">
+    <div class="card-header">高壓鋼瓶安全注意事項</div>
+    <div class="card-body">
+      <ol style="padding-left:20px;font-size:0.9em;line-height:2.2;">
+        <li>應避免直接日曬、遠離高溫及熱源</li>
+        <li>瓶身應有相關標示，避免誤用</li>
+        <li>放置時應加固定</li>
+        <li>儲區應避免設置於人員群集、通道或出入口</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <a href="../../">&#8592; 返回季報列表</a>
+    <span style="font-size:0.82em;color:var(--text-light);">114年第一季 · 大豐環保科技</span>
+  </div>
+
+</div><!-- /container -->
+
+<script>window.OHS_SIDEBAR_BASE = '../../../';</script>
+<script src="../../../shared/sidebar.js"></script>
+</body>
+</html>
