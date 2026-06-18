@@ -237,6 +237,60 @@ body.dark .card-btn { background: #263349; }
 body.dark .expiry-progress { background: #334155; }
 body.dark .placeholder-card { border-color: #334155; background: #1e293b; }
 
+/* ── Doc Cards ── */
+.doc-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px; margin-bottom: 20px;
+}
+.doc-card {
+  background: var(--card); border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.07);
+  overflow: hidden; transition: box-shadow .2s;
+  display: flex; flex-direction: column;
+}
+.doc-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+.doc-card-top {
+  padding: 18px 18px 10px;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.doc-icon {
+  font-size: 24px; flex-shrink: 0;
+  width: 46px; height: 46px;
+  background: var(--fire-light); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.doc-info .doc-num { font-size: 10px; color: var(--sub); font-weight: 700; letter-spacing: 1px; margin-bottom: 2px; }
+.doc-info .doc-name { font-size: 14px; font-weight: 800; color: var(--text); line-height: 1.3; }
+.doc-desc { padding: 0 18px 12px; font-size: 12px; color: var(--sub); line-height: 1.6; flex: 1; }
+.doc-action { padding: 10px 18px; border-top: 1px solid var(--border); }
+.doc-btn {
+  display: block; width: 100%; padding: 9px;
+  border-radius: 8px; text-align: center;
+  font-size: 13px; font-weight: 700; text-decoration: none;
+  background: var(--fire); color: #fff; transition: background .15s;
+}
+.doc-btn:hover { background: var(--fire-dark); }
+.doc-sub-label {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: 2px; margin: 20px 0 10px;
+}
+.link-list { display: flex; flex-direction: column; gap: 8px; }
+.link-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 10px;
+  background: var(--card); border: 1px solid var(--border);
+  font-size: 13px; color: var(--text);
+  text-decoration: none; transition: border-color .15s;
+}
+.link-item:hover { border-color: var(--fire); }
+.link-item .link-icon { font-size: 18px; flex-shrink: 0; }
+.link-item .link-name { flex: 1; font-weight: 600; }
+.link-item .link-badge {
+  font-size: 10px; padding: 2px 7px; border-radius: 10px;
+  font-weight: 700; background: #f1f5f9; color: var(--sub);
+}
+body.dark .link-badge { background: #334155; }
+
 /* ── Responsive ── */
 @media (max-width: 600px) {
   main { padding: 20px 16px 48px; }
@@ -282,7 +336,7 @@ body.dark .placeholder-card { border-color: #334155; background: #1e293b; }
     </a>
     <a href="#m3">
       📁 文件快速存取
-      <span class="nav-badge">建置中</span>
+      <span class="nav-badge">已啟用</span>
     </a>
   </div>
 
@@ -318,25 +372,79 @@ body.dark .placeholder-card { border-color: #334155; background: #1e293b; }
     </div>
   </div>
 
-  <!-- ══ Module 3：文件快速存取（佔位） ══ -->
+  <!-- ══ Module 3：文件快速存取（啟用） ══ -->
   <div class="section-block" id="m3">
     <div class="section-label">
       模組三・文件快速存取
-      <span class="mod-tag pending">建置中</span>
+      <span class="mod-tag active">已啟用</span>
     </div>
-    <div class="placeholder-card">
-      <div class="ph-icon">📁</div>
-      <div class="ph-text">
-        <h3>常用消防文件一鍵取得</h3>
-        <p>此模組建置完成後，將提供最常用文件的 SharePoint 直連，無需翻找 K 槽。</p>
-        <ul>
-          <li>防火管理三表（日常火源、消防設備、防火避難設施）空白下載</li>
-          <li>各站消防防護計劃書（最新版）</li>
-          <li>本年度消防演練成果資料夾連結</li>
-          <li>消防設備年度檢修申報統計表</li>
-        </ul>
+
+    <div class="doc-sub-label">防火管理三表（數位填寫）</div>
+    <div class="doc-grid">
+
+      <div class="doc-card">
+        <div class="doc-card-top">
+          <div class="doc-icon">🗓️</div>
+          <div class="doc-info">
+            <div class="doc-num">表單 01</div>
+            <div class="doc-name">日常火源<br>自行檢查表</div>
+          </div>
+        </div>
+        <div class="doc-desc">每月一張，逐日記錄用火設備、電器設備、煙蒂處理等五項。支援月份切換與預設值一鍵填入。</div>
+        <div class="doc-action">
+          <a class="doc-btn" href="forms/01-daily-fire.html">📝 開啟填寫</a>
+        </div>
       </div>
+
+      <div class="doc-card">
+        <div class="doc-card-top">
+          <div class="doc-icon">🚪</div>
+          <div class="doc-info">
+            <div class="doc-num">表單 02</div>
+            <div class="doc-name">防火避難設施<br>自行檢查紀錄表</div>
+          </div>
+        </div>
+        <div class="doc-desc">10 項防火避難設施檢查重點，含安全門、樓梯、走廊通道、逃生路線圖等，設有第一次／第二次欄位。</div>
+        <div class="doc-action">
+          <a class="doc-btn" href="forms/02-evacuation.html">📝 開啟填寫</a>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-card-top">
+          <div class="doc-icon">🧯</div>
+          <div class="doc-info">
+            <div class="doc-num">表單 03</div>
+            <div class="doc-name">消防安全設備<br>自行檢查紀錄表</div>
+          </div>
+        </div>
+        <div class="doc-desc">涵蓋滅火器、室內消防栓、撒水設備、火警警報、廣播、避難器具、標示設備等 8 大類設備。</div>
+        <div class="doc-action">
+          <a class="doc-btn" href="forms/03-equipment.html">📝 開啟填寫</a>
+        </div>
+      </div>
+
     </div>
+
+    <div class="doc-sub-label">消防防護計劃書 &amp; 演練成果</div>
+    <div class="link-list">
+      <a class="link-item" href="#" onclick="return false" title="連結補充中">
+        <span class="link-icon">📑</span>
+        <span class="link-name">各站消防防護計劃書（最新版）</span>
+        <span class="link-badge">連結補充中</span>
+      </a>
+      <a class="link-item" href="#" onclick="return false" title="連結補充中">
+        <span class="link-icon">📸</span>
+        <span class="link-name">115年消防演練成果資料夾</span>
+        <span class="link-badge">連結補充中</span>
+      </a>
+      <a class="link-item" href="#" onclick="return false" title="連結補充中">
+        <span class="link-icon">📊</span>
+        <span class="link-name">消防設備年度檢修申報統計表</span>
+        <span class="link-badge">連結補充中</span>
+      </a>
+    </div>
+
   </div>
 
 </main>

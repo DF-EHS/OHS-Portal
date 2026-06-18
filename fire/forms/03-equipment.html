@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>消防安全設備自行檢查紀錄表</title>
+<style>
+:root {
+  --fire: #dc2626; --fire-dark: #991b1b;
+  --bg: #f8fafc; --card: #fff; --border: #e2e8f0;
+  --text: #1e293b; --sub: #64748b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background: var(--bg); color: var(--text); }
+
+.no-print header {
+  background: linear-gradient(135deg, #450a0a 0%, #991b1b 45%, #ea580c 100%);
+  color: #fff; padding: 11px 20px;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.3);
+}
+.no-print header h1 { font-size: 16px; font-weight: 700; flex: 1; }
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer; font-family: inherit; text-decoration: none;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.2); }
+.action-bar {
+  display: flex; gap: 10px; align-items: center;
+  padding: 14px 24px; background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+.btn-print {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 22px; border-radius: 8px;
+  background: var(--fire); color: #fff;
+  font-size: 13px; font-weight: 700; border: none;
+  cursor: pointer; font-family: inherit;
+  box-shadow: 0 3px 10px rgba(220,38,38,.3);
+}
+.btn-print:hover { background: var(--fire-dark); }
+.btn-clear {
+  padding: 9px 18px; border-radius: 8px;
+  background: #f1f5f9; border: 1px solid var(--border);
+  color: var(--sub); font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.btn-clear:hover { background: var(--border); }
+.action-hint { font-size: 12px; color: var(--sub); }
+
+.form-page {
+  max-width: 820px; margin: 24px auto; padding: 32px 36px;
+  background: var(--card); border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,.08);
+}
+.form-title {
+  text-align: center; font-size: 20px; font-weight: 800;
+  letter-spacing: 4px; margin-bottom: 16px;
+}
+.form-header {
+  display: flex; flex-wrap: wrap; border: 1px solid #333;
+}
+.header-field {
+  flex: 1; min-width: 200px; padding: 7px 12px;
+  border-right: 1px solid #333; font-size: 13px;
+  display: flex; align-items: center; gap: 6px;
+}
+.header-field:last-child { border-right: none; }
+.header-field label { white-space: nowrap; font-weight: 600; }
+.header-field input {
+  flex: 1; border: none; border-bottom: 1px solid #888;
+  font-size: 13px; font-family: inherit; background: transparent; outline: none;
+}
+.header-field input:focus { border-bottom-color: var(--fire); }
+
+.check-table { width: 100%; border-collapse: collapse; border: 2px solid #333; }
+.check-table th {
+  background: #333; color: #fff; font-size: 12px; font-weight: 700;
+  padding: 8px 10px; text-align: center; border: 1px solid #555;
+}
+.check-table td {
+  font-size: 13px; padding: 7px 10px;
+  border: 1px solid #ccc; vertical-align: middle;
+}
+.section-row td {
+  background: #f1f5f9; font-weight: 800;
+  font-size: 13px; letter-spacing: 1px;
+  border-top: 2px solid #666;
+}
+.item-col { width: 52%; line-height: 1.6; }
+.check-cell {
+  width: 20%; text-align: center; cursor: pointer;
+  user-select: none; font-size: 13px; font-weight: 600;
+  transition: background .15s;
+}
+.check-cell:hover { background: #f8fafc; }
+.check-empty { color: #aaa; }
+.check-pass { background: #f0fdf4; color: #16a34a; }
+.check-fail { background: #fef2f2; color: #dc2626; }
+
+.sig-row { display: flex; border: 2px solid #333; border-top: none; }
+.sig-cell {
+  flex: 1; padding: 10px 14px; min-height: 60px;
+  border-right: 1px solid #333; font-size: 12px; font-weight: 700;
+}
+.sig-cell:last-child { border-right: none; }
+.sig-input {
+  width: 100%; border: none; border-bottom: 1px solid #ccc;
+  margin-top: 8px; font-size: 12px; font-family: inherit;
+  background: transparent; outline: none;
+}
+.sig-input:focus { border-bottom-color: var(--fire); }
+.notes { font-size: 11px; color: #555; margin-top: 10px; line-height: 1.8; }
+.notes strong { color: var(--text); }
+
+body.dark { background: #0f172a; }
+body.dark .form-page { background: #1e293b; color: #f1f5f9; }
+body.dark .form-title { color: #f1f5f9; }
+body.dark .check-table td { border-color: #334155; color: #f1f5f9; }
+body.dark .section-row td { background: #263349; }
+body.dark .check-cell:hover { background: #1e3a5f; }
+body.dark .check-pass { background: #052e16; }
+body.dark .check-fail { background: #450a0a; }
+body.dark .notes { color: #94a3b8; }
+body.dark .action-bar { background: #1e293b; border-color: #334155; }
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; font-size: 9pt; }
+  .form-page { margin: 0; padding: 10mm 12mm; box-shadow: none; border-radius: 0; max-width: 100%; }
+  .form-title { font-size: 15pt; margin-bottom: 8px; }
+  .check-table td { padding: 4px 6px; font-size: 8pt; }
+  .check-table th { font-size: 8pt; padding: 4px 6px; }
+  .check-cell { font-size: 8pt; }
+  .section-row td { background: #e8e8e8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .check-pass { background: #e8f5e9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .check-fail { background: #ffebee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .check-table th { background: #e0e0e0 !important; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .notes { font-size: 7pt; }
+}
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <header>
+    <a class="hdr-btn" href="../">← 消防管理</a>
+    <h1>🔥 消防安全設備自行檢查紀錄表</h1>
+  </header>
+  <div class="action-bar">
+    <button class="btn-print" onclick="window.print()">🖨️ 列印 / 匯出 PDF</button>
+    <button class="btn-clear" onclick="clearAll()">↺ 清除全部</button>
+    <span class="action-hint">點擊儲存格切換狀態：□ 未填 → ■ 符合 → ■ 不符合</span>
+  </div>
+</div>
+
+<div class="form-page">
+
+  <h2 class="form-title">消防安全設備自行檢查紀錄表</h2>
+
+  <div class="form-header">
+    <div class="header-field">
+      <label>實施人員：</label>
+      <input type="text" placeholder="姓名">
+    </div>
+    <div class="header-field" style="flex:1.4">
+      <label>檢查日期：</label>
+      <input type="text" placeholder="民國　年　月　日">
+    </div>
+  </div>
+
+  <table class="check-table" id="eq-table">
+    <thead>
+      <tr>
+        <th style="width:14%">設備名稱</th>
+        <th class="item-col" style="text-align:left">檢　查　重　點</th>
+        <th style="width:17%">第一次<br>檢查結果</th>
+        <th style="width:17%">第二次<br>檢查結果</th>
+      </tr>
+    </thead>
+    <tbody id="eq-body"></tbody>
+  </table>
+
+  <div class="sig-row">
+    <div class="sig-cell">
+      防火管理人處置情形暨簽章<br>
+      <input class="sig-input" type="text">
+    </div>
+    <div class="sig-cell">
+      管理權人處置情形暨簽章<br>
+      <input class="sig-input" type="text">
+    </div>
+  </div>
+
+  <div class="notes">
+    <strong>備考：</strong>如有異常現象，應立即報告防火管理人。<br>
+    <strong>符號說明：</strong>「■符合」→堪用、符合安全規定；「■不符合」→無法使用、損壞或未依安全規定且無法立即排除者。
+  </div>
+
+</div>
+
+<script>
+const EQUIPMENT = [
+  {
+    name: '滅火器',
+    items: [
+      '放置於固定且便於取用之明顯場所。',
+      '安全插梢無脫落或損傷等影響使用之情形。',
+      '噴嘴無變形、損傷、老化等影響使用之情形。',
+      '壓力指示計之壓力指示值在有效範圍內。',
+      '無其他影響滅火器使用之情形（如放置雜物）。',
+    ],
+  },
+  {
+    name: '室內消防栓',
+    items: [
+      '消防栓箱門確實關閉，水帶及瞄子之數量正確。',
+      '消防栓箱內瞄子及水帶等無變形、損傷等無法使用情形。',
+      '紅色幫浦表示燈保持明亮。',
+      '無其他明顯影響使用之情形（如放置雜物）。',
+    ],
+  },
+  {
+    name: '撒水設備',
+    items: [
+      '無新設隔間、棚架致未在撒水範圍內之情形。',
+      '撒水頭無變形及漏水之情形。',
+      '送水口無變形及妨礙操作之情形。',
+      '制水閥保持開啟，附近並有「制水閥」字樣之標識。',
+      '無其他明顯影響使用之情形（如放置雜物）。',
+    ],
+  },
+  {
+    name: '火警自動警報設備',
+    items: [
+      '受信總機電壓表在所定之範圍內或電源表示燈保持明亮。',
+      '火警探測器無變形、損壞等無法使用之情形。',
+    ],
+  },
+  {
+    name: '火警發信機',
+    items: [
+      '按鈕前之保護板，無破損、變形及損壞等影響使用之情形。',
+      '無其他明顯影響使用之情形（如放置雜物）。',
+    ],
+  },
+  {
+    name: '緊急廣播設備',
+    items: [
+      '實際進行廣播播放測試，確保設備能正常播放。',
+    ],
+  },
+  {
+    name: '避難器具',
+    items: [
+      '避難器具之標識，無脫落、污損等影響辨識之情形。',
+      '避難器具及其零件，無明顯變形、脫落等影響使用之情形。',
+      '避難器具周遭無放置雜物影響其使用之情形。',
+      '下降空間暢通無妨礙下降之情形（如設置遮雨棚）。',
+    ],
+  },
+  {
+    name: '標示設備',
+    items: [
+      '無內部裝修，致影響辨識之情形。',
+      '無標識脫落、變形、損傷或周圍放置雜物等影響辨別之情形。',
+      '燈具之光源有保持明亮，無閃爍等影響辨識之情形。',
+    ],
+  },
+  {
+    name: '其它',
+    items: [''],
+  },
+];
+
+const STATES = [
+  { text: '□', cls: 'check-cell check-empty' },
+  { text: '■ 符合', cls: 'check-cell check-pass' },
+  { text: '■ 不符合', cls: 'check-cell check-fail' },
+];
+
+function buildTable() {
+  const tbody = document.getElementById('eq-body');
+  let html = '';
+  EQUIPMENT.forEach(eq => {
+    const rowspan = eq.items.length;
+    eq.items.forEach((item, i) => {
+      html += `<tr>`;
+      if (i === 0) {
+        html += `<td rowspan="${rowspan}" style="text-align:center;font-weight:700;vertical-align:middle;font-size:12px;">${eq.name}</td>`;
+      }
+      html += `<td class="item-col">${item || '（自填）'}</td>`;
+      html += `<td class="${STATES[0].cls}" data-state="0" onclick="toggleCheck(this)">${STATES[0].text}</td>`;
+      html += `<td class="${STATES[0].cls}" data-state="0" onclick="toggleCheck(this)">${STATES[0].text}</td>`;
+      html += `</tr>`;
+    });
+  });
+  tbody.innerHTML = html;
+}
+
+function toggleCheck(cell) {
+  let s = (parseInt(cell.dataset.state) + 1) % STATES.length;
+  cell.dataset.state = s;
+  cell.textContent = STATES[s].text;
+  cell.className = STATES[s].cls;
+}
+
+function clearAll() {
+  document.querySelectorAll('.check-cell').forEach(c => {
+    c.dataset.state = 0; c.textContent = STATES[0].text; c.className = STATES[0].cls;
+  });
+  document.querySelectorAll('input[type="text"]').forEach(i => i.value = '');
+}
+
+buildTable();
+if (localStorage.getItem('portal-dark') === '1') document.body.classList.add('dark');
+</script>
+</body>
+</html>
