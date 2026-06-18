@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>消防管理 | 大豐環保科技</title>
+<style>
+:root {
+  --fire:        #dc2626;
+  --fire-dark:   #991b1b;
+  --fire-light:  #fef2f2;
+  --fire-border: #fecaca;
+  --orange:      #ea580c;
+  --green:       #16a34a;
+  --green-light: #f0fdf4;
+  --amber:       #d97706;
+  --amber-light: #fffbeb;
+  --navy:        #1e3a5f;
+  --bg:          #f8fafc;
+  --card:        #ffffff;
+  --border:      #e2e8f0;
+  --text:        #1e293b;
+  --sub:         #64748b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+
+/* ── Header ── */
+header {
+  background: linear-gradient(135deg, #450a0a 0%, #991b1b 45%, #ea580c 100%);
+  color: #fff; padding: 12px 20px;
+  display: flex; align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.4);
+}
+header h1 { font-size: 17px; font-weight: 700; flex: 1; }
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3);
+  background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer;
+  transition: background .15s; font-family: inherit; flex-shrink: 0;
+  text-decoration: none; display: inline-flex; align-items: center;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.2); }
+.hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 12px; color: #fca5a5; font-weight: 600; white-space: nowrap; }
+
+/* ── Main ── */
+main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24px 60px; }
+
+/* ── Page Hero ── */
+.page-hero {
+  background: linear-gradient(135deg, #450a0a 0%, #991b1b 50%, #dc2626 100%);
+  color: #fff; border-radius: 16px; padding: 28px 32px; margin-bottom: 32px;
+  box-shadow: 0 4px 20px rgba(220,38,38,.25);
+  display: flex; align-items: center; gap: 20px;
+}
+.hero-icon { font-size: 52px; flex-shrink: 0; }
+.hero-text h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.hero-text p { font-size: 13px; color: #fca5a5; line-height: 1.6; }
+
+/* ── Module Nav ── */
+.module-nav {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+}
+.module-nav a {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 18px; border-radius: 24px;
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  border: 1.5px solid var(--border);
+  background: var(--card); color: var(--text);
+  transition: all .15s;
+}
+.module-nav a.active {
+  background: var(--fire); color: #fff; border-color: var(--fire);
+}
+.module-nav a:hover:not(.active) { border-color: var(--fire); color: var(--fire); }
+.module-nav a .nav-badge {
+  font-size: 10px; padding: 1px 6px; border-radius: 10px;
+  font-weight: 700; background: rgba(255,255,255,.2);
+}
+.module-nav a:not(.active) .nav-badge {
+  background: #f1f5f9; color: var(--sub);
+}
+
+/* ── Section Label ── */
+.section-label {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: 3px; text-transform: uppercase;
+  margin: 0 0 20px; display: flex; align-items: center; gap: 10px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.section-label .mod-tag {
+  font-size: 10px; padding: 2px 8px; border-radius: 10px;
+  font-weight: 700; letter-spacing: 0; text-transform: none;
+  margin-left: 6px;
+}
+.mod-tag.active { background: #dcfce7; color: #15803d; }
+.mod-tag.pending { background: #f1f5f9; color: var(--sub); }
+
+/* ── Placeholder Card ── */
+.placeholder-card {
+  background: var(--card); border-radius: 14px;
+  border: 2px dashed var(--border);
+  padding: 36px 28px; margin-bottom: 40px;
+  display: flex; align-items: center; gap: 20px;
+}
+.ph-icon { font-size: 40px; flex-shrink: 0; opacity: .5; }
+.ph-text h3 { font-size: 15px; font-weight: 700; color: var(--sub); margin-bottom: 6px; }
+.ph-text p  { font-size: 13px; color: var(--sub); line-height: 1.7; }
+.ph-text ul { padding-left: 16px; margin-top: 6px; }
+.ph-text ul li { font-size: 12px; color: var(--sub); margin-bottom: 3px; }
+
+/* ── Managers Grid ── */
+.managers-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px; margin-bottom: 40px;
+}
+
+/* ── Manager Card ── */
+.manager-card {
+  background: var(--card); border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  overflow: hidden; transition: box-shadow .2s;
+}
+.manager-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.12); }
+
+.card-top {
+  padding: 16px 18px 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.site-icon-wrap {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+  background: var(--fire-light);
+}
+.site-info .site-name { font-size: 11px; color: var(--sub); font-weight: 700; letter-spacing: 1px; }
+.site-info .manager-name { font-size: 20px; font-weight: 800; color: var(--text); line-height: 1.2; }
+
+.expiry-bar {
+  padding: 0 18px 16px;
+}
+.expiry-label { font-size: 10px; font-weight: 700; color: var(--sub); letter-spacing: 1px; margin-bottom: 6px; }
+.expiry-main {
+  display: flex; align-items: baseline; gap: 8px;
+}
+.days-num {
+  font-size: 32px; font-weight: 800; line-height: 1;
+}
+.days-unit { font-size: 12px; color: var(--sub); font-weight: 600; }
+.expiry-progress {
+  height: 4px; background: #f1f5f9; border-radius: 4px; margin-top: 8px; overflow: hidden;
+}
+.expiry-progress-fill { height: 100%; border-radius: 4px; transition: width .4s; }
+
+.status-green .days-num { color: var(--green); }
+.status-green .expiry-progress-fill { background: var(--green); }
+.status-amber .days-num { color: var(--amber); }
+.status-amber .expiry-progress-fill { background: var(--amber); }
+.status-red .days-num { color: var(--fire); }
+.status-red .expiry-progress-fill { background: var(--fire); }
+
+.card-meta {
+  border-top: 1px solid var(--border);
+  padding: 12px 18px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.meta-row {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--sub);
+}
+.meta-row .meta-icon { width: 16px; text-align: center; flex-shrink: 0; }
+.meta-row strong { color: var(--text); font-weight: 600; }
+
+.card-actions {
+  border-top: 1px solid var(--border);
+  padding: 10px 18px;
+  display: flex; gap: 8px;
+}
+.card-btn {
+  flex: 1; padding: 7px 10px; border-radius: 8px;
+  font-size: 11px; font-weight: 700; text-align: center;
+  text-decoration: none; font-family: inherit;
+  border: 1px solid var(--border); background: #f8fafc;
+  color: var(--sub); cursor: pointer; transition: all .15s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+}
+.card-btn:hover { background: var(--fire-light); border-color: var(--fire-border); color: var(--fire); }
+.card-btn.disabled { opacity: .45; cursor: not-allowed; pointer-events: none; }
+
+/* ── Expiry Status Badge ── */
+.status-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 9px; border-radius: 20px;
+  font-size: 11px; font-weight: 700;
+}
+.status-badge.green { background: var(--green-light); color: var(--green); }
+.status-badge.amber { background: var(--amber-light); color: var(--amber); }
+.status-badge.red   { background: var(--fire-light);  color: var(--fire);  }
+
+/* ── Section spacer ── */
+.section-block { margin-bottom: 40px; }
+
+/* ── Footer ── */
+footer {
+  text-align: center; padding: 18px 24px;
+  font-size: 12px; color: var(--sub);
+  border-top: 1px solid var(--border); background: var(--card);
+}
+
+/* ── Dark Toggle ── */
+#dark-toggle {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text); border-radius: 50%;
+  width: 44px; height: 44px; font-size: 20px;
+  cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── Dark Mode ── */
+body.dark {
+  --bg: #0f172a; --card: #1e293b; --border: #334155;
+  --text: #f1f5f9; --sub: #94a3b8;
+  --fire-light: #450a0a; --fire-border: #7f1d1d;
+  --green-light: #052e16; --amber-light: #431407;
+}
+body.dark .module-nav a:not(.active) { background: #1e293b; }
+body.dark .card-btn { background: #263349; }
+body.dark .expiry-progress { background: #334155; }
+body.dark .placeholder-card { border-color: #334155; background: #1e293b; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  main { padding: 20px 16px 48px; }
+  .page-hero { flex-direction: column; text-align: center; padding: 22px 20px; }
+  .managers-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<button id="dark-toggle" onclick="toggleDark()" title="切換深色／淺色模式">🌙</button>
+
+<header>
+  <a class="hdr-btn" href="../">← 系統首頁</a>
+  <h1>🔥 消防管理</h1>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <div class="hero-icon">🔥</div>
+    <div class="hero-text">
+      <h2>消防安全管理系統</h2>
+      <p>集中管理防火管理人認證資訊、各站合規狀態與消防文件，<br>
+         提供稽核時的即時查閱介面。</p>
+    </div>
+  </div>
+
+  <!-- Module Nav -->
+  <div class="module-nav">
+    <a href="#m1">
+      📊 合規儀表板
+      <span class="nav-badge">建置中</span>
+    </a>
+    <a href="#m2" class="active">
+      👤 防火管理人名冊
+      <span class="nav-badge">已啟用</span>
+    </a>
+    <a href="#m3">
+      📁 文件快速存取
+      <span class="nav-badge">建置中</span>
+    </a>
+  </div>
+
+  <!-- ══ Module 1：合規儀表板（佔位） ══ -->
+  <div class="section-block" id="m1">
+    <div class="section-label">
+      模組一・合規儀表板
+      <span class="mod-tag pending">建置中</span>
+    </div>
+    <div class="placeholder-card">
+      <div class="ph-icon">📊</div>
+      <div class="ph-text">
+        <h3>各站消防合規狀態追蹤</h3>
+        <p>此模組建置完成後，將以站區 × 活動矩陣呈現每年合規執行狀況。</p>
+        <ul>
+          <li>消防演練完成狀態（每年6月、12月各一次）</li>
+          <li>消防設備年度檢修申報完成狀態</li>
+          <li>各站進度 Traffic Light 指示燈</li>
+          <li>連結至各站申報書與訓練成果</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Module 2：防火管理人名冊（啟用） ══ -->
+  <div class="section-block" id="m2">
+    <div class="section-label">
+      模組二・防火管理人名冊
+      <span class="mod-tag active">已啟用</span>
+    </div>
+    <div class="managers-grid" id="managers-grid">
+      <!-- 由 JS 渲染 -->
+    </div>
+  </div>
+
+  <!-- ══ Module 3：文件快速存取（佔位） ══ -->
+  <div class="section-block" id="m3">
+    <div class="section-label">
+      模組三・文件快速存取
+      <span class="mod-tag pending">建置中</span>
+    </div>
+    <div class="placeholder-card">
+      <div class="ph-icon">📁</div>
+      <div class="ph-text">
+        <h3>常用消防文件一鍵取得</h3>
+        <p>此模組建置完成後，將提供最常用文件的 SharePoint 直連，無需翻找 K 槽。</p>
+        <ul>
+          <li>防火管理三表（日常火源、消防設備、防火避難設施）空白下載</li>
+          <li>各站消防防護計劃書（最新版）</li>
+          <li>本年度消防演練成果資料夾連結</li>
+          <li>消防設備年度檢修申報統計表</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+
+<script>
+// ─────────────────────────────────────────────
+//  防火管理人資料
+//  validUntil: 西元年 YYYY-MM-DD
+//  pdfUrl: SharePoint 連結（空字串 = 補充中）
+// ─────────────────────────────────────────────
+const MANAGERS = [
+  {
+    site:      "台中總部",
+    icon:      "🏢",
+    name:      "王婕誼",
+    trainType: "初訓",
+    batch:     "第135期",
+    validFrom: "2024-08-29",
+    validUntil:"2027-08-28",
+    certNo:    "I113初00288號",
+    issuer:    "彰化縣工業會附設職業訓練中心",
+    pdfUrl:    "",
+  },
+  {
+    site:      "全興廠",
+    icon:      "🏭",
+    name:      "洪健翔",
+    trainType: "複訓",
+    batch:     "第280期",
+    validFrom: "2025-09-11",
+    validUntil:"2028-09-10",
+    certNo:    "I114複00743號",
+    issuer:    "彰化縣工業會附設職業訓練中心",
+    pdfUrl:    "",
+  },
+  {
+    site:      "五股",
+    icon:      "🏗️",
+    name:      "侯兆謙",
+    trainType: "初訓",
+    batch:     "第114122期",
+    validFrom: "2025-09-03",
+    validUntil:"2028-09-02",
+    certNo:    "B114初01537號",
+    issuer:    "社團法人中華消防協會",
+    pdfUrl:    "",
+  },
+];
+
+// ── 日期工具 ──
+function daysUntil(dateStr) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const target = new Date(dateStr);
+  return Math.round((target - today) / 86400000);
+}
+
+function adToRoc(dateStr) {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return `${y - 1911}年${m}月${d}日`;
+}
+
+function statusClass(days) {
+  if (days < 0)   return 'red';
+  if (days < 90)  return 'red';
+  if (days < 180) return 'amber';
+  return 'green';
+}
+
+function statusLabel(days) {
+  if (days < 0)   return '⚠️ 已過期';
+  if (days < 90)  return '⚠️ 即將到期';
+  if (days < 180) return '⏰ 注意追蹤';
+  return '✓ 有效中';
+}
+
+function progressPct(validFrom, validUntil, daysLeft) {
+  const total = daysUntil(validUntil) - daysUntil(validFrom) + daysUntil(validFrom);
+  // total valid days from issuance to expiry
+  const from = new Date(validFrom), until = new Date(validUntil);
+  const totalDays = Math.round((until - from) / 86400000);
+  if (totalDays <= 0) return 0;
+  const pct = (daysLeft / totalDays) * 100;
+  return Math.max(0, Math.min(100, pct));
+}
+
+// ── 渲染卡片 ──
+function buildManagers() {
+  const grid = document.getElementById('managers-grid');
+  grid.innerHTML = MANAGERS.map(m => {
+    const days    = daysUntil(m.validUntil);
+    const sc      = statusClass(days);
+    const pct     = progressPct(m.validFrom, m.validUntil, days);
+    const daysDisp = days < 0 ? `${Math.abs(days)}` : `${days}`;
+    const daysLbl  = days < 0 ? '天前已到期' : '天後到期';
+
+    return `
+    <div class="manager-card">
+      <div class="card-top">
+        <div class="site-icon-wrap">${m.icon}</div>
+        <div class="site-info">
+          <div class="site-name">${m.site}</div>
+          <div class="manager-name">${m.name}</div>
+        </div>
+        <span class="status-badge ${sc}" style="margin-left:auto;align-self:flex-start">
+          ${statusLabel(days)}
+        </span>
+      </div>
+
+      <div class="expiry-bar status-${sc}">
+        <div class="expiry-label">認證剩餘效期</div>
+        <div class="expiry-main">
+          <span class="days-num">${daysDisp}</span>
+          <span class="days-unit">${daysLbl}</span>
+        </div>
+        <div class="expiry-progress">
+          <div class="expiry-progress-fill" style="width:${pct}%"></div>
+        </div>
+      </div>
+
+      <div class="card-meta">
+        <div class="meta-row">
+          <span class="meta-icon">📅</span>
+          <span>有效期間 <strong>${adToRoc(m.validFrom)} ～ ${adToRoc(m.validUntil)}</strong></span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-icon">🎓</span>
+          <span>訓練類別 <strong>${m.trainType} ${m.batch}</strong></span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-icon">🔖</span>
+          <span>證書字號 <strong>${m.certNo}</strong></span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-icon">🏛️</span>
+          <span style="line-height:1.5">${m.issuer}</span>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <a class="card-btn ${m.pdfUrl ? '' : 'disabled'}"
+           href="${m.pdfUrl || '#'}"
+           ${m.pdfUrl ? 'target="_blank"' : ''}
+           title="${m.pdfUrl ? '開啟證書' : '連結補充中'}">
+          📄 ${m.pdfUrl ? '查看證書' : '連結補充中'}
+        </a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+buildManagers();
+
+// ── 深色模式 ──
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('portal-dark', isDark ? '1' : '0');
+  document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
+}
+if (localStorage.getItem('portal-dark') === '1') {
+  document.body.classList.add('dark');
+  document.getElementById('dark-toggle').textContent = '☀️';
+}
+</script>
+<script>window.OHS_SIDEBAR_BASE = '../';</script>
+<script src="../shared/sidebar.js"></script>
+</body>
+</html>
