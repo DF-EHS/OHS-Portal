@@ -230,6 +230,10 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24p
 .comp-legend span {
   padding: 3px 10px; border-radius: 10px; font-weight: 700;
 }
+.leg-done    { background: #f0fdf4; color: #15803d; }
+.leg-missing { background: #fffbeb; color: #92400e; }
+.leg-pending { background: #eff6ff; color: #1e40af; }
+.leg-future  { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
 .comp-note { font-size: 11px; color: var(--sub); margin-top: 8px; line-height: 1.7; }
 body.dark .comp-matrix td { border-color: #334155; }
 body.dark .comp-matrix .year-col { color: #f1f5f9; }
@@ -333,7 +337,7 @@ body.dark .link-badge { background: #334155; }
 </head>
 <body>
 
-<button id="dark-toggle" onclick="toggleDark()" title="切換深色／淺色模式">🌙</button>
+<button type="button" id="dark-toggle" onclick="toggleDark()" title="切換深色／淺色模式">🌙</button>
 
 <header>
   <a class="hdr-btn" href="../">← 系統首頁</a>
@@ -380,10 +384,10 @@ body.dark .link-badge { background: #334155; }
     </div>
 
     <div class="comp-legend">
-      <span style="background:#f0fdf4;color:#15803d">✓ 已完成</span>
-      <span style="background:#fffbeb;color:#92400e">⚠ 未記錄</span>
-      <span style="background:#eff6ff;color:#1e40af">⟳ 待補上傳</span>
-      <span style="background:#f8fafc;color:#64748b;border:1px solid #e2e8f0">— 未到期</span>
+      <span class="leg-done">✓ 已完成</span>
+      <span class="leg-missing">⚠ 未記錄</span>
+      <span class="leg-pending">⟳ 待補上傳</span>
+      <span class="leg-future">— 未到期</span>
     </div>
 
     <div class="comp-wrap">
@@ -508,13 +512,13 @@ body.dark .link-badge { background: #334155; }
 // ─────────────────────────────────────────────
 const DRILLS = [
   { roc: 115,
-    taichung: { h1: { s:'pending' }, h2: { s:'future' } },
-    quanxing:  { h1: { s:'pending' }, h2: { s:'future' } } },
+    taichung: { h1: { s:'done', d:'2026-05-14' }, h2: { s:'future' } },
+    quanxing:  { h1: { s:'done', d:'2026-05-21' }, h2: { s:'future' } } },
   { roc: 114,
-    taichung: { h1: { s:'missing' }, h2: { s:'missing' } },
+    taichung: { h1: { s:'done', d:'2025-03-13' }, h2: { s:'done', d:'2025-09-18' } },
     quanxing:  { h1: { s:'done', d:'2025-01-09' }, h2: { s:'done', d:'2025-12-29' } } },
   { roc: 113,
-    taichung: { h1: { s:'done', d:'2024-06-14' }, h2: { s:'missing' } },
+    taichung: { h1: { s:'done', d:'2024-06-14' }, h2: { s:'done', d:'2024-10-18' } },
     quanxing:  { h1: { s:'done', d:'2024-03-14' }, h2: { s:'done', d:'2024-09-12' } } },
   { roc: 112,
     taichung: { h1: { s:'done', d:'2023-04-21' }, h2: { s:'done', d:'2023-10-20' } },
