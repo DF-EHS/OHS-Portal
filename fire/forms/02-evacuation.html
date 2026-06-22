@@ -103,6 +103,7 @@ body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background
 .check-cell:hover { background: #f8fafc; }
 .check-empty { color: #aaa; }
 .check-pass { background: #f0fdf4; color: #16a34a; }
+.check-warn { background: #fffbeb; color: #b45309; }
 .check-fail { background: #fef2f2; color: #dc2626; }
 
 /* ── Signature Area ── */
@@ -134,6 +135,7 @@ body.dark .check-table th { background: #1e3a5f; }
 body.dark .check-table td { border-color: #334155; color: #f1f5f9; }
 body.dark .check-cell:hover { background: #263349; }
 body.dark .check-pass { background: #052e16; }
+body.dark .check-warn { background: #422006; color: #fcd34d; }
 body.dark .check-fail { background: #450a0a; }
 body.dark .notes { color: #94a3b8; }
 body.dark .action-bar { background: #1e293b; }
@@ -157,6 +159,7 @@ body.dark .action-bar { background: #1e293b; }
   .check-table { border-color: #000; }
   .check-table th { background: #e0e0e0 !important; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-pass { background: #e8f5e9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .check-warn { background: #fffde7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-fail { background: #ffebee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
@@ -171,7 +174,7 @@ body.dark .action-bar { background: #1e293b; }
   <div class="action-bar">
     <button class="btn-print" onclick="window.print()">🖨️ 列印 / 匯出 PDF</button>
     <button class="btn-clear" onclick="clearAll()">↺ 清除全部</button>
-    <span class="action-hint">點擊儲存格切換狀態：□ 未填 → ■ 符合 → ■ 不符合</span>
+    <span class="action-hint">點擊儲存格切換：□ 未填 → ○ 符合 → Ｖ 改善後符合 → Ｘ 不符合</span>
   </div>
 </div>
 
@@ -219,7 +222,7 @@ body.dark .action-bar { background: #1e293b; }
 
   <div class="notes">
     <strong>備考：</strong>如有異常現象，應立即報告防火管理人。<br>
-    <strong>符號說明：</strong>「■符合」→堪用、符合安全規定等；「■不符合」→無法使用、損壞或未依安全規定且無法立即排除者。
+    <strong>符號說明：</strong>「○」→堪用、符合安全規定等；「Ｖ」→立即修正後堪用或符合安全規定；「Ｘ」→無法使用、損壞或未依安全規定且無法立即排除者。
   </div>
 
 </div>
@@ -239,9 +242,10 @@ const ITEMS = [
 ];
 
 const STATES = [
-  { text: '□', cls: 'check-cell check-empty' },
-  { text: '■ 符合', cls: 'check-cell check-pass' },
-  { text: '■ 不符合', cls: 'check-cell check-fail' },
+  { text: '□',  cls: 'check-cell check-empty' },
+  { text: '○',  cls: 'check-cell check-pass'  },
+  { text: 'Ｖ', cls: 'check-cell check-warn'  },
+  { text: 'Ｘ', cls: 'check-cell check-fail'  },
 ];
 
 function buildTable() {
@@ -249,7 +253,7 @@ function buildTable() {
   tbody.innerHTML = ITEMS.map((item, i) => `
     <tr>
       <td style="text-align:center;font-weight:700">${i + 1}</td>
-      <td class="item-col">${i < 9 ? '　' : ''}${item}</td>
+      <td class="item-col">${item}</td>
       <td class="${STATES[0].cls}" data-state="0" onclick="toggleCheck(this)">${STATES[0].text}</td>
       <td class="${STATES[0].cls}" data-state="0" onclick="toggleCheck(this)">${STATES[0].text}</td>
     </tr>`).join('');

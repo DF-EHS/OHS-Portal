@@ -97,6 +97,7 @@ body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background
 .check-cell:hover { background: #f8fafc; }
 .check-empty { color: #aaa; }
 .check-pass { background: #f0fdf4; color: #16a34a; }
+.check-warn { background: #fffbeb; color: #b45309; }
 .check-fail { background: #fef2f2; color: #dc2626; }
 
 .sig-row { display: flex; border: 2px solid #333; border-top: none; }
@@ -121,6 +122,7 @@ body.dark .check-table td { border-color: #334155; color: #f1f5f9; }
 body.dark .section-row td { background: #263349; }
 body.dark .check-cell:hover { background: #1e3a5f; }
 body.dark .check-pass { background: #052e16; }
+body.dark .check-warn { background: #422006; color: #fcd34d; }
 body.dark .check-fail { background: #450a0a; }
 body.dark .notes { color: #94a3b8; }
 body.dark .action-bar { background: #1e293b; border-color: #334155; }
@@ -135,6 +137,7 @@ body.dark .action-bar { background: #1e293b; border-color: #334155; }
   .check-cell { font-size: 8pt; }
   .section-row td { background: #e8e8e8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-pass { background: #e8f5e9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .check-warn { background: #fffde7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-fail { background: #ffebee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-table th { background: #e0e0e0 !important; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .notes { font-size: 7pt; }
@@ -151,7 +154,7 @@ body.dark .action-bar { background: #1e293b; border-color: #334155; }
   <div class="action-bar">
     <button class="btn-print" onclick="window.print()">🖨️ 列印 / 匯出 PDF</button>
     <button class="btn-clear" onclick="clearAll()">↺ 清除全部</button>
-    <span class="action-hint">點擊儲存格切換狀態：□ 未填 → ■ 符合 → ■ 不符合</span>
+    <span class="action-hint">點擊儲存格切換：□ 未填 → ○ 符合 → Ｖ 改善後符合 → Ｘ 不符合</span>
   </div>
 </div>
 
@@ -173,7 +176,7 @@ body.dark .action-bar { background: #1e293b; border-color: #334155; }
   <table class="check-table" id="eq-table">
     <thead>
       <tr>
-        <th style="width:14%">設備名稱</th>
+        <th style="width:14%">設備內容</th>
         <th class="item-col" style="text-align:left">檢　查　重　點</th>
         <th style="width:17%">第一次<br>檢查結果</th>
         <th style="width:17%">第二次<br>檢查結果</th>
@@ -195,7 +198,7 @@ body.dark .action-bar { background: #1e293b; border-color: #334155; }
 
   <div class="notes">
     <strong>備考：</strong>如有異常現象，應立即報告防火管理人。<br>
-    <strong>符號說明：</strong>「■符合」→堪用、符合安全規定；「■不符合」→無法使用、損壞或未依安全規定且無法立即排除者。
+    <strong>符號說明：</strong>「○」→堪用、符合安全規定等；「Ｖ」→立即修正後堪用或符合安全規定；「Ｘ」→無法使用、損壞或未依安全規定且無法立即排除者。
   </div>
 
 </div>
@@ -275,9 +278,10 @@ const EQUIPMENT = [
 ];
 
 const STATES = [
-  { text: '□', cls: 'check-cell check-empty' },
-  { text: '■ 符合', cls: 'check-cell check-pass' },
-  { text: '■ 不符合', cls: 'check-cell check-fail' },
+  { text: '□',  cls: 'check-cell check-empty' },
+  { text: '○',  cls: 'check-cell check-pass'  },
+  { text: 'Ｖ', cls: 'check-cell check-warn'  },
+  { text: 'Ｘ', cls: 'check-cell check-fail'  },
 ];
 
 function buildTable() {
