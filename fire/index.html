@@ -208,6 +208,38 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24p
 /* ── Section spacer ── */
 .section-block { margin-bottom: 40px; }
 
+/* ── Compliance Matrix ── */
+.comp-wrap { overflow-x: auto; margin-bottom: 8px; }
+.comp-matrix { width: 100%; border-collapse: collapse; }
+.comp-matrix th, .comp-matrix td {
+  padding: 9px 12px; border: 1px solid var(--border);
+  font-size: 12px; text-align: center; vertical-align: middle;
+}
+.comp-matrix .year-col { font-weight: 800; font-size: 13px; width: 80px; white-space: nowrap; }
+.comp-matrix thead th { background: var(--navy); color: #fff; font-weight: 700; border-color: #2c4a6e; }
+.cell-done { background: #f0fdf4; }
+.cell-done .cell-mark { font-size: 14px; color: #15803d; font-weight: 800; }
+.cell-done .cell-date { font-size: 11px; color: #166534; margin-top: 2px; }
+.cell-missing { background: #fffbeb; color: #92400e; font-weight: 700; }
+.cell-pending { background: #eff6ff; color: #1e40af; font-weight: 700; }
+.cell-future { background: #f8fafc; color: #94a3b8; }
+.comp-legend {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  font-size: 11px; margin-bottom: 14px;
+}
+.comp-legend span {
+  padding: 3px 10px; border-radius: 10px; font-weight: 700;
+}
+.comp-note { font-size: 11px; color: var(--sub); margin-top: 8px; line-height: 1.7; }
+body.dark .comp-matrix td { border-color: #334155; }
+body.dark .comp-matrix .year-col { color: #f1f5f9; }
+body.dark .cell-done { background: #052e16; }
+body.dark .cell-done .cell-mark { color: #4ade80; }
+body.dark .cell-done .cell-date { color: #86efac; }
+body.dark .cell-missing { background: #422006; color: #fcd34d; }
+body.dark .cell-pending { background: #1e3a5f; color: #93c5fd; }
+body.dark .cell-future { background: #1e293b; color: #475569; }
+
 /* ── Footer ── */
 footer {
   text-align: center; padding: 18px 24px;
@@ -328,7 +360,7 @@ body.dark .link-badge { background: #334155; }
   <div class="module-nav">
     <a href="#m1">
       📊 合規儀表板
-      <span class="nav-badge">建置中</span>
+      <span class="nav-badge">已啟用</span>
     </a>
     <a href="#m2" class="active">
       👤 防火管理人名冊
@@ -340,25 +372,42 @@ body.dark .link-badge { background: #334155; }
     </a>
   </div>
 
-  <!-- ══ Module 1：合規儀表板（佔位） ══ -->
+  <!-- ══ Module 1：合規儀表板 ══ -->
   <div class="section-block" id="m1">
     <div class="section-label">
-      模組一・合規儀表板
-      <span class="mod-tag pending">建置中</span>
+      模組一・消防演練合規儀表板
+      <span class="mod-tag active">已啟用</span>
     </div>
-    <div class="placeholder-card">
-      <div class="ph-icon">📊</div>
-      <div class="ph-text">
-        <h3>各站消防合規狀態追蹤</h3>
-        <p>此模組建置完成後，將以站區 × 活動矩陣呈現每年合規執行狀況。</p>
-        <ul>
-          <li>消防演練完成狀態（每年6月、12月各一次）</li>
-          <li>消防設備年度檢修申報完成狀態</li>
-          <li>各站進度 Traffic Light 指示燈</li>
-          <li>連結至各站申報書與訓練成果</li>
-        </ul>
-      </div>
+
+    <div class="comp-legend">
+      <span style="background:#f0fdf4;color:#15803d">✓ 已完成</span>
+      <span style="background:#fffbeb;color:#92400e">⚠ 未記錄</span>
+      <span style="background:#eff6ff;color:#1e40af">⟳ 待補上傳</span>
+      <span style="background:#f8fafc;color:#64748b;border:1px solid #e2e8f0">— 未到期</span>
     </div>
+
+    <div class="comp-wrap">
+      <table class="comp-matrix">
+        <thead>
+          <tr>
+            <th rowspan="2">年度</th>
+            <th colspan="2">🏢 台中總部</th>
+            <th colspan="2">🏭 全興廠</th>
+          </tr>
+          <tr>
+            <th>上半年</th>
+            <th>下半年</th>
+            <th>上半年</th>
+            <th>下半年</th>
+          </tr>
+        </thead>
+        <tbody id="comp-body"></tbody>
+      </table>
+    </div>
+    <p class="comp-note">
+      資料來源：K:\HR-人資\7.工安\13. 消防管理\1．消防安全教育訓練暨演練<br>
+      ⚠ 未記錄 = K 槽對應資料夾查無演練成果；⟳ 待補上傳 = 資料夾存在但尚無檔案
+    </p>
   </div>
 
   <!-- ══ Module 2：防火管理人名冊（啟用） ══ -->
@@ -452,6 +501,50 @@ body.dark .link-badge { background: #334155; }
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
 
 <script>
+// ─────────────────────────────────────────────
+//  消防演練合規矩陣
+//  s: 'done'=已完成  'missing'=未記錄  'pending'=待補上傳  'future'=未到期
+//  d: 西元日期 YYYY-MM-DD
+// ─────────────────────────────────────────────
+const DRILLS = [
+  { roc: 115,
+    taichung: { h1: { s:'pending' }, h2: { s:'future' } },
+    quanxing:  { h1: { s:'pending' }, h2: { s:'future' } } },
+  { roc: 114,
+    taichung: { h1: { s:'missing' }, h2: { s:'missing' } },
+    quanxing:  { h1: { s:'done', d:'2025-01-09' }, h2: { s:'done', d:'2025-12-29' } } },
+  { roc: 113,
+    taichung: { h1: { s:'done', d:'2024-06-14' }, h2: { s:'missing' } },
+    quanxing:  { h1: { s:'done', d:'2024-03-14' }, h2: { s:'done', d:'2024-09-12' } } },
+  { roc: 112,
+    taichung: { h1: { s:'done', d:'2023-04-21' }, h2: { s:'done', d:'2023-10-20' } },
+    quanxing:  { h1: { s:'done', d:'2023-04-27' }, h2: { s:'done', d:'2023-10-19' } } },
+  { roc: 111,
+    taichung: { h1: { s:'done', d:'2022-06-09' }, h2: { s:'done', d:'2022-10-17' } },
+    quanxing:  { h1: { s:'done', d:'2022-06-16' }, h2: { s:'done', d:'2022-10-25' } } },
+  { roc: 110,
+    taichung: { h1: { s:'done', d:'2021-04-22' }, h2: { s:'done', d:'2021-10-27' } },
+    quanxing:  { h1: { s:'done', d:'2021-04-21' }, h2: { s:'done', d:'2021-10-14' } } },
+];
+
+function fmtRoc(d) {
+  const [y, m, day] = d.split('-').map(Number);
+  return `${y - 1911}/${String(m).padStart(2,'0')}/${String(day).padStart(2,'0')}`;
+}
+
+function drillCell(item) {
+  if (item.s === 'done')    return `<td class="cell-done"><div class="cell-mark">✓</div><div class="cell-date">${fmtRoc(item.d)}</div></td>`;
+  if (item.s === 'missing') return `<td class="cell-missing">⚠ 未記錄</td>`;
+  if (item.s === 'pending') return `<td class="cell-pending">⟳ 待補</td>`;
+  return `<td class="cell-future">—</td>`;
+}
+
+function buildMatrix() {
+  document.getElementById('comp-body').innerHTML = DRILLS.map(r =>
+    `<tr><td class="year-col">民${r.roc}年</td>${drillCell(r.taichung.h1)}${drillCell(r.taichung.h2)}${drillCell(r.quanxing.h1)}${drillCell(r.quanxing.h2)}</tr>`
+  ).join('');
+}
+
 // ─────────────────────────────────────────────
 //  防火管理人資料
 //  validUntil: 西元年 YYYY-MM-DD
@@ -597,6 +690,7 @@ function buildManagers() {
   }).join('');
 }
 
+buildMatrix();
 buildManagers();
 
 // ── 深色模式 ──
