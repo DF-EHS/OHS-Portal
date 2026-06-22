@@ -28,26 +28,25 @@ body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background
 .hdr-btn:hover { background: rgba(255,255,255,.2); }
 .action-bar {
   display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
-  padding: 12px 24px; background: var(--card);
+  padding: 10px 24px; background: var(--card);
   border-bottom: 1px solid var(--border);
 }
 .action-label { font-size: 13px; color: var(--sub); font-weight: 600; }
 .sel-group { display: flex; align-items: center; gap: 6px; }
 .sel-group select {
-  padding: 7px 10px; border-radius: 6px; border: 1px solid var(--border);
-  font-size: 13px; font-family: inherit; background: var(--card); color: var(--text);
-  cursor: pointer;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border);
+  font-size: 13px; font-family: inherit; background: var(--card); color: var(--text); cursor: pointer;
 }
 .btn-rebuild {
-  padding: 7px 16px; border-radius: 6px;
+  padding: 6px 14px; border-radius: 6px;
   background: #334155; color: #fff;
   font-size: 13px; font-weight: 600; border: none;
   cursor: pointer; font-family: inherit;
 }
 .btn-rebuild:hover { background: #1e293b; }
 .btn-print {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 9px 22px; border-radius: 8px;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 20px; border-radius: 8px;
   background: var(--fire); color: #fff;
   font-size: 13px; font-weight: 700; border: none;
   cursor: pointer; font-family: inherit;
@@ -55,16 +54,29 @@ body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background
 }
 .btn-print:hover { background: var(--fire-dark); }
 .btn-clear {
-  padding: 9px 18px; border-radius: 8px;
+  padding: 8px 16px; border-radius: 8px;
   background: #f1f5f9; border: 1px solid var(--border);
   color: var(--sub); font-size: 13px; font-weight: 600;
   cursor: pointer; font-family: inherit;
 }
 .btn-clear:hover { background: var(--border); }
-.action-sep { width: 1px; height: 28px; background: var(--border); margin: 0 4px; }
+.action-sep { width: 1px; height: 26px; background: var(--border); margin: 0 2px; }
+.legend { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.legend-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 10px;
+  font-size: 11px; font-weight: 600;
+}
+.lc-weekend { background: #f1f5f9; color: #64748b; }
+.lc-holiday { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.lc-workday { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+.lc-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.lc-weekend .lc-dot { background: #94a3b8; }
+.lc-holiday .lc-dot { background: #f59e0b; }
+.lc-workday .lc-dot { background: #22c55e; }
 
 .form-page {
-  max-width: 900px; margin: 24px auto; padding: 28px 32px;
+  max-width: 900px; margin: 20px auto; padding: 28px 32px;
   background: var(--card); border-radius: 12px;
   box-shadow: 0 2px 16px rgba(0,0,0,.08);
 }
@@ -89,13 +101,10 @@ body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background
 .header-field input:focus { border-bottom-color: var(--fire); }
 .month-display { font-weight: 700; font-size: 13px; color: var(--fire-dark); }
 
-.check-table {
-  width: 100%; border-collapse: collapse; border: 2px solid #333;
-}
+.check-table { width: 100%; border-collapse: collapse; border: 2px solid #333; }
 .check-table th {
   background: #333; color: #fff; font-size: 11px; font-weight: 700;
-  padding: 7px 6px; text-align: center; border: 1px solid #555;
-  line-height: 1.4;
+  padding: 7px 6px; text-align: center; border: 1px solid #555; line-height: 1.4;
 }
 .check-table td {
   font-size: 13px; padding: 5px 7px;
@@ -112,11 +121,24 @@ body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background
 .check-pass  { background: #f0fdf4; color: #15803d; font-size: 15px; }
 .check-warn  { background: #fffbeb; color: #b45309; font-size: 14px; }
 .check-fail  { background: #fef2f2; color: #dc2626; font-size: 14px; }
-.weekend-cell { background: #f8fafc; cursor: default; }
+.weekend-cell { background: #f8fafc !important; cursor: default; }
 .weekend-cell:hover { filter: none; }
-tr.weekend-row td { background: #f8fafc; color: #94a3b8; }
+
+/* ── 列顏色 ── */
+tr.weekend-row td  { background: #f8fafc; color: #94a3b8; }
 tr.weekend-row td:first-child,
 tr.weekend-row td:nth-child(2) { color: #64748b; }
+tr.holiday-row td  { background: #fffdf0; }  /* 國定假日（平日）：淡黃 */
+tr.holiday-row td:nth-child(2) { color: #b45309; font-weight: 700; }
+tr.workday-row td  { background: #f0fdf8; }  /* 補班日：淡綠 */
+tr.workday-row td:nth-child(2) { color: #15803d; font-weight: 700; }
+
+.workday-badge {
+  display: inline-block; font-size: 9px; padding: 0 4px;
+  background: #dcfce7; color: #15803d; border-radius: 4px;
+  font-weight: 700; margin-left: 3px; vertical-align: middle;
+  border: 1px solid #bbf7d0;
+}
 
 .remark-cell { min-width: 120px; }
 .remark-input {
@@ -124,11 +146,10 @@ tr.weekend-row td:nth-child(2) { color: #64748b; }
   font-size: 12px; font-family: inherit; background: transparent; outline: none;
 }
 .remark-input:focus { border-bottom-color: var(--fire); }
-.weekend-remark { font-size: 12px; color: #94a3b8; font-style: italic; }
+.off-remark { font-size: 12px; color: #94a3b8; font-style: italic; }
+.holiday-remark { font-size: 11px; color: #b45309; font-weight: 600; }
 
-.sig-row {
-  display: flex; border: 2px solid #333; border-top: none;
-}
+.sig-row { display: flex; border: 2px solid #333; border-top: none; }
 .sig-cell {
   flex: 1; padding: 10px 14px; min-height: 56px;
   border-right: 1px solid #333; font-size: 12px; font-weight: 700;
@@ -143,6 +164,7 @@ tr.weekend-row td:nth-child(2) { color: #64748b; }
 .notes { font-size: 11px; color: #555; margin-top: 10px; line-height: 1.9; }
 .notes strong { color: var(--text); }
 
+/* ── Dark Mode ── */
 body.dark { background: #0f172a; }
 body.dark .form-page { background: #1e293b; color: #f1f5f9; }
 body.dark .form-title { color: #f1f5f9; }
@@ -154,18 +176,23 @@ body.dark .check-pass { background: #052e16; color: #4ade80; }
 body.dark .check-warn { background: #422006; color: #fcd34d; }
 body.dark .check-fail { background: #450a0a; color: #f87171; }
 body.dark tr.weekend-row td { background: #1a2235; color: #475569; }
+body.dark tr.holiday-row td  { background: #2d2000; }
+body.dark tr.holiday-row td:nth-child(2) { color: #fbbf24; }
+body.dark tr.workday-row td  { background: #052e16; }
+body.dark tr.workday-row td:nth-child(2) { color: #4ade80; }
 body.dark .action-bar { background: #1e293b; border-color: #334155; }
 body.dark .sel-group select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
 body.dark .notes { color: #94a3b8; }
+body.dark .lc-weekend { background: #263349; color: #94a3b8; }
+body.dark .lc-holiday { background: #422006; color: #fbbf24; border-color: #78350f; }
+body.dark .lc-workday { background: #052e16; color: #4ade80; border-color: #166534; }
 
+/* ── Print ── */
 @media print {
   @page { size: A4 portrait; margin: 10mm 12mm; }
   .no-print { display: none !important; }
   body { background: white; font-size: 8pt; }
-  .form-page {
-    margin: 0; padding: 0;
-    box-shadow: none; border-radius: 0; max-width: 100%;
-  }
+  .form-page { margin: 0; padding: 0; box-shadow: none; border-radius: 0; max-width: 100%; }
   .form-title { font-size: 13pt; margin-bottom: 6px; letter-spacing: 3px; }
   .check-table th { font-size: 7pt; padding: 4px 3px; }
   .check-table td { padding: 3px 4px; font-size: 8pt; }
@@ -173,12 +200,15 @@ body.dark .notes { color: #94a3b8; }
   .remark-cell { font-size: 7pt; }
   .remark-input { font-size: 7pt; border-bottom: 1px solid #000; }
   tr.weekend-row td { background: #f4f4f4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  tr.holiday-row td  { background: #fffde7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  tr.workday-row td  { background: #f1fff5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-pass { background: #e8f5e9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-warn { background: #fffde7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-fail { background: #ffebee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-na   { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-table th { background: #e0e0e0 !important; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .notes { font-size: 7pt; }
+  .workday-badge { display: none; }
 }
 </style>
 </head>
@@ -207,8 +237,13 @@ body.dark .notes { color: #94a3b8; }
     </div>
     <div class="action-sep"></div>
     <button class="btn-print" onclick="window.print()">🖨️ 列印 / 匯出 PDF</button>
-    <button class="btn-clear" onclick="resetToDefaults()">↺ 重設為預設值</button>
-    <span style="font-size:12px;color:var(--sub)">點擊儲存格切換：空白 → 無 → ○ → Ｖ → Ｘ</span>
+    <button class="btn-clear" onclick="resetToDefaults()">↺ 重設</button>
+    <div class="action-sep"></div>
+    <div class="legend">
+      <span class="legend-chip lc-weekend"><span class="lc-dot"></span>週末</span>
+      <span class="legend-chip lc-holiday"><span class="lc-dot"></span>國定假日</span>
+      <span class="legend-chip lc-workday"><span class="lc-dot"></span>補班</span>
+    </div>
   </div>
 </div>
 
@@ -257,10 +292,7 @@ body.dark .notes { color: #94a3b8; }
   <div class="notes">
     <strong>備考：</strong>如有異常現象，應立即報告防火管理人。<br>
     <strong>符號說明：</strong>
-    「○」→ 符合規定；
-    「Ｖ」→ 立即改善後符合規定；
-    「Ｘ」→ 無法使用、損壞或未符規定且無法立即改善；
-    「無」→ 無此作業項目（不適用）。
+    「○」→ 符合規定；「Ｖ」→ 立即改善後符合規定；「Ｘ」→ 無法使用、損壞或未符規定且無法立即改善；「無」→ 無此作業項目（不適用）。
   </div>
 
 </div>
@@ -270,21 +302,105 @@ const WEEK_NAMES = ['日','一','二','三','四','五','六'];
 
 // States: 0=blank, 1=無, 2=○, 3=Ｖ, 4=Ｘ
 const STATES = [
-  { text: '',  cls: 'check-cell check-empty' },
-  { text: '無', cls: 'check-cell check-na' },
-  { text: '○', cls: 'check-cell check-pass' },
-  { text: 'Ｖ', cls: 'check-cell check-warn' },
-  { text: 'Ｘ', cls: 'check-cell check-fail' },
+  { text: '',   cls: 'check-cell check-empty' },
+  { text: '無',  cls: 'check-cell check-na'    },
+  { text: '○',  cls: 'check-cell check-pass'  },
+  { text: 'Ｖ', cls: 'check-cell check-warn'  },
+  { text: 'Ｘ', cls: 'check-cell check-fail'  },
 ];
 
-// Weekday default states: [用火設備, 電器設備, 煙蒂, 下班火源, 其它]
-// 無=1, ○=2
+// Weekday default: [用火設備, 電器設備, 煙蒂, 下班火源, 其它]  無=1  ○=2
 const WEEKDAY_DEFAULTS = [1, 2, 2, 1, 1];
+
+// ══════════════════════════════════════════════════════════════════
+//  台灣國定假日 / 補班日
+//  格式：'YYYY-MM-DD': ['H'|'W', '說明']
+//    H = 放假（國定假日，即使平日也不上班）
+//    W = 補班（即使週末也上班）
+//  資料來源：行政院人事行政總處
+//    https://www.dgpa.gov.tw/informationlist?uid=127
+//  ⚠️  標記「需確認」的項目每年年底請對照官方公告更新
+// ══════════════════════════════════════════════════════════════════
+const HOLIDAYS = {
+  // ── 2025（民國 114 年）────────────────────────────────────────
+  '2025-01-01': ['H', '元旦'],
+  '2025-01-18': ['W', '補班'],
+  '2025-01-27': ['H', '農曆除夕前一日'],
+  '2025-01-28': ['H', '除夕'],
+  '2025-01-29': ['H', '春節 初一'],
+  '2025-01-30': ['H', '春節 初二'],
+  '2025-01-31': ['H', '春節 初三'],
+  '2025-02-01': ['H', '春節 初四'],  // 週六（顯示名稱用）
+  '2025-02-02': ['H', '春節 初五'],  // 週日
+  '2025-02-28': ['H', '和平紀念日'],
+  '2025-03-29': ['W', '補班'],
+  '2025-04-04': ['H', '兒童節 / 清明節'],
+  '2025-05-01': ['H', '勞動節'],
+  '2025-05-30': ['H', '端午節 補假'],  // 端午 5/31(六) → 補假 5/30(五)
+  '2025-06-28': ['W', '補班'],
+  '2025-10-06': ['H', '中秋節'],
+  '2025-10-10': ['H', '國慶日'],
+  // ── 2026（民國 115 年）────────────────────────────────────────
+  '2026-01-01': ['H', '元旦'],
+  '2026-01-02': ['H', '元旦 橋接'],    // 需確認
+  '2026-02-14': ['W', '補班'],
+  '2026-02-16': ['H', '除夕'],
+  '2026-02-17': ['H', '春節 初一'],
+  '2026-02-18': ['H', '春節 初二'],
+  '2026-02-19': ['H', '春節 初三'],
+  '2026-02-20': ['H', '春節 初四（橋接）'],
+  '2026-02-21': ['H', '春節 初五'],    // 週六
+  '2026-02-22': ['H', '春節 初六'],    // 週日
+  '2026-02-28': ['H', '和平紀念日'],   // 週六
+  '2026-03-02': ['H', '和平紀念日 補假'],  // 需確認
+  '2026-04-03': ['H', '兒童節 補假'],  // 4/4(六) → 補假 4/3(五)
+  '2026-04-04': ['H', '兒童節'],       // 週六
+  '2026-04-05': ['H', '清明節'],       // 週日
+  '2026-04-06': ['H', '清明節 補假'],  // 需確認
+  '2026-05-01': ['H', '勞動節'],
+  '2026-06-19': ['H', '端午節'],       // 需確認（約 6/19）
+  '2026-09-25': ['H', '中秋節'],       // 需確認（約 9/25）
+  '2026-10-09': ['H', '國慶 補假'],    // 10/10(六) → 補假 10/9(五)  需確認
+  '2026-10-10': ['H', '國慶日'],       // 週六
+  // ── 2027（民國 116 年）────────────────────────────────────────
+  '2027-01-01': ['H', '元旦'],
+  '2027-01-30': ['W', '補班'],         // 需確認
+  '2027-02-05': ['H', '除夕'],
+  '2027-02-06': ['H', '春節 初一'],    // 週六
+  '2027-02-07': ['H', '春節 初二'],    // 週日
+  '2027-02-08': ['H', '春節 初三'],
+  '2027-02-09': ['H', '春節 初四'],
+  '2027-02-10': ['H', '春節 初五'],
+  '2027-02-11': ['H', '春節 初一 補假'],  // 需確認
+  '2027-02-12': ['H', '春節 初二 補假'],  // 需確認
+  '2027-02-13': ['W', '補班'],            // 需確認
+  '2027-02-28': ['H', '和平紀念日'],   // 週日
+  '2027-03-01': ['H', '和平紀念日 補假'],
+  '2027-04-04': ['H', '兒童節'],       // 週日
+  '2027-04-05': ['H', '清明節 / 兒童節 補假'],
+  '2027-04-30': ['H', '勞動節 補假'],  // 5/1(六) → 補假 4/30(五)  需確認
+  '2027-06-09': ['H', '端午節'],       // 需確認（約 6/9）
+  '2027-09-15': ['H', '中秋節'],       // 需確認（約 9/15）
+  '2027-10-10': ['H', '國慶日'],       // 週日
+  '2027-10-11': ['H', '國慶 補假'],
+  // ── 2028（民國 117 年）────────────────────────────────────────
+  '2028-01-01': ['H', '元旦'],         // 週六  需確認補假日期
+  '2028-01-03': ['H', '元旦 補假'],    // 需確認
+  '2028-01-25': ['H', '除夕'],
+  '2028-01-26': ['H', '春節 初一'],
+  '2028-01-27': ['H', '春節 初二'],
+  '2028-01-28': ['H', '春節 初三'],    // 週六
+  '2028-01-29': ['H', '春節 初四'],    // 週日
+  '2028-01-30': ['H', '春節 初三 補假'],  // 需確認
+  '2028-01-31': ['H', '春節 初四 補假'],  // 需確認
+  '2028-02-28': ['H', '和平紀念日'],
+  '2028-10-10': ['H', '國慶日'],
+};
 
 function initYearSelector() {
   const sel = document.getElementById('sel-year');
   const curRoc = new Date().getFullYear() - 1911;
-  for (let y = curRoc - 2; y <= curRoc + 1; y++) {
+  for (let y = curRoc - 2; y <= curRoc + 3; y++) {
     const opt = document.createElement('option');
     opt.value = y;
     opt.textContent = y;
@@ -306,20 +422,43 @@ function rebuildTable() {
   let html = '';
 
   for (let day = 1; day <= daysInMonth; day++) {
-    const wd = new Date(adYear, month - 1, day).getDay();
+    const wd      = new Date(adYear, month - 1, day).getDay();
+    const dateStr = `${adYear}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const hdata   = HOLIDAYS[dateStr];           // ['H'|'W', '名稱'] or undefined
     const isWeekend = wd === 0 || wd === 6;
-    const wdSat = wd === 6;
 
-    html += `<tr class="${isWeekend ? 'weekend-row' : ''}" data-weekend="${isWeekend}">`;
+    // 判斷當日性質
+    const isWorkday  = isWeekend && hdata?.[0] === 'W';                        // 補班（週末改工作）
+    const isHoliday  = hdata?.[0] === 'H' || (isWeekend && !isWorkday);       // 放假
+    const isNatHol   = hdata?.[0] === 'H' && !isWeekend;                      // 平日國定假日（染色）
+
+    // 列樣式
+    let rowClass = 'weekend-row';
+    if (isWorkday)   rowClass = 'workday-row';
+    else if (isNatHol) rowClass = 'holiday-row';
+
+    // 週 欄顏色（放假日不套用紅/橙，補班不套用）
+    let wdColor = '';
+    if (!isHoliday && !isWorkday) {
+      if (wd === 6) wdColor = 'color:#b45309;';
+      if (wd === 0) wdColor = 'color:#dc2626;';
+    }
+    const badge = isWorkday ? '<span class="workday-badge">補班</span>' : '';
+
+    html += `<tr class="${rowClass}" data-holiday="${isHoliday && !isWorkday}">`;
     html += `<td style="text-align:center;font-weight:700;width:5%">${day}</td>`;
-    html += `<td style="text-align:center;width:5%;${wdSat ? 'color:#b45309' : wd===0 ? 'color:#dc2626' : ''}">${WEEK_NAMES[wd]}</td>`;
+    html += `<td style="text-align:center;width:5%;${wdColor}">${WEEK_NAMES[wd]}${badge}</td>`;
 
-    if (isWeekend) {
+    if (isHoliday && !isWorkday) {
+      // 放假列：空白不可點擊格 + 假日名稱
       for (let i = 0; i < 5; i++) {
         html += `<td class="check-cell check-empty weekend-cell" data-readonly="1"></td>`;
       }
-      html += `<td class="remark-cell"><span class="weekend-remark">無上班</span></td>`;
+      const remarkText = hdata ? hdata[1] : '無上班';
+      const remarkCls  = (isNatHol && hdata) ? 'holiday-remark' : 'off-remark';
+      html += `<td class="remark-cell"><span class="${remarkCls}">${remarkText}</span></td>`;
     } else {
+      // 工作列（含補班）：預設值可點擊格
       WEEKDAY_DEFAULTS.forEach(s => {
         html += `<td class="${STATES[s].cls}" data-state="${s}" onclick="toggleCheck(this)">${STATES[s].text}</td>`;
       });
@@ -339,7 +478,7 @@ function toggleCheck(cell) {
 }
 
 function resetToDefaults() {
-  if (!confirm('重設所有儲存格為預設值？（平日恢復預設，已填入的附記將清除）')) return;
+  if (!confirm('重設所有儲存格為預設值？（平日及補班日恢復預設，已填附記將清除）')) return;
   rebuildTable();
   document.querySelectorAll('#inspector, #area, .sig-input').forEach(i => i.value = '');
 }
