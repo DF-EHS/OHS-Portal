@@ -191,10 +191,6 @@ body.dark .other-input { color: #f1f5f9; }
       <label>實施人員：</label>
       <input type="text" placeholder="姓名">
     </div>
-    <div class="header-field" style="flex:1.4">
-      <label>檢查日期：</label>
-      <input type="text" placeholder="民國　年　月　日">
-    </div>
   </div>
 
   <table class="check-table" id="eq-table">
@@ -250,6 +246,7 @@ const EQUIPMENT = [
   },
   {
     name: '撒水設備',
+    date: '不適用',
     items: [
       '無新設隔間、棚架致未在撒水範圍內之情形。',
       '撒水頭無變形及漏水之情形。',
@@ -330,7 +327,8 @@ function buildTable() {
       html += `<td class="item-col">${item}</td>`;
       html += `<td class="${STATES[0].cls}" data-state="0" onclick="toggleCheck(this)">${STATES[0].text}</td>`;
       if (i === 0) {
-        html += `<td rowspan="${rowspan}" class="date-cell"><input type="text" class="date-input" placeholder="月/日"></td>`;
+        const dateVal = eq.date || '';
+        html += `<td rowspan="${rowspan}" class="date-cell"><input type="text" class="date-input" placeholder="月/日" value="${dateVal}"></td>`;
       }
       html += `</tr>`;
     });
