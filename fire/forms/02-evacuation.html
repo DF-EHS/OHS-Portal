@@ -63,8 +63,26 @@ body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background
 }
 
 .form-header {
-  border: 1px solid #333; margin-bottom: 0;
+  border: 1px solid #333; border-bottom: none; margin-bottom: 0;
 }
+.date-label-cell {
+  font-size: 13px; font-weight: 600; padding: 7px 12px;
+  text-align: left; background: #fff;
+  border: 1px solid #555 !important;
+  border-top: 2px solid #333 !important;
+}
+.date-input-cell {
+  padding: 6px 10px; text-align: center; background: #fff;
+  border: 1px solid #555 !important;
+  border-top: 2px solid #333 !important;
+}
+.date-input-cell input {
+  border: none; border-bottom: 1px solid #888;
+  font-size: 13px; font-family: inherit;
+  background: transparent; outline: none;
+  text-align: center; width: 100%;
+}
+.date-input-cell input:focus { border-bottom-color: var(--fire); }
 .header-row {
   display: flex; border-bottom: 1px solid #333;
 }
@@ -144,6 +162,8 @@ body.dark .check-warn { background: #422006; color: #fcd34d; }
 body.dark .check-fail { background: #450a0a; }
 body.dark .notes { color: #94a3b8; }
 body.dark .action-bar { background: #1e293b; }
+body.dark .date-label-cell,
+body.dark .date-input-cell { background: #1e293b; color: #f1f5f9; }
 
 /* ── Print ── */
 @media print {
@@ -163,6 +183,8 @@ body.dark .action-bar { background: #1e293b; }
   .sig-cell { min-height: 100pt; }
   .notes { font-size: 8pt; }
   .check-table { border-color: #000; }
+  .date-label-cell, .date-input-cell { background: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .date-input-cell input { border-bottom: 1px solid #000; }
   .check-table th { background: #e0e0e0 !important; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-pass { background: #e8f5e9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-warn { background: #fffde7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -199,21 +221,19 @@ body.dark .action-bar { background: #1e293b; }
         <input type="text" id="area" placeholder="區域">
       </div>
     </div>
-    <div class="header-row">
-      <div class="header-field" style="flex:0 0 64%">
-        <label>實施日時：</label>
-      </div>
-      <div class="header-field" style="flex:0 0 18%;justify-content:center">
-        <input type="text" id="datetime1" placeholder="民國　年　月　日" style="text-align:center">
-      </div>
-      <div class="header-field" style="flex:0 0 18%;justify-content:center">
-        <input type="text" id="datetime2" placeholder="民國　年　月　日" style="text-align:center">
-      </div>
-    </div>
   </div>
 
   <table class="check-table">
     <thead>
+      <tr>
+        <td colspan="2" class="date-label-cell">實施日時：</td>
+        <td class="date-input-cell">
+          <input type="text" id="datetime1" placeholder="民國　年　月　日">
+        </td>
+        <td class="date-input-cell">
+          <input type="text" id="datetime2" placeholder="民國　年　月　日">
+        </td>
+      </tr>
       <tr>
         <th style="width:4%">#</th>
         <th class="item-col" style="text-align:left">檢　查　重　點</th>
