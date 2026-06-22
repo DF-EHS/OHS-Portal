@@ -80,7 +80,7 @@ body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background
   padding: 8px 10px; text-align: center; border: 1px solid #555;
 }
 .check-table td {
-  font-size: 13px; padding: 7px 10px;
+  font-size: 12px; padding: 4px 8px;
   border: 1px solid #ccc; vertical-align: middle;
 }
 .section-row td {
@@ -88,10 +88,11 @@ body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background
   font-size: 13px; letter-spacing: 1px;
   border-top: 2px solid #666;
 }
-.item-col { width: 52%; line-height: 1.6; }
+.item-col { width: 54%; line-height: 1.5; }
 .check-cell {
-  width: 20%; text-align: center; cursor: pointer;
-  user-select: none; font-size: 13px; font-weight: 600;
+  width: 16%; text-align: center; cursor: pointer;
+  user-select: none; -webkit-user-select: none;
+  font-size: 13px; font-weight: 600;
   transition: background .15s;
 }
 .check-cell:hover { background: #f8fafc; }
@@ -99,19 +100,37 @@ body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background
 .check-pass { background: #f0fdf4; color: #16a34a; }
 .check-warn { background: #fffbeb; color: #b45309; }
 .check-fail { background: #fef2f2; color: #dc2626; }
+.date-cell {
+  width: 12%; text-align: center; vertical-align: middle;
+  border: 1px solid #ccc;
+}
+.date-input {
+  width: 100%; border: none; border-bottom: 1px solid #aaa;
+  font-size: 11px; font-family: inherit; background: transparent;
+  outline: none; text-align: center;
+}
+.date-input:focus { border-bottom-color: var(--fire); }
+.other-input {
+  width: 100%; border: none; border-bottom: 1px solid #aaa;
+  font-size: 12px; font-family: inherit; background: transparent;
+  outline: none; padding: 2px 4px;
+}
+.other-input:focus { border-bottom-color: var(--fire); }
 
 .sig-row { display: flex; border: 2px solid #333; border-top: none; }
 .sig-cell {
-  flex: 1; padding: 10px 14px; min-height: 60px;
+  flex: 1; padding: 10px 14px; min-height: 200px;
   border-right: 1px solid #333; font-size: 12px; font-weight: 700;
+  display: flex; flex-direction: column;
 }
 .sig-cell:last-child { border-right: none; }
 .sig-input {
-  width: 100%; border: none; border-bottom: 1px solid #ccc;
+  flex: 1; width: 100%; border: none;
   margin-top: 8px; font-size: 12px; font-family: inherit;
   background: transparent; outline: none;
+  resize: none; line-height: 1.8;
 }
-.sig-input:focus { border-bottom-color: var(--fire); }
+.sig-input:focus { outline: none; }
 .notes { font-size: 11px; color: #555; margin-top: 10px; line-height: 1.8; }
 .notes strong { color: var(--text); }
 
@@ -126,20 +145,25 @@ body.dark .check-warn { background: #422006; color: #fcd34d; }
 body.dark .check-fail { background: #450a0a; }
 body.dark .notes { color: #94a3b8; }
 body.dark .action-bar { background: #1e293b; border-color: #334155; }
+body.dark .date-cell,
+body.dark .date-input,
+body.dark .other-input { color: #f1f5f9; }
 
 @media print {
   .no-print { display: none !important; }
   body { background: white; font-size: 9pt; }
   .form-page { margin: 0; padding: 10mm 12mm; box-shadow: none; border-radius: 0; max-width: 100%; }
   .form-title { font-size: 15pt; margin-bottom: 8px; }
-  .check-table td { padding: 4px 6px; font-size: 8pt; }
+  .check-table td { padding: 3px 5px; font-size: 8pt; }
   .check-table th { font-size: 8pt; padding: 4px 6px; }
-  .check-cell { font-size: 8pt; }
+  .check-cell { font-size: 9pt; }
+  .sig-cell { min-height: 250pt; }
   .section-row td { background: #e8e8e8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-pass { background: #e8f5e9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-warn { background: #fffde7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-fail { background: #ffebee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .check-table th { background: #e0e0e0 !important; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .date-input { border-bottom: 1px solid #000; }
   .notes { font-size: 7pt; }
 }
 </style>
@@ -178,8 +202,8 @@ body.dark .action-bar { background: #1e293b; border-color: #334155; }
       <tr>
         <th style="width:14%">設備內容</th>
         <th class="item-col" style="text-align:left">檢　查　重　點</th>
-        <th style="width:17%">第一次<br>檢查結果</th>
-        <th style="width:17%">第二次<br>檢查結果</th>
+        <th style="width:16%">檢查結果</th>
+        <th style="width:12%">日期</th>
       </tr>
     </thead>
     <tbody id="eq-body"></tbody>
@@ -187,12 +211,12 @@ body.dark .action-bar { background: #1e293b; border-color: #334155; }
 
   <div class="sig-row">
     <div class="sig-cell">
-      防火管理人處置情形暨簽章<br>
-      <input class="sig-input" type="text">
+      防火管理人處置情形暨簽章
+      <textarea class="sig-input"></textarea>
     </div>
     <div class="sig-cell">
-      管理權人處置情形暨簽章<br>
-      <input class="sig-input" type="text">
+      管理權人處置情形暨簽章
+      <textarea class="sig-input"></textarea>
     </div>
   </div>
 
@@ -288,15 +312,26 @@ function buildTable() {
   const tbody = document.getElementById('eq-body');
   let html = '';
   EQUIPMENT.forEach(eq => {
+    if (eq.name === '其它') {
+      html += `<tr>
+        <td style="text-align:center;font-weight:700;vertical-align:middle;font-size:12px;">其它</td>
+        <td colspan="3" style="padding:6px 10px;">
+          <input type="text" class="other-input" placeholder="（自填）">
+        </td>
+      </tr>`;
+      return;
+    }
     const rowspan = eq.items.length;
     eq.items.forEach((item, i) => {
       html += `<tr>`;
       if (i === 0) {
         html += `<td rowspan="${rowspan}" style="text-align:center;font-weight:700;vertical-align:middle;font-size:12px;">${eq.name}</td>`;
       }
-      html += `<td class="item-col">${item || '（自填）'}</td>`;
+      html += `<td class="item-col">${item}</td>`;
       html += `<td class="${STATES[0].cls}" data-state="0" onclick="toggleCheck(this)">${STATES[0].text}</td>`;
-      html += `<td class="${STATES[0].cls}" data-state="0" onclick="toggleCheck(this)">${STATES[0].text}</td>`;
+      if (i === 0) {
+        html += `<td rowspan="${rowspan}" class="date-cell"><input type="text" class="date-input" placeholder="月/日"></td>`;
+      }
       html += `</tr>`;
     });
   });
@@ -314,7 +349,7 @@ function clearAll() {
   document.querySelectorAll('.check-cell').forEach(c => {
     c.dataset.state = 0; c.textContent = STATES[0].text; c.className = STATES[0].cls;
   });
-  document.querySelectorAll('input[type="text"]').forEach(i => i.value = '');
+  document.querySelectorAll('input[type="text"], textarea').forEach(i => i.value = '');
 }
 
 buildTable();
