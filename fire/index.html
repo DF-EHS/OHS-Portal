@@ -208,41 +208,56 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24p
 /* ── Section spacer ── */
 .section-block { margin-bottom: 40px; }
 
-/* ── Compliance Matrix ── */
-.comp-wrap { overflow-x: auto; margin-bottom: 8px; }
-.comp-matrix { width: 100%; border-collapse: collapse; }
-.comp-matrix th, .comp-matrix td {
-  padding: 9px 12px; border: 1px solid var(--border);
-  font-size: 12px; text-align: center; vertical-align: middle;
+/* ── Drill Dashboard ── */
+.drill-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+.drill-tab {
+  padding: 6px 16px; border-radius: 20px;
+  border: 1.5px solid var(--border); background: var(--card);
+  color: var(--sub); font-size: 12px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: all .15s;
 }
-.comp-matrix .year-col { font-weight: 800; font-size: 13px; width: 80px; white-space: nowrap; }
-.comp-matrix thead th { background: var(--navy); color: #fff; font-weight: 700; border-color: #2c4a6e; }
-.cell-done { background: #f0fdf4; }
-.cell-done .cell-mark { font-size: 14px; color: #15803d; font-weight: 800; }
-.cell-done .cell-date { font-size: 11px; color: #166534; margin-top: 2px; }
-.cell-missing { background: #fffbeb; color: #92400e; font-weight: 700; }
-.cell-pending { background: #eff6ff; color: #1e40af; font-weight: 700; }
-.cell-future { background: #f8fafc; color: #94a3b8; }
-.comp-legend {
-  display: flex; gap: 12px; flex-wrap: wrap;
-  font-size: 11px; margin-bottom: 14px;
+.drill-tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.drill-tab:hover:not(.active) { border-color: var(--navy); color: var(--navy); }
+
+.drill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px; }
+.drill-card {
+  background: var(--card); border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07); overflow: hidden;
 }
-.comp-legend span {
-  padding: 3px 10px; border-radius: 10px; font-weight: 700;
+.drill-card-head {
+  padding: 14px 18px; display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid var(--border);
 }
-.leg-done    { background: #f0fdf4; color: #15803d; }
-.leg-missing { background: #fffbeb; color: #92400e; }
-.leg-pending { background: #eff6ff; color: #1e40af; }
-.leg-future  { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
-.comp-note { font-size: 11px; color: var(--sub); margin-top: 8px; line-height: 1.7; }
-body.dark .comp-matrix td { border-color: #334155; }
-body.dark .comp-matrix .year-col { color: #f1f5f9; }
-body.dark .cell-done { background: #052e16; }
-body.dark .cell-done .cell-mark { color: #4ade80; }
-body.dark .cell-done .cell-date { color: #86efac; }
-body.dark .cell-missing { background: #422006; color: #fcd34d; }
-body.dark .cell-pending { background: #1e3a5f; color: #93c5fd; }
-body.dark .cell-future { background: #1e293b; color: #475569; }
+.drill-site-icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: var(--fire-light); font-size: 22px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.drill-site-name { font-size: 11px; color: var(--sub); font-weight: 700; letter-spacing: 1px; }
+.drill-site-label { font-size: 16px; font-weight: 800; }
+.drill-card-body { padding: 14px 18px; display: flex; flex-direction: column; gap: 12px; }
+.drill-half { display: flex; align-items: center; justify-content: space-between; }
+.half-label { font-size: 12px; color: var(--sub); font-weight: 600; }
+.drill-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700;
+}
+.drill-badge.done    { background: #f0fdf4; color: #15803d; }
+.drill-badge.missing { background: #fffbeb; color: #92400e; }
+.drill-badge.pending { background: #eff6ff; color: #1e40af; }
+.drill-badge.future  { background: #f8fafc; color: #94a3b8; border: 1px solid var(--border); }
+.drill-note { font-size: 11px; color: var(--sub); line-height: 1.7; }
+
+body.dark .drill-tab { background: #1e293b; }
+body.dark .drill-card { background: #1e293b; }
+body.dark .drill-badge.done    { background: #052e16; color: #4ade80; }
+body.dark .drill-badge.missing { background: #422006; color: #fcd34d; }
+body.dark .drill-badge.pending { background: #1e3a5f; color: #93c5fd; }
+body.dark .drill-badge.future  { background: #263349; color: #475569; border-color: #334155; }
+
+@media (max-width: 600px) {
+  .drill-grid { grid-template-columns: 1fr; }
+}
 
 /* ── Footer ── */
 footer {
@@ -383,34 +398,10 @@ body.dark .link-badge { background: #334155; }
       <span class="mod-tag active">已啟用</span>
     </div>
 
-    <div class="comp-legend">
-      <span class="leg-done">✓ 已完成</span>
-      <span class="leg-missing">⚠ 未記錄</span>
-      <span class="leg-pending">⟳ 待補上傳</span>
-      <span class="leg-future">— 未到期</span>
-    </div>
-
-    <div class="comp-wrap">
-      <table class="comp-matrix">
-        <thead>
-          <tr>
-            <th rowspan="2">年度</th>
-            <th colspan="2">🏢 台中總部</th>
-            <th colspan="2">🏭 全興廠</th>
-          </tr>
-          <tr>
-            <th>上半年</th>
-            <th>下半年</th>
-            <th>上半年</th>
-            <th>下半年</th>
-          </tr>
-        </thead>
-        <tbody id="comp-body"></tbody>
-      </table>
-    </div>
-    <p class="comp-note">
-      資料來源：K:\HR-人資\7.工安\13. 消防管理\1．消防安全教育訓練暨演練<br>
-      ⚠ 未記錄 = K 槽對應資料夾查無演練成果；⟳ 待補上傳 = 資料夾存在但尚無檔案
+    <div class="drill-tabs" id="drill-tabs"></div>
+    <div class="drill-grid" id="drill-grid"></div>
+    <p class="drill-note">
+      資料來源：K:\HR-人資\7.工安\13. 消防管理　·　✓ 已完成　⚠ 未記錄　⟳ 待補上傳　— 未到期
     </p>
   </div>
 
@@ -531,22 +522,58 @@ const DRILLS = [
     quanxing:  { h1: { s:'done', d:'2021-04-21' }, h2: { s:'done', d:'2021-10-14' } } },
 ];
 
+const STATIONS = [
+  { key: 'taichung', label: '台中總部', sub: '台中市北屯區', icon: '🏢' },
+  { key: 'quanxing', label: '全興廠',   sub: '彰化縣和美鎮', icon: '🏭' },
+];
+
+let activeRoc = DRILLS[0].roc;
+
 function fmtRoc(d) {
   const [y, m, day] = d.split('-').map(Number);
   return `${y - 1911}/${String(m).padStart(2,'0')}/${String(day).padStart(2,'0')}`;
 }
 
-function drillCell(item) {
-  if (item.s === 'done')    return `<td class="cell-done"><div class="cell-mark">✓</div><div class="cell-date">${fmtRoc(item.d)}</div></td>`;
-  if (item.s === 'missing') return `<td class="cell-missing">⚠ 未記錄</td>`;
-  if (item.s === 'pending') return `<td class="cell-pending">⟳ 待補</td>`;
-  return `<td class="cell-future">—</td>`;
+function badgeHtml(item) {
+  if (item.s === 'done')    return `<span class="drill-badge done">✓ ${fmtRoc(item.d)}</span>`;
+  if (item.s === 'missing') return `<span class="drill-badge missing">⚠ 未記錄</span>`;
+  if (item.s === 'pending') return `<span class="drill-badge pending">⟳ 待補</span>`;
+  return `<span class="drill-badge future">— 未到期</span>`;
+}
+
+function renderDrills(roc) {
+  activeRoc = roc;
+  document.querySelectorAll('.drill-tab').forEach(t =>
+    t.classList.toggle('active', +t.dataset.roc === roc));
+  const row = DRILLS.find(r => r.roc === roc);
+  document.getElementById('drill-grid').innerHTML = STATIONS.map(st => `
+    <div class="drill-card">
+      <div class="drill-card-head">
+        <div class="drill-site-icon">${st.icon}</div>
+        <div>
+          <div class="drill-site-name">${st.sub}</div>
+          <div class="drill-site-label">${st.label}</div>
+        </div>
+      </div>
+      <div class="drill-card-body">
+        <div class="drill-half">
+          <span class="half-label">上半年</span>
+          ${badgeHtml(row[st.key].h1)}
+        </div>
+        <div class="drill-half">
+          <span class="half-label">下半年</span>
+          ${badgeHtml(row[st.key].h2)}
+        </div>
+      </div>
+    </div>`).join('');
 }
 
 function buildMatrix() {
-  document.getElementById('comp-body').innerHTML = DRILLS.map(r =>
-    `<tr><td class="year-col">民${r.roc}年</td>${drillCell(r.taichung.h1)}${drillCell(r.taichung.h2)}${drillCell(r.quanxing.h1)}${drillCell(r.quanxing.h2)}</tr>`
+  document.getElementById('drill-tabs').innerHTML = DRILLS.map(r =>
+    `<button type="button" class="drill-tab${r.roc === activeRoc ? ' active' : ''}"
+     data-roc="${r.roc}" onclick="renderDrills(${r.roc})">民${r.roc}年</button>`
   ).join('');
+  renderDrills(activeRoc);
 }
 
 // ─────────────────────────────────────────────
