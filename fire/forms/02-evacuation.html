@@ -63,11 +63,14 @@ body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background
 }
 
 .form-header {
-  display: flex; flex-wrap: wrap; gap: 0;
   border: 1px solid #333; margin-bottom: 0;
 }
+.header-row {
+  display: flex; border-bottom: 1px solid #333;
+}
+.header-row:last-child { border-bottom: none; }
 .header-field {
-  flex: 1; min-width: 180px; padding: 7px 12px;
+  flex: 1; padding: 7px 12px;
   border-right: 1px solid #333; font-size: 13px;
   display: flex; align-items: center; gap: 6px;
 }
@@ -112,16 +115,18 @@ body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; background
   margin-top: -1px;
 }
 .sig-cell {
-  flex: 1; padding: 10px 14px; min-height: 64px;
+  flex: 1; padding: 10px 14px; min-height: 120px;
   border-right: 1px solid #333; font-size: 12px; font-weight: 700;
+  display: flex; flex-direction: column;
 }
 .sig-cell:last-child { border-right: none; }
 .sig-input {
-  width: 100%; border: none; border-bottom: 1px solid #ccc;
+  flex: 1; width: 100%; border: none;
   margin-top: 8px; font-size: 12px; font-family: inherit;
   background: transparent; outline: none;
+  resize: none; line-height: 1.8;
 }
-.sig-input:focus { border-bottom-color: var(--fire); }
+.sig-input:focus { outline: none; }
 
 /* ── Notes ── */
 .notes { font-size: 11px; color: #555; margin-top: 10px; line-height: 1.8; }
@@ -154,7 +159,8 @@ body.dark .action-bar { background: #1e293b; }
   .check-table th { font-size: 9pt; padding: 5px 8px; }
   .check-cell { font-size: 10pt; }
   .check-empty { color: #999; }
-  .sig-input { border-bottom: 1px solid #000; }
+  .sig-input { border: none; }
+  .sig-cell { min-height: 100pt; }
   .notes { font-size: 8pt; }
   .check-table { border-color: #000; }
   .check-table th { background: #e0e0e0 !important; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -183,17 +189,21 @@ body.dark .action-bar { background: #1e293b; }
   <h2 class="form-title">防火避難設施自行檢查紀錄表</h2>
 
   <div class="form-header">
-    <div class="header-field">
-      <label>實施人員：</label>
-      <input type="text" id="inspector" placeholder="姓名">
+    <div class="header-row">
+      <div class="header-field">
+        <label>實施人員：</label>
+        <input type="text" id="inspector" placeholder="姓名">
+      </div>
+      <div class="header-field">
+        <label>負責區域：</label>
+        <input type="text" id="area" placeholder="區域">
+      </div>
     </div>
-    <div class="header-field">
-      <label>負責區域：</label>
-      <input type="text" id="area" placeholder="區域">
-    </div>
-    <div class="header-field" style="flex:1.4">
-      <label>實施日時：</label>
-      <input type="text" id="datetime" placeholder="民國　年　月　日">
+    <div class="header-row">
+      <div class="header-field">
+        <label>實施日時：</label>
+        <input type="text" id="datetime" placeholder="民國　　年　　月　　日　　時　　分">
+      </div>
     </div>
   </div>
 
@@ -211,12 +221,12 @@ body.dark .action-bar { background: #1e293b; }
 
   <div class="sig-row">
     <div class="sig-cell">
-      防火管理人處置情形暨簽章<br>
-      <input class="sig-input" type="text" placeholder="">
+      防火管理人處置情形暨簽章
+      <textarea class="sig-input"></textarea>
     </div>
     <div class="sig-cell">
-      管理權人處置情形暨簽章<br>
-      <input class="sig-input" type="text" placeholder="">
+      管理權人處置情形暨簽章
+      <textarea class="sig-input"></textarea>
     </div>
   </div>
 
@@ -270,7 +280,7 @@ function clearAll() {
   document.querySelectorAll('.check-cell').forEach(c => {
     c.dataset.state = 0; c.textContent = STATES[0].text; c.className = STATES[0].cls;
   });
-  document.querySelectorAll('input[type="text"]').forEach(i => i.value = '');
+  document.querySelectorAll('input[type="text"], textarea').forEach(i => i.value = '');
 }
 
 buildTable();
