@@ -195,6 +195,11 @@
         <span class="nav-icon">📰</span>職災情報與安衛動態
       </a>
 
+      <div class="nav-section">消防管理</div>
+      <a class="nav-item" href="${BASE}fire/" data-match="/fire/">
+        <span class="nav-icon">🔥</span>消防管理
+      </a>
+
       <div class="nav-section">個人工具</div>
       <a class="nav-item" href="${BASE}tasks/" data-match="/tasks/">
         <span class="nav-icon">✅</span>職安工作中樞
