@@ -169,6 +169,9 @@
       <a class="nav-item" href="${BASE}harassment/" data-match="/harassment/">
         <span class="nav-icon">🛡️</span>不法侵害防治系統
       </a>
+      <a class="nav-item" href="${BASE}ergonomic/" data-match="/ergonomic/">
+        <span class="nav-icon">🧍</span>人因性危害預防
+      </a>
 
       <div class="nav-section">人員管理</div>
       <a class="nav-item" href="${BASE}training/" data-match="/training/">
