@@ -388,14 +388,17 @@
       <a class="nav-item" href="./accident/">
         <span class="nav-icon">📈</span>職業災害分析系統
       </a>
-      <a class="nav-item" href="./harassment/">
-        <span class="nav-icon">🛡️</span>不法侵害防治系統
-      </a>
+
+      <div class="nav-section">四大防護計畫</div>
+
       <a class="nav-item" href="./ergonomic/">
         <span class="nav-icon">🧍</span>人因性危害預防
       </a>
       <a class="nav-item" href="./overload/">
         <span class="nav-icon">😰</span>異常工作負荷預防
+      </a>
+      <a class="nav-item" href="./harassment/">
+        <span class="nav-icon">🛡️</span>不法侵害防治系統
       </a>
       <a class="nav-item" href="./maternity/">
         <span class="nav-icon">🤰</span>母性健康保護
@@ -548,25 +551,30 @@
           </div>
         </div>
 
-        <div class="sys-card" onclick="location.href='./harassment/'">
+        <div class="sys-card" onclick="location.href='./heat/'">
           <div class="card-header">
-            <div class="card-icon ci-violet">🛡️</div>
+            <div class="card-icon ci-heat">🌡️</div>
             <div>
-              <div class="card-title">不法侵害防治系統</div>
-              <div class="card-desc">提供匿名或具名通報職場不法侵害事件，含 AI 輔助分析、案件進度查詢及 HR 後台管理，保障申訴人隱私。</div>
+              <div class="card-title">熱危害風險即時查詢</div>
+              <div class="card-desc">依據勞動部熱危害預防指引四級分類，自動取得所在地最近氣象站即時溫濕度，計算 WBGT 並顯示風險等級與防護建議。</div>
             </div>
           </div>
           <div class="card-tags">
-            <span class="tag tg-violet">職場霸凌</span>
-            <span class="tag tg-violet">匿名通報</span>
-            <span class="tag tg-navy">AI 分析</span>
-            <span class="tag tg-blue">案件追蹤</span>
+            <span class="tag tg-red">WBGT 估算</span>
+            <span class="tag tg-orange">四級風險</span>
+            <span class="tag tg-navy">即時氣象</span>
+            <span class="tag tg-green">中央氣象署</span>
           </div>
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-violet" onclick="event.stopPropagation();location.href='./harassment/'">開啟系統 ›</button>
+            <button class="open-btn btn-heat" onclick="event.stopPropagation();location.href='./heat/'">開啟查詢 ›</button>
           </div>
         </div>
+
+      </div>
+
+      <div class="section-label">四大防護計畫</div>
+      <div class="card-grid">
 
         <div class="sys-card" onclick="location.href='./ergonomic/'">
           <div class="card-header">
@@ -608,6 +616,26 @@
           </div>
         </div>
 
+        <div class="sys-card" onclick="location.href='./harassment/'">
+          <div class="card-header">
+            <div class="card-icon ci-violet">🛡️</div>
+            <div>
+              <div class="card-title">不法侵害防治系統</div>
+              <div class="card-desc">提供匿名或具名通報職場不法侵害事件，含 AI 輔助分析、案件進度查詢及 HR 後台管理，保障申訴人隱私。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-violet">職場霸凌</span>
+            <span class="tag tg-violet">匿名通報</span>
+            <span class="tag tg-navy">AI 分析</span>
+            <span class="tag tg-blue">案件追蹤</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-violet" onclick="event.stopPropagation();location.href='./harassment/'">開啟系統 ›</button>
+          </div>
+        </div>
+
         <div class="sys-card" onclick="location.href='./maternity/'">
           <div class="card-header">
             <div class="card-icon ci-rose">🤰</div>
@@ -625,26 +653,6 @@
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
             <button class="open-btn btn-rose" onclick="event.stopPropagation();location.href='./maternity/'">開啟系統 ›</button>
-          </div>
-        </div>
-
-        <div class="sys-card" onclick="location.href='./heat/'">
-          <div class="card-header">
-            <div class="card-icon ci-heat">🌡️</div>
-            <div>
-              <div class="card-title">熱危害風險即時查詢</div>
-              <div class="card-desc">依據勞動部熱危害預防指引四級分類，自動取得所在地最近氣象站即時溫濕度，計算 WBGT 並顯示風險等級與防護建議。</div>
-            </div>
-          </div>
-          <div class="card-tags">
-            <span class="tag tg-red">WBGT 估算</span>
-            <span class="tag tg-orange">四級風險</span>
-            <span class="tag tg-navy">即時氣象</span>
-            <span class="tag tg-green">中央氣象署</span>
-          </div>
-          <div class="card-footer">
-            <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-heat" onclick="event.stopPropagation();location.href='./heat/'">開啟查詢 ›</button>
           </div>
         </div>
 

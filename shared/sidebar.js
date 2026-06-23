@@ -166,14 +166,16 @@
       <a class="nav-item" href="${BASE}accident/" data-match="/accident/">
         <span class="nav-icon">📈</span>職業災害分析系統
       </a>
-      <a class="nav-item" href="${BASE}harassment/" data-match="/harassment/">
-        <span class="nav-icon">🛡️</span>不法侵害防治系統
-      </a>
+
+      <div class="nav-section">四大防護計畫</div>
       <a class="nav-item" href="${BASE}ergonomic/" data-match="/ergonomic/">
         <span class="nav-icon">🧍</span>人因性危害預防
       </a>
       <a class="nav-item" href="${BASE}overload/" data-match="/overload/">
         <span class="nav-icon">😰</span>異常工作負荷預防
+      </a>
+      <a class="nav-item" href="${BASE}harassment/" data-match="/harassment/">
+        <span class="nav-icon">🛡️</span>不法侵害防治系統
       </a>
       <a class="nav-item" href="${BASE}maternity/" data-match="/maternity/">
         <span class="nav-icon">🤰</span>母性健康保護
