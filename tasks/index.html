@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>職安工作中樞 | 大豐環保科技</title>
-<script src="https://alcdn.msauth.net/browser/2.39.0/js/msal-browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.39.0/lib/msal-browser.min.js"></script>
 <style>
 :root {
   --accent:    #15803d;
@@ -526,6 +526,10 @@ let viewMode  = 'list';
 
 // ══ 登入 / 登出 ══════════════════════════════════════════════════════════════
 window.addEventListener('load', async () => {
+  if (typeof msal === 'undefined') {
+    showLoginPage('MSAL 函式庫載入失敗，請重新整理頁面');
+    return;
+  }
   await msalClient.handleRedirectPromise().catch(() => {});
   const accounts = msalClient.getAllAccounts();
   if (accounts.length > 0) {
@@ -535,8 +539,8 @@ window.addEventListener('load', async () => {
       await initGraph();
       hideLoginPage();
       await loadTasks();
-    } catch {
-      showLoginPage();
+    } catch (e) {
+      showLoginPage(`自動登入失敗：${e.message || e}`);
     }
   } else {
     showLoginPage();
@@ -593,8 +597,9 @@ function hideLoginPage() {
     V('logout-btn').style.display = '';
   }
 }
-function showLoginPage() {
+function showLoginPage(errMsg) {
   V('login-page').style.display = '';
+  if (errMsg) { const e = V('login-err'); e.textContent = errMsg; e.style.display = 'block'; }
   const btn = V('login-btn');
   btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="10" height="10" fill="#F35325"/><rect x="12" y="1" width="10" height="10" fill="#81BC06"/><rect x="1" y="12" width="10" height="10" fill="#05A6F0"/><rect x="12" y="12" width="10" height="10" fill="#FFBA08"/></svg> 使用 Microsoft 帳號登入';
   btn.disabled = false;
