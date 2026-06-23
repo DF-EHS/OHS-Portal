@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>職安工作中樞 | 大豐環保科技</title>
+<script src="https://alcdn.msauth.net/browser/2.39.0/js/msal-browser.min.js"></script>
 <style>
 :root {
   --accent:    #15803d;
@@ -296,22 +297,17 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
 .login-logo img { height: 140px; object-fit: contain; }
 .login-card h2 { font-size: 18px; color: var(--text); font-weight: 800; margin-bottom: 4px; }
 .login-card > p { font-size: 12px; color: var(--sub); margin-bottom: 28px; line-height: 1.7; }
-.login-fi {
-  width: 100%; border: 1.5px solid var(--border); border-radius: 8px;
-  padding: 12px 14px; font-size: 16px; outline: none; font-family: inherit;
-  margin-bottom: 12px; background: #fff; box-sizing: border-box;
-  transition: border-color .15s, box-shadow .15s;
-}
-.login-fi:focus { border-color: #c2410c; box-shadow: 0 0 0 3px rgba(194,65,12,.08); }
-.login-err { color: var(--red); font-size: 13px; margin-bottom: 10px; display: none; }
+.login-err { color: var(--red); font-size: 13px; margin-bottom: 10px; display: none; line-height: 1.5; }
 .login-btn {
   width: 100%; padding: 13px;
-  background: linear-gradient(135deg, #c2410c, #f59840);
+  background: #0078d4;
   color: #fff; border: none; border-radius: 8px;
   font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit;
   transition: opacity .15s; margin-top: 4px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
 }
-.login-btn:hover { opacity: .88; }
+.login-btn:hover:not(:disabled) { opacity: .88; }
+.login-btn:disabled { opacity: .6; cursor: not-allowed; }
 
 /* ── Responsive ── */
 @media (max-width: 600px) {
@@ -336,6 +332,8 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
       <div class="notif-items" id="notif-items"></div>
     </div>
   </div>
+  <span id="user-name" style="font-size:11px;color:rgba(255,255,255,.75);flex-shrink:0;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
+  <button type="button" class="hdr-btn" id="logout-btn" onclick="doLogout()" style="display:none;flex-shrink:0">登出</button>
   <div class="hdr-brand" style="margin-left:0">
     <img src="../dafon-logo.png" alt="大豐環保科技">
     <span>大豐環保科技</span>
@@ -371,14 +369,14 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
       <option value="created">按建立時間</option>
     </select>
     <div class="view-toggle">
-      <button class="vt-btn active" id="btn-list" onclick="setView('list')" title="列表">☰</button>
-      <button class="vt-btn"        id="btn-grid" onclick="setView('grid')" title="格狀">⊞</button>
+      <button type="button" class="vt-btn active" id="btn-list" onclick="setView('list')" title="列表">☰</button>
+      <button type="button" class="vt-btn"        id="btn-grid" onclick="setView('grid')" title="格狀">⊞</button>
     </div>
-    <button class="new-btn" onclick="openPanel()">＋ 新增任務</button>
+    <button type="button" class="new-btn" onclick="openPanel()">＋ 新增任務</button>
   </div>
 
   <div class="sec-label">任務列表</div>
-  <div id="task-list"><div class="loading">載入中…</div></div>
+  <div id="task-list"><div class="loading">請先登入…</div></div>
 </main>
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統 &nbsp;·&nbsp; 職安工作中樞</footer>
@@ -388,7 +386,7 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
 <div class="side-panel" id="side-panel">
   <div class="panel-hdr">
     <h3 id="panel-title">新增任務</h3>
-    <button class="panel-close" onclick="closePanel()">✕</button>
+    <button type="button" class="panel-close" onclick="closePanel()">✕</button>
   </div>
   <div class="panel-body">
     <div class="field">
@@ -454,8 +452,8 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
     </div>
   </div>
   <div class="panel-foot">
-    <button class="btn-cancel" onclick="closePanel()">取消</button>
-    <button class="btn-save" id="btn-save" onclick="saveTask()">儲存</button>
+    <button type="button" class="btn-cancel" onclick="closePanel()">取消</button>
+    <button type="button" class="btn-save" id="btn-save" onclick="saveTask()">儲存</button>
   </div>
 </div>
 
@@ -475,19 +473,47 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); 
         <img src="../contract/logo-login.png" alt="大豐環保科技">
       </div>
       <h2>職安工作中樞</h2>
-      <p>大豐環保科技股份有限公司<br>請輸入密碼以繼續</p>
-      <input class="login-fi" id="login-pw" type="password"
-             placeholder="請輸入密碼" autocomplete="off"
-             onkeydown="if(event.key==='Enter')doLogin()">
-      <div class="login-err" id="login-err">密碼錯誤，請重新輸入</div>
-      <button class="login-btn" onclick="doLogin()">登入</button>
+      <p>大豐環保科技股份有限公司<br>請使用公司 Microsoft 帳號登入</p>
+      <div class="login-err" id="login-err"></div>
+      <button type="button" class="login-btn" id="login-btn" onclick="doLogin()">
+        <svg width="20" height="20" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="10" height="10" fill="#F35325"/>
+          <rect x="12" y="1" width="10" height="10" fill="#81BC06"/>
+          <rect x="1" y="12" width="10" height="10" fill="#05A6F0"/>
+          <rect x="12" y="12" width="10" height="10" fill="#FFBA08"/>
+        </svg>
+        使用 Microsoft 帳號登入
+      </button>
+      <p style="font-size:11px;color:var(--sub);margin-top:14px">資料安全儲存於公司 SharePoint</p>
     </div>
   </div>
 </div>
 
 <script>
-const API = 'https://script.google.com/macros/s/AKfycbzkDcRv1jwyvIXGJ0Y07oOULXv0hhNx78501Z1EjJUOBo766ZAq_Rh4DGzFVwCY3wFW/exec';
+// ══════════════════════════════════════════════════════════════════════════════
+// Microsoft Graph / MSAL 設定
+// 完成 Azure AD 應用程式註冊後，填入以下佔位符：
+// ══════════════════════════════════════════════════════════════════════════════
+const MSAL_CONFIG = {
+  auth: {
+    clientId:    '4266a752-ec70-4996-afdd-614130df98dd',
+    authority:   'https://login.microsoftonline.com/619dfe56-7cb7-4ff8-b015-1bf1e7632258',
+    redirectUri: window.location.origin + window.location.pathname
+  },
+  cache: { cacheLocation: 'sessionStorage', storeAuthStateInCookie: false }
+};
+const GRAPH_SCOPES = ['Sites.ReadWrite.All'];
+const SP_HOSTNAME  = 'dfrecyclecom.sharepoint.com';
+const SP_SITE_PATH = '/HR';
+const LIST_NAME    = 'OHSTasks';
 
+const msalClient   = new msal.PublicClientApplication(MSAL_CONFIG);
+let currentAccount = null;
+let graphToken     = null;
+let graphIds       = null;   // { siteId, listId }
+const spItemMap    = new Map();  // taskId (UUID) → SharePoint item id
+
+// ── 現有常數（不變）──────────────────────────────────────────────────────────
 const STATUS_LABEL = { todo:'待處理', doing:'進行中', waiting:'等待中', done:'已完成' };
 const PRI_BADGE    = { '高':'b-phi', '中':'b-pmid', '低':'b-plow' };
 const STA_BADGE    = { todo:'b-todo', doing:'b-doing', waiting:'b-waiting', done:'b-done' };
@@ -498,56 +524,254 @@ let editingId = null;
 let saving    = false;
 let viewMode  = 'list';
 
-/* ── Init ── */
-// 每次頁面載入（含重新整理）都需重新登入，不使用 sessionStorage
-
-function doLogin() {
-  const pw = V('login-pw').value;
-  if (pw === 'gloomy') {
-    V('login-page').style.display = 'none';
-    loadTasks();
+// ══ 登入 / 登出 ══════════════════════════════════════════════════════════════
+window.addEventListener('load', async () => {
+  await msalClient.handleRedirectPromise().catch(() => {});
+  const accounts = msalClient.getAllAccounts();
+  if (accounts.length > 0) {
+    currentAccount = accounts[0];
+    try {
+      await refreshToken();
+      await initGraph();
+      hideLoginPage();
+      await loadTasks();
+    } catch {
+      showLoginPage();
+    }
   } else {
-    V('login-err').style.display = 'block';
-    V('login-pw').value = '';
-    V('login-pw').focus();
+    showLoginPage();
+  }
+});
+
+async function doLogin() {
+  const btn = V('login-btn');
+  btn.textContent = '登入中…'; btn.disabled = true;
+  V('login-err').style.display = 'none';
+  try {
+    const result = await msalClient.loginPopup({ scopes: GRAPH_SCOPES });
+    currentAccount = result.account;
+    graphToken = result.accessToken;
+    await initGraph();
+    hideLoginPage();
+    await loadTasks();
+  } catch (e) {
+    const isCancel = e.errorCode === 'user_cancelled' || e.message?.includes('user_cancelled');
+    const msg = isCancel ? '已取消登入' : `登入失敗：${e.message || e}`;
+    const errEl = V('login-err');
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+    btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="10" height="10" fill="#F35325"/><rect x="12" y="1" width="10" height="10" fill="#81BC06"/><rect x="1" y="12" width="10" height="10" fill="#05A6F0"/><rect x="12" y="12" width="10" height="10" fill="#FFBA08"/></svg> 使用 Microsoft 帳號登入';
+    btn.disabled = false;
   }
 }
 
+async function doLogout() {
+  try { await msalClient.logoutPopup({ account: currentAccount }); } catch {}
+  currentAccount = null; graphToken = null; graphIds = null;
+  spItemMap.clear(); tasks = [];
+  V('user-name').textContent = '';
+  V('logout-btn').style.display = 'none';
+  showLoginPage();
+}
+
+async function refreshToken() {
+  if (!currentAccount) throw new Error('未登入');
+  try {
+    const r = await msalClient.acquireTokenSilent({ scopes: GRAPH_SCOPES, account: currentAccount });
+    graphToken = r.accessToken;
+  } catch {
+    const r = await msalClient.loginPopup({ scopes: GRAPH_SCOPES });
+    currentAccount = r.account;
+    graphToken = r.accessToken;
+  }
+}
+
+function hideLoginPage() {
+  V('login-page').style.display = 'none';
+  if (currentAccount) {
+    V('user-name').textContent = currentAccount.name || currentAccount.username || '';
+    V('logout-btn').style.display = '';
+  }
+}
+function showLoginPage() {
+  V('login-page').style.display = '';
+  const btn = V('login-btn');
+  btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="10" height="10" fill="#F35325"/><rect x="12" y="1" width="10" height="10" fill="#81BC06"/><rect x="1" y="12" width="10" height="10" fill="#05A6F0"/><rect x="12" y="12" width="10" height="10" fill="#FFBA08"/></svg> 使用 Microsoft 帳號登入';
+  btn.disabled = false;
+}
+
+// ══ Graph 初始化（取得 siteId + listId）══════════════════════════════════════
+async function initGraph() {
+  await refreshToken();
+  const h = graphHeaders();
+
+  const siteRes = await fetch(
+    `https://graph.microsoft.com/v1.0/sites/${SP_HOSTNAME}:${SP_SITE_PATH}`,
+    { headers: h }
+  );
+  if (!siteRes.ok) {
+    const e = await siteRes.json().catch(() => ({}));
+    throw new Error(`無法連接 SharePoint（${siteRes.status}）：${e.error?.message || ''}`);
+  }
+  const site = await siteRes.json();
+
+  const listRes = await fetch(
+    `https://graph.microsoft.com/v1.0/sites/${site.id}/lists?$filter=displayName eq '${LIST_NAME}'`,
+    { headers: h }
+  );
+  const lists = await listRes.json();
+  if (!lists.value?.length) throw new Error(`找不到 SharePoint 清單「${LIST_NAME}」，請確認清單已建立且名稱正確`);
+  graphIds = { siteId: site.id, listId: lists.value[0].id };
+}
+
+function graphHeaders() {
+  return { Authorization: `Bearer ${graphToken}` };
+}
+
+// ══ 載入任務（Graph GET）══════════════════════════════════════════════════════
 async function loadTasks() {
   setList('<div class="loading">載入中…</div>');
   try {
-    const res  = await fetch(API + '?t=' + Date.now(), { redirect: 'follow' });
-    const data = await res.json();
-    if (data.error) throw new Error(data.error);
+    await refreshToken();
+    if (!graphIds) await initGraph();
+    const items = await fetchAllItems(
+      `https://graph.microsoft.com/v1.0/sites/${graphIds.siteId}/lists/${graphIds.listId}/items?expand=fields&$top=999`,
+      graphHeaders()
+    );
+    spItemMap.clear();
     const seen = new Set();
-    tasks = (data.tasks || []).filter(t => {
-      if (!t.id || seen.has(t.id)) return false;
-      seen.add(t.id); return true;
-    }).map(t => {
-      // Sheets 把日期字串轉成 Date 物件，讀回後變冗長字串，在此正規化
-      if (t.dueAt) {
-        const d = new Date(t.dueAt);
-        if (!isNaN(d.getTime())) t.dueAt = localYMD(d);
-      }
-      return t;
-    });
+    tasks = items
+      .filter(item => {
+        const id = item.fields?.taskId;
+        if (!id || seen.has(id)) return false;
+        seen.add(id); return true;
+      })
+      .map(item => {
+        const f = item.fields;
+        spItemMap.set(f.taskId, item.id);
+        return {
+          id:                  f.taskId              || '',
+          title:               f.Title               || '',
+          category:            f.category            || '',
+          dueAt:               f.dueAt               || '',
+          repeatRule:          f.repeatRule          || '',
+          status:              f.taskStatus          || 'todo',
+          priority:            f.priority            || '中',
+          owner:               f.owner               || '',
+          description:         f.description         || '',
+          reminderDays:        Number(f.reminderDays) || 7,
+          reminderTime:        f.reminderTime        || '',
+          tags:                safeJson(f.tags,        []),
+          documents:           safeJson(f.documents,   []),
+          createdAt:           f.createdAt           || '',
+          updatedAt:           f.updatedAt           || '',
+          noDueDate:           !!f.noDueDate,
+          repeatWeekday:       f.repeatWeekday       || '',
+          repeatMonthDay:      f.repeatMonthDay      || '',
+          repeatQuarterMonth:  f.repeatQuarterMonth  || '',
+          repeatQuarterDay:    f.repeatQuarterDay    || '',
+          repeatHalfYearMonth: f.repeatHalfYearMonth || '',
+          repeatHalfYearDay:   f.repeatHalfYearDay   || '',
+          repeatYearMonth:     f.repeatYearMonth     || '',
+          repeatYearDay:       f.repeatYearDay       || '',
+          repeatCustomText:    f.repeatCustomText    || ''
+        };
+      });
     renderAll();
   } catch(e) {
     setList(`<div class="notice err">❌ 載入失敗：${esc(e.message)}<br>
-      <small>請確認 Apps Script 已部署，或重新整理頁面再試。</small></div>`);
+      <small>請確認 SharePoint 清單已建立，或重新整理頁面再試。</small></div>`);
   }
 }
 
+async function fetchAllItems(url, headers) {
+  let items = [], nextUrl = url;
+  while (nextUrl) {
+    const res = await fetch(nextUrl, { headers });
+    if (!res.ok) throw new Error(`Graph API 錯誤（${res.status}）`);
+    const data = await res.json();
+    items = items.concat(data.value || []);
+    nextUrl = data['@odata.nextLink'] || null;
+  }
+  return items;
+}
+
+// ══ CRUD（Graph POST / PATCH / DELETE）═══════════════════════════════════════
 async function apiPost(payload) {
-  const res = await fetch(API, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(payload),
-    redirect: 'follow'
-  });
-  const data = await res.json();
-  if (data.error) throw new Error(data.error);
-  return data;
+  await refreshToken();
+  if (!graphIds) await initGraph();
+  const h = { ...graphHeaders(), 'Content-Type': 'application/json' };
+  const base = `https://graph.microsoft.com/v1.0/sites/${graphIds.siteId}/lists/${graphIds.listId}/items`;
+
+  if (payload.action === 'add') {
+    const res = await fetch(base, {
+      method: 'POST', headers: h,
+      body: JSON.stringify({ fields: taskToFields(payload.task) })
+    });
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({}));
+      throw new Error(e.error?.message || `新增失敗（${res.status}）`);
+    }
+    const created = await res.json();
+    spItemMap.set(payload.task.id, created.id);
+
+  } else if (payload.action === 'update') {
+    const spId = spItemMap.get(payload.task.id);
+    if (!spId) throw new Error('找不到對應項目，請重新整理頁面');
+    const res = await fetch(`${base}/${spId}`, {
+      method: 'PATCH', headers: h,
+      body: JSON.stringify({ fields: taskToFields(payload.task) })
+    });
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({}));
+      throw new Error(e.error?.message || `更新失敗（${res.status}）`);
+    }
+
+  } else if (payload.action === 'delete') {
+    const spId = spItemMap.get(payload.id);
+    if (!spId) throw new Error('找不到對應項目，請重新整理頁面');
+    const res = await fetch(`${base}/${spId}`, { method: 'DELETE', headers: h });
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({}));
+      throw new Error(e.error?.message || `刪除失敗（${res.status}）`);
+    }
+    spItemMap.delete(payload.id);
+  }
+}
+
+function taskToFields(task) {
+  return {
+    taskId:              task.id              || '',
+    Title:               task.title           || '',
+    category:            task.category        || '',
+    dueAt:               task.dueAt           || '',
+    repeatRule:          task.repeatRule      || '',
+    taskStatus:          task.status          || 'todo',
+    priority:            task.priority        || '中',
+    owner:               task.owner           || '',
+    description:         task.description     || '',
+    reminderDays:        task.reminderDays    ?? 7,
+    reminderTime:        task.reminderTime    || '',
+    tags:                JSON.stringify(task.tags      || []),
+    documents:           JSON.stringify(task.documents || []),
+    createdAt:           task.createdAt       || '',
+    updatedAt:           task.updatedAt       || '',
+    noDueDate:           !!task.noDueDate,
+    repeatWeekday:       task.repeatWeekday       || '',
+    repeatMonthDay:      task.repeatMonthDay      || '',
+    repeatQuarterMonth:  task.repeatQuarterMonth  || '',
+    repeatQuarterDay:    task.repeatQuarterDay    || '',
+    repeatHalfYearMonth: task.repeatHalfYearMonth || '',
+    repeatHalfYearDay:   task.repeatHalfYearDay   || '',
+    repeatYearMonth:     task.repeatYearMonth     || '',
+    repeatYearDay:       task.repeatYearDay       || '',
+    repeatCustomText:    task.repeatCustomText    || ''
+  };
+}
+
+function safeJson(str, fallback) {
+  if (!str) return fallback;
+  try { return JSON.parse(str); } catch { return fallback; }
 }
 
 function genId() {
@@ -558,7 +782,7 @@ function genId() {
   });
 }
 
-/* ── View toggle ── */
+// ══ View toggle ══════════════════════════════════════════════════════════════
 function setView(mode) {
   viewMode = mode;
   V('btn-list').classList.toggle('active', mode === 'list');
@@ -566,7 +790,7 @@ function setView(mode) {
   renderList();
 }
 
-/* ── Render ── */
+// ══ Render ═══════════════════════════════════════════════════════════════════
 function renderAll() { renderStats(); renderList(); updateNotifBadge(); }
 
 function renderStats() {
@@ -617,21 +841,18 @@ function filteredTasks() {
       return true;
     })
     .sort((a, b) => {
-      // 已完成永遠排最後
       if (a.status === 'done' && b.status !== 'done') return 1;
       if (b.status === 'done' && a.status !== 'done') return -1;
 
       if (sortBy === 'priority') {
         const pd = (priOrder[a.priority] ?? 1) - (priOrder[b.priority] ?? 1);
         if (pd !== 0) return pd;
-        // 相同優先度再依到期日
         if (a.dueAt && b.dueAt) return new Date(a.dueAt) - new Date(b.dueAt);
         return 0;
       }
       if (sortBy === 'created') {
         return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
       }
-      // 預設：按到期日（逾期優先，無到期日排後）
       const ao = isOverdue(a), bo = isOverdue(b);
       if (ao && !bo) return -1;
       if (!ao && bo) return 1;
@@ -692,8 +913,8 @@ function taskCard(t) {
 
   const doneBtn = done ? ''
     : t.repeatRule
-      ? `<button class="ta-btn btn-done" onclick="completeTask('${t.id}')">✓ 完成 🔄</button>`
-      : `<button class="ta-btn btn-done" onclick="completeTask('${t.id}')">✓ 完成</button>`;
+      ? `<button type="button" class="ta-btn btn-done" onclick="completeTask('${t.id}')">✓ 完成 🔄</button>`
+      : `<button type="button" class="ta-btn btn-done" onclick="completeTask('${t.id}')">✓ 完成</button>`;
 
   return `
   <div class="task-card ${cardCls}">
@@ -711,13 +932,13 @@ function taskCard(t) {
     </div>
     <div class="task-actions">
       ${doneBtn}
-      <button class="ta-btn" onclick="openPanel('${t.id}')">編輯</button>
-      <button class="ta-btn btn-del" onclick="deleteTask('${t.id}')">刪除</button>
+      <button type="button" class="ta-btn" onclick="openPanel('${t.id}')">編輯</button>
+      <button type="button" class="ta-btn btn-del" onclick="deleteTask('${t.id}')">刪除</button>
     </div>
   </div>`;
 }
 
-/* ── Panel ── */
+// ══ Panel ═════════════════════════════════════════════════════════════════════
 function openPanel(id) {
   editingId = id || null;
   V('panel-title').textContent = id ? '編輯任務' : '新增任務';
@@ -762,7 +983,7 @@ function toggleNoDue() {
   if (checked) V('f-due').value = '';
 }
 
-/* ── CRUD ── */
+// ══ CRUD 呼叫（UI 層） ════════════════════════════════════════════════════════
 async function saveTask() {
   if (saving) return;
   const title    = V('f-title').value.trim();
@@ -862,7 +1083,7 @@ async function deleteTask(id) {
   } catch(e) { alert('刪除失敗：' + e.message); }
 }
 
-/* ── Notifications ── */
+// ══ Notifications ═════════════════════════════════════════════════════════════
 function isDueSoon(t) {
   if (t.status === 'done' || isNoDue(t) || !t.dueAt) return false;
   const days = (new Date(t.dueAt) - new Date(new Date().toDateString())) / 86400000;
@@ -907,7 +1128,7 @@ document.addEventListener('click', () => {
   V('notif-drop')?.classList.remove('open');
 });
 
-/* ── Utils ── */
+// ══ Utils ═════════════════════════════════════════════════════════════════════
 function isOverdue(t) {
   if (t.status === 'done' || isNoDue(t) || !t.dueAt) return false;
   return new Date(t.dueAt) < new Date(new Date().toDateString());
