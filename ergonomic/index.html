@@ -261,7 +261,7 @@ body.dark .filter-bar input, body.dark .filter-bar select { background: #1e293b;
       </div>
       <div class="home-card" onclick="showLoginPage()">
         <div class="icon">🔐</div>
-        <h2>HR 管理後台</h2>
+        <h2>管理後台</h2>
         <p>問卷回覆管理、護理師評估<br>作業危害盤點、改善措施追蹤<br>（需輸入管理密碼）</p>
       </div>
     </div>
@@ -461,7 +461,7 @@ function hideLogin()    { V('login-page').style.display = 'none'; }
 function doLogin() {
   if (V('login-pw').value === ADMIN_PASS) {
     isAdmin = true; hideLogin();
-    V('hdr-mode').textContent = 'HR 管理後台';
+    V('hdr-mode').textContent = '管理後台';
     V('btn-logout').style.display = '';
     showView('view-admin');
     switchTab('resp'); loadResp();
