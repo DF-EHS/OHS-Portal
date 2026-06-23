@@ -502,16 +502,13 @@ const MSAL_CONFIG = {
   },
   cache: { cacheLocation: 'sessionStorage', storeAuthStateInCookie: false }
 };
-const GRAPH_SCOPES = ['Sites.ReadWrite.All'];
-const SP_HOSTNAME  = 'dfrecyclecom.sharepoint.com';
-const SP_SITE_PATH = '/HR';
-const LIST_NAME    = 'OHSTasks';
+const GRAPH_SCOPES = ['https://dfrecyclecom.sharepoint.com/AllSites.Write'];
+const SP_LIST_URL  = "https://dfrecyclecom.sharepoint.com/HR/_api/web/lists/getbytitle('OHSTasks')/items";
 
 const msalClient   = new msal.PublicClientApplication(MSAL_CONFIG);
 let currentAccount = null;
 let graphToken     = null;
-let graphIds       = null;   // { siteId, listId }
-const spItemMap    = new Map();  // taskId (UUID) → SharePoint item id
+const spItemMap    = new Map();  // taskId (UUID) → SharePoint item id (integer)
 
 // ── 現有常數（不變）──────────────────────────────────────────────────────────
 const STATUS_LABEL = { todo:'待處理', doing:'進行中', waiting:'等待中', done:'已完成' };
@@ -536,7 +533,6 @@ window.addEventListener('load', async () => {
     currentAccount = accounts[0];
     try {
       await refreshToken();
-      await initGraph();
       hideLoginPage();
       await loadTasks();
     } catch (e) {
@@ -555,7 +551,6 @@ async function doLogin() {
     const result = await msalClient.loginPopup({ scopes: GRAPH_SCOPES });
     currentAccount = result.account;
     graphToken = result.accessToken;
-    await initGraph();
     hideLoginPage();
     await loadTasks();
   } catch (e) {
@@ -605,81 +600,56 @@ function showLoginPage(errMsg) {
   btn.disabled = false;
 }
 
-// ══ Graph 初始化（取得 siteId + listId）══════════════════════════════════════
-async function initGraph() {
-  await refreshToken();
-  const h = graphHeaders();
-
-  const siteRes = await fetch(
-    `https://graph.microsoft.com/v1.0/sites/${SP_HOSTNAME}:${SP_SITE_PATH}`,
-    { headers: h }
-  );
-  if (!siteRes.ok) {
-    const e = await siteRes.json().catch(() => ({}));
-    throw new Error(`無法連接 SharePoint（${siteRes.status}）：${e.error?.message || ''}`);
-  }
-  const site = await siteRes.json();
-
-  const listRes = await fetch(
-    `https://graph.microsoft.com/v1.0/sites/${site.id}/lists?$filter=displayName eq '${LIST_NAME}'`,
-    { headers: h }
-  );
-  const lists = await listRes.json();
-  if (!lists.value?.length) throw new Error(`找不到 SharePoint 清單「${LIST_NAME}」，請確認清單已建立且名稱正確`);
-  graphIds = { siteId: site.id, listId: lists.value[0].id };
+function spHeaders() {
+  return {
+    Authorization: `Bearer ${graphToken}`,
+    Accept: 'application/json;odata=nometadata',
+    'Content-Type': 'application/json;odata=nometadata'
+  };
 }
 
-function graphHeaders() {
-  return { Authorization: `Bearer ${graphToken}` };
-}
-
-// ══ 載入任務（Graph GET）══════════════════════════════════════════════════════
+// ══ 載入任務（SharePoint REST API GET）═══════════════════════════════════════
 async function loadTasks() {
   setList('<div class="loading">載入中…</div>');
   try {
     await refreshToken();
-    if (!graphIds) await initGraph();
-    const items = await fetchAllItems(
-      `https://graph.microsoft.com/v1.0/sites/${graphIds.siteId}/lists/${graphIds.listId}/items?expand=fields&$top=999`,
-      graphHeaders()
-    );
+    const items = await fetchAllItems(`${SP_LIST_URL}?$top=999`, spHeaders());
     spItemMap.clear();
     const seen = new Set();
     tasks = items
       .filter(item => {
-        const id = item.fields?.taskId;
+        const id = item.taskId;
         if (!id || seen.has(id)) return false;
         seen.add(id); return true;
       })
       .map(item => {
-        const f = item.fields;
-        spItemMap.set(f.taskId, item.id);
+        spItemMap.set(item.taskId, item.ID);
         return {
-          id:                  f.taskId              || '',
-          title:               f.Title               || '',
-          category:            f.category            || '',
-          dueAt:               f.dueAt               || '',
-          repeatRule:          f.repeatRule          || '',
-          status:              f.taskStatus          || 'todo',
-          priority:            f.priority            || '中',
-          owner:               f.owner               || '',
-          description:         f.description         || '',
-          reminderDays:        Number(f.reminderDays) || 7,
-          reminderTime:        f.reminderTime        || '',
-          tags:                safeJson(f.tags,        []),
-          documents:           safeJson(f.documents,   []),
-          createdAt:           f.createdAt           || '',
-          updatedAt:           f.updatedAt           || '',
-          noDueDate:           !!f.noDueDate,
-          repeatWeekday:       f.repeatWeekday       || '',
-          repeatMonthDay:      f.repeatMonthDay      || '',
-          repeatQuarterMonth:  f.repeatQuarterMonth  || '',
-          repeatQuarterDay:    f.repeatQuarterDay    || '',
-          repeatHalfYearMonth: f.repeatHalfYearMonth || '',
-          repeatHalfYearDay:   f.repeatHalfYearDay   || '',
-          repeatYearMonth:     f.repeatYearMonth     || '',
-          repeatYearDay:       f.repeatYearDay       || '',
-          repeatCustomText:    f.repeatCustomText    || ''
+          id:                  item.taskId              || '',
+          title:               item.Title               || '',
+          category:            item.category            || '',
+          dueAt:               item.dueAt               || '',
+          repeatRule:          item.repeatRule          || '',
+          status:              item.taskStatus          || 'todo',
+          priority:            item.priority            || '中',
+          owner:               item.owner               || '',
+          description:         item.description         || '',
+          reminderDays:        Number(item.reminderDays) || 7,
+          reminderTime:        item.reminderTime        || '',
+          tags:                safeJson(item.tags,        []),
+          documents:           safeJson(item.documents,   []),
+          createdAt:           item.createdAt           || '',
+          updatedAt:           item.updatedAt           || '',
+          noDueDate:           !!item.noDueDate,
+          repeatWeekday:       item.repeatWeekday       || '',
+          repeatMonthDay:      item.repeatMonthDay      || '',
+          repeatQuarterMonth:  item.repeatQuarterMonth  || '',
+          repeatQuarterDay:    item.repeatQuarterDay    || '',
+          repeatHalfYearMonth: item.repeatHalfYearMonth || '',
+          repeatHalfYearDay:   item.repeatHalfYearDay   || '',
+          repeatYearMonth:     item.repeatYearMonth     || '',
+          repeatYearDay:       item.repeatYearDay       || '',
+          repeatCustomText:    item.repeatCustomText    || ''
         };
       });
     renderAll();
@@ -693,7 +663,7 @@ async function fetchAllItems(url, headers) {
   let items = [], nextUrl = url;
   while (nextUrl) {
     const res = await fetch(nextUrl, { headers });
-    if (!res.ok) throw new Error(`Graph API 錯誤（${res.status}）`);
+    if (!res.ok) throw new Error(`SharePoint API 錯誤（${res.status}）`);
     const data = await res.json();
     items = items.concat(data.value || []);
     nextUrl = data['@odata.nextLink'] || null;
@@ -701,31 +671,30 @@ async function fetchAllItems(url, headers) {
   return items;
 }
 
-// ══ CRUD（Graph POST / PATCH / DELETE）═══════════════════════════════════════
+// ══ CRUD（SharePoint REST API POST / PATCH / DELETE）═════════════════════════
 async function apiPost(payload) {
   await refreshToken();
-  if (!graphIds) await initGraph();
-  const h = { ...graphHeaders(), 'Content-Type': 'application/json' };
-  const base = `https://graph.microsoft.com/v1.0/sites/${graphIds.siteId}/lists/${graphIds.listId}/items`;
+  const h = spHeaders();
 
   if (payload.action === 'add') {
-    const res = await fetch(base, {
+    const res = await fetch(SP_LIST_URL, {
       method: 'POST', headers: h,
-      body: JSON.stringify({ fields: taskToFields(payload.task) })
+      body: JSON.stringify(taskToFields(payload.task))
     });
     if (!res.ok) {
       const e = await res.json().catch(() => ({}));
       throw new Error(e.error?.message || `新增失敗（${res.status}）`);
     }
     const created = await res.json();
-    spItemMap.set(payload.task.id, created.id);
+    spItemMap.set(payload.task.id, created.ID);
 
   } else if (payload.action === 'update') {
     const spId = spItemMap.get(payload.task.id);
     if (!spId) throw new Error('找不到對應項目，請重新整理頁面');
-    const res = await fetch(`${base}/${spId}`, {
-      method: 'PATCH', headers: h,
-      body: JSON.stringify({ fields: taskToFields(payload.task) })
+    const res = await fetch(`${SP_LIST_URL}(${spId})`, {
+      method: 'PATCH',
+      headers: { ...h, 'IF-MATCH': '*' },
+      body: JSON.stringify(taskToFields(payload.task))
     });
     if (!res.ok) {
       const e = await res.json().catch(() => ({}));
@@ -735,7 +704,10 @@ async function apiPost(payload) {
   } else if (payload.action === 'delete') {
     const spId = spItemMap.get(payload.id);
     if (!spId) throw new Error('找不到對應項目，請重新整理頁面');
-    const res = await fetch(`${base}/${spId}`, { method: 'DELETE', headers: h });
+    const res = await fetch(`${SP_LIST_URL}(${spId})`, {
+      method: 'DELETE',
+      headers: { ...h, 'IF-MATCH': '*' }
+    });
     if (!res.ok) {
       const e = await res.json().catch(() => ({}));
       throw new Error(e.error?.message || `刪除失敗（${res.status}）`);
