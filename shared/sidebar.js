@@ -172,6 +172,9 @@
       <a class="nav-item" href="${BASE}ergonomic/" data-match="/ergonomic/">
         <span class="nav-icon">🧍</span>人因性危害預防
       </a>
+      <a class="nav-item" href="${BASE}overload/" data-match="/overload/">
+        <span class="nav-icon">😰</span>異常工作負荷預防
+      </a>
 
       <div class="nav-section">人員管理</div>
       <a class="nav-item" href="${BASE}training/" data-match="/training/">

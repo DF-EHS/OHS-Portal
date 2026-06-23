@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>異常工作負荷預防系統 | 大豐環保科技</title>
+<style>
+:root {
+  --accent: #c2410c; --accent-h: #9a3412;
+  --accent-bg: #fff7ed; --accent-bd: #fed7aa;
+  --bg: #fff7ed; --card: #fff; --border: #fed7aa;
+  --text: #431407; --sub: #78716c;
+  --red: #dc2626; --orange: #ea580c; --amber: #d97706; --green: #16a34a; --blue: #2563eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #431407 0%, #9a3412 55%, #ea580c 100%);
+  color: #fff; padding: 14px 24px;
+  display: flex; align-items: center; gap: 12px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.3);
+}
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer;
+  text-decoration: none; display: inline-block; font-family: inherit; transition: background .15s;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.2); }
+header h1 { font-size: 17px; font-weight: 700; flex: 1; }
+.hdr-right { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0; }
+
+/* Main */
+main { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
+
+/* Card */
+.card { background: var(--card); border-radius: 14px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,.07); border: 1px solid var(--border); }
+
+/* Home grid */
+.home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+.home-card {
+  background: var(--card); border-radius: 16px; padding: 32px 24px; text-align: center;
+  border: 2px solid var(--border); cursor: pointer; transition: all .2s;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+.home-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(194,65,12,.15); transform: translateY(-2px); }
+.home-card .icon { font-size: 48px; margin-bottom: 14px; }
+.home-card h2 { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+.home-card p { font-size: 13px; color: var(--sub); line-height: 1.6; }
+
+/* Titles */
+.sec-title { font-size: 19px; font-weight: 800; margin-bottom: 6px; }
+.sec-sub { font-size: 13px; color: var(--sub); margin-bottom: 20px; }
+
+/* Buttons */
+.btn-primary {
+  background: var(--accent); color: #fff; padding: 10px 24px;
+  border: none; border-radius: 8px; font-size: 14px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.btn-primary:hover { background: var(--accent-h); }
+.btn-secondary {
+  background: #f5f5f4; color: var(--sub); padding: 10px 20px;
+  border: 1px solid #d6d3d1; border-radius: 8px;
+  font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
+}
+.btn-secondary:hover { background: #e7e5e4; }
+
+/* Fields */
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 9px 12px; border: 1.5px solid var(--border);
+  border-radius: 8px; font-size: 14px; font-family: inherit; outline: none;
+  transition: border-color .15s; background: #fff; color: var(--text);
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
+
+/* Notice */
+.notice { padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 12px; }
+.notice.info { background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412; }
+.notice.err  { background: #fef2f2; border: 1px solid #fecaca; color: var(--red); }
+.notice.ok   { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+
+/* Questionnaire */
+.q-section-hdr {
+  background: linear-gradient(135deg, var(--accent-h), var(--accent));
+  color: #fff; padding: 14px 20px; border-radius: 10px 10px 0 0; margin-bottom: 0;
+}
+.q-section-hdr h3 { font-size: 16px; font-weight: 800; }
+.q-section-hdr p  { font-size: 12px; opacity: .85; margin-top: 2px; }
+.q-section-body   { background: var(--card); border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; padding: 6px 0; margin-bottom: 24px; }
+
+.q-item { padding: 12px 20px; border-bottom: 1px solid #fef3c7; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.q-item:last-child { border-bottom: none; }
+.q-num  { font-size: 11px; font-weight: 800; color: var(--accent); min-width: 22px; }
+.q-text { flex: 1; font-size: 14px; min-width: 180px; }
+.q-opts { display: flex; gap: 6px; flex-wrap: wrap; }
+.q-opt  {
+  padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer;
+  border: 1.5px solid #d6d3d1; background: #f5f5f4; color: var(--sub); transition: all .15s;
+  user-select: none;
+}
+.q-opt:hover { border-color: var(--accent); color: var(--accent); }
+.q-opt.sel-0 { background: #f0fdf4; border-color: #16a34a; color: #15803d; }
+.q-opt.sel-1 { background: #fefce8; border-color: #ca8a04; color: #a16207; }
+.q-opt.sel-2 { background: #fff7ed; border-color: #ea580c; color: #9a3412; }
+.q-opt.sel-3 { background: #fef2f2; border-color: var(--red); color: var(--red); }
+.q-unanswered { border-color: #f87171 !important; background: #fff1f2 !important; }
+
+/* Progress bar */
+.prog-wrap { margin-bottom: 20px; }
+.prog-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--sub); margin-bottom: 6px; }
+.prog-bar { height: 6px; background: #e7e5e4; border-radius: 3px; overflow: hidden; }
+.prog-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--amber)); border-radius: 3px; transition: width .3s; }
+
+/* Score card */
+.score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.score-card { background: var(--card); border: 2px solid var(--border); border-radius: 12px; padding: 18px; text-align: center; }
+.score-card .sc-num { font-size: 36px; font-weight: 900; line-height: 1; }
+.score-card .sc-lbl { font-size: 12px; color: var(--sub); margin-top: 4px; }
+.score-card .sc-lvl { display: inline-block; margin-top: 8px; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+
+/* Consult box */
+.consult-box { border-radius: 10px; padding: 16px 20px; margin-bottom: 16px; display: flex; align-items: center; gap: 14px; }
+.consult-box.no-need { background: #f0fdf4; border: 1.5px solid #86efac; }
+.consult-box.suggest { background: #fff7ed; border: 1.5px solid #fdba74; }
+.consult-box.required { background: #fef2f2; border: 1.5px solid #fca5a5; }
+.consult-box .c-icon { font-size: 28px; }
+.consult-box .c-title { font-size: 15px; font-weight: 800; }
+.consult-box .c-sub { font-size: 12px; color: var(--sub); margin-top: 2px; }
+
+/* Admin tabs */
+.admin-tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
+.tab-btn {
+  padding: 10px 18px; font-size: 14px; font-weight: 700; font-family: inherit;
+  border: none; background: none; cursor: pointer; color: var(--sub);
+  border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all .15s;
+}
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-btn:hover:not(.active) { color: var(--text); }
+
+/* Table */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tbl th { background: #fef3c7; padding: 10px 12px; text-align: left; font-weight: 700; font-size: 12px; color: var(--accent-h); position: sticky; top: 0; }
+.tbl td { padding: 10px 12px; border-bottom: 1px solid #fef9c3; vertical-align: middle; }
+.tbl tbody tr { cursor: pointer; transition: background .12s; }
+.tbl tbody tr:hover { background: #fff7ed; }
+
+/* Badge */
+.badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+.b-low  { background: #dcfce7; color: #15803d; }
+.b-mid  { background: #fef9c3; color: #854d0e; }
+.b-high { background: #fee2e2; color: var(--red); }
+.b-none { background: #f0fdf4; color: #15803d; }
+.b-sug  { background: #fff7ed; color: #9a3412; }
+.b-req  { background: #fef2f2; color: var(--red); }
+.b-todo { background: #f1f5f9; color: #64748b; }
+.b-prog { background: #eff6ff; color: #1d4ed8; }
+.b-done { background: #f0fdf4; color: #15803d; }
+
+/* Toolbar */
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+.toolbar input, .toolbar select { padding: 7px 11px; border: 1.5px solid #d6d3d1; border-radius: 7px; font-size: 13px; font-family: inherit; outline: none; }
+.toolbar input:focus, .toolbar select:focus { border-color: var(--accent); }
+.toolbar input[type="text"] { flex: 1; min-width: 160px; }
+.ml-auto { margin-left: auto; }
+
+/* Wrap */
+.tbl-wrap { overflow-x: auto; }
+
+/* Empty state */
+.empty { text-align: center; padding: 48px 24px; color: var(--sub); }
+.empty .icon { font-size: 40px; margin-bottom: 12px; }
+.empty p { font-size: 14px; line-height: 1.7; }
+
+/* Side panel */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 300; display: none; }
+.side-panel {
+  position: fixed; right: 0; top: 0; bottom: 0; width: min(480px, 95vw);
+  background: var(--card); z-index: 301; display: flex; flex-direction: column;
+  box-shadow: -6px 0 30px rgba(0,0,0,.15); transform: translateX(100%); transition: transform .25s;
+}
+.side-panel.open { transform: translateX(0); }
+.panel-hdr { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.panel-hdr h3 { font-size: 16px; font-weight: 800; }
+.panel-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--sub); line-height: 1; }
+.panel-body { flex: 1; overflow-y: auto; padding: 20px; }
+.panel-foot { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
+
+/* Overtime threshold display */
+.ot-thresh { padding: 10px 14px; border-radius: 8px; font-size: 12px; margin-bottom: 8px; }
+.ot-thresh.ok    { background: #f0fdf4; border: 1px solid #86efac; color: #15803d; }
+.ot-thresh.warn  { background: #fff7ed; border: 1px solid #fdba74; color: #9a3412; }
+.ot-thresh.alert { background: #fef2f2; border: 1px solid #fca5a5; color: var(--red); }
+.ot-stat-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #fef9c3; }
+.ot-stat-row:last-child { border-bottom: none; }
+.ot-dept { font-weight: 700; font-size: 14px; flex: 1; }
+
+/* Login */
+#login-page {
+  position: fixed; inset: 0; background: rgba(67,20,7,.85);
+  display: flex; align-items: center; justify-content: center; z-index: 400;
+}
+.login-box {
+  background: #fff; border-radius: 18px; padding: 36px 32px; width: min(380px, 92vw);
+  text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,.4);
+}
+.login-box .icon { font-size: 48px; margin-bottom: 8px; }
+.login-box h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+.login-box p { font-size: 13px; color: var(--sub); margin-bottom: 20px; }
+
+@media(max-width:640px) {
+  .home-grid { grid-template-columns: 1fr; }
+  .score-grid { grid-template-columns: 1fr; }
+  .q-item { flex-direction: column; align-items: flex-start; }
+  .admin-tabs { overflow-x: auto; }
+}
+</style>
+</head>
+<body>
+<script>window.OHS_SIDEBAR_BASE='../';</script>
+<script src="../shared/sidebar.js"></script>
+
+<!-- Login -->
+<div id="login-page" style="display:none">
+  <div class="login-box">
+    <div class="icon">🔐</div>
+    <h2>管理後台</h2>
+    <p>請輸入管理密碼以進入<br>異常工作負荷管理後台</p>
+    <div class="field"><input type="password" id="login-pw" placeholder="管理密碼" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn-primary" style="width:100%;margin-bottom:10px" onclick="doLogin()">登入管理後台</button>
+    <button class="btn-secondary" style="width:100%" onclick="hideLogin();showView('view-q-start')">填寫評估問卷（不需登入）</button>
+    <div id="login-err" class="notice err" style="margin-top:12px;display:none">密碼錯誤，請重試</div>
+  </div>
+</div>
+
+<!-- Header -->
+<header>
+  <button class="hdr-btn" onclick="showView('view-home')">← 返回</button>
+  <h1>😰 異常工作負荷促發疾病預防系統</h1>
+  <div class="hdr-right">
+    <span id="hdr-mode" style="font-size:13px;opacity:.85"></span>
+    <button id="btn-logout" class="hdr-btn" onclick="doLogout()" style="display:none">登出</button>
+  </div>
+</header>
+
+<main>
+
+<!-- Home -->
+<div id="view-home">
+  <div style="text-align:center;padding:20px 0 10px">
+    <div style="font-size:52px;margin-bottom:10px">😰</div>
+    <h2 style="font-size:22px;font-weight:900;margin-bottom:8px">異常工作負荷促發疾病預防系統</h2>
+    <p style="font-size:14px;color:var(--sub);max-width:480px;margin:0 auto;line-height:1.7">
+      依職業安全衛生法第6條第2項及 D2-EM-023 辦法，評估過度工作負荷對腦心血管疾病之促發風險。
+    </p>
+  </div>
+  <div class="home-grid">
+    <div class="home-card" onclick="showView('view-q-start')">
+      <div class="icon">📝</div>
+      <h2>填寫評估問卷</h2>
+      <p>填寫個人相關疲勞及工作相關疲勞量表<br>（共 20 題，約 5 分鐘完成）</p>
+    </div>
+    <div class="home-card" onclick="showLoginPage()">
+      <div class="icon">🔐</div>
+      <h2>管理後台</h2>
+      <p>問卷回覆管理、部門工時管理<br>醫師面談記錄追蹤（需輸入管理密碼）</p>
+    </div>
+  </div>
+  <div class="notice info" style="margin-top:20px">
+    ℹ️ 本問卷評估結果僅供參考，最終風險判斷由護理師/醫師綜合個人腦心血管風險後決定。
+  </div>
+</div>
+
+<!-- Q Start -->
+<div id="view-q-start" style="display:none">
+  <div class="card" style="max-width:520px;margin:0 auto">
+    <h2 class="sec-title">填寫前確認</h2>
+    <p class="sec-sub">請輸入您的基本資料後開始填寫問卷</p>
+    <div class="field">
+      <label>員工編號 <span style="color:var(--red)">*</span></label>
+      <input type="text" id="q-id" placeholder="請輸入員工編號" oninput="V('q-start-err').style.display='none'">
+    </div>
+    <div class="field"><label>姓名（選填）</label><input type="text" id="q-name" placeholder="請輸入姓名"></div>
+    <div class="field"><label>部門（選填）</label><input type="text" id="q-dept" placeholder="請輸入所屬部門"></div>
+    <div id="q-start-err" class="notice err" style="display:none"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-primary" onclick="startQ()">開始填寫問卷 →</button>
+      <button class="btn-secondary" onclick="showView('view-home')">返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- Q Form -->
+<div id="view-q-form" style="display:none">
+  <div class="notice info" style="margin-bottom:16px">
+    員工編號：<strong id="q-display-id"></strong>｜請根據<strong>過去一個月</strong>的實際狀況作答
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-label"><span>填寫進度</span><span id="prog-text">0 / 20</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="q-section-hdr">
+    <h3>第一部分：個人相關疲勞量表</h3>
+    <p>請評估下列各項感受的頻率（從不 → 常常）</p>
+  </div>
+  <div class="q-section-body" id="section-personal"></div>
+
+  <!-- Section 2 -->
+  <div class="q-section-hdr">
+    <h3>第二部分：工作相關疲勞量表</h3>
+    <p>請評估與工作相關的疲勞感受（從不 → 常常）</p>
+  </div>
+  <div class="q-section-body" id="section-work"></div>
+
+  <div id="q-form-err" class="notice err" style="display:none"></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+    <button class="btn-primary" onclick="submitQ()">送出問卷</button>
+    <button class="btn-secondary" onclick="showView('view-q-start')">← 返回</button>
+  </div>
+</div>
+
+<!-- Q Done -->
+<div id="view-q-done" style="display:none">
+  <div class="card" style="max-width:620px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:44px;margin-bottom:8px">✅</div>
+      <h2 style="font-size:20px;font-weight:900">問卷已送出</h2>
+      <p style="font-size:13px;color:var(--sub);margin-top:4px">您的評估結果如下，護理師將進行後續評估</p>
+    </div>
+
+    <div class="score-grid" id="done-scores"></div>
+    <div id="done-consult" style="margin-bottom:16px"></div>
+    <div id="done-ai" style="display:none" class="card" style="border:1px solid var(--accent-bd);margin-bottom:16px"></div>
+
+    <div style="text-align:center;margin-top:10px">
+      <button class="btn-secondary" onclick="showView('view-home')">返回首頁</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin -->
+<div id="view-admin" style="display:none">
+  <div class="admin-tabs">
+    <button class="tab-btn active" id="tab-btn-resp"     onclick="switchTab('resp')">📋 問卷回覆</button>
+    <button class="tab-btn"        id="tab-btn-overtime" onclick="switchTab('overtime')">⏰ 工時管理</button>
+    <button class="tab-btn"        id="tab-btn-interview"onclick="switchTab('interview')">🩺 面談管理</button>
+  </div>
+
+  <!-- 問卷回覆 -->
+  <div id="tab-resp">
+    <div class="toolbar">
+      <input type="text" id="f-resp" placeholder="搜尋員工編號/姓名/部門…" oninput="renderResp()">
+      <select id="f-overload" onchange="renderResp()">
+        <option value="">全部過負荷等級</option>
+        <option>低度</option><option>中度</option><option>高度</option>
+      </select>
+      <select id="f-consult" onchange="renderResp()">
+        <option value="">全部諮詢建議</option>
+        <option>不需諮詢</option><option>建議諮詢</option><option>需要諮詢</option>
+      </select>
+      <select id="f-resp-status" onchange="renderResp()">
+        <option value="">全部狀態</option>
+        <option>待審查</option><option>評估中</option><option>已結案</option>
+      </select>
+    </div>
+    <div class="tbl-wrap"><div id="resp-wrap"><div class="notice info">載入中…</div></div></div>
+  </div>
+
+  <!-- 工時管理 -->
+  <div id="tab-overtime" style="display:none">
+    <div class="toolbar">
+      <select id="f-ot-year" onchange="renderOvertime()">
+        <option value="">全部年度</option>
+      </select>
+      <select id="f-ot-month" onchange="renderOvertime()">
+        <option value="">全部月份</option>
+        <option>1</option><option>2</option><option>3</option><option>4</option>
+        <option>5</option><option>6</option><option>7</option><option>8</option>
+        <option>9</option><option>10</option><option>11</option><option>12</option>
+      </select>
+      <input type="text" id="f-ot-dept" placeholder="搜尋部門…" oninput="renderOvertime()" style="max-width:180px">
+      <button class="btn-primary ml-auto" onclick="openOtPanel(null)">＋ 新增工時紀錄</button>
+    </div>
+    <div class="notice info" style="margin-bottom:14px">
+      ⚠️ 門檻：單月加班 &gt;100h（高）、45–100h（中）、&lt;45h（低）。依法規，還需跨月平均評估，請搭配 6 個月趨勢觀察。
+    </div>
+    <div id="ot-summary" style="margin-bottom:16px"></div>
+    <div class="tbl-wrap"><div id="ot-wrap"><div class="notice info">載入中…</div></div></div>
+  </div>
+
+  <!-- 面談管理 -->
+  <div id="tab-interview" style="display:none">
+    <div class="toolbar">
+      <input type="text" id="f-iv" placeholder="搜尋員工編號/姓名…" oninput="renderInterview()">
+      <select id="f-iv-status" onchange="renderInterview()">
+        <option value="">全部狀態</option>
+        <option>待面談</option><option>已面談</option><option>追蹤中</option><option>已結案</option>
+      </select>
+      <button class="btn-primary ml-auto" onclick="openIvPanel(null)">＋ 新增面談紀錄</button>
+    </div>
+    <div class="tbl-wrap"><div id="iv-wrap"><div class="notice info">載入中…</div></div></div>
+  </div>
+</div>
+
+</main>
+
+<!-- Side panel -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+<div class="side-panel" id="side-panel">
+  <div class="panel-hdr">
+    <h3 id="panel-title"></h3>
+    <button class="panel-close" onclick="closePanel()">×</button>
+  </div>
+  <div class="panel-body" id="panel-body"></div>
+  <div class="panel-foot" id="panel-foot"></div>
+</div>
+
+<script>
+// ─────────────── Config ───────────────
+const API          = 'YOUR_GAS_URL_HERE';
+const ADMIN_PASS   = 'admin';
+const ADMIN_TOKEN  = 'overload-admin-2025';
+const WORKER_URL   = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+
+// ─────────────── Questionnaire Data ──
+const Q_PERSONAL = [
+  '我感到身體疲倦',
+  '我覺得體力不支',
+  '我感到精神疲乏',
+  '我感到思考變得遲鈍',
+  '我的注意力難以集中',
+  '睡醒後仍感到疲憊',
+  '我感到全身肌肉痠痛',
+  '整天都覺得很累',
+  '休息後疲勞感無法完全消除',
+  '我感到提不起勁來',
+];
+const Q_WORK = [
+  '我覺得工作量超過能負荷的程度',
+  '工作讓我在情緒上感到精疲力竭',
+  '工作使我感到壓力沈重',
+  '工作讓我感到挫折',
+  '工作使我難以在下班後放鬆休息',
+  '工作壓力影響到我的睡眠品質',
+  '我覺得工作讓我身心俱疲',
+  '工作的要求使我難以喘息',
+  '工作量導致我效率下降',
+  '工作使我感到心灰意冷',
+];
+const OPT_LABELS = ['從不','偶爾','有時','常常'];
+
+// ─────────────── State ────────────────
+let isAdmin = false;
+let qEmpId = '', qEmpName = '', qEmpDept = '';
+let answers = {};   // { 'p-0': 2, 'p-1': 0, 'w-0': 1, ... }
+let allResp = [], allOvertime = [], allInterview = [];
+
+// ─────────────── Helpers ──────────────
+const V = id => document.getElementById(id);
+const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const safeJson = (s,f) => { try { return JSON.parse(s); } catch { return f; } };
+
+function showView(id) {
+  ['view-home','view-q-start','view-q-form','view-q-done','view-admin']
+    .forEach(v => V(v).style.display = v===id ? '' : 'none');
+}
+
+function switchTab(t) {
+  ['resp','overtime','interview'].forEach(x => {
+    V('tab-'+x).style.display = x===t ? '' : 'none';
+    V('tab-btn-'+x).classList.toggle('active', x===t);
+  });
+  if (t==='resp')      loadResp();
+  if (t==='overtime')  loadOvertime();
+  if (t==='interview') loadInterview();
+}
+
+function openPanel()  { V('overlay').style.display='block'; V('side-panel').classList.add('open'); }
+function closePanel() { V('overlay').style.display='none';  V('side-panel').classList.remove('open'); }
+
+// ─────────────── Score Calc ──────────
+function calcPersonalScore(ans) {
+  const total = Q_PERSONAL.reduce((s,_,i) => s + (ans[`p-${i}`]||0), 0);
+  return Math.round((total / (Q_PERSONAL.length * 3)) * 100);
+}
+function calcWorkScore(ans) {
+  const total = Q_WORK.reduce((s,_,i) => s + (ans[`w-${i}`]||0), 0);
+  return Math.round((total / (Q_WORK.length * 3)) * 100);
+}
+function personalLevel(score) {
+  if (score < 50) return { label:'低度', code:0, cls:'b-low' };
+  if (score <= 70) return { label:'中度', code:1, cls:'b-mid' };
+  return { label:'高度', code:2, cls:'b-high' };
+}
+function workLevel(score) {
+  if (score < 45) return { label:'低度', code:0, cls:'b-low' };
+  if (score <= 60) return { label:'中度', code:1, cls:'b-mid' };
+  return { label:'高度', code:2, cls:'b-high' };
+}
+function overtimeLevel(h) {
+  h = Number(h)||0;
+  if (h < 45) return { label:'低度', code:0, cls:'b-low' };
+  if (h <= 100) return { label:'中度', code:1, cls:'b-mid' };
+  return { label:'高度', code:2, cls:'b-high' };
+}
+function overallLevel(pCode, wCode) {
+  const c = Math.max(pCode, wCode);
+  return c===0 ? { label:'低度', code:0, cls:'b-low' } :
+         c===1 ? { label:'中度', code:1, cls:'b-mid' } :
+                 { label:'高度', code:2, cls:'b-high' };
+}
+function consultRecommend(overloadCode, cvRisk) {
+  const cvCode = cvRisk==='高' ? 2 : cvRisk==='中' ? 1 : 0;
+  if (overloadCode===0) return { label:'不需諮詢', cls:'b-none', boxCls:'no-need', icon:'✅', sub:'工作負荷低度，繼續保持健康的生活習慣' };
+  if (cvCode===0) return { label:'不需諮詢', cls:'b-none', boxCls:'no-need', icon:'✅', sub:'心血管風險低，建議持續關注工作負荷狀況' };
+  if (overloadCode===2 && cvCode>=1) return { label:'需要諮詢', cls:'b-req', boxCls:'required', icon:'🚨', sub:'高工作負荷且具心血管風險，請儘速安排醫師面談' };
+  return { label:'建議諮詢', cls:'b-sug', boxCls:'suggest', icon:'⚠️', sub:'建議安排護理師或醫師評估，確認健康狀況' };
+}
+
+// ─────────────── Login ────────────────
+function showLoginPage() { V('login-page').style.display=''; V('login-err').style.display='none'; setTimeout(()=>V('login-pw').focus(),100); }
+function hideLogin()     { V('login-page').style.display='none'; }
+function doLogin() {
+  if (V('login-pw').value === ADMIN_PASS) {
+    isAdmin = true; hideLogin();
+    V('hdr-mode').textContent = '管理後台';
+    V('btn-logout').style.display = '';
+    showView('view-admin');
+    switchTab('resp');
+  } else {
+    V('login-err').style.display='block';
+  }
+}
+function doLogout() {
+  isAdmin = false;
+  V('hdr-mode').textContent=''; V('btn-logout').style.display='none';
+  showView('view-home');
+}
+
+// ─────────────── Questionnaire ────────
+function startQ() {
+  const id = V('q-id').value.trim();
+  if (!id) { V('q-start-err').textContent='請輸入員工編號'; V('q-start-err').style.display=''; return; }
+  V('q-start-err').style.display='none';
+  qEmpId=id; qEmpName=V('q-name').value.trim(); qEmpDept=V('q-dept').value.trim();
+  answers={};
+  V('q-display-id').textContent=qEmpId;
+  buildQForm();
+  showView('view-q-form');
+  updateProgress();
+}
+
+function buildQForm() {
+  V('section-personal').innerHTML = Q_PERSONAL.map((q,i) => buildQItem(`p-${i}`, i+1, q)).join('');
+  V('section-work').innerHTML     = Q_WORK.map((q,i) => buildQItem(`w-${i}`, i+11, q)).join('');
+}
+function buildQItem(key, num, text) {
+  return `<div class="q-item" id="qi-${key}">
+    <span class="q-num">Q${num}</span>
+    <span class="q-text">${esc(text)}</span>
+    <div class="q-opts">
+      ${OPT_LABELS.map((lbl,v) => `<span class="q-opt ${answers[key]===v?`sel-${v}`:''}" onclick="selectAns('${key}',${v})">${lbl}</span>`).join('')}
+    </div>
+  </div>`;
+}
+function selectAns(key, val) {
+  answers[key] = val;
+  const qi = V(`qi-${key}`);
+  qi.querySelectorAll('.q-opt').forEach((el,i) => {
+    el.className = `q-opt${i===val?' sel-'+i:''}`;
+  });
+  qi.classList.remove('q-unanswered');
+  updateProgress();
+}
+function updateProgress() {
+  const total = Q_PERSONAL.length + Q_WORK.length;
+  const done  = Object.keys(answers).length;
+  V('prog-text').textContent = `${done} / ${total}`;
+  V('prog-fill').style.width = `${(done/total)*100}%`;
+}
+
+async function submitQ() {
+  // Validate all answered
+  const unanswered = [];
+  Q_PERSONAL.forEach((_,i) => { if (answers[`p-${i}`]===undefined) unanswered.push(`p-${i}`); });
+  Q_WORK.forEach((_,i)     => { if (answers[`w-${i}`]===undefined) unanswered.push(`w-${i}`); });
+  if (unanswered.length) {
+    unanswered.forEach(k => { const el=V(`qi-${k}`); if(el) el.classList.add('q-unanswered'); });
+    V('q-form-err').textContent=`還有 ${unanswered.length} 題未作答，請完整填寫後送出`;
+    V('q-form-err').style.display='';
+    document.getElementById(`qi-${unanswered[0]}`).scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  V('q-form-err').style.display='none';
+  const pScore = calcPersonalScore(answers);
+  const wScore = calcWorkScore(answers);
+  const pLv = personalLevel(pScore);
+  const wLv = workLevel(wScore);
+  const ovLv = overallLevel(pLv.code, wLv.code);
+  showDone(pScore, wScore, pLv, wLv, ovLv);
+  try {
+    await post({ action:'submitQ',
+      empId:qEmpId, empName:qEmpName, empDept:qEmpDept,
+      personalScore:pScore, workScore:wScore,
+      personalLevel:pLv.label, workLevel:wLv.label, overallLevel:ovLv.label,
+      answers: JSON.stringify(answers)
+    });
+  } catch(e) { console.warn('submit error:', e.message); }
+}
+
+function showDone(pScore, wScore, pLv, wLv, ovLv) {
+  showView('view-q-done');
+  V('done-scores').innerHTML = `
+    <div class="score-card">
+      <div class="sc-num" style="color:${pLv.code===0?'var(--green)':pLv.code===1?'var(--amber)':'var(--red)'}">${pScore}</div>
+      <div class="sc-lbl">個人相關疲勞分數（滿分100）</div>
+      <span class="sc-lvl ${pLv.cls}">${pLv.label}</span>
+    </div>
+    <div class="score-card">
+      <div class="sc-num" style="color:${wLv.code===0?'var(--green)':wLv.code===1?'var(--amber)':'var(--red)'}">${wScore}</div>
+      <div class="sc-lbl">工作相關疲勞分數（滿分100）</div>
+      <span class="sc-lvl ${wLv.cls}">${wLv.label}</span>
+    </div>`;
+  const cr = consultRecommend(ovLv.code, '低'); // default CV=低 before HR input
+  V('done-consult').innerHTML = `
+    <div class="consult-box ${cr.boxCls}">
+      <div class="c-icon">${cr.icon}</div>
+      <div>
+        <div class="c-title">綜合過負荷等級：${ovLv.label}</div>
+        <div class="c-sub">${cr.sub}</div>
+        <div class="c-sub" style="margin-top:4px">※ 最終諮詢建議將由管理師整合您的腦心血管風險評估後確認</div>
+      </div>
+    </div>`;
+  // Fetch AI interpretation
+  const prompt = `你是職業安全衛生護理師，請以繁體中文、200字以內，用白話解釋以下異常工作負荷評估結果，並給予生活調整建議：
+個人相關疲勞分數：${pScore}分（${pLv.label}）
+工作相關疲勞分數：${wScore}分（${wLv.label}）
+綜合過負荷等級：${ovLv.label}`;
+  V('done-ai').style.display='';
+  V('done-ai').innerHTML='<div style="color:var(--sub);font-size:13px">✨ AI 正在解讀結果…</div>';
+  fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:prompt}) })
+    .then(r=>r.json()).then(d => {
+      const txt = d.reply||d.response||d.message||'（AI 無回應）';
+      V('done-ai').innerHTML=`<div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--accent)">✨ AI 解讀</div><div style="font-size:13px;line-height:1.8;white-space:pre-wrap">${esc(txt)}</div>`;
+    }).catch(() => { V('done-ai').style.display='none'; });
+}
+
+// ─────────────── API ──────────────────
+async function post(params) {
+  const fd = new FormData();
+  for (const [k,v] of Object.entries(params)) fd.append(k, v);
+  const res = await fetch(API, { method:'POST', body:fd });
+  return res.json();
+}
+
+// ─────────────── Resp tab ─────────────
+async function loadResp() {
+  V('resp-wrap').innerHTML='<div class="notice info">載入中…</div>';
+  try {
+    const d = await post({ action:'listResp', token:ADMIN_TOKEN });
+    allResp = d.rows||[]; renderResp();
+  } catch(e) { V('resp-wrap').innerHTML=`<div class="notice err">載入失敗：${e.message}</div>`; }
+}
+
+function renderResp() {
+  const q    = V('f-resp').value.toLowerCase();
+  const olF  = V('f-overload').value;
+  const csF  = V('f-consult').value;
+  const stF  = V('f-resp-status').value;
+  const rows = allResp.filter(r => {
+    const txt = (r.empId+r.empName+r.empDept).toLowerCase();
+    return (!q||txt.includes(q)) && (!olF||r.overallLevel===olF) && (!csF||r.consultRecommend===csF) && (!stF||(r.status||'待審查')===stF);
+  });
+  if (!rows.length) { V('resp-wrap').innerHTML='<div class="empty"><div class="icon">📋</div><p>目前無符合的問卷回覆</p></div>'; return; }
+  V('resp-wrap').innerHTML=`<table class="tbl"><thead><tr>
+    <th>員工編號</th><th>姓名</th><th>部門</th><th>填寫日期</th>
+    <th>個人疲勞</th><th>工作疲勞</th><th>過負荷等級</th><th>諮詢建議</th><th>狀態</th>
+  </tr></thead><tbody>${rows.map(r=>{
+    const pLv = personalLevel(Number(r.personalScore)||0);
+    const wLv = workLevel(Number(r.workScore)||0);
+    const ovLv = r.overallLevel==='高度'?{cls:'b-high',label:'高度'}:r.overallLevel==='中度'?{cls:'b-mid',label:'中度'}:{cls:'b-low',label:'低度'};
+    const cr = consultRecommend(ovLv.label==='高度'?2:ovLv.label==='中度'?1:0, r.cvRisk||'低');
+    const st = r.status||'待審查';
+    const stCls = st==='已結案'?'b-done':st==='評估中'?'b-prog':'b-todo';
+    return `<tr onclick="openRespPanel('${r.id}')">
+      <td><strong>${esc(r.empId)}</strong></td>
+      <td>${esc(r.empName||'—')}</td><td>${esc(r.empDept||'—')}</td>
+      <td>${esc(r.submitDate||'')}</td>
+      <td><span class="badge ${pLv.cls}">${Number(r.personalScore)||0}分 ${pLv.label}</span></td>
+      <td><span class="badge ${wLv.cls}">${Number(r.workScore)||0}分 ${wLv.label}</span></td>
+      <td><span class="badge ${ovLv.cls}">${esc(r.overallLevel||'—')}</span></td>
+      <td><span class="badge ${cr.cls}">${cr.label}</span></td>
+      <td><span class="badge ${stCls}">${esc(st)}</span></td>
+    </tr>`;
+  }).join('')}</tbody></table>`;
+}
+
+function openRespPanel(id) {
+  const r = allResp.find(x=>x.id===id);
+  if (!r) return;
+  const pScore = Number(r.personalScore)||0;
+  const wScore = Number(r.workScore)||0;
+  const pLv = personalLevel(pScore);
+  const wLv = workLevel(wScore);
+  const ovCode = Math.max(pLv.code, wLv.code);
+  const cvRisk = r.cvRisk||'低';
+  const cr = consultRecommend(ovCode, cvRisk);
+  V('panel-title').textContent=`${esc(r.empId)} ${esc(r.empName||'')} 評估詳情`;
+  V('panel-body').innerHTML=`
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+      <span class="badge ${pLv.cls}">個人疲勞 ${pScore}分 ${pLv.label}</span>
+      <span class="badge ${wLv.cls}">工作疲勞 ${wScore}分 ${wLv.label}</span>
+      <span style="font-size:12px;color:var(--sub)">填寫：${esc(r.submitDate||'')}</span>
+    </div>
+    <div class="consult-box ${cr.boxCls}" style="margin-bottom:16px">
+      <div class="c-icon">${cr.icon}</div>
+      <div><div class="c-title">${cr.label}</div><div class="c-sub">${cr.sub}</div></div>
+    </div>
+    <div class="field"><label>腦心血管風險等級（由護理師/醫師評定）</label>
+      <select id="rp-cv">
+        ${['低','中','高'].map(o=>`<option ${cvRisk===o?'selected':''}>${o}</option>`).join('')}
+      </select>
+    </div>
+    <div id="rp-consult-preview" style="margin-bottom:12px"></div>
+    <div class="field"><label>護理師/醫師評估意見</label>
+      <textarea id="rp-note" rows="4">${esc(r.notes||'')}</textarea>
+    </div>
+    <div class="field"><label>AI 分析結果</label>
+      <textarea id="rp-ai" rows="3">${esc(r.aiNote||'')}</textarea>
+    </div>
+    <div class="field"><label>案件狀態</label>
+      <select id="rp-status">
+        ${['待審查','評估中','已結案'].map(o=>`<option ${(r.status||'待審查')===o?'selected':''}>${o}</option>`).join('')}
+      </select>
+    </div>
+    <div id="rp-err" class="notice err" style="display:none"></div>`;
+  updateConsultPreview(ovCode, cvRisk);
+  V('rp-cv').addEventListener('change', ()=>updateConsultPreview(ovCode, V('rp-cv').value));
+  V('panel-foot').innerHTML=`
+    <button class="btn-primary" onclick="saveResp('${id}')">儲存</button>
+    <button class="btn-secondary" onclick="aiAnalyzeResp('${id}')">✨ AI 分析</button>
+    <button class="btn-secondary" onclick="closePanel()">取消</button>`;
+  openPanel();
+}
+function updateConsultPreview(ovCode, cvRisk) {
+  const cr = consultRecommend(ovCode, cvRisk);
+  V('rp-consult-preview').innerHTML=`<div class="consult-box ${cr.boxCls}" style="padding:10px 14px"><span class="c-icon" style="font-size:18px">${cr.icon}</span><span style="font-size:13px;font-weight:700">${cr.label}</span></div>`;
+}
+async function aiAnalyzeResp(id) {
+  const r = allResp.find(x=>x.id===id);
+  if (!r) return;
+  const btn = V('panel-foot').querySelector('[onclick*="aiAnalyze"]');
+  if(btn){btn.textContent='分析中…';btn.disabled=true;}
+  const prompt = `你是職業安全衛生護理師，請以繁體中文、200字以內解讀以下異常工作負荷評估結果，給出健康建議：
+員工：${r.empId} ${r.empName||''}（${r.empDept||'—'}）
+個人相關疲勞：${r.personalScore}分（${r.personalLevel}）
+工作相關疲勞：${r.workScore}分（${r.workLevel}）
+綜合過負荷等級：${r.overallLevel}
+腦心血管風險：${V('rp-cv').value}`;
+  try {
+    const res = await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:prompt})});
+    const d   = await res.json();
+    V('rp-ai').value = d.reply||d.response||d.message||'（AI 無回應）';
+  } catch(e) { V('rp-ai').value='分析失敗：'+e.message; }
+  if(btn){btn.textContent='✨ AI 分析';btn.disabled=false;}
+}
+async function saveResp(id) {
+  V('rp-err').style.display='none';
+  try {
+    const d = await post({action:'updateResp',token:ADMIN_TOKEN,id,
+      cvRisk:V('rp-cv').value, notes:V('rp-note').value,
+      aiNote:V('rp-ai').value, status:V('rp-status').value,
+      consultRecommend:consultRecommend(
+        Math.max(personalLevel(Number(allResp.find(x=>x.id===id)?.personalScore)||0).code,
+                 workLevel(Number(allResp.find(x=>x.id===id)?.workScore)||0).code),
+        V('rp-cv').value).label
+    });
+    if (d.ok) {
+      const r=allResp.find(x=>x.id===id);
+      if(r){r.cvRisk=V('rp-cv').value;r.notes=V('rp-note').value;r.aiNote=V('rp-ai').value;r.status=V('rp-status').value;r.consultRecommend=V('rp-consult-preview').querySelector('.c-title')?.textContent||r.consultRecommend;}
+      renderResp(); closePanel();
+    } else throw new Error(d.error||'儲存失敗');
+  } catch(e){ V('rp-err').textContent=e.message; V('rp-err').style.display=''; }
+}
+
+// ─────────────── Overtime tab ─────────
+async function loadOvertime() {
+  V('ot-wrap').innerHTML='<div class="notice info">載入中…</div>';
+  try {
+    const d = await post({action:'listOvertime',token:ADMIN_TOKEN});
+    allOvertime = d.rows||[]; populateOtYears(); renderOvertime();
+  } catch(e){ V('ot-wrap').innerHTML=`<div class="notice err">載入失敗：${e.message}</div>`; }
+}
+function populateOtYears() {
+  const years = [...new Set(allOvertime.map(r=>r.year))].sort((a,b)=>b-a);
+  V('f-ot-year').innerHTML='<option value="">全部年度</option>'+years.map(y=>`<option>${y}</option>`).join('');
+}
+function renderOvertime() {
+  const yF = V('f-ot-year').value;
+  const mF = V('f-ot-month').value;
+  const dF = V('f-ot-dept').value.toLowerCase();
+  const rows = allOvertime.filter(r => (!yF||String(r.year)===yF)&&(!mF||String(r.month)===mF)&&(!dF||r.dept.toLowerCase().includes(dF)));
+
+  // Dept summary for current/latest month
+  if (allOvertime.length) {
+    const latestYear = Math.max(...allOvertime.map(r=>Number(r.year)));
+    const latestMonth = Math.max(...allOvertime.filter(r=>Number(r.year)===latestYear).map(r=>Number(r.month)));
+    const latest = allOvertime.filter(r=>Number(r.year)===latestYear&&Number(r.month)===latestMonth);
+    const alerts = latest.filter(r=>overtimeLevel(r.overtimeHours).code>0);
+    V('ot-summary').innerHTML = alerts.length
+      ? `<div class="notice err">⚠️ ${latestYear}年${latestMonth}月 共 <strong>${alerts.length}</strong> 個部門加班時數超標（≥45h），請優先關注。</div>`
+      : `<div class="notice ok">✅ ${latestYear}年${latestMonth}月 所有部門加班時數均在門檻內（&lt;45h）</div>`;
+  } else { V('ot-summary').innerHTML=''; }
+
+  if (!rows.length) { V('ot-wrap').innerHTML='<div class="empty"><div class="icon">⏰</div><p>尚無工時記錄<br><small>點擊「新增工時紀錄」開始記錄</small></p></div>'; return; }
+  V('ot-wrap').innerHTML=`<table class="tbl"><thead><tr>
+    <th>部門</th><th>年度</th><th>月份</th><th>加班時數</th><th>等級</th><th>備註</th><th>操作</th>
+  </tr></thead><tbody>${rows.map(r=>{
+    const lv = overtimeLevel(r.overtimeHours);
+    return `<tr onclick="openOtPanel('${r.id}')">
+      <td><strong>${esc(r.dept)}</strong></td>
+      <td>${esc(r.year)}</td><td>${esc(r.month)}</td>
+      <td><strong>${esc(r.overtimeHours)}</strong> h</td>
+      <td><span class="badge ${lv.cls}">${lv.label}</span></td>
+      <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.note||'—')}</td>
+      <td onclick="event.stopPropagation()">
+        <button class="btn-secondary" style="font-size:12px;padding:4px 10px" onclick="openOtPanel('${r.id}')">編輯</button>
+        <button class="btn-secondary" style="font-size:12px;padding:4px 10px;color:var(--red);margin-left:4px" onclick="delOvertime('${r.id}')">刪除</button>
+      </td>
+    </tr>`;
+  }).join('')}</tbody></table>`;
+}
+function openOtPanel(id) {
+  const r = id ? allOvertime.find(x=>x.id===id) : null;
+  const now = new Date();
+  V('panel-title').textContent = r ? '編輯工時紀錄' : '新增工時紀錄';
+  V('panel-body').innerHTML=`
+    <div class="field"><label>部門 *</label><input type="text" id="ot-dept" value="${esc(r?.dept||'')}"></div>
+    <div class="field"><label>年度 *</label><input type="number" id="ot-year" value="${r?.year||now.getFullYear()}" min="2020" max="2099"></div>
+    <div class="field"><label>月份 *</label><select id="ot-month">
+      ${[...Array(12)].map((_,i)=>`<option value="${i+1}" ${Number(r?.month)===(i+1)?'selected':''}>${i+1} 月</option>`).join('')}
+    </select></div>
+    <div class="field"><label>加班時數（小時）*</label><input type="number" id="ot-hours" value="${r?.overtimeHours||''}" min="0" step="0.5" placeholder="例：72.5"></div>
+    <div id="ot-lvl-preview" style="margin-bottom:12px"></div>
+    <div class="field"><label>備註</label><textarea id="ot-note" rows="3">${esc(r?.note||'')}</textarea></div>
+    <div id="ot-err" class="notice err" style="display:none"></div>`;
+  V('ot-hours').addEventListener('input', () => {
+    const h = parseFloat(V('ot-hours').value)||0;
+    const lv = overtimeLevel(h);
+    V('ot-lvl-preview').innerHTML = h>0 ? `<span class="badge ${lv.cls}">${lv.label}（${h}h）</span>` : '';
+  });
+  if(r) V('ot-hours').dispatchEvent(new Event('input'));
+  V('panel-foot').innerHTML=`
+    <button class="btn-primary" onclick="saveOvertime('${id||''}')">儲存</button>
+    <button class="btn-secondary" onclick="closePanel()">取消</button>`;
+  openPanel();
+}
+async function saveOvertime(id) {
+  const dept=V('ot-dept').value.trim(), year=V('ot-year').value, month=V('ot-month').value, h=V('ot-hours').value;
+  if(!dept||!h){ V('ot-err').textContent='請填入部門和加班時數'; V('ot-err').style.display=''; return; }
+  V('ot-err').style.display='none';
+  try {
+    const d = await post({action:'saveOvertime',token:ADMIN_TOKEN,
+      data:JSON.stringify({id:id||'',dept,year:Number(year),month:Number(month),overtimeHours:Number(h),
+        level:overtimeLevel(h).label, note:V('ot-note').value})});
+    if(d.ok){ await loadOvertime(); closePanel(); } else throw new Error(d.error||'儲存失敗');
+  } catch(e){ V('ot-err').textContent=e.message; V('ot-err').style.display=''; }
+}
+async function delOvertime(id) {
+  if(!confirm('確定刪除此工時紀錄？')) return;
+  await post({action:'delOvertime',token:ADMIN_TOKEN,id});
+  await loadOvertime();
+}
+
+// ─────────────── Interview tab ────────
+async function loadInterview() {
+  V('iv-wrap').innerHTML='<div class="notice info">載入中…</div>';
+  try {
+    const d = await post({action:'listInterview',token:ADMIN_TOKEN});
+    allInterview = d.rows||[]; renderInterview();
+  } catch(e){ V('iv-wrap').innerHTML=`<div class="notice err">載入失敗：${e.message}</div>`; }
+}
+function renderInterview() {
+  const q = V('f-iv').value.toLowerCase();
+  const stF = V('f-iv-status').value;
+  const rows = allInterview.filter(r => {
+    const txt=(r.empId+r.empName).toLowerCase();
+    return (!q||txt.includes(q))&&(!stF||(r.status||'待面談')===stF);
+  });
+  if(!rows.length){ V('iv-wrap').innerHTML='<div class="empty"><div class="icon">🩺</div><p>尚無面談紀錄<br><small>點擊「新增面談紀錄」開始記錄</small></p></div>'; return; }
+  V('iv-wrap').innerHTML=`<table class="tbl"><thead><tr>
+    <th>員工編號</th><th>姓名</th><th>部門</th><th>面談日期</th><th>護理師</th><th>採行措施</th><th>狀態</th>
+  </tr></thead><tbody>${rows.map(r=>{
+    const st=r.status||'待面談';
+    const stCls=st==='已結案'?'b-done':st==='追蹤中'?'b-prog':st==='已面談'?'b-sug':'b-todo';
+    return `<tr onclick="openIvPanel('${r.id}')">
+      <td><strong>${esc(r.empId)}</strong></td>
+      <td>${esc(r.empName||'—')}</td><td>${esc(r.empDept||'—')}</td>
+      <td>${esc(r.interviewDate||'—')}</td>
+      <td>${esc(r.nurse||'—')}</td>
+      <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.measures||'—')}</td>
+      <td><span class="badge ${stCls}">${esc(st)}</span></td>
+    </tr>`;
+  }).join('')}</tbody></table>`;
+}
+function openIvPanel(id) {
+  const r = id ? allInterview.find(x=>x.id===id) : null;
+  V('panel-title').textContent = r ? '編輯面談紀錄' : '新增面談紀錄';
+  V('panel-body').innerHTML=`
+    <div class="field"><label>員工編號 *</label><input type="text" id="iv-emp" value="${esc(r?.empId||'')}"></div>
+    <div class="field"><label>姓名</label><input type="text" id="iv-name" value="${esc(r?.empName||'')}"></div>
+    <div class="field"><label>部門</label><input type="text" id="iv-dept" value="${esc(r?.empDept||'')}"></div>
+    <div class="field"><label>面談日期</label><input type="date" id="iv-date" value="${esc(r?.interviewDate||'')}"></div>
+    <div class="field"><label>護理師姓名</label><input type="text" id="iv-nurse" value="${esc(r?.nurse||'')}"></div>
+    <div class="field"><label>醫師姓名</label><input type="text" id="iv-doctor" value="${esc(r?.doctor||'')}"></div>
+    <div class="field"><label>採行措施（可多項描述）</label>
+      <textarea id="iv-measures" rows="4">${esc(r?.measures||'')}</textarea>
+    </div>
+    <div class="field"><label>追蹤/複診日期</label><input type="date" id="iv-followup" value="${esc(r?.followupDate||'')}"></div>
+    <div class="field"><label>狀態</label><select id="iv-status">
+      ${['待面談','已面談','追蹤中','已結案'].map(o=>`<option ${(r?.status||'待面談')===o?'selected':''}>${o}</option>`).join('')}
+    </select></div>
+    <div id="iv-err" class="notice err" style="display:none"></div>`;
+  V('panel-foot').innerHTML=`
+    <button class="btn-primary" onclick="saveInterview('${id||''}')">儲存</button>
+    ${id?`<button class="btn-secondary" style="color:var(--red)" onclick="delInterview('${id}')">刪除</button>`:''}
+    <button class="btn-secondary" onclick="closePanel()">取消</button>`;
+  openPanel();
+}
+async function saveInterview(id) {
+  const emp=V('iv-emp').value.trim();
+  if(!emp){ V('iv-err').textContent='請填入員工編號'; V('iv-err').style.display=''; return; }
+  V('iv-err').style.display='none';
+  try {
+    const d = await post({action:'saveInterview',token:ADMIN_TOKEN,
+      data:JSON.stringify({id:id||'',empId:emp,empName:V('iv-name').value,empDept:V('iv-dept').value,
+        interviewDate:V('iv-date').value,nurse:V('iv-nurse').value,doctor:V('iv-doctor').value,
+        measures:V('iv-measures').value,followupDate:V('iv-followup').value,status:V('iv-status').value})});
+    if(d.ok){ await loadInterview(); closePanel(); } else throw new Error(d.error||'儲存失敗');
+  } catch(e){ V('iv-err').textContent=e.message; V('iv-err').style.display=''; }
+}
+async function delInterview(id) {
+  if(!confirm('確定刪除此面談紀錄？')) return;
+  await post({action:'delInterview',token:ADMIN_TOKEN,id});
+  await loadInterview();
+}
+
+// ─────────────── Init ─────────────────
+showView('view-home');
+</script>
+</body>
+</html>
