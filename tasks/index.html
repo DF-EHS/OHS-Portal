@@ -1,2633 +1,931 @@
-﻿<!doctype html>
-<html lang="zh-Hant">
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>職安工作中樞自主管理版</title>
-  <style>
-    :root {
-      --bg: #f5f7f2;
-      --body-start: #fbfcf8;
-      --body-halo-cyan: rgba(76, 135, 149, .13);
-      --body-halo-green: rgba(63, 127, 95, .13);
-      --surface: #ffffff;
-      --surface-rgb: 255, 255, 255;
-      --surface-2: #eef4ed;
-      --ink: #23302b;
-      --muted: #65736b;
-      --line: #d8e1d6;
-      --accent: #3f7f5f;
-      --accent-soft: #dcefe4;
-      --cyan: #4c8795;
-      --cyan-soft: #dceef2;
-      --amber: #a66a22;
-      --amber-soft: #f6ead8;
-      --red: #b0443c;
-      --red-soft: #f5dfdc;
-      --shadow: 0 16px 36px rgba(56, 74, 63, 0.12);
-      font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", Arial, sans-serif;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    html[data-theme="dark"] {
-      --bg: #17201d;
-      --body-start: #1f2a26;
-      --body-halo-cyan: rgba(99, 170, 184, .12);
-      --body-halo-green: rgba(111, 178, 139, .12);
-      --surface: #26332e;
-      --surface-rgb: 38, 51, 46;
-      --surface-2: #202a26;
-      --ink: #edf5ef;
-      --muted: #aab8b0;
-      --line: #3b4a43;
-      --accent: #79b995;
-      --accent-soft: #203c2d;
-      --cyan: #82bfd0;
-      --cyan-soft: #203943;
-      --amber: #e5b268;
-      --amber-soft: #493923;
-      --red: #e28b84;
-      --red-soft: #4c2b2d;
-      --shadow: 0 18px 40px rgba(0, 0, 0, .28);
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 86% 10%, var(--body-halo-cyan), transparent 18rem),
-        radial-gradient(circle at 9% 92%, var(--body-halo-green), transparent 22rem),
-        linear-gradient(180deg, var(--body-start), var(--bg));
-    }
-
-    button, input, select, textarea { font: inherit; }
-    button { cursor: pointer; }
-
-    .app {
-      display: grid;
-      grid-template-columns: 260px minmax(0, 1fr);
-      min-height: 100vh;
-    }
-
-    .sidebar {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      padding: 22px 18px;
-      border-right: 1px solid var(--line);
-      background: rgba(var(--surface-rgb), .88);
-      backdrop-filter: blur(12px);
-      overflow-y: auto;
-    }
-
-    .portal-back {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 6px;
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      margin-bottom: 16px;
-      transition: background .15s, color .15s;
-    }
-    .portal-back:hover { background: var(--surface-2); color: var(--ink); }
-
-    .brand {
-      display: grid;
-      grid-template-columns: 42px 1fr;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 22px;
-    }
-
-    .mark {
-      display: grid;
-      place-items: center;
-      width: 42px;
-      height: 42px;
-      border-radius: 8px;
-      color: white;
-      background: linear-gradient(135deg, #d97706, #f59e0b);
-      box-shadow: 0 12px 22px rgba(217, 119, 6, .22);
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-size: 18px;
-      line-height: 1.2;
-      letter-spacing: 0;
-    }
-
-    .brand p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    .nav {
-      display: grid;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
-
-    .nav button,
-    .action,
-    .icon-button,
-    .segmented button {
-      border: 1px solid transparent;
-      border-radius: 8px;
-      background: transparent;
-      color: var(--ink);
-      transition: .16s ease;
-    }
-
-    .nav button {
-      display: grid;
-      grid-template-columns: 22px 1fr auto;
-      gap: 10px;
-      align-items: center;
-      min-height: 42px;
-      padding: 9px 10px;
-      text-align: left;
-      font-weight: 800;
-    }
-
-    .nav button:hover,
-    .nav button.active {
-      border-color: var(--line);
-      background: var(--surface-2);
-    }
-
-    .nav small {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .side-block {
-      padding-top: 16px;
-      border-top: 1px solid var(--line);
-    }
-
-    .side-block h2 {
-      margin: 0 0 10px;
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0;
-    }
-
-    .mini-stats {
-      display: grid;
-      gap: 0;
-    }
-
-    .mini-stat {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 7px 2px;
-      border-bottom: 1px dashed var(--line);
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .mini-stat:last-child { border-bottom: none; }
-
-    .mini-stat strong {
-      color: var(--accent);
-      font-size: 20px;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .notification-card {
-      display: grid;
-      gap: 8px;
-      padding: 10px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface);
-    }
-
-    .notification-card .action {
-      width: 100%;
-      min-height: 36px;
-    }
-
-    .notification-status {
-      margin: 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .main {
-      min-width: 0;
-      padding: 24px;
-    }
-
-    .topbar {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 14px;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-
-    .topbar h2 {
-      margin: 0;
-      font-size: 26px;
-      line-height: 1.25;
-      letter-spacing: 0;
-    }
-
-    .topbar p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .view { display: none; }
-    .view.active { display: block; }
-
-    .grid {
-      display: grid;
-      gap: 14px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .field {
-      display: grid;
-      gap: 7px;
-    }
-
-    .field.full { grid-column: 1 / -1; }
-
-    label {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface);
-      color: var(--ink);
-      outline: none;
-    }
-
-    input,
-    select {
-      min-height: 42px;
-      padding: 0 11px;
-    }
-
-    input:disabled,
-    select:disabled,
-    textarea:disabled {
-      color: var(--muted);
-      background: var(--surface-2);
-    }
-
-    textarea {
-      min-height: 96px;
-      padding: 11px;
-      resize: vertical;
-      line-height: 1.55;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(63, 127, 95, .12);
-    }
-
-    .panel {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(var(--surface-rgb), .88);
-      box-shadow: var(--shadow);
-    }
-
-    .panel-head {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--line);
-      background: linear-gradient(180deg, var(--surface), var(--surface-2));
-    }
-
-    .panel-head h3 {
-      margin: 0;
-      font-size: 16px;
-      letter-spacing: 0;
-    }
-
-    .panel-body { padding: 16px; }
-
-    .form-actions,
-    .toolbar,
-    .row-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .form-actions { justify-content: flex-end; }
-
-    .action {
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      justify-content: center;
-      min-height: 40px;
-      padding: 0 12px;
-      border-color: var(--line);
-      background: var(--surface);
-      font-weight: 800;
-      text-decoration: none;
-    }
-
-    .action.primary {
-      border-color: var(--accent);
-      color: white;
-      background: var(--accent);
-    }
-
-    .action.danger {
-      border-color: rgba(176, 68, 60, .32);
-      color: var(--red);
-      background: var(--red-soft);
-    }
-
-    .action:hover {
-      box-shadow: 0 8px 18px rgba(56, 74, 63, .12);
-      transform: translateY(-1px);
-    }
-
-    .segmented {
-      display: inline-flex;
-      gap: 6px;
-      padding: 4px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface);
-    }
-
-    .segmented button {
-      min-height: 32px;
-      padding: 0 10px;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .segmented button.active,
-    .segmented button:hover {
-      color: var(--ink);
-      background: var(--accent-soft);
-    }
-
-    .filter-grid {
-      display: grid;
-      grid-template-columns: minmax(220px, 1fr) 180px 150px 160px;
-      gap: 10px;
-      align-items: end;
-      margin-bottom: 14px;
-    }
-
-    .task-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .task-list.grid-mode {
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      align-items: stretch;
-    }
-
-    .task-list.grid-mode .task-card {
-      grid-template-columns: 1fr;
-      align-content: start;
-      min-height: 260px;
-    }
-
-    .task-list.grid-mode .row-actions {
-      align-self: end;
-      padding-top: 4px;
-    }
-
-    .task-list.grid-mode .task-card > div:first-child {
-      min-width: 0;
-      overflow: hidden;
-    }
-
-    .task-list.grid-mode .pill {
-      white-space: normal;
-      overflow-wrap: anywhere;
-    }
-
-    .task-card {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 14px;
-      align-items: start;
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-left: 5px solid var(--accent);
-      border-radius: 8px;
-      background: var(--surface);
-      box-shadow: 0 8px 18px rgba(56, 74, 63, .07);
-    }
-
-    .task-card.overdue { border-left-color: var(--red); }
-    .task-card.soon { border-left-color: var(--amber); }
-    .task-card.done { border-left-color: var(--accent); opacity: .78; }
-    .task-card.generated {
-      border-color: rgba(63, 127, 95, .55);
-      background: var(--accent-soft);
-      box-shadow: 0 12px 26px rgba(63, 127, 95, .16);
-    }
-
-    .task-title {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 7px;
-    }
-
-    .task-title strong {
-      font-size: 16px;
-      line-height: 1.4;
-      overflow-wrap: anywhere;
-    }
-
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.35;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      min-height: 24px;
-      padding: 3px 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--surface);
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .pill.status-todo { background: var(--surface-2); }
-    .pill.status-doing { color: var(--cyan); background: var(--cyan-soft); border-color: transparent; }
-    .pill.status-waiting { color: var(--amber); background: var(--amber-soft); border-color: transparent; }
-    .pill.status-done { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
-    .pill.status-overdue { color: var(--red); background: var(--red-soft); border-color: transparent; }
-    .pill.priority-high { color: var(--red); background: var(--red-soft); border-color: transparent; }
-    .pill.priority-medium { color: var(--amber); background: var(--amber-soft); border-color: transparent; }
-    .pill.priority-low { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
-
-    .task-note {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-      white-space: pre-wrap;
-    }
-
-    .check-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      min-height: 42px;
-      padding: 0 11px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface);
-      color: var(--ink);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .check-row input {
-      width: 16px;
-      min-height: auto;
-      margin: 0;
-      accent-color: var(--accent);
-    }
-
-    .list-section {
-      display: grid;
-      gap: 10px;
-    }
-
-    .list-section + .list-section {
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px solid var(--line);
-    }
-
-    .list-section-title {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      justify-content: space-between;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .empty {
-      padding: 30px;
-      border: 1px dashed var(--line);
-      border-radius: 8px;
-      color: var(--muted);
-      background: rgba(var(--surface-rgb), .68);
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    .icon {
-      width: 18px;
-      height: 18px;
-      stroke: currentColor;
-      stroke-width: 2;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      flex: 0 0 auto;
-    }
-
-    .hidden { display: none !important; }
-
-    .toast {
-      position: fixed;
-      right: 18px;
-      bottom: 82px;
-      z-index: 20;
-      max-width: min(420px, calc(100vw - 36px));
-      padding: 12px 14px;
-      border: 1px solid rgba(63, 127, 95, .35);
-      border-radius: 8px;
-      color: var(--ink);
-      background: var(--surface);
-      box-shadow: var(--shadow);
-      line-height: 1.55;
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .toast strong {
-      color: var(--accent);
-    }
-
-    .utility-dock {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      padding: 12px 0 4px;
-      margin-top: 16px;
-      border-top: 1px solid var(--line);
-      flex-wrap: wrap;
-    }
-    .utility-dock .utility-button {
-      flex: 1;
-    }
-
-    .utility-button {
-      display: inline-flex;
-      gap: 6px;
-      align-items: center;
-      justify-content: center;
-      min-width: 42px;
-      min-height: 38px;
-      padding: 0 10px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      color: var(--ink);
-      background: var(--surface);
-      font-size: 12px;
-      font-weight: 900;
-      transition: .16s ease;
-    }
-
-    .utility-button:hover {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      transform: translateY(-1px);
-    }
-
-    .utility-button .icon {
-      width: 16px;
-      height: 16px;
-    }
-
-    .repeat-detail {
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface-2);
-    }
-
-    .repeat-detail .repeat-title {
-      margin: 0 0 10px;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .repeat-detail-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    @media (max-width: 1080px) {
-      .app { grid-template-columns: 1fr; }
-      .sidebar {
-        position: relative;
-        height: auto;
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-      }
-      .nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .form-grid,
-      .filter-grid,
-      .repeat-detail-grid {
-        grid-template-columns: 1fr;
-      }
-      .task-card { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 620px) {
-      .main { padding: 16px; }
-      .sidebar { padding: 18px 16px; }
-      .nav { grid-template-columns: 1fr; }
-      .topbar { grid-template-columns: 1fr; }
-    }
-
-    /* ── 通知鈴鐺（嵌入 nav）──────────────────────────── */
-    @keyframes bell-shake {
-      0%,100% { transform: rotate(0); }
-      15%      { transform: rotate(14deg); }
-      35%      { transform: rotate(-11deg); }
-      55%      { transform: rotate(8deg); }
-      75%      { transform: rotate(-5deg); }
-    }
-    #notifTrigger.urgent .icon { animation: bell-shake .7s ease .4s both; }
-
-    #notifTrigger small.notif-badge {
-      color: var(--muted);
-      font-size: 11px;
-    }
-    #notifTrigger small.notif-badge.has-urgent {
-      background: var(--red);
-      color: #fff;
-      padding: 1px 6px;
-      border-radius: 9px;
-      font-size: 10px;
-      font-weight: 800;
-    }
-    #notifTrigger small.notif-badge.hidden { display: none; }
-
-    /* ── 通知面板 ──────────────────────────────────────── */
-    .notif-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 910;
-      background: rgba(0,0,0,.22);
-      backdrop-filter: blur(2px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .22s;
-    }
-    .notif-overlay.open { opacity: 1; pointer-events: auto; }
-
-    .notif-panel {
-      position: fixed;
-      top: 0; right: 0;
-      width: 320px;
-      max-width: 100vw;
-      height: 100vh;
-      background: var(--surface);
-      border-left: 1px solid var(--line);
-      box-shadow: -6px 0 30px rgba(0,0,0,.16);
-      z-index: 920;
-      display: flex;
-      flex-direction: column;
-      transform: translateX(100%);
-      transition: transform .22s ease;
-    }
-    .notif-panel.open { transform: translateX(0); }
-
-    .notif-head {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 15px 16px;
-      border-bottom: 1px solid var(--line);
-      flex-shrink: 0;
-    }
-    .notif-head h3 { flex: 1; font-size: 15px; margin: 0; color: var(--ink); }
-    .notif-close {
-      width: 30px; height: 30px;
-      border-radius: 6px; border: none;
-      background: transparent;
-      color: var(--muted);
-      font-size: 16px;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: background .15s;
-    }
-    .notif-close:hover { background: var(--surface-2); color: var(--ink); }
-
-    .notif-scroll {
-      flex: 1;
-      overflow-y: auto;
-      padding: 8px 12px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .notif-group-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: var(--muted);
-      padding: 12px 4px 4px;
-      text-transform: uppercase;
-    }
-    .notif-group-label:first-child { padding-top: 4px; }
-
-    .notif-item {
-      padding: 10px 12px;
-      border-radius: 8px;
-      background: var(--surface-2);
-      cursor: pointer;
-      border-left: 3px solid transparent;
-      transition: background .15s;
-    }
-    .notif-item:hover { background: var(--accent-soft); }
-    .notif-item.ni-overdue { border-left-color: var(--red); }
-    .notif-item.ni-today   { border-left-color: var(--amber); }
-    .notif-item.ni-soon    { border-left-color: var(--cyan); }
-
-    .notif-item-title { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.4; }
-    .notif-item-sub   { font-size: 11px; color: var(--muted); margin-top: 3px; }
-
-    .notif-empty {
-      text-align: center;
-      color: var(--muted);
-      padding: 48px 20px;
-      font-size: 13px;
-      line-height: 2;
-    }
-
-    /* ── 登入頁 ──────────────────────────────────────────── */
-    #login-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 9998;
-      background: linear-gradient(145deg, #111a16 0%, #1a2820 60%, #0f1a14 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .login-box {
-      width: 320px;
-      background: var(--surface);
-      border-radius: 18px;
-      padding: 40px 32px 36px;
-      text-align: center;
-      box-shadow: 0 28px 64px rgba(0,0,0,.45);
-      border: 1px solid rgba(121,185,149,.18);
-    }
-    .login-icon {
-      font-size: 36px;
-      margin-bottom: 14px;
-      line-height: 1;
-    }
-    .login-box h2 {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--ink);
-      margin: 0 0 6px;
-    }
-    .login-box p {
-      font-size: 12px;
-      color: var(--muted);
-      margin: 0 0 24px;
-    }
-    .login-pwd-wrap {
-      position: relative;
-      margin-bottom: 10px;
-    }
-    .login-pwd-wrap input {
-      width: 100%;
-      padding: 11px 40px 11px 14px;
-      border: 1px solid var(--line);
-      border-radius: 9px;
-      background: var(--surface-2);
-      color: var(--ink);
-      font-size: 15px;
-      outline: none;
-      transition: border-color .15s;
-    }
-    .login-pwd-wrap input:focus { border-color: var(--accent); }
-    .login-show-btn {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: var(--muted);
-      cursor: pointer;
-      padding: 2px;
-      font-size: 16px;
-      line-height: 1;
-    }
-    .login-err {
-      font-size: 12px;
-      color: var(--red);
-      margin: 0 0 10px;
-      min-height: 18px;
-    }
-    .login-err.hidden { visibility: hidden; }
-    .login-submit {
-      width: 100%;
-      padding: 11px;
-      border-radius: 9px;
-      border: none;
-      background: var(--accent);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background .15s, transform .1s;
-      margin-bottom: 18px;
-    }
-    .login-submit:hover { background: #338a5e; }
-    .login-submit:active { transform: scale(.97); }
-    .login-back {
-      font-size: 12px;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color .15s;
-    }
-    .login-back:hover { color: var(--ink); }
-    @keyframes login-shake {
-      0%,100% { transform: translateX(0); }
-      20%      { transform: translateX(-8px); }
-      40%      { transform: translateX(7px); }
-      60%      { transform: translateX(-5px); }
-      80%      { transform: translateX(4px); }
-    }
-    .login-box.shake { animation: login-shake .4s ease; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>職安工作中樞 | 大豐環保科技</title>
+<style>
+:root {
+  --accent:    #15803d;
+  --accent-h:  #14532d;
+  --accent-bg: #f0fdf4;
+  --accent-bd: #bbf7d0;
+  --bg:     #f1f5f9;
+  --card:   #ffffff;
+  --border: #e2e8f0;
+  --text:   #1e293b;
+  --sub:    #64748b;
+  --red:    #dc2626;
+  --orange: #d97706;
+  --blue:   #2563eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+
+/* ── Header ── */
+header {
+  background: linear-gradient(135deg, #431407 0%, #c2410c 50%, #f59840 100%);
+  color: #fff; padding: 14px 24px;
+  display: flex; align-items: center; gap: 12px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.35);
+}
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer;
+  transition: background .15s; flex-shrink: 0;
+  text-decoration: none; display: inline-block; font-family: inherit;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.2); }
+header h1 { font-size: 17px; font-weight: 700; }
+.hdr-brand { display: flex; align-items: center; gap: 7px; margin-left: auto; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 12px; color: rgba(255,255,255,.65); font-weight: 600; white-space: nowrap; }
+
+/* ── Main ── */
+main { flex: 1; max-width: 900px; margin: 0 auto; width: 100%; padding: 28px 24px 60px; }
+
+/* ── Stats ── */
+.stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 12px; margin-bottom: 20px;
+}
+.stat-card {
+  background: var(--card); border-radius: 12px; padding: 16px;
+  text-align: center; box-shadow: 0 1px 6px rgba(0,0,0,.06);
+  border: 1px solid var(--border); cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,.1); }
+.stat-num   { font-size: 28px; font-weight: 800; line-height: 1; }
+.stat-label { font-size: 11px; color: var(--sub); margin-top: 5px; }
+
+/* ── Filter bar ── */
+.filter-bar {
+  display: flex; gap: 10px; margin-bottom: 20px;
+  flex-wrap: wrap; align-items: center;
+}
+.filter-bar input, .filter-bar select {
+  padding: 8px 12px; border: 1.5px solid var(--border);
+  border-radius: 8px; font-size: 13px; font-family: inherit;
+  color: var(--text); background: var(--card); outline: none;
+  transition: border-color .15s;
+}
+.filter-bar input { flex: 1; min-width: 160px; }
+.filter-bar input:focus, .filter-bar select:focus { border-color: var(--accent); }
+.new-btn {
+  padding: 8px 18px; background: var(--accent); color: #fff;
+  border: none; border-radius: 8px; font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+  white-space: nowrap; margin-left: auto;
+}
+.new-btn:hover { background: var(--accent-h); }
+
+/* ── Section label ── */
+.sec-label {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+}
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── Task list ── */
+.task-list { display: flex; flex-direction: column; gap: 10px; }
+
+.task-card {
+  background: var(--card); border-radius: 12px;
+  padding: 16px 20px; box-shadow: 0 1px 6px rgba(0,0,0,.06);
+  border: 1px solid var(--border); border-left: 3px solid transparent;
+  display: flex; align-items: flex-start; gap: 14px;
+  transition: box-shadow .15s;
+}
+.task-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+.task-card.is-done    { opacity: .55; }
+.task-card.is-overdue { border-left-color: var(--red); }
+.task-card.is-doing   { border-left-color: var(--blue); }
+.task-card.is-waiting { border-left-color: var(--orange); }
+
+.task-body  { flex: 1; min-width: 0; }
+.task-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; word-break: break-word; }
+.task-title.is-done { text-decoration: line-through; color: var(--sub); }
+.task-meta  { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.task-desc  { font-size: 12px; color: var(--sub); margin-top: 7px; line-height: 1.6; word-break: break-word; }
+
+.badge { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+.b-cat     { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-bd); }
+.b-phi     { background: #fee2e2; color: #991b1b; }
+.b-pmid    { background: #fff7ed; color: #92400e; }
+.b-plow    { background: #f8fafc; color: var(--sub); border: 1px solid var(--border); }
+.b-todo    { background: #f8fafc; color: var(--sub); border: 1px solid var(--border); }
+.b-doing   { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.b-waiting { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+.b-done    { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-bd); }
+.due-ok    { font-size: 12px; color: var(--sub); }
+.due-over  { font-size: 12px; color: var(--red); font-weight: 600; }
+
+.task-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+.ta-btn {
+  padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--card); font-size: 12px; cursor: pointer;
+  font-family: inherit; color: var(--sub); transition: background .15s; white-space: nowrap;
+}
+.ta-btn:hover       { background: var(--bg); }
+.ta-btn.btn-done    { color: var(--accent); border-color: var(--accent-bd); background: var(--accent-bg); }
+.ta-btn.btn-done:hover { background: #dcfce7; }
+.ta-btn.btn-del     { color: var(--red); }
+.ta-btn.btn-del:hover  { background: #fef2f2; }
+
+/* ── Side panel ── */
+.overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.35);
+  z-index: 300; display: none;
+}
+.overlay.open { display: block; }
+
+.side-panel {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(440px, 100vw); background: var(--card);
+  box-shadow: -4px 0 28px rgba(0,0,0,.18);
+  z-index: 301; display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform .25s cubic-bezier(.4,0,.2,1);
+}
+.side-panel.open { transform: translateX(0); }
+
+.panel-hdr {
+  padding: 18px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+.panel-hdr h3 { font-size: 16px; font-weight: 700; }
+.panel-close {
+  background: none; border: none; font-size: 20px;
+  cursor: pointer; color: var(--sub); line-height: 1;
+}
+.panel-close:hover { color: var(--text); }
+.panel-body { flex: 1; overflow-y: auto; padding: 20px; }
+.panel-foot {
+  padding: 14px 20px; border-top: 1px solid var(--border);
+  display: flex; gap: 10px; flex-shrink: 0;
+}
+
+.field { margin-bottom: 16px; }
+.field:last-child { margin-bottom: 0; }
+.field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.field input, .field textarea, .field select {
+  width: 100%; padding: 9px 12px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: 14px; font-family: inherit; color: var(--text);
+  background: #fff; outline: none; transition: border-color .15s;
+}
+.field input:focus, .field textarea:focus, .field select:focus {
+  border-color: var(--accent); box-shadow: 0 0 0 3px rgba(21,128,61,.08);
+}
+.field textarea { min-height: 80px; resize: vertical; }
+.req { color: var(--red); margin-left: 2px; }
+
+.btn-save {
+  flex: 1; padding: 10px; background: var(--accent); color: #fff;
+  border: none; border-radius: 8px; font-size: 14px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.btn-save:hover    { background: var(--accent-h); }
+.btn-save:disabled { opacity: .6; cursor: not-allowed; }
+.btn-cancel {
+  padding: 10px 20px; background: var(--card); border: 1.5px solid var(--border);
+  border-radius: 8px; font-size: 14px; cursor: pointer; font-family: inherit;
+}
+.btn-cancel:hover { background: var(--bg); }
+
+/* ── Grid view ── */
+.task-list.grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+.grid-view .task-card   { flex-direction: column; }
+.grid-view .task-actions { flex-direction: row; flex-wrap: wrap; margin-top: 10px; }
+
+/* ── View toggle ── */
+.view-toggle { display: flex; gap: 4px; flex-shrink: 0; }
+.vt-btn {
+  padding: 7px 10px; border-radius: 7px;
+  border: 1.5px solid var(--border); background: var(--card);
+  cursor: pointer; font-size: 15px; line-height: 1;
+  color: var(--sub); transition: all .15s;
+}
+.vt-btn.active { background: var(--accent-bg); border-color: var(--accent-bd); color: var(--accent); }
+
+/* ── Notification ── */
+.notif-wrap { position: relative; flex-shrink: 0; }
+.notif-btn {
+  padding: 6px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(255,255,255,.1);
+  color: #fff; font-size: 16px; cursor: pointer;
+  transition: background .15s; position: relative;
+  font-family: inherit;
+}
+.notif-btn:hover { background: rgba(255,255,255,.2); }
+.notif-badge {
+  position: absolute; top: -5px; right: -5px;
+  background: var(--red); color: #fff;
+  font-size: 10px; font-weight: 700; border-radius: 10px;
+  padding: 1px 5px; line-height: 1.4; display: none; pointer-events: none;
+}
+.notif-badge.show { display: block; }
+.notif-drop {
+  position: absolute; top: calc(100% + 10px); right: 0;
+  width: 300px; background: var(--card); color: var(--text);
+  border-radius: 12px; box-shadow: 0 8px 28px rgba(0,0,0,.18);
+  border: 1px solid var(--border); z-index: 400;
+  display: none; overflow: hidden;
+}
+.notif-drop.open { display: block; }
+.notif-drop-hd   { padding: 12px 16px; font-size: 13px; font-weight: 700; border-bottom: 1px solid var(--border); }
+.notif-items     { max-height: 300px; overflow-y: auto; }
+.notif-row {
+  padding: 10px 16px; border-bottom: 1px solid var(--border);
+  font-size: 13px; cursor: pointer; transition: background .15s;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.notif-row:last-child { border-bottom: none; }
+.notif-row:hover { background: var(--bg); }
+.notif-row-title {
+  font-weight: 700; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%;
+}
+.notif-row-sub   { color: var(--sub); font-size: 11px; }
+.notif-empty     { padding: 24px; text-align: center; color: var(--sub); font-size: 13px; }
+
+/* ── States ── */
+.notice { border-radius: 10px; padding: 12px 16px; font-size: 13px; display: flex; gap: 8px; align-items: flex-start; margin-bottom: 16px; line-height: 1.6; }
+.notice.err { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+.empty-state { text-align: center; padding: 60px 20px; color: var(--sub); }
+.empty-icon  { font-size: 48px; margin-bottom: 12px; }
+.loading     { text-align: center; padding: 48px; color: var(--sub); font-size: 14px; }
+
+/* ── Footer ── */
+footer { text-align: center; padding: 16px; font-size: 12px; color: var(--sub); border-top: 1px solid var(--border); }
+
+/* ── Login page ── */
+#login-page {
+  position: fixed; inset: 0; z-index: 1000;
+  background: var(--bg); display: flex; flex-direction: column;
+}
+@media (min-width: 769px) {
+  #login-page { left: 260px; }
+}
+.login-hdr {
+  background: linear-gradient(135deg, #431407 0%, #c2410c 50%, #f59840 100%);
+  color: #fff; padding: 14px 24px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 16px rgba(0,0,0,.35);
+}
+.login-hdr h1 { font-size: 17px; font-weight: 700; }
+.login-wrap { display: flex; align-items: center; justify-content: center; flex: 1; padding: 24px; }
+.login-card {
+  background: #fff; border-radius: 16px; padding: 44px 36px 36px;
+  box-shadow: 0 4px 32px rgba(0,0,0,.12); width: 100%; max-width: 360px; text-align: center;
+}
+.login-logo { margin-bottom: 14px; }
+.login-logo img { height: 140px; object-fit: contain; }
+.login-card h2 { font-size: 18px; color: var(--text); font-weight: 800; margin-bottom: 4px; }
+.login-card > p { font-size: 12px; color: var(--sub); margin-bottom: 28px; line-height: 1.7; }
+.login-fi {
+  width: 100%; border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 12px 14px; font-size: 16px; outline: none; font-family: inherit;
+  margin-bottom: 12px; background: #fff; box-sizing: border-box;
+  transition: border-color .15s, box-shadow .15s;
+}
+.login-fi:focus { border-color: #c2410c; box-shadow: 0 0 0 3px rgba(194,65,12,.08); }
+.login-err { color: var(--red); font-size: 13px; margin-bottom: 10px; display: none; }
+.login-btn {
+  width: 100%; padding: 13px;
+  background: linear-gradient(135deg, #c2410c, #f59840);
+  color: #fff; border: none; border-radius: 8px;
+  font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit;
+  transition: opacity .15s; margin-top: 4px;
+}
+.login-btn:hover { opacity: .88; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .new-btn   { margin-left: 0; width: 100%; }
+  .task-card { flex-direction: column; }
+  .task-actions { flex-direction: row; }
+}
+</style>
 </head>
 <body>
-<div id="gs-loader" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(23,32,29,.88);backdrop-filter:blur(6px);align-items:center;justify-content:center;flex-direction:column;gap:14px;">
-  <div style="width:44px;height:44px;border:4px solid rgba(121,185,149,.25);border-top-color:#79b995;border-radius:50%;animation:spin 1s linear infinite;"></div>
-  <p style="color:#edf5ef;font-size:14px;font-weight:600;margin:0;letter-spacing:.5px;">從雲端載入工作清單⋯</p>
-  <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
+<header>
+  <a href="../" class="hdr-btn">← 返回入口</a>
+  <h1>✅ 職安工作中樞</h1>
+  <div class="notif-wrap" style="margin-left:auto">
+    <button class="notif-btn" onclick="toggleNotif(event)">
+      🔔<span class="notif-badge" id="notif-badge"></span>
+    </button>
+    <div class="notif-drop" id="notif-drop">
+      <div class="notif-drop-hd">⏰ 逾期 / 即將到期</div>
+      <div class="notif-items" id="notif-items"></div>
+    </div>
+  </div>
+  <div class="hdr-brand" style="margin-left:0">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
+
+<main>
+  <div class="stats-row" id="stats-row">
+    <div class="stat-card"><div class="stat-num" style="color:var(--accent)">—</div><div class="stat-label">全部任務</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--blue)">—</div><div class="stat-label">進行中</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--red)">—</div><div class="stat-label">已逾期</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--sub)">—</div><div class="stat-label">已完成</div></div>
+  </div>
+
+  <div class="filter-bar">
+    <input type="text" id="search" placeholder="搜尋任務標題…" oninput="renderList()">
+    <select id="filter-cat" onchange="renderList()">
+      <option value="">全部類別</option>
+      <option>固定工作</option><option>法規符合</option><option>風險評估</option><option>教育訓練</option>
+      <option>健康管理</option><option>設備巡檢</option><option>調查追蹤</option>
+      <option>行政事務</option><option>其他</option>
+    </select>
+    <select id="filter-status" onchange="renderList()">
+      <option value="">全部狀態</option>
+      <option value="todo">待處理</option>
+      <option value="doing">進行中</option>
+      <option value="waiting">等待中</option>
+      <option value="done">已完成</option>
+    </select>
+    <select id="sort-by" onchange="renderList()">
+      <option value="due">按到期日</option>
+      <option value="priority">按優先度</option>
+      <option value="created">按建立時間</option>
+    </select>
+    <div class="view-toggle">
+      <button class="vt-btn active" id="btn-list" onclick="setView('list')" title="列表">☰</button>
+      <button class="vt-btn"        id="btn-grid" onclick="setView('grid')" title="格狀">⊞</button>
+    </div>
+    <button class="new-btn" onclick="openPanel()">＋ 新增任務</button>
+  </div>
+
+  <div class="sec-label">任務列表</div>
+  <div id="task-list"><div class="loading">載入中…</div></div>
+</main>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統 &nbsp;·&nbsp; 職安工作中樞</footer>
+
+<!-- ── Side panel ── -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+<div class="side-panel" id="side-panel">
+  <div class="panel-hdr">
+    <h3 id="panel-title">新增任務</h3>
+    <button class="panel-close" onclick="closePanel()">✕</button>
+  </div>
+  <div class="panel-body">
+    <div class="field">
+      <label>任務標題 <span class="req">*</span></label>
+      <input type="text" id="f-title" placeholder="請輸入任務標題">
+    </div>
+    <div class="field">
+      <label>類別 <span class="req">*</span></label>
+      <select id="f-category">
+        <option value="">請選擇類別</option>
+        <option>固定工作</option><option>法規符合</option><option>風險評估</option><option>教育訓練</option>
+        <option>健康管理</option><option>設備巡檢</option><option>調查追蹤</option>
+        <option>行政事務</option><option>其他</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>優先度 <span class="req">*</span></label>
+      <select id="f-priority">
+        <option value="高">🔴 高</option>
+        <option value="中" selected>🟡 中</option>
+        <option value="低">⚪ 低</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>狀態 <span class="req">*</span></label>
+      <select id="f-status">
+        <option value="todo">待處理</option>
+        <option value="doing">進行中</option>
+        <option value="waiting">等待中</option>
+        <option value="done">已完成</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>截止日期</label>
+      <input type="date" id="f-due">
+      <div style="margin-top:8px">
+        <label style="display:inline-flex;align-items:center;gap:7px;font-weight:400;cursor:pointer;font-size:13px">
+          <input type="checkbox" id="f-no-due" onchange="toggleNoDue()">
+          無截止日期
+        </label>
+      </div>
+    </div>
+    <div class="field">
+      <label>重複週期</label>
+      <select id="f-recur">
+        <option value="">不重複（單次）</option>
+        <option value="weekly">每週</option>
+        <option value="biweekly">每兩週</option>
+        <option value="monthly">每月</option>
+        <option value="quarterly">每季（3個月）</option>
+        <option value="biannual">每半年（6個月）</option>
+        <option value="yearly">每年</option>
+        <option value="daily">每日</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>協作者</label>
+      <input type="text" id="f-owner" placeholder="選填">
+    </div>
+    <div class="field">
+      <label>備註說明</label>
+      <textarea id="f-desc" placeholder="選填，可記錄任務背景或注意事項"></textarea>
+    </div>
+  </div>
+  <div class="panel-foot">
+    <button class="btn-cancel" onclick="closePanel()">取消</button>
+    <button class="btn-save" id="btn-save" onclick="saveTask()">儲存</button>
+  </div>
 </div>
-  <div class="app">
-    <aside class="sidebar">
-      <a class="portal-back" href="../">← 系統入口</a>
-      <div class="brand">
-        <div class="mark" aria-hidden="true">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z"></path><path d="M9 12l2 2 4-5"></path></svg>
-        </div>
-        <div>
-          <h1>職安工作中樞</h1>
-          <p>自主管理版</p>
-        </div>
-      </div>
 
-      <nav class="nav" aria-label="主頁面">
-        <button class="active" type="button" data-view="form">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
-          <span>新增工作</span>
-          <small id="editingBadge"></small>
-        </button>
-        <button type="button" data-view="list">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3 6h.01"></path><path d="M3 12h.01"></path><path d="M3 18h.01"></path></svg>
-          <span>列表</span>
-          <small id="listCount">0</small>
-        </button>
-        <button type="button" id="notifTrigger" onclick="toggleNotifPanel()" title="工作通知">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <span>通知</span>
-          <small class="notif-badge hidden" id="notifBadge">0</small>
-        </button>
-      </nav>
-
-      <div class="side-block">
-        <h2>概況</h2>
-        <div class="mini-stats">
-          <div class="mini-stat"><span>全部工作</span><strong id="statTotal">0</strong></div>
-          <div class="mini-stat"><span>未完成</span><strong id="statOpen">0</strong></div>
-          <div class="mini-stat"><span>已逾期</span><strong id="statOverdue">0</strong></div>
-        </div>
-      </div>
-
-      <div class="side-block" style="display:none">
-        <h2>提醒</h2>
-        <div class="notification-card">
-          <button class="action" type="button" id="enableNotificationBtn">啟用瀏覽器通知</button>
-          <button class="action hidden" type="button" id="testNotificationBtn">測試通知</button>
-          <button class="action" type="button" id="checkReminderBtn">立即檢查提醒</button>
-          <button class="action hidden" type="button" id="resetReminderLogBtn">重設提醒紀錄</button>
-          <p class="notification-status" id="notificationStatus">請先按上方按鈕，允許瀏覽器通知後才會開始提醒。</p>
-        </div>
-      </div>
-
-      <div class="utility-dock" aria-label="快速工具">
-        <button class="utility-button" type="button" id="themeToggleBtn" title="切換淺色或深色模式" aria-label="切換淺色或深色模式">
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2"></path><path d="M12 19v2"></path><path d="M4.2 4.2l1.4 1.4"></path><path d="M18.4 18.4l1.4 1.4"></path><path d="M3 12h2"></path><path d="M19 12h2"></path><path d="M4.2 19.8l1.4-1.4"></path><path d="M18.4 5.6l1.4-1.4"></path><circle cx="12" cy="12" r="4"></circle></svg>
-          <span id="themeToggleText">深色</span>
-        </button>
-        <button class="utility-button" type="button" id="scrollTopBtn" title="捲動到頂部" aria-label="捲動到頂部">
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg>
-          <span>頂部</span>
-        </button>
-      </div>
-    </aside>
-
-    <main class="main">
-      <section id="formView" class="view active">
-        <div class="topbar">
-          <div>
-            <h2 id="formTitle">新增工作項目</h2>
-            <p>輸入工作、期限、重複性與提醒設定，資料會保存在此瀏覽器。</p>
-          </div>
-          <div class="toolbar">
-            <button class="action" type="button" id="loadStarterBtn">載入目前工作清單</button>
-            <button class="action" type="button" id="resetFormBtn">清空表單</button>
-          </div>
-        </div>
-
-        <form id="taskForm" class="panel">
-          <div class="panel-head">
-            <h3>工作內容</h3>
-            <span class="pill" id="formModePill">新增模式</span>
-          </div>
-          <div class="panel-body">
-            <div class="form-grid">
-              <div class="field full">
-                <label for="title">工作項目</label>
-                <input id="title" name="title" required placeholder="例如：10 日前職災月報申報">
-              </div>
-
-              <div class="field">
-                <label for="category">工作類別</label>
-                <select id="category" name="category" required></select>
-              </div>
-
-              <div class="field">
-                <label for="customCategory">自訂類別</label>
-                <input id="customCategory" name="customCategory" placeholder="選擇「其他」時可輸入">
-              </div>
-
-              <div class="field">
-                <label for="dueAt">預計完成時間</label>
-                <input id="dueAt" name="dueAt" type="datetime-local">
-              </div>
-
-              <div class="field">
-                <label for="noDueDate">期限型態</label>
-                <label class="check-row" for="noDueDate">
-                  <input id="noDueDate" name="noDueDate" type="checkbox">
-                  <span>不定期／持續工作</span>
-                </label>
-              </div>
-
-              <div class="field">
-                <label for="status">目前狀態</label>
-                <select id="status" name="status">
-                  <option value="todo">未開始</option>
-                  <option value="doing">進行中</option>
-                  <option value="waiting">等待他人</option>
-                  <option value="done">已完成</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="priority">優先程度</label>
-                <select id="priority" name="priority">
-                  <option value="medium">中</option>
-                  <option value="high">高</option>
-                  <option value="low">低</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="owner">負責或協作對象</label>
-                <input id="owner" name="owner" placeholder="例如：職安 / 總務 / 資訊部">
-              </div>
-
-              <div class="field">
-                <label for="reminderDays">提前提醒天數</label>
-                <input id="reminderDays" name="reminderDays" type="number" min="0" step="1" value="7">
-              </div>
-
-              <div class="field">
-                <label for="reminderTime">固定提醒時間</label>
-                <input id="reminderTime" name="reminderTime" type="time">
-              </div>
-
-              <div class="field">
-                <label for="repeatRule">是否為重複性工作</label>
-                <select id="repeatRule" name="repeatRule">
-                  <option value="none">否</option>
-                  <option value="daily">每日</option>
-                  <option value="weekly">每週</option>
-                  <option value="monthly">每月</option>
-                  <option value="quarterly">每季</option>
-                  <option value="semiannual">每半年</option>
-                  <option value="yearly">每年</option>
-                  <option value="custom">自訂</option>
-                </select>
-              </div>
-
-              <div class="field full repeat-detail hidden" data-repeat-detail="daily">
-                <p class="repeat-title">每日重複設定</p>
-                <div class="repeat-detail-grid">
-                  <div class="field">
-                    <label>提醒日期</label>
-                    <input value="每日" disabled>
-                  </div>
-                  <div class="field">
-                    <label>提醒時間</label>
-                    <input value="使用上方固定提醒時間" disabled>
-                  </div>
-                </div>
-              </div>
-
-              <div class="field full repeat-detail hidden" data-repeat-detail="weekly">
-                <p class="repeat-title">每週重複設定</p>
-                <div class="repeat-detail-grid">
-                  <div class="field">
-                    <label for="repeatWeekday">每週星期</label>
-                    <select id="repeatWeekday" name="repeatWeekday">
-                      <option value="">請選擇</option>
-                      <option value="1">星期一</option>
-                      <option value="2">星期二</option>
-                      <option value="3">星期三</option>
-                      <option value="4">星期四</option>
-                      <option value="5">星期五</option>
-                      <option value="6">星期六</option>
-                      <option value="7">星期日</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label>提醒時間</label>
-                    <input value="使用上方固定提醒時間" disabled>
-                  </div>
-                </div>
-              </div>
-
-              <div class="field full repeat-detail hidden" data-repeat-detail="monthly">
-                <p class="repeat-title">每月重複設定</p>
-                <div class="repeat-detail-grid">
-                  <div class="field">
-                    <label for="repeatMonthDay">每月幾日</label>
-                    <input id="repeatMonthDay" name="repeatMonthDay" type="number" min="1" max="31" placeholder="例如：10">
-                  </div>
-                  <div class="field">
-                    <label>提醒時間</label>
-                    <input value="使用上方固定提醒時間" disabled>
-                  </div>
-                </div>
-              </div>
-
-              <div class="field full repeat-detail hidden" data-repeat-detail="quarterly">
-                <p class="repeat-title">每季重複設定</p>
-                <div class="repeat-detail-grid">
-                  <div class="field">
-                    <label for="repeatQuarterMonth">每季第幾個月</label>
-                    <select id="repeatQuarterMonth" name="repeatQuarterMonth">
-                      <option value="">請選擇</option>
-                      <option value="1">第 1 個月</option>
-                      <option value="2">第 2 個月</option>
-                      <option value="3">第 3 個月</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="repeatQuarterDay">該月幾日</label>
-                    <input id="repeatQuarterDay" name="repeatQuarterDay" type="number" min="1" max="31" placeholder="例如：30">
-                  </div>
-                </div>
-              </div>
-
-              <div class="field full repeat-detail hidden" data-repeat-detail="semiannual">
-                <p class="repeat-title">每半年重複設定</p>
-                <div class="repeat-detail-grid">
-                  <div class="field">
-                    <label for="repeatHalfYearMonth">每半年第幾個月</label>
-                    <select id="repeatHalfYearMonth" name="repeatHalfYearMonth">
-                      <option value="">請選擇</option>
-                      <option value="1">第 1 個月</option>
-                      <option value="2">第 2 個月</option>
-                      <option value="3">第 3 個月</option>
-                      <option value="4">第 4 個月</option>
-                      <option value="5">第 5 個月</option>
-                      <option value="6">第 6 個月</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="repeatHalfYearDay">該月幾日</label>
-                    <input id="repeatHalfYearDay" name="repeatHalfYearDay" type="number" min="1" max="31" placeholder="例如：30">
-                  </div>
-                </div>
-              </div>
-
-              <div class="field full repeat-detail hidden" data-repeat-detail="yearly">
-                <p class="repeat-title">每年重複設定</p>
-                <div class="repeat-detail-grid">
-                  <div class="field">
-                    <label for="repeatYearMonth">每年幾月</label>
-                    <input id="repeatYearMonth" name="repeatYearMonth" type="number" min="1" max="12" placeholder="例如：5">
-                  </div>
-                  <div class="field">
-                    <label for="repeatYearDay">該月幾日</label>
-                    <input id="repeatYearDay" name="repeatYearDay" type="number" min="1" max="31" placeholder="例如：31">
-                  </div>
-                </div>
-              </div>
-
-              <div class="field full repeat-detail hidden" data-repeat-detail="custom">
-                <p class="repeat-title">自訂重複設定</p>
-                <div class="field">
-                  <label for="repeatCustomText">自訂規則</label>
-                  <input id="repeatCustomText" name="repeatCustomText" placeholder="例如：每次連假前一個工作日 16:50">
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="tags">標籤</label>
-                <input id="tags" name="tags" placeholder="以逗號分隔，例如：證照,回訓,提醒">
-              </div>
-
-              <div class="field full">
-                <label for="description">工作說明</label>
-                <textarea id="description" name="description" placeholder="補充觸發條件、作業流程、注意事項"></textarea>
-              </div>
-
-              <div class="field full">
-                <label for="documents">需要文件</label>
-                <textarea id="documents" name="documents" placeholder="一行一項，例如：申報截圖、簽到表、證照清冊"></textarea>
-              </div>
-
-              <div class="field full" style="display:flex;gap:10px;flex-wrap:wrap">
-                <div style="flex:2;min-width:180px">
-                  <label for="fileLink">附件連結（相對路徑或網址）</label>
-                  <input id="fileLink" name="fileLink" placeholder="例如：intro/職安衛新夥伴的生存報告.html">
-                </div>
-                <div style="flex:1;min-width:120px">
-                  <label for="fileLinkLabel">按鈕顯示名稱</label>
-                  <input id="fileLinkLabel" name="fileLinkLabel" placeholder="例如：開啟簡報">
-                </div>
-              </div>
-            </div>
-
-            <div class="form-actions" style="margin-top:14px;">
-              <button class="action" type="button" id="cancelEditBtn">取消編輯</button>
-              <button class="action primary" type="submit">儲存工作</button>
-            </div>
-          </div>
-        </form>
-      </section>
-
-      <section id="listView" class="view">
-        <div class="topbar">
-          <div>
-            <h2>工作列表</h2>
-            <p>搜尋、篩選、更新狀態，也可以匯出或匯入 JSON 備份。</p>
-          </div>
-          <div class="toolbar">
-            <button class="action" type="button" id="exportBtn">匯出 JSON</button>
-            <label class="action" for="importInput">匯入 JSON</label>
-            <input id="importInput" class="hidden" type="file" accept="application/json">
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-head">
-            <h3>篩選</h3>
-            <div class="toolbar">
-              <div class="segmented" id="layoutSwitch" aria-label="列表顯示模式">
-                <button type="button" data-layout="list">清單</button>
-                <button class="active" type="button" data-layout="grid">格狀</button>
-              </div>
-              <div class="segmented" id="quickStatus">
-                <button type="button" data-status-filter="all">全部</button>
-                <button class="active" type="button" data-status-filter="open">未完成</button>
-                <button type="button" data-status-filter="soon">近期</button>
-                <button type="button" data-status-filter="overdue">逾期</button>
-                <button type="button" data-status-filter="done">已完成</button>
-              </div>
-            </div>
-          </div>
-          <div class="panel-body">
-            <div class="filter-grid">
-              <div class="field">
-                <label for="searchInput">搜尋</label>
-                <input id="searchInput" type="search" placeholder="搜尋工作、說明、負責人、標籤">
-              </div>
-              <div class="field">
-                <label for="categoryFilter">類別</label>
-                <select id="categoryFilter"></select>
-              </div>
-              <div class="field">
-                <label for="statusFilter">狀態</label>
-                <select id="statusFilter"></select>
-              </div>
-              <div class="field">
-                <label for="sortBy">排序</label>
-                <select id="sortBy">
-                  <option value="dueAsc">期限由近到遠</option>
-                  <option value="createdDesc">新增由新到舊</option>
-                  <option value="priority">優先程度</option>
-                  <option value="category">工作類別</option>
-                </select>
-              </div>
-            </div>
-            <div id="taskList" class="task-list"></div>
-          </div>
-        </div>
-      </section>
-
-    </main>
+<!-- ── Login page ── -->
+<div id="login-page">
+  <div class="login-hdr">
+    <a href="../" class="hdr-btn">← 系統入口</a>
+    <h1>✅ 職安工作中樞</h1>
+    <div class="hdr-brand">
+      <img src="../dafon-logo.png" alt="大豐環保科技">
+      <span>大豐環保科技</span>
+    </div>
   </div>
-
-  <!-- ── 登入頁 ── -->
-  <div id="login-overlay">
-    <div class="login-box" id="login-box">
-      <div class="login-icon">🔒</div>
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="../contract/logo-login.png" alt="大豐環保科技">
+      </div>
       <h2>職安工作中樞</h2>
-      <p>此系統為個人工作管理，請輸入密碼進入</p>
-      <form id="login-form" onsubmit="tryLogin(event)">
-        <div class="login-pwd-wrap">
-          <input id="login-pwd" type="password" placeholder="請輸入密碼" autocomplete="current-password">
-          <button type="button" class="login-show-btn" id="login-show-btn" onclick="togglePwdVisible()" title="顯示／隱藏密碼">👁</button>
-        </div>
-        <p class="login-err hidden" id="login-err">密碼錯誤，請再試一次</p>
-        <button class="login-submit" type="submit">進入系統</button>
-      </form>
-      <a class="login-back" href="../">← 回到系統入口</a>
+      <p>大豐環保科技股份有限公司<br>請輸入密碼以繼續</p>
+      <input class="login-fi" id="login-pw" type="password"
+             placeholder="請輸入密碼" autocomplete="off"
+             onkeydown="if(event.key==='Enter')doLogin()">
+      <div class="login-err" id="login-err">密碼錯誤，請重新輸入</div>
+      <button class="login-btn" onclick="doLogin()">登入</button>
     </div>
   </div>
+</div>
 
-  <!-- ── 通知背板 ── -->
-  <div class="notif-overlay" id="notifOverlay" onclick="closeNotifPanel()"></div>
+<script>
+const API = 'https://script.google.com/macros/s/AKfycbzkDcRv1jwyvIXGJ0Y07oOULXv0hhNx78501Z1EjJUOBo766ZAq_Rh4DGzFVwCY3wFW/exec';
 
-  <!-- ── 通知面板 ── -->
-  <div class="notif-panel" id="notifPanel">
-    <div class="notif-head">
-      <h3>🔔 工作通知</h3>
-      <button class="notif-close" type="button" onclick="closeNotifPanel()" title="關閉">✕</button>
-    </div>
-    <div class="notif-scroll" id="notifScroll"></div>
-  </div>
+const STATUS_LABEL = { todo:'待處理', doing:'進行中', waiting:'等待中', done:'已完成' };
+const PRI_BADGE    = { '高':'b-phi', '中':'b-pmid', '低':'b-plow' };
+const STA_BADGE    = { todo:'b-todo', doing:'b-doing', waiting:'b-waiting', done:'b-done' };
+const RECUR_LABEL  = { daily:'每日', weekly:'每週', biweekly:'每兩週', monthly:'每月', quarterly:'每季', biannual:'每半年', yearly:'每年' };
 
-  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+let tasks     = [];
+let editingId = null;
+let saving    = false;
+let viewMode  = 'list';
 
-  <script>
-    const STORAGE_KEY = "osh-self-managed-tasks-v1";
-    const CATEGORY_KEY = "osh-self-managed-categories-v1";
-    const NOTIFIED_KEY = "osh-self-managed-notified-reminders-v1";
-    const NOTIFICATION_ENABLED_KEY = "osh-self-managed-notification-enabled-v1";
-    const THEME_KEY = "osh-self-managed-theme-v1";
-    const STATUS_LABELS = { todo: "未開始", doing: "進行中", waiting: "等待他人", done: "已完成" };
-    const PRIORITY_LABELS = { high: "高", medium: "中", low: "低" };
-    const REPEAT_LABELS = { none: "否", daily: "每日", weekly: "每週", monthly: "每月", quarterly: "每季", semiannual: "每半年", yearly: "每年", custom: "自訂" };
-    const WEEKDAY_LABELS = { 1: "星期一", 2: "星期二", 3: "星期三", 4: "星期四", 5: "星期五", 6: "星期六", 7: "星期日" };
-    const DEFAULT_CATEGORIES = [
-      "固定工作",
-      "證照管理與盤點",
-      "人員與設備變更",
-      "事故處理",
-      "庶務與承攬商",
-      "設備及文件管理",
-      "網站開發與數據數位化",
-      "教材與巡檢優化",
-      "現場改善與諮詢",
-      "其他"
-    ];
+/* ── Init ── */
+// 每次頁面載入（含重新整理）都需重新登入，不使用 sessionStorage
 
-    const starterTasks = [
-      seed("發送工作日誌", "固定工作", "2026-05-25T17:30", "daily", "done", "medium", "AI 自動化 / 職安", "已成功轉為 AI 自動寄出。"),
-      seed("休假前巡檢", "固定工作", "2026-05-29T17:15", "weekly", "todo", "medium", "職安", "週五或休假下班前 10 至 15 分鐘，進行辦公室電器與電源巡查。"),
-      seed("10 日前職災月報申報", "固定工作", "2026-06-10T12:00", "monthly", "todo", "high", "職安", "登載安全衛生履歷智能雲並完成勞檢申報。"),
-      seed("協調臨場服務", "固定工作", "2026-05-30T17:00", "monthly", "waiting", "medium", "職安 / 職護", "與職護協調當月臨場服務日期與時間。"),
-      seed("安衛委員會資料準備", "固定工作", "2026-06-30T17:00", "quarterly", "doing", "high", "職安", "彙整職業安全衛生委員會資料，補齊 2026 Q1 資料。"),
-      seed("法規鑑別更新", "固定工作", "2026-06-30T17:00", "quarterly", "doing", "medium", "職安", "更新法規鑑別 Excel，確保條目符合公司當前作業項目。"),
-      seed("教育訓練籌備與結案", "固定工作", "2026-05-31T17:00", "yearly", "doing", "high", "職安 / 講師", "完成結案報告、QR code 測驗與滿意度調查整理。"),
-      seed("環境監測進度知悉", "固定工作", "2026-05-31T17:00", "yearly", "waiting", "medium", "環安人員 / 職安", "總部 5 月；全興廠 5 月、11 月。"),
-      seed("專案訓練與活動", "固定工作", "2026-06-01T17:00", "yearly", "todo", "medium", "職安 / 相關單位", "8、9 月司機訓；6 月或 9 月策略營。"),
-      seed("ISO 內部稽核", "固定工作", "2026-12-31T17:00", "yearly", "todo", "medium", "職安 / ISO 團隊", "每年定期參與內部稽核流程。"),
-      seed("發布到期資訊", "證照管理與盤點", "", "none", "todo", "high", "職安 / 各單位", "透過 LINE 或 E-mail，利用 Outlook 通訊錄通知各單位。"),
-      seed("在職確認與證照審核", "證照管理與盤點", "", "none", "todo", "medium", "職安 / HR", "利用 HRM 查詢是否在職，核對證號、取證單位、發照日與到期日。"),
-      seed("二度催辦", "證照管理與盤點", "", "none", "waiting", "high", "職安 / 單位主管", "針對未回訓或未上傳者二次通知並壓定完成日期。"),
-      Object.assign(seed("自我介紹準備", "人員與設備變更", "2026-06-06T17:00", "none", "doing", "medium", "職安", "向部門同事介紹職安衛工作現況與個人背景。"), { fileLink: "intro/職安衛新夥伴的生存報告.html", fileLinkLabel: "職安衛新夥伴的生存報告" }),
-      seed("新進員工追蹤", "人員與設備變更", "", "none", "todo", "medium", "職安 / HR", "新人第 1、7、30 天問卷調查。"),
-      seed("職安人員報備", "人員與設備變更", "", "none", "todo", "high", "職安", "人員異動時向主管機關申報，附組織圖。"),
-      seed("新設備評估", "人員與設備變更", "", "none", "todo", "high", "職安 / 使用單位", "新設備如 AI 智慧垃圾桶需製作風險評估與點檢表。"),
-      seed("BPM 流程發起", "事故處理", "", "none", "todo", "high", "職安 / BPM 簽核人員", "發起工傷事故調查紀錄並追蹤至簽結。"),
-      seed("職災判定與訪視", "事故處理", "", "none", "todo", "high", "職安 / 主任", "準備三聯單、路線圖、診斷證明，與主任現場訪視判定。"),
-      seed("危害辨識修正", "事故處理", "", "none", "todo", "high", "職安", "事故後檢視並修正危害辨識 Excel。"),
-      seed("承攬商管理", "庶務與承攬商", "", "none", "todo", "high", "職安 / 承攬商 / 使用單位", "入廠前簽署告知切結書與作業許可。"),
-      seed("行政申請", "庶務與承攬商", "", "none", "todo", "low", "職安 / 行政", "補卡單、用印、制服或物品領用。"),
-      seed("製作分析網站", "網站開發與數據數位化", "2026-05-31T17:00", "none", "doing", "medium", "職安 / AI", "建立職安數據分析網站並部署於加密 Gitpage。"),
-      seed("自動預警系統", "網站開發與數據數位化", "2026-07-31T17:00", "none", "waiting", "high", "職安 / 資訊部", "證照回訓、自動點檢表與自動傳訊功能。"),
-      seed("目標設定：上半年建置、下半年自動化", "網站開發與數據數位化", "2026-06-30T17:00", "none", "doing", "medium", "職安 / 資訊部 / AI", "以上半年建置、下半年自動化為目標。"),
-      seed("教材整合", "教材與巡檢優化", "2026-09-01T17:00", "none", "doing", "medium", "職安 / AI", "開發四種完整教材，利用 AI 生成圖與真實照片強化影響力。"),
-      seed("AI 巡檢應用", "教材與巡檢優化", "2026-08-31T17:00", "none", "todo", "medium", "職安 / 資訊部 / 現場", "推動 6S 與現場巡檢自動識別與數位化檢查表。"),
-      seed("演練完整化", "教材與巡檢優化", "2026-10-31T17:00", "none", "todo", "medium", "職安 / 總務 / 各單位", "規劃消防、地震、急救分開訓練並盤點消防編組工具。"),
-      seed("地下一樓優化", "現場改善與諮詢", "2026-06-30T17:00", "none", "doing", "high", "職安 / 現場 / 總務", "追蹤舊衣作業危害分析、增設滅火器及消防配置圖。"),
-      seed("SDS 管理", "現場改善與諮詢", "2026-06-15T17:00", "none", "todo", "medium", "職安 / 總務", "確保總部清潔用品皆備有 SDS 安全資料表。"),
-      seed("外部諮詢", "現場改善與諮詢", "2026-07-15T17:00", "none", "todo", "medium", "職安 / 外部顧問", "與勞動部確認挖掘機、鏟裝機正確回訓方式。"),
-      seed("詢問勞檢：線上點檢表簽署方式", "現場改善與諮詢", "", "none", "todo", "medium", "職安 / 勞檢", "確認線上點檢表是否必須親簽或員工認證即可。"),
-      seed("安全設備櫃增設計劃", "現場改善與諮詢", "", "none", "todo", "medium", "職安 / 總務 / 現場", "規劃增設安全設備櫃，集中管理安全設備與耗材。"),
-      seed("廁所與茶水間擦手紙增設計劃", "現場改善與諮詢", "", "none", "todo", "low", "職安 / 總務", "評估廁所與茶水間增設擦手紙設備與補充管理。")
-    ];
+function doLogin() {
+  const pw = V('login-pw').value;
+  if (pw === 'gloomy') {
+    V('login-page').style.display = 'none';
+    loadTasks();
+  } else {
+    V('login-err').style.display = 'block';
+    V('login-pw').value = '';
+    V('login-pw').focus();
+  }
+}
 
-    let tasks = loadTasks();
-
-    let categories = loadCategories();
-    let activeView = "form";
-    let editingId = null;
-    let quickFilter = "open";
-    let listLayout = "grid";
-    let highlightedTaskId = "";
-    let toastTimer = null;
-    let reminderTimer = null;
-    let notifiedReminders = loadNotifiedReminders();
-
-    function seed(title, category, dueAt, repeatRule, status, priority, owner, description) {
-      return {
-        id: crypto.randomUUID ? crypto.randomUUID() : `task-${Date.now()}-${Math.random()}`,
-        title, category, dueAt, repeatRule, status, priority, owner, description,
-        ...repeatConfigFromDueAt(dueAt, repeatRule),
-        reminderDays: 7,
-        reminderTime: dueAt && dueAt.includes("T") ? dueAt.slice(11, 16) : "",
-        tags: [],
-        documents: [],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
-    }
-
-    function repeatConfigFromDueAt(dueAt, repeatRule) {
-      const date = parseDate(dueAt);
-      if (!date) return {};
-      const weekday = date.getDay() === 0 ? "7" : String(date.getDay());
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      const quarterMonth = ((month - 1) % 3) + 1;
-      const halfYearMonth = ((month - 1) % 6) + 1;
-      if (repeatRule === "weekly") return { repeatWeekday: weekday };
-      if (repeatRule === "monthly") return { repeatMonthDay: day };
-      if (repeatRule === "quarterly") return { repeatQuarterMonth: quarterMonth, repeatQuarterDay: day };
-      if (repeatRule === "semiannual") return { repeatHalfYearMonth: halfYearMonth, repeatHalfYearDay: day };
-      if (repeatRule === "yearly") return { repeatYearMonth: month, repeatYearDay: day };
-      return {};
-    }
-
-    function loadTasks() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-      catch { return []; }
-    }
-
-    function saveTasks() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-    }
-
-    function loadCategories() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(CATEGORY_KEY));
-        if (Array.isArray(saved) && saved.length) {
-          return [...saved, ...DEFAULT_CATEGORIES.filter((category) => !saved.includes(category))];
-        }
-        return [...DEFAULT_CATEGORIES];
-      } catch {
-        return [...DEFAULT_CATEGORIES];
+async function loadTasks() {
+  setList('<div class="loading">載入中…</div>');
+  try {
+    const res  = await fetch(API + '?t=' + Date.now(), { redirect: 'follow' });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    const seen = new Set();
+    tasks = (data.tasks || []).filter(t => {
+      if (!t.id || seen.has(t.id)) return false;
+      seen.add(t.id); return true;
+    }).map(t => {
+      // Sheets 把日期字串轉成 Date 物件，讀回後變冗長字串，在此正規化
+      if (t.dueAt) {
+        const d = new Date(t.dueAt);
+        if (!isNaN(d.getTime())) t.dueAt = localYMD(d);
       }
-    }
-
-    function saveCategories() {
-      localStorage.setItem(CATEGORY_KEY, JSON.stringify(categories));
-    }
-
-    function loadNotifiedReminders() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(NOTIFIED_KEY));
-        return Array.isArray(saved) ? saved : [];
-      } catch {
-        return [];
-      }
-    }
-
-    function saveNotifiedReminders() {
-      localStorage.setItem(NOTIFIED_KEY, JSON.stringify(notifiedReminders.slice(-600)));
-    }
-
-    function byId(id) { return document.getElementById(id); }
-
-    function preferredTheme() {
-      const saved = localStorage.getItem(THEME_KEY);
-      if (saved === "dark" || saved === "light") return saved;
-      return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    }
-
-    function applyTheme(theme) {
-      const nextTheme = theme === "dark" ? "dark" : "light";
-      document.documentElement.dataset.theme = nextTheme;
-      localStorage.setItem(THEME_KEY, nextTheme);
-      const label = byId("themeToggleText");
-      const button = byId("themeToggleBtn");
-      if (label) label.textContent = nextTheme === "dark" ? "淺色" : "深色";
-      if (button) button.setAttribute("aria-pressed", nextTheme === "dark" ? "true" : "false");
-    }
-
-    function toggleTheme() {
-      const current = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
-      applyTheme(current === "dark" ? "light" : "dark");
-    }
-
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      document.querySelector(".sidebar")?.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function parseDate(value) {
-      if (!value) return null;
-      const date = new Date(value);
-      return Number.isNaN(date.getTime()) ? null : date;
-    }
-
-    function daysUntil(value) {
-      const date = parseDate(value);
-      if (!date) return null;
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      date.setHours(0, 0, 0, 0);
-      return Math.ceil((date - today) / 86400000);
-    }
-
-    function dueText(task) {
-      if (isNoDueTask(task)) return "不定期／持續工作";
-      const date = parseDate(task.dueAt);
-      const diff = daysUntil(task.dueAt);
-      const text = date ? `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, "0")}/${String(date.getDate()).padStart(2, "0")} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}` : task.dueAt;
-      if (diff === null) return text;
-      if (diff < 0 && task.status !== "done") return `${text}｜已過 ${Math.abs(diff)} 天`;
-      if (diff === 0) return `${text}｜今天`;
-      return `${text}｜還有 ${diff} 天`;
-    }
-
-    function dateTimeText(date) {
-      if (!date) return "";
-      return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, "0")}/${String(date.getDate()).padStart(2, "0")} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
-    }
-
-    function isOverdue(task) {
-      const diff = daysUntil(task.dueAt);
-      return diff !== null && diff < 0 && task.status !== "done";
-    }
-
-    function isSoon(task) {
-      const diff = daysUntil(task.dueAt);
-      const reminder = Number(task.reminderDays ?? 7);
-      return diff !== null && diff >= 0 && diff <= reminder && task.status !== "done";
-    }
-
-    function reminderText(task) {
-      const parts = [];
-      if (task.reminderTime) parts.push(`固定提醒 ${task.reminderTime}`);
-      if (task.reminderDays !== undefined && task.reminderDays !== "" && Number(task.reminderDays) > 0) {
-        parts.push(`提前 ${Number(task.reminderDays)} 天`);
-      }
-      return parts.length ? parts.join(" / ") : "未設定提醒";
-    }
-
-    function reminderDueAt(task) {
-      const due = parseDate(task.dueAt);
-      if (!due || task.status === "done" || isNoDueTask(task)) return null;
-      const reminderDays = Math.max(0, Number(task.reminderDays ?? 7) || 0);
-      const trigger = new Date(due);
-      trigger.setDate(trigger.getDate() - reminderDays);
-      const time = task.reminderTime || (task.dueAt && task.dueAt.includes("T") ? task.dueAt.slice(11, 16) : "");
-      if (time) {
-        const [hour, minute] = time.split(":").map(Number);
-        trigger.setHours(Number.isFinite(hour) ? hour : due.getHours(), Number.isFinite(minute) ? minute : due.getMinutes(), 0, 0);
-      } else {
-        trigger.setHours(due.getHours(), due.getMinutes(), 0, 0);
-      }
-      return trigger;
-    }
-
-    function reminderKey(task) {
-      const trigger = reminderDueAt(task);
-      if (!trigger) return "";
-      return [task.id, task.dueAt || "", task.reminderDays ?? "", task.reminderTime || "", trigger.toISOString()].join("|");
-    }
-
-    function reminderEntries() {
-      return tasks
-        .map((task) => ({ task, triggerAt: reminderDueAt(task), key: reminderKey(task) }))
-        .filter((entry) => entry.triggerAt && entry.key)
-        .sort((a, b) => a.triggerAt - b.triggerAt);
-    }
-
-    function nextReminderEntry() {
-      const now = new Date();
-      return reminderEntries().find((entry) => !notifiedReminders.includes(entry.key) && entry.triggerAt >= now)
-        || reminderEntries().find((entry) => !notifiedReminders.includes(entry.key));
-    }
-
-    function isNoDueTask(task) {
-      return Boolean(task.noDueDate) || !task.dueAt;
-    }
-
-    function repeatScheduleText(task) {
-      const rule = task.repeatRule || "none";
-      const inferred = repeatConfigFromDueAt(task.dueAt, rule);
-      if (rule === "none") return "否";
-      if (rule === "daily") return "每日";
-      if (rule === "weekly") {
-        const weekday = task.repeatWeekday || inferred.repeatWeekday;
-        return weekday ? `每週${WEEKDAY_LABELS[weekday]}` : "每週（未指定星期）";
-      }
-      if (rule === "monthly") {
-        const day = task.repeatMonthDay || inferred.repeatMonthDay;
-        return day ? `每月 ${day} 日` : "每月（未指定日期）";
-      }
-      if (rule === "quarterly") {
-        const quarterMonth = task.repeatQuarterMonth || inferred.repeatQuarterMonth;
-        const quarterDay = task.repeatQuarterDay || inferred.repeatQuarterDay;
-        const month = quarterMonth ? `第 ${quarterMonth} 個月` : "未指定月份";
-        const day = quarterDay ? `${quarterDay} 日` : "未指定日期";
-        return `每季${month} ${day}`;
-      }
-      if (rule === "semiannual") {
-        const halfYearMonth = task.repeatHalfYearMonth || inferred.repeatHalfYearMonth;
-        const halfYearDay = task.repeatHalfYearDay || inferred.repeatHalfYearDay;
-        const month = halfYearMonth ? `第 ${halfYearMonth} 個月` : "未指定月份";
-        const day = halfYearDay ? `${halfYearDay} 日` : "未指定日期";
-        return `每半年${month} ${day}`;
-      }
-      if (rule === "yearly") {
-        const yearMonth = task.repeatYearMonth || inferred.repeatYearMonth;
-        const yearDay = task.repeatYearDay || inferred.repeatYearDay;
-        const month = yearMonth ? `${yearMonth} 月` : "未指定月份";
-        const day = yearDay ? `${yearDay} 日` : "未指定日期";
-        return `每年 ${month} ${day}`;
-      }
-      if (rule === "custom") return task.repeatCustomText || "自訂";
-      return REPEAT_LABELS[rule] || rule;
-    }
-
-    function updateRepeatFields() {
-      const rule = byId("repeatRule").value;
-      document.querySelectorAll("[data-repeat-detail]").forEach((block) => {
-        block.classList.toggle("hidden", block.dataset.repeatDetail !== rule || rule === "none");
-      });
-    }
-
-    function updateDueDateMode() {
-      const noDueDate = byId("noDueDate").checked;
-      byId("dueAt").disabled = noDueDate;
-      if (noDueDate) byId("dueAt").value = "";
-    }
-
-    function renderCategories() {
-      const formValue = byId("category")?.value;
-      const filterValue = byId("categoryFilter")?.value;
-      const options = categories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("");
-      byId("category").innerHTML = options;
-      byId("categoryFilter").innerHTML = `<option value="all">全部類別</option>${options}`;
-      if (formValue && categories.includes(formValue)) byId("category").value = formValue;
-      if (filterValue && (filterValue === "all" || categories.includes(filterValue))) byId("categoryFilter").value = filterValue;
-    }
-
-    function renderStatusFilter() {
-      const current = byId("statusFilter")?.value;
-      byId("statusFilter").innerHTML = `<option value="all">全部狀態</option>${Object.entries(STATUS_LABELS).map(([value, label]) => `<option value="${value}">${label}</option>`).join("")}`;
-      if (current && (current === "all" || STATUS_LABELS[current])) byId("statusFilter").value = current;
-    }
-
-    function escapeHtml(value) {
-      return String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char]));
-    }
-
-    function icon(name) {
-      const icons = {
-        edit: '<svg class="icon" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path></svg>',
-        check: '<svg class="icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>',
-        play: '<svg class="icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7-11-7z"></path></svg>',
-        trash: '<svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M6 6l1 15h10l1-15"></path></svg>'
-      };
-      return icons[name] || "";
-    }
-
-    function setView(view) {
-      activeView = view;
-      document.querySelectorAll(".view").forEach((panel) => panel.classList.toggle("active", panel.id === `${view}View`));
-      document.querySelectorAll("[data-view]").forEach((button) => button.classList.toggle("active", button.dataset.view === view));
-      renderAll();
-    }
-
-    function taskFormData() {
-      const categoryValue = byId("category").value === "其他" && byId("customCategory").value.trim()
-        ? byId("customCategory").value.trim()
-        : byId("category").value;
-      if (!categories.includes(categoryValue)) {
-        categories.push(categoryValue);
-        saveCategories();
-      }
-      return {
-        title: byId("title").value.trim(),
-        category: categoryValue,
-        noDueDate: byId("noDueDate").checked,
-        dueAt: byId("noDueDate").checked ? "" : byId("dueAt").value,
-        status: byId("status").value,
-        priority: byId("priority").value,
-        owner: byId("owner").value.trim(),
-        reminderDays: Number(byId("reminderDays").value || 0),
-        reminderTime: byId("reminderTime").value,
-        repeatRule: byId("repeatRule").value,
-        repeatWeekday: byId("repeatWeekday").value,
-        repeatMonthDay: byId("repeatMonthDay").value ? Number(byId("repeatMonthDay").value) : "",
-        repeatQuarterMonth: byId("repeatQuarterMonth").value,
-        repeatQuarterDay: byId("repeatQuarterDay").value ? Number(byId("repeatQuarterDay").value) : "",
-        repeatHalfYearMonth: byId("repeatHalfYearMonth").value,
-        repeatHalfYearDay: byId("repeatHalfYearDay").value ? Number(byId("repeatHalfYearDay").value) : "",
-        repeatYearMonth: byId("repeatYearMonth").value ? Number(byId("repeatYearMonth").value) : "",
-        repeatYearDay: byId("repeatYearDay").value ? Number(byId("repeatYearDay").value) : "",
-        repeatCustomText: byId("repeatCustomText").value.trim(),
-        tags: byId("tags").value.split(",").map((item) => item.trim()).filter(Boolean),
-        description: byId("description").value.trim(),
-        documents: byId("documents").value.split(/\n/).map((item) => item.trim()).filter(Boolean),
-        fileLink: byId("fileLink").value.trim(),
-        fileLinkLabel: byId("fileLinkLabel").value.trim()
-      };
-    }
-
-    function fillForm(task) {
-      const inferred = repeatConfigFromDueAt(task.dueAt, task.repeatRule);
-      byId("title").value = task.title || "";
-      byId("category").value = categories.includes(task.category) ? task.category : "其他";
-      byId("customCategory").value = categories.includes(task.category) ? "" : task.category || "";
-      byId("noDueDate").checked = isNoDueTask(task);
-      updateDueDateMode();
-      byId("dueAt").value = task.noDueDate ? "" : task.dueAt || "";
-      byId("status").value = task.status || "todo";
-      byId("priority").value = task.priority || "medium";
-      byId("owner").value = task.owner || "";
-      byId("reminderDays").value = task.reminderDays ?? 7;
-      byId("reminderTime").value = task.reminderTime || "";
-      byId("repeatRule").value = task.repeatRule || "none";
-      byId("repeatWeekday").value = task.repeatWeekday || inferred.repeatWeekday || "";
-      byId("repeatMonthDay").value = task.repeatMonthDay || inferred.repeatMonthDay || "";
-      byId("repeatQuarterMonth").value = task.repeatQuarterMonth || inferred.repeatQuarterMonth || "";
-      byId("repeatQuarterDay").value = task.repeatQuarterDay || inferred.repeatQuarterDay || "";
-      byId("repeatHalfYearMonth").value = task.repeatHalfYearMonth || inferred.repeatHalfYearMonth || "";
-      byId("repeatHalfYearDay").value = task.repeatHalfYearDay || inferred.repeatHalfYearDay || "";
-      byId("repeatYearMonth").value = task.repeatYearMonth || inferred.repeatYearMonth || "";
-      byId("repeatYearDay").value = task.repeatYearDay || inferred.repeatYearDay || "";
-      byId("repeatCustomText").value = task.repeatCustomText || "";
-      byId("tags").value = (task.tags || []).join(", ");
-      byId("description").value = task.description || "";
-      byId("documents").value = (task.documents || []).join("\n");
-      byId("fileLink").value = task.fileLink || "";
-      byId("fileLinkLabel").value = task.fileLinkLabel || "";
-      updateRepeatFields();
-    }
-
-    function resetForm() {
-      editingId = null;
-      byId("taskForm").reset();
-      byId("noDueDate").checked = false;
-      byId("dueAt").disabled = false;
-      byId("reminderDays").value = 7;
-      byId("reminderTime").value = "";
-      byId("status").value = "todo";
-      byId("priority").value = "medium";
-      byId("repeatRule").value = "none";
-      byId("repeatWeekday").value = "";
-      byId("repeatMonthDay").value = "";
-      byId("repeatQuarterMonth").value = "";
-      byId("repeatQuarterDay").value = "";
-      byId("repeatHalfYearMonth").value = "";
-      byId("repeatHalfYearDay").value = "";
-      byId("repeatYearMonth").value = "";
-      byId("repeatYearDay").value = "";
-      byId("repeatCustomText").value = "";
-      byId("formTitle").textContent = "新增工作項目";
-      byId("formModePill").textContent = "新增模式";
-      byId("cancelEditBtn").classList.add("hidden");
-      updateDueDateMode();
-      updateRepeatFields();
-      renderAll();
-    }
-
-    function saveTask(event) {
-      event.preventDefault();
-      const data = taskFormData();
-      if (!data.title) return;
-      if (editingId) {
-        tasks = tasks.map((task) => task.id === editingId ? { ...task, ...data, updatedAt: new Date().toISOString() } : task);
-      } else {
-        tasks.unshift({
-          id: crypto.randomUUID ? crypto.randomUUID() : `task-${Date.now()}`,
-          ...data,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        });
-      }
-      saveTasks();
-      resetForm();
-      setView("list");
-    }
-
-    function editTask(id) {
-      const task = tasks.find((item) => item.id === id);
-      if (!task) return;
-      editingId = id;
-      byId("formTitle").textContent = "編輯工作項目";
-      byId("formModePill").textContent = "編輯模式";
-      byId("cancelEditBtn").classList.remove("hidden");
-      setView("form");
-      fillForm(task);
-    }
-
-    function newTaskId() {
-      return globalThis.crypto && typeof globalThis.crypto.randomUUID === "function"
-        ? globalThis.crypto.randomUUID()
-        : `task-${Date.now()}-${Math.random()}`;
-    }
-
-    function showToast(message) {
-      const toast = byId("toast");
-      if (!toast) return;
-      toast.innerHTML = message;
-      toast.classList.remove("hidden");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.add("hidden"), 5200);
-    }
-
-    function setQuickFilter(value) {
-      quickFilter = value;
-      document.querySelectorAll("[data-status-filter]").forEach((item) => {
-        item.classList.toggle("active", item.dataset.statusFilter === value);
-      });
-    }
-
-    function revealGeneratedTask(task) {
-      setView("list");
-      setQuickFilter("open");
-      byId("searchInput").value = "";
-      byId("categoryFilter").value = "all";
-      byId("statusFilter").value = "all";
-      byId("sortBy").value = "createdDesc";
-      renderAll();
-      requestAnimationFrame(() => {
-        document.querySelector(`[data-task-id="${task.id}"]`)?.scrollIntoView({ behavior: "smooth", block: "center" });
-      });
-    }
-
-    function revealTask(task) {
-      highlightedTaskId = task.id;
-      setView("list");
-      setQuickFilter("open");
-      byId("searchInput").value = "";
-      byId("categoryFilter").value = "all";
-      byId("statusFilter").value = "all";
-      byId("sortBy").value = "dueAsc";
-      renderAll();
-      requestAnimationFrame(() => {
-        document.querySelector(`[data-task-id="${task.id}"]`)?.scrollIntoView({ behavior: "smooth", block: "center" });
-      });
-    }
-
-    function notificationSupported() {
-      return "Notification" in window;
-    }
-
-    function notificationEnabled() {
-      return notificationSupported() && Notification.permission === "granted";
-    }
-
-    function setNotificationEnabled(value) {
-      localStorage.setItem(NOTIFICATION_ENABLED_KEY, value ? "true" : "false");
-    }
-
-    function updateNotificationStatus() {
-      const button = byId("enableNotificationBtn");
-      const testButton = byId("testNotificationBtn");
-      const resetButton = byId("resetReminderLogBtn");
-      const status = byId("notificationStatus");
-      if (!button || !status) return;
-      if (!notificationSupported()) {
-        button.disabled = true;
-        testButton?.classList.add("hidden");
-        resetButton?.classList.add("hidden");
-        status.textContent = "此瀏覽器不支援桌面通知。";
-        return;
-      }
-      if (Notification.permission === "denied") {
-        button.disabled = false;
-        button.textContent = "通知已被封鎖";
-        testButton?.classList.add("hidden");
-        resetButton?.classList.remove("hidden");
-        status.textContent = "系統通知已被瀏覽器封鎖。頁面開啟時仍會用右下角提示提醒。";
-        return;
-      }
-      if (Notification.permission === "granted" && notificationEnabled()) {
-        const next = nextReminderEntry();
-        button.disabled = false;
-        button.textContent = "通知已啟用";
-        testButton?.classList.remove("hidden");
-        resetButton?.classList.remove("hidden");
-        status.textContent = next
-          ? `頁面開啟時，每分鐘檢查一次提醒。下一次：${dateTimeText(next.triggerAt)}｜${next.task.title}`
-          : "頁面開啟時，每分鐘檢查一次提醒。目前沒有可推算的下一個提醒。";
-        return;
-      }
-      button.disabled = false;
-      button.textContent = "啟用瀏覽器通知";
-      testButton?.classList.add("hidden");
-      resetButton?.classList.remove("hidden");
-      status.textContent = Notification.permission === "granted"
-        ? "瀏覽器已允許通知，頁面提醒已可使用。"
-        : `系統通知尚未授權，目前權限：${Notification.permission}。頁面開啟時仍會用右下角提示提醒。`;
-    }
-
-    async function enableBrowserNotifications() {
-      if (!notificationSupported()) {
-        showToast("此瀏覽器不支援桌面通知。");
-        updateNotificationStatus();
-        return;
-      }
-      let permission = Notification.permission;
-      try {
-        if (permission === "default") permission = await Notification.requestPermission();
-        permission = Notification.permission;
-      } catch {
-        showToast("瀏覽器通知權限請求失敗，請確認目前瀏覽器是否允許此頁使用通知。");
-        updateNotificationStatus();
-        return;
-      }
-      if (permission === "granted") {
-        setNotificationEnabled(true);
-        updateNotificationStatus();
-        startReminderChecker();
-        checkTaskReminders();
-        showToast("瀏覽器通知已啟用。頁面開啟時會檢查提醒。");
-      } else {
-        setNotificationEnabled(false);
-        updateNotificationStatus();
-        startReminderChecker();
-        showToast(`尚未取得系統通知權限（目前：${permission}）。頁面開啟時仍會用右下角提示提醒。`);
-      }
-    }
-
-    function testBrowserNotification() {
-      if (!notificationSupported() || Notification.permission !== "granted") {
-        showToast(`目前通知權限是「${notificationSupported() ? Notification.permission : "unsupported"}」，請先啟用瀏覽器通知。`);
-        updateNotificationStatus();
-        return;
-      }
-      try {
-        const notification = new Notification("職安工作中樞測試通知", {
-          body: "如果你看到這則通知，代表頁面開啟時的提醒功能已可運作。",
-          tag: "osh-notification-test"
-        });
-        notification.onclick = () => {
-          window.focus();
-          notification.close();
-        };
-        showToast("已送出測試通知。");
-      } catch {
-        showToast("測試通知送出失敗，請確認瀏覽器通知權限。");
-      }
-    }
-
-    async function manualCheckReminders() {
-      if (!notificationSupported()) {
-        showToast("此瀏覽器不支援桌面通知。");
-        updateNotificationStatus();
-        return;
-      }
-      if (Notification.permission !== "granted") {
-        await enableBrowserNotifications();
-      }
-      checkTaskReminders({ force: true, showIdle: true });
-    }
-
-    function resetReminderLog() {
-      notifiedReminders = [];
-      saveNotifiedReminders();
-      updateNotificationStatus();
-      showToast("提醒紀錄已重設，可重新測試同一筆工作的通知。");
-    }
-
-    function pruneNotifiedReminders() {
-      const activeKeys = new Set(tasks.map(reminderKey).filter(Boolean));
-      const next = notifiedReminders.filter((key) => activeKeys.has(key));
-      if (next.length !== notifiedReminders.length) {
-        notifiedReminders = next;
-        saveNotifiedReminders();
-      }
-    }
-
-    function sendTaskNotification(task, triggerAt) {
-      const notification = new Notification(`職安工作提醒：${task.title}`, {
-        body: `${dueText(task)}\n${task.category || "未分類"}｜${reminderText(task)}`,
-        tag: `osh-task-${task.id}-${task.dueAt || triggerAt.toISOString()}`,
-        requireInteraction: false
-      });
-      notification.onclick = () => {
-        window.focus();
-        revealTask(task);
-        notification.close();
-      };
-    }
-
-    function describeNextReminder() {
-      const next = nextReminderEntry();
-      return next
-        ? `下一個提醒：${dateTimeText(next.triggerAt)}｜${escapeHtml(next.task.title)}`
-        : "目前沒有可推算的下一個提醒。";
-    }
-
-    function checkTaskReminders(options = {}) {
-      const force = Boolean(options.force);
-      const showIdle = Boolean(options.showIdle);
-      const systemNotificationReady = notificationSupported() && Notification.permission === "granted";
-      const now = new Date();
-      let changed = false;
-      const triggered = [];
-      pruneNotifiedReminders();
-      reminderEntries().forEach(({ task, triggerAt, key }) => {
-        if (!triggerAt || !key || triggerAt > now || notifiedReminders.includes(key)) return;
-        if (systemNotificationReady) {
-          try {
-            sendTaskNotification(task, triggerAt);
-          } catch {
-            showToast("瀏覽器通知送出失敗，改用頁面內提示。");
-          }
-        }
-        notifiedReminders.push(key);
-        triggered.push(task);
-        changed = true;
-      });
-      if (changed) saveNotifiedReminders();
-      if (triggered.length) {
-        const names = triggered.slice(0, 3).map((task) => escapeHtml(task.title)).join("、");
-        const prefix = systemNotificationReady ? "提醒已觸發" : "頁面提醒已觸發";
-        showToast(`${prefix}：<strong>${names}</strong>${triggered.length > 3 ? ` 等 ${triggered.length} 項` : ""}`);
-      } else if (showIdle) {
-        const permission = notificationSupported() ? Notification.permission : "unsupported";
-        const suffix = systemNotificationReady ? "" : `<br>系統通知權限：${permission}，目前會使用頁面內提示。`;
-        showToast(`${describeNextReminder()}${suffix}`);
-      }
-      updateNotificationStatus();
-    }
-
-    function startReminderChecker() {
-      clearInterval(reminderTimer);
-      updateNotificationStatus();
-      checkTaskReminders();
-      reminderTimer = setInterval(checkTaskReminders, 60000);
-    }
-
-    function formatDateTimeLocal(date) {
-      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
-    }
-
-    function lastDayOfMonth(year, monthIndex) {
-      return new Date(year, monthIndex + 1, 0).getDate();
-    }
-
-    function dateInMonthWithDay(source, year, monthIndex, day) {
-      const result = new Date(source);
-      const safeDay = Math.min(Math.max(Number(day) || source.getDate(), 1), lastDayOfMonth(year, monthIndex));
-      result.setDate(1);
-      result.setFullYear(year, monthIndex, safeDay);
-      return result;
-    }
-
-    function nextPeriodDate(source, periodMonths, periodPosition, day) {
-      const position = Math.min(Math.max(Number(periodPosition) || 1, 1), periodMonths);
-      const startMonth = Math.floor(source.getMonth() / periodMonths) * periodMonths;
-      let targetMonth = startMonth + position - 1;
-      let targetYear = source.getFullYear();
-      let candidate = dateInMonthWithDay(source, targetYear, targetMonth, day);
-      if (candidate <= source) {
-        targetMonth += periodMonths;
-        targetYear += Math.floor(targetMonth / 12);
-        targetMonth %= 12;
-        candidate = dateInMonthWithDay(source, targetYear, targetMonth, day);
-      }
-      return candidate;
-    }
-
-    function nextRepeatDueAt(task) {
-      const source = parseDate(task.dueAt);
-      const rule = task.repeatRule || "none";
-      const inferred = repeatConfigFromDueAt(task.dueAt, rule);
-      if (!source || rule === "none" || rule === "custom") return "";
-      if (rule === "daily") {
-        const next = new Date(source);
-        next.setDate(next.getDate() + 1);
-        return formatDateTimeLocal(next);
-      }
-      if (rule === "weekly") {
-        const targetWeekday = Number(task.repeatWeekday || inferred.repeatWeekday);
-        if (!targetWeekday) return "";
-        const currentWeekday = source.getDay() === 0 ? 7 : source.getDay();
-        const diff = ((targetWeekday - currentWeekday + 7) % 7) || 7;
-        const next = new Date(source);
-        next.setDate(next.getDate() + diff);
-        return formatDateTimeLocal(next);
-      }
-      if (rule === "monthly") {
-        return formatDateTimeLocal(nextPeriodDate(source, 1, 1, task.repeatMonthDay || inferred.repeatMonthDay));
-      }
-      if (rule === "quarterly") {
-        return formatDateTimeLocal(nextPeriodDate(source, 3, task.repeatQuarterMonth || inferred.repeatQuarterMonth, task.repeatQuarterDay || inferred.repeatQuarterDay));
-      }
-      if (rule === "semiannual") {
-        return formatDateTimeLocal(nextPeriodDate(source, 6, task.repeatHalfYearMonth || inferred.repeatHalfYearMonth, task.repeatHalfYearDay || inferred.repeatHalfYearDay));
-      }
-      if (rule === "yearly") {
-        const targetMonth = Number(task.repeatYearMonth || inferred.repeatYearMonth);
-        if (!targetMonth) return "";
-        let candidate = dateInMonthWithDay(source, source.getFullYear(), targetMonth - 1, task.repeatYearDay || inferred.repeatYearDay);
-        if (candidate <= source) candidate = dateInMonthWithDay(source, source.getFullYear() + 1, targetMonth - 1, task.repeatYearDay || inferred.repeatYearDay);
-        return formatDateTimeLocal(candidate);
-      }
-      return "";
-    }
-
-    function buildNextRepeatTask(task, now) {
-      const nextDueAt = nextRepeatDueAt(task);
-      if (!nextDueAt) return null;
-      const duplicate = tasks.some((item) => {
-        if (item.id === task.id) return false;
-        return item.title === task.title
-          && item.category === task.category
-          && item.repeatRule === task.repeatRule
-          && item.dueAt === nextDueAt;
-      });
-      if (duplicate) return null;
-      return {
-        ...task,
-        id: newTaskId(),
-        status: "todo",
-        dueAt: nextDueAt,
-        generatedFrom: task.id,
-        previousTaskId: task.id,
-        nextTaskId: "",
-        completedAt: "",
-        createdAt: now,
-        updatedAt: now
-      };
-    }
-
-    function completeTask(id) {
-      const task = tasks.find((item) => item.id === id);
-      if (!task || task.status === "done") return;
-      const now = new Date().toISOString();
-      const nextTask = buildNextRepeatTask(task, now);
-      tasks = tasks.map((item) => item.id === id
-        ? { ...item, status: "done", completedAt: now, nextTaskId: nextTask?.id || item.nextTaskId || "", updatedAt: now }
-        : item);
-      if (nextTask) tasks.unshift(nextTask);
-      saveTasks();
-      if (nextTask) {
-        highlightedTaskId = nextTask.id;
-        revealGeneratedTask(nextTask);
-        showToast(`已完成 <strong>${escapeHtml(task.title)}</strong>，並建立下一期：<strong>${escapeHtml(dueText(nextTask))}</strong>`);
-      } else {
-        renderAll();
-        const reason = task.repeatRule === "custom"
-          ? "自訂重複規則不會自動產生下一期。"
-          : task.repeatRule === "none"
-            ? "此工作不是重複性工作。"
-            : !task.dueAt
-              ? "此工作未設定預計完成時間，無法推算下一期。"
-              : "下一期可能已存在，未重複建立。";
-        showToast(`已完成 <strong>${escapeHtml(task.title)}</strong>。${reason}`);
-      }
-    }
-
-    function updateStatus(id, status) {
-      tasks = tasks.map((task) => task.id === id ? { ...task, status, updatedAt: new Date().toISOString() } : task);
-      saveTasks();
-      renderAll();
-    }
-
-    function deleteTask(id) {
-      const task = tasks.find((item) => item.id === id);
-      if (!task || !confirm(`確定刪除「${task.title}」？`)) return;
-      tasks = tasks.filter((item) => item.id !== id);
-      saveTasks();
-      renderAll();
-    }
-
-    function filteredTasks() {
-      const keyword = byId("searchInput")?.value.trim().toLowerCase() || "";
-      const category = byId("categoryFilter")?.value || "all";
-      const status = byId("statusFilter")?.value || "all";
-      const sortBy = byId("sortBy")?.value || "dueAsc";
-      let list = tasks.filter((task) => {
-        const text = [task.title, task.category, task.owner, task.description, ...(task.tags || [])].join(" ").toLowerCase();
-        if (keyword && !text.includes(keyword)) return false;
-        if (category !== "all" && task.category !== category) return false;
-        if (status !== "all" && task.status !== status) return false;
-        if (quickFilter === "open" && task.status === "done") return false;
-        if (quickFilter === "soon" && !isSoon(task)) return false;
-        if (quickFilter === "overdue" && !isOverdue(task)) return false;
-        return true;
-      });
-      list.sort((a, b) => {
-        if (sortBy === "createdDesc") return new Date(b.createdAt) - new Date(a.createdAt);
-        if (sortBy === "priority") return priorityWeight(b.priority) - priorityWeight(a.priority);
-        if (sortBy === "category") return a.category.localeCompare(b.category, "zh-Hant") || a.title.localeCompare(b.title, "zh-Hant");
-        const ad = parseDate(a.dueAt)?.getTime() ?? Number.MAX_SAFE_INTEGER;
-        const bd = parseDate(b.dueAt)?.getTime() ?? Number.MAX_SAFE_INTEGER;
-        return ad - bd;
-      });
-      return list;
-    }
-
-    function priorityWeight(value) {
-      return { high: 3, medium: 2, low: 1 }[value] || 0;
-    }
-
-    function taskStateClass(task) {
-      if (task.status === "done") return "done";
-      if (isOverdue(task)) return "overdue";
-      if (isSoon(task)) return "soon";
-      return "";
-    }
-
-    function taskCard(task) {
-      const cardClass = `${taskStateClass(task)} ${task.id === highlightedTaskId ? "generated" : ""}`.trim();
-      return `
-        <article class="task-card ${cardClass}" data-task-id="${task.id}">
-          <div>
-            <div class="task-title">
-              <strong>${escapeHtml(task.title)}</strong>
-              <span class="pill status-${task.status}">${STATUS_LABELS[task.status] || task.status}</span>
-              <span class="pill priority-${task.priority}">優先 ${PRIORITY_LABELS[task.priority] || task.priority}</span>
-            </div>
-            <div class="meta">
-              <span class="pill">${escapeHtml(task.category)}</span>
-              <span class="pill">${escapeHtml(dueText(task))}</span>
-              <span class="pill">重複：${escapeHtml(repeatScheduleText(task))}</span>
-              <span class="pill">${escapeHtml(reminderText(task))}</span>
-              ${task.owner ? `<span class="pill">${escapeHtml(task.owner)}</span>` : ""}
-            </div>
-            ${task.description ? `<div class="task-note">${escapeHtml(task.description)}</div>` : ""}
-            ${task.fileLink ? `<div style="margin-top:8px"><a href="${escapeHtml(task.fileLink)}" class="action" style="display:inline-flex;align-items:center;gap:5px;text-decoration:none;font-weight:700">📎 ${escapeHtml(task.fileLinkLabel || "開啟附件")}</a></div>` : ""}
-            ${(task.tags || []).length ? `<div class="meta" style="margin-top:8px;">${task.tags.map((tag) => `<span class="pill">#${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
-          </div>
-          <div class="row-actions">
-            <button class="action" type="button" data-edit="${task.id}">${icon("edit")}編輯</button>
-            ${task.status === "todo" ? `<button class="action" type="button" data-status-doing="${task.id}">${icon("play")}開始</button>` : ""}
-            ${task.status !== "done" ? `<button class="action" type="button" data-done="${task.id}">${icon("check")}完成</button>` : `<button class="action" type="button" data-status-todo="${task.id}">重開</button>`}
-            <button class="action danger" type="button" data-delete="${task.id}">${icon("trash")}刪除</button>
-          </div>
-        </article>
-      `;
-    }
-
-    function renderList() {
-      const list = filteredTasks();
-      const taskList = byId("taskList");
-      const sortBy = byId("sortBy")?.value || "dueAsc";
-      if (!list.length) {
-        taskList.classList.remove("grid-mode");
-        taskList.innerHTML = `<div class="empty">目前沒有符合條件的工作。</div>`;
-        return;
-      }
-      if (sortBy === "dueAsc") {
-        const scheduled = list.filter((task) => !isNoDueTask(task));
-        const noDue = list.filter(isNoDueTask);
-        const sectionClass = `task-list ${listLayout === "grid" ? "grid-mode" : ""}`;
-        taskList.classList.remove("grid-mode");
-        taskList.innerHTML = [
-          scheduled.length ? `
-            <section class="list-section">
-              <div class="list-section-title"><span>有期限工作</span><span>${scheduled.length} 項</span></div>
-              <div class="${sectionClass}">${scheduled.map(taskCard).join("")}</div>
-            </section>
-          ` : "",
-          noDue.length ? `
-            <section class="list-section">
-              <div class="list-section-title"><span>不定期／持續工作</span><span>${noDue.length} 項</span></div>
-              <div class="${sectionClass}">${noDue.map(taskCard).join("")}</div>
-            </section>
-          ` : ""
-        ].join("");
-        return;
-      }
-      taskList.classList.toggle("grid-mode", listLayout === "grid");
-      taskList.innerHTML = list.map(taskCard).join("");
-    }
-
-    function bindTaskActions() {
-      document.querySelectorAll("[data-edit]").forEach((button) => button.addEventListener("click", () => editTask(button.dataset.edit)));
-      document.querySelectorAll("[data-done]").forEach((button) => button.addEventListener("click", () => completeTask(button.dataset.done)));
-      document.querySelectorAll("[data-status-doing]").forEach((button) => button.addEventListener("click", () => updateStatus(button.dataset.statusDoing, "doing")));
-      document.querySelectorAll("[data-status-todo]").forEach((button) => button.addEventListener("click", () => updateStatus(button.dataset.statusTodo, "todo")));
-      document.querySelectorAll("[data-delete]").forEach((button) => button.addEventListener("click", () => deleteTask(button.dataset.delete)));
-    }
-
-    function renderStats() {
-      const open = tasks.filter((task) => task.status !== "done");
-      const overdue = tasks.filter(isOverdue);
-      byId("statTotal").textContent = tasks.length;
-      byId("statOpen").textContent = open.length;
-      byId("statOverdue").textContent = overdue.length;
-      byId("listCount").textContent = tasks.length;
-      byId("editingBadge").textContent = editingId ? "編輯" : "";
-    }
-
-    function renderAll() {
-      renderCategories();
-      renderStatusFilter();
-      renderStats();
-      renderList();
-      bindTaskActions();
-      checkTaskReminders();
-    }
-
-    function loadStarter() {
-      if (tasks.length && !confirm("目前已有工作資料，是否以目前工作清單範例覆蓋？")) return;
-      tasks = starterTasks.map((task) => ({ ...task, id: crypto.randomUUID ? crypto.randomUUID() : `task-${Date.now()}-${Math.random()}` }));
-      saveTasks();
-      renderAll();
-      setView("list");
-    }
-
-    function exportTasks() {
-      const payload = { exportedAt: new Date().toISOString(), tasks, categories };
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "職安工作中樞_自主管理版備份.json";
-      link.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function importTasks(file) {
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const payload = JSON.parse(reader.result);
-          const imported = Array.isArray(payload) ? payload : payload.tasks;
-          if (!Array.isArray(imported)) throw new Error("Invalid JSON");
-          tasks = imported;
-          if (Array.isArray(payload.categories)) categories = payload.categories;
-          saveTasks();
-          saveCategories();
-          renderAll();
-          setView("list");
-        } catch {
-          alert("匯入失敗，請確認 JSON 格式。");
-        }
-      };
-      reader.readAsText(file, "utf-8");
-    }
-
-    document.querySelectorAll("[data-view]").forEach((button) => {
-      button.addEventListener("click", () => setView(button.dataset.view));
+      return t;
     });
-    byId("taskForm").addEventListener("submit", saveTask);
-    byId("resetFormBtn").addEventListener("click", resetForm);
-    byId("cancelEditBtn").addEventListener("click", () => { resetForm(); setView("list"); });
-    byId("loadStarterBtn").addEventListener("click", loadStarter);
-    byId("exportBtn").addEventListener("click", exportTasks);
-    byId("importInput").addEventListener("change", (event) => importTasks(event.target.files[0]));
-    byId("enableNotificationBtn").addEventListener("click", enableBrowserNotifications);
-    byId("testNotificationBtn").addEventListener("click", testBrowserNotification);
-    byId("checkReminderBtn").addEventListener("click", manualCheckReminders);
-    byId("resetReminderLogBtn").addEventListener("click", resetReminderLog);
-    byId("themeToggleBtn").addEventListener("click", toggleTheme);
-    byId("scrollTopBtn").addEventListener("click", scrollToTop);
-    byId("noDueDate").addEventListener("change", updateDueDateMode);
-    byId("repeatRule").addEventListener("change", updateRepeatFields);
-    ["searchInput", "categoryFilter", "statusFilter", "sortBy"].forEach((id) => byId(id).addEventListener("input", renderAll));
-    document.querySelectorAll("[data-status-filter]").forEach((button) => {
-      button.addEventListener("click", () => {
-        quickFilter = button.dataset.statusFilter;
-        document.querySelectorAll("[data-status-filter]").forEach((item) => item.classList.toggle("active", item === button));
-        renderAll();
-      });
-    });
-    document.querySelectorAll("[data-layout]").forEach((button) => {
-      button.addEventListener("click", () => {
-        listLayout = button.dataset.layout;
-        document.querySelectorAll("[data-layout]").forEach((item) => item.classList.toggle("active", item === button));
-        renderAll();
-      });
-    });
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) checkTaskReminders();
-    });
-    window.addEventListener("focus", checkTaskReminders);
-
-    applyTheme(preferredTheme());
-    renderCategories();
-    renderStatusFilter();
-    resetForm();
     renderAll();
-    updateNotificationStatus();
-    startReminderChecker();
+  } catch(e) {
+    setList(`<div class="notice err">❌ 載入失敗：${esc(e.message)}<br>
+      <small>請確認 Apps Script 已部署，或重新整理頁面再試。</small></div>`);
+  }
+}
 
-    // ── 登入驗證 ──────────────────────────────────────────────────
-    const AUTH_HASH = 'f695f6db85ce1d2a06c220ce4ba2739b567603fdb6c0c003787fc9633cf17c90';
-    let _authed = false;
+async function apiPost(payload) {
+  const res = await fetch(API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(payload),
+    redirect: 'follow'
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
+}
 
-    async function sha256(str) {
-      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-    }
+function genId() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
 
-    function isAuthenticated() { return _authed; }
-    function setAuthenticated() { _authed = true; }
+/* ── View toggle ── */
+function setView(mode) {
+  viewMode = mode;
+  V('btn-list').classList.toggle('active', mode === 'list');
+  V('btn-grid').classList.toggle('active', mode === 'grid');
+  renderList();
+}
 
-    function togglePwdVisible() {
-      const inp = document.getElementById('login-pwd');
-      inp.type = inp.type === 'password' ? 'text' : 'password';
-    }
+/* ── Render ── */
+function renderAll() { renderStats(); renderList(); updateNotifBadge(); }
 
-    async function tryLogin(event) {
-      event.preventDefault();
-      const pwd  = document.getElementById('login-pwd').value;
-      const hash = await sha256(pwd);
-      const err  = document.getElementById('login-err');
-      const box  = document.getElementById('login-box');
-      if (hash === AUTH_HASH) {
-        setAuthenticated();
-        document.getElementById('login-overlay').style.display = 'none';
-        loadFromCloud();
-      } else {
-        if (err) err.classList.remove('hidden');
-        if (box) {
-          box.classList.remove('shake');
-          void box.offsetWidth; // reflow to restart animation
-          box.classList.add('shake');
-        }
-        document.getElementById('login-pwd').value = '';
-        document.getElementById('login-pwd').focus();
+function renderStats() {
+  const total = tasks.length;
+  const open  = tasks.filter(t => t.status !== 'done').length;
+  const over  = tasks.filter(isOverdue).length;
+  const done  = tasks.filter(t => t.status === 'done').length;
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-card" onclick="setFilter('')">
+      <div class="stat-num" style="color:var(--accent)">${total}</div>
+      <div class="stat-label">全部任務</div>
+    </div>
+    <div class="stat-card" onclick="setFilter('open')">
+      <div class="stat-num" style="color:var(--blue)">${open}</div>
+      <div class="stat-label">進行中</div>
+    </div>
+    <div class="stat-card" onclick="setFilter('overdue')">
+      <div class="stat-num" style="color:var(--red)">${over}</div>
+      <div class="stat-label">已逾期</div>
+    </div>
+    <div class="stat-card" onclick="setFilter('done')">
+      <div class="stat-num" style="color:var(--sub)">${done}</div>
+      <div class="stat-label">已完成</div>
+    </div>`;
+}
+
+function setFilter(type) {
+  const ss = document.getElementById('filter-status');
+  const sc = document.getElementById('filter-cat');
+  if      (type === 'open')    ss.value = 'doing';
+  else if (type === 'done')    ss.value = 'done';
+  else { ss.value = ''; sc.value = ''; }
+  renderList();
+}
+
+function filteredTasks() {
+  const q      = document.getElementById('search').value.trim().toLowerCase();
+  const cat    = document.getElementById('filter-cat').value;
+  const sta    = document.getElementById('filter-status').value;
+  const sortBy = document.getElementById('sort-by').value;
+  const priOrder = { '高':0, '中':1, '低':2 };
+
+  return tasks
+    .filter(t => {
+      if (q   && !t.title.toLowerCase().includes(q)) return false;
+      if (cat && t.category !== cat) return false;
+      if (sta && t.status   !== sta) return false;
+      return true;
+    })
+    .sort((a, b) => {
+      // 已完成永遠排最後
+      if (a.status === 'done' && b.status !== 'done') return 1;
+      if (b.status === 'done' && a.status !== 'done') return -1;
+
+      if (sortBy === 'priority') {
+        const pd = (priOrder[a.priority] ?? 1) - (priOrder[b.priority] ?? 1);
+        if (pd !== 0) return pd;
+        // 相同優先度再依到期日
+        if (a.dueAt && b.dueAt) return new Date(a.dueAt) - new Date(b.dueAt);
+        return 0;
       }
-    }
-
-    // ── Google Sheets 後端整合 ─────────────────────────────────────
-    const GS_API = 'https://script.google.com/macros/s/AKfycbzkDcRv1jwyvIXGJ0Y07oOULXv0hhNx78501Z1EjJUOBo766ZAq_Rh4DGzFVwCY3wFW/exec';
-
-    function showLoader(v) {
-      const el = document.getElementById('gs-loader');
-      if (el) el.style.display = v ? 'flex' : 'none';
-    }
-
-    async function apiPost(payload) {
-      const resp = await fetch(GS_API, {
-        method: 'POST',
-        redirect: 'follow',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload)
-      });
-      return resp.json();
-    }
-
-    async function loadFromCloud() {
-      showLoader(true);
-      try {
-        const resp = await fetch(GS_API + '?t=' + Date.now(), { redirect: 'follow' });
-        const data = await resp.json();
-        if (Array.isArray(data.tasks)) {
-          if (data.tasks.length > 0) {
-            // 去重：以 id 為 key，保留第一次出現的，避免 GAS Sheet 有重複列
-            const seen = new Set();
-            tasks = data.tasks.filter(t => {
-              if (!t.id || seen.has(t.id)) return false;
-              seen.add(t.id);
-              return true;
-            });
-          } else {
-            // 初次使用：以範例工作初始化並寫入雲端
-            tasks = starterTasks.map(t => ({ ...t }));
-            apiPost({ action: 'bulkWrite', tasks }).catch(() => {});
-          }
-        }
-      } catch(err) {
-        console.warn('無法從雲端載入工作清單，使用本機資料', err);
+      if (sortBy === 'created') {
+        return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
       }
-      showLoader(false);
-      setView('list');
-      renderAll();
-      updateNotifBadge();
-      // 載入完成：若有逾期或今天到期的工作，顯示提示 toast
-      const _ng = buildNotifItems();
-      if (_ng.overdue.length > 0 || _ng.today.length > 0) {
-        const parts = [];
-        if (_ng.overdue.length) parts.push(`<strong>${_ng.overdue.length}</strong> 項已逾期`);
-        if (_ng.today.length)   parts.push(`<strong>${_ng.today.length}</strong> 項今天到期`);
-        showToast(`⚠️ ${parts.join('，')}，點選左側 🔔 查看詳情。`);
-      }
-    }
+      // 預設：按到期日（逾期優先，無到期日排後）
+      const ao = isOverdue(a), bo = isOverdue(b);
+      if (ao && !bo) return -1;
+      if (!ao && bo) return 1;
+      const nda = isNoDue(a), ndb = isNoDue(b);
+      if (nda && !ndb) return 1;
+      if (!nda && ndb) return -1;
+      if (a.dueAt && b.dueAt) return a.dueAt.localeCompare(b.dueAt);
+      return (priOrder[a.priority] ?? 1) - (priOrder[b.priority] ?? 1);
+    });
+}
 
-    // 覆寫：每次變更後全量同步至雲端（debounce 800ms，防止連續操作產生並發 bulkWrite）
-    let _saveTimer = null;
-    function saveTasks() {
-      updateNotifBadge();
-      clearTimeout(_saveTimer);
-      const snapshot = JSON.stringify(tasks); // 固定當下狀態，避免閉包拿到更新後的 tasks
-      _saveTimer = setTimeout(() => {
-        apiPost({ action: 'bulkWrite', tasks: JSON.parse(snapshot) })
-          .catch(e => console.warn('雲端同步失敗', e));
-      }, 800);
-    }
+function renderList() {
+  const list = filteredTasks();
+  if (!list.length) {
+    setList('<div class="empty-state"><div class="empty-icon">✅</div><p>沒有符合條件的任務</p></div>');
+    return;
+  }
+  const cls      = viewMode === 'grid' ? 'task-list grid-view' : 'task-list';
+  const activeDue = list.filter(t => t.status !== 'done' && !isNoDue(t) && t.dueAt);
+  const noDueAct  = list.filter(t => t.status !== 'done' && (isNoDue(t) || !t.dueAt));
+  const doneAll   = list.filter(t => t.status === 'done');
 
-    // ── 通知中心 ──────────────────────────────────────────────────
-    function buildNotifItems() {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const g = { overdue: [], today: [], soon: [] };
-      tasks.forEach(task => {
-        if (task.status === 'done' || !task.dueAt) return;
-        const due = parseDate(task.dueAt);
-        if (!due) return;
-        const dueDay = new Date(due);
-        dueDay.setHours(0, 0, 0, 0);
-        const diff = Math.ceil((dueDay - today) / 86400000);
-        const rd = Number(task.reminderDays ?? 7);
-        if (diff < 0)            g.overdue.push({ task, diff });
-        else if (diff === 0)     g.today.push({ task, diff });
-        else if (diff <= rd)     g.soon.push({ task, diff });
-      });
-      g.overdue.sort((a, b) => a.diff - b.diff);
-      g.soon.sort((a, b) => a.diff - b.diff);
-      return g;
-    }
+  let html = '';
+  if (activeDue.length) {
+    html += `<div class="${cls}">` + activeDue.map(taskCard).join('') + '</div>';
+  }
+  if (noDueAct.length) {
+    html += `<div class="sec-label" style="margin-top:28px">隨時待辦（無截止日期）<span style="font-size:11px;font-weight:400;letter-spacing:0;margin-left:8px">${noDueAct.length} 項</span></div>`;
+    html += `<div class="${cls}">` + noDueAct.map(taskCard).join('') + '</div>';
+  }
+  if (doneAll.length) {
+    html += `<div class="sec-label" style="margin-top:28px">已完成<span style="font-size:11px;font-weight:400;letter-spacing:0;margin-left:8px">${doneAll.length} 項</span></div>`;
+    html += `<div class="${cls}">` + doneAll.map(taskCard).join('') + '</div>';
+  }
+  if (!html) {
+    html = '<div class="empty-state"><div class="empty-icon">✅</div><p>沒有符合條件的任務</p></div>';
+  }
+  setList(html);
+}
 
-    function updateNotifBadge() {
-      const g = buildNotifItems();
-      const urgent = g.overdue.length + g.today.length;
-      const total  = urgent + g.soon.length;
-      const badge   = document.getElementById('notifBadge');
-      const trigger = document.getElementById('notifTrigger');
-      if (badge) {
-        badge.textContent = urgent > 0 ? urgent : total;
-        badge.classList.toggle('hidden', total === 0);
-        badge.classList.toggle('has-urgent', urgent > 0);
-      }
-      if (trigger) trigger.classList.toggle('urgent', urgent > 0);
-    }
+function setList(html) { document.getElementById('task-list').innerHTML = html; }
 
-    function renderNotifScroll() {
-      const el = document.getElementById('notifScroll');
-      if (!el) return;
-      const g = buildNotifItems();
-      const total = g.overdue.length + g.today.length + g.soon.length;
-      if (total === 0) {
-        el.innerHTML = '<div class="notif-empty">🎉<br>目前沒有待處理通知<br><small>所有工作皆在掌控中</small></div>';
-        return;
-      }
-      const itemHtml = (entry, cls) => {
-        const sub = entry.diff < 0  ? `已逾期 ${Math.abs(entry.diff)} 天`
-                  : entry.diff === 0 ? '今天到期'
-                  : `還有 ${entry.diff} 天`;
-        return `<div class="notif-item ${cls}" data-task-id="${entry.task.id}" onclick="notifGoto(this.dataset.taskId)">
-          <div class="notif-item-title">${escapeHtml(entry.task.title)}</div>
-          <div class="notif-item-sub">${sub}・${escapeHtml(entry.task.category)}</div>
-        </div>`;
+function taskCard(t) {
+  const over = isOverdue(t);
+  const noDue = isNoDue(t);
+  const done  = t.status === 'done';
+
+  const cardCls = done ? 'is-done'
+    : over             ? 'is-overdue'
+    : t.status === 'doing'   ? 'is-doing'
+    : t.status === 'waiting' ? 'is-waiting' : '';
+
+  const dueHtml = noDue
+    ? `<span class="due-ok">無截止日期</span>`
+    : t.dueAt
+      ? `<span class="${over ? 'due-over' : 'due-ok'}">${over ? '⚠ 逾期 · ' : ''}${t.dueAt.slice(0,10)}</span>`
+      : '';
+
+  const doneBtn = done ? ''
+    : t.repeatRule
+      ? `<button class="ta-btn btn-done" onclick="completeTask('${t.id}')">✓ 完成 🔄</button>`
+      : `<button class="ta-btn btn-done" onclick="completeTask('${t.id}')">✓ 完成</button>`;
+
+  return `
+  <div class="task-card ${cardCls}">
+    <div class="task-body">
+      <div class="task-title${done ? ' is-done' : ''}">${esc(t.title)}</div>
+      <div class="task-meta">
+        <span class="badge b-cat">${esc(t.category || '其他')}</span>
+        <span class="badge ${PRI_BADGE[t.priority] || 'b-pmid'}">${esc(t.priority || '中')}</span>
+        <span class="badge ${STA_BADGE[t.status]   || 'b-todo'}">${STATUS_LABEL[t.status] || t.status}</span>
+        ${t.repeatRule ? `<span class="badge" style="background:#f3e8ff;color:#7c3aed;border:1px solid #ddd6fe">🔄 ${RECUR_LABEL[t.repeatRule] || t.repeatRule}</span>` : ''}
+        ${t.owner ? `<span style="font-size:12px;color:var(--sub)">👤 ${esc(t.owner)}</span>` : ''}
+        ${dueHtml}
+      </div>
+      ${t.description ? `<div class="task-desc">${esc(t.description)}</div>` : ''}
+    </div>
+    <div class="task-actions">
+      ${doneBtn}
+      <button class="ta-btn" onclick="openPanel('${t.id}')">編輯</button>
+      <button class="ta-btn btn-del" onclick="deleteTask('${t.id}')">刪除</button>
+    </div>
+  </div>`;
+}
+
+/* ── Panel ── */
+function openPanel(id) {
+  editingId = id || null;
+  V('panel-title').textContent = id ? '編輯任務' : '新增任務';
+
+  if (id) {
+    const t = tasks.find(t => t.id === id);
+    if (!t) return;
+    V('f-title').value    = t.title       || '';
+    V('f-category').value = t.category    || '';
+    V('f-priority').value = t.priority    || '中';
+    V('f-status').value   = t.status      || 'todo';
+    V('f-due').value      = t.dueAt       ? t.dueAt.slice(0,10) : '';
+    V('f-no-due').checked = isNoDue(t);
+    V('f-recur').value    = t.repeatRule  || '';
+    V('f-owner').value    = t.owner       || '';
+    V('f-desc').value     = t.description || '';
+  } else {
+    V('f-title').value    = '';
+    V('f-category').value = '';
+    V('f-priority').value = '中';
+    V('f-status').value   = 'todo';
+    V('f-due').value      = '';
+    V('f-no-due').checked = false;
+    V('f-recur').value    = '';
+    V('f-owner').value    = '';
+    V('f-desc').value     = '';
+  }
+  toggleNoDue();
+  V('overlay').classList.add('open');
+  V('side-panel').classList.add('open');
+  setTimeout(() => V('f-title').focus(), 50);
+}
+
+function closePanel() {
+  V('overlay').classList.remove('open');
+  V('side-panel').classList.remove('open');
+}
+
+function toggleNoDue() {
+  const checked = V('f-no-due').checked;
+  V('f-due').disabled = checked;
+  if (checked) V('f-due').value = '';
+}
+
+/* ── CRUD ── */
+async function saveTask() {
+  if (saving) return;
+  const title    = V('f-title').value.trim();
+  const category = V('f-category').value;
+  if (!title)    { V('f-title').focus();    alert('請輸入任務標題'); return; }
+  if (!category) { V('f-category').focus(); alert('請選擇類別');     return; }
+
+  const noDue = V('f-no-due').checked;
+  const now   = new Date().toISOString();
+  const task  = {
+    id:          editingId || genId(),
+    title,
+    category,
+    priority:    V('f-priority').value,
+    status:      V('f-status').value,
+    dueAt:       noDue ? '' : (V('f-due').value || ''),
+    noDueDate:   noDue,
+    repeatRule:  V('f-recur').value,
+    owner:       V('f-owner').value.trim(),
+    description: V('f-desc').value.trim(),
+    updatedAt:   now,
+    createdAt:   editingId
+      ? (tasks.find(t => t.id === editingId)?.createdAt || now)
+      : now
+  };
+
+  saving = true;
+  const btn = V('btn-save');
+  btn.textContent = '儲存中…'; btn.disabled = true;
+
+  try {
+    if (editingId) {
+      await apiPost({ action: 'update', task });
+      const idx = tasks.findIndex(t => t.id === editingId);
+      if (idx >= 0) tasks[idx] = task; else tasks.push(task);
+    } else {
+      await apiPost({ action: 'add', task });
+      tasks.unshift(task);
+    }
+    closePanel();
+    renderAll();
+  } catch(e) {
+    alert('儲存失敗：' + e.message);
+  } finally {
+    saving = false;
+    btn.textContent = '儲存'; btn.disabled = false;
+  }
+}
+
+async function completeTask(id) {
+  const t = tasks.find(t => t.id === id);
+  if (!t) return;
+  const recurVal = t.repeatRule;
+  t.status = 'done'; t.updatedAt = new Date().toISOString();
+  try {
+    await apiPost({ action: 'update', task: t });
+    if (recurVal) {
+      const next = {
+        ...t,
+        id:        genId(),
+        status:    'todo',
+        dueAt:     calcNextDue(t.dueAt, recurVal),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
-      let html = '';
-      if (g.overdue.length) {
-        html += `<div class="notif-group-label">🔴 已逾期（${g.overdue.length}）</div>`;
-        html += g.overdue.map(e => itemHtml(e, 'ni-overdue')).join('');
-      }
-      if (g.today.length) {
-        html += `<div class="notif-group-label">🟠 今天到期（${g.today.length}）</div>`;
-        html += g.today.map(e => itemHtml(e, 'ni-today')).join('');
-      }
-      if (g.soon.length) {
-        html += `<div class="notif-group-label">🔵 即將到期（${g.soon.length}）</div>`;
-        html += g.soon.map(e => itemHtml(e, 'ni-soon')).join('');
-      }
-      el.innerHTML = html;
+      await apiPost({ action: 'add', task: next });
+      tasks.unshift(next);
     }
+    renderAll();
+  } catch(e) { alert('更新失敗：' + e.message); }
+}
 
-    function toggleNotifPanel() {
-      const panel = document.getElementById('notifPanel');
-      if (!panel) return;
-      if (panel.classList.contains('open')) { closeNotifPanel(); return; }
-      renderNotifScroll();
-      panel.classList.add('open');
-      document.getElementById('notifOverlay')?.classList.add('open');
-    }
+function calcNextDue(dueAt, recur) {
+  const base = dueAt ? new Date(dueAt) : new Date();
+  if (isNaN(base.getTime())) return localYMD(new Date());
+  const DAYS = { daily: 1, weekly: 7, biweekly: 14 };
+  if (DAYS[recur] != null) base.setDate(base.getDate() + DAYS[recur]);
+  else if (recur === 'monthly')   base.setMonth(base.getMonth() + 1);
+  else if (recur === 'quarterly') base.setMonth(base.getMonth() + 3);
+  else if (recur === 'biannual')  base.setMonth(base.getMonth() + 6);
+  else if (recur === 'yearly')    base.setFullYear(base.getFullYear() + 1);
+  return localYMD(base);
+}
 
-    function closeNotifPanel() {
-      document.getElementById('notifPanel')?.classList.remove('open');
-      document.getElementById('notifOverlay')?.classList.remove('open');
-    }
+function localYMD(d) {
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}
 
-    function notifGoto(id) {
-      closeNotifPanel();
-      highlightedTaskId = id;
-      setView('list');
-      setQuickFilter('open');
-      byId('searchInput').value = '';
-      byId('categoryFilter').value = 'all';
-      byId('statusFilter').value = 'all';
-      byId('sortBy').value = 'dueAsc';
-      renderAll();
-      requestAnimationFrame(() => {
-        document.querySelector(`[data-task-id="${id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-    }
+async function deleteTask(id) {
+  if (!confirm('確定要刪除此任務？此操作無法還原。')) return;
+  try {
+    await apiPost({ action: 'delete', id });
+    tasks = tasks.filter(t => t.id !== id);
+    renderAll();
+  } catch(e) { alert('刪除失敗：' + e.message); }
+}
 
-    // 覆寫 filteredTasks：補充「已完成」快篩邏輯
-    function filteredTasks() {
-      const keyword  = byId("searchInput")?.value.trim().toLowerCase() || "";
-      const category = byId("categoryFilter")?.value || "all";
-      const status   = byId("statusFilter")?.value   || "all";
-      const sortBy   = byId("sortBy")?.value          || "dueAsc";
-      let list = tasks.filter(task => {
-        const text = [task.title, task.category, task.owner, task.description, ...(task.tags || [])].join(" ").toLowerCase();
-        if (keyword && !text.includes(keyword)) return false;
-        if (category !== "all" && task.category !== category) return false;
-        if (status   !== "all" && task.status   !== status)   return false;
-        if (quickFilter === "open"    && task.status === "done") return false;
-        if (quickFilter === "soon"    && !isSoon(task))          return false;
-        if (quickFilter === "overdue" && !isOverdue(task))       return false;
-        if (quickFilter === "done"    && task.status !== "done") return false;
-        return true;
-      });
-      list.sort((a, b) => {
-        if (sortBy === "createdDesc") return new Date(b.createdAt) - new Date(a.createdAt);
-        if (sortBy === "priority")    return priorityWeight(b.priority) - priorityWeight(a.priority);
-        if (sortBy === "category")    return a.category.localeCompare(b.category, "zh-Hant") || a.title.localeCompare(b.title, "zh-Hant");
-        const ad = parseDate(a.dueAt)?.getTime() ?? Number.MAX_SAFE_INTEGER;
-        const bd = parseDate(b.dueAt)?.getTime() ?? Number.MAX_SAFE_INTEGER;
-        return ad - bd;
-      });
-      return list;
-    }
+/* ── Notifications ── */
+function isDueSoon(t) {
+  if (t.status === 'done' || isNoDue(t) || !t.dueAt) return false;
+  const days = (new Date(t.dueAt) - new Date(new Date().toDateString())) / 86400000;
+  return days >= 0 && days <= 3;
+}
 
-    // 頁面載入時：已驗證直接進入，否則顯示登入頁
-    if (isAuthenticated()) {
-      document.getElementById('login-overlay').style.display = 'none';
-      loadFromCloud();
-    }
-    // else：login-overlay 保持顯示，等待使用者輸入密碼
-  </script>
+function updateNotifBadge() {
+  const n = tasks.filter(t => isOverdue(t) || isDueSoon(t)).length;
+  const el = V('notif-badge');
+  el.textContent = n > 9 ? '9+' : n;
+  el.classList.toggle('show', n > 0);
+}
+
+function toggleNotif(e) {
+  e.stopPropagation();
+  const dd = V('notif-drop');
+  if (!dd.classList.contains('open')) renderNotifList();
+  dd.classList.toggle('open');
+}
+
+function renderNotifList() {
+  const urgent = tasks
+    .filter(t => isOverdue(t) || isDueSoon(t))
+    .sort((a, b) => {
+      if (isOverdue(a) && !isOverdue(b)) return -1;
+      if (!isOverdue(a) && isOverdue(b)) return 1;
+      return new Date(a.dueAt || 0) - new Date(b.dueAt || 0);
+    });
+  const el = V('notif-items');
+  if (!urgent.length) {
+    el.innerHTML = '<div class="notif-empty">🎉 沒有逾期或即將到期的任務</div>';
+    return;
+  }
+  el.innerHTML = urgent.map(t => `
+    <div class="notif-row" onclick="V('notif-drop').classList.remove('open');openPanel('${t.id}')">
+      <div class="notif-row-title">${esc(t.title) || '（無標題）'}</div>
+      <div class="notif-row-sub">${isOverdue(t) ? '⚠ 已逾期' : '⏰ 3天內到期'} &nbsp;${formatDueDate(t.dueAt)} &nbsp;${esc(t.category || '')}</div>
+    </div>`).join('');
+}
+
+document.addEventListener('click', () => {
+  V('notif-drop')?.classList.remove('open');
+});
+
+/* ── Utils ── */
+function isOverdue(t) {
+  if (t.status === 'done' || isNoDue(t) || !t.dueAt) return false;
+  return new Date(t.dueAt) < new Date(new Date().toDateString());
+}
+function isNoDue(t) {
+  return t.noDueDate === true || t.noDueDate === 'TRUE' || t.noDueDate === 'true';
+}
+function formatDueDate(d) {
+  if (!d) return '';
+  const dt = new Date(d);
+  if (isNaN(dt.getTime())) return String(d).slice(0,10);
+  return dt.toLocaleDateString('zh-TW', {year:'numeric', month:'2-digit', day:'2-digit'});
+}
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function V(id) { return document.getElementById(id); }
+</script>
+<script src="../shared/sidebar.js"></script>
 </body>
 </html>
-
