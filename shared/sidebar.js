@@ -175,6 +175,9 @@
       <a class="nav-item" href="${BASE}overload/" data-match="/overload/">
         <span class="nav-icon">😰</span>異常工作負荷預防
       </a>
+      <a class="nav-item" href="${BASE}maternity/" data-match="/maternity/">
+        <span class="nav-icon">🤰</span>母性健康保護
+      </a>
 
       <div class="nav-section">人員管理</div>
       <a class="nav-item" href="${BASE}training/" data-match="/training/">
