@@ -347,6 +347,29 @@ body.dark .placeholder-card { border-color: #334155; background: #1e293b; }
 }
 body.dark .link-badge { background: #334155; }
 
+/* ── Expiry Alert Banner ── */
+#expiry-alert {
+  display:none; align-items:center; gap:12px;
+  padding:10px 20px; font-size:13px; font-weight:600; border-bottom:2px solid;
+}
+#expiry-alert.alert-red   { background:#fef2f2; color:#991b1b; border-color:#fecaca; }
+#expiry-alert.alert-amber { background:#fffbeb; color:#92400e; border-color:#fde68a; }
+.alert-icon { font-size:18px; flex-shrink:0; }
+.alert-text { flex:1; line-height:1.5; }
+.alert-mail {
+  padding:6px 14px; border-radius:8px; font-size:12px; font-weight:700;
+  text-decoration:none; white-space:nowrap; flex-shrink:0;
+}
+.alert-red   .alert-mail { background:#fecaca; color:#991b1b; border:1.5px solid #fecaca; }
+.alert-amber .alert-mail { background:#fde68a; color:#92400e; border:1.5px solid #fde68a; }
+.alert-mail:hover { opacity:.8; }
+.alert-close { background:none; border:none; font-size:16px; cursor:pointer; color:inherit; opacity:.6; padding:0 4px; }
+.alert-close:hover { opacity:1; }
+body.dark #expiry-alert.alert-red   { background:#450a0a; color:#fca5a5; border-color:#7f1d1d; }
+body.dark #expiry-alert.alert-amber { background:#431407; color:#fde68a; border-color:#78350f; }
+body.dark .alert-red   .alert-mail  { background:#7f1d1d; color:#fca5a5; border-color:#7f1d1d; }
+body.dark .alert-amber .alert-mail  { background:#78350f; color:#fde68a; border-color:#78350f; }
+
 /* ── Responsive ── */
 @media (max-width: 600px) {
   main { padding: 20px 16px 48px; }
@@ -367,6 +390,7 @@ body.dark .link-badge { background: #334155; }
     <span>大豐環保科技</span>
   </div>
 </header>
+<div id="expiry-alert" role="alert"></div>
 
 <main>
 
@@ -827,6 +851,47 @@ function buildInspMatrix() {
 }
 
 buildInspMatrix();
+
+// ── 防火管理人到期警示橫幅 ──
+function checkExpiryAlert() {
+  const THRESHOLD = 180;
+  const expiring = MANAGERS
+    .map(m => ({ ...m, days: daysUntil(m.validUntil) }))
+    .filter(m => m.days < THRESHOLD)
+    .sort((a, b) => a.days - b.days);
+  if (!expiring.length) return;
+
+  const hasRed = expiring.some(m => m.days < 90);
+  const el = document.getElementById('expiry-alert');
+  el.className = hasRed ? 'alert-red' : 'alert-amber';
+
+  const summary = expiring.map(m => {
+    const label = m.days < 0 ? '已過期' : `剩 ${m.days} 天`;
+    return `${m.site} ${m.name}（${adToRoc(m.validUntil)}・${label}）`;
+  }).join('　·　');
+
+  const subject = '【消防管理】防火管理人認證到期提醒';
+  const body = [
+    '以下防火管理人的認證即將到期，請儘速安排複訓或換證：', '',
+    ...expiring.map(m =>
+      `• ${m.site} ${m.name}\n  到期日：${adToRoc(m.validUntil)}（剩餘 ${m.days} 天）\n  訓練類別：${m.trainType} ${m.batch}\n  證書字號：${m.certNo}`
+    ), '',
+    '消防管理系統：https://df-ehs.github.io/OHS-Portal/fire/',
+  ].join('\n');
+
+  const mailto = `mailto:df.hr.openai@df-recycle.com`
+    + `?subject=${encodeURIComponent(subject)}`
+    + `&body=${encodeURIComponent(body)}`;
+
+  el.innerHTML = `
+    <span class="alert-icon">${hasRed ? '🔴' : '🟡'}</span>
+    <span class="alert-text">防火管理人認證即將到期：${summary}</span>
+    <a class="alert-mail" href="${mailto}">✉️ 立即寄信提醒</a>
+    <button class="alert-close" onclick="this.parentElement.style.display='none'" title="關閉">✕</button>
+  `;
+  el.style.display = 'flex';
+}
+checkExpiryAlert();
 
 // ── 深色模式 ──
 function toggleDark() {
