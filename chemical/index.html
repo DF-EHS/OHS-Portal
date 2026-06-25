@@ -353,15 +353,14 @@ body.dark .decl-icon  { background: #451a03; }
 
   <!-- Module Nav -->
   <div class="module-nav">
-    <a href="#m1">📊 合規概覽<span class="nav-badge">已啟用</span></a>
+    <a href="#m1">📊 合規概覽 &amp; 申報追蹤<span class="nav-badge">已啟用</span></a>
     <a href="#m2">🧪 化學品清冊 &amp; SDS<span class="nav-badge">已啟用</span></a>
-    <a href="#m3">📋 申報合規追蹤<span class="nav-badge">已啟用</span></a>
   </div>
 
-  <!-- ══ Module 1：合規概覽 ══ -->
+  <!-- ══ Module 1：合規概覽 & 申報追蹤 ══ -->
   <div class="section-block" id="m1">
     <div class="section-label">
-      模組一・合規概覽
+      模組一・合規概覽 &amp; 申報追蹤
       <span class="mod-tag active">已啟用</span>
     </div>
 
@@ -386,6 +385,36 @@ body.dark .decl-icon  { background: #451a03; }
 
     <div class="info-note">
       ⚠️ 法規依據：職業安全衛生法第 10 條、危害性化學品標示及通識規則。化學品清冊、SDS 及危害標示每年應更新核對，SDS 有效期限通常為 3 年。
+    </div>
+
+    <!-- A: 公共危險物品申報 -->
+    <p class="sub-heading">📋 公共危險物品申報（每半年・全興廠）</p>
+
+    <div class="info-note note-mb">
+      依「工廠危險物品申報辦法」規定，儲存達一定數量之公共危險物品，應每半年（<strong>1月</strong>及<strong>7月</strong>）向直轄市、縣市消防機關申報，並繳交公共意外責任險保單。
+    </div>
+
+    <div class="drill-tabs" id="decl-tabs"></div>
+    <div class="decl-grid" id="decl-grid"></div>
+    <p class="drill-note">✓ 已完成　✓* 完成待補日期　⟳ 待申報　— 未到期</p>
+
+    <!-- B: 優先管理化學品申報 -->
+    <p class="sub-heading sub-heading-gap">📌 優先管理化學品申報（每年度・全興廠）</p>
+
+    <table class="priority-table">
+      <thead>
+        <tr>
+          <th>年度</th>
+          <th>申報狀態</th>
+          <th>備註</th>
+        </tr>
+      </thead>
+      <tbody id="priority-tbody"></tbody>
+    </table>
+    <p class="drill-note">依「毒性及關注化學物質管理法」，使用優先管理化學物質之工廠每年應申報。</p>
+
+    <div class="good-note note-mt">
+      📌 保存期限提醒：一般危害性化學品的 SDS 保存 <strong>3 年</strong>；若作業勞工曾接觸附表四所列特定化學物質（本公司目前不適用），相關紀錄需保存 <strong>30 年</strong>。
     </div>
   </div>
 
@@ -428,43 +457,6 @@ body.dark .decl-icon  { background: #451a03; }
     </p>
   </div>
 
-  <!-- ══ Module 3：申報合規追蹤 ══ -->
-  <div class="section-block" id="m3">
-    <div class="section-label">
-      模組三・申報合規追蹤
-      <span class="mod-tag active">已啟用</span>
-    </div>
-
-    <!-- A: 公共危險物品申報 -->
-    <p class="sub-heading">📋 公共危險物品申報（每半年・全興廠）</p>
-
-    <div class="info-note note-mb">
-      依「工廠危險物品申報辦法」規定，儲存達一定數量之公共危險物品，應每半年（<strong>1月</strong>及<strong>7月</strong>）向直轄市、縣市消防機關申報，並繳交公共意外責任險保單。
-    </div>
-
-    <div class="drill-tabs" id="decl-tabs"></div>
-    <div class="decl-grid" id="decl-grid"></div>
-    <p class="drill-note">✓ 已完成　✓* 完成待補日期　⟳ 待申報　— 未到期</p>
-
-    <!-- B: 優先管理化學品申報 -->
-    <p class="sub-heading sub-heading-gap">📌 優先管理化學品申報（每年度・全興廠）</p>
-
-    <table class="priority-table">
-      <thead>
-        <tr>
-          <th>年度</th>
-          <th>申報狀態</th>
-          <th>備註</th>
-        </tr>
-      </thead>
-      <tbody id="priority-tbody"></tbody>
-    </table>
-    <p class="drill-note">依「毒性及關注化學物質管理法」，使用優先管理化學物質之工廠每年應申報。</p>
-  </div>
-
-  <div class="good-note">
-    📌 保存期限提醒：一般危害性化學品的 SDS 保存 <strong>3 年</strong>；若作業勞工曾接觸附表四所列特定化學物質（本公司目前不適用），相關紀錄需保存 <strong>30 年</strong>。
-  </div>
 
 </main>
 
