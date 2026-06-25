@@ -208,6 +208,10 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24p
   display: inline-flex; align-items: center; gap: 3px;
   padding: 2px 7px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap;
 }
+.ghs-icon {
+  display: inline-block; width: 12px; text-align: center; flex-shrink: 0;
+  font-size: 11px; line-height: 1; font-style: normal;
+}
 .ghs-fire   { background: #fee2e2; color: #dc2626; }
 .ghs-corr   { background: #ffedd5; color: #b45309; }
 .ghs-tox    { background: #f3f4f6; color: #374151; }
@@ -534,21 +538,21 @@ const PRIORITY_DECL = [
 //  GHS 分類標籤定義
 // ─────────────────────────────────────────────────────────────
 const GHS_DEF = {
-  fire:   ['易燃性',   'ghs-fire'],
-  corr:   ['腐蝕性',   'ghs-corr'],
-  tox:    ['急毒性',   'ghs-tox'],
-  irrit:  ['刺激性',   'ghs-irrit'],
-  ox:     ['氧化性',   'ghs-ox'],
-  health: ['健康危害', 'ghs-health'],
-  env:    ['環境危害', 'ghs-env'],
-  none:   ['低危害',   'ghs-none'],
+  fire:   { icon: '▲', label: '易燃性',   cls: 'ghs-fire'   },
+  corr:   { icon: '◈', label: '腐蝕性',   cls: 'ghs-corr'   },
+  tox:    { icon: '✕', label: '急毒性',   cls: 'ghs-tox'    },
+  irrit:  { icon: '!', label: '刺激性',   cls: 'ghs-irrit'  },
+  ox:     { icon: '⊕', label: '氧化性',   cls: 'ghs-ox'     },
+  health: { icon: '◇', label: '健康危害', cls: 'ghs-health' },
+  env:    { icon: '♻', label: '環境危害', cls: 'ghs-env'    },
+  none:   { icon: '—', label: '低危害',   cls: 'ghs-none'   },
 };
 
 function ghsHtml(codes) {
   return '<div class="ghs-wrap">' +
     codes.map(c => {
       const d = GHS_DEF[c] || GHS_DEF.none;
-      return `<span class="ghs-badge ${d[1]}">${d[0]}</span>`;
+      return `<span class="ghs-badge ${d.cls}"><span class="ghs-icon">${d.icon}</span>${d.label}</span>`;
     }).join('') + '</div>';
 }
 
