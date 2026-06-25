@@ -37,11 +37,15 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # 先抓最新 remote 狀態，讓 HEAD 與 origin/main 對齊，避免 rebase 衝突
+          git fetch origin main
+          git reset --soft origin/main
+
           git add news/index.html news/cache.json
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else
             git commit -m "chore: auto-update OHS news [skip ci]"
-            git pull --rebase origin main
-            git push
+            git push origin HEAD:main
           fi
