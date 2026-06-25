@@ -259,6 +259,11 @@ body.dark .drill-badge.future  { background: #263349; color: #475569; border-col
   .drill-grid { grid-template-columns: 1fr; }
 }
 
+/* ── Inspection Grid（3 欄） ── */
+.insp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 12px; }
+@media (max-width: 800px) { .insp-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .insp-grid { grid-template-columns: 1fr; } }
+
 /* ── Footer ── */
 footer {
   text-align: center; padding: 18px 24px;
@@ -381,11 +386,15 @@ body.dark .link-badge { background: #334155; }
       📊 各年度消防演練紀錄
       <span class="nav-badge">已啟用</span>
     </a>
-    <a href="#m2" class="active">
+    <a href="#m2">
+      📋 年度檢修申報
+      <span class="nav-badge">已啟用</span>
+    </a>
+    <a href="#m3" class="active">
       👤 防火管理人名冊
       <span class="nav-badge">已啟用</span>
     </a>
-    <a href="#m3">
+    <a href="#m4">
       📁 文件快速存取
       <span class="nav-badge">已啟用</span>
     </a>
@@ -405,10 +414,23 @@ body.dark .link-badge { background: #334155; }
     </p>
   </div>
 
-  <!-- ══ Module 2：防火管理人名冊（啟用） ══ -->
+  <!-- ══ Module 2：年度消防設備檢修申報 ══ -->
   <div class="section-block" id="m2">
     <div class="section-label">
-      模組二・防火管理人名冊
+      模組二・年度消防設備檢修申報
+      <span class="mod-tag active">已啟用</span>
+    </div>
+    <div class="drill-tabs" id="insp-tabs"></div>
+    <div class="insp-grid" id="insp-grid"></div>
+    <p class="drill-note">
+      資料來源：K:\HR-人資\7.工安\13. 消防管理\年度檢修申報　·　✓ 已申報完成　⟳ 進行中　— 未建廠
+    </p>
+  </div>
+
+  <!-- ══ Module 3：防火管理人名冊（啟用） ══ -->
+  <div class="section-block" id="m3">
+    <div class="section-label">
+      模組三・防火管理人名冊
       <span class="mod-tag active">已啟用</span>
     </div>
     <div class="managers-grid" id="managers-grid">
@@ -416,10 +438,10 @@ body.dark .link-badge { background: #334155; }
     </div>
   </div>
 
-  <!-- ══ Module 3：文件快速存取（啟用） ══ -->
-  <div class="section-block" id="m3">
+  <!-- ══ Module 4：文件快速存取（啟用） ══ -->
+  <div class="section-block" id="m4">
     <div class="section-label">
-      模組三・文件快速存取
+      模組四・文件快速存取
       <span class="mod-tag active">已啟用</span>
     </div>
 
@@ -728,6 +750,83 @@ function buildManagers() {
 
 buildMatrix();
 buildManagers();
+
+// ─────────────────────────────────────────────
+//  年度消防設備檢修申報
+//  s: 'done'=已申報  'done-nodate'=已完成待補日期
+//     'pending'=進行中  'not-built'=未建廠
+// ─────────────────────────────────────────────
+const INSPECTIONS = [
+  { roc: 115,
+    taichung: { s:'done',     d:'2026-04-09' },
+    quanxing: { s:'done-nodate' },
+    wugu:     { s:'pending' } },
+  { roc: 114,
+    taichung: { s:'done',     d:'2025-03-10' },
+    quanxing: { s:'done',     d:'2025-12-02' },
+    wugu:     { s:'done',     d:'2025-05-14' } },
+  { roc: 113,
+    taichung: { s:'done',     d:'2024-02-15' },
+    quanxing: { s:'done',     d:'2024-11-21' },
+    wugu:     { s:'done',     d:'2024-06-05' } },
+  { roc: 112,
+    taichung: { s:'done',     d:'2023-03-24' },
+    quanxing: { s:'done',     d:'2023-11-27' },
+    wugu:     { s:'done',     d:'2023-11-30' } },
+  { roc: 111,
+    taichung: { s:'done-nodate' },
+    quanxing: { s:'done',     d:'2022-12-02' },
+    wugu:     { s:'not-built' } },
+];
+
+const INSP_STATIONS = [
+  { key: 'taichung', label: '台中總部',  sub: '台中市北屯區',  icon: '🏢' },
+  { key: 'quanxing', label: '全興廠',    sub: '彰化縣和美鎮',  icon: '🏭' },
+  { key: 'wugu',     label: '五股分選廠', sub: '新北夏綠地',    icon: '🏗️' },
+];
+
+let activeInspRoc = INSPECTIONS[0].roc;
+
+function inspBadgeHtml(item) {
+  if (item.s === 'done')        return `<span class="drill-badge done">✓ ${fmtRoc(item.d)}</span>`;
+  if (item.s === 'done-nodate') return `<span class="drill-badge done">✓ 已完成（日期補充中）</span>`;
+  if (item.s === 'pending')     return `<span class="drill-badge pending">⟳ 進行中</span>`;
+  if (item.s === 'not-built')   return `<span class="drill-badge future">— 未建廠</span>`;
+  return `<span class="drill-badge future">— 未到期</span>`;
+}
+
+function renderInspection(roc) {
+  activeInspRoc = roc;
+  document.querySelectorAll('.insp-tab').forEach(t =>
+    t.classList.toggle('active', +t.dataset.roc === roc));
+  const row = INSPECTIONS.find(r => r.roc === roc);
+  document.getElementById('insp-grid').innerHTML = INSP_STATIONS.map(st => `
+    <div class="drill-card">
+      <div class="drill-card-head">
+        <div class="drill-site-icon">${st.icon}</div>
+        <div>
+          <div class="drill-site-name">${st.sub}</div>
+          <div class="drill-site-label">${st.label}</div>
+        </div>
+      </div>
+      <div class="drill-card-body">
+        <div class="drill-half">
+          <span class="half-label">年度申報日期</span>
+          ${inspBadgeHtml(row[st.key])}
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function buildInspMatrix() {
+  document.getElementById('insp-tabs').innerHTML = INSPECTIONS.map(r =>
+    `<button type="button" class="drill-tab insp-tab${r.roc === activeInspRoc ? ' active' : ''}"
+     data-roc="${r.roc}" onclick="renderInspection(${r.roc})">民${r.roc}年</button>`
+  ).join('');
+  renderInspection(activeInspRoc);
+}
+
+buildInspMatrix();
 
 // ── 深色模式 ──
 function toggleDark() {
