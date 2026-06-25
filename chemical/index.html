@@ -354,9 +354,8 @@ body.dark .decl-icon  { background: #451a03; }
   <!-- Module Nav -->
   <div class="module-nav">
     <a href="#m1">📊 合規概覽<span class="nav-badge">已啟用</span></a>
-    <a href="#m2">🧪 化學品清冊<span class="nav-badge">已啟用</span></a>
+    <a href="#m2">🧪 化學品清冊 &amp; SDS<span class="nav-badge">已啟用</span></a>
     <a href="#m3">📋 申報合規追蹤<span class="nav-badge">已啟用</span></a>
-    <a href="#m4">📄 SDS 文件索引<span class="nav-badge">已啟用</span></a>
   </div>
 
   <!-- ══ Module 1：合規概覽 ══ -->
@@ -390,11 +389,15 @@ body.dark .decl-icon  { background: #451a03; }
     </div>
   </div>
 
-  <!-- ══ Module 2：化學品清冊 ══ -->
+  <!-- ══ Module 2：化學品清冊 & SDS ══ -->
   <div class="section-block" id="m2">
     <div class="section-label">
-      模組二・化學品清冊（全興廠，民114年）
+      模組二・化學品清冊 &amp; SDS 索引（全興廠，民114年）
       <span class="mod-tag active">已啟用</span>
+    </div>
+
+    <div class="info-note">
+      📁 製表日期與有效至日期取自各 SDS 第十六節（其他資料）之「製表日期」，依職安法規有效期限為 <strong>3 年</strong>。🔴 已過期／🟡 即將到期（90天內）者請優先更新。
     </div>
 
     <div class="chem-filter" id="chem-filter">
@@ -411,7 +414,10 @@ body.dark .decl-icon  { background: #451a03; }
             <th>使用區域</th>
             <th>濃度/型態</th>
             <th>GHS 危害分類</th>
-            <th>SDS</th>
+            <th>SDS 製表日期</th>
+            <th>有效至</th>
+            <th>SDS 狀態</th>
+            <th>操作</th>
           </tr>
         </thead>
         <tbody id="chem-tbody"></tbody>
@@ -456,36 +462,8 @@ body.dark .decl-icon  { background: #451a03; }
     <p class="drill-note">依「毒性及關注化學物質管理法」，使用優先管理化學物質之工廠每年應申報。</p>
   </div>
 
-  <!-- ══ Module 4：SDS 文件索引 ══ -->
-  <div class="section-block" id="m4">
-    <div class="section-label">
-      模組四・SDS 安全資料表索引
-      <span class="mod-tag active">已啟用</span>
-    </div>
-
-    <div class="info-note">
-      📁 製表日期與有效至日期取自各 SDS 第十六節（其他資料）之「製表日期」，依職安法規 SDS 有效期限為 <strong>3 年</strong>。🔴 已過期／🟡 即將到期（90天內）者請優先更新。
-    </div>
-
-    <div class="chem-table-wrap">
-      <table class="chem-table">
-        <thead>
-          <tr>
-            <th>化學品名稱</th>
-            <th>使用區域</th>
-            <th>製表日期</th>
-            <th>有效至</th>
-            <th>狀態</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody id="sds-tbody"></tbody>
-      </table>
-    </div>
-
-    <div class="good-note note-mt">
-      📌 保存期限提醒：一般危害性化學品的 SDS 保存 <strong>3 年</strong>；若作業勞工曾接觸附表四所列特定化學物質（本公司目前不適用），相關紀錄需保存 <strong>30 年</strong>。
-    </div>
+  <div class="good-note">
+    📌 保存期限提醒：一般危害性化學品的 SDS 保存 <strong>3 年</strong>；若作業勞工曾接觸附表四所列特定化學物質（本公司目前不適用），相關紀錄需保存 <strong>30 年</strong>。
   </div>
 
 </main>
@@ -605,15 +583,21 @@ function renderChemTable() {
     : CHEMICALS.filter(c => c.area === currentFilter);
 
   document.getElementById('chem-tbody').innerHTML = list.map(c => {
-    const sdsBtn = c.sds
-      ? `<button class="chem-sds-btn has-sds" onclick="openSds('${c.name.replace(/'/g,"\\'")}','${c.sds}')">📄 預覽 SDS</button>`
+    const dateCell  = c.sdsDate       ? `<span style="font-size:12px">${c.sdsDate}</span>`      : '<span style="font-size:11px;color:var(--sub)">—</span>';
+    const validCell = c.sdsValidUntil ? `<span style="font-size:12px">${c.sdsValidUntil}</span>` : '<span style="font-size:11px;color:var(--sub)">—</span>';
+    const ops = c.sds
+      ? `<button class="chem-sds-btn has-sds" onclick="openSds('${c.name.replace(/'/g,"\\'")}','${c.sds}')">👁 預覽</button>
+         <a class="chem-sds-btn has-sds" href="${c.sds}" download style="margin-left:4px;text-decoration:none">⬇</a>`
       : `<button class="chem-sds-btn no-sds" disabled>補充中</button>`;
     return `<tr>
       <td class="chem-name">${c.name}</td>
       <td>${areaHtml(c.area)}</td>
       <td style="font-size:12px;color:var(--sub)">${c.conc}</td>
       <td>${ghsHtml(c.ghs)}</td>
-      <td>${sdsBtn}</td>
+      <td>${dateCell}</td>
+      <td>${validCell}</td>
+      <td>${sdsStatusBadge(c)}</td>
+      <td style="white-space:nowrap">${ops}</td>
     </tr>`;
   }).join('');
 }
@@ -690,7 +674,7 @@ function buildPriorityTable() {
 }
 
 // ─────────────────────────────────────────────────────────────
-//  Module 4: SDS 文件索引
+//  SDS 狀態計算（供 Module 2 renderChemTable 使用）
 // ─────────────────────────────────────────────────────────────
 function sdsDaysUntil(dateStr) {
   if (!dateStr) return null;
@@ -705,25 +689,6 @@ function sdsStatusBadge(c) {
   if (days < 0)   return `<span class="sds-badge sds-expired">🔴 已過期（${Math.abs(days)}天前）</span>`;
   if (days < 90)  return `<span class="sds-badge sds-expiring">🟡 即將到期（剩${days}天）</span>`;
   return `<span class="sds-badge sds-ok">✅ 有效</span>`;
-}
-
-function buildSdsTable() {
-  document.getElementById('sds-tbody').innerHTML = CHEMICALS.map(c => {
-    const dateCell  = c.sdsDate       ? `<span style="font-size:12px">${c.sdsDate}</span>`      : '<span style="font-size:11px;color:var(--sub)">—</span>';
-    const validCell = c.sdsValidUntil ? `<span style="font-size:12px">${c.sdsValidUntil}</span>` : '<span style="font-size:11px;color:var(--sub)">—</span>';
-    const previewBtn = c.sds
-      ? `<button class="chem-sds-btn has-sds" onclick="openSds('${c.name.replace(/'/g,"\\'")}','${c.sds}')">👁 預覽</button>
-         <a class="chem-sds-btn has-sds" href="${c.sds}" download style="margin-left:4px;text-decoration:none">⬇</a>`
-      : `<button class="chem-sds-btn no-sds" disabled>尚未上傳</button>`;
-    return `<tr>
-      <td class="chem-name">${c.name}</td>
-      <td>${areaHtml(c.area)}</td>
-      <td>${dateCell}</td>
-      <td>${validCell}</td>
-      <td>${sdsStatusBadge(c)}</td>
-      <td style="white-space:nowrap">${previewBtn}</td>
-    </tr>`;
-  }).join('');
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -772,7 +737,6 @@ buildOverview();
 renderChemTable();
 buildDeclMatrix();
 buildPriorityTable();
-buildSdsTable();
 </script>
 <script src="../shared/sidebar.js"></script>
 </body>
