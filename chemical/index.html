@@ -234,6 +234,15 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24p
 .chem-sds-btn.has-sds:hover { background: var(--chem); color: #fff; }
 .chem-sds-btn.no-sds { opacity: .45; cursor: not-allowed; }
 
+/* ── SDS Status Badges ── */
+.sds-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.sds-expired  { background: #fef2f2; color: #dc2626; }
+.sds-expiring { background: #fffbeb; color: #d97706; }
+.sds-ok       { background: #f0fdf4; color: #16a34a; }
+body.dark .sds-expired  { background: #450a0a; color: #fca5a5; }
+body.dark .sds-expiring { background: #431407; color: #fde68a; }
+body.dark .sds-ok       { background: #052e16; color: #86efac; }
+
 /* ── SDS Dialog ── */
 #sds-dialog {
   padding: 0; border: none; border-radius: 16px;
@@ -455,7 +464,7 @@ body.dark .decl-icon  { background: #451a03; }
     </div>
 
     <div class="info-note">
-      📁 SDS 檔案請上傳至 <code>chemical/sds/廢水廠/</code> 和 <code>chemical/sds/現場油品/</code> 目錄後即可線上預覽。SDS 有效期限請從各 SDS 封面確認並填入，通常為 <strong>3 年</strong>有效。
+      📁 製表日期與有效至日期取自各 SDS 第十六節（其他資料）之「製表日期」，依職安法規 SDS 有效期限為 <strong>3 年</strong>。🔴 已過期／🟡 即將到期（90天內）者請優先更新。
     </div>
 
     <div class="chem-table-wrap">
@@ -464,7 +473,9 @@ body.dark .decl-icon  { background: #451a03; }
           <tr>
             <th>化學品名稱</th>
             <th>使用區域</th>
-            <th>SDS 有效至</th>
+            <th>製表日期</th>
+            <th>有效至</th>
+            <th>狀態</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -499,32 +510,33 @@ body.dark .decl-icon  { background: #451a03; }
 //  sds:  相對路徑（空字串=尚未上傳）
 // ─────────────────────────────────────────────────────────────
 const CHEMICALS = [
-  // ── 廢水廠 ──
-  { name: 'PAC（聚氯化鋁）',               area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'sds/廢水廠/PAC-SDS.pdf' },
-  { name: '液鹼（氫氧化鈉 32%/45%）',      area:'wastewater', conc:'32%~45%',  ghs:['corr'],              sds:'sds/廢水廠/液鹼SDS.pdf' },
-  { name: '陰離子高分子聚合物 A-110',       area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'sds/廢水廠/陰離子SDS.pdf' },
-  { name: '陽離子助凝劑',                   area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'sds/廢水廠/陽性助凝劑SDS.pdf' },
-  { name: '消石灰（氫氧化鈣）',              area:'wastewater', conc:'固體粉末', ghs:['irrit','corr'],      sds:'sds/廢水廠/消石灰SDS.pdf' },
-  { name: '硫酸鋁 7.5%',                   area:'wastewater', conc:'7.5%',     ghs:['irrit'],             sds:'sds/廢水廠/硫酸鋁SDS.pdf' },
-  { name: '高分子凝集劑 FA-40B',            area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'sds/廢水廠/高分子凝集劑SDS.pdf' },
-  { name: '消泡劑',                         area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'sds/廢水廠/消泡劑SDS.pdf' },
-  { name: '葡萄糖',                         area:'wastewater', conc:'不詳',     ghs:['none'],              sds:'' },
-  // ── 現場/油品 ──
-  { name: 'DICHNO 極壓機油 HD 系列',        area:'site', conc:'純物質',  ghs:['health','env'],       sds:'sds/現場油品/DICHNO極壓機油SDS.pdf' },
-  { name: 'SHELL 液壓油 AW32/46/68',        area:'site', conc:'純物質',  ghs:['health','env'],       sds:'sds/現場油品/SHELL液壓油SDS.pdf' },
-  { name: '金島高溫軸承牛油 NO.2/3',         area:'site', conc:'固體油脂', ghs:['env'],               sds:'sds/現場油品/金島軸承牛油SDS.pdf' },
-  { name: 'DICHNO 太古油 C-20 水性切削油',  area:'site', conc:'不詳',    ghs:['irrit','health'],     sds:'sds/現場油品/DICHNO太古油SDS.pdf' },
-  { name: '超級柴油',                        area:'site', conc:'純物質',  ghs:['fire','tox','env'],   sds:'sds/現場油品/超級柴油SDS.pdf' },
-  { name: '松香水',                          area:'site', conc:'純物質',  ghs:['fire','irrit'],       sds:'sds/現場油品/松香水SDS.pdf' },
-  { name: '調合漆（合成樹脂型）',             area:'site', conc:'不詳',    ghs:['fire','irrit'],       sds:'sds/現場油品/調合漆SDS.pdf' },
-  { name: '油漆溶劑（松香水）',              area:'site', conc:'不詳',    ghs:['fire','irrit'],       sds:'sds/現場油品/油漆溶劑SDS.pdf' },
-  { name: '洗衣粉（無香味）',                area:'site', conc:'固體',    ghs:['irrit'],              sds:'sds/現場油品/洗衣粉SDS.pdf' },
-  { name: 'WD-40 MUP Low Odor',             area:'site', conc:'噴霧劑',  ghs:['fire','env'],         sds:'sds/現場油品/WD-40-SDS.pdf' },
-  { name: 'Spray Lubricant 88（噴樂88）',   area:'site', conc:'噴霧劑',  ghs:['fire','env'],         sds:'sds/現場油品/噴樂88-SDS.pdf' },
-  { name: '矽利康',                          area:'site', conc:'膏狀',    ghs:['irrit'],              sds:'sds/現場油品/矽利康SDS.pdf' },
-  { name: '次氯酸鈉（漂白水）',              area:'site', conc:'不詳',    ghs:['ox','corr','env'],    sds:'sds/現場油品/次氯酸鈉SDS.pdf' },
-  { name: '片鹼（氫氧化鈉固體）',            area:'site', conc:'固體',    ghs:['corr'],               sds:'sds/現場油品/片鹼SDS.pdf' },
-  { name: '清罐脫氧劑',                      area:'site', conc:'不詳',    ghs:['corr'],               sds:'sds/現場油品/清罐脫氧劑SDS.pdf' },
+  // ── 廢水廠（9種）── area:'wastewater'  sdsDate=製表日期  sdsValidUntil=有效至(製表+3年)
+  { name: 'PAC（聚氯化鋁）',               area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'',                                                                              sdsDate:'',           sdsValidUntil:'' },
+  { name: '液鹼（氫氧化鈉 32%/45%）',      area:'wastewater', conc:'32%~45%',  ghs:['corr'],              sds:'sds/廢水廠/志氯-液鹼SDS.pdf',                                                   sdsDate:'2024-09-24', sdsValidUntil:'2027-09-24' },
+  { name: '陰離子高分子聚合物 A-110',       area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'',                                                                              sdsDate:'',           sdsValidUntil:'' },
+  { name: '陽離子助凝劑',                   area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'sds/廢水廠/陽性助凝劑SDS.pdf',                                                  sdsDate:'2026-01-02', sdsValidUntil:'2029-01-02' },
+  { name: '消石灰（氫氧化鈣）',              area:'wastewater', conc:'固體粉末', ghs:['irrit','corr'],      sds:'sds/廢水廠/消石灰SDS.pdf',                                                      sdsDate:'2026-01-01', sdsValidUntil:'2029-01-01' },
+  { name: '硫酸鋁 7.5%',                   area:'wastewater', conc:'7.5%',     ghs:['irrit'],             sds:'sds/廢水廠/硫酸鋁7.5_   SDS-新版114.1.2-117.1.1.pdf',                          sdsDate:'2025-01-02', sdsValidUntil:'2028-01-01' },
+  { name: '高分子凝集劑 FA-40B',            area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'sds/廢水廠/高分子凝集劑SDS.pdf',                                                sdsDate:'2025-05-21', sdsValidUntil:'2028-05-21' },
+  { name: '消泡劑',                         area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'',                                                                              sdsDate:'',           sdsValidUntil:'' },
+  { name: '葡萄糖',                         area:'wastewater', conc:'不詳',     ghs:['none'],              sds:'',                                                                              sdsDate:'',           sdsValidUntil:'' },
+  // ── 現場（9種）── area:'site'
+  { name: 'WD-40 MUP Low Odor',             area:'site', conc:'噴霧劑',   ghs:['fire','env'],         sds:'sds/現場/1.SDS -WD-40.pdf',                                                       sdsDate:'2023-11-23', sdsValidUntil:'2026-11-23' },
+  { name: 'Spray Lubricant 88（噴樂88）',   area:'site', conc:'噴霧劑',   ghs:['fire','env'],         sds:'sds/現場/2.SDS-噴樂88.pdf',                                                       sdsDate:'2024-07-30', sdsValidUntil:'2027-07-30' },
+  { name: '松香水',                          area:'site', conc:'純物質',   ghs:['fire','irrit'],       sds:'sds/現場/3.松香水.pdf',                                                           sdsDate:'2024-01-02', sdsValidUntil:'2027-01-02' },
+  { name: '油漆溶劑（松香水）',              area:'site', conc:'不詳',     ghs:['fire','irrit'],       sds:'sds/現場/4.油漆溶劑(松香水).pdf',                                                 sdsDate:'2023-02-22', sdsValidUntil:'2026-02-22' },
+  { name: '調合漆（合成樹脂型）',             area:'site', conc:'不詳',     ghs:['fire','irrit'],       sds:'sds/現場/5.調合漆(合成樹脂型).pdf',                                               sdsDate:'2024-01-05', sdsValidUntil:'2027-01-05' },
+  { name: '次氯酸鈉（漂白水）',              area:'site', conc:'不詳',     ghs:['ox','corr','env'],    sds:'sds/現場/6.次氯酸鈉.pdf',                                                         sdsDate:'2023-08-02', sdsValidUntil:'2026-08-02' },
+  { name: '矽利康',                          area:'site', conc:'膏狀',     ghs:['irrit'],              sds:'sds/現場/高菖MSDS  矽利康.pdf',                                                   sdsDate:'2014-12-30', sdsValidUntil:'2017-12-30' },
+  { name: '清罐脫氧劑',                      area:'site', conc:'不詳',     ghs:['corr'],               sds:'sds/現場/清罐脫氧劑物質安全係數表GHS114  森鋒.pdf',                               sdsDate:'2025-08-13', sdsValidUntil:'2028-08-13' },
+  { name: '片鹼（氫氧化鈉固體）',            area:'site', conc:'固體',     ghs:['corr'],               sds:'sds/現場/片鹼-SDS.pdf',                                                           sdsDate:'2025-05-19', sdsValidUntil:'2028-05-19' },
+  // ── 油品（6種）── area:'site'
+  { name: 'DICHNO 極壓機油 HD 系列',        area:'site', conc:'純物質',   ghs:['health','env'],       sds:'sds/油品/1.DICHNO極壓機油220 320.pdf',                                            sdsDate:'2024-01-02', sdsValidUntil:'2027-01-02' },
+  { name: 'SHELL 液壓油 AW32/46/68',        area:'site', conc:'純物質',   ghs:['health','env'],       sds:'sds/油品/2.SHELL液壓油.pdf',                                                      sdsDate:'2024-01-02', sdsValidUntil:'2027-01-02' },
+  { name: '金島高溫軸承牛油 NO.2/3',         area:'site', conc:'固體油脂', ghs:['env'],               sds:'sds/油品/3.金島高溫軸承牛油NO.2 3.pdf',                                           sdsDate:'2024-07-12', sdsValidUntil:'2027-07-12' },
+  { name: 'DICHNO 太古油 C-20 水性切削油',  area:'site', conc:'不詳',     ghs:['irrit','health'],     sds:'sds/油品/4.DICHNO 太古油C-20 水性切消油.pdf',                                     sdsDate:'2024-01-02', sdsValidUntil:'2027-01-02' },
+  { name: '超級柴油',                        area:'site', conc:'純物質',   ghs:['fire','tox','env'],   sds:'sds/油品/5.超級柴油SDS.pdf',                                                      sdsDate:'2023-08-23', sdsValidUntil:'2026-08-23' },
+  { name: '洗衣粉（無香味）',                area:'site', conc:'固體',     ghs:['irrit'],              sds:'sds/油品/7.無香味洗衣粉-SDS.pdf',                                                 sdsDate:'2022-01-03', sdsValidUntil:'2025-01-03' },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -680,16 +692,36 @@ function buildPriorityTable() {
 // ─────────────────────────────────────────────────────────────
 //  Module 4: SDS 文件索引
 // ─────────────────────────────────────────────────────────────
+function sdsDaysUntil(dateStr) {
+  if (!dateStr) return null;
+  const now = new Date(); now.setHours(0,0,0,0);
+  const exp = new Date(dateStr); exp.setHours(0,0,0,0);
+  return Math.round((exp - now) / 86400000);
+}
+
+function sdsStatusBadge(c) {
+  if (!c.sdsValidUntil) return '<span style="font-size:11px;color:var(--sub)">—</span>';
+  const days = sdsDaysUntil(c.sdsValidUntil);
+  if (days < 0)   return `<span class="sds-badge sds-expired">🔴 已過期（${Math.abs(days)}天前）</span>`;
+  if (days < 90)  return `<span class="sds-badge sds-expiring">🟡 即將到期（剩${days}天）</span>`;
+  return `<span class="sds-badge sds-ok">✅ 有效</span>`;
+}
+
 function buildSdsTable() {
   document.getElementById('sds-tbody').innerHTML = CHEMICALS.map(c => {
+    const dateCell  = c.sdsDate       ? `<span style="font-size:12px">${c.sdsDate}</span>`      : '<span style="font-size:11px;color:var(--sub)">—</span>';
+    const validCell = c.sdsValidUntil ? `<span style="font-size:12px">${c.sdsValidUntil}</span>` : '<span style="font-size:11px;color:var(--sub)">—</span>';
     const previewBtn = c.sds
-      ? `<button class="chem-sds-btn has-sds" onclick="openSds('${c.name.replace(/'/g,"\\'")}','${c.sds}')">👁 預覽</button>`
+      ? `<button class="chem-sds-btn has-sds" onclick="openSds('${c.name.replace(/'/g,"\\'")}','${c.sds}')">👁 預覽</button>
+         <a class="chem-sds-btn has-sds" href="${c.sds}" download style="margin-left:4px;text-decoration:none">⬇</a>`
       : `<button class="chem-sds-btn no-sds" disabled>尚未上傳</button>`;
     return `<tr>
       <td class="chem-name">${c.name}</td>
       <td>${areaHtml(c.area)}</td>
-      <td style="font-size:12px;color:var(--sub)">待確認</td>
-      <td>${previewBtn}</td>
+      <td>${dateCell}</td>
+      <td>${validCell}</td>
+      <td>${sdsStatusBadge(c)}</td>
+      <td style="white-space:nowrap">${previewBtn}</td>
     </tr>`;
   }).join('');
 }
