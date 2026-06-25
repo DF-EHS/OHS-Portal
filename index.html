@@ -240,6 +240,8 @@
   .btn-emerald:hover { background: #047857; }
   .ci-emerald { background: #d1fae5; }
   .tg-emerald { background: #d1fae5; color: #059669; }
+  .ci-amber   { background: #fef3c7; }
+  .tg-amber   { background: #fef3c7; color: #b45309; }
   .btn-rose   { background: var(--rose); color: #fff; }
   .btn-rose:hover   { background: #be185d; }
   .btn-violet { background: #5b21b6; color: #fff; }
@@ -318,6 +320,8 @@
   body.dark .tg-violet  { background: #2e1065; color: #c4b5fd; }
   body.dark .btn-violet { background: #6d28d9; }
   body.dark .btn-violet:hover { background: #5b21b6; }
+  body.dark .ci-amber   { background: #422006; }
+  body.dark .tg-amber   { background: #422006; color: #fcd34d; }
   body.dark .placeholder-card { background: #1e293b; border-color: #334155; }
   body.dark .content-topbar   { background: #1e293b; border-color: #334155; }
 
@@ -572,6 +576,26 @@
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
             <button class="open-btn btn-heat" onclick="event.stopPropagation();location.href='./heat/'">開啟查詢 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./chemical/'">
+          <div class="card-header">
+            <div class="card-icon ci-amber">⚗️</div>
+            <div>
+              <div class="card-title">危害性化學品管理系統</div>
+              <div class="card-desc">全興廠化學品清冊（GHS 危害分類）、SDS 安全資料表索引與線上預覽、公共危險物品及優先管理化學品申報合規追蹤。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-amber">GHS</span>
+            <span class="tag tg-amber">SDS</span>
+            <span class="tag tg-orange">危害標示</span>
+            <span class="tag tg-navy">申報追蹤</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-amber" onclick="event.stopPropagation();location.href='./chemical/'">開啟系統 ›</button>
           </div>
         </div>
 

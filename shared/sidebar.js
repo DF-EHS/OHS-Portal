@@ -166,6 +166,9 @@
       <a class="nav-item" href="${BASE}accident/" data-match="/accident/">
         <span class="nav-icon">📈</span>職業災害分析系統
       </a>
+      <a class="nav-item" href="${BASE}chemical/" data-match="/chemical/">
+        <span class="nav-icon">⚗️</span>危害性化學品管理
+      </a>
 
       <div class="nav-section">四大防護計畫</div>
       <a class="nav-item" href="${BASE}ergonomic/" data-match="/ergonomic/">

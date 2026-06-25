@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>化學品管理 | 大豐環保科技</title>
+<style>
+:root {
+  --chem:        #d97706;
+  --chem-dark:   #b45309;
+  --chem-darker: #78350f;
+  --chem-light:  #fffbeb;
+  --chem-border: #fde68a;
+  --green:       #16a34a;
+  --green-light: #f0fdf4;
+  --red:         #dc2626;
+  --red-light:   #fef2f2;
+  --navy:        #1e3a5f;
+  --bg:          #f8fafc;
+  --card:        #ffffff;
+  --border:      #e2e8f0;
+  --text:        #1e293b;
+  --sub:         #64748b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+
+/* ── Header ── */
+header {
+  background: linear-gradient(135deg, #78350f 0%, #b45309 45%, #d97706 100%);
+  color: #fff; padding: 12px 20px;
+  display: flex; align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.4);
+}
+header h1 { font-size: 17px; font-weight: 700; flex: 1; }
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3);
+  background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer;
+  transition: background .15s; font-family: inherit; flex-shrink: 0;
+  text-decoration: none; display: inline-flex; align-items: center;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.2); }
+.hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 12px; color: #fde68a; font-weight: 600; white-space: nowrap; }
+
+/* ── Main ── */
+main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24px 60px; }
+
+/* ── Page Hero ── */
+.page-hero {
+  background: linear-gradient(135deg, #78350f 0%, #b45309 50%, #d97706 100%);
+  color: #fff; border-radius: 16px; padding: 28px 32px; margin-bottom: 32px;
+  box-shadow: 0 4px 20px rgba(217,119,6,.25);
+  display: flex; align-items: center; gap: 20px;
+}
+.hero-icon { font-size: 52px; flex-shrink: 0; }
+.hero-text h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.hero-text p  { font-size: 13px; color: #fde68a; line-height: 1.6; }
+
+/* ── Module Nav ── */
+.module-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.module-nav a {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 18px; border-radius: 24px;
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  border: 1.5px solid var(--border);
+  background: var(--card); color: var(--text);
+  transition: all .15s;
+}
+.module-nav a.active { background: var(--chem); color: #fff; border-color: var(--chem); }
+.module-nav a:hover:not(.active) { border-color: var(--chem); color: var(--chem); }
+.module-nav a .nav-badge {
+  font-size: 10px; padding: 1px 6px; border-radius: 10px;
+  font-weight: 700; background: rgba(255,255,255,.2);
+}
+.module-nav a:not(.active) .nav-badge { background: #f1f5f9; color: var(--sub); }
+
+/* ── Section Label ── */
+.section-label {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: 3px; text-transform: uppercase;
+  margin: 0 0 20px; display: flex; align-items: center; gap: 10px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.section-label .mod-tag {
+  font-size: 10px; padding: 2px 8px; border-radius: 10px;
+  font-weight: 700; letter-spacing: 0; text-transform: none; margin-left: 6px;
+}
+.mod-tag.active  { background: #dcfce7; color: #15803d; }
+.mod-tag.pending { background: #f1f5f9; color: var(--sub); }
+
+/* ── Section Block ── */
+.section-block { margin-bottom: 48px; }
+
+/* ── Stats Row ── */
+.stats-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--card); border-radius: 14px; padding: 20px 22px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06); border-left: 4px solid var(--chem);
+}
+.stat-num   { font-size: 36px; font-weight: 800; color: var(--chem); line-height: 1; }
+.stat-label { font-size: 12px; color: var(--sub); font-weight: 600; margin-top: 6px; }
+
+/* ── Notes ── */
+.info-note {
+  background: var(--chem-light); border: 1px solid var(--chem-border);
+  border-radius: 10px; padding: 12px 16px; font-size: 12px;
+  color: var(--chem-dark); line-height: 1.7; margin-bottom: 20px;
+}
+.good-note {
+  background: var(--green-light); border: 1px solid #bbf7d0;
+  border-radius: 10px; padding: 12px 16px; font-size: 12px;
+  color: var(--green); line-height: 1.7; margin-bottom: 20px;
+}
+
+/* ── Year Tabs ── */
+.drill-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+.drill-tab {
+  padding: 6px 16px; border-radius: 20px;
+  border: 1.5px solid var(--border); background: var(--card);
+  color: var(--sub); font-size: 12px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: all .15s;
+}
+.drill-tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.drill-tab:hover:not(.active) { border-color: var(--navy); color: var(--navy); }
+
+/* ── Declaration Grid ── */
+.decl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px; }
+.decl-card {
+  background: var(--card); border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07); overflow: hidden;
+}
+.decl-card-head {
+  padding: 14px 18px; display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.decl-icon {
+  width: 42px; height: 42px; border-radius: 12px; background: var(--chem-light);
+  font-size: 22px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.decl-label  { font-size: 11px; color: var(--sub); font-weight: 700; letter-spacing: 1px; }
+.decl-period { font-size: 16px; font-weight: 800; }
+.decl-card-body { padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
+.half-label { font-size: 12px; color: var(--sub); font-weight: 600; }
+
+.drill-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700;
+}
+.drill-badge.done      { background: #f0fdf4; color: #15803d; }
+.drill-badge.done-nd   { background: #f0fdf4; color: #15803d; }
+.drill-badge.missing   { background: #fffbeb; color: #92400e; }
+.drill-badge.pending   { background: #eff6ff; color: #1e40af; }
+.drill-badge.future    { background: #f8fafc; color: #94a3b8; border: 1px solid var(--border); }
+.drill-note { font-size: 11px; color: var(--sub); line-height: 1.7; }
+
+/* ── Priority Decl Table ── */
+.priority-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+.priority-table th {
+  background: #f8fafc; color: var(--sub); font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; padding: 10px 14px; text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+.priority-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.priority-table tr:last-child td { border-bottom: none; }
+
+/* ── Chemical Filter ── */
+.chem-filter { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+.chem-filter-btn {
+  padding: 6px 16px; border-radius: 20px;
+  border: 1.5px solid var(--border); background: var(--card);
+  color: var(--sub); font-size: 12px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: all .15s;
+}
+.chem-filter-btn.active { background: var(--chem); color: #fff; border-color: var(--chem); }
+.chem-filter-btn:hover:not(.active) { border-color: var(--chem); color: var(--chem); }
+
+/* ── Chemical Table ── */
+.chem-table-wrap { background: var(--card); border-radius: 14px; box-shadow: 0 2px 10px rgba(0,0,0,.06); overflow: hidden; }
+.chem-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.chem-table th {
+  background: #f8fafc; color: var(--sub); font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px;
+  text-align: left; border-bottom: 2px solid var(--border);
+}
+.chem-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.chem-table tr:last-child td { border-bottom: none; }
+.chem-table tr:hover td { background: var(--chem-light); }
+.chem-name { font-weight: 700; color: var(--text); }
+
+.area-tag { display: inline-flex; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+.area-ww   { background: #eff6ff; color: #1d4ed8; }
+.area-site { background: #ffedd5; color: #c2410c; }
+
+/* ── GHS Badges ── */
+.ghs-wrap { display: flex; flex-wrap: wrap; gap: 4px; }
+.ghs-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 7px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap;
+}
+.ghs-fire   { background: #fee2e2; color: #dc2626; }
+.ghs-corr   { background: #ffedd5; color: #b45309; }
+.ghs-tox    { background: #f3f4f6; color: #374151; }
+.ghs-irrit  { background: #fef9c3; color: #854d0e; }
+.ghs-ox     { background: #fef3c7; color: #b45309; }
+.ghs-health { background: #eff6ff; color: #1d4ed8; }
+.ghs-env    { background: #f0fdf4; color: #15803d; }
+.ghs-none   { background: #f8fafc; color: #94a3b8; }
+
+/* ── SDS Button ── */
+.chem-sds-btn {
+  padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700;
+  border: 1px solid var(--border); background: var(--card); color: var(--sub);
+  cursor: pointer; font-family: inherit; transition: all .15s; white-space: nowrap;
+}
+.chem-sds-btn.has-sds { border-color: var(--chem); color: var(--chem); }
+.chem-sds-btn.has-sds:hover { background: var(--chem); color: #fff; }
+.chem-sds-btn.no-sds { opacity: .45; cursor: not-allowed; }
+
+/* ── SDS Dialog ── */
+#sds-dialog {
+  padding: 0; border: none; border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+  max-width: 900px; width: 95vw; max-height: 92vh;
+  overflow: hidden; display: flex; flex-direction: column;
+}
+#sds-dialog::backdrop { background: rgba(0,0,0,.55); }
+.sds-dialog-head {
+  display: flex; align-items: center; gap: 10px; padding: 14px 18px;
+  border-bottom: 1px solid var(--border); background: var(--card); flex-shrink: 0;
+}
+.sds-dialog-title { flex: 1; font-size: 15px; font-weight: 700; }
+.sds-close-btn {
+  background: none; border: none; font-size: 20px; cursor: pointer;
+  color: var(--sub); padding: 0 4px; font-family: inherit;
+}
+.sds-close-btn:hover { color: var(--text); }
+#sds-frame { flex: 1; border: none; min-height: 560px; }
+
+/* ── Footer ── */
+footer {
+  text-align: center; padding: 18px 24px;
+  font-size: 12px; color: var(--sub);
+  border-top: 1px solid var(--border); background: var(--card);
+}
+
+/* ── Dark Toggle ── */
+#dark-toggle {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text); border-radius: 50%;
+  width: 44px; height: 44px; font-size: 20px;
+  cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── Dark Mode ── */
+body.dark {
+  --bg: #0f172a; --card: #1e293b; --border: #334155;
+  --text: #f1f5f9; --sub: #94a3b8;
+  --chem-light: #451a03; --chem-border: #78350f;
+  --green-light: #052e16; --red-light: #450a0a;
+}
+body.dark .module-nav a:not(.active) { background: #1e293b; }
+body.dark .drill-tab   { background: #1e293b; }
+body.dark .decl-card   { background: #1e293b; }
+body.dark .drill-badge.done    { background: #052e16; color: #4ade80; }
+body.dark .drill-badge.done-nd { background: #052e16; color: #4ade80; }
+body.dark .drill-badge.pending { background: #1e3a5f; color: #93c5fd; }
+body.dark .drill-badge.future  { background: #263349; color: #475569; border-color: #334155; }
+body.dark .stat-card   { background: #1e293b; }
+body.dark .info-note   { background: #451a03; border-color: #78350f; color: #fde68a; }
+body.dark .good-note   { background: #052e16; border-color: #166534; color: #86efac; }
+body.dark .chem-table th  { background: #263349; }
+body.dark .chem-table tr:hover td { background: #2d1b00; }
+body.dark .chem-table-wrap { background: #1e293b; }
+body.dark .priority-table th { background: #263349; }
+body.dark .area-ww   { background: #1e3054; color: #93c5fd; }
+body.dark .area-site { background: #431407; color: #fdba74; }
+body.dark .ghs-fire   { background: #450a0a; color: #fca5a5; }
+body.dark .ghs-corr   { background: #431407; color: #fed7aa; }
+body.dark .ghs-tox    { background: #1e293b; color: #cbd5e1; }
+body.dark .ghs-irrit  { background: #422006; color: #fcd34d; }
+body.dark .ghs-ox     { background: #422006; color: #fde68a; }
+body.dark .ghs-health { background: #1e3a5f; color: #93c5fd; }
+body.dark .ghs-env    { background: #052e16; color: #86efac; }
+body.dark .ghs-none   { background: #263349; color: #475569; }
+body.dark .chem-sds-btn { background: #263349; }
+body.dark .decl-icon  { background: #451a03; }
+
+@media (max-width: 700px) {
+  .stats-row  { grid-template-columns: 1fr 1fr; }
+  .decl-grid  { grid-template-columns: 1fr; }
+  main { padding: 20px 16px 48px; }
+  .page-hero { flex-direction: column; text-align: center; padding: 22px 20px; }
+  .chem-table th:nth-child(3), .chem-table td:nth-child(3) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<button type="button" id="dark-toggle" onclick="toggleDark()" title="切換深色／淺色模式">🌙</button>
+
+<header>
+  <a class="hdr-btn" href="../">← 系統首頁</a>
+  <h1>⚗️ 危害性化學品管理</h1>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <div class="hero-icon">⚗️</div>
+    <div class="hero-text">
+      <h2>危害性化學品管理系統</h2>
+      <p>全興廠化學品清冊（GHS 危害分類）、SDS 安全資料表索引、<br>
+         公共危險物品及優先管理化學品申報合規追蹤。</p>
+    </div>
+  </div>
+
+  <!-- Module Nav -->
+  <div class="module-nav">
+    <a href="#m1">📊 合規概覽<span class="nav-badge">已啟用</span></a>
+    <a href="#m2">🧪 化學品清冊<span class="nav-badge">已啟用</span></a>
+    <a href="#m3">📋 申報合規追蹤<span class="nav-badge">已啟用</span></a>
+    <a href="#m4">📄 SDS 文件索引<span class="nav-badge">已啟用</span></a>
+  </div>
+
+  <!-- ══ Module 1：合規概覽 ══ -->
+  <div class="section-block" id="m1">
+    <div class="section-label">
+      模組一・合規概覽
+      <span class="mod-tag active">已啟用</span>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num">9</div>
+        <div class="stat-label">廢水廠化學品種數</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">15</div>
+        <div class="stat-label">現場/油品化學品種數</div>
+      </div>
+      <div class="stat-card" id="decl-stat-card">
+        <div class="stat-num" id="decl-stat-num">—</div>
+        <div class="stat-label">當年度申報完成次數（共2次）</div>
+      </div>
+    </div>
+
+    <div class="good-note">
+      ✅ 本公司 24 種化學品均不屬於「作業環境監測紀錄應保存三十年之化學物質一覽表」（附表四）所列之特定化學物質。作業環境監測紀錄依一般規定保存 <strong>3 年</strong>即可。
+    </div>
+
+    <div class="info-note">
+      ⚠️ 法規依據：職業安全衛生法第 10 條、危害性化學品標示及通識規則。化學品清冊、SDS 及危害標示每年應更新核對，SDS 有效期限通常為 3 年。
+    </div>
+  </div>
+
+  <!-- ══ Module 2：化學品清冊 ══ -->
+  <div class="section-block" id="m2">
+    <div class="section-label">
+      模組二・化學品清冊（全興廠，民114年）
+      <span class="mod-tag active">已啟用</span>
+    </div>
+
+    <div class="chem-filter" id="chem-filter">
+      <button class="chem-filter-btn active" data-area="all"  onclick="filterChems('all')">全部（24種）</button>
+      <button class="chem-filter-btn"        data-area="wastewater" onclick="filterChems('wastewater')">💧 廢水廠（9種）</button>
+      <button class="chem-filter-btn"        data-area="site" onclick="filterChems('site')">🏭 現場/油品（15種）</button>
+    </div>
+
+    <div class="chem-table-wrap">
+      <table class="chem-table">
+        <thead>
+          <tr>
+            <th>化學品名稱</th>
+            <th>使用區域</th>
+            <th>濃度/型態</th>
+            <th>GHS 危害分類</th>
+            <th>SDS</th>
+          </tr>
+        </thead>
+        <tbody id="chem-tbody"></tbody>
+      </table>
+    </div>
+    <p class="drill-note" style="margin-top:10px">
+      資料來源：114年危害性化學品清冊（全興廠）　·　GHS分類依 CCB 化學品分類標示工具輸出
+    </p>
+  </div>
+
+  <!-- ══ Module 3：申報合規追蹤 ══ -->
+  <div class="section-block" id="m3">
+    <div class="section-label">
+      模組三・申報合規追蹤
+      <span class="mod-tag active">已啟用</span>
+    </div>
+
+    <!-- A: 公共危險物品申報 -->
+    <p style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:14px;">📋 公共危險物品申報（每半年・全興廠）</p>
+
+    <div class="info-note" style="margin-bottom:16px">
+      依「工廠危險物品申報辦法」規定，儲存達一定數量之公共危險物品，應每半年（<strong>1月</strong>及<strong>7月</strong>）向直轄市、縣市消防機關申報，並繳交公共意外責任險保單。
+    </div>
+
+    <div class="drill-tabs" id="decl-tabs"></div>
+    <div class="decl-grid" id="decl-grid"></div>
+    <p class="drill-note">✓ 已完成　✓* 完成待補日期　⟳ 待申報　— 未到期</p>
+
+    <!-- B: 優先管理化學品申報 -->
+    <p style="font-size:14px;font-weight:800;color:var(--text);margin:32px 0 14px;">📌 優先管理化學品申報（每年度・全興廠）</p>
+
+    <table class="priority-table">
+      <thead>
+        <tr>
+          <th>年度</th>
+          <th>申報狀態</th>
+          <th>備註</th>
+        </tr>
+      </thead>
+      <tbody id="priority-tbody"></tbody>
+    </table>
+    <p class="drill-note">依「毒性及關注化學物質管理法」，使用優先管理化學物質之工廠每年應申報。</p>
+  </div>
+
+  <!-- ══ Module 4：SDS 文件索引 ══ -->
+  <div class="section-block" id="m4">
+    <div class="section-label">
+      模組四・SDS 安全資料表索引
+      <span class="mod-tag active">已啟用</span>
+    </div>
+
+    <div class="info-note">
+      📁 SDS 檔案請上傳至 <code>chemical/sds/廢水廠/</code> 和 <code>chemical/sds/現場油品/</code> 目錄後即可線上預覽。SDS 有效期限請從各 SDS 封面確認並填入，通常為 <strong>3 年</strong>有效。
+    </div>
+
+    <div class="chem-table-wrap">
+      <table class="chem-table">
+        <thead>
+          <tr>
+            <th>化學品名稱</th>
+            <th>使用區域</th>
+            <th>SDS 有效至</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="sds-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="good-note" style="margin-top:16px">
+      📌 保存期限提醒：一般危害性化學品的 SDS 保存 <strong>3 年</strong>；若作業勞工曾接觸附表四所列特定化學物質（本公司目前不適用），相關紀錄需保存 <strong>30 年</strong>。
+    </div>
+  </div>
+
+</main>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+
+<!-- SDS Preview Dialog -->
+<dialog id="sds-dialog">
+  <div class="sds-dialog-head">
+    <span class="sds-dialog-title" id="sds-title">SDS 安全資料表</span>
+    <button class="sds-close-btn" onclick="closeSds()" title="關閉">✕</button>
+  </div>
+  <iframe id="sds-frame" src="" title="SDS 安全資料表預覽"></iframe>
+</dialog>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+//  化學品資料（全興廠，114年）
+//  area: 'wastewater'=廢水廠  'site'=現場/油品
+//  ghs:  'fire'易燃 'corr'腐蝕性 'tox'急毒性 'irrit'刺激性
+//         'ox'氧化性 'health'健康危害 'env'環境危害 'none'低危害
+//  sds:  相對路徑（空字串=尚未上傳）
+// ─────────────────────────────────────────────────────────────
+const CHEMICALS = [
+  // ── 廢水廠 ──
+  { name: 'PAC（聚氯化鋁）',               area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'sds/廢水廠/PAC-SDS.pdf' },
+  { name: '液鹼（氫氧化鈉 32%/45%）',      area:'wastewater', conc:'32%~45%',  ghs:['corr'],              sds:'sds/廢水廠/液鹼SDS.pdf' },
+  { name: '陰離子高分子聚合物 A-110',       area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'sds/廢水廠/陰離子SDS.pdf' },
+  { name: '陽離子助凝劑',                   area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'sds/廢水廠/陽性助凝劑SDS.pdf' },
+  { name: '消石灰（氫氧化鈣）',              area:'wastewater', conc:'固體粉末', ghs:['irrit','corr'],      sds:'sds/廢水廠/消石灰SDS.pdf' },
+  { name: '硫酸鋁 7.5%',                   area:'wastewater', conc:'7.5%',     ghs:['irrit'],             sds:'sds/廢水廠/硫酸鋁SDS.pdf' },
+  { name: '高分子凝集劑 FA-40B',            area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'sds/廢水廠/高分子凝集劑SDS.pdf' },
+  { name: '消泡劑',                         area:'wastewater', conc:'不詳',     ghs:['irrit'],             sds:'sds/廢水廠/消泡劑SDS.pdf' },
+  { name: '葡萄糖',                         area:'wastewater', conc:'不詳',     ghs:['none'],              sds:'' },
+  // ── 現場/油品 ──
+  { name: 'DICHNO 極壓機油 HD 系列',        area:'site', conc:'純物質',  ghs:['health','env'],       sds:'sds/現場油品/DICHNO極壓機油SDS.pdf' },
+  { name: 'SHELL 液壓油 AW32/46/68',        area:'site', conc:'純物質',  ghs:['health','env'],       sds:'sds/現場油品/SHELL液壓油SDS.pdf' },
+  { name: '金島高溫軸承牛油 NO.2/3',         area:'site', conc:'固體油脂', ghs:['env'],               sds:'sds/現場油品/金島軸承牛油SDS.pdf' },
+  { name: 'DICHNO 太古油 C-20 水性切削油',  area:'site', conc:'不詳',    ghs:['irrit','health'],     sds:'sds/現場油品/DICHNO太古油SDS.pdf' },
+  { name: '超級柴油',                        area:'site', conc:'純物質',  ghs:['fire','tox','env'],   sds:'sds/現場油品/超級柴油SDS.pdf' },
+  { name: '松香水',                          area:'site', conc:'純物質',  ghs:['fire','irrit'],       sds:'sds/現場油品/松香水SDS.pdf' },
+  { name: '調合漆（合成樹脂型）',             area:'site', conc:'不詳',    ghs:['fire','irrit'],       sds:'sds/現場油品/調合漆SDS.pdf' },
+  { name: '油漆溶劑（松香水）',              area:'site', conc:'不詳',    ghs:['fire','irrit'],       sds:'sds/現場油品/油漆溶劑SDS.pdf' },
+  { name: '洗衣粉（無香味）',                area:'site', conc:'固體',    ghs:['irrit'],              sds:'sds/現場油品/洗衣粉SDS.pdf' },
+  { name: 'WD-40 MUP Low Odor',             area:'site', conc:'噴霧劑',  ghs:['fire','env'],         sds:'sds/現場油品/WD-40-SDS.pdf' },
+  { name: 'Spray Lubricant 88（噴樂88）',   area:'site', conc:'噴霧劑',  ghs:['fire','env'],         sds:'sds/現場油品/噴樂88-SDS.pdf' },
+  { name: '矽利康',                          area:'site', conc:'膏狀',    ghs:['irrit'],              sds:'sds/現場油品/矽利康SDS.pdf' },
+  { name: '次氯酸鈉（漂白水）',              area:'site', conc:'不詳',    ghs:['ox','corr','env'],    sds:'sds/現場油品/次氯酸鈉SDS.pdf' },
+  { name: '片鹼（氫氧化鈉固體）',            area:'site', conc:'固體',    ghs:['corr'],               sds:'sds/現場油品/片鹼SDS.pdf' },
+  { name: '清罐脫氧劑',                      area:'site', conc:'不詳',    ghs:['corr'],               sds:'sds/現場油品/清罐脫氧劑SDS.pdf' },
+];
+
+// ─────────────────────────────────────────────────────────────
+//  公共危險物品申報（每半年：1月、7月）
+//  s: 'done'=已完成  'done-nodate'=完成待補日期  'pending'=待申報  'future'=未到期
+// ─────────────────────────────────────────────────────────────
+const DECLARATIONS = [
+  { roc:115, jan:{ s:'done-nodate' }, jul:{ s:'pending' } },
+  { roc:114, jan:{ s:'done-nodate' }, jul:{ s:'done-nodate' } },
+  { roc:113, jan:{ s:'done-nodate' }, jul:{ s:'done-nodate' } },
+  { roc:112, jan:{ s:'done-nodate' }, jul:{ s:'done-nodate' } },
+];
+
+// ─────────────────────────────────────────────────────────────
+//  優先管理化學品申報（每年度）
+// ─────────────────────────────────────────────────────────────
+const PRIORITY_DECL = [
+  { roc:115, s:'done-nodate', note:'全興廠聲明書已申報' },
+  { roc:114, s:'done-nodate', note:'全興廠聲明書已申報' },
+  { roc:113, s:'done-nodate', note:'全興廠聲明書已申報' },
+  { roc:112, s:'done-nodate', note:'' },
+];
+
+// ─────────────────────────────────────────────────────────────
+//  GHS 分類標籤定義
+// ─────────────────────────────────────────────────────────────
+const GHS_DEF = {
+  fire:   ['🔥 易燃',   'ghs-fire'],
+  corr:   ['⚠ 腐蝕性', 'ghs-corr'],
+  tox:    ['☠ 急毒性', 'ghs-tox'],
+  irrit:  ['！刺激性', 'ghs-irrit'],
+  ox:     ['⊕ 氧化性', 'ghs-ox'],
+  health: ['⬡ 健康危害','ghs-health'],
+  env:    ['🌿 環境危害','ghs-env'],
+  none:   ['— 低危害',  'ghs-none'],
+};
+
+function ghsHtml(codes) {
+  return '<div class="ghs-wrap">' +
+    codes.map(c => {
+      const d = GHS_DEF[c] || GHS_DEF.none;
+      return `<span class="ghs-badge ${d[1]}">${d[0]}</span>`;
+    }).join('') + '</div>';
+}
+
+function areaHtml(area) {
+  if (area === 'wastewater') return '<span class="area-tag area-ww">💧 廢水廠</span>';
+  return '<span class="area-tag area-site">🏭 現場/油品</span>';
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Module 2: 化學品清冊
+// ─────────────────────────────────────────────────────────────
+let currentFilter = 'all';
+
+function filterChems(area) {
+  currentFilter = area;
+  document.querySelectorAll('.chem-filter-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.area === area));
+  renderChemTable();
+}
+
+function renderChemTable() {
+  const list = currentFilter === 'all'
+    ? CHEMICALS
+    : CHEMICALS.filter(c => c.area === currentFilter);
+
+  document.getElementById('chem-tbody').innerHTML = list.map(c => {
+    const sdsBtn = c.sds
+      ? `<button class="chem-sds-btn has-sds" onclick="openSds('${c.name.replace(/'/g,"\\'")}','${c.sds}')">📄 預覽 SDS</button>`
+      : `<button class="chem-sds-btn no-sds" disabled>補充中</button>`;
+    return `<tr>
+      <td class="chem-name">${c.name}</td>
+      <td>${areaHtml(c.area)}</td>
+      <td style="font-size:12px;color:var(--sub)">${c.conc}</td>
+      <td>${ghsHtml(c.ghs)}</td>
+      <td>${sdsBtn}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Module 3A: 公共危險物品申報矩陣
+// ─────────────────────────────────────────────────────────────
+let activeRoc = DECLARATIONS[0].roc;
+
+function declBadgeHtml(item) {
+  if (!item) return '<span class="drill-badge future">— 未設定</span>';
+  if (item.s === 'done')         return `<span class="drill-badge done">✓ ${item.d}</span>`;
+  if (item.s === 'done-nodate')  return `<span class="drill-badge done-nd">✓ 已完成</span>`;
+  if (item.s === 'pending')      return `<span class="drill-badge pending">⟳ 待申報</span>`;
+  return `<span class="drill-badge future">— 未到期</span>`;
+}
+
+function renderDeclGrid(roc) {
+  activeRoc = roc;
+  document.querySelectorAll('.drill-tab').forEach(t =>
+    t.classList.toggle('active', +t.dataset.roc === roc));
+  const row = DECLARATIONS.find(r => r.roc === roc);
+  document.getElementById('decl-grid').innerHTML = `
+    <div class="decl-card">
+      <div class="decl-card-head">
+        <div class="decl-icon">📅</div>
+        <div>
+          <div class="decl-label">全興廠・上半年申報</div>
+          <div class="decl-period">1 月份</div>
+        </div>
+      </div>
+      <div class="decl-card-body">
+        <span class="half-label">公共危險物品申報</span>
+        ${declBadgeHtml(row.jan)}
+      </div>
+    </div>
+    <div class="decl-card">
+      <div class="decl-card-head">
+        <div class="decl-icon">📅</div>
+        <div>
+          <div class="decl-label">全興廠・下半年申報</div>
+          <div class="decl-period">7 月份</div>
+        </div>
+      </div>
+      <div class="decl-card-body">
+        <span class="half-label">公共危險物品申報</span>
+        ${declBadgeHtml(row.jul)}
+      </div>
+    </div>`;
+}
+
+function buildDeclMatrix() {
+  document.getElementById('decl-tabs').innerHTML = DECLARATIONS.map(r =>
+    `<button type="button" class="drill-tab${r.roc === activeRoc ? ' active' : ''}"
+     data-roc="${r.roc}" onclick="renderDeclGrid(${r.roc})">民${r.roc}年</button>`
+  ).join('');
+  renderDeclGrid(activeRoc);
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Module 3B: 優先管理化學品申報
+// ─────────────────────────────────────────────────────────────
+function buildPriorityTable() {
+  document.getElementById('priority-tbody').innerHTML = PRIORITY_DECL.map(r => {
+    const badge = (r.s === 'done' || r.s === 'done-nodate')
+      ? '<span class="drill-badge done">✓ 已申報</span>'
+      : '<span class="drill-badge pending">⟳ 待申報</span>';
+    return `<tr>
+      <td style="font-weight:700">民${r.roc}年（${r.roc + 1911 - 2000 > 9 ? r.roc + 1911 - 2000 : '0' + (r.roc + 1911 - 2000)} 年度）</td>
+      <td>${badge}</td>
+      <td style="font-size:12px;color:var(--sub)">${r.note || '—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Module 4: SDS 文件索引
+// ─────────────────────────────────────────────────────────────
+function buildSdsTable() {
+  document.getElementById('sds-tbody').innerHTML = CHEMICALS.map(c => {
+    const previewBtn = c.sds
+      ? `<button class="chem-sds-btn has-sds" onclick="openSds('${c.name.replace(/'/g,"\\'")}','${c.sds}')">👁 預覽</button>`
+      : `<button class="chem-sds-btn no-sds" disabled>尚未上傳</button>`;
+    return `<tr>
+      <td class="chem-name">${c.name}</td>
+      <td>${areaHtml(c.area)}</td>
+      <td style="font-size:12px;color:var(--sub)">待確認</td>
+      <td>${previewBtn}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Module 1: 合規概覽統計
+// ─────────────────────────────────────────────────────────────
+function buildOverview() {
+  const cur = DECLARATIONS[0];
+  let doneCount = 0;
+  if (cur.jan.s === 'done' || cur.jan.s === 'done-nodate') doneCount++;
+  if (cur.jul.s === 'done' || cur.jul.s === 'done-nodate') doneCount++;
+  document.getElementById('decl-stat-num').textContent = doneCount;
+}
+
+// ─────────────────────────────────────────────────────────────
+//  SDS Dialog
+// ─────────────────────────────────────────────────────────────
+function openSds(name, path) {
+  document.getElementById('sds-title').textContent = name + '　— SDS 安全資料表';
+  document.getElementById('sds-frame').src = path;
+  document.getElementById('sds-dialog').showModal();
+}
+function closeSds() {
+  document.getElementById('sds-dialog').close();
+  document.getElementById('sds-frame').src = '';
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Dark Mode
+// ─────────────────────────────────────────────────────────────
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('portal-dark', isDark ? '1' : '0');
+  document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
+}
+(function () {
+  if (localStorage.getItem('portal-dark') === '1') {
+    document.body.classList.add('dark');
+    document.getElementById('dark-toggle').textContent = '☀️';
+  }
+})();
+
+// ─────────────────────────────────────────────────────────────
+//  Init
+// ─────────────────────────────────────────────────────────────
+buildOverview();
+renderChemTable();
+buildDeclMatrix();
+buildPriorityTable();
+buildSdsTable();
+</script>
+<script src="../shared/sidebar.js"></script>
+</body>
+</html>
