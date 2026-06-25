@@ -1,6 +1,39 @@
 {
   "items": [
     {
+      "key": "ef31dc7cb67598c4",
+      "title": "勞動部修正發布「職業安全衛生管理規章及職業安全衛生管理計畫指導原則」",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/207058/",
+      "pubDate": "Thu, 25 Jun 2026 11:48:30 GMT",
+      "pubTs": 1782388110.0,
+      "desc": "「職業安全衛生管理辦法」部分修正條文定於115年7月1日施行，依修正條文第12條之1規定，雇主使勞工從事工作前，應就工作場所內之建築物、機械、設備等實施風險評估，並依事業單位規模、性質及風險評估結果訂定職業安全衛生管理計畫，期引導企業訂定符合需求之職業安全衛生管理計畫，落實職業安全衛生管理。 為配合…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "2ed469e425046ff7",
+      "title": "2026職場霸凌防治專章上路定義了什麼？誰來把關？人資、法務、職安、職醫／職護各該扮演什麼角色？",
+      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE5ObWdZQUhiTkRyNlU3ay1ZMl8zX1d4QXZ2dDNTSTJDcWZ1QklPVzBaU0poZGdoVzU2NlFwdlBCeWdnTmpSN0R3N0FGRQ?oc=5",
+      "pubDate": "Thu, 25 Jun 2026 03:55:39 GMT",
+      "pubTs": 1782359739.0,
+      "desc": "2026職場霸凌防治專章上路定義了什麼？誰來把關？人資、法務、職安、職醫／職護各該扮演什麼角色？&nbsp;&nbsp;CSR@天下",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "66e74a212f39590c",
+      "title": "詹江村嚴重惡化動手術 大嘆：難道是職業傷害？",
+      "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNaEVhOFRIejQ2NkYtSUN1dVctQS03N3lHZ0VYc0Y5NjlzR1Y1em9WZTJ3RUw4UnlPQjFaTTE5WE5CUHFYQjI3SmRqREZucGtpYnEwaklHWXpPTkZTbHU2bDVUNmF3R0tVZnhpVlNZQS0wMC0yXzF3SHpfX1RwTkJxVnlyRQ?oc=5",
+      "pubDate": "Thu, 25 Jun 2026 02:50:00 GMT",
+      "pubTs": 1782355800.0,
+      "desc": "詹江村嚴重惡化動手術 大嘆：難道是職業傷害？&nbsp;&nbsp;壹蘋新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "8844ebfa0dfb7b84",
       "title": "苗栗化工廠驚傳工安意外 泰籍移工遭底渣活埋搶救不治",
       "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5TV3RMWkkxT1dJQ0M4d1owZ1k3LVpEOWJ5anlTVDlMLUpYYV9pMVJTOHNjd0dfS25aMDQ0OTE1SXBuYTltSnpXaHRqeFp4N3JPWnc?oc=5",
@@ -40,6 +73,17 @@
       "pubDate": "Wed, 24 Jun 2026 15:26:54 GMT",
       "pubTs": 1782314814.0,
       "desc": "近日新竹地區接連發生工作者於局限空間作業時，吸入硫化氫及使用發電機導致一氧化碳中毒等災害事件，再次凸顯污水池、人孔等局限空間場所潛藏高度危險性。職安署強調，使勞工進入局限空間作業之事業單位務必嚴格落實「先通風、再測定、後作業」原則，以確保作業人員生命安全。 局限空間災害多發生於小型事業單位。由於其人…",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "29181a481325b39c",
+      "title": "苗栗工安意外！ 泰籍工人清理焚化爐遭崩落物掩埋傷重不治",
+      "link": "https://news.google.com/rss/articles/CBMiOkFVX3lxTE5XdG5IaU53WS1uRVBzbEdqX2djb0hMSFpDTVpVN3c1SEY0UU1Md0pQQzZiRnJSRzhVSkE?oc=5",
+      "pubDate": "Wed, 24 Jun 2026 14:10:17 GMT",
+      "pubTs": 1782310217.0,
+      "desc": "苗栗工安意外！ 泰籍工人清理焚化爐遭崩落物掩埋傷重不治&nbsp;&nbsp;ENN台灣電報",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -1216,7 +1260,7 @@
       "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9iOXhmODJUMHVHSnl1cVRha3lXSDdFMUFkTk9QcTdnMGQ5aVRwTDhLTXM3VTAyLXE4SjFORVY2d3pCSWlGVzREUHcxbEFrSWhM0gFWQVVfeXFMUDBEX3V1WXJqMWUxcUpPdjkwOVJsckkzWTFVRGlER0c5OENUZXkxUks4WWtxNGFKbGd2UlVYODFadnNhQ01lblYtZmR4T2RqcW5KR0tuOGc?oc=5",
       "pubDate": "Fri, 12 Jun 2026 07:00:00 GMT",
       "pubTs": 1781247600.0,
-      "desc": "神岡驚傳工安意外！47歲工人操作沖壓機 慘遭機台夾頭大量出血命危&nbsp;&nbsp;udn",
+      "desc": "神岡驚傳工安意外！47歲工人操作沖壓機 慘遭機台夾頭大量出血命危&nbsp;&nbsp;UDN",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -1376,5 +1420,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-06-25T00:38:26.741710+00:00"
+  "lastUpdated": "2026-06-25T04:55:38.543319+00:00"
 }
