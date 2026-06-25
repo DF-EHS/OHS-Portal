@@ -217,6 +217,13 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24p
 .ghs-env    { background: #f0fdf4; color: #15803d; }
 .ghs-none   { background: #f8fafc; color: #94a3b8; }
 
+/* ── Sub-section headings & note spacing ── */
+.sub-heading      { font-size:14px; font-weight:800; color:var(--text); margin-bottom:14px; }
+.sub-heading-gap  { margin-top:32px; }
+.note-source      { margin-top:10px; }
+.note-mb          { margin-bottom:16px; }
+.note-mt          { margin-top:16px; }
+
 /* ── SDS Button ── */
 .chem-sds-btn {
   padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700;
@@ -232,7 +239,10 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24p
   padding: 0; border: none; border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0,0,0,.3);
   max-width: 900px; width: 95vw; max-height: 92vh;
-  overflow: hidden; display: flex; flex-direction: column;
+  overflow: hidden;
+}
+#sds-dialog[open] {
+  display: flex; flex-direction: column;
 }
 #sds-dialog::backdrop { background: rgba(0,0,0,.55); }
 .sds-dialog-head {
@@ -379,9 +389,9 @@ body.dark .decl-icon  { background: #451a03; }
     </div>
 
     <div class="chem-filter" id="chem-filter">
-      <button class="chem-filter-btn active" data-area="all"  onclick="filterChems('all')">全部（24種）</button>
-      <button class="chem-filter-btn"        data-area="wastewater" onclick="filterChems('wastewater')">💧 廢水廠（9種）</button>
-      <button class="chem-filter-btn"        data-area="site" onclick="filterChems('site')">🏭 現場/油品（15種）</button>
+      <button type="button" class="chem-filter-btn active" data-area="all"  onclick="filterChems('all')">全部（24種）</button>
+      <button type="button" class="chem-filter-btn"        data-area="wastewater" onclick="filterChems('wastewater')">💧 廢水廠（9種）</button>
+      <button type="button" class="chem-filter-btn"        data-area="site" onclick="filterChems('site')">🏭 現場/油品（15種）</button>
     </div>
 
     <div class="chem-table-wrap">
@@ -398,7 +408,7 @@ body.dark .decl-icon  { background: #451a03; }
         <tbody id="chem-tbody"></tbody>
       </table>
     </div>
-    <p class="drill-note" style="margin-top:10px">
+    <p class="drill-note note-source">
       資料來源：114年危害性化學品清冊（全興廠）　·　GHS分類依 CCB 化學品分類標示工具輸出
     </p>
   </div>
@@ -411,9 +421,9 @@ body.dark .decl-icon  { background: #451a03; }
     </div>
 
     <!-- A: 公共危險物品申報 -->
-    <p style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:14px;">📋 公共危險物品申報（每半年・全興廠）</p>
+    <p class="sub-heading">📋 公共危險物品申報（每半年・全興廠）</p>
 
-    <div class="info-note" style="margin-bottom:16px">
+    <div class="info-note note-mb">
       依「工廠危險物品申報辦法」規定，儲存達一定數量之公共危險物品，應每半年（<strong>1月</strong>及<strong>7月</strong>）向直轄市、縣市消防機關申報，並繳交公共意外責任險保單。
     </div>
 
@@ -422,7 +432,7 @@ body.dark .decl-icon  { background: #451a03; }
     <p class="drill-note">✓ 已完成　✓* 完成待補日期　⟳ 待申報　— 未到期</p>
 
     <!-- B: 優先管理化學品申報 -->
-    <p style="font-size:14px;font-weight:800;color:var(--text);margin:32px 0 14px;">📌 優先管理化學品申報（每年度・全興廠）</p>
+    <p class="sub-heading sub-heading-gap">📌 優先管理化學品申報（每年度・全興廠）</p>
 
     <table class="priority-table">
       <thead>
@@ -462,7 +472,7 @@ body.dark .decl-icon  { background: #451a03; }
       </table>
     </div>
 
-    <div class="good-note" style="margin-top:16px">
+    <div class="good-note note-mt">
       📌 保存期限提醒：一般危害性化學品的 SDS 保存 <strong>3 年</strong>；若作業勞工曾接觸附表四所列特定化學物質（本公司目前不適用），相關紀錄需保存 <strong>30 年</strong>。
     </div>
   </div>
@@ -475,7 +485,7 @@ body.dark .decl-icon  { background: #451a03; }
 <dialog id="sds-dialog">
   <div class="sds-dialog-head">
     <span class="sds-dialog-title" id="sds-title">SDS 安全資料表</span>
-    <button class="sds-close-btn" onclick="closeSds()" title="關閉">✕</button>
+    <button type="button" class="sds-close-btn" onclick="closeSds()" title="關閉">✕</button>
   </div>
   <iframe id="sds-frame" src="" title="SDS 安全資料表預覽"></iframe>
 </dialog>
