@@ -6,10 +6,10 @@
 <title>人因性危害預防系統 | 大豐環保科技</title>
 <style>
 :root {
-  --accent: #0e7490; --accent-h: #164e63;
-  --accent-bg: #ecfeff; --accent-bd: #a5f3fc;
-  --bg: #f0f9ff; --card: #fff; --border: #e0f2fe;
-  --text: #0c4a6e; --sub: #64748b;
+  --accent: #059669; --accent-h: #065f46;
+  --accent-bg: #ecfdf5; --accent-bd: #a7f3d0;
+  --bg: #f0fdf4; --card: #fff; --border: #d1fae5;
+  --text: #064e3b; --sub: #64748b;
   --red: #dc2626; --orange: #ea580c; --amber: #d97706; --green: #16a34a;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -17,7 +17,7 @@ body { font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif; background: 
 
 /* Header */
 header {
-  background: linear-gradient(135deg, #083344 0%, #0e7490 55%, #22d3ee 100%);
+  background: linear-gradient(135deg, #064e3b 0%, #059669 55%, #34d399 100%);
   color: #fff; padding: 14px 24px;
   display: flex; align-items: center; gap: 12px;
   position: sticky; top: 0; z-index: 200;
@@ -81,7 +81,7 @@ main { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
 
 /* Notice */
 .notice { padding: 12px 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
-.notice.info { background: var(--accent-bg); border: 1px solid var(--accent-bd); color: #083344; }
+.notice.info { background: var(--accent-bg); border: 1px solid var(--accent-bd); color: #064e3b; }
 .notice.warn { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
 .notice.err  { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
 .notice.ok   { background: #f0fdf4; border: 1px solid #bbf7d0; color: #14532d; }
@@ -179,7 +179,7 @@ main { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
 /* Login */
 #login-page {
   position: fixed; inset: 0; z-index: 500;
-  background: linear-gradient(135deg, #083344 0%, #0e7490 55%, #22d3ee 100%);
+  background: linear-gradient(135deg, #064e3b 0%, #059669 55%, #34d399 100%);
   display: flex; align-items: center; justify-content: center;
 }
 .login-card {
@@ -187,7 +187,7 @@ main { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
   width: 360px; max-width: 90vw; box-shadow: 0 20px 60px rgba(0,0,0,.3); text-align: center;
 }
 .login-icon { font-size: 52px; margin-bottom: 10px; }
-.login-card h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; color: #083344; }
+.login-card h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; color: #064e3b; }
 .login-card p { font-size: 13px; color: var(--sub); margin-bottom: 24px; }
 .login-err { color: var(--red); font-size: 13px; margin-bottom: 12px; display: none; }
 
@@ -211,7 +211,7 @@ main { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
 }
 
 /* Dark */
-body.dark { background: #0f172a; --card: #1e293b; --border: #334155; --text: #e2e8f0; --sub: #94a3b8; --bg: #0f172a; --accent-bg: #0c2d3d; --accent-bd: #164e63; }
+body.dark { background: #0f172a; --card: #1e293b; --border: #334155; --text: #e2e8f0; --sub: #94a3b8; --bg: #0f172a; --accent-bg: #022c22; --accent-bd: #065f46; }
 body.dark .home-card, body.dark .bp-btn { background: #1e293b; }
 body.dark .field input, body.dark .field select, body.dark .field textarea { background: #1e293b; color: #e2e8f0; }
 body.dark .tbl th { background: #1e293b; }
