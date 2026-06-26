@@ -194,9 +194,6 @@
       <a class="nav-item" href="https://hr-corptraining.zerozero.tw/certificates" target="_blank">
         <span class="nav-icon">🪪</span>證照管理
       </a>
-      <a class="nav-item" href="https://check-system.gm.zerozero.tw/dashboard" target="_blank">
-        <span class="nav-icon">📋</span>自動點檢系統
-      </a>
       <a class="nav-item" href="${BASE}contract/" data-match="/contract/">
         <span class="nav-icon">🏗️</span>承攬商管理系統
       </a>
@@ -220,6 +217,9 @@
       <div class="nav-section">機械設備</div>
       <a class="nav-item" href="${BASE}equipment/" data-match="/equipment/">
         <span class="nav-icon">⚙️</span>機械設備管理
+      </a>
+      <a class="nav-item" href="https://check-system.gm.zerozero.tw/dashboard" target="_blank">
+        <span class="nav-icon">📋</span>自動點檢系統
       </a>
 
       <div class="nav-section">個人工具</div>
