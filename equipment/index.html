@@ -185,6 +185,40 @@ main { flex: 1; max-width: 1100px; margin: 0 auto; width: 100%; padding: 32px 24
 /* ── No results ── */
 #no-results { display: none; text-align: center; padding: 40px; color: var(--sub); font-size: 15px; }
 
+/* ── SOP Modal ── */
+#sop-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,.6); align-items: center; justify-content: center;
+}
+#sop-overlay.open { display: flex; }
+#sop-modal {
+  background: var(--card); border-radius: 16px;
+  width: min(1280px, 95vw); height: 90vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 80px rgba(0,0,0,.45);
+  overflow: hidden;
+}
+#sop-modal-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 18px; flex-shrink: 0;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1d4ed8 100%);
+  color: #fff;
+}
+#sop-modal-title {
+  flex: 1; font-size: 15px; font-weight: 700;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sop-m-btn {
+  padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.12);
+  color: #fff; cursor: pointer; font-family: inherit; white-space: nowrap;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
+  transition: background .15s;
+}
+.sop-m-btn:hover { background: rgba(255,255,255,.28); color: #fff; }
+.sop-m-close { padding: 6px 11px; font-size: 17px; line-height: 1; }
+#sop-iframe { flex: 1; border: none; width: 100%; min-height: 0; }
+
 /* ── Footer ── */
 footer {
   text-align: center; padding: 18px 24px;
@@ -214,6 +248,7 @@ body.dark .sop-card { background: #1e293b; }
 body.dark #sop-search { background: #1e293b; color: #f1f5f9; }
 body.dark .placeholder-box { background: #1e293b; border-color: #334155; }
 body.dark .info-note { background: #1e3a5f; border-color: #1e40af; color: #93c5fd; }
+body.dark #sop-modal { background: #1e293b; }
 
 @media (max-width: 700px) {
   main { padding: 20px 16px 48px; }
@@ -281,7 +316,7 @@ body.dark .info-note { background: #1e3a5f; border-color: #1e40af; color: #93c5f
     </div>
 
     <div class="info-note">
-      📄 共 <strong>29 份</strong>安全作業標準，涵蓋作業類、廠區設備、再生處理設備及其他設備。點擊任一卡片即可在新分頁開啟對應 SOP。
+      📄 共 <strong>29 份</strong>安全作業標準，涵蓋作業類、廠區設備、再生處理設備及其他設備。點擊任一卡片即可在頁面內預覽，並可列印或下載 PDF。
     </div>
 
     <div class="sop-toolbar">
@@ -573,6 +608,19 @@ body.dark .info-note { background: #1e3a5f; border-color: #1e40af; color: #93c5f
 
 </main>
 
+<!-- ── SOP Modal ── -->
+<div id="sop-overlay">
+  <div id="sop-modal" onclick="event.stopPropagation()">
+    <div id="sop-modal-head">
+      <span id="sop-modal-title">安全作業標準</span>
+      <button class="sop-m-btn" onclick="printSOP()" title="列印或另存為 PDF">⬇ 下載 PDF</button>
+      <a id="sop-newwin" class="sop-m-btn" href="#" target="_blank" title="在新分頁開啟">↗ 新分頁</a>
+      <button class="sop-m-btn sop-m-close" onclick="closeSOP()" title="關閉">✕</button>
+    </div>
+    <iframe id="sop-iframe" src=""></iframe>
+  </div>
+</div>
+
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
 
 <script>
@@ -601,6 +649,31 @@ function filterSOPs(q) {
     q ? `顯示 ${visible} / 29 份` : '共 29 份安全作業標準';
   document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
 }
+
+// ── SOP Modal ────────────────────────────────────────────────
+function openSOP(name, href) {
+  document.getElementById('sop-modal-title').textContent = name + '　安全作業標準';
+  document.getElementById('sop-iframe').src = href;
+  document.getElementById('sop-newwin').href = href;
+  document.getElementById('sop-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSOP() {
+  document.getElementById('sop-overlay').classList.remove('open');
+  document.getElementById('sop-iframe').src = '';
+  document.body.style.overflow = '';
+}
+function printSOP() {
+  document.getElementById('sop-iframe').contentWindow.print();
+}
+document.getElementById('sop-overlay').addEventListener('click', closeSOP);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSOP(); });
+document.addEventListener('click', function(e) {
+  const card = e.target.closest('a.sop-card');
+  if (!card) return;
+  e.preventDefault();
+  openSOP(card.dataset.name, card.getAttribute('href'));
+});
 
 // ── Dark Mode ────────────────────────────────────────────────
 function toggleDark() {
