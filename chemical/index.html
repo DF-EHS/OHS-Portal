@@ -797,9 +797,9 @@ function renderChemTable() {
          <a class="chem-sds-btn has-sds" href="${c.sds}" download style="margin-left:4px;text-decoration:none">⬇</a>`
       : `<button class="chem-sds-btn no-sds" disabled>補充中</button>`;
     const safetyOps = SDS_DETAILS[c.name]
-      ? `<button class="chem-sds-btn safety-btn" onclick="openSafetyDrawer('${n}')" style="margin-top:5px">🛡 安全資訊</button>`
+      ? `<button type="button" class="chem-sds-btn safety-btn" onclick="openSafetyDrawer('${n}')">🛡 安全資訊</button>`
       : '';
-    const ops = `<div style="display:flex;flex-direction:column;align-items:flex-start">${sdsOps}${safetyOps}</div>`;
+    const ops = `<div style="display:flex;flex-direction:row;align-items:center;gap:4px;flex-wrap:nowrap">${sdsOps}${safetyOps}</div>`;
     return `<tr>
       <td class="chem-name">${c.name}</td>
       <td>${areaHtml(c.area)}</td>
