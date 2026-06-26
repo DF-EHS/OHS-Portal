@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>機械設備管理系統 — 大豐環保科技</title>
+  <style>
+    :root {
+      --accent:  #2563eb;
+      --accent2: #1d4ed8;
+      --navy:    #0f172a;
+      --mid:     #1e3a5f;
+      --bg:      #f1f5f9;
+      --card:    #ffffff;
+      --border:  #e2e8f0;
+      --text:    #1e293b;
+      --sub:     #64748b;
+      --cat-a:   #7c3aed;  /* 作業類 */
+      --cat-b:   #0891b2;  /* 廠區設備 */
+      --cat-c:   #059669;  /* 再生處理 */
+      --cat-d:   #d97706;  /* 其他設備 */
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+      background: var(--bg); color: var(--text); font-size: 14px;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 55%, #2563eb 100%);
+      color: #fff; padding: 14px 24px;
+      display: flex; align-items: center; gap: 12px;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 16px rgba(0,0,0,.4);
+    }
+    header h1 { font-size: 18px; font-weight: 700; }
+    .hdr-sub { font-size: 12px; color: #93c5fd; margin-left: 12px; }
+    .hdr-brand { display: flex; align-items: center; gap: 7px; margin-left: auto; flex-shrink: 0; }
+    .hdr-brand img { height: 24px; object-fit: contain; }
+    .hdr-brand span { font-size: 12px; color: #94a3b8; font-weight: 600; white-space: nowrap; }
+
+    /* ── Breadcrumb ── */
+    #breadcrumb {
+      padding: 8px 24px; background: #fff;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px; color: var(--sub);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .bc-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 12px; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      transition: background .15s, color .15s; border: none;
+    }
+    .bc-home { background: var(--navy); color: #fff; }
+    .bc-home:hover { background: #16305a; }
+    .bc-cur { background: #f1f5f9; color: var(--sub); cursor: default; }
+    .sep { color: #cbd5e1; }
+
+    /* ── Module Tabs ── */
+    #tabs {
+      display: flex; gap: 0;
+      background: #fff;
+      border-bottom: 2px solid var(--border);
+      padding: 0 24px;
+    }
+    .tab-btn {
+      padding: 14px 24px;
+      font-size: 14px; font-weight: 600;
+      cursor: pointer; border: none;
+      background: none; color: var(--sub);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      display: flex; align-items: center; gap: 8px;
+      transition: color .15s, border-color .15s;
+    }
+    .tab-btn:hover { color: var(--accent); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-badge {
+      font-size: 11px; font-weight: 700;
+      background: var(--accent); color: #fff;
+      border-radius: 10px; padding: 1px 7px;
+    }
+    .tab-btn:not(.active) .tab-badge { background: #e2e8f0; color: var(--sub); }
+
+    /* ── Main content ── */
+    #main { padding: 28px 24px; max-width: 1400px; }
+
+    /* ── MODULE PANELS ── */
+    .module-panel { display: none; }
+    .module-panel.active { display: block; }
+
+    /* ── Module 1 Placeholder ── */
+    .placeholder-box {
+      background: var(--card); border: 2px dashed var(--border);
+      border-radius: 16px; padding: 60px 32px;
+      text-align: center; color: var(--sub);
+    }
+    .placeholder-icon { font-size: 56px; margin-bottom: 16px; }
+    .placeholder-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .placeholder-sub { font-size: 14px; line-height: 1.7; color: var(--sub); }
+    .placeholder-note {
+      display: inline-block; margin-top: 20px;
+      background: #eff6ff; color: var(--accent);
+      border: 1px solid #bfdbfe; border-radius: 8px;
+      padding: 8px 20px; font-size: 13px; font-weight: 600;
+    }
+
+    /* ── Module 2 Search bar ── */
+    #sop-toolbar {
+      display: flex; gap: 12px; align-items: center;
+      margin-bottom: 24px; flex-wrap: wrap;
+    }
+    #sop-search {
+      flex: 1; min-width: 200px; max-width: 380px;
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 9px 14px; font-size: 14px; font-family: inherit;
+      outline: none; background: var(--card);
+      transition: border-color .15s;
+    }
+    #sop-search:focus { border-color: var(--accent); }
+    .sop-stats { font-size: 13px; color: var(--sub); margin-left: auto; }
+
+    /* ── Category section ── */
+    .cat-section { margin-bottom: 36px; }
+    .cat-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px; padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+    }
+    .cat-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .cat-title { font-size: 16px; font-weight: 700; color: var(--text); }
+    .cat-count {
+      font-size: 12px; color: #fff; font-weight: 700;
+      background: var(--sub); border-radius: 10px;
+      padding: 1px 8px; margin-left: 4px;
+    }
+
+    /* ── SOP Card grid ── */
+    .sop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .sop-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex; flex-direction: column;
+      gap: 10px;
+      transition: box-shadow .15s, transform .15s, border-color .15s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+    .sop-card:hover {
+      box-shadow: 0 6px 24px rgba(37,99,235,.15);
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+    .sop-card-icon { font-size: 28px; }
+    .sop-card-name { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.4; }
+    .sop-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+    .cat-badge {
+      font-size: 11px; font-weight: 700;
+      border-radius: 6px; padding: 2px 8px;
+    }
+    .sop-open-btn {
+      font-size: 12px; color: var(--accent);
+      font-weight: 600; white-space: nowrap;
+    }
+    .sop-card:hover .sop-open-btn::after { content: " →"; }
+
+    /* Hidden when search filters out */
+    .sop-card.hidden { display: none; }
+    .cat-section.hidden { display: none; }
+
+    /* ── No results ── */
+    #no-results {
+      display: none; text-align: center; padding: 40px;
+      color: var(--sub); font-size: 15px;
+    }
+
+    /* dark mode */
+    body.dark {
+      --bg: #0f172a; --card: #1e293b; --border: #334155;
+      --text: #f1f5f9; --sub: #94a3b8;
+    }
+    body.dark header { box-shadow: 0 2px 16px rgba(0,0,0,.6); }
+    body.dark #tabs, body.dark #breadcrumb { background: #1e293b; }
+    body.dark #sop-search { background: #1e293b; color: #f1f5f9; }
+
+    @media (max-width: 600px) {
+      #main { padding: 16px; }
+      .sop-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span style="font-size:22px;">⚙️</span>
+  <h1>機械設備管理系統</h1>
+  <span class="hdr-sub">Machinery &amp; Equipment Management</span>
+  <div class="hdr-brand">
+    <img src="../上地球logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
+
+<div id="breadcrumb">
+  <a class="bc-btn bc-home" href="../">🏠 首頁</a>
+  <span class="sep">›</span>
+  <span class="bc-btn bc-cur">⚙️ 機械設備管理系統</span>
+</div>
+
+<div id="tabs">
+  <button class="tab-btn active" onclick="switchTab('inventory')">
+    📋 模組一｜設備清冊
+    <span class="tab-badge">即將上線</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('sop')">
+    📄 模組二｜安全作業標準
+    <span class="tab-badge" id="sop-count">29</span>
+  </button>
+</div>
+
+<div id="main">
+
+  <!-- ════════ MODULE 1：設備清冊 ════════ -->
+  <div id="panel-inventory" class="module-panel active">
+    <div class="placeholder-box">
+      <div class="placeholder-icon">📋</div>
+      <div class="placeholder-title">設備清冊</div>
+      <div class="placeholder-sub">
+        設備清冊資料建置中，請提供設備清單後即可匯入。<br>
+        清冊將包含：設備編號、設備名稱、所在位置、保養週期、下次保養日期等資訊。
+      </div>
+      <div class="placeholder-note">⏳ 資料準備中，稍候即可建置</div>
+    </div>
+  </div>
+
+  <!-- ════════ MODULE 2：安全作業標準 ════════ -->
+  <div id="panel-sop" class="module-panel">
+
+    <div id="sop-toolbar">
+      <input id="sop-search" type="text" placeholder="🔍 搜尋作業名稱…" oninput="filterSOPs(this.value)">
+      <span class="sop-stats" id="sop-visible-count">共 29 份安全作業標準</span>
+    </div>
+
+    <div id="no-results">找不到符合的安全作業標準</div>
+
+    <!-- 作業類 -->
+    <div class="cat-section" id="cat-a">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:var(--cat-a);"></div>
+        <span class="cat-title">作業類</span>
+        <span class="cat-count" style="background:var(--cat-a);">7</span>
+      </div>
+      <div class="sop-grid">
+        <a class="sop-card" href="sop/人工搬運作業安全作業標準.html" target="_blank" data-name="人工搬運作業">
+          <div class="sop-card-icon">📦</div>
+          <div class="sop-card-name">人工搬運作業</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/使用貨車從事搬運作業安全作業標準.html" target="_blank" data-name="使用貨車從事搬運作業">
+          <div class="sop-card-icon">🚛</div>
+          <div class="sop-card-name">使用貨車從事搬運作業</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/公務車輛使用作業安全作業標準.html" target="_blank" data-name="公務車輛使用作業">
+          <div class="sop-card-icon">🚗</div>
+          <div class="sop-card-name">公務車輛使用作業</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/吊掛作業安全作業標準.html" target="_blank" data-name="吊掛作業">
+          <div class="sop-card-icon">🏗️</div>
+          <div class="sop-card-name">吊掛作業</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/粉碎作業安全作業標準.html" target="_blank" data-name="粉碎作業">
+          <div class="sop-card-icon">🔨</div>
+          <div class="sop-card-name">粉碎作業</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/產品包裝作業安全作業標準.html" target="_blank" data-name="產品包裝作業">
+          <div class="sop-card-icon">📫</div>
+          <div class="sop-card-name">產品包裝作業</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/外銷成品包裝作業安全作業標準.html" target="_blank" data-name="外銷成品包裝作業">
+          <div class="sop-card-icon">🚢</div>
+          <div class="sop-card-name">外銷成品包裝作業</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 廠區設備 -->
+    <div class="cat-section" id="cat-b">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:var(--cat-b);"></div>
+        <span class="cat-title">廠區設備</span>
+        <span class="cat-count" style="background:var(--cat-b);">7</span>
+      </div>
+      <div class="sop-grid">
+        <a class="sop-card" href="sop/固定式起重機安全作業標準.html" target="_blank" data-name="固定式起重機">
+          <div class="sop-card-icon">🏋️</div>
+          <div class="sop-card-name">固定式起重機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/鐵桶裁切機安全作業標準.html" target="_blank" data-name="鐵桶裁切機">
+          <div class="sop-card-icon">✂️</div>
+          <div class="sop-card-name">鐵桶裁切機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/夾子車安全作業標準.html" target="_blank" data-name="夾子車">
+          <div class="sop-card-icon">🚜</div>
+          <div class="sop-card-name">夾子車</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/堆高機安全作業標準.html" target="_blank" data-name="堆高機">
+          <div class="sop-card-icon">🏗️</div>
+          <div class="sop-card-name">堆高機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/廢水設施操作安全作業標準.html" target="_blank" data-name="廢水設施操作">
+          <div class="sop-card-icon">💧</div>
+          <div class="sop-card-name">廢水設施操作</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/臥式打包機安全作業標準.html" target="_blank" data-name="臥式打包機">
+          <div class="sop-card-icon">📦</div>
+          <div class="sop-card-name">臥式打包機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/玻璃分選安全作業標準.html" target="_blank" data-name="玻璃分選">
+          <div class="sop-card-icon">🔬</div>
+          <div class="sop-card-name">玻璃分選</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 再生處理設備 -->
+    <div class="cat-section" id="cat-c">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:var(--cat-c);"></div>
+        <span class="cat-title">再生處理設備</span>
+        <span class="cat-count" style="background:var(--cat-c);">7</span>
+      </div>
+      <div class="sop-grid">
+        <a class="sop-card" href="sop/粉碎機安全作業標準.html" target="_blank" data-name="粉碎機">
+          <div class="sop-card-icon">⚙️</div>
+          <div class="sop-card-name">粉碎機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/吹膜機安全作業標準.html" target="_blank" data-name="吹膜機">
+          <div class="sop-card-icon">🌀</div>
+          <div class="sop-card-name">吹膜機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/烘料機安全作業標準.html" target="_blank" data-name="烘料機">
+          <div class="sop-card-icon">🔥</div>
+          <div class="sop-card-name">烘料機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/萬馬力混煉機安全作業標準.html" target="_blank" data-name="萬馬力混煉機">
+          <div class="sop-card-icon">🔩</div>
+          <div class="sop-card-name">萬馬力混煉機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/造粒設備安全作業標準.html" target="_blank" data-name="造粒設備">
+          <div class="sop-card-icon">🔧</div>
+          <div class="sop-card-name">造粒設備</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/拌料機安全作業標準.html" target="_blank" data-name="拌料機">
+          <div class="sop-card-icon">🔄</div>
+          <div class="sop-card-name">拌料機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/射出機安全作業標準.html" target="_blank" data-name="射出機">
+          <div class="sop-card-icon">💉</div>
+          <div class="sop-card-name">射出機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 其他設備 -->
+    <div class="cat-section" id="cat-d">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:var(--cat-d);"></div>
+        <span class="cat-title">其他設備</span>
+        <span class="cat-count" style="background:var(--cat-d);">8</span>
+      </div>
+      <div class="sop-grid">
+        <a class="sop-card" href="sop/打包機安全作業標準.html" target="_blank" data-name="打包機">
+          <div class="sop-card-icon">📦</div>
+          <div class="sop-card-name">打包機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/立式打包機安全作業標準.html" target="_blank" data-name="立式打包機">
+          <div class="sop-card-icon">📦</div>
+          <div class="sop-card-name">立式打包機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/挖掘機安全作業標準.html" target="_blank" data-name="挖掘機">
+          <div class="sop-card-icon">🦾</div>
+          <div class="sop-card-name">挖掘機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/恆溫箱安全作業標準.html" target="_blank" data-name="恆溫箱">
+          <div class="sop-card-icon">🌡️</div>
+          <div class="sop-card-name">恆溫箱</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/地磅安全作業標準.html" target="_blank" data-name="地磅">
+          <div class="sop-card-icon">⚖️</div>
+          <div class="sop-card-name">地磅</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/熔融指數測定機安全作業標準.html" target="_blank" data-name="熔融指數測定機">
+          <div class="sop-card-icon">🔭</div>
+          <div class="sop-card-name">熔融指數測定機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/半自動包膜機安全作業標準.html" target="_blank" data-name="半自動包膜機">
+          <div class="sop-card-icon">🎁</div>
+          <div class="sop-card-name">半自動包膜機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+        <a class="sop-card" href="sop/色選機安全作業標準.html" target="_blank" data-name="色選機">
+          <div class="sop-card-icon">🎨</div>
+          <div class="sop-card-name">色選機</div>
+          <div class="sop-card-footer">
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="sop-open-btn">開啟</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- end panel-sop -->
+</div><!-- end main -->
+
+<script src="../shared/sidebar.js"></script>
+<script>
+  // ── Tab switching ──────────────────────────────────────────────────────────
+  function switchTab(name) {
+    document.querySelectorAll('.module-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  // ── SOP Search ─────────────────────────────────────────────────────────────
+  function filterSOPs(q) {
+    q = q.trim().toLowerCase();
+    let visible = 0;
+
+    document.querySelectorAll('.sop-card').forEach(card => {
+      const name = card.dataset.name.toLowerCase();
+      const match = !q || name.includes(q);
+      card.classList.toggle('hidden', !match);
+      if (match) visible++;
+    });
+
+    // Hide empty categories
+    document.querySelectorAll('.cat-section').forEach(sec => {
+      const anyVisible = [...sec.querySelectorAll('.sop-card')].some(c => !c.classList.contains('hidden'));
+      sec.classList.toggle('hidden', !anyVisible);
+    });
+
+    document.getElementById('sop-visible-count').textContent =
+      q ? `顯示 ${visible} / 29 份` : '共 29 份安全作業標準';
+    document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  // ── Dark mode persistence ──────────────────────────────────────────────────
+  if (localStorage.getItem('ohs-dark') === '1') document.body.classList.add('dark');
+</script>
+</body>
+</html>

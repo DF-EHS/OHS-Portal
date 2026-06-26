@@ -214,6 +214,11 @@
         <span class="nav-icon">🧯</span>消防管理
       </a>
 
+      <div class="nav-section">機械設備</div>
+      <a class="nav-item" href="${BASE}equipment/" data-match="/equipment/">
+        <span class="nav-icon">⚙️</span>機械設備管理
+      </a>
+
       <div class="nav-section">個人工具</div>
       <a class="nav-item" href="${BASE}tasks/" data-match="/tasks/">
         <span class="nav-icon">✅</span>職安工作中樞
