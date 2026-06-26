@@ -1,6 +1,72 @@
 {
   "items": [
     {
+      "key": "a6371e7c6e20df8e",
+      "title": "職安法新制 7 月上路！南投縣政府推 AI 智慧巡檢「反霸凌」宣導",
+      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBJTFRWcWVBRlp5U0JxaDgtc05pczZZcWlHbUs5dm1JVHdka3hSUFI5TDlncWVLTVM0Vk9rektaQnF5UV8xWnlHRWpacDJEWUw0OUZr?oc=5",
+      "pubDate": "Fri, 26 Jun 2026 04:37:59 GMT",
+      "pubTs": 1782448679.0,
+      "desc": "職安法新制 7 月上路！南投縣政府推 AI 智慧巡檢「反霸凌」宣導&nbsp;&nbsp;台灣好報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "2e7b6e71d4f2d6a2",
+      "title": "米克拉颱風北上及西南風增強易有豪雨發生 事業單位應加強戶外及鄰水作業安全",
+      "link": "https://www.osha.gov.tw/48110/48417/48419/207111/",
+      "pubDate": "Thu, 25 Jun 2026 16:35:27 GMT",
+      "pubTs": 1782405327.0,
+      "desc": "依中央氣象署最新預報資料顯示，受輕度颱風米克拉北上，鋒面接近及西南風影響，屏東縣、高雄市有局部大豪雨，各地亦有大雨或豪雨發生之機率，應注意雷擊、強陣風，山區須慎防坍方、落石、土石流及溪水暴漲。勞動部職業安全衛生署提醒，從事營造、道路維修、河川整治、邊坡維護、農林漁牧及其他戶外作業之事業單位，應加強防…",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "eb370f170a163e5b",
+      "title": "網路流傳「只要同事訂雞排沒揪就是職場霸凌」嗎？答案是：要同時符合5大要件，經過調查程序後，才能認定是職場霸凌",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/207052/",
+      "pubDate": "Thu, 25 Jun 2026 16:20:20 GMT",
+      "pubTs": 1782404420.0,
+      "desc": "關於近期網路上流傳許多職場「踩霸凌紅線」行為的說法，容易造成誤解，例如，只要同事們一起訂雞排沒揪就是職場霸凌？只要主管不給員工請假就是職場霸凌？在工作群組中散布同事負面言論也是踩到霸凌的紅線？或是其他令人不舒服的對待方式。 職安署表示，職場中難免會有人與人之間的意見不合、口角衝突等，這些令人不愉快或…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "a37cfb9f6cf9a93b",
+      "title": "澳洲離岸基礎設施監管機構(OIR)代表拜會職安署，交流離岸風電職業安全衛生管理經驗",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/207101/",
+      "pubDate": "Thu, 25 Jun 2026 15:00:28 GMT",
+      "pubTs": 1782399628.0,
+      "desc": "澳洲離岸基礎設施監管機構(Offshore Infrastructure Regulator, OIR) Owen Wilson執行處長，偕同丹麥商哥本哈根離岸風力開發股份有限公司(COP)及沃旭能源(Ørsted)環安衛主管，於本（115）年6月25日拜會勞動部職業安全衛生署，由林毓堂署長親自接待…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "7817155d4379c3a5",
+      "title": "快訊》新北驚爆工安意外！中和2工人墜電梯井骨折送醫- 社會",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9jTDF0ZGlMei1RdHRUZmxqZm5RQ2o3SWZFYlpKZlJkSjVTbWhQeS1IYllNelhYcG5xb2ItRTlXOWVXSW1rb3dqaUtic3BmRWdMQ3dyX0VFMWV0Q3l1NWF4OEVTRHMtRzA0alo1UUln?oc=5",
+      "pubDate": "Thu, 25 Jun 2026 12:50:17 GMT",
+      "pubTs": 1782391817.0,
+      "desc": "快訊》新北驚爆工安意外！中和2工人墜電梯井骨折送醫- 社會&nbsp;&nbsp;中時新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "2380b4b11dd6b996",
+      "title": "職場霸凌防治專章7月將上路 勞動部推出指導手冊|內政",
+      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFBDSGxGSXZESXlxU21xSUlBR0FGNVJnNEpUcUR1eVJ3VUVpc01JdDFoSkQ0QzVyNTByRzNGY2E5djhPTHhRMDJtSGdRbw?oc=5",
+      "pubDate": "Thu, 25 Jun 2026 12:00:00 GMT",
+      "pubTs": 1782388800.0,
+      "desc": "職場霸凌防治專章7月將上路 勞動部推出指導手冊|內政&nbsp;&nbsp;僑務電子報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "ef31dc7cb67598c4",
       "title": "勞動部修正發布「職業安全衛生管理規章及職業安全衛生管理計畫指導原則」",
       "link": "https://www.osha.gov.tw/48110/48417/48423/207058/",
@@ -10,6 +76,39 @@
       "source_id": "osha_announce",
       "source_name": "職安署公告",
       "badge": "green"
+    },
+    {
+      "key": "07ef536c31a5eaf0",
+      "title": "職安零災害！農村水保署南投分署 x 中促會 首場營造業安全衛生教育訓練",
+      "link": "https://news.google.com/rss/articles/CBMiwgNBVV95cUxQd05UNUZraU9VUExMbmVLenROeVZJdkdsaXZMcnRPSllwMTdEQnR4TU1LQ2d2T2t5eGJ3RXdzWVVhQkRwWlhXamJ2M1RKdGNnRlBTSmlObW1peDhLZFg1VjlybENRcG9nR0N6RlIwOUNjMTFzTHFDcW5lOUZqMFFfS1hxR0tMekJaTHRwaUt1UlRhRVh2a1FjNVdLRzJCWU4yc0tnRTNsQ1E2VkFkeGtoMGJfYkJwNVllbm9mTERTWXRtTnlCMlZVSHhBSnF1VXBpWmlJUmd5Mko2Y0lheXJuNFFvNnJyWUdIS1hOa3R1ZS1mbVNLb1JTV2RENmF3dFhvRFNiWXdNVEdNUjY0bTBVOUJiS1N4bnJNejNYRlVZVWFOWS1IbWxubEVZd0lLdk1VUUxmOVNLelc3enRwVXZuV3dJeTN0UmpsdVFKQVpFQmRsazc0cUhFMGkwbVI5WEVGVnFEZV9VajZ5TENVMTRMVkR6Z2E4SzB1UldwbE1NTXNoTHozb3lkZXdRYnhZd3BHT2RCdmpfYVBYNE0wWFgyei0yaGZGLXlncWdtcmZfbExUaGtkSXBxYzg3RUVXZ0tGT3c?oc=5",
+      "pubDate": "Thu, 25 Jun 2026 10:50:50 GMT",
+      "pubTs": 1782384650.0,
+      "desc": "職安零災害！農村水保署南投分署 x 中促會 首場營造業安全衛生教育訓練&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "1c28a4e8957a69c5",
+      "title": "台南市勞工局推動職災勞工關懷與重建陪伴職災勞工走出低谷重返職場",
+      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE15cnVkWUgxUlpJY0JMR3NXVjlvMHNLWE8xM2Qyc0hKbl9iU0xRa3FBN0NCNTdlVV9vT2JMYXo2ZkRnS2NjbjRXcA?oc=5",
+      "pubDate": "Thu, 25 Jun 2026 06:41:34 GMT",
+      "pubTs": 1782369694.0,
+      "desc": "台南市勞工局推動職災勞工關懷與重建陪伴職災勞工走出低谷重返職場&nbsp;&nbsp;台灣民眾電子報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "bf2c5d090869371d",
+      "title": "共同守護工地安全！ 中市勞工局辦職安觀摩活動 強化營造業防災量能",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFB6VE82UjNmeWlsUEp5UG53TnB1anB4c2lienRhUVE5YlBrVFJQVTBKRURHNFEyX3o1YUlzY3pQVlMyOWRfUXhnckJFWVE3SUFkU1E?oc=5",
+      "pubDate": "Thu, 25 Jun 2026 06:11:34 GMT",
+      "pubTs": 1782367894.0,
+      "desc": "共同守護工地安全！ 中市勞工局辦職安觀摩活動 強化營造業防災量能&nbsp;&nbsp;taichung.gov.tw",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "2ed469e425046ff7",
@@ -34,6 +133,28 @@
       "badge": "red"
     },
     {
+      "key": "a826283ee54051a2",
+      "title": "詹江村嚴重惡化動手術 大嘆：難道是職業傷害？",
+      "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1zTXR3MU5sU01TX0tGdkNpaFF6ellPMklpbjFwVGFPZDdnVWZIYnA3UmFjMlA0UkVlc3RidFpFNlVyX3U2WldlRmRpY3dWZXBCcWdQR21KU2NQTXU3TnhsLWY1UEhKNFNzLURKdmZPdDBPUkY3NkpJMlVNSm1tUWc?oc=5",
+      "pubDate": "Thu, 25 Jun 2026 02:50:00 GMT",
+      "pubTs": 1782355800.0,
+      "desc": "詹江村嚴重惡化動手術 大嘆：難道是職業傷害？&nbsp;&nbsp;壹蘋新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "9e27f610c6caac17",
+      "title": "勞工朋友注意！3職業工會欠繳保費 勞保局示警列黑名單 - 生活新聞 - PChome Online 新聞",
+      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNTnVqa2ljZ2Y5Y01zbzNYNERZZDJQX1JhS1p4cVJkX0VVWTRDNDI4NHRnckhWTkp0dF8tYnUtaEd1U3lFSG0xUDJqX0NNQ1RhczdkRnYxZFlvMXI4OTNZRlZnZWMtSEZ4Z2JHYWxTbmI0NDFIRnVFTlA3aHQ1NjNzb2FDRF9HMGs4?oc=5",
+      "pubDate": "Thu, 25 Jun 2026 00:59:25 GMT",
+      "pubTs": 1782349165.0,
+      "desc": "勞工朋友注意！3職業工會欠繳保費 勞保局示警列黑名單 - 生活新聞 - PChome Online 新聞&nbsp;&nbsp;PChome Online 新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "8844ebfa0dfb7b84",
       "title": "苗栗化工廠驚傳工安意外 泰籍移工遭底渣活埋搶救不治",
       "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5TV3RMWkkxT1dJQ0M4d1owZ1k3LVpEOWJ5anlTVDlMLUpYYV9pMVJTOHNjd0dfS25aMDQ0OTE1SXBuYTltSnpXaHRqeFp4N3JPWnc?oc=5",
@@ -43,17 +164,6 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
-    },
-    {
-      "key": "eb370f170a163e5b",
-      "title": "網路流傳「只要同事訂雞排沒揪就是職場霸凌」嗎？答案是：要同時符合5大要件，經過調查程序後，才能認定是職場霸凌",
-      "link": "https://www.osha.gov.tw/48110/48417/48423/207052/",
-      "pubDate": "Wed, 24 Jun 2026 18:03:59 GMT",
-      "pubTs": 1782324239.0,
-      "desc": "關於近期網路上流傳許多職場「踩霸凌紅線」行為的說法，容易造成誤解，例如，只要同事們一起訂雞排沒揪就是職場霸凌？只要主管不給員工請假就是職場霸凌？在工作群組中散布同事負面言論也是踩到霸凌的紅線？或是其他令人不舒服的對待方式。 職安署表示，職場中難免會有人與人之間的意見不合、口角衝突等，這些令人不愉快或…",
-      "source_id": "osha_announce",
-      "source_name": "職安署公告",
-      "badge": "green"
     },
     {
       "key": "24a51edd25a664cc",
@@ -155,6 +265,17 @@
       "badge": "red"
     },
     {
+      "key": "0561b68673d01d3e",
+      "title": "苗栗化工廠工安意外！泰籍移工遭爐渣壓埋 搶救不治",
+      "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFA5NDJxMXRHM3UtdDJGRHRfdnluOE5UWXZfNkZKYjQtb2lmclI3X3BQMEVlUm9jSGFRNjlUcUhZYXlOYmhNb0ZXeWJ4MzRCVS14TEJOajU5WFB5aFdtMURoQVFxaTlVSlXSAWxBVV95cUxOX1czTEZ6OUpaY2ZSR3MyZFNKVG5qdXBPV0ZmUDUyV2s5SzdNRXVQcUlxR0JhWmNScFFzZVdoMl9mMUoxNnc3em1BS09OTG5sVFdJRnY1LWZhOGc5YUZsQUdhc2llVHJEcG9RdjU?oc=5",
+      "pubDate": "Wed, 24 Jun 2026 05:47:21 GMT",
+      "pubTs": 1782280041.0,
+      "desc": "苗栗化工廠工安意外！泰籍移工遭爐渣壓埋 搶救不治&nbsp;&nbsp;自由時報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "896c9c90170301ee",
       "title": "苗栗工安意外！清理焚化爐遭爐渣掩埋 泰籍工人送醫不治",
       "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9Xc2lGQWZRV0gtVnVzMElsLUh1NlM2QUthb3FIRm9JZUszajNGRHZlNjhnQ29hdUZoQjhxUXVEVGlpNmh3dzVFTm1rMW5kQXFkeGtCaXhROFFZeVktWlhvU08ya3RfQ2VEUktwc2lKSUZNQlhpcERucDJmMUZyRVE?oc=5",
@@ -194,6 +315,17 @@
       "pubDate": "Wed, 24 Jun 2026 03:38:59 GMT",
       "pubTs": 1782272339.0,
       "desc": "被主管冷落算職場霸凌嗎？7月新制5大認定要件一次看－中央社&nbsp;&nbsp;商周",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "2837d178e0c7e7b8",
+      "title": "主管下班傳LINE就算職場霸凌？勞動部揭「判斷標準」、不必然違規",
+      "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNSjNteGVTd3NJcjVuNWxHcVNTbWpHZ1Z5ZWtzZFRCSUxrTWEyRHFQczZ0eEpDd1N4Z2kwLW9ZaTVCQXNyd0U0Q1JKSnUyMHNNaFk3RDV2dDQ4QkJIWVB6cTJrZGk5VmZiSmhJdTQ1TXotbTFRcU5SN3hFd2hodjZGVWo3c0ZxM082UXc?oc=5",
+      "pubDate": "Wed, 24 Jun 2026 02:43:04 GMT",
+      "pubTs": 1782268984.0,
+      "desc": "主管下班傳LINE就算職場霸凌？勞動部揭「判斷標準」、不必然違規&nbsp;&nbsp;104職場力",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
@@ -298,6 +430,17 @@
       "badge": "purple"
     },
     {
+      "key": "cd579f71ac05c18e",
+      "title": "配合職安法職場霸凌防治新制將上路 勞動部發布子法及配套措施協助企業落實法遵、打造健康友善職場",
+      "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1nZFMzNFRvb0FYbzVSeWZmY3JCbjdDNjR3djFpbm5BZmJndWtrcE0xcDhGLXpkTHZQV0twVEhFZnNqUFBmdkJvWG4tWWt2bWZaVkF4Y0prRHJ4SGZI?oc=5",
+      "pubDate": "Tue, 23 Jun 2026 06:38:12 GMT",
+      "pubTs": 1782196692.0,
+      "desc": "配合職安法職場霸凌防治新制將上路 勞動部發布子法及配套措施協助企業落實法遵、打造健康友善職場&nbsp;&nbsp;mol.gov.tw",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "7dcc33db2410a834",
       "title": "泰山社宅工地發生工安意外 住都中心：全力協助家屬",
       "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9id1BYRDZFaVl1VXFxZEVqR1V3MFhUYUZaWUpicTVQYzhUYUNzQjBpQWpNNUNTVWF1TVFHTE1ZckRkMDZxcFV2NnRJQ1hib2t2bkdFSVNR0gFWQVVfeXFMT2J3UFhENkVpWXVVcXFkRWpHVXcwWFRhRlpZSmJxNVBjOFRhQ3NCMGlBak01Q1NVYXVNUUdMTVlyRGQwNnFwVXY2dElDWGJva3ZuR0VJU1E?oc=5",
@@ -325,7 +468,7 @@
       "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE16aDRlaU5tY3RfMzh6OHZWWlluem5KbGdUU0hNYmJxVUNka2tvQ2NlNENCcS1QcWx6eWNPQjYtdTNrS2h5d2RpU1RqTHViaktnVWx1bEUyMmExWV9mZXB1RDkxajFwUFl6UWxuM0xNUjA?oc=5",
       "pubDate": "Tue, 23 Jun 2026 00:32:00 GMT",
       "pubTs": 1782174720.0,
-      "desc": "辦實事︱工傷賠償三年無果 網友留言后已到賬&nbsp;&nbsp;人民网贵州",
+      "desc": "辦實事︱工傷賠償三年無果 網友留言后已到賬&nbsp;&nbsp;人民网",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -774,8 +917,8 @@
       "key": "ca9ad241c29f96f8",
       "title": "先受訓再進場！ 中市推職安卡訓練守護營造安全",
       "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5vYjUxZEcwb3FaT3F2d0FzNlRpWHhUdXVyLUY2UEJpT2p5cFZWal9XZ2hSZkl0ZzlQMXBHMzJIMnJDV1VsWDhtbl80RmlsYTk2MHhkWS1ZbEdsaTB6YWVN?oc=5",
-      "pubDate": "Tue, 16 Jun 2026 08:15:30 GMT",
-      "pubTs": 1781597730.0,
+      "pubDate": "Tue, 16 Jun 2026 07:00:00 GMT",
+      "pubTs": 1781593200.0,
       "desc": "先受訓再進場！ 中市推職安卡訓練守護營造安全&nbsp;&nbsp;taichung.gov.tw",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
@@ -829,17 +972,6 @@
       "key": "9910d750ac0793d6",
       "title": "北市文山區傳工安意外 55歲工人慘遭鋼材重壓當場死亡",
       "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBGSzdDODBablFleW9XVFNZb25hajFlNG82WWp5WDlaRTNrRzlzTkRpcUVIYWdJSUp4cW5TVUs5Mk5Yd19wQ19FVVhLVEVYcnJhcmhZbkdn0gFWQVVfeXFMUEZLN0M4MFpuUWV5b1dUU1lvbmFqMWU0bzZZanlYOVpFM2tHOXNORGlxRUhhZ0lJSnhxblNVSzkyTlh3X3BDX0VVWEtURVhycmFyaFluR2c?oc=5",
-      "pubDate": "Mon, 15 Jun 2026 11:05:42 GMT",
-      "pubTs": 1781521542.0,
-      "desc": "北市文山區傳工安意外 55歲工人慘遭鋼材重壓當場死亡&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "df7308b94c9f6f48",
-      "title": "北市文山區傳工安意外 55歲工人慘遭鋼材重壓當場死亡",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5WcU5sOW9EUHB1bGFsUHNiNkFMZGVBQ3l1bUNwbS1rOG9xa2k3YllwWHFkS3Ewcl81cEZaZmVnX3JjSUs5NU5PT0F5QWZCMnpw0gFWQVVfeXFMUEZLN0M4MFpuUWV5b1dUU1lvbmFqMWU0bzZZanlYOVpFM2tHOXNORGlxRUhhZ0lJSnhxblNVSzkyTlh3X3BDX0VVWEtURVhycmFyaFluR2c?oc=5",
       "pubDate": "Mon, 15 Jun 2026 11:05:42 GMT",
       "pubTs": 1781521542.0,
       "desc": "北市文山區傳工安意外 55歲工人慘遭鋼材重壓當場死亡&nbsp;&nbsp;UDN",
@@ -920,6 +1052,17 @@
       "pubDate": "Mon, 15 Jun 2026 10:32:12 GMT",
       "pubTs": 1781519532.0,
       "desc": "北市文山區工安意外！鐵工廠H型鋼材掉落 55歲工人遭砸身亡&nbsp;&nbsp;台視新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "df7308b94c9f6f48",
+      "title": "北市文山區傳工安意外 55歲工人慘遭鋼材重壓當場死亡",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5WcU5sOW9EUHB1bGFsUHNiNkFMZGVBQ3l1bUNwbS1rOG9xa2k3YllwWHFkS3Ewcl81cEZaZmVnX3JjSUs5NU5PT0F5QWZCMnpw0gFWQVVfeXFMUEZLN0M4MFpuUWV5b1dUU1lvbmFqMWU0bzZZanlYOVpFM2tHOXNORGlxRUhhZ0lJSnhxblNVSzkyTlh3X3BDX0VVWEtURVhycmFyaFluR2c?oc=5",
+      "pubDate": "Mon, 15 Jun 2026 07:00:00 GMT",
+      "pubTs": 1781506800.0,
+      "desc": "北市文山區傳工安意外 55歲工人慘遭鋼材重壓當場死亡&nbsp;&nbsp;UDN",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -1277,28 +1420,6 @@
       "badge": "red"
     },
     {
-      "key": "956d2b82383e1304",
-      "title": "提升監測成效及保護勞工健康 勞動部大幅修正「勞工作業環境監測實施辦法」",
-      "link": "https://www.osha.gov.tw/48110/48417/48419/204647/",
-      "pubDate": "Fri, 12 Jun 2026 04:00:00 GMT",
-      "pubTs": 1781236800.0,
-      "desc": "為引導雇主確實掌握勞工作業場所的有害暴露風險，落實保護勞工健康，勞動部於6月12日修正發布《勞工作業環境監測實施辦法》，除擴增監測項目、強化監測規劃與執行品質外，亦導入企業自主管理審核機制，讓監測制度更能落實把關，作為預防職業病及改善工作環境的重要依據。 勞動部說明，為了更能反映勞工作業的真實暴露情…",
-      "source_id": "gnews_law",
-      "source_name": "法規更新",
-      "badge": "teal"
-    },
-    {
-      "key": "669157461a57f537",
-      "title": "落實起重機源頭防災 勞動部擴大起重機汰舊換新補助 每輛最高可達140萬元",
-      "link": "https://www.osha.gov.tw/48110/48417/48419/204654/",
-      "pubDate": "Fri, 12 Jun 2026 04:00:00 GMT",
-      "pubTs": 1781236800.0,
-      "desc": "為降低移動式起重機因結構老舊衍生之安全風險，落實「強化職場減災行動計畫」，勞動部於今日修正發布「移動式起重機汰舊換新及強化安全作業補助要點」。本次修正除擴大補助對象，並新增關鍵零組件維修補助，單輛最高補助金額達140萬元，期盼透過實質的經費挹注減輕中小企業或自營作業者負擔，鼓勵雇主踴躍申請，共同打造…",
-      "source_id": "gnews_law",
-      "source_name": "法規更新",
-      "badge": "teal"
-    },
-    {
       "key": "a18a9737287616c9",
       "title": "職安署強化列管產品線上審核流程，縮短民眾申辦案件時程",
       "link": "https://www.osha.gov.tw/48110/48417/48423/204550/",
@@ -1420,5 +1541,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-06-25T04:55:38.543319+00:00"
+  "lastUpdated": "2026-06-26T05:00:55.724812+00:00"
 }
