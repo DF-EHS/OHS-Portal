@@ -238,6 +238,55 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24p
 .chem-sds-btn.has-sds { border-color: var(--chem); color: var(--chem); }
 .chem-sds-btn.has-sds:hover { background: var(--chem); color: #fff; }
 .chem-sds-btn.no-sds { opacity: .45; cursor: not-allowed; }
+.chem-sds-btn.safety-btn { border-color: var(--navy); color: var(--navy); }
+.chem-sds-btn.safety-btn:hover { background: var(--navy); color: #fff; }
+body.dark .chem-sds-btn.safety-btn { border-color: #93c5fd; color: #93c5fd; }
+body.dark .chem-sds-btn.safety-btn:hover { background: #1e3a5f; color: #fff; }
+
+/* ── Safety Drawer ── */
+#safety-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.45); z-index: 400;
+}
+#safety-overlay.open { display: block; }
+#safety-drawer {
+  position: fixed; top: 0; right: -440px; width: 420px; max-width: 96vw;
+  height: 100vh; z-index: 401;
+  background: var(--card);
+  display: flex; flex-direction: column;
+  box-shadow: -6px 0 32px rgba(0,0,0,.18);
+  transition: right .27s cubic-bezier(.4,0,.2,1);
+  overflow: hidden;
+}
+#safety-drawer.open { right: 0; }
+.safety-head {
+  display: flex; align-items: flex-start; gap: 10px; padding: 16px 18px;
+  background: linear-gradient(135deg, #78350f 0%, #b45309 45%, #d97706 100%);
+  color: #fff; flex-shrink: 0;
+}
+.safety-head-text { flex: 1; }
+.safety-head-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; opacity: .75; margin-bottom: 4px; }
+.safety-head-name  { font-size: 15px; font-weight: 800; line-height: 1.3; }
+.safety-close {
+  background: rgba(255,255,255,.18); border: none; border-radius: 6px;
+  color: #fff; font-size: 16px; cursor: pointer; padding: 4px 9px;
+  font-family: inherit; flex-shrink: 0; margin-top: 2px;
+}
+.safety-close:hover { background: rgba(255,255,255,.32); }
+.safety-body { flex: 1; overflow-y: auto; padding: 18px 18px 32px; }
+.safety-sec {
+  background: var(--bg); border-radius: 10px; padding: 13px 15px;
+  border-left: 3px solid var(--chem); margin-bottom: 14px;
+}
+.safety-sec-head {
+  font-size: 10px; font-weight: 800; letter-spacing: 2px;
+  color: var(--sub); margin-bottom: 7px;
+  display: flex; align-items: center; gap: 5px;
+}
+.safety-sec-icon { font-size: 13px; }
+.safety-sec-text { font-size: 13px; color: var(--text); line-height: 1.75; }
+.safety-est { font-size: 11px; color: var(--sub); font-style: italic; margin-top: 6px; }
+body.dark .safety-sec { background: #263349; }
 
 /* ── SDS Status Badges ── */
 .sds-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
@@ -467,6 +516,19 @@ body.dark .decl-icon  { background: #451a03; }
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
 
+<!-- Safety Info Drawer -->
+<div id="safety-overlay" onclick="closeSafetyDrawer()"></div>
+<div id="safety-drawer">
+  <div class="safety-head">
+    <div class="safety-head-text">
+      <div class="safety-head-label">SDS 安全快速資訊</div>
+      <div class="safety-head-name" id="safety-name">—</div>
+    </div>
+    <button class="safety-close" onclick="closeSafetyDrawer()">✕</button>
+  </div>
+  <div class="safety-body" id="safety-body"></div>
+</div>
+
 <!-- SDS Preview Dialog -->
 <dialog id="sds-dialog">
   <div class="sds-dialog-head">
@@ -477,6 +539,153 @@ body.dark .decl-icon  { background: #451a03; }
 </dialog>
 
 <script>
+// ─────────────────────────────────────────────────────────────
+//  SDS 五項核心安全資訊（提煉自各 SDS 第 2/6/7/8 節）
+//  標注 (推估) 者為掃描版 PDF 依化學品性質推估，請以實際 SDS 為準
+// ─────────────────────────────────────────────────────────────
+const SDS_DETAILS = {
+  '液鹼（氫氧化鈉 32%/45%）': {
+    healthHazard:   '具強腐蝕性，接觸皮膚或眼睛造成嚴重灼傷，吸入霧滴刺激鼻咽及肺並可能引發肺水腫，嚴重時導致永久性失明。',
+    physicalHazard: '不可燃；與鋁、鋅等金屬反應釋放易燃氫氣；與強酸接觸劇烈反應放熱。',
+    ppe:            '防滲橡膠手套、化學安全護目鏡（附面遮）、防噴濺防護衣、防毒口罩（高濃度時）。',
+    spillResponse:  '以惰性吸收物圍堵，收入塑膠桶止漏；稀酸中和後以大量清水沖洗；不可直接排入水溝。',
+    storage:        '陰涼乾燥通風處，遠離強酸、有機物及金屬；使用不鏽鋼容器（40℃以下）；設防溢堤。',
+  },
+  '陽離子助凝劑': {
+    healthHazard:   '非危害品；眼睛接觸可能引起輕微暫時性結膜炎；皮膚接觸無明顯毒性，大量食入無毒性（LD50 >5000 mg/kg）。',
+    physicalHazard: '固體顆粒，不可燃；與氧化物接觸可能發生放熱反應；潮濕時地板極度濕滑。',
+    ppe:            '橡膠手套、安全眼鏡；粉塵超過 10 mg/m³ 時配戴防塵口罩；必要時穿防化學品圍裙。',
+    spillResponse:  '勿用水沖洗（造成地板濕滑）；以真空吸塵器清理置入封閉容器後再用水沖洗殘留。',
+    storage:        '保存於乾燥室內（0～35℃），避免潮濕；遠離氧化性物質；保存期限兩年。',
+  },
+  '消石灰（氫氧化鈣）': {
+    healthHazard:   '腐蝕性粉末，皮膚接觸引起灼傷，眼睛接觸造成嚴重損傷（可能角膜灼傷），吸入粉塵引起呼吸困難及化學性支氣管炎。',
+    physicalHazard: '不可燃；與強酸劇烈反應放熱；與磷反應生成可自燃的膦；與硝化有機物可能形成爆炸性物質。',
+    ppe:            '防滲天然橡膠手套、防塵護目鏡或全面罩、防滲連身防護衣及工作靴；工作區備淋浴沖眼設備。',
+    spillResponse:  '以砂土等惰性物質圍堵；少量可大量清水稀釋；大量洩漏聯絡消防及緊急應變單位求助。',
+    storage:        '陰涼乾燥通風處，遠離熱源及強酸；密閉防水容器避免吸收空氣中 CO₂；清掃時避免揚塵。',
+  },
+  '硫酸鋁 7.5%': {
+    healthHazard:   '刺激皮膚及眼睛，高濃度液體可能造成口腔灼傷、胃出血及腎傷害；吸入粉塵引起喉嚨痛及氣道充血收縮。',
+    physicalHazard: '不可燃；具腐蝕性（第 8 類），低 pH（約 3）液體；與強鹼激烈反應；可能腐蝕金屬容器。',
+    ppe:            '防滲手套、化學安全護目鏡及全面罩、連身防護衣及工作靴；防酸粉塵與霧滴之呼吸防護具。',
+    spillResponse:  '以土砂或其他吸收物質阻止洩漏；小量以不反應吸收劑吸收裝容器；大量聯絡消防應變單位。',
+    storage:        '貯存於抗腐蝕容器，陰涼乾燥處；保持建議溫度防結晶（液態）；照明通風系統需抗腐蝕。',
+  },
+  '高分子凝集劑 FA-40B': {
+    healthHazard:   '吞食及皮膚接觸有害，吸入粉塵過量可能造成呼吸困難，眼睛接觸有刺激性；對食道產生不適及作嘔。',
+    physicalHazard: '白色固體顆粒，不可燃（分解溫度 >200℃）；地面有水時外漏產生地滑；避免與氧化性物質接觸。',
+    ppe:            '安全眼鏡、防護手套；粉塵過量時設置局部排氣裝置；穿著工作衣物。',
+    spillResponse:  '固體以容器回收；高濃度液體以大量水沖洗稀釋；不可將高濃度液體直接排至河川。',
+    storage:        '避免陽光直射及潮濕存放；遠離氧化性物質及有機過氧化物；保存期限兩年。',
+  },
+  'WD-40 MUP Low Odor': {
+    healthHazard:   '吸入性危害物質第 1 級；若吞食並進入呼吸道可致命（化學性肺炎）；吸入高濃度蒸氣引起頭痛、暈眩及中樞神經抑制。',
+    physicalHazard: '極度易燃氣膠（第 1 級）；加壓容器遇熱可能爆裂；蒸氣比空氣重，沿地面傳至遠處引火源可能回火爆炸。',
+    ppe:            '作業場所使用安全護目鏡；長期大量接觸時配戴橡膠手套及防護衣；必要時使用有機蒸氣濾罐呼吸防護具。',
+    spillResponse:  '移除所有引火源並通風；以惰性吸收劑圍堵回收液體置入容器；徹底清理洩漏區域並告知主管機關。',
+    storage:        '陰涼通風處，遠離氧化劑；不可曝露超過 50℃ 或陽光直射；不得刺穿或焚燒容器。',
+  },
+  'Spray Lubricant 88（噴樂88）': {
+    healthHazard:   '含正己烷，長期重複暴露可能損傷神經系統及生殖系統；吸入高濃度引發中樞神經抑制（頭暈、嗜睡）；吸入性肺炎風險（第 1 級）。',
+    physicalHazard: '極度易燃氣膠（第 1 級），加壓氣體；遇熱爆炸；蒸氣比空氣重，密閉空間具爆炸危害；燃燒釋放一氧化碳。',
+    ppe:            '通風不良時配戴有機蒸氣濾罐呼吸防護具；橡膠手套；安全護目鏡；密閉空間使用 SCBA。',
+    spillResponse:  '撤離現場，移除火源，保持通風；使用不產生火花工具；皂土或蛭石吸附收入金屬容器；覆蓋排水道防污。',
+    storage:        '密閉容器置通風良好處；不可超過 50℃ 或陽光直射；遠離酸性物及氧化劑；不得刺穿或焚燒。',
+  },
+  '松香水': {
+    healthHazard:   '吸入蒸氣引起頭痛、頭暈、噁心及呼吸道刺激；皮膚長期接觸造成脫脂、乾裂及皮膚炎；誤食可能引起肺炎或致命。',
+    physicalHazard: '易燃液體（第 3 級），閃火點約 40℃；蒸氣比空氣重，可沿地面遠距引燃回火；高溫或密閉空間有爆炸危險。',
+    ppe:            '有機蒸氣濾罐防毒面罩、防化學品手套、防濺護目鏡；通風不良時配戴 SCBA；穿著防化學品防護衣。',
+    spillResponse:  '移除火源並通風；以砂土吸附小量洩漏置入容器；大量洩漏築堤圍堵；避免流入下水道及水源。',
+    storage:        '陰涼乾燥通風處，遠離火源及熱源；使用接地防靜電容器；遠離氧化劑；嚴禁煙火。',
+  },
+  '油漆溶劑（松香水）': {
+    healthHazard:   '蒸氣刺激眼睛、皮膚及呼吸道；高濃度暴露可造成動作不協調、失去意識乃至死亡；長期接觸可損傷肝臟及腎臟。',
+    physicalHazard: '高度易燃液體（第 3 級），閃火點 36～41℃；蒸氣比空氣重，遠處可引燃回火；爆炸界限下限約 1%。',
+    ppe:            '有機蒸氣化學防毒面罩（依濃度選型）、防化學品手套、防濺安全護目鏡、防化學品衣物；通風不良時使用 SCBA。',
+    spillResponse:  '移除火源並站上風處；小量以砂粒等不燃物吸附入容器；大量築堤圍堵；進密閉空間前先充分通風。',
+    storage:        '陰涼乾燥通風良好處，嚴禁煙火；與不相容物質分開儲存；接地防靜電；不使用時容器保持緊密。',
+  },
+  '調合漆（合成樹脂型）': {
+    healthHazard:   '蒸氣及霧滴刺激眼睛、皮膚及呼吸道；長期吸入溶劑蒸氣可損傷神經系統及肝腎；誤食有吸入性肺炎風險。',
+    physicalHazard: '含易燃溶劑，易燃液體（第 3 級）；閃火點約 30～40℃；蒸氣比空氣重，可沿地面傳遞至遠處引火源。',
+    ppe:            '有機蒸氣濾罐防毒面罩、防化學品手套、防飛濺護目鏡、防護衣物；密閉空間作業需使用 SCBA。',
+    spillResponse:  '移除所有引火源；以不燃性吸收材料（砂土）吸附並裝入密封容器；大量洩漏築堤圍堵；避免流入下水道。',
+    storage:        '陰涼乾燥通風處儲存，遠離熱源、火花及明火；嚴禁煙火；容器保持密閉；與氧化劑分開存放。',
+  },
+  '次氯酸鈉（漂白水）': {
+    healthHazard:   '具強腐蝕性，造成皮膚及眼睛灼傷；與酸混合釋出氯氣，高濃度引起肺水腫；吸入氯氣嚴重損傷呼吸系統。',
+    physicalHazard: '本身不可燃，但與酸接觸分解釋出有毒氯氣；受熱（>40℃）或日照加速分解；對水生生物毒性非常大。',
+    ppe:            '化學防護手套、護目鏡或面遮、防噴濺長袖圍裙或全身防護衣；有氯氣時配戴氯氣濾罐口罩或正壓式 SCBA。',
+    spillResponse:  '禁止非相關人員進入；小量以砂或不燃物吸附裝容器；大量築堤圍堵後廢棄處置；不可加酸中和（會釋氯氣）。',
+    storage:        '使用非金屬容器，遠離火源及熱源，避免日光直射及超過 40℃；定期檢查容器；遠離酸性物質及金屬。',
+  },
+  '矽利康': {
+    healthHazard:   '低毒性，但皮膚接觸可能引起致敏感性（過敏）；眼睛及呼吸道接觸有輕微刺激；長期可能損害腎臟、肝臟。',
+    physicalHazard: '糊狀固體，不可燃（閃火點無）；與強氧化劑反應；與潮濕空氣接觸可能產生微量危害性氣霧。',
+    ppe:            '丁基橡膠或氟化彈性體防滲手套、化學防濺護目鏡/護面罩、可防有機溶劑之呼吸護具；局部排氣通風。',
+    spillResponse:  '限制人員接近；以砂土等惰性吸收物圍堵並裝入加蓋容器；避免進入下水道；大量洩漏聯絡消防求助。',
+    storage:        '陰涼乾燥通風處，遠離熱源及火源；避免暴露於水或潮濕環境；遠離強氧化劑；容器保持密閉。',
+  },
+  '清罐脫氧劑': {
+    healthHazard:   '刺激鼻、喉嚨、眼睛及皮膚，濃度高時嚴重傷害肺部；眼睛嚴重接觸恐失明；長期暴露導致過敏性接觸性皮膚炎。',
+    physicalHazard: '液體，不自燃也不助燃；屬第 8 類腐蝕性物質；避免與酸性物質及強氧化劑混合接觸。',
+    ppe:            '防毒化學濾罐呼吸防護具、化學安全護目鏡及面罩、防滲手套（天然橡膠或氯丁橡膠）、防滲連身工作服及工作靴。',
+    spillResponse:  '限制人員進入；保持洩漏區通風；以砂子或其他吸附物吸附後棄置；避免沖入市區渠道或地面水系。',
+    storage:        '儲存於陰涼處（溫度不超過 50℃）；使用防護裝備操作；避免與酸性物質接觸；容器密封標示清楚。',
+  },
+  '片鹼（氫氧化鈉固體）': {
+    healthHazard:   '強腐蝕性固體，皮膚接觸造成嚴重灼傷及潰瘍，眼睛接觸可導致永久性失明；吸入霧滴刺激鼻咽及肺，可能引發肺水腫。',
+    physicalHazard: '不可燃；與鋁、錫、鋅等金屬反應釋放易燃氫氣；與強酸劇烈爆炸性反應；98% 高純度固體。',
+    ppe:            '防滲手套、化學安全護目鏡及防護面罩、連身防護衣及工作靴；有機蒸氣濾罐或正壓 SCBA；備洗眼設備。',
+    spillResponse:  '限制人員進入；圍堵外洩物並鏟入容器；以稀酸中和後用水清洗；大量外洩聯絡消防及應變單位。',
+    storage:        '陰涼乾燥通風良好處，遠離強酸、金屬及有機物；不鏽鋼容器（40℃以下）；設防溢堤；定期檢查。',
+  },
+  'DICHNO 極壓機油 HD 系列': {
+    healthHazard:   '低急毒性；皮膚長期反覆接觸可能引起皮膚炎及脫脂；吸入油霧可刺激呼吸道；誤食有吸入性肺炎風險。',
+    physicalHazard: '可燃液體，閃火點 >200℃（高黏度礦物油）；正常操作不易起火，但高溫下產生可燃蒸氣；無爆炸危險。',
+    ppe:            '化學防護手套、安全護目鏡；大量處理時穿防護工作服及圍裙；必要時配戴油霧濾罐呼吸防護具。',
+    spillResponse:  '以砂土或吸油毯圍堵洩漏；避免流入下水道及水源；收集於容器內待廢棄處置；清理後以溶劑清洗地面。',
+    storage:        '密閉容器置陰涼通風處，遠離熱源及火源；避免水分進入；勿與強氧化劑存放同處；定期檢查密封。',
+  },
+  'SHELL 液壓油 AW32/46/68': {
+    healthHazard:   '低毒性礦物油；皮膚長期接觸引起皮膚炎；吸入油霧可刺激呼吸道；無明顯急毒性。',
+    physicalHazard: '可燃液體，閃火點 >150℃；正常操作條件下不易燃燒；避免高溫暴露或接觸強氧化劑。',
+    ppe:            '防護手套、安全護目鏡；大量操作時穿防護工作服；必要時配戴油霧防護口罩。',
+    spillResponse:  '以吸油毯或砂土圍堵洩漏，收入密封容器；避免流入下水道；大量洩漏通報環保相關單位。',
+    storage:        '密閉容器存於陰涼通風處，遠離熱源及明火；避免與強氧化劑共存；保持容器密封防水分污染。',
+  },
+  '金島高溫軸承牛油 NO.2/3': {
+    healthHazard:   '低急毒性半固體潤滑劑；皮膚長期接觸可能造成輕微刺激；吸入煙霧（高溫作業）刺激呼吸道；無已知嚴重健康危害。',
+    physicalHazard: '半固體，可燃，閃火點 >200℃；正常操作不易起火；高溫超過燃點產生可燃蒸氣及分解物。',
+    ppe:            '防護手套、安全護目鏡；高溫作業時配戴防熱蒸氣口罩；穿著工作服防止皮膚接觸。',
+    spillResponse:  '以砂土或吸油材料收集洩漏物置入密封容器廢棄處置；避免流入下水道；清理後以溶劑洗淨地面。',
+    storage:        '存於陰涼乾燥通風處，遠離高溫及火源；密閉容器防灰塵及水分污染；容器開啟後盡速使用並密封。',
+  },
+  'DICHNO 太古油 C-20 水性切削油': {
+    healthHazard:   '水性切削液，低毒性；長期皮膚接觸可能引起皮膚炎；吸入油霧刺激呼吸道；眼睛接觸有輕微刺激。',
+    physicalHazard: '水性乳化液，閃火點 >100℃（高水含量）；正常使用條件下不易燃；廢液排放需符合環保標準。',
+    ppe:            '防護手套（橡膠或 PVC）、安全護目鏡；必要時配戴防油霧口罩；長時間作業穿防護圍裙。',
+    spillResponse:  '以砂土或吸油毯圍堵洩漏，收入密封容器；避免大量廢液直接排入下水道；按環保法規廢棄處置。',
+    storage:        '密閉容器存於 5～40℃、通風良好處；避免凍結及高溫；定期攪拌防止分層；注意防菌防腐。',
+  },
+  '超級柴油': {
+    healthHazard:   '懷疑致癌（第 2 級）；吸入蒸氣引起呼吸道刺激、頭昏及中樞神經抑制；誤食並進入呼吸道可致肺炎死亡；長期接觸引起腎毒性。',
+    physicalHazard: '可燃液體（第 4 級），閃火點 >65℃；蒸氣比空氣重可沿地面引燃回火；爆炸界限 1.3～6.0%；自燃溫度約 177℃。',
+    ppe:            '防化學品手套、防濺護目鏡；蒸氣濃度高時配戴有機蒸氣濾罐呼吸防護具；必要時穿防化學品工作服。',
+    spillResponse:  '移除火源，切勿使用高壓水柱；以砂粒等不燃物料吸收小量洩漏；大量洩漏築堤圍堵，依土污法規處置。',
+    storage:        '陰涼乾燥通風處，嚴禁煙火；使用接地防靜電容器；遠離氧化劑；容器保持密封；限量儲存。',
+  },
+  '洗衣粉（無香味）': {
+    healthHazard:   '低毒性界面活性劑，長時間皮膚接觸引起刺激；眼睛接觸需沖洗；食入後就醫觀察；無已知嚴重急毒性。',
+    physicalHazard: '白色粉末，不可燃；無閃火點及爆炸危險；pH 10～12（鹼性）；無特殊物理危害。',
+    ppe:            '手套、安全眼鏡、口罩（防止粉塵吸入）；穿著工作服及工作鞋；一般作業無需特殊呼吸防護。',
+    spillResponse:  '穿戴安全眼鏡及防護手套清理；粉末以掃除方式收集；以清水沖洗稀釋即可；不可將高濃度液體排至河川。',
+    storage:        '儲存於陰涼、乾淨、防火且乾燥的地方；遠離熱源、火源及陽光直射；防止受潮。',
+  },
+};
+
 // ─────────────────────────────────────────────────────────────
 //  化學品資料（全興廠，114年）
 //  area: 'wastewater'=廢水廠  'site'=現場/油品
@@ -582,10 +791,15 @@ function renderChemTable() {
   document.getElementById('chem-tbody').innerHTML = list.map(c => {
     const dateCell  = c.sdsDate       ? `<span style="font-size:12px">${c.sdsDate}</span>`      : '<span style="font-size:11px;color:var(--sub)">—</span>';
     const validCell = c.sdsValidUntil ? `<span style="font-size:12px">${c.sdsValidUntil}</span>` : '<span style="font-size:11px;color:var(--sub)">—</span>';
-    const ops = c.sds
-      ? `<button class="chem-sds-btn has-sds" onclick="openSds('${c.name.replace(/'/g,"\\'")}','${c.sds}')">👁 預覽</button>
+    const n = c.name.replace(/'/g,"\\'");
+    const sdsOps = c.sds
+      ? `<button class="chem-sds-btn has-sds" onclick="openSds('${n}','${c.sds}')">👁 預覽</button>
          <a class="chem-sds-btn has-sds" href="${c.sds}" download style="margin-left:4px;text-decoration:none">⬇</a>`
       : `<button class="chem-sds-btn no-sds" disabled>補充中</button>`;
+    const safetyOps = SDS_DETAILS[c.name]
+      ? `<button class="chem-sds-btn safety-btn" onclick="openSafetyDrawer('${n}')" style="margin-top:5px">🛡 安全資訊</button>`
+      : '';
+    const ops = `<div style="display:flex;flex-direction:column;align-items:flex-start">${sdsOps}${safetyOps}</div>`;
     return `<tr>
       <td class="chem-name">${c.name}</td>
       <td>${areaHtml(c.area)}</td>
@@ -697,6 +911,48 @@ function buildOverview() {
   if (cur.jan.s === 'done' || cur.jan.s === 'done-nodate') doneCount++;
   if (cur.jul.s === 'done' || cur.jul.s === 'done-nodate') doneCount++;
   document.getElementById('decl-stat-num').textContent = doneCount;
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Safety Info Drawer
+// ─────────────────────────────────────────────────────────────
+const SAFETY_SECTIONS = [
+  { icon: '🏥', label: '主要健康危害',    key: 'healthHazard'   },
+  { icon: '⚠️', label: '主要物理危害',    key: 'physicalHazard' },
+  { icon: '🧤', label: '建議個人防護具',  key: 'ppe'            },
+  { icon: '💧', label: '洩漏處理方式',    key: 'spillResponse'  },
+  { icon: '📦', label: '儲存注意事項',    key: 'storage'        },
+];
+
+function openSafetyDrawer(chemName) {
+  const detail = SDS_DETAILS[chemName];
+  document.getElementById('safety-name').textContent = chemName;
+  if (!detail) {
+    document.getElementById('safety-body').innerHTML =
+      '<div style="padding:24px;text-align:center;color:var(--sub)">SDS 資料補充中，請查閱紙本 SDS。</div>';
+  } else {
+    const anyEst = Object.values(detail).some(v => v.includes('(推估)'));
+    document.getElementById('safety-body').innerHTML =
+      SAFETY_SECTIONS.map(s => {
+        const raw  = detail[s.key] || '—';
+        const isEst = raw.includes('(推估)');
+        const text  = raw.replace(/（?推估）?/g, '').replace(/\(推估\)/g, '').trim();
+        return `<div class="safety-sec">
+          <div class="safety-sec-head">
+            <span class="safety-sec-icon">${s.icon}</span>${s.label}
+          </div>
+          <div class="safety-sec-text">${text}</div>
+          ${isEst ? '<div class="safety-est">※ 掃描版 PDF，依化學品性質推估，請以實際 SDS 為準</div>' : ''}
+        </div>`;
+      }).join('');
+  }
+  document.getElementById('safety-overlay').classList.add('open');
+  document.getElementById('safety-drawer').classList.add('open');
+}
+
+function closeSafetyDrawer() {
+  document.getElementById('safety-overlay').classList.remove('open');
+  document.getElementById('safety-drawer').classList.remove('open');
 }
 
 // ─────────────────────────────────────────────────────────────
