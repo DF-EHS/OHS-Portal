@@ -4,235 +4,264 @@
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>機械設備管理系統 — 大豐環保科技</title>
-  <style>
-    :root {
-      --accent:  #2563eb;
-      --accent2: #1d4ed8;
-      --navy:    #0f172a;
-      --mid:     #1e3a5f;
-      --bg:      #f1f5f9;
-      --card:    #ffffff;
-      --border:  #e2e8f0;
-      --text:    #1e293b;
-      --sub:     #64748b;
-      --cat-a:   #7c3aed;  /* 作業類 */
-      --cat-b:   #0891b2;  /* 廠區設備 */
-      --cat-c:   #059669;  /* 再生處理 */
-      --cat-d:   #d97706;  /* 其他設備 */
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
-      background: var(--bg); color: var(--text); font-size: 14px;
-    }
+  <title>機械設備管理 | 大豐環保科技</title>
+<style>
+:root {
+  --eq:        #1d4ed8;
+  --eq-dark:   #1e3a5f;
+  --eq-darker: #0f172a;
+  --eq-light:  #eff6ff;
+  --eq-border: #bfdbfe;
+  --navy:      #1e3a5f;
+  --bg:        #f8fafc;
+  --card:      #ffffff;
+  --border:    #e2e8f0;
+  --text:      #1e293b;
+  --sub:       #64748b;
+  --cat-a:     #7c3aed;
+  --cat-b:     #0891b2;
+  --cat-c:     #059669;
+  --cat-d:     #d97706;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; display: flex; flex-direction: column;
+}
 
-    /* ── Header ── */
-    header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 55%, #2563eb 100%);
-      color: #fff; padding: 14px 24px;
-      display: flex; align-items: center; gap: 12px;
-      position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 16px rgba(0,0,0,.4);
-    }
-    header h1 { font-size: 18px; font-weight: 700; }
-    .hdr-sub { font-size: 12px; color: #93c5fd; margin-left: 12px; }
-    .hdr-brand { display: flex; align-items: center; gap: 7px; margin-left: auto; flex-shrink: 0; }
-    .hdr-brand img { height: 24px; object-fit: contain; }
-    .hdr-brand span { font-size: 12px; color: #94a3b8; font-weight: 600; white-space: nowrap; }
+/* ── Header ── */
+header {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 45%, #1d4ed8 100%);
+  color: #fff; padding: 12px 20px;
+  display: flex; align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.4);
+}
+header h1 { font-size: 17px; font-weight: 700; flex: 1; }
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3);
+  background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer;
+  transition: background .15s; font-family: inherit; flex-shrink: 0;
+  text-decoration: none; display: inline-flex; align-items: center;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.2); }
+.hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 12px; color: #93c5fd; font-weight: 600; white-space: nowrap; }
 
-    /* ── Breadcrumb ── */
-    #breadcrumb {
-      padding: 8px 24px; background: #fff;
-      border-bottom: 1px solid var(--border);
-      font-size: 12px; color: var(--sub);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .bc-btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 4px 12px; border-radius: 20px;
-      font-size: 12px; font-weight: 600;
-      cursor: pointer; text-decoration: none;
-      transition: background .15s, color .15s; border: none;
-    }
-    .bc-home { background: var(--navy); color: #fff; }
-    .bc-home:hover { background: #16305a; }
-    .bc-cur { background: #f1f5f9; color: var(--sub); cursor: default; }
-    .sep { color: #cbd5e1; }
+/* ── Main ── */
+main { flex: 1; max-width: 1100px; margin: 0 auto; width: 100%; padding: 32px 24px 60px; }
 
-    /* ── Module Tabs ── */
-    #tabs {
-      display: flex; gap: 0;
-      background: #fff;
-      border-bottom: 2px solid var(--border);
-      padding: 0 24px;
-    }
-    .tab-btn {
-      padding: 14px 24px;
-      font-size: 14px; font-weight: 600;
-      cursor: pointer; border: none;
-      background: none; color: var(--sub);
-      border-bottom: 3px solid transparent;
-      margin-bottom: -2px;
-      display: flex; align-items: center; gap: 8px;
-      transition: color .15s, border-color .15s;
-    }
-    .tab-btn:hover { color: var(--accent); }
-    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-    .tab-badge {
-      font-size: 11px; font-weight: 700;
-      background: var(--accent); color: #fff;
-      border-radius: 10px; padding: 1px 7px;
-    }
-    .tab-btn:not(.active) .tab-badge { background: #e2e8f0; color: var(--sub); }
+/* ── Page Hero ── */
+.page-hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1d4ed8 100%);
+  color: #fff; border-radius: 16px; padding: 28px 32px; margin-bottom: 32px;
+  box-shadow: 0 4px 20px rgba(29,78,216,.25);
+  display: flex; align-items: center; gap: 20px;
+}
+.hero-icon { font-size: 52px; flex-shrink: 0; }
+.hero-text h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.hero-text p  { font-size: 13px; color: #93c5fd; line-height: 1.6; }
 
-    /* ── Main content ── */
-    #main { padding: 28px 24px; max-width: 1400px; }
+/* ── Module Nav ── */
+.module-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.module-nav a {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 18px; border-radius: 24px;
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  border: 1.5px solid var(--border);
+  background: var(--card); color: var(--text);
+  transition: all .15s; cursor: pointer;
+}
+.module-nav a.active { background: var(--eq); color: #fff; border-color: var(--eq); }
+.module-nav a:hover:not(.active) { border-color: var(--eq); color: var(--eq); }
+.module-nav a .nav-badge {
+  font-size: 10px; padding: 1px 6px; border-radius: 10px;
+  font-weight: 700; background: rgba(255,255,255,.2);
+}
+.module-nav a:not(.active) .nav-badge { background: #f1f5f9; color: var(--sub); }
 
-    /* ── MODULE PANELS ── */
-    .module-panel { display: none; }
-    .module-panel.active { display: block; }
+/* ── Section Label ── */
+.section-label {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: 3px; text-transform: uppercase;
+  margin: 0 0 20px; display: flex; align-items: center; gap: 10px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.section-label .mod-tag {
+  font-size: 10px; padding: 2px 8px; border-radius: 10px;
+  font-weight: 700; letter-spacing: 0; text-transform: none; margin-left: 6px;
+}
+.mod-tag.active  { background: #dcfce7; color: #15803d; }
+.mod-tag.pending { background: #f1f5f9; color: var(--sub); }
 
-    /* ── Module 1 Placeholder ── */
-    .placeholder-box {
-      background: var(--card); border: 2px dashed var(--border);
-      border-radius: 16px; padding: 60px 32px;
-      text-align: center; color: var(--sub);
-    }
-    .placeholder-icon { font-size: 56px; margin-bottom: 16px; }
-    .placeholder-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-    .placeholder-sub { font-size: 14px; line-height: 1.7; color: var(--sub); }
-    .placeholder-note {
-      display: inline-block; margin-top: 20px;
-      background: #eff6ff; color: var(--accent);
-      border: 1px solid #bfdbfe; border-radius: 8px;
-      padding: 8px 20px; font-size: 13px; font-weight: 600;
-    }
+/* ── Section Block ── */
+.section-block { margin-bottom: 48px; }
+.section-block.hidden { display: none; }
 
-    /* ── Module 2 Search bar ── */
-    #sop-toolbar {
-      display: flex; gap: 12px; align-items: center;
-      margin-bottom: 24px; flex-wrap: wrap;
-    }
-    #sop-search {
-      flex: 1; min-width: 200px; max-width: 380px;
-      border: 1px solid var(--border); border-radius: 8px;
-      padding: 9px 14px; font-size: 14px; font-family: inherit;
-      outline: none; background: var(--card);
-      transition: border-color .15s;
-    }
-    #sop-search:focus { border-color: var(--accent); }
-    .sop-stats { font-size: 13px; color: var(--sub); margin-left: auto; }
+/* ── Info Notes ── */
+.info-note {
+  background: var(--eq-light); border: 1px solid var(--eq-border);
+  border-radius: 10px; padding: 12px 16px; font-size: 12px;
+  color: var(--eq-dark); line-height: 1.7; margin-bottom: 20px;
+}
 
-    /* ── Category section ── */
-    .cat-section { margin-bottom: 36px; }
-    .cat-header {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 14px; padding-bottom: 10px;
-      border-bottom: 2px solid var(--border);
-    }
-    .cat-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-    .cat-title { font-size: 16px; font-weight: 700; color: var(--text); }
-    .cat-count {
-      font-size: 12px; color: #fff; font-weight: 700;
-      background: var(--sub); border-radius: 10px;
-      padding: 1px 8px; margin-left: 4px;
-    }
+/* ── Placeholder ── */
+.placeholder-box {
+  background: var(--card); border: 2px dashed var(--border);
+  border-radius: 16px; padding: 60px 32px;
+  text-align: center; color: var(--sub);
+}
+.placeholder-icon  { font-size: 56px; margin-bottom: 16px; }
+.placeholder-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.placeholder-sub   { font-size: 14px; line-height: 1.7; }
+.placeholder-note  {
+  display: inline-block; margin-top: 20px;
+  background: var(--eq-light); color: var(--eq);
+  border: 1px solid var(--eq-border); border-radius: 8px;
+  padding: 8px 20px; font-size: 13px; font-weight: 600;
+}
 
-    /* ── SOP Card grid ── */
-    .sop-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 14px;
-    }
-    .sop-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      display: flex; flex-direction: column;
-      gap: 10px;
-      transition: box-shadow .15s, transform .15s, border-color .15s;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-    }
-    .sop-card:hover {
-      box-shadow: 0 6px 24px rgba(37,99,235,.15);
-      transform: translateY(-2px);
-      border-color: var(--accent);
-    }
-    .sop-card-icon { font-size: 28px; }
-    .sop-card-name { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.4; }
-    .sop-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
-    .cat-badge {
-      font-size: 11px; font-weight: 700;
-      border-radius: 6px; padding: 2px 8px;
-    }
-    .sop-open-btn {
-      font-size: 12px; color: var(--accent);
-      font-weight: 600; white-space: nowrap;
-    }
-    .sop-card:hover .sop-open-btn::after { content: " →"; }
+/* ── SOP Search ── */
+.sop-toolbar {
+  display: flex; gap: 12px; align-items: center;
+  margin-bottom: 24px; flex-wrap: wrap;
+}
+#sop-search {
+  flex: 1; min-width: 200px; max-width: 380px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 9px 14px; font-size: 14px; font-family: inherit;
+  outline: none; background: var(--card);
+  transition: border-color .15s;
+}
+#sop-search:focus { border-color: var(--eq); }
+.sop-stats { font-size: 13px; color: var(--sub); margin-left: auto; }
 
-    /* Hidden when search filters out */
-    .sop-card.hidden { display: none; }
-    .cat-section.hidden { display: none; }
+/* ── Category Section ── */
+.cat-section { margin-bottom: 36px; }
+.cat-section.hidden { display: none; }
+.cat-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+}
+.cat-dot   { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.cat-title { font-size: 15px; font-weight: 800; color: var(--text); }
+.cat-count {
+  font-size: 11px; color: #fff; font-weight: 700;
+  border-radius: 10px; padding: 1px 8px; margin-left: 4px;
+}
 
-    /* ── No results ── */
-    #no-results {
-      display: none; text-align: center; padding: 40px;
-      color: var(--sub); font-size: 15px;
-    }
+/* ── SOP Grid ── */
+.sop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+.sop-card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 16px;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: box-shadow .15s, transform .15s, border-color .15s;
+  cursor: pointer; text-decoration: none; color: inherit;
+}
+.sop-card:hover {
+  box-shadow: 0 6px 20px rgba(29,78,216,.15);
+  transform: translateY(-2px);
+  border-color: var(--eq);
+}
+.sop-card.hidden   { display: none; }
+.sop-card-icon     { font-size: 28px; }
+.sop-card-name     { font-size: 13px; font-weight: 700; line-height: 1.4; flex: 1; }
+.sop-card-footer   { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+.cat-badge         { font-size: 11px; font-weight: 700; border-radius: 6px; padding: 2px 8px; }
+.sop-open-btn      { font-size: 12px; color: var(--eq); font-weight: 600; white-space: nowrap; }
+.sop-card:hover .sop-open-btn::after { content: " →"; }
 
-    /* dark mode */
-    body.dark {
-      --bg: #0f172a; --card: #1e293b; --border: #334155;
-      --text: #f1f5f9; --sub: #94a3b8;
-    }
-    body.dark header { box-shadow: 0 2px 16px rgba(0,0,0,.6); }
-    body.dark #tabs, body.dark #breadcrumb { background: #1e293b; }
-    body.dark #sop-search { background: #1e293b; color: #f1f5f9; }
+/* ── No results ── */
+#no-results { display: none; text-align: center; padding: 40px; color: var(--sub); font-size: 15px; }
 
-    @media (max-width: 600px) {
-      #main { padding: 16px; }
-      .sop-grid { grid-template-columns: 1fr 1fr; }
-    }
-  </style>
+/* ── Footer ── */
+footer {
+  text-align: center; padding: 18px 24px;
+  font-size: 12px; color: var(--sub);
+  border-top: 1px solid var(--border); background: var(--card);
+}
+
+/* ── Dark Toggle ── */
+#dark-toggle {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text); border-radius: 50%;
+  width: 44px; height: 44px; font-size: 20px;
+  cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── Dark Mode ── */
+body.dark {
+  --bg: #0f172a; --card: #1e293b; --border: #334155;
+  --text: #f1f5f9; --sub: #94a3b8;
+  --eq-light: #1e3a5f; --eq-border: #1e40af;
+}
+body.dark .module-nav a:not(.active) { background: #1e293b; }
+body.dark .cat-header { border-color: #334155; }
+body.dark .sop-card { background: #1e293b; }
+body.dark #sop-search { background: #1e293b; color: #f1f5f9; }
+body.dark .placeholder-box { background: #1e293b; border-color: #334155; }
+body.dark .info-note { background: #1e3a5f; border-color: #1e40af; color: #93c5fd; }
+
+@media (max-width: 700px) {
+  main { padding: 20px 16px 48px; }
+  .sop-grid { grid-template-columns: 1fr 1fr; }
+  .page-hero { flex-direction: column; text-align: center; padding: 22px 20px; }
+}
+</style>
 </head>
 <body>
 
+<button type="button" id="dark-toggle" onclick="toggleDark()" title="切換深色／淺色模式">🌙</button>
+
 <header>
-  <span style="font-size:22px;">⚙️</span>
-  <h1>機械設備管理系統</h1>
-  <span class="hdr-sub">Machinery &amp; Equipment Management</span>
+  <a class="hdr-btn" href="../">← 系統首頁</a>
+  <h1>⚙️ 機械設備管理</h1>
   <div class="hdr-brand">
-    <img src="../上地球logo.png" alt="大豐環保科技">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
     <span>大豐環保科技</span>
   </div>
 </header>
 
-<div id="breadcrumb">
-  <a class="bc-btn bc-home" href="../">🏠 首頁</a>
-  <span class="sep">›</span>
-  <span class="bc-btn bc-cur">⚙️ 機械設備管理系統</span>
-</div>
+<main>
 
-<div id="tabs">
-  <button class="tab-btn active" onclick="switchTab('inventory')">
-    📋 模組一｜設備清冊
-    <span class="tab-badge">即將上線</span>
-  </button>
-  <button class="tab-btn" onclick="switchTab('sop')">
-    📄 模組二｜安全作業標準
-    <span class="tab-badge" id="sop-count">29</span>
-  </button>
-</div>
+  <!-- Hero -->
+  <div class="page-hero">
+    <div class="hero-icon">⚙️</div>
+    <div class="hero-text">
+      <h2>機械設備管理系統</h2>
+      <p>全興廠機械設備清冊管理、安全作業標準（SOP）查閱，<br>
+         涵蓋作業類、廠區設備、再生處理設備共 29 份操作標準。</p>
+    </div>
+  </div>
 
-<div id="main">
+  <!-- Module Nav -->
+  <div class="module-nav">
+    <a id="nav-m1" onclick="showModule(1)">📋 設備清冊<span class="nav-badge">建置中</span></a>
+    <a id="nav-m2" onclick="showModule(2)" class="active">📄 安全作業標準<span class="nav-badge">29 份</span></a>
+  </div>
 
-  <!-- ════════ MODULE 1：設備清冊 ════════ -->
-  <div id="panel-inventory" class="module-panel active">
+  <!-- ══ Module 1：設備清冊 ══ -->
+  <div class="section-block hidden" id="m1">
+    <div class="section-label">
+      模組一・設備清冊
+      <span class="mod-tag pending">建置中</span>
+    </div>
+    <div class="info-note">
+      📋 設備清冊資料建置中，請提供設備清單後即可匯入。清冊將包含：設備編號、設備名稱、所在位置、保養週期、下次保養日期等資訊。
+    </div>
     <div class="placeholder-box">
       <div class="placeholder-icon">📋</div>
       <div class="placeholder-title">設備清冊</div>
@@ -244,29 +273,36 @@
     </div>
   </div>
 
-  <!-- ════════ MODULE 2：安全作業標準 ════════ -->
-  <div id="panel-sop" class="module-panel">
+  <!-- ══ Module 2：安全作業標準 ══ -->
+  <div class="section-block" id="m2">
+    <div class="section-label">
+      模組二・安全作業標準（SOP）索引
+      <span class="mod-tag active">已上線</span>
+    </div>
 
-    <div id="sop-toolbar">
+    <div class="info-note">
+      📄 共 <strong>29 份</strong>安全作業標準，涵蓋作業類、廠區設備、再生處理設備及其他設備。點擊任一卡片即可在新分頁開啟對應 SOP。
+    </div>
+
+    <div class="sop-toolbar">
       <input id="sop-search" type="text" placeholder="🔍 搜尋作業名稱…" oninput="filterSOPs(this.value)">
       <span class="sop-stats" id="sop-visible-count">共 29 份安全作業標準</span>
     </div>
-
     <div id="no-results">找不到符合的安全作業標準</div>
 
     <!-- 作業類 -->
     <div class="cat-section" id="cat-a">
       <div class="cat-header">
-        <div class="cat-dot" style="background:var(--cat-a);"></div>
+        <div class="cat-dot" style="background:var(--cat-a)"></div>
         <span class="cat-title">作業類</span>
-        <span class="cat-count" style="background:var(--cat-a);">7</span>
+        <span class="cat-count" style="background:var(--cat-a)">7</span>
       </div>
       <div class="sop-grid">
         <a class="sop-card" href="sop/人工搬運作業安全作業標準.html" target="_blank" data-name="人工搬運作業">
           <div class="sop-card-icon">📦</div>
           <div class="sop-card-name">人工搬運作業</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a)">作業類</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -274,7 +310,7 @@
           <div class="sop-card-icon">🚛</div>
           <div class="sop-card-name">使用貨車從事搬運作業</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a)">作業類</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -282,7 +318,7 @@
           <div class="sop-card-icon">🚗</div>
           <div class="sop-card-name">公務車輛使用作業</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a)">作業類</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -290,7 +326,7 @@
           <div class="sop-card-icon">🏗️</div>
           <div class="sop-card-name">吊掛作業</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a)">作業類</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -298,7 +334,7 @@
           <div class="sop-card-icon">🔨</div>
           <div class="sop-card-name">粉碎作業</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a)">作業類</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -306,7 +342,7 @@
           <div class="sop-card-icon">📫</div>
           <div class="sop-card-name">產品包裝作業</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a)">作業類</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -314,7 +350,7 @@
           <div class="sop-card-icon">🚢</div>
           <div class="sop-card-name">外銷成品包裝作業</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a);">作業類</span>
+            <span class="cat-badge" style="background:#f3e8ff;color:var(--cat-a)">作業類</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -324,16 +360,16 @@
     <!-- 廠區設備 -->
     <div class="cat-section" id="cat-b">
       <div class="cat-header">
-        <div class="cat-dot" style="background:var(--cat-b);"></div>
+        <div class="cat-dot" style="background:var(--cat-b)"></div>
         <span class="cat-title">廠區設備</span>
-        <span class="cat-count" style="background:var(--cat-b);">7</span>
+        <span class="cat-count" style="background:var(--cat-b)">7</span>
       </div>
       <div class="sop-grid">
         <a class="sop-card" href="sop/固定式起重機安全作業標準.html" target="_blank" data-name="固定式起重機">
           <div class="sop-card-icon">🏋️</div>
           <div class="sop-card-name">固定式起重機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b)">廠區設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -341,7 +377,7 @@
           <div class="sop-card-icon">✂️</div>
           <div class="sop-card-name">鐵桶裁切機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b)">廠區設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -349,7 +385,7 @@
           <div class="sop-card-icon">🚜</div>
           <div class="sop-card-name">夾子車</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b)">廠區設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -357,7 +393,7 @@
           <div class="sop-card-icon">🏗️</div>
           <div class="sop-card-name">堆高機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b)">廠區設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -365,7 +401,7 @@
           <div class="sop-card-icon">💧</div>
           <div class="sop-card-name">廢水設施操作</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b)">廠區設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -373,7 +409,7 @@
           <div class="sop-card-icon">📦</div>
           <div class="sop-card-name">臥式打包機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b)">廠區設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -381,7 +417,7 @@
           <div class="sop-card-icon">🔬</div>
           <div class="sop-card-name">玻璃分選</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b);">廠區設備</span>
+            <span class="cat-badge" style="background:#ecfeff;color:var(--cat-b)">廠區設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -391,16 +427,16 @@
     <!-- 再生處理設備 -->
     <div class="cat-section" id="cat-c">
       <div class="cat-header">
-        <div class="cat-dot" style="background:var(--cat-c);"></div>
+        <div class="cat-dot" style="background:var(--cat-c)"></div>
         <span class="cat-title">再生處理設備</span>
-        <span class="cat-count" style="background:var(--cat-c);">7</span>
+        <span class="cat-count" style="background:var(--cat-c)">7</span>
       </div>
       <div class="sop-grid">
         <a class="sop-card" href="sop/粉碎機安全作業標準.html" target="_blank" data-name="粉碎機">
           <div class="sop-card-icon">⚙️</div>
           <div class="sop-card-name">粉碎機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c)">再生處理</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -408,7 +444,7 @@
           <div class="sop-card-icon">🌀</div>
           <div class="sop-card-name">吹膜機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c)">再生處理</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -416,7 +452,7 @@
           <div class="sop-card-icon">🔥</div>
           <div class="sop-card-name">烘料機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c)">再生處理</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -424,7 +460,7 @@
           <div class="sop-card-icon">🔩</div>
           <div class="sop-card-name">萬馬力混煉機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c)">再生處理</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -432,7 +468,7 @@
           <div class="sop-card-icon">🔧</div>
           <div class="sop-card-name">造粒設備</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c)">再生處理</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -440,7 +476,7 @@
           <div class="sop-card-icon">🔄</div>
           <div class="sop-card-name">拌料機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c)">再生處理</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -448,7 +484,7 @@
           <div class="sop-card-icon">💉</div>
           <div class="sop-card-name">射出機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c);">再生處理</span>
+            <span class="cat-badge" style="background:#ecfdf5;color:var(--cat-c)">再生處理</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -458,16 +494,16 @@
     <!-- 其他設備 -->
     <div class="cat-section" id="cat-d">
       <div class="cat-header">
-        <div class="cat-dot" style="background:var(--cat-d);"></div>
+        <div class="cat-dot" style="background:var(--cat-d)"></div>
         <span class="cat-title">其他設備</span>
-        <span class="cat-count" style="background:var(--cat-d);">8</span>
+        <span class="cat-count" style="background:var(--cat-d)">8</span>
       </div>
       <div class="sop-grid">
         <a class="sop-card" href="sop/打包機安全作業標準.html" target="_blank" data-name="打包機">
           <div class="sop-card-icon">📦</div>
           <div class="sop-card-name">打包機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d)">其他設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -475,7 +511,7 @@
           <div class="sop-card-icon">📦</div>
           <div class="sop-card-name">立式打包機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d)">其他設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -483,7 +519,7 @@
           <div class="sop-card-icon">🦾</div>
           <div class="sop-card-name">挖掘機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d)">其他設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -491,7 +527,7 @@
           <div class="sop-card-icon">🌡️</div>
           <div class="sop-card-name">恆溫箱</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d)">其他設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -499,7 +535,7 @@
           <div class="sop-card-icon">⚖️</div>
           <div class="sop-card-name">地磅</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d)">其他設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -507,7 +543,7 @@
           <div class="sop-card-icon">🔭</div>
           <div class="sop-card-name">熔融指數測定機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d)">其他設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -515,7 +551,7 @@
           <div class="sop-card-icon">🎁</div>
           <div class="sop-card-name">半自動包膜機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d)">其他設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
@@ -523,51 +559,62 @@
           <div class="sop-card-icon">🎨</div>
           <div class="sop-card-name">色選機</div>
           <div class="sop-card-footer">
-            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d);">其他設備</span>
+            <span class="cat-badge" style="background:#fffbeb;color:var(--cat-d)">其他設備</span>
             <span class="sop-open-btn">開啟</span>
           </div>
         </a>
       </div>
     </div>
 
-  </div><!-- end panel-sop -->
-</div><!-- end main -->
+    <p style="font-size:12px;color:var(--sub);margin-top:8px">
+      資料來源：全興廠安全作業標準文件（SOP）　·　共 29 份
+    </p>
+  </div>
 
-<script src="../shared/sidebar.js"></script>
+</main>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+
 <script>
-  // ── Tab switching ──────────────────────────────────────────────────────────
-  function switchTab(name) {
-    document.querySelectorAll('.module-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('panel-' + name).classList.add('active');
-    event.currentTarget.classList.add('active');
+// ── Module switching ─────────────────────────────────────────
+function showModule(n) {
+  [1, 2].forEach(i => {
+    document.getElementById('m' + i).classList.toggle('hidden', i !== n);
+    document.getElementById('nav-m' + i).classList.toggle('active', i === n);
+  });
+}
+
+// ── SOP Search ───────────────────────────────────────────────
+function filterSOPs(q) {
+  q = q.trim().toLowerCase();
+  let visible = 0;
+  document.querySelectorAll('.sop-card').forEach(card => {
+    const match = !q || card.dataset.name.toLowerCase().includes(q);
+    card.classList.toggle('hidden', !match);
+    if (match) visible++;
+  });
+  document.querySelectorAll('.cat-section').forEach(sec => {
+    const anyVisible = [...sec.querySelectorAll('.sop-card')].some(c => !c.classList.contains('hidden'));
+    sec.classList.toggle('hidden', !anyVisible);
+  });
+  document.getElementById('sop-visible-count').textContent =
+    q ? `顯示 ${visible} / 29 份` : '共 29 份安全作業標準';
+  document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+}
+
+// ── Dark Mode ────────────────────────────────────────────────
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('portal-dark', isDark ? '1' : '0');
+  document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
+}
+(function () {
+  if (localStorage.getItem('portal-dark') === '1') {
+    document.body.classList.add('dark');
+    document.getElementById('dark-toggle').textContent = '☀️';
   }
-
-  // ── SOP Search ─────────────────────────────────────────────────────────────
-  function filterSOPs(q) {
-    q = q.trim().toLowerCase();
-    let visible = 0;
-
-    document.querySelectorAll('.sop-card').forEach(card => {
-      const name = card.dataset.name.toLowerCase();
-      const match = !q || name.includes(q);
-      card.classList.toggle('hidden', !match);
-      if (match) visible++;
-    });
-
-    // Hide empty categories
-    document.querySelectorAll('.cat-section').forEach(sec => {
-      const anyVisible = [...sec.querySelectorAll('.sop-card')].some(c => !c.classList.contains('hidden'));
-      sec.classList.toggle('hidden', !anyVisible);
-    });
-
-    document.getElementById('sop-visible-count').textContent =
-      q ? `顯示 ${visible} / 29 份` : '共 29 份安全作業標準';
-    document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
-  }
-
-  // ── Dark mode persistence ──────────────────────────────────────────────────
-  if (localStorage.getItem('ohs-dark') === '1') document.body.classList.add('dark');
+})();
 </script>
+<script src="../shared/sidebar.js"></script>
 </body>
 </html>
