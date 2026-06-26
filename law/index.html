@@ -963,6 +963,10 @@ function appendSourceCards(results, query) {
 // ── Cloudflare Worker（CORS Proxy → IT Gemini 閘道器）──────────
 const AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
 
+// ── 法規鑑別記錄後端（GAS）───────────────────────────────────
+// 部署 law/apps-script.gs 後填入 Web App URL；留空則退回本機儲存
+const AUDIT_GAS_URL = '';
+
 // ── 主送出函數（RAG + Gemini）────────────────────────────────
 async function sendChat() {
   const inp = document.getElementById('chat-input');
@@ -1065,13 +1069,31 @@ function auditKey(src) {
   return `lex_audit_${src.site_id}_${src.sub || ''}`;
 }
 
-function loadAudits(src) {
+async function loadAudits(src) {
+  if (AUDIT_GAS_URL) {
+    try {
+      const q = `?site_id=${encodeURIComponent(src.site_id)}&sub=${encodeURIComponent(src.sub || '')}`;
+      const d = await (await fetch(AUDIT_GAS_URL + q)).json();
+      return (d.records || []).map(rec => ({
+        quarter: rec.quarter, ts: rec.ts,
+        results: (() => { try { return JSON.parse(rec.results_json || '[]'); } catch { return []; } })(),
+        summary: { ok: +rec.ok, changed: +rec.changed, anomaly: +rec.anomaly, fail: +rec.fail }
+      }));
+    } catch { return []; }
+  }
   try { return JSON.parse(localStorage.getItem(auditKey(src)) || '[]'); }
   catch { return []; }
 }
 
-function saveAudit(src, record) {
-  const list = loadAudits(src);
+async function saveAudit(src, record) {
+  if (AUDIT_GAS_URL) {
+    await fetch(AUDIT_GAS_URL, {
+      method: 'POST',
+      body: JSON.stringify({ site_id: src.site_id, sub: src.sub || '', site_label: src.site_name, ...record })
+    });
+    return;
+  }
+  const list = JSON.parse(localStorage.getItem(auditKey(src)) || '[]');
   list.unshift(record);
   if (list.length > 20) list.length = 20;
   localStorage.setItem(auditKey(src), JSON.stringify(list));
@@ -1083,9 +1105,12 @@ function curAuditQuarter() {
   return `${now.getFullYear()} Q${q}`;
 }
 
-function runAudit(src) {
+async function runAudit(src) {
+  const btn = document.getElementById('btn-run-audit');
+  if (btn) { btn.disabled = true; btn.textContent = '執行中…'; }
   if (!src.live_amend_checked) {
     alert('尚無法規庫快取資料。\n請先執行 _fetch_law_dates.py 再執行 build.py。');
+    if (btn) { btn.disabled = false; btn.textContent = '立即執行'; }
     return;
   }
   const laws = src.summary.filter(l => l.url);
@@ -1112,14 +1137,15 @@ function runAudit(src) {
       anomaly: results.filter(r => r.status === 'anomaly').length
     }
   };
-  saveAudit(src, record);
-  renderAuditPanel(src);
+  await saveAudit(src, record);
+  await renderAuditPanel(src);
 }
 
-function renderAuditPanel(src) {
+async function renderAuditPanel(src) {
   const panel = document.getElementById('audit-panel');
   if (!panel) return;
-  const history = loadAudits(src);
+  if (AUDIT_GAS_URL) panel.innerHTML = `<div class="audit-hdr"><h3>每季法規鑑別</h3><span style="font-size:12px;color:var(--sub)">載入記錄中…</span></div>`;
+  const history = await loadAudits(src);
   const latest = history[0] || null;
 
   let rows = '';
