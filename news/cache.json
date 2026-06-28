@@ -1,6 +1,28 @@
 {
   "items": [
     {
+      "key": "edf7c603deb61aac",
+      "title": "職場安全 連江最暖！連江縣消防局首批職安布告欄正式上線",
+      "link": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE5WS014bDRDd1U4dDF1eG1wYk8yOWQ2dEJxdTNuVHZ2ZVpDOHF0UnoydlNTeDIyeDJBUHVXUDg3MU10WXhCOHFz?oc=5",
+      "pubDate": "Sat, 27 Jun 2026 18:54:19 GMT",
+      "pubTs": 1782586459.0,
+      "desc": "職場安全 連江最暖！連江縣消防局首批職安布告欄正式上線&nbsp;&nbsp;台灣新聞雲",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "3d68c917d8d18c52",
+      "title": "-營造作業主管安全衛生教育訓練 結訓測驗及格率100%",
+      "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFAtN1Y2S3Q4LW1qcWxVRWF5QmRaVXRFVlg0VmhSS3hWeEtrNzhweXNGNDhTN1VyR1ROLTM4RktZNm5EVm1MZExkY25tV3czWmtBaEhzdFR0bU03Zw?oc=5",
+      "pubDate": "Sat, 27 Jun 2026 13:18:40 GMT",
+      "pubTs": 1782566320.0,
+      "desc": "-營造作業主管安全衛生教育訓練 結訓測驗及格率100%&nbsp;&nbsp;kmdn.gov.tw",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "dda6c0605ff6c798",
       "title": "職安法新制即將上路！南投縣政府推 AI 智慧巡檢與「反霸凌」宣導",
       "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9FUkRNZXZrYmZQdlFFc0dObHRzQnZiVEtjdUxLaE9Pd3V4bW1zeGNqSVJlVk8tbmpzbWpjUkhTU1A4V0JfRk1Oa1o2UXN5bTVsMUE?oc=5",
@@ -142,6 +164,17 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
+    },
+    {
+      "key": "5be534d2c7efbf86",
+      "title": "江蘇工傷保險參保人數達2418萬人 今年將開展10萬人專項培訓",
+      "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5XcFViMHNqc1I3WkdheU9SRFJuZzNvamlEczRyVzNRNzU2VVdWTlM4OHhkbEFlRVhtVEZ4eXU2NldxeE9BY3MybUN6NkxyNVloSEROZUpLUHIwaHJ0VktUa05VdGtjazd5TWtWSDVxNTQ?oc=5",
+      "pubDate": "Thu, 25 Jun 2026 10:11:00 GMT",
+      "pubTs": 1782382260.0,
+      "desc": "江蘇工傷保險參保人數達2418萬人 今年將開展10萬人專項培訓&nbsp;&nbsp;人民网－江苏频道",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "1c28a4e8957a69c5",
@@ -304,6 +337,17 @@
       "pubDate": "Wed, 24 Jun 2026 07:17:25 GMT",
       "pubTs": 1782285445.0,
       "desc": "突宣布6月26日眼角膜移植手術詹江村憶昔1事造成職業傷害- 政治&nbsp;&nbsp;中時新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "d3eeeff28a7e384b",
+      "title": "快新聞／苗栗爆嚴重工安意外！泰籍移工「慘遭爐渣壓死」",
+      "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE84a0ZQRHEzekJKYlVVQU9xdHl5eDJpQ2x5bGJockF0dGFfODA5akJMaTBHYlRNdlhmMnp0TEJVUXNnSy1xbndsSHBxY0dURmFqQnJnYVRJbnpUVWxKTGduOQ?oc=5",
+      "pubDate": "Wed, 24 Jun 2026 06:31:36 GMT",
+      "pubTs": 1782282696.0,
+      "desc": "快新聞／苗栗爆嚴重工安意外！泰籍移工「慘遭爐渣壓死」&nbsp;&nbsp;民視新聞網",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -1145,127 +1189,6 @@
       "badge": "purple"
     },
     {
-      "key": "485de489c4f73f23",
-      "title": "守護移工安全與權益，勞青處辦理法治教育與手作聯誼",
-      "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTE56MDdXOTlGQTV0TGpaMEkxQ1dIaXQxNkVvODJDWVNfeHYtcGF5MVZELW1CbW5yaUhLSFFHNlVGcmFqaldybndYeE9OMmo1OVdoTVk0N2I0TWNDV2duUEZ5b2RfVWc1OGQxWGo4X2xQczc0ZW8?oc=5",
-      "pubDate": "Sun, 14 Jun 2026 04:59:46 GMT",
-      "pubTs": 1781413186.0,
-      "desc": "守護移工安全與權益，勞青處辦理法治教育與手作聯誼&nbsp;&nbsp;環球日報社",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "2d573620b35626c1",
-      "title": "藝筆畫職安! 中市職業安全衛生繪畫比賽63件作品獲獎 陽明大樓特展開跑",
-      "link": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE15Q01SMGQ0NThGRHVkRmRJSGprdG1RYXdUa1NLT3VKUElMUjJjclNjem1nX1BzeklmQXlqLWx3M2RhOWZTTlE?oc=5",
-      "pubDate": "Sun, 14 Jun 2026 03:25:30 GMT",
-      "pubTs": 1781407530.0,
-      "desc": "藝筆畫職安! 中市職業安全衛生繪畫比賽63件作品獲獎 陽明大樓特展開跑&nbsp;&nbsp;台灣新聞雲報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "2755e25e78b74e73",
-      "title": "松鼠擊穿高壓電！高雄鋼鐵大廠爆炸 網嚇：以為在放煙火",
-      "link": "https://news.google.com/rss/articles/CBMi6wJBVV95cUxQZHRtZHozSXFZVG5HYUFBUW1PVGRzUVU3aGN3ZnE2OXVHVWlpVS1wM1o2SVNZMDdISU5sazdNYUozQ0k2LVg1NmRneU45RDQ1a3RteEVDTG1uQ1JMWFBXeFktSkx5VmZqV0xVTEFlNmVoTlZ2OWNOOVc0cHI0RjQ1U3dVRUUyQmFCcGx1X0NaR1EzSEVsaW9rdDFOUlE0QWEtUXk1VGF3V00yNDg5cDM4ajdld2VQX19WVzBBMUFwRWlCeGhEZDhLQngzdUdpOUNuMk96c3dKalplaXZINWJBRHFnS0d0aTk3UnZJdWR6eVZjOUEzQUdURkJpc2hKZm9VbmlyU1MyUl9DYWZQRmhSa3NkMFZWNXJEQzdLUWVhR0N3RTJGNmtqNVZ4TzhqMDNOMHhLcGlHZzBoSjVjeUVUZEVUYzFhSUNlelpWdWxBYkwxak8wUWNtbWtxejc0V1A4UklCYnNJa3phRVE?oc=5",
-      "pubDate": "Sun, 14 Jun 2026 02:37:30 GMT",
-      "pubTs": 1781404650.0,
-      "desc": "松鼠擊穿高壓電！高雄鋼鐵大廠爆炸 網嚇：以為在放煙火&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "49bb51e52f3d781a",
-      "title": "快訊/高雄鋼鐵廠爆炸火光又停電！現場有焦屍",
-      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5BUTVidDVsNlNlazFjXzlFSXhkVFc5eVoyTmRaWkFjX3FlbUczNnVVM0Jrd1lPVmpkVU1DLTM2a1hUNDhTTFd6dkZmLU13QTd1d1hr?oc=5",
-      "pubDate": "Sun, 14 Jun 2026 01:08:46 GMT",
-      "pubTs": 1781399326.0,
-      "desc": "快訊/高雄鋼鐵廠爆炸火光又停電！現場有焦屍&nbsp;&nbsp;中天新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "50fd219090eccc5d",
-      "title": "金門攜手中央 守護消防員職安 - 中國時報- 翻爆",
-      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxONHR2T0FTTVo2bDNfNlRmT0p4Wkp0b1lFMnFMQWJ2aU14RVJIalZkaFM2ZXQwOUJvNGJRVFhRa1E3Z3ZWaTIyY3dmdTJIRVRRWEw4ZkxqZGFkZUlqbk52bUZ5V2loaDRaYmZpSXB6TzlwemxydTZGSHloa2dTMEVLRWMwSkpiZlRD?oc=5",
-      "pubDate": "Sun, 14 Jun 2026 01:07:30 GMT",
-      "pubTs": 1781399250.0,
-      "desc": "金門攜手中央 守護消防員職安&nbsp;&nbsp;中國時報- 翻爆",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "b93080881be68ebc",
-      "title": "岡山廢棄物處理廠爆炸 罰500萬勒令停工",
-      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE14QkJoWXhxV0dpbU5WSGx4SkctazFOMjNNT3B3RmZsTV8wTWZLUmNjQnM3Mi1VLVY0Y2w5Z1FVNWlpRExQbU9jcGhsN2w3eGZrQmZOSE5hWnByRFnSAWBBVV95cUxNWnljNUdpanpCNTdEaXF2QmhKOHFqVWZ0YlQ2TG1oUzJlOEliNHJGcjU1cTNaMFpBZ0Nsd1p3bElxNGJzMjhSSThsblFUTWJXS0VvWGhaUk5kZlNWczRVS18?oc=5",
-      "pubDate": "Sat, 13 Jun 2026 21:30:00 GMT",
-      "pubTs": 1781386200.0,
-      "desc": "岡山廢棄物處理廠爆炸 罰500萬勒令停工&nbsp;&nbsp;自由時報",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "1398127972e80a21",
-      "title": "台南市勞工局推職安臨廠訪視 助中小企業安全安心呷頭路",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBHRUJfZFhrOE0zLWo4WlMwdTgyQXFvLVJYZTloT2h5YmhQOGJIa0V3anpoZ2o0dGZQbWhlcTNmc0lLekJKdWpFV2tMTTE1MkxnUVdhTFBES1l5cFZWOVHSAWhBVV95cUxQTjE3WjZ2a2poaXhRZjhIdkJuMkhPYmhBOXZEZE9fdlk3XzI2TmF0MG1hajBmdGZiam1udURjaTFXRkZ6UXpNZTlaeUtQNjI2YzVpbHpoLWczSHM5Y2Fhd3JwLXQ4MGFFTA?oc=5",
-      "pubDate": "Sat, 13 Jun 2026 09:24:00 GMT",
-      "pubTs": 1781342640.0,
-      "desc": "台南市勞工局推職安臨廠訪視 助中小企業安全安心呷頭路&nbsp;&nbsp;ETtoday新聞雲",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "e0d19edc369a4d76",
-      "title": "勞工局推動職安臨廠訪視輔導 臺南呷頭路安全又安心",
-      "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE1VTFdJUzU4SU05NGlkaVBwS3Zha2t4R1hQblRVcVhUQUZmSkhQOUIxVUs0dGxJZ3VhVkRZdU9HN0dwclJwa3lhcGFiYWJHTmRvSkt0YzlfazdYa0NhVkgwNkJXbEFsWnFRX3V1VGtnc213UQ?oc=5",
-      "pubDate": "Sat, 13 Jun 2026 08:58:45 GMT",
-      "pubTs": 1781341125.0,
-      "desc": "勞工局推動職安臨廠訪視輔導 臺南呷頭路安全又安心&nbsp;&nbsp;wennan.org.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "79937953d0fbc532",
-      "title": "為何上班族越認真越易變胖？英國研究揭「職業傷害肥胖」2大原因",
-      "link": "https://news.google.com/rss/articles/CBMimwNBVV95cUxPOENlN3lVRU10Z0xqWV84X1AzOWpHNTlpNTc5YjgwV2Nsc185ckdTc2lLdHhuRDhpQ214OHFuODk2MC1JaUR2Qk84UHRjLWtMWFotWlRBQ0NqMExyR2VKdnI2OTlzMlBfRlB3ZUEycUxNQTdyZlNlSGdhVVVqeERWOUxQMk1CaExKWURLSWZ1eFlHc0VsVzVhclpvRXUwNk83NHlUWGhfV2p6N2ZISE0xVFI1RDdKYUlIajU4TXBaTHI3YkxhbHk4MF83RFVsSVB6WWxpVHR2d1hIQUdYcGxGT0tsU3RKR3drNWlzalFhblFvVUtlYk0wWnZ5NFZOLWNWVHJGaDFKc0xJMVRLbTZTQzQ1clUwY3JsdXpSYkU1SkFqY1RVa0lfT1FJOTJCLVN3SnRkQjdVdEc2T3NlLWI0dU9rQ2xPSVpUWmdQVmRPZi1OQTlvc094bXpOUElvUzRpNkNBV1ByLURoVl9iSHBoamRJN0FWcUhSbkVjZnZwQ29KdzRRb3JVV3VCRWxERFlSUUVKVDE2bDJGc0k?oc=5",
-      "pubDate": "Sat, 13 Jun 2026 08:00:53 GMT",
-      "pubTs": 1781337653.0,
-      "desc": "為何上班族越認真越易變胖？英國研究揭「職業傷害肥胖」2大原因&nbsp;&nbsp;香港01",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "d95146d8b48f6d20",
-      "title": "台南市辦理職業安全衛生輔導員教育訓練強化「職業安全衛生輔導團」成員專業能力",
-      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE1pNFI1SlVreTZPMUtJeHFzZTNnZ0NDRXA5NkRMX2NMTDNJUTFvcFJGNmlmdGJlekdESzc2VHVxMk5SeS0xZW4xcQ?oc=5",
-      "pubDate": "Sat, 13 Jun 2026 07:46:49 GMT",
-      "pubTs": 1781336809.0,
-      "desc": "台南市辦理職業安全衛生輔導員教育訓練強化「職業安全衛生輔導團」成員專業能力&nbsp;&nbsp;台灣民眾電子報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "5d2ee3ce0dcd06c2",
-      "title": "台南勞工局推動職安臨廠訪視輔導，為「職業安全衛生輔導團」成員教育訓練充電",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5PZ2tITVVWZkRDeWRTdko0SUFISVhvOXIwTUF2anRXa2pMbEdwZjlVMVdObll6WUVwdXVJNnJyZU9ZeHNqY29rc2swb1RQZENZdlE?oc=5",
-      "pubDate": "Sat, 13 Jun 2026 07:28:12 GMT",
-      "pubTs": 1781335692.0,
-      "desc": "台南勞工局推動職安臨廠訪視輔導，為「職業安全衛生輔導團」成員教育訓練充電&nbsp;&nbsp;中華新聞雲／中華日報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
       "key": "a18a9737287616c9",
       "title": "職安署強化列管產品線上審核流程，縮短民眾申辦案件時程",
       "link": "https://www.osha.gov.tw/48110/48417/48423/204550/",
@@ -1387,5 +1310,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-06-27T04:42:48.359769+00:00"
+  "lastUpdated": "2026-06-28T05:09:55.151516+00:00"
 }
