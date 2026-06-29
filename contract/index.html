@@ -659,15 +659,8 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
       <div class="fsec-hdr">🔥 動火作業申請書</div>
       <div class="fsec-body">
         <div class="fsec-note">FM-D3-EM-001-01C｜電焊、切割、研磨等產生火花或明火之作業，申請前請確認作業環境安全</div>
-        <div class="fg">
-          <label>進行作業人員</label>
-          <div class="chk-wrap" id="hw-worker-type-wrap">
-            <label class="chk-chip sel"><input type="checkbox" checked onchange="chipChange(this)">本公司</label>
-            <label class="chk-chip"><input type="checkbox" onchange="chipChange(this)">承攬商</label>
-          </div>
-        </div>
         <div class="frow">
-          <div class="fg"><label>承攬商名稱</label><input class="fi" id="hw-company" placeholder="（無則免填）"/></div>
+          <div class="fg"><label class="req">承攬商名稱</label><input class="fi" id="hw-company" placeholder="請輸入承攬商名稱"/></div>
           <div class="fg"><label class="req">承攬工程名稱</label><input class="fi" id="hw-workname" placeholder="請輸入工程或作業名稱"/></div>
         </div>
         <div class="frow">
@@ -738,6 +731,17 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
     <div class="fsec">
       <div class="fsec-hdr">✍️ 電子簽名送出</div>
       <div class="fsec-body">
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px;padding:6px 10px;background:#f0f9ff;border-radius:6px;border-left:3px solid var(--teal)">會　簽　表</div>
+        <div class="frow3">
+          <div class="fg"><label>施工單位部門主管</label><input class="fi" id="hw-cosign-unit-mgr" placeholder="姓名"/></div>
+          <div class="fg"><label>職安衛業務主管</label><input class="fi" id="hw-cosign-safety-mgr" placeholder="（作業危害風險告知及防範說明）"/></div>
+          <div class="fg"><label>應會簽部門</label><input class="fi" id="hw-cosign-dept" placeholder="部門名稱"/></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>監工部門主管</label><input class="fi" id="hw-cosign-super-mgr" placeholder="姓名"/></div>
+          <div class="fg"><label>監工人員</label><input class="fi" id="hw-cosign-super" placeholder="姓名"/></div>
+        </div>
+        <div style="margin:16px 0 10px;border-top:1px solid var(--border);padding-top:14px;font-size:12px;font-weight:700;color:var(--navy)">承攬商 / 申請人簽名</div>
         <div class="fg"><label class="req">申請人姓名</label><input class="fi" id="hw-signee" placeholder="請輸入姓名"/></div>
         <div class="fg" style="margin-top:10px">
           <label>電子簽名</label>
@@ -785,15 +789,8 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
       <div class="fsec-hdr">⚠️ 特殊危害作業申請書</div>
       <div class="fsec-body">
         <div class="fsec-note">FM-D3-EM-001-02C｜局限空間、吊掛、高架、危險管路及送電等特殊危害作業，申請前請確認已完成危害告知</div>
-        <div class="fg">
-          <label>進行作業人員</label>
-          <div class="chk-wrap" id="sp-worker-type-wrap">
-            <label class="chk-chip sel"><input type="checkbox" checked onchange="chipChange(this)">本公司</label>
-            <label class="chk-chip"><input type="checkbox" onchange="chipChange(this)">承攬商</label>
-          </div>
-        </div>
         <div class="frow">
-          <div class="fg"><label>承攬商名稱</label><input class="fi" id="sp-company" placeholder="（無則免填）"/></div>
+          <div class="fg"><label class="req">承攬商名稱</label><input class="fi" id="sp-company" placeholder="請輸入承攬商名稱"/></div>
           <div class="fg"><label class="req">承攬工程名稱</label><input class="fi" id="sp-workname" placeholder="請輸入工程或作業名稱"/></div>
         </div>
         <div class="fg">
@@ -880,6 +877,17 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
     <div class="fsec">
       <div class="fsec-hdr">✍️ 電子簽名送出</div>
       <div class="fsec-body">
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px;padding:6px 10px;background:#f0f9ff;border-radius:6px;border-left:3px solid var(--teal)">會　簽　表</div>
+        <div class="frow3">
+          <div class="fg"><label>施工單位部門主管</label><input class="fi" id="sp-cosign-unit-mgr" placeholder="姓名"/></div>
+          <div class="fg"><label>職安衛業務主管</label><input class="fi" id="sp-cosign-safety-mgr" placeholder="（作業危害風險告知及防範說明）"/></div>
+          <div class="fg"><label>應會簽部門</label><input class="fi" id="sp-cosign-dept" placeholder="部門名稱"/></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>監工部門主管</label><input class="fi" id="sp-cosign-super-mgr" placeholder="姓名"/></div>
+          <div class="fg"><label>監工人員</label><input class="fi" id="sp-cosign-super" placeholder="姓名"/></div>
+        </div>
+        <div style="margin:16px 0 10px;border-top:1px solid var(--border);padding-top:14px;font-size:12px;font-weight:700;color:var(--navy)">承攬商 / 申請人簽名</div>
         <div class="fg"><label class="req">申請人姓名</label><input class="fi" id="sp-signee" placeholder="請輸入姓名"/></div>
         <div class="fg" style="margin-top:10px">
           <label>電子簽名</label>
@@ -3913,6 +3921,7 @@ function goPrevHW(cur) {
 
 function validateHW(step) {
   if(step === 1) {
+    if(!document.getElementById('hw-company').value.trim()) return '請填寫承攬商名稱';
     if(!document.getElementById('hw-workname').value.trim()) return '請填寫承攬工程名稱';
     if(!document.getElementById('hw-date').value) return '請填寫申請日期';
     if(!document.getElementById('hw-location').value.trim()) return '請填寫作業地點';
@@ -3966,7 +3975,6 @@ async function submitHotWork() {
     type: 'hotwork',
     submittedAt: new Date().toISOString(),
     basic: {
-      workerType: getHWChips('hw-worker-type-wrap').join('、'),
       company: document.getElementById('hw-company').value.trim(),
       workname: document.getElementById('hw-workname').value.trim(),
       supervisor: document.getElementById('hw-supervisor').value.trim(),
@@ -3982,6 +3990,13 @@ async function submitHotWork() {
     postChecks: [1,2,3].map(i=>document.getElementById('hw-post-'+i).checked),
     signee: document.getElementById('hw-signee').value.trim(),
     signature: document.getElementById('hw-sig-canvas').toDataURL('image/png'),
+    cosigns: {
+      unitMgr:   document.getElementById('hw-cosign-unit-mgr').value.trim(),
+      safetyMgr: document.getElementById('hw-cosign-safety-mgr').value.trim(),
+      dept:      document.getElementById('hw-cosign-dept').value.trim(),
+      superMgr:  document.getElementById('hw-cosign-super-mgr').value.trim(),
+      supervisor:document.getElementById('hw-cosign-super').value.trim(),
+    },
   };
   showLoading('正在送出申請…');
   try {
@@ -4035,6 +4050,7 @@ function goPrevSP(cur) {
 
 function validateSP(step) {
   if(step === 1) {
+    if(!document.getElementById('sp-company').value.trim()) return '請填寫承攬商名稱';
     if(!document.getElementById('sp-workname').value.trim()) return '請填寫承攬工程名稱';
     if(!document.getElementById('sp-date').value) return '請填寫申請日期';
     if(!document.getElementById('sp-location').value.trim()) return '請填寫作業地點';
@@ -4089,7 +4105,6 @@ async function submitSpecial() {
     type: 'special',
     submittedAt: new Date().toISOString(),
     basic: {
-      workerType: getSPChips('sp-worker-type-wrap').join('、'),
       company: document.getElementById('sp-company').value.trim(),
       workname: document.getElementById('sp-workname').value.trim(),
       categories: getSPChips('sp-cat-wrap'),
@@ -4109,6 +4124,13 @@ async function submitSpecial() {
     pipelineChecks: [1,2,3].map(i=>document.getElementById('sp-pl-'+i).checked),
     signee: document.getElementById('sp-signee').value.trim(),
     signature: document.getElementById('sp-sig-canvas').toDataURL('image/png'),
+    cosigns: {
+      unitMgr:   document.getElementById('sp-cosign-unit-mgr').value.trim(),
+      safetyMgr: document.getElementById('sp-cosign-safety-mgr').value.trim(),
+      dept:      document.getElementById('sp-cosign-dept').value.trim(),
+      superMgr:  document.getElementById('sp-cosign-super-mgr').value.trim(),
+      supervisor:document.getElementById('sp-cosign-super').value.trim(),
+    },
   };
   showLoading('正在送出申請…');
   try {
@@ -4171,8 +4193,17 @@ function renderHotWorkDetail(r) {
       <div><div class="dl">承攬商監工</div><div class="dv">${X(b.supervisor||'—')}</div></div>
       <div><div class="dl">連絡電話</div><div class="dv">${X(b.phone||'—')}</div></div>
       <div><div class="dl">作業時間</div><div class="dv">${X(b.timeStart||'—')} ～ ${X(b.timeEnd||'—')}</div></div>
-      <div><div class="dl">作業人員</div><div class="dv">${X(b.workerType||'—')}</div></div>
     </div></div></div>`;
+  const co = r.cosigns || {};
+  html += `<div class="detail-blk"><div class="detail-blk-hdr">會　簽　表</div><div class="detail-blk-body">
+    <div class="detail-grid">
+      <div><div class="dl">施工單位部門主管</div><div class="dv">${X(co.unitMgr||'—')}</div></div>
+      <div><div class="dl">職安衛業務主管</div><div class="dv">${X(co.safetyMgr||'—')}</div></div>
+      <div><div class="dl">應會簽部門</div><div class="dv">${X(co.dept||'—')}</div></div>
+      <div><div class="dl">監工部門主管</div><div class="dv">${X(co.superMgr||'—')}</div></div>
+      <div><div class="dl">監工人員</div><div class="dv">${X(co.supervisor||'—')}</div></div>
+    </div>
+  </div></div>`;
   html += `<div class="detail-blk"><div class="detail-blk-hdr">動火前巡檢（14項）</div><div class="detail-blk-body">
     ${PRE_ITEMS.map((item,i)=>`<div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="font-weight:700;color:${pre[i]?'var(--green)':'var(--red)'};min-width:18px">${chk(pre[i])}</span><span>${item}</span></div>`).join('')}
   </div></div>`;
@@ -4185,7 +4216,40 @@ function renderHotWorkDetail(r) {
     </div>
     ${r.signature ? `<img class="sig-img" src="${r.signature}" style="margin-top:10px">` : ''}
   </div></div>`;
+  if(currentRole === 'admin') {
+    html += `<div class="detail-blk"><div class="detail-blk-hdr">補充確認簽名（Admin）</div><div class="detail-blk-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div>
+          <div class="dl" style="margin-bottom:6px">監工確認簽名</div>
+          ${r.supervisorSig ? `<img class="sig-img" src="${r.supervisorSig}" style="display:block;margin-bottom:8px">` : ''}
+          <div class="sig-outer" style="height:110px" id="hw-admin-super-outer">
+            <canvas id="hw-admin-super-sig" width="300" height="110"></canvas>
+            <div class="sig-hint" id="hw-admin-super-hint">${r.supervisorSig ? '重新簽名' : '監工在此簽名'}</div>
+          </div>
+          <div class="sig-tools"><button class="btn btn-sm" onclick="clearAdminSig('hw-admin-super-sig','hw-admin-super-hint')">清除</button></div>
+        </div>
+        <div>
+          <div class="dl" style="margin-bottom:6px">環安衛確認簽名</div>
+          ${r.safetySig ? `<img class="sig-img" src="${r.safetySig}" style="display:block;margin-bottom:8px">` : ''}
+          <div class="sig-outer" style="height:110px" id="hw-admin-safety-outer">
+            <canvas id="hw-admin-safety-sig" width="300" height="110"></canvas>
+            <div class="sig-hint" id="hw-admin-safety-hint">${r.safetySig ? '重新簽名' : '環安衛在此簽名'}</div>
+          </div>
+          <div class="sig-tools"><button class="btn btn-sm" onclick="clearAdminSig('hw-admin-safety-sig','hw-admin-safety-hint')">清除</button></div>
+        </div>
+      </div>
+      <div style="margin-top:14px">
+        <button class="btn btn-success" onclick="saveHWCounterSig()">💾 儲存補簽</button>
+      </div>
+    </div></div>`;
+  }
   document.getElementById('detail-content').innerHTML = html;
+  if(currentRole === 'admin') {
+    setTimeout(()=>{
+      initAdminSig('hw-admin-super-sig', 'hw-admin-super-hint');
+      initAdminSig('hw-admin-safety-sig', 'hw-admin-safety-hint');
+    }, 100);
+  }
 }
 
 function renderSpecialDetail(r) {
@@ -4224,6 +4288,16 @@ function renderSpecialDetail(r) {
       <div><div class="dl">施工人數</div><div class="dv">${X(b.headcount||'—')} 人</div></div>
       <div><div class="dl">作業時間</div><div class="dv">${X(b.timeStart||'—')} ～ ${X(b.timeEnd||'—')}</div></div>
     </div></div></div>`;
+  const sco = r.cosigns || {};
+  html += `<div class="detail-blk"><div class="detail-blk-hdr">會　簽　表</div><div class="detail-blk-body">
+    <div class="detail-grid">
+      <div><div class="dl">施工單位部門主管</div><div class="dv">${X(sco.unitMgr||'—')}</div></div>
+      <div><div class="dl">職安衛業務主管</div><div class="dv">${X(sco.safetyMgr||'—')}</div></div>
+      <div><div class="dl">應會簽部門</div><div class="dv">${X(sco.dept||'—')}</div></div>
+      <div><div class="dl">監工部門主管</div><div class="dv">${X(sco.superMgr||'—')}</div></div>
+      <div><div class="dl">監工人員</div><div class="dv">${X(sco.supervisor||'—')}</div></div>
+    </div>
+  </div></div>`;
   html += renderSection('一、局限空間作業', CS, r.confinedSpaceChecks);
   html += renderSection('二、吊掛作業', LF, r.liftingChecks);
   html += renderSection('三、高架作業', EL, r.elevatedChecks);
@@ -4232,7 +4306,40 @@ function renderSpecialDetail(r) {
     <div class="detail-grid"><div><div class="dl">申請人</div><div class="dv">${X(r.signee||'—')}</div></div></div>
     ${r.signature ? `<img class="sig-img" src="${r.signature}" style="margin-top:10px">` : ''}
   </div></div>`;
+  if(currentRole === 'admin') {
+    html += `<div class="detail-blk"><div class="detail-blk-hdr">補充確認簽名（Admin）</div><div class="detail-blk-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div>
+          <div class="dl" style="margin-bottom:6px">監工確認簽名</div>
+          ${r.supervisorSig ? `<img class="sig-img" src="${r.supervisorSig}" style="display:block;margin-bottom:8px">` : ''}
+          <div class="sig-outer" style="height:110px" id="sp-admin-super-outer">
+            <canvas id="sp-admin-super-sig" width="300" height="110"></canvas>
+            <div class="sig-hint" id="sp-admin-super-hint">${r.supervisorSig ? '重新簽名' : '監工在此簽名'}</div>
+          </div>
+          <div class="sig-tools"><button class="btn btn-sm" onclick="clearAdminSig('sp-admin-super-sig','sp-admin-super-hint')">清除</button></div>
+        </div>
+        <div>
+          <div class="dl" style="margin-bottom:6px">環安衛確認簽名</div>
+          ${r.safetySig ? `<img class="sig-img" src="${r.safetySig}" style="display:block;margin-bottom:8px">` : ''}
+          <div class="sig-outer" style="height:110px" id="sp-admin-safety-outer">
+            <canvas id="sp-admin-safety-sig" width="300" height="110"></canvas>
+            <div class="sig-hint" id="sp-admin-safety-hint">${r.safetySig ? '重新簽名' : '環安衛在此簽名'}</div>
+          </div>
+          <div class="sig-tools"><button class="btn btn-sm" onclick="clearAdminSig('sp-admin-safety-sig','sp-admin-safety-hint')">清除</button></div>
+        </div>
+      </div>
+      <div style="margin-top:14px">
+        <button class="btn btn-success" onclick="saveSPCounterSig()">💾 儲存補簽</button>
+      </div>
+    </div></div>`;
+  }
   document.getElementById('detail-content').innerHTML = html;
+  if(currentRole === 'admin') {
+    setTimeout(()=>{
+      initAdminSig('sp-admin-super-sig', 'sp-admin-super-hint');
+      initAdminSig('sp-admin-safety-sig', 'sp-admin-safety-hint');
+    }, 100);
+  }
 }
 
 // ════════════════════════════════════════════════
@@ -4246,6 +4353,7 @@ function exportHotWorkPDF(r) {
   const chk = v => v ? 'ˇ' : '×';
   const pre = r.preChecks || [];
   const post = r.postChecks || [];
+  const co = r.cosigns || {};
   const PRE = ['3公尺內備有可使用/正常操作之自動灑水或手提滅火器','防爆區或侷限空間內作業由工安單位測定可燃性氣體濃度','動火時旁邊有警戒人員','排除管線內可燃性物質','隔離或中斷該區域之火警偵測器','清除工作區域週邊11公尺內的可燃物或使用防火毯覆蓋保護','工作區域易燃性地面予以防火保護','工作區域週邊的地面及牆面不得有開口或使用防火毯覆蓋保護','動火作業人員的安全眼鏡、面罩、手套等防護具','施工產生之火花予以收集，工作區域內用防火布加以保護','建築結構為不易燃性材料建造，或為不易燃性材料覆蓋保護','須移走牆背面的易燃物質（如另一面有易燃物質，須移除之）','電焊機接頭及接地良好，並有自動電擊防止裝置','鋼瓶直立或使用鋼瓶推車固定並有安全逆止閥'];
   const POST = ['每日收工前將火警系統中斷復歸，並檢點施工環境安全','環境整理復歸，材料器材工具收拾整齊','施工完畢後30分鐘動火場所覆查，沒有餘燼或悶燒情形'];
   const css = `*{box-sizing:border-box;margin:0;padding:0;}body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:10.5pt;color:#000;background:#fff;}.page{width:210mm;min-height:297mm;padding:12mm 14mm;margin:0 auto;}table{width:100%;border-collapse:collapse;}td,th{border:1px solid #333;padding:3px 5px;font-size:9.5pt;vertical-align:middle;}th{background:#dce3ed;font-weight:700;text-align:center;}.lbl{font-weight:700;background:#f0f0f0;font-size:9pt;}.sub-hdr{background:#2c4a6e;color:#fff;font-weight:700;font-size:9pt;text-align:center;padding:4px;}.chk-no{text-align:center;width:24px;font-weight:700;}.chk-val{text-align:center;width:52px;font-weight:700;}.co-hdr{display:flex;align-items:center;gap:10px;margin-bottom:6px;}.co-hdr img{height:36px;}.co-name{font-size:13pt;font-weight:700;}.doc-title{font-size:15pt;font-weight:700;text-align:center;margin:6px 0 2px;}.doc-no{font-size:8.5pt;text-align:center;color:#555;margin-bottom:8px;}.note-box{border:1px solid #999;padding:6px 8px;font-size:8.5pt;line-height:1.8;margin-top:6px;}.footer{font-size:8pt;color:#666;text-align:right;margin-top:4px;}.sig-img{max-height:80px;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}`;
@@ -4254,12 +4362,14 @@ function exportHotWorkPDF(r) {
 <div class="doc-title">動 火 作 業 許 可 證</div>
 <div class="doc-no">FM-D3-EM-001-01C　　申請編號：${X(r.id)}</div>
 <table style="margin-bottom:6px">
-  <tr><td class="lbl" style="width:22%">進行作業人員</td><td>${X(b.workerType||'—')}</td><td class="lbl" style="width:20%">申請日期</td><td>${fd(b.applyDate)}</td></tr>
-  <tr><td class="lbl">承攬商名稱</td><td>${X(b.company||'—')}</td><td class="lbl">申請時段</td><td>${X(b.shift||'—')}</td></tr>
+  <tr><td class="lbl" style="width:22%">承攬商名稱</td><td>${X(b.company||'—')}</td><td class="lbl" style="width:20%">申請日期</td><td>${fd(b.applyDate)}</td></tr>
   <tr><td class="lbl">承攬工程名稱</td><td colspan="3">${X(b.workname||'—')}</td></tr>
   <tr><td class="lbl">地點／建物／樓層</td><td colspan="3">${X(b.location||'—')}</td></tr>
   <tr><td class="lbl">動火設備</td><td>${X(b.equipment||'—')}</td><td class="lbl">承攬商監工</td><td>${X(b.supervisor||'—')}</td></tr>
   <tr><td class="lbl">連絡電話</td><td>${X(b.phone||'—')}</td><td class="lbl">作業時間</td><td>${X(b.timeStart||'—')} ～ ${X(b.timeEnd||'—')}</td></tr>
+  <tr><td class="lbl">施工單位主管</td><td>${X(co.unitMgr||'—')}</td><td class="lbl">職安衛主管</td><td>${X(co.safetyMgr||'—')}</td></tr>
+  <tr><td class="lbl">應會簽部門</td><td>${X(co.dept||'—')}</td><td class="lbl">監工部門主管</td><td>${X(co.superMgr||'—')}</td></tr>
+  <tr><td class="lbl">監工人員</td><td colspan="3">${X(co.supervisor||'—')}</td></tr>
 </table>
 <table>
   <tr><td colspan="3" style="background:#2c4a6e;color:#fff;font-weight:700;padding:4px 8px">動火檢查表</td></tr>
@@ -4271,6 +4381,10 @@ function exportHotWorkPDF(r) {
   ${POST.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${post[i]?'#16a34a':'#dc2626'}">${chk(post[i])}</td></tr>`).join('')}
 </table>
 <div class="note-box"><strong>說明：</strong><br>1. 表單簽核後由監工貼於施工區域，作業結束由監工收回並交工安單位存檔。<br>2. 動火作業一日為限逾期重新申請。</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;border:1px solid #ccc;padding:8px">
+  <div><div style="font-size:9pt;font-weight:700;margin-bottom:4px">監工確認簽名</div>${r.supervisorSig?`<img src="${r.supervisorSig}" style="max-height:50px">`:''}<div style="height:50px;border-bottom:1px solid #999"></div></div>
+  <div><div style="font-size:9pt;font-weight:700;margin-bottom:4px">環安衛確認簽名</div>${r.safetySig?`<img src="${r.safetySig}" style="max-height:50px">`:''}<div style="height:50px;border-bottom:1px solid #999"></div></div>
+</div>
 <div class="footer">FM-D3-EM-001-01C ／ 大豐環保科技股份有限公司 ／ 送出時間：${(r.submittedAt||'').slice(0,16).replace('T',' ')}</div>
 </div>`;
   const win = window.open('','_blank');
@@ -4280,12 +4394,88 @@ function exportHotWorkPDF(r) {
   setTimeout(()=>win.print(), 600);
 }
 
+// ── Admin counter-sign helpers ──────────────────
+const _adminSigStates = {};
+
+function initAdminSig(canvasId, hintId) {
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
+  const outer = canvas.parentElement;
+  canvas.width = outer.offsetWidth || 300;
+  canvas.height = 110;
+  const ctx = canvas.getContext('2d');
+  ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  _adminSigStates[canvasId] = { ctx, drawing: false, hasData: false };
+  const pos = e => {
+    const r = canvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return [src.clientX - r.left, src.clientY - r.top];
+  };
+  canvas.onmousedown = e => { _adminSigStates[canvasId].drawing=true; ctx.beginPath(); const [x,y]=pos(e); ctx.moveTo(x,y); };
+  canvas.onmousemove = e => {
+    if(!_adminSigStates[canvasId].drawing) return;
+    const [x,y]=pos(e); ctx.lineTo(x,y); ctx.stroke();
+    _adminSigStates[canvasId].hasData=true;
+    const h=document.getElementById(hintId); if(h) h.style.display='none';
+  };
+  canvas.onmouseup = () => _adminSigStates[canvasId].drawing=false;
+  canvas.addEventListener('touchstart', e=>{ e.preventDefault(); _adminSigStates[canvasId].drawing=true; ctx.beginPath(); const [x,y]=pos(e); ctx.moveTo(x,y); }, {passive:false});
+  canvas.addEventListener('touchmove', e=>{ e.preventDefault(); if(!_adminSigStates[canvasId].drawing) return; const [x,y]=pos(e); ctx.lineTo(x,y); ctx.stroke(); _adminSigStates[canvasId].hasData=true; const h=document.getElementById(hintId); if(h) h.style.display='none'; }, {passive:false});
+  canvas.addEventListener('touchend', ()=>_adminSigStates[canvasId].drawing=false);
+}
+
+function clearAdminSig(canvasId, hintId) {
+  const s = _adminSigStates[canvasId];
+  if(!s) return;
+  const canvas = document.getElementById(canvasId);
+  s.ctx.clearRect(0,0,canvas.width,canvas.height);
+  s.hasData = false;
+  const h = document.getElementById(hintId); if(h) h.style.display='';
+}
+
+async function saveHWCounterSig() {
+  const r = _currentRecord;
+  if(!r) return;
+  const superState  = _adminSigStates['hw-admin-super-sig'];
+  const safetyState = _adminSigStates['hw-admin-safety-sig'];
+  const updated = { ...r };
+  if(superState?.hasData)  updated.supervisorSig = document.getElementById('hw-admin-super-sig').toDataURL('image/png');
+  if(safetyState?.hasData) updated.safetySig     = document.getElementById('hw-admin-safety-sig').toDataURL('image/png');
+  showLoading('儲存補簽中…');
+  try {
+    const res = await apiPost({ action: 'update', id: r.id, data: updated });
+    if(!res.success) throw new Error(res.error||'儲存失敗');
+    _currentRecord = updated;
+    toast('補簽已儲存', 'ok');
+  } catch(ex) { toast('儲存失敗：'+ex.message, 'bad'); }
+  finally { hideLoading(); }
+}
+
+async function saveSPCounterSig() {
+  const r = _currentRecord;
+  if(!r) return;
+  const superState  = _adminSigStates['sp-admin-super-sig'];
+  const safetyState = _adminSigStates['sp-admin-safety-sig'];
+  const updated = { ...r };
+  if(superState?.hasData)  updated.supervisorSig = document.getElementById('sp-admin-super-sig').toDataURL('image/png');
+  if(safetyState?.hasData) updated.safetySig     = document.getElementById('sp-admin-safety-sig').toDataURL('image/png');
+  showLoading('儲存補簽中…');
+  try {
+    const res = await apiPost({ action: 'update', id: r.id, data: updated });
+    if(!res.success) throw new Error(res.error||'儲存失敗');
+    _currentRecord = updated;
+    toast('補簽已儲存', 'ok');
+  } catch(ex) { toast('儲存失敗：'+ex.message, 'bad'); }
+  finally { hideLoading(); }
+}
+
 function exportSpecialPDF(r) {
   const baseHref = new URL('../', location.href).href;
   const X = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const b = r.basic || {};
   const fd = d => (d||'').replace(/-/g,'/');
   const chk = v => v ? 'ˇ' : '×';
+  const co = r.cosigns || {};
   const CS = ['指派一人以上之安全警戒人員，隨時監視、聯絡作業？','工安單位測定作業場所空氣中氧氣濃度在19%以上？','工安單位測定危害物濃度達法定容許濃度以下？','備有空氣呼吸氣器、安全帶（索）等防護器具使勞工確實戴用？','告知作業之勞工施予必要安全注意事項及訓練？','送風機進行充份通風換氣？'];
   const LF = ['起重機操作及吊掛人員是否有訓練合格證書？','起重機/吊籠是否有在有效期限內的檢查合格證，且機具與證照相符？','鍊條是否有龜裂或腐蝕情形？吊勾是否有防滑舌片？','吊籠操作人員配戴安全帶？安全帶獨立拉掛固定，不得掛在吊籠之吊索上？','吊掛作業前後左右是否有警告禁止進入標示？','吊車支撐桿是否平衡固定？'];
   const EL = ['指定安全警戒人員，隨時監視、指揮作業？','固定安全梯，不可用身體搖晃來移動工作梯？','搭架作業之鷹架腳應固定於地面，並有交叉連桿、30cm以上安全踏板？','工作場所邊緣及開孔設立堅固之護欄或護蓋或安全帶索或安全網避免墜落？'];
@@ -4299,13 +4489,15 @@ function exportSpecialPDF(r) {
 <div class="doc-title">特 殊 危 害 作 業 許 可 證</div>
 <div class="doc-no">FM-D3-EM-001-02C　　申請編號：${X(r.id)}</div>
 <table style="margin-bottom:6px">
-  <tr><td class="lbl" style="width:22%">進行作業人員</td><td>${X(b.workerType||'—')}</td><td class="lbl" style="width:20%">申請日期</td><td>${fd(b.applyDate)}</td></tr>
-  <tr><td class="lbl">承攬商名稱</td><td>${X(b.company||'—')}</td><td class="lbl">申請時段</td><td>${X(b.shift||'—')}</td></tr>
+  <tr><td class="lbl" style="width:22%">承攬商名稱</td><td>${X(b.company||'—')}</td><td class="lbl" style="width:20%">申請日期</td><td>${fd(b.applyDate)}</td></tr>
   <tr><td class="lbl">承攬工程名稱</td><td colspan="3">${X(b.workname||'—')}</td></tr>
   <tr><td class="lbl">作業類別</td><td colspan="3">${(b.categories||[]).join('　')}</td></tr>
   <tr><td class="lbl">地點／建物／樓層</td><td>${X(b.location||'—')}</td><td class="lbl">使用設備</td><td>${X(b.equipment||'—')}</td></tr>
   <tr><td class="lbl">承攬商監工</td><td>${X(b.supervisor||'—')}</td><td class="lbl">連絡電話</td><td>${X(b.phone||'—')}</td></tr>
   <tr><td class="lbl">施工人數</td><td>${X(b.headcount||'—')} 人</td><td class="lbl">作業時間</td><td>${X(b.timeStart||'—')} ～ ${X(b.timeEnd||'—')}</td></tr>
+  <tr><td class="lbl">施工單位主管</td><td>${X(co.unitMgr||'—')}</td><td class="lbl">職安衛主管</td><td>${X(co.safetyMgr||'—')}</td></tr>
+  <tr><td class="lbl">應會簽部門</td><td>${X(co.dept||'—')}</td><td class="lbl">監工部門主管</td><td>${X(co.superMgr||'—')}</td></tr>
+  <tr><td class="lbl">監工人員</td><td colspan="3">${X(co.supervisor||'—')}</td></tr>
 </table>
 <table>
   <tr><td colspan="3" style="background:#2c4a6e;color:#fff;font-weight:700;padding:4px 8px">特殊危險作業檢查表</td></tr>
@@ -4317,6 +4509,10 @@ function exportSpecialPDF(r) {
   <tr><td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:right;padding-right:8px">申請人簽名：${X(r.signee||'')}</td><td class="chk-val">${r.signature?`<img src="${r.signature}" style="max-height:40px;max-width:80px">`:''}</td></tr>
 </table>
 <div class="note-box"><strong>說明：</strong><br>1. 表單由監工貼於施工區域，作業結束由監工收回並交由工安單位存檔。<br>2. 特殊危害作業以一日為限，逾期重新申請。</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;border:1px solid #ccc;padding:8px">
+  <div><div style="font-size:9pt;font-weight:700;margin-bottom:4px">監工確認簽名</div>${r.supervisorSig?`<img src="${r.supervisorSig}" style="max-height:50px">`:''}<div style="height:50px;border-bottom:1px solid #999"></div></div>
+  <div><div style="font-size:9pt;font-weight:700;margin-bottom:4px">環安衛確認簽名</div>${r.safetySig?`<img src="${r.safetySig}" style="max-height:50px">`:''}<div style="height:50px;border-bottom:1px solid #999"></div></div>
+</div>
 <div class="footer">FM-D3-EM-001-02C ／ 大豐環保科技股份有限公司 ／ 送出時間：${(r.submittedAt||'').slice(0,16).replace('T',' ')}</div>
 </div>`;
   const win = window.open('','_blank');
