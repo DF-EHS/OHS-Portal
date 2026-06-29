@@ -406,6 +406,7 @@ let allPersonnel = [], allSelfAssess = [], allHazard = [], allInterview = [];
 // ─────────────── Helpers ──────────────
 const V   = id => document.getElementById(id);
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const toDate = s => s ? String(s).slice(0,10) : '';
 const safeJson = (s,f) => { try { return JSON.parse(s); } catch { return f; } };
 
 function showView(id) {
@@ -537,15 +538,15 @@ function renderPersonnel() {
   V('per-wrap').innerHTML=alertHtml+`<table class="tbl"><thead><tr>
     <th>員工編號</th><th>姓名</th><th>部門</th><th>預產期</th><th>孕週</th><th>保護狀態</th><th>備註</th>
   </tr></thead><tbody>${rows.map(r=>{
-    const wks   = r.dueDate ? gestationalWeeks(r.dueDate) : null;
-    const stage = stageFromDue(r.dueDate, r.status);
+    const wks   = r.dueDate ? gestationalWeeks(toDate(r.dueDate)) : null;
+    const stage = stageFromDue(toDate(r.dueDate), r.status);
     const wksHtml = (wks!==null && wks>=0 && stage!=='哺乳期' && stage!=='保護結束')
       ? `<span class="weeks-chip">第 ${wks} 週</span>` : '';
     return `<tr onclick="openPersonnelPanel('${r.id}')">
       <td><strong>${esc(r.empId)}</strong></td>
       <td>${esc(r.empName||'—')}</td>
       <td>${esc(r.dept||'—')}</td>
-      <td>${esc(r.dueDate||'—')}</td>
+      <td>${esc(toDate(r.dueDate)||'—')}</td>
       <td>${wksHtml||'—'}</td>
       <td><span class="badge ${stageCls(stage)}">${esc(stage)}</span></td>
       <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.note||'—')}</td>
@@ -564,7 +565,7 @@ function openPersonnelPanel(id, saEmpId = null) {
     <div class="field"><label>姓名</label><input type="text" id="per-name" value="${esc(r?.empName||sa?.empName||'')}"></div>
     <div class="field"><label>部門</label><input type="text" id="per-dept" value="${esc(r?.dept||sa?.empDept||'')}"></div>
     <div class="field"><label>聯絡電話</label><input type="text" id="per-phone" value="${esc(r?.phone||'')}"></div>
-    <div class="field"><label>預產期</label><input type="date" id="per-due" value="${esc(r?.dueDate||sa?.dueDate||'')}"></div>
+    <div class="field"><label>預產期</label><input type="date" id="per-due" value="${toDate(r?.dueDate||sa?.dueDate)}"></div>
     <div class="field"><label>狀態</label><select id="per-status">
       ${['妊娠初期','妊娠中期','妊娠晚期','哺乳期','保護結束'].map(o=>`<option ${(r?.status||sa?.stage||'妊娠初期')===o?'selected':''}>${o}</option>`).join('')}
     </select></div>
