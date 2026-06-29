@@ -154,6 +154,17 @@ main { max-width: 980px; margin: 0 auto; padding: 28px 20px 60px; }
 /* Section divider */
 .form-section-title { font-size: 14px; font-weight: 800; color: var(--accent); margin: 20px 0 10px; padding-bottom: 6px; border-bottom: 2px solid var(--accent-bd); }
 
+/* Case flow badges & action buttons */
+.case-badge { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+.case-badge.has  { background: #fefce8; color: #854d0e; }
+.case-badge.done { background: #f0fdf4; color: #15803d; }
+.case-badge.none { background: #f1f5f9; color: #64748b; }
+.act-btn { padding: 4px 9px; border-radius: 6px; font-size: 11px; font-weight: 700; border: 1.5px solid; cursor: pointer; background: none; white-space: nowrap; font-family: inherit; transition: background .12s; }
+.act-btn-haz { border-color: #d97706; color: #d97706; }
+.act-btn-haz:hover { background: #fef3c7; }
+.act-btn-iv  { border-color: #0891b2; color: #0891b2; }
+.act-btn-iv:hover  { background: #e0f2fe; }
+
 @media(max-width:640px) {
   .home-grid { grid-template-columns: 1fr; }
   .admin-tabs { overflow-x: auto; }
@@ -501,12 +512,16 @@ async function post(params) {
 async function loadPersonnel() {
   V('per-wrap').innerHTML='<div class="notice info">載入中…</div>';
   try {
-    const [pd, sd] = await Promise.all([
-      post({action:'listPersonnel', token:ADMIN_TOKEN}),
+    const [pd, sd, hd, id] = await Promise.all([
+      post({action:'listPersonnel',  token:ADMIN_TOKEN}),
       post({action:'listSelfAssess', token:ADMIN_TOKEN}),
+      post({action:'listHazard',     token:ADMIN_TOKEN}),
+      post({action:'listInterview',  token:ADMIN_TOKEN}),
     ]);
     allPersonnel  = pd.rows||[];
     allSelfAssess = sd.rows||[];
+    allHazard     = hd.rows||[];
+    allInterview  = id.rows||[];
     renderPersonnel();
   } catch(e){ V('per-wrap').innerHTML=`<div class="notice err">載入失敗：${e.message}</div>`; }
 }
@@ -536,12 +551,18 @@ function renderPersonnel() {
     </div>` : '';
   if (!rows.length && !alertHtml) { V('per-wrap').innerHTML='<div class="empty"><div class="icon">👤</div><p>尚無受保護員工名冊<br><small>點擊「新增人員」開始建立</small></p></div>'; return; }
   V('per-wrap').innerHTML=alertHtml+`<table class="tbl"><thead><tr>
-    <th>員工編號</th><th>姓名</th><th>部門</th><th>預產期</th><th>孕週</th><th>保護狀態</th><th>備註</th>
+    <th>員工編號</th><th>姓名</th><th>部門</th><th>預產期</th><th>孕週</th><th>保護狀態</th><th>危害評估</th><th>操作</th>
   </tr></thead><tbody>${rows.map(r=>{
     const wks   = r.dueDate ? gestationalWeeks(toDate(r.dueDate)) : null;
     const stage = stageFromDue(toDate(r.dueDate), r.status);
     const wksHtml = (wks!==null && wks>=0 && stage!=='哺乳期' && stage!=='保護結束')
       ? `<span class="weeks-chip">第 ${wks} 週</span>` : '';
+    const hazRecs = allHazard.filter(h=>String(h.empId)===String(r.empId));
+    const lastHaz = hazRecs.slice(-1)[0];
+    const hazBadge = hazRecs.length
+      ? `<span class="case-badge ${lastHaz?.riskGrade==='第三級管理'?'has':lastHaz?.riskGrade==='第二級管理'?'has':'done'}">${hazRecs.length}筆・${lastHaz?.riskGrade||'—'}</span>`
+      : `<span class="case-badge none">未評估</span>`;
+    const empIdStr = esc(String(r.empId));
     return `<tr onclick="openPersonnelPanel('${r.id}')">
       <td><strong>${esc(r.empId)}</strong></td>
       <td>${esc(r.empName||'—')}</td>
@@ -549,7 +570,11 @@ function renderPersonnel() {
       <td>${esc(toDate(r.dueDate)||'—')}</td>
       <td>${wksHtml||'—'}</td>
       <td><span class="badge ${stageCls(stage)}">${esc(stage)}</span></td>
-      <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.note||'—')}</td>
+      <td>${hazBadge}</td>
+      <td style="white-space:nowrap;display:flex;gap:4px;padding:8px 12px">
+        <button class="act-btn act-btn-haz" onclick="event.stopPropagation();openHazardPanel(null,'${empIdStr}')">⚠️ 危害評估</button>
+        <button class="act-btn act-btn-iv"  onclick="event.stopPropagation();openInterviewPanel(null,'${empIdStr}')">🩺 面談</button>
+      </td>
     </tr>`;
   }).join('')}</tbody></table>`;
 }
@@ -629,15 +654,16 @@ function renderHazard() {
   }).join('')}</tbody></table>`;
 }
 
-function openHazardPanel(id) {
+function openHazardPanel(id, prefillEmpId = null) {
   const r = id ? allHazard.find(x=>x.id===id) : null;
+  const p = prefillEmpId ? allPersonnel.find(x=>String(x.empId)===String(prefillEmpId)) : null;
   const selHaz = {}; HAZ_CATEGORIES.forEach(c=>{ selHaz[c.key]=r?safeJson(r[c.key],[]):[]; });
   const envLv = r ? (r.envLevel==='第三級（≥1/2 容許標準）'?3:r.envLevel==='第二級（1/10–1/2 容許標準）'?2:1) : 1;
   const hlLv  = r ? (r.healthLevel==='第三級（有危害）'?3:r.healthLevel==='第二級（可能受影響）'?2:1) : 1;
   V('panel-title').textContent = r?'編輯危害評估':'新增危害評估';
   V('panel-body').innerHTML=`
-    <div class="field"><label>員工編號 *</label><input type="text" id="h-emp" value="${esc(r?.empId||'')}"></div>
-    <div class="field"><label>員工姓名</label><input type="text" id="h-name" value="${esc(r?.empName||'')}"></div>
+    <div class="field"><label>員工編號 *</label><input type="text" id="h-emp" value="${esc(r?.empId||p?.empId||'')}"></div>
+    <div class="field"><label>員工姓名</label><input type="text" id="h-name" value="${esc(r?.empName||p?.empName||'')}"></div>
     <div class="field"><label>評估日期</label><input type="date" id="h-date" value="${esc(r?.assessDate||new Date().toISOString().slice(0,10))}"></div>
 
     <div class="form-section-title" style="margin-top:14px">作業危害勾選（FM-024-02）</div>
@@ -671,9 +697,14 @@ function openHazardPanel(id) {
   V('panel-foot').innerHTML=`
     <button class="btn-primary" onclick="saveHazard('${id||''}')">儲存</button>
     <button class="btn-secondary" onclick="aiHazardAdvice('${id||''}')">✨ AI 建議</button>
+    <button class="btn-secondary" onclick="openInterviewFromHazard()" style="color:#0891b2;border-color:#0891b2">🩺 建立面談記錄</button>
     ${id?`<button class="btn-secondary" style="color:var(--red)" onclick="delHazard('${id}')">刪除</button>`:''}
     <button class="btn-secondary" onclick="closePanel()">取消</button>`;
   openPanel();
+}
+function openInterviewFromHazard() {
+  const empId = V('h-emp')?.value || '';
+  openInterviewPanel(null, empId);
 }
 function updateRiskPreview() {
   const e = parseInt(V('h-env')?.value)||1;
@@ -766,13 +797,25 @@ function renderInterview() {
     </tr>`;
   }).join('')}</tbody></table>`;
 }
-function openInterviewPanel(id) {
-  const r=id?allInterview.find(x=>x.id===id):null;
+function openInterviewPanel(id, prefillEmpId = null) {
+  const r = id ? allInterview.find(x=>x.id===id) : null;
+  const p = prefillEmpId ? allPersonnel.find(x=>String(x.empId)===String(prefillEmpId)) : null;
+  const hazRecs = prefillEmpId ? allHazard.filter(h=>String(h.empId)===String(prefillEmpId)) : [];
+  const lastHaz = hazRecs.slice(-1)[0];
+  const empId   = r?.empId   || p?.empId   || prefillEmpId || '';
+  const empName = r?.empName || p?.empName || '';
+  const empDept = r?.empDept || p?.dept    || '';
+  const hazNote = lastHaz
+    ? `<div class="notice ${lastHaz.riskGrade==='第三級管理'?'err':lastHaz.riskGrade==='第二級管理'?'info':'ok'}" style="margin-bottom:14px">
+        📋 危害評估結果（${esc(toDate(lastHaz.assessDate))}）：<strong>${esc(lastHaz.riskGrade)}</strong><br>
+        <span style="font-size:12px;opacity:.85">${esc(RISK_LABELS[lastHaz.riskGrade==='第三級管理'?3:lastHaz.riskGrade==='第二級管理'?2:1]?.text||'')}</span>
+      </div>` : '';
   V('panel-title').textContent=r?'編輯面談紀錄':'新增面談紀錄';
   V('panel-body').innerHTML=`
-    <div class="field"><label>員工編號 *</label><input type="text" id="iv-emp" value="${esc(r?.empId||'')}"></div>
-    <div class="field"><label>姓名</label><input type="text" id="iv-name" value="${esc(r?.empName||'')}"></div>
-    <div class="field"><label>部門</label><input type="text" id="iv-dept" value="${esc(r?.empDept||'')}"></div>
+    ${hazNote}
+    <div class="field"><label>員工編號 *</label><input type="text" id="iv-emp" value="${esc(empId)}"></div>
+    <div class="field"><label>姓名</label><input type="text" id="iv-name" value="${esc(empName)}"></div>
+    <div class="field"><label>部門</label><input type="text" id="iv-dept" value="${esc(empDept)}"></div>
     <div class="field"><label>面談日期</label><input type="date" id="iv-date" value="${esc(r?.interviewDate||'')}"></div>
     <div class="field"><label>面談人員（護理師/醫師）</label><input type="text" id="iv-interviewer" value="${esc(r?.interviewer||'')}"></div>
     <div class="form-section-title" style="margin-top:10px">工作調整採行措施（FM-024-05）</div>
