@@ -4457,45 +4457,120 @@ function exportHotWorkPDF(r) {
   const baseHref = new URL('../', location.href).href;
   const X = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const b = r.basic || {};
-  const fd = d => (d||'').replace(/-/g,'/');
-  const chk = v => v ? 'ˇ' : '×';
+  const co = r.cosigns || {};
   const pre = r.preChecks || [];
   const post = r.postChecks || [];
   const supC = r.supervisorChecks || [];
   const safC = r.safetyChecks || [];
-  const co = r.cosigns || {};
-  const PRE = ['3公尺內備有可使用/正常操作之自動灑水或手提滅火器','防爆區或侷限空間內作業由工安單位測定可燃性氣體濃度','動火時旁邊有警戒人員','排除管線內可燃性物質','隔離或中斷該區域之火警偵測器','清除工作區域週邊11公尺內的可燃物或使用防火毯覆蓋保護','工作區域易燃性地面予以防火保護','工作區域週邊的地面及牆面不得有開口或使用防火毯覆蓋保護','動火作業人員的安全眼鏡、面罩、手套等防護具','施工產生之火花予以收集，工作區域內用防火布加以保護','建築結構為不易燃性材料建造，或為不易燃性材料覆蓋保護','須移走牆背面的易燃物質（如另一面有易燃物質，須移除之）','電焊機接頭及接地良好，並有自動電擊防止裝置','鋼瓶直立或使用鋼瓶推車固定並有安全逆止閥'];
-  const POST = ['每日收工前將火警系統中斷復歸，並檢點施工環境安全','環境整理復歸，材料器材工具收拾整齊','施工完畢後30分鐘動火場所覆查，沒有餘燼或悶燒情形'];
-  const css = `*{box-sizing:border-box;margin:0;padding:0;}body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:10.5pt;color:#000;background:#fff;}.page{width:210mm;min-height:297mm;padding:12mm 14mm;margin:0 auto;}table{width:100%;border-collapse:collapse;}td,th{border:1px solid #333;padding:3px 5px;font-size:9.5pt;vertical-align:middle;}th{background:#dce3ed;font-weight:700;text-align:center;}.lbl{font-weight:700;background:#f0f0f0;font-size:9pt;}.sub-hdr{background:#2c4a6e;color:#fff;font-weight:700;font-size:9pt;text-align:center;padding:4px;}.chk-no{text-align:center;width:24px;font-weight:700;}.chk-val{text-align:center;width:52px;font-weight:700;}.co-hdr{display:flex;align-items:center;gap:10px;margin-bottom:6px;}.co-hdr img{height:36px;}.co-name{font-size:13pt;font-weight:700;}.doc-title{font-size:15pt;font-weight:700;text-align:center;margin:6px 0 2px;}.doc-no{font-size:8.5pt;text-align:center;color:#555;margin-bottom:8px;}.note-box{border:1px solid #999;padding:6px 8px;font-size:8.5pt;line-height:1.8;margin-top:6px;}.footer{font-size:8pt;color:#666;text-align:right;margin-top:4px;}.sig-img{max-height:80px;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}`;
+  const apP = (b.applyDate||'').split('-');
+  const shift = b.shift||'';
+  const ck = v => v===true ? 'ˇ' : v===false ? '×' : '';
+  const ckC = v => v===true ? '#16a34a' : v===false ? '#dc2626' : '#333';
+  const cb = v => shift.includes(v) ? '☑' : '□';
+  const sImg = src => src ? `<img src="${src}" style="max-height:38px;max-width:95%;display:block;margin:2px auto">` : '';
+  const PRE = [
+    '3 公尺內備有可使用/正常操作之自動灑水或手提滅火器',
+    '防爆區或侷限空間內作業由工安單位測定可燃性氣體濃度',
+    '動火時旁邊有警戒人員',
+    '排除管線內可燃性物質',
+    '隔離或中斷該區域之火警偵測器',
+    '清除工作區域週邊 11 公尺內的可燃物或使用防火毯覆蓋保護',
+    '工作區域易燃性地面予以防火保護',
+    '工作區域週邊的地面及牆面不得有開口或使用防火毯覆蓋保護',
+    '動火作業人員的安全眼鏡、面罩、手套等防護具',
+    '施工產生之火花予以收集，工作區域內用防火布加以保護',
+    '建築結構為不易燃性材料建造，或為不易燃性材料覆蓋保護',
+    '須移走牆背面的易燃物質(如另一面有易燃物質，須移除之)',
+    '電焊機接頭及接地良好，並有自動電擊防止裝置',
+    '鋼瓶直立或使用鋼瓶推車固定並有安全逆止閥'
+  ];
+  const POST = [
+    '每日收工前將火警系統中斷復歸，並檢點施工環境安全',
+    '環境整理復歸，材料器材工具收拾整齊',
+    '施工完畢後 30 分鐘動火場所覆查，沒有餘燼或悶燒情形'
+  ];
+  const chkR = (item, cv, sv, ev) =>
+    `<tr><td style="font-size:9pt;padding:3px 6px">${item}</td>` +
+    `<td style="text-align:center;width:52px;font-weight:700;color:${ckC(cv)}">${ck(cv)}</td>` +
+    `<td style="text-align:center;width:52px;font-weight:700;color:${ckC(sv)}">${supC.length?ck(sv):''}</td>` +
+    `<td style="text-align:center;width:52px;font-weight:700;color:${ckC(ev)}">${safC.length?ck(ev):''}</td>` +
+    `<td style="width:60px"></td></tr>`;
+  const css = `*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:10pt;color:#000;background:#fff}.page{width:210mm;min-height:297mm;padding:10mm 12mm;margin:0 auto}.co-hdr{display:flex;align-items:center;gap:12px;margin-bottom:4px}.co-hdr img{height:40px}.co-name{font-size:13pt;font-weight:700}.doc-no{font-size:8.5pt;color:#555;margin-left:auto}.doc-title{font-size:15pt;font-weight:700;text-align:center;text-decoration:underline;margin:4px 0 8px}table{width:100%;border-collapse:collapse;table-layout:fixed}td,th{border:1px solid #222;padding:3px 5px;font-size:9.5pt;vertical-align:middle}.chk-hdr{background:#dce3ed;font-weight:700;text-align:center;font-size:9pt}.sec-hdr{background:#e8e8e8;font-weight:700;text-align:center;padding:4px}.sig-lbl{font-weight:700}.sig-cell{text-align:center;vertical-align:middle;height:44px}.c-hdr{background:#f0f0f0;font-weight:700;text-align:center;font-size:8.5pt;padding:3px}.c-val{text-align:center;font-size:9.5pt;height:36px;vertical-align:middle}.note{margin-top:8px;font-size:8.5pt;line-height:1.8}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}`;
   const pg = `<div class="page">
-<div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div><div class="co-name">大豐環保科技股份有限公司</div></div></div>
+<div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div class="co-name">大豐環保科技股份有限公司</div><div class="doc-no">FM-D3-EM-001-01C</div></div>
 <div class="doc-title">動 火 作 業 許 可 證</div>
-<div class="doc-no">FM-D3-EM-001-01C　　申請編號：${X(r.id)}</div>
 <table style="margin-bottom:6px">
-  <tr><td class="lbl" style="width:22%">承攬商名稱</td><td>${X(b.company||'—')}</td><td class="lbl" style="width:20%">申請日期</td><td>${fd(b.applyDate)}</td></tr>
-  <tr><td class="lbl">承攬工程名稱</td><td colspan="3">${X(b.workname||'—')}</td></tr>
-  <tr><td class="lbl">地點／建物／樓層</td><td colspan="3">${X(b.location||'—')}</td></tr>
-  <tr><td class="lbl">動火設備</td><td>${X(b.equipment||'—')}</td><td class="lbl">承攬商監工</td><td>${X(b.supervisor||'—')}</td></tr>
-  <tr><td class="lbl">連絡電話</td><td>${X(b.phone||'—')}</td><td class="lbl">作業時間</td><td>${X(b.timeStart||'—')} ～ ${X(b.timeEnd||'—')}</td></tr>
-  <tr><td class="lbl">施工單位主管</td><td>${X(co.unitMgr||'—')}</td><td class="lbl">職安衛主管</td><td>${X(co.safetyMgr||'—')}</td></tr>
-  <tr><td class="lbl">應會簽部門</td><td>${X(co.dept||'—')}</td><td class="lbl">監工部門主管</td><td>${X(co.superMgr||'—')}</td></tr>
-  <tr><td class="lbl">監工人員</td><td colspan="3">${X(co.supervisor||'—')}</td></tr>
+<colgroup><col span="15" style="width:6.67%"></colgroup>
+<tr>
+  <td colspan="5" style="padding:3px 6px">進行動火作業人員：□ ${X(r.signee||'')}</td>
+  <td colspan="5" style="padding:3px 6px">承攬商名稱：${X(b.company||'')}</td>
+  <td colspan="5" style="padding:3px 6px">承攬工程名稱：${X(b.workname||'')}</td>
+</tr>
+<tr>
+  <td colspan="5" style="padding:3px 6px">申請日期：${X((b.applyDate||'').replace(/-/g,'/'))}</td>
+  <td colspan="10" style="padding:3px 6px">申請時段：${cb('日班')}日班　${cb('假日')}假日</td>
+</tr>
+<tr>
+  <td colspan="10" style="padding:3px 6px">地點/建物/樓層：${X(b.location||'')}</td>
+  <td colspan="5" style="padding:3px 6px">動火設備：${X(b.equipment||'')}</td>
+</tr>
+<tr>
+  <td colspan="5" style="padding:3px 6px">承攬商監工：${X(b.supervisor||'')}</td>
+  <td colspan="10" style="padding:3px 6px">連絡電話：${X(b.phone||'')}</td>
+</tr>
+<tr>
+  <td colspan="15" style="padding:3px 6px">作業期間：${apP[1]||''}月 ${apP[2]||''}日 ${X(b.timeStart||'')} 時 ~ ${X(b.timeEnd||'')} 時（動火作業一日為限，逾期重新申請）</td>
+</tr>
+<tr>
+  <td colspan="3" class="c-hdr">施工單位<br>部門主管</td>
+  <td colspan="4" class="c-hdr">施工單位職安衛業務主管<br><span style="font-size:7.5pt;font-weight:400">(作業危害風險告知及防範說明)</span></td>
+  <td colspan="3" class="c-hdr">應會簽部門：</td>
+  <td colspan="2" class="c-hdr">監工<br>部門主管</td>
+  <td colspan="3" class="c-hdr">監工人員</td>
+</tr>
+<tr>
+  <td colspan="3" class="c-val">${X(co.unitMgr||'')}</td>
+  <td colspan="4" class="c-val">${X(co.safetyMgr||'')}</td>
+  <td colspan="3" class="c-val">${X(co.dept||'')}</td>
+  <td colspan="2" class="c-val">${X(co.superMgr||'')}</td>
+  <td colspan="3" class="c-val">${X(co.supervisor||'')}</td>
+</tr>
 </table>
+<div style="text-align:center;font-weight:700;font-size:11pt;margin:6px 0 2px">動火檢查表</div>
+<div style="font-size:8.5pt;margin-bottom:3px">承攬商及本公司監工須於動火及收工前進行下列重點檢查　※ (ˇ代表 OK　×-代表未完成　△-不適用)</div>
 <table>
-  <tr><td colspan="3" style="background:#2c4a6e;color:#fff;font-weight:700;padding:4px 8px">動火檢查表</td></tr>
-  <tr><th class="chk-no">#</th><th>檢查項目</th><th style="width:42px">承攬商</th><th style="width:42px">監工</th><th style="width:42px">環安衛</th></tr>
-  <tr><td colspan="5" class="sub-hdr">動火前巡檢</td></tr>
-  ${PRE.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${pre[i]?'#16a34a':'#dc2626'}">${chk(pre[i])}</td><td class="chk-val" style="color:${supC[i]?'#16a34a':'#999'}">${supC.length?chk(supC[i]):'—'}</td><td class="chk-val" style="color:${safC[i]?'#16a34a':'#999'}">${safC.length?chk(safC[i]):'—'}</td></tr>`).join('')}
-  <tr><td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:right;padding-right:8px">申請人簽名：${X(r.signee||'')}</td><td class="chk-val" colspan="3">${r.signature?`<img class="sig-img" src="${r.signature}" style="max-height:40px;max-width:80px">`:''}</td></tr>
-  <tr><td colspan="5" class="sub-hdr">收工後巡檢</td></tr>
-  ${POST.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${post[i]?'#16a34a':'#dc2626'}">${chk(post[i])}</td><td class="chk-val" style="color:${supC[14+i]?'#16a34a':'#999'}">${supC.length?chk(supC[14+i]):'—'}</td><td class="chk-val" style="color:${safC[14+i]?'#16a34a':'#999'}">${safC.length?chk(safC[14+i]):'—'}</td></tr>`).join('')}
+<colgroup><col style="width:auto"><col style="width:52px"><col style="width:52px"><col style="width:52px"><col style="width:60px"></colgroup>
+<tr>
+  <th class="chk-hdr" rowspan="2">檢查重點</th>
+  <th class="chk-hdr" colspan="3">檢查結果</th>
+  <th class="chk-hdr" rowspan="2">附　註</th>
+</tr>
+<tr>
+  <th class="chk-hdr">1.承攬商</th>
+  <th class="chk-hdr">2.監工</th>
+  <th class="chk-hdr">3.環安衛</th>
+</tr>
+<tr><td colspan="5" class="sec-hdr">動火前巡檢</td></tr>
+${PRE.map((t,i)=>chkR(t,pre[i],supC[i],safC[i])).join('')}
+<tr>
+  <td class="sig-lbl">動火前檢查後簽名</td>
+  <td class="sig-cell">${sImg(r.signature)}</td>
+  <td class="sig-cell">${sImg(r.supervisorSig)}</td>
+  <td class="sig-cell">${sImg(r.safetySig)}</td>
+  <td></td>
+</tr>
+<tr><td colspan="5" class="sec-hdr">收工後巡檢</td></tr>
+${POST.map((t,i)=>chkR(t,post[i],supC[14+i],safC[14+i])).join('')}
+<tr>
+  <td class="sig-lbl">收工檢查後簽名</td>
+  <td class="sig-cell"></td>
+  <td class="sig-cell"></td>
+  <td class="sig-cell"></td>
+  <td></td>
+</tr>
 </table>
-<div class="note-box"><strong>說明：</strong><br>1. 表單簽核後由監工貼於施工區域，作業結束由監工收回並交工安單位存檔。<br>2. 動火作業一日為限逾期重新申請。</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;border:1px solid #ccc;padding:8px">
-  <div><div style="font-size:9pt;font-weight:700;margin-bottom:4px">監工確認簽名</div>${r.supervisorSig?`<img src="${r.supervisorSig}" style="max-height:50px">`:''}<div style="height:50px;border-bottom:1px solid #999"></div></div>
-  <div><div style="font-size:9pt;font-weight:700;margin-bottom:4px">環安衛確認簽名</div>${r.safetySig?`<img src="${r.safetySig}" style="max-height:50px">`:''}<div style="height:50px;border-bottom:1px solid #999"></div></div>
-</div>
-<div class="footer">FM-D3-EM-001-01C ／ 大豐環保科技股份有限公司 ／ 送出時間：${(r.submittedAt||'').slice(0,16).replace('T',' ')}</div>
+<div class="note">說明：1.表單簽核後由監工貼於施工區域，承攬商及監工應進行作業前中後安全檢點並簽名，工安單位巡檢時進行檢查並簽名。作業結束由監工收回並交工安單位存檔。<br>
+　　　　2.動火作業一日為限逾期重新申請，若當日因故未進行動火作業，請在表單空白處註明以玆鑑別查核。</div>
 </div>`;
   const win = window.open('','_blank');
   if(!win){ toast('請允許瀏覽器開啟彈出視窗','bad'); return; }
@@ -4647,49 +4722,133 @@ function exportSpecialPDF(r) {
   const baseHref = new URL('../', location.href).href;
   const X = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const b = r.basic || {};
-  const fd = d => (d||'').replace(/-/g,'/');
-  const chk = v => v ? 'ˇ' : '×';
   const co = r.cosigns || {};
   const supC = r.supervisorChecks || [];
   const safC = r.safetyChecks || [];
-  const CS = ['指派一人以上之安全警戒人員，隨時監視、聯絡作業？','工安單位測定作業場所空氣中氧氣濃度在19%以上？','工安單位測定危害物濃度達法定容許濃度以下？','備有空氣呼吸氣器、安全帶（索）等防護器具使勞工確實戴用？','告知作業之勞工施予必要安全注意事項及訓練？','送風機進行充份通風換氣？'];
-  const LF = ['起重機操作及吊掛人員是否有訓練合格證書？','起重機/吊籠是否有在有效期限內的檢查合格證，且機具與證照相符？','鍊條是否有龜裂或腐蝕情形？吊勾是否有防滑舌片？','吊籠操作人員配戴安全帶？安全帶獨立拉掛固定，不得掛在吊籠之吊索上？','吊掛作業前後左右是否有警告禁止進入標示？','吊車支撐桿是否平衡固定？'];
-  const EL = ['指定安全警戒人員，隨時監視、指揮作業？','固定安全梯，不可用身體搖晃來移動工作梯？','搭架作業之鷹架腳應固定於地面，並有交叉連桿、30cm以上安全踏板？','工作場所邊緣及開孔設立堅固之護欄或護蓋或安全帶索或安全網避免墜落？'];
-  const PL = ['應確認管路內的內容物之化性及物性？','施工前，確認管路內是否有原殘留物質並告知作適當之防護及處理？','執行相關閥件之操作並確認相關閥件為關閉狀態後掛牌標示。'];
-  const css = `*{box-sizing:border-box;margin:0;padding:0;}body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:10.5pt;color:#000;background:#fff;}.page{width:210mm;min-height:297mm;padding:12mm 14mm;margin:0 auto;}table{width:100%;border-collapse:collapse;}td,th{border:1px solid #333;padding:3px 5px;font-size:9.5pt;vertical-align:middle;}th{background:#dce3ed;font-weight:700;text-align:center;}.lbl{font-weight:700;background:#f0f0f0;font-size:9pt;}.sub-hdr{background:#2c4a6e;color:#fff;font-weight:700;font-size:9pt;text-align:center;padding:4px;}.chk-no{text-align:center;width:24px;font-weight:700;}.chk-val{text-align:center;width:38px;font-weight:700;}.co-hdr{display:flex;align-items:center;gap:10px;margin-bottom:6px;}.co-hdr img{height:36px;}.co-name{font-size:13pt;font-weight:700;}.doc-title{font-size:15pt;font-weight:700;text-align:center;margin:6px 0 2px;}.doc-no{font-size:8.5pt;text-align:center;color:#555;margin-bottom:8px;}.note-box{border:1px solid #999;padding:6px 8px;font-size:8.5pt;line-height:1.8;margin-top:6px;}.footer{font-size:8pt;color:#666;text-align:right;margin-top:4px;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}`;
-  const renderSection = (title, items, ctrChecks, supChecks, safChecks) =>
-    `<tr><td colspan="5" class="sub-hdr">${title}</td></tr>` +
-    items.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${(ctrChecks||[])[i]?'#16a34a':'#dc2626'}">${chk((ctrChecks||[])[i])}</td><td class="chk-val" style="color:${(supChecks||[])[i]?'#16a34a':'#999'}">${supC.length?chk((supChecks||[])[i]):'—'}</td><td class="chk-val" style="color:${(safChecks||[])[i]?'#16a34a':'#999'}">${safC.length?chk((safChecks||[])[i]):'—'}</td></tr>`).join('');
+  const apP = (b.applyDate||'').split('-');
+  const shift = b.shift||'';
+  const cats = b.categories || [];
+  const ck = v => v===true ? 'ˇ' : v===false ? '×' : '';
+  const ckC = v => v===true ? '#16a34a' : v===false ? '#dc2626' : '#333';
+  const cb = v => shift.includes(v) ? '☑' : '□';
+  const cc = v => cats.includes(v) ? '☑' : '□';
+  const sImg = src => src ? `<img src="${src}" style="max-height:38px;max-width:95%;display:block;margin:2px auto">` : '';
+  const CS = [
+    '指派一人以上之安全警戒人員，隨時監視、聯絡作業？',
+    '工安單位測定作業場所空氣中氧氣濃度在 19％以上？',
+    '工安單位測定危害物濃度達法定容許濃度以下？',
+    '備有空氣呼吸氣器、安全帶(索)等防護器具使勞工確實戴用？',
+    '告知作業之勞工施予必要安全注意事項及訓練？',
+    '送風機進行充份通風換氣？'
+  ];
+  const LF = [
+    '起重機操作及吊掛人員是否有訓練合格證書？',
+    '起重機/吊籠是否有在有效期限內的檢查合格證，且機具與證照相符？',
+    '鍊條是否有龜裂或腐蝕情形？吊勾是否有防滑舌片？',
+    '吊籠操作人員配戴安全帶？安全帶獨立拉掛固定，不得掛在吊籠之吊索上？',
+    '吊掛作業前後左右是否有警告禁止進入標示？',
+    '吊車支撐桿是否平衡固定？'
+  ];
+  const EL = [
+    '指定安全警戒人員，隨時監視、指揮作業？',
+    '固定安全梯，不可用身體搖晃來移動工作梯？',
+    '搭架作業之鷹架腳應固定於地面，並有交叉連桿、30cm 以上安全踏板？',
+    '工作場所邊緣及開孔設立堅固之護欄或護蓋或安全帶索或安全網避免墜落？'
+  ];
+  const PL = [
+    '應確認管路內的內容物之化性及物性？',
+    '施工前，確認管路內是否有原殘留物質並告知作適當之防護及處理？',
+    '執行相關閥件之操作並確認相關閥件為關閉狀態後掛牌標示。'
+  ];
+  const catRow = (label, items, cArr, sSlice, eSlice) =>
+    items.map((t,i) =>
+      `<tr>${i===0?`<td style="writing-mode:vertical-rl;text-orientation:upright;text-align:center;font-weight:700;font-size:8.5pt;width:20px;padding:2px;background:#f5f5f5" rowspan="${items.length}">${label}</td>`:''}`+
+      `<td style="font-size:9pt;padding:3px 5px">${t}</td>`+
+      `<td style="text-align:center;width:48px;font-weight:700;color:${ckC((cArr||[])[i])}">${ck((cArr||[])[i])}</td>`+
+      `<td style="text-align:center;width:48px;font-weight:700;color:${ckC(sSlice[i])}">${supC.length?ck(sSlice[i]):''}</td>`+
+      `<td style="text-align:center;width:48px;font-weight:700;color:${ckC(eSlice[i])}">${safC.length?ck(eSlice[i]):''}</td>`+
+      `<td style="width:55px"></td></tr>`
+    ).join('');
+  const css = `*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:10pt;color:#000;background:#fff}.page{width:210mm;min-height:297mm;padding:10mm 12mm;margin:0 auto}.co-hdr{display:flex;align-items:center;gap:12px;margin-bottom:4px}.co-hdr img{height:40px}.co-name{font-size:13pt;font-weight:700}.doc-no{font-size:8.5pt;color:#555;margin-left:auto}.doc-title{font-size:15pt;font-weight:700;text-align:center;text-decoration:underline;margin:4px 0 8px}table{width:100%;border-collapse:collapse;table-layout:fixed}td,th{border:1px solid #222;padding:3px 5px;font-size:9.5pt;vertical-align:middle}.chk-hdr{background:#dce3ed;font-weight:700;text-align:center;font-size:9pt}.sec-hdr{background:#e8e8e8;font-weight:700;text-align:center;padding:4px}.sig-lbl{font-weight:700}.sig-cell{text-align:center;vertical-align:middle;height:44px}.c-hdr{background:#f0f0f0;font-weight:700;text-align:center;font-size:8.5pt;padding:3px}.c-val{text-align:center;font-size:9.5pt;height:36px;vertical-align:middle}.note{margin-top:8px;font-size:8.5pt;line-height:1.8}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}`;
   const pg = `<div class="page">
-<div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div><div class="co-name">大豐環保科技股份有限公司</div></div></div>
+<div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div class="co-name">大豐環保科技股份有限公司</div><div class="doc-no">FM-D3-EM-001-02C</div></div>
 <div class="doc-title">特 殊 危 害 作 業 許 可 證</div>
-<div class="doc-no">FM-D3-EM-001-02C　　申請編號：${X(r.id)}</div>
 <table style="margin-bottom:6px">
-  <tr><td class="lbl" style="width:22%">承攬商名稱</td><td>${X(b.company||'—')}</td><td class="lbl" style="width:20%">申請日期</td><td>${fd(b.applyDate)}</td></tr>
-  <tr><td class="lbl">承攬工程名稱</td><td colspan="3">${X(b.workname||'—')}</td></tr>
-  <tr><td class="lbl">作業類別</td><td colspan="3">${(b.categories||[]).join('　')}</td></tr>
-  <tr><td class="lbl">地點／建物／樓層</td><td>${X(b.location||'—')}</td><td class="lbl">使用設備</td><td>${X(b.equipment||'—')}</td></tr>
-  <tr><td class="lbl">承攬商監工</td><td>${X(b.supervisor||'—')}</td><td class="lbl">連絡電話</td><td>${X(b.phone||'—')}</td></tr>
-  <tr><td class="lbl">施工人數</td><td>${X(b.headcount||'—')} 人</td><td class="lbl">作業時間</td><td>${X(b.timeStart||'—')} ～ ${X(b.timeEnd||'—')}</td></tr>
-  <tr><td class="lbl">施工單位主管</td><td>${X(co.unitMgr||'—')}</td><td class="lbl">職安衛主管</td><td>${X(co.safetyMgr||'—')}</td></tr>
-  <tr><td class="lbl">應會簽部門</td><td>${X(co.dept||'—')}</td><td class="lbl">監工部門主管</td><td>${X(co.superMgr||'—')}</td></tr>
-  <tr><td class="lbl">監工人員</td><td colspan="3">${X(co.supervisor||'—')}</td></tr>
+<colgroup><col span="15" style="width:6.67%"></colgroup>
+<tr>
+  <td colspan="5" style="padding:3px 6px">進行特殊危害作業人員：□ ${X(r.signee||'')}</td>
+  <td colspan="5" style="padding:3px 6px">承攬商名稱：${X(b.company||'')}</td>
+  <td colspan="5" style="padding:3px 6px">承攬工程名稱：${X(b.workname||'')}</td>
+</tr>
+<tr>
+  <td colspan="15" style="padding:3px 6px">作業類別　${cc('局限空間')}局限空間　${cc('吊掛')}吊掛　${cc('高架')}高架　${cc('危險管路拆卸鑽孔')}危險管路拆卸鑽孔　${cc('送電作業')}送電作業</td>
+</tr>
+<tr>
+  <td colspan="5" style="padding:3px 6px">申請日期：${X((b.applyDate||'').replace(/-/g,'/'))}</td>
+  <td colspan="10" style="padding:3px 6px">申請時段：${cb('日班')}日班　${cb('假日')}假日</td>
+</tr>
+<tr>
+  <td colspan="10" style="padding:3px 6px">地點/建物/樓層：${X(b.location||'')}</td>
+  <td colspan="5" style="padding:3px 6px">使用設備：${X(b.equipment||'')}</td>
+</tr>
+<tr>
+  <td colspan="5" style="padding:3px 6px">承攬商監工：${X(b.supervisor||'')}</td>
+  <td colspan="5" style="padding:3px 6px">連絡電話：${X(b.phone||'')}</td>
+  <td colspan="5" style="padding:3px 6px">施工人數：${X(b.headcount||'')}</td>
+</tr>
+<tr>
+  <td colspan="15" style="padding:3px 6px">作業期間：${apP[1]||''}月 ${apP[2]||''}日 ${X(b.timeStart||'')} 時 ~ ${X(b.timeEnd||'')} 時（特殊危險作業一日為限，逾期重新申請）</td>
+</tr>
+<tr>
+  <td colspan="3" class="c-hdr">施工單位<br>部門主管</td>
+  <td colspan="4" class="c-hdr">施工單位職安衛業務主管<br><span style="font-size:7.5pt;font-weight:400">(作業危害風險告知及防範說明)</span></td>
+  <td colspan="3" class="c-hdr">應會簽部門：</td>
+  <td colspan="2" class="c-hdr">監工<br>部門主管</td>
+  <td colspan="3" class="c-hdr">監工人員</td>
+</tr>
+<tr>
+  <td colspan="3" class="c-val">${X(co.unitMgr||'')}</td>
+  <td colspan="4" class="c-val">${X(co.safetyMgr||'')}</td>
+  <td colspan="3" class="c-val">${X(co.dept||'')}</td>
+  <td colspan="2" class="c-val">${X(co.superMgr||'')}</td>
+  <td colspan="3" class="c-val">${X(co.supervisor||'')}</td>
+</tr>
 </table>
+<div style="text-align:center;font-weight:700;font-size:11pt;margin:6px 0 2px">特殊危險作業檢查表</div>
+<div style="font-size:8.5pt;margin-bottom:3px">承攬商及本公司監工須於特殊危害作業施工前及收工前進行下列重點檢查　※ (ˇ-代表 OK　×-代表未完成　△-不適用)</div>
 <table>
-  <tr><td colspan="5" style="background:#2c4a6e;color:#fff;font-weight:700;padding:4px 8px">特殊危險作業檢查表</td></tr>
-  <tr><th class="chk-no">#</th><th>檢查項目</th><th style="width:42px">承攬商</th><th style="width:42px">監工</th><th style="width:42px">環安衛</th></tr>
-  ${renderSection('一、局限空間作業', CS, r.confinedSpaceChecks, supC.slice(0,6), safC.slice(0,6))}
-  ${renderSection('二、吊掛作業', LF, r.liftingChecks, supC.slice(6,12), safC.slice(6,12))}
-  ${renderSection('三、高架作業', EL, r.elevatedChecks, supC.slice(12,16), safC.slice(12,16))}
-  ${renderSection('四、危險管路拆卸、鑽孔作業', PL, r.pipelineChecks, supC.slice(16,19), safC.slice(16,19))}
-  <tr><td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:right;padding-right:8px">申請人簽名：${X(r.signee||'')}</td><td class="chk-val" colspan="3">${r.signature?`<img src="${r.signature}" style="max-height:40px;max-width:80px">`:''}</td></tr>
+<colgroup><col style="width:20px"><col style="width:auto"><col style="width:48px"><col style="width:48px"><col style="width:48px"><col style="width:55px"></colgroup>
+<tr>
+  <th class="chk-hdr" colspan="2" rowspan="2">檢查重點</th>
+  <th class="chk-hdr" colspan="3">檢查結果</th>
+  <th class="chk-hdr" rowspan="2">附　註</th>
+</tr>
+<tr>
+  <th class="chk-hdr">1.承攬商</th>
+  <th class="chk-hdr">2.監工</th>
+  <th class="chk-hdr">3.環安衛</th>
+</tr>
+${catRow('局限空間作業', CS, r.confinedSpaceChecks, supC.slice(0,6), safC.slice(0,6))}
+${catRow('吊掛作業', LF, r.liftingChecks, supC.slice(6,12), safC.slice(6,12))}
+${catRow('高架作業', EL, r.elevatedChecks, supC.slice(12,16), safC.slice(12,16))}
+${catRow('危險管路拆、鑽孔作業', PL, r.pipelineChecks, supC.slice(16,19), safC.slice(16,19))}
+<tr>
+  <td class="sig-lbl" colspan="2">施工前檢查後簽名</td>
+  <td class="sig-cell">${sImg(r.signature)}</td>
+  <td class="sig-cell">${sImg(r.supervisorSig)}</td>
+  <td class="sig-cell">${sImg(r.safetySig)}</td>
+  <td></td>
+</tr>
+<tr>
+  <td class="sig-lbl" colspan="2">收工後檢查現場環境復歸後簽名</td>
+  <td class="sig-cell"></td>
+  <td class="sig-cell"></td>
+  <td class="sig-cell"></td>
+  <td></td>
+</tr>
 </table>
-<div class="note-box"><strong>說明：</strong><br>1. 表單由監工貼於施工區域，作業結束由監工收回並交由工安單位存檔。<br>2. 特殊危害作業以一日為限，逾期重新申請。</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;border:1px solid #ccc;padding:8px">
-  <div><div style="font-size:9pt;font-weight:700;margin-bottom:4px">監工確認簽名</div>${r.supervisorSig?`<img src="${r.supervisorSig}" style="max-height:50px">`:''}<div style="height:50px;border-bottom:1px solid #999"></div></div>
-  <div><div style="font-size:9pt;font-weight:700;margin-bottom:4px">環安衛確認簽名</div>${r.safetySig?`<img src="${r.safetySig}" style="max-height:50px">`:''}<div style="height:50px;border-bottom:1px solid #999"></div></div>
-</div>
-<div class="footer">FM-D3-EM-001-02C ／ 大豐環保科技股份有限公司 ／ 送出時間：${(r.submittedAt||'').slice(0,16).replace('T',' ')}</div>
+<div class="note">說明：1.表單由監工貼於施工區域，承攬商及監工應進行作業前中後安全檢點並簽名，工安單位巡檢時進行檢查並簽名。作業結束由監工收回並交由工安單位存檔。<br>
+　　　　2.特殊危害作業以一日為限，逾期重新申請，若當日因故未進行特殊危害作業，請在備註欄上說明以玆鑑別查核。</div>
 </div>`;
   const win = window.open('','_blank');
   if(!win){ toast('請允許瀏覽器開啟彈出視窗','bad'); return; }
