@@ -535,7 +535,7 @@ function showEditor(key) {
       `<button class="pill ${s.duration===d?'selected':''}" onclick="setDur('${key}','${d}')">${d}</button>`
     ).join('');
   }
-  V('score-editor').style.display = '';
+  V('score-editor').style.display = 'block';
 }
 
 function hideEditor() { V('score-editor').style.display = 'none'; }
@@ -570,7 +570,7 @@ async function submitQ() {
       date: new Date().toLocaleDateString('zh-TW')
     })});
     const d = await res.json();
-    if (d.success) {
+    if (d.ok) {
       const hasHigh = Object.values(symptoms).some(s => (s.score||0) >= 3);
       V('q-done-msg').textContent = hasHigh
         ? '您有部位評分偏高（3分以上），HR 將安排護理師評估，請注意後續通知。'
