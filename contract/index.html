@@ -699,26 +699,30 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
     <div class="fsec">
       <div class="fsec-hdr">✅ 動火前安全確認</div>
       <div class="fsec-body">
-        <p style="font-size:12px;color:var(--sub);margin-bottom:14px">請確認以下安全檢查項目均已完成或不適用後，方可進行動火作業。請勾選所有已確認項目。</p>
+        <p style="font-size:12px;color:var(--sub);margin-bottom:10px">請確認以下安全檢查項目均已完成或不適用後，方可進行動火作業。請由承攬商人員親自逐項巡檢後勾選。</p>
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          <button type="button" class="btn btn-sm" onclick="document.querySelectorAll('#hw-step-2 input[type=checkbox]').forEach(c=>c.checked=true)">☑ 全部勾選</button>
+          <button type="button" class="btn btn-sm" onclick="document.querySelectorAll('#hw-step-2 input[type=checkbox]').forEach(c=>c.checked=false)">☐ 清除全部</button>
+        </div>
         <div style="font-size:12px;font-weight:700;color:var(--navy);margin:0 0 8px;padding:6px 10px;background:#eff6ff;border-radius:6px">動火前巡檢（共14項）</div>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-1" checked onchange="syncConfirmRow('hw-pre-1',this)"><span>3公尺內備有可使用/正常操作之自動灑水或手提滅火器</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-2" checked onchange="syncConfirmRow('hw-pre-2',this)"><span>防爆區或侷限空間內作業由工安單位測定可燃性氣體濃度</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-3" checked onchange="syncConfirmRow('hw-pre-3',this)"><span>動火時旁邊有警戒人員</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-4" checked onchange="syncConfirmRow('hw-pre-4',this)"><span>排除管線內可燃性物質</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-5" checked onchange="syncConfirmRow('hw-pre-5',this)"><span>隔離或中斷該區域之火警偵測器</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-6" checked onchange="syncConfirmRow('hw-pre-6',this)"><span>清除工作區域週邊11公尺內的可燃物或使用防火毯覆蓋保護</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-7" checked onchange="syncConfirmRow('hw-pre-7',this)"><span>工作區域易燃性地面予以防火保護</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-8" checked onchange="syncConfirmRow('hw-pre-8',this)"><span>工作區域週邊的地面及牆面不得有開口或使用防火毯覆蓋保護</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-9" checked onchange="syncConfirmRow('hw-pre-9',this)"><span>動火作業人員的安全眼鏡、面罩、手套等防護具</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-10" checked onchange="syncConfirmRow('hw-pre-10',this)"><span>施工產生之火花予以收集，工作區域內用防火布加以保護</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-11" checked onchange="syncConfirmRow('hw-pre-11',this)"><span>建築結構為不易燃性材料建造，或為不易燃性材料覆蓋保護</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-12" checked onchange="syncConfirmRow('hw-pre-12',this)"><span>須移走牆背面的易燃物質（如另一面有易燃物質，須移除之）</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-13" checked onchange="syncConfirmRow('hw-pre-13',this)"><span>電焊機接頭及接地良好，並有自動電擊防止裝置</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-pre-14" checked onchange="syncConfirmRow('hw-pre-14',this)"><span>鋼瓶直立或使用鋼瓶推車固定並有安全逆止閥</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-1" onchange="syncConfirmRow('hw-pre-1',this)"><span>3公尺內備有可使用/正常操作之自動灑水或手提滅火器</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-2" onchange="syncConfirmRow('hw-pre-2',this)"><span>防爆區或侷限空間內作業由工安單位測定可燃性氣體濃度</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-3" onchange="syncConfirmRow('hw-pre-3',this)"><span>動火時旁邊有警戒人員</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-4" onchange="syncConfirmRow('hw-pre-4',this)"><span>排除管線內可燃性物質</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-5" onchange="syncConfirmRow('hw-pre-5',this)"><span>隔離或中斷該區域之火警偵測器</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-6" onchange="syncConfirmRow('hw-pre-6',this)"><span>清除工作區域週邊11公尺內的可燃物或使用防火毯覆蓋保護</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-7" onchange="syncConfirmRow('hw-pre-7',this)"><span>工作區域易燃性地面予以防火保護</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-8" onchange="syncConfirmRow('hw-pre-8',this)"><span>工作區域週邊的地面及牆面不得有開口或使用防火毯覆蓋保護</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-9" onchange="syncConfirmRow('hw-pre-9',this)"><span>動火作業人員的安全眼鏡、面罩、手套等防護具</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-10" onchange="syncConfirmRow('hw-pre-10',this)"><span>施工產生之火花予以收集，工作區域內用防火布加以保護</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-11" onchange="syncConfirmRow('hw-pre-11',this)"><span>建築結構為不易燃性材料建造，或為不易燃性材料覆蓋保護</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-12" onchange="syncConfirmRow('hw-pre-12',this)"><span>須移走牆背面的易燃物質（如另一面有易燃物質，須移除之）</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-13" onchange="syncConfirmRow('hw-pre-13',this)"><span>電焊機接頭及接地良好，並有自動電擊防止裝置</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-14" onchange="syncConfirmRow('hw-pre-14',this)"><span>鋼瓶直立或使用鋼瓶推車固定並有安全逆止閥</span></label>
         <div style="font-size:12px;font-weight:700;color:var(--navy);margin:14px 0 8px;padding:6px 10px;background:#f0fdf4;border-radius:6px">收工後巡檢（共3項）</div>
-        <label class="confirm-row"><input type="checkbox" id="hw-post-1" checked onchange="syncConfirmRow('hw-post-1',this)"><span>每日收工前將火警系統中斷復歸，並檢點施工環境安全</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-post-2" checked onchange="syncConfirmRow('hw-post-2',this)"><span>環境整理復歸，材料器材工具收拾整齊</span></label>
-        <label class="confirm-row"><input type="checkbox" id="hw-post-3" checked onchange="syncConfirmRow('hw-post-3',this)"><span>施工完畢後30分鐘動火場所覆查，沒有餘燼或悶燒情形</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-post-1" onchange="syncConfirmRow('hw-post-1',this)"><span>每日收工前將火警系統中斷復歸，並檢點施工環境安全</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-post-2" onchange="syncConfirmRow('hw-post-2',this)"><span>環境整理復歸，材料器材工具收拾整齊</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-post-3" onchange="syncConfirmRow('hw-post-3',this)"><span>施工完畢後30分鐘動火場所覆查，沒有餘燼或悶燒情形</span></label>
       </div>
     </div>
     <div class="step-nav">
@@ -841,30 +845,34 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
     <div class="fsec">
       <div class="fsec-hdr">✅ 特殊危害作業安全確認</div>
       <div class="fsec-body">
-        <p style="font-size:12px;color:var(--sub);margin-bottom:14px">請依作業類別確認以下安全檢查項目均已完成或不適用</p>
+        <p style="font-size:12px;color:var(--sub);margin-bottom:10px">請依作業類別由承攬商人員親自逐項巡檢後勾選確認</p>
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          <button type="button" class="btn btn-sm" onclick="document.querySelectorAll('#sp-step-2 input[type=checkbox]').forEach(c=>c.checked=true)">☑ 全部勾選</button>
+          <button type="button" class="btn btn-sm" onclick="document.querySelectorAll('#sp-step-2 input[type=checkbox]').forEach(c=>c.checked=false)">☐ 清除全部</button>
+        </div>
         <div style="font-size:12px;font-weight:700;color:var(--navy);margin:0 0 8px;padding:6px 10px;background:#eff6ff;border-radius:6px">一、局限空間作業</div>
-        <label class="confirm-row"><input type="checkbox" id="sp-cs-1" checked onchange="syncConfirmRow('sp-cs-1',this)"><span>指派一人以上之安全警戒人員，隨時監視、聯絡作業？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-cs-2" checked onchange="syncConfirmRow('sp-cs-2',this)"><span>工安單位測定作業場所空氣中氧氣濃度在19%以上？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-cs-3" checked onchange="syncConfirmRow('sp-cs-3',this)"><span>工安單位測定危害物濃度達法定容許濃度以下？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-cs-4" checked onchange="syncConfirmRow('sp-cs-4',this)"><span>備有空氣呼吸氣器、安全帶（索）等防護器具使勞工確實戴用？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-cs-5" checked onchange="syncConfirmRow('sp-cs-5',this)"><span>告知作業之勞工施予必要安全注意事項及訓練？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-cs-6" checked onchange="syncConfirmRow('sp-cs-6',this)"><span>送風機進行充份通風換氣？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-cs-1" onchange="syncConfirmRow('sp-cs-1',this)"><span>指派一人以上之安全警戒人員，隨時監視、聯絡作業？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-cs-2" onchange="syncConfirmRow('sp-cs-2',this)"><span>工安單位測定作業場所空氣中氧氣濃度在19%以上？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-cs-3" onchange="syncConfirmRow('sp-cs-3',this)"><span>工安單位測定危害物濃度達法定容許濃度以下？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-cs-4" onchange="syncConfirmRow('sp-cs-4',this)"><span>備有空氣呼吸氣器、安全帶（索）等防護器具使勞工確實戴用？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-cs-5" onchange="syncConfirmRow('sp-cs-5',this)"><span>告知作業之勞工施予必要安全注意事項及訓練？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-cs-6" onchange="syncConfirmRow('sp-cs-6',this)"><span>送風機進行充份通風換氣？</span></label>
         <div style="font-size:12px;font-weight:700;color:var(--navy);margin:14px 0 8px;padding:6px 10px;background:#eff6ff;border-radius:6px">二、吊掛作業</div>
-        <label class="confirm-row"><input type="checkbox" id="sp-lf-1" checked onchange="syncConfirmRow('sp-lf-1',this)"><span>起重機操作及吊掛人員是否有訓練合格證書？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-lf-2" checked onchange="syncConfirmRow('sp-lf-2',this)"><span>起重機/吊籠是否有在有效期限內的檢查合格證，且機具與證照相符？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-lf-3" checked onchange="syncConfirmRow('sp-lf-3',this)"><span>鍊條是否有龜裂或腐蝕情形？吊勾是否有防滑舌片？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-lf-4" checked onchange="syncConfirmRow('sp-lf-4',this)"><span>吊籠操作人員配戴安全帶？安全帶獨立拉掛固定，不得掛在吊籠之吊索上？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-lf-5" checked onchange="syncConfirmRow('sp-lf-5',this)"><span>吊掛作業前後左右是否有警告禁止進入標示？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-lf-6" checked onchange="syncConfirmRow('sp-lf-6',this)"><span>吊車支撐桿是否平衡固定？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-lf-1" onchange="syncConfirmRow('sp-lf-1',this)"><span>起重機操作及吊掛人員是否有訓練合格證書？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-lf-2" onchange="syncConfirmRow('sp-lf-2',this)"><span>起重機/吊籠是否有在有效期限內的檢查合格證，且機具與證照相符？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-lf-3" onchange="syncConfirmRow('sp-lf-3',this)"><span>鍊條是否有龜裂或腐蝕情形？吊勾是否有防滑舌片？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-lf-4" onchange="syncConfirmRow('sp-lf-4',this)"><span>吊籠操作人員配戴安全帶？安全帶獨立拉掛固定，不得掛在吊籠之吊索上？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-lf-5" onchange="syncConfirmRow('sp-lf-5',this)"><span>吊掛作業前後左右是否有警告禁止進入標示？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-lf-6" onchange="syncConfirmRow('sp-lf-6',this)"><span>吊車支撐桿是否平衡固定？</span></label>
         <div style="font-size:12px;font-weight:700;color:var(--navy);margin:14px 0 8px;padding:6px 10px;background:#eff6ff;border-radius:6px">三、高架作業</div>
-        <label class="confirm-row"><input type="checkbox" id="sp-el-1" checked onchange="syncConfirmRow('sp-el-1',this)"><span>指定安全警戒人員，隨時監視、指揮作業？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-el-2" checked onchange="syncConfirmRow('sp-el-2',this)"><span>固定安全梯，不可用身體搖晃來移動工作梯？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-el-3" checked onchange="syncConfirmRow('sp-el-3',this)"><span>搭架作業之鷹架腳應固定於地面，並有交叉連桿、30cm以上安全踏板？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-el-4" checked onchange="syncConfirmRow('sp-el-4',this)"><span>工作場所邊緣及開孔設立堅固之護欄或護蓋或安全帶索或安全網避免墜落？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-el-1" onchange="syncConfirmRow('sp-el-1',this)"><span>指定安全警戒人員，隨時監視、指揮作業？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-el-2" onchange="syncConfirmRow('sp-el-2',this)"><span>固定安全梯，不可用身體搖晃來移動工作梯？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-el-3" onchange="syncConfirmRow('sp-el-3',this)"><span>搭架作業之鷹架腳應固定於地面，並有交叉連桿、30cm以上安全踏板？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-el-4" onchange="syncConfirmRow('sp-el-4',this)"><span>工作場所邊緣及開孔設立堅固之護欄或護蓋或安全帶索或安全網避免墜落？</span></label>
         <div style="font-size:12px;font-weight:700;color:var(--navy);margin:14px 0 8px;padding:6px 10px;background:#eff6ff;border-radius:6px">四、危險管路拆卸、鑽孔作業</div>
-        <label class="confirm-row"><input type="checkbox" id="sp-pl-1" checked onchange="syncConfirmRow('sp-pl-1',this)"><span>應確認管路內的內容物之化性及物性？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-pl-2" checked onchange="syncConfirmRow('sp-pl-2',this)"><span>施工前，確認管路內是否有原殘留物質並告知作適當之防護及處理？</span></label>
-        <label class="confirm-row"><input type="checkbox" id="sp-pl-3" checked onchange="syncConfirmRow('sp-pl-3',this)"><span>執行相關閥件之操作並確認相關閥件為關閉狀態後掛牌標示。</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-pl-1" onchange="syncConfirmRow('sp-pl-1',this)"><span>應確認管路內的內容物之化性及物性？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-pl-2" onchange="syncConfirmRow('sp-pl-2',this)"><span>施工前，確認管路內是否有原殘留物質並告知作適當之防護及處理？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-pl-3" onchange="syncConfirmRow('sp-pl-3',this)"><span>執行相關閥件之操作並確認相關閥件為關閉狀態後掛牌標示。</span></label>
       </div>
     </div>
     <div class="step-nav">
@@ -1823,7 +1831,7 @@ async function renderRecords(){
       <td class="wn">${wn}</td>
       <td>${dateRange}</td>
       <td>${period}</td>
-      <td><span class="badge badge-g">已提交</span>${currentRole==='admin'&&hasEval(r.id)?'&nbsp;<span class="badge" style="background:#dbeafe;color:#1d4ed8">已評核</span>':''}</td>
+      <td><span class="badge badge-g">已提交</span>${(r.type==='hotwork'||r.type==='special')?(r.checkStatus==='complete'?'&nbsp;<span class="badge" style="background:#dcfce7;color:#16a34a">三方完成</span>':r.checkStatus==='supervisor'?'&nbsp;<span class="badge" style="background:#dbeafe;color:#1d4ed8">待環安衛</span>':'&nbsp;<span class="badge" style="background:#fff7ed;color:#c2410c">待監工</span>'):''} ${currentRole==='admin'&&hasEval(r.id)?'&nbsp;<span class="badge" style="background:#dbeafe;color:#1d4ed8">已評核</span>':''}</td>
       <td>
         <button class="btn btn-sm btn-primary" onclick="viewRecord('${r.id}')">查看</button>
         <button class="btn btn-sm btn-danger" style="margin-left:4px" onclick="confirmDelete('${r.id}')">刪除</button>
@@ -4144,6 +4152,26 @@ async function submitSpecial() {
 }
 
 // ════════════════════════════════════════════════
+//  Admin inspection helpers
+// ════════════════════════════════════════════════
+function makeInspCheckRows(prefix, items, savedChecks) {
+  return items.map((item, i) => {
+    const isChk = (savedChecks || [])[i] === true;
+    return `<label class="confirm-row"><input type="checkbox" id="${prefix}-${i}" ${isChk ? 'checked' : ''}><span>${item}</span></label>`;
+  }).join('');
+}
+function toggleAllAdmin(containerId) {
+  document.getElementById(containerId)
+    .querySelectorAll('input[type="checkbox"]')
+    .forEach(cb => cb.checked = true);
+}
+function clearAllAdmin(containerId) {
+  document.getElementById(containerId)
+    .querySelectorAll('input[type="checkbox"]')
+    .forEach(cb => cb.checked = false);
+}
+
+// ════════════════════════════════════════════════
 //  Hotwork / Special record detail renderers
 // ════════════════════════════════════════════════
 function renderHotWorkDetail(r) {
@@ -4217,31 +4245,63 @@ function renderHotWorkDetail(r) {
     ${r.signature ? `<img class="sig-img" src="${r.signature}" style="margin-top:10px">` : ''}
   </div></div>`;
   if(currentRole === 'admin') {
-    html += `<div class="detail-blk"><div class="detail-blk-hdr">補充確認簽名（Admin）</div><div class="detail-blk-body">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-        <div>
+    const cs = r.checkStatus || 'contractor';
+    const supDone = cs === 'supervisor' || cs === 'complete';
+    const safDone = cs === 'complete';
+    html += `<div class="detail-blk" style="border-left:4px solid #0ea5e9">
+      <div class="detail-blk-hdr" style="background:#f0f9ff">👷 監工巡檢
+        <span style="font-size:11px;font-weight:400;margin-left:8px;color:${supDone ? 'var(--green)' : '#f59e0b'}">${supDone ? '✓ 已完成' : '● 待巡檢'}</span>
+      </div>
+      <div class="detail-blk-body">
+        <div style="margin-bottom:10px;display:flex;gap:8px">
+          <button class="btn btn-sm" onclick="toggleAllAdmin('hw-sup-checks')">☑ 全部勾選</button>
+          <button class="btn btn-sm" onclick="clearAllAdmin('hw-sup-checks')">☐ 清除全部</button>
+        </div>
+        <div id="hw-sup-checks">
+          <div style="font-size:11px;font-weight:700;color:var(--navy);margin:0 0 6px;padding:4px 8px;background:#eff6ff;border-radius:4px">動火前巡檢（14項）</div>
+          ${makeInspCheckRows('hw-sup-pre', PRE_ITEMS, r.supervisorChecks)}
+          <div style="font-size:11px;font-weight:700;color:var(--navy);margin:10px 0 6px;padding:4px 8px;background:#f0fdf4;border-radius:4px">收工後巡檢（3項）</div>
+          ${makeInspCheckRows('hw-sup-post', POST_ITEMS, (r.supervisorChecks||[]).slice(14))}
+        </div>
+        <div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--border)">
           <div class="dl" style="margin-bottom:6px">監工確認簽名</div>
-          ${r.supervisorSig ? `<img class="sig-img" src="${r.supervisorSig}" style="display:block;margin-bottom:8px">` : ''}
+          ${r.supervisorSig ? `<img class="sig-img" src="${r.supervisorSig}" style="display:block;margin-bottom:8px;max-height:80px">` : ''}
           <div class="sig-outer" style="height:110px" id="hw-admin-super-outer">
             <canvas id="hw-admin-super-sig" width="300" height="110"></canvas>
             <div class="sig-hint" id="hw-admin-super-hint">${r.supervisorSig ? '重新簽名' : '監工在此簽名'}</div>
           </div>
-          <div class="sig-tools"><button class="btn btn-sm" onclick="clearAdminSig('hw-admin-super-sig','hw-admin-super-hint')">清除</button></div>
+          <div class="sig-tools"><button class="btn btn-sm" onclick="clearAdminSig('hw-admin-super-sig','hw-admin-super-hint')">清除簽名</button></div>
+          <div style="margin-top:10px"><button class="btn btn-primary" onclick="saveHWSupervisorReview()">💾 儲存監工巡檢</button></div>
         </div>
-        <div>
+      </div>
+    </div>`;
+    html += `<div class="detail-blk" style="border-left:4px solid #10b981">
+      <div class="detail-blk-hdr" style="background:#f0fdf4">🛡️ 環安衛巡檢
+        <span style="font-size:11px;font-weight:400;margin-left:8px;color:${safDone ? 'var(--green)' : '#f59e0b'}">${safDone ? '✓ 已完成' : '● 待巡檢'}</span>
+      </div>
+      <div class="detail-blk-body">
+        <div style="margin-bottom:10px;display:flex;gap:8px">
+          <button class="btn btn-sm" onclick="toggleAllAdmin('hw-saf-checks')">☑ 全部勾選</button>
+          <button class="btn btn-sm" onclick="clearAllAdmin('hw-saf-checks')">☐ 清除全部</button>
+        </div>
+        <div id="hw-saf-checks">
+          <div style="font-size:11px;font-weight:700;color:var(--navy);margin:0 0 6px;padding:4px 8px;background:#eff6ff;border-radius:4px">動火前巡檢（14項）</div>
+          ${makeInspCheckRows('hw-saf-pre', PRE_ITEMS, r.safetyChecks)}
+          <div style="font-size:11px;font-weight:700;color:var(--navy);margin:10px 0 6px;padding:4px 8px;background:#f0fdf4;border-radius:4px">收工後巡檢（3項）</div>
+          ${makeInspCheckRows('hw-saf-post', POST_ITEMS, (r.safetyChecks||[]).slice(14))}
+        </div>
+        <div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--border)">
           <div class="dl" style="margin-bottom:6px">環安衛確認簽名</div>
-          ${r.safetySig ? `<img class="sig-img" src="${r.safetySig}" style="display:block;margin-bottom:8px">` : ''}
+          ${r.safetySig ? `<img class="sig-img" src="${r.safetySig}" style="display:block;margin-bottom:8px;max-height:80px">` : ''}
           <div class="sig-outer" style="height:110px" id="hw-admin-safety-outer">
             <canvas id="hw-admin-safety-sig" width="300" height="110"></canvas>
             <div class="sig-hint" id="hw-admin-safety-hint">${r.safetySig ? '重新簽名' : '環安衛在此簽名'}</div>
           </div>
-          <div class="sig-tools"><button class="btn btn-sm" onclick="clearAdminSig('hw-admin-safety-sig','hw-admin-safety-hint')">清除</button></div>
+          <div class="sig-tools"><button class="btn btn-sm" onclick="clearAdminSig('hw-admin-safety-sig','hw-admin-safety-hint')">清除簽名</button></div>
+          <div style="margin-top:10px"><button class="btn btn-success" onclick="saveHWSafetyReview()">💾 儲存環安衛巡檢</button></div>
         </div>
       </div>
-      <div style="margin-top:14px">
-        <button class="btn btn-success" onclick="saveHWCounterSig()">💾 儲存補簽</button>
-      </div>
-    </div></div>`;
+    </div>`;
   }
   document.getElementById('detail-content').innerHTML = html;
   if(currentRole === 'admin') {
@@ -4307,31 +4367,79 @@ function renderSpecialDetail(r) {
     ${r.signature ? `<img class="sig-img" src="${r.signature}" style="margin-top:10px">` : ''}
   </div></div>`;
   if(currentRole === 'admin') {
-    html += `<div class="detail-blk"><div class="detail-blk-hdr">補充確認簽名（Admin）</div><div class="detail-blk-body">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-        <div>
+    const cs = r.checkStatus || 'contractor';
+    const supDone = cs === 'supervisor' || cs === 'complete';
+    const safDone = cs === 'complete';
+    const supCS = (r.supervisorChecks||[]).slice(0,6);
+    const supLF = (r.supervisorChecks||[]).slice(6,12);
+    const supEL = (r.supervisorChecks||[]).slice(12,16);
+    const supPL = (r.supervisorChecks||[]).slice(16,19);
+    const safCS = (r.safetyChecks||[]).slice(0,6);
+    const safLF = (r.safetyChecks||[]).slice(6,12);
+    const safEL = (r.safetyChecks||[]).slice(12,16);
+    const safPL = (r.safetyChecks||[]).slice(16,19);
+    html += `<div class="detail-blk" style="border-left:4px solid #0ea5e9">
+      <div class="detail-blk-hdr" style="background:#f0f9ff">👷 監工巡檢
+        <span style="font-size:11px;font-weight:400;margin-left:8px;color:${supDone ? 'var(--green)' : '#f59e0b'}">${supDone ? '✓ 已完成' : '● 待巡檢'}</span>
+      </div>
+      <div class="detail-blk-body">
+        <div style="margin-bottom:10px;display:flex;gap:8px">
+          <button class="btn btn-sm" onclick="toggleAllAdmin('sp-sup-checks')">☑ 全部勾選</button>
+          <button class="btn btn-sm" onclick="clearAllAdmin('sp-sup-checks')">☐ 清除全部</button>
+        </div>
+        <div id="sp-sup-checks">
+          <div style="font-size:11px;font-weight:700;color:var(--navy);margin:0 0 6px;padding:4px 8px;background:#eff6ff;border-radius:4px">一、局限空間作業（6項）</div>
+          ${makeInspCheckRows('sp-sup-cs', CS, supCS)}
+          <div style="font-size:11px;font-weight:700;color:var(--navy);margin:10px 0 6px;padding:4px 8px;background:#eff6ff;border-radius:4px">二、吊掛作業（6項）</div>
+          ${makeInspCheckRows('sp-sup-lf', LF, supLF)}
+          <div style="font-size:11px;font-weight:700;color:var(--navy);margin:10px 0 6px;padding:4px 8px;background:#eff6ff;border-radius:4px">三、高架作業（4項）</div>
+          ${makeInspCheckRows('sp-sup-el', EL, supEL)}
+          <div style="font-size:11px;font-weight:700;color:var(--navy);margin:10px 0 6px;padding:4px 8px;background:#eff6ff;border-radius:4px">四、危險管路拆卸、鑽孔作業（3項）</div>
+          ${makeInspCheckRows('sp-sup-pl', PL, supPL)}
+        </div>
+        <div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--border)">
           <div class="dl" style="margin-bottom:6px">監工確認簽名</div>
-          ${r.supervisorSig ? `<img class="sig-img" src="${r.supervisorSig}" style="display:block;margin-bottom:8px">` : ''}
+          ${r.supervisorSig ? `<img class="sig-img" src="${r.supervisorSig}" style="display:block;margin-bottom:8px;max-height:80px">` : ''}
           <div class="sig-outer" style="height:110px" id="sp-admin-super-outer">
             <canvas id="sp-admin-super-sig" width="300" height="110"></canvas>
             <div class="sig-hint" id="sp-admin-super-hint">${r.supervisorSig ? '重新簽名' : '監工在此簽名'}</div>
           </div>
-          <div class="sig-tools"><button class="btn btn-sm" onclick="clearAdminSig('sp-admin-super-sig','sp-admin-super-hint')">清除</button></div>
+          <div class="sig-tools"><button class="btn btn-sm" onclick="clearAdminSig('sp-admin-super-sig','sp-admin-super-hint')">清除簽名</button></div>
+          <div style="margin-top:10px"><button class="btn btn-primary" onclick="saveSPSupervisorReview()">💾 儲存監工巡檢</button></div>
         </div>
-        <div>
+      </div>
+    </div>`;
+    html += `<div class="detail-blk" style="border-left:4px solid #10b981">
+      <div class="detail-blk-hdr" style="background:#f0fdf4">🛡️ 環安衛巡檢
+        <span style="font-size:11px;font-weight:400;margin-left:8px;color:${safDone ? 'var(--green)' : '#f59e0b'}">${safDone ? '✓ 已完成' : '● 待巡檢'}</span>
+      </div>
+      <div class="detail-blk-body">
+        <div style="margin-bottom:10px;display:flex;gap:8px">
+          <button class="btn btn-sm" onclick="toggleAllAdmin('sp-saf-checks')">☑ 全部勾選</button>
+          <button class="btn btn-sm" onclick="clearAllAdmin('sp-saf-checks')">☐ 清除全部</button>
+        </div>
+        <div id="sp-saf-checks">
+          <div style="font-size:11px;font-weight:700;color:var(--navy);margin:0 0 6px;padding:4px 8px;background:#eff6ff;border-radius:4px">一、局限空間作業（6項）</div>
+          ${makeInspCheckRows('sp-saf-cs', CS, safCS)}
+          <div style="font-size:11px;font-weight:700;color:var(--navy);margin:10px 0 6px;padding:4px 8px;background:#eff6ff;border-radius:4px">二、吊掛作業（6項）</div>
+          ${makeInspCheckRows('sp-saf-lf', LF, safLF)}
+          <div style="font-size:11px;font-weight:700;color:var(--navy);margin:10px 0 6px;padding:4px 8px;background:#eff6ff;border-radius:4px">三、高架作業（4項）</div>
+          ${makeInspCheckRows('sp-saf-el', EL, safEL)}
+          <div style="font-size:11px;font-weight:700;color:var(--navy);margin:10px 0 6px;padding:4px 8px;background:#eff6ff;border-radius:4px">四、危險管路拆卸、鑽孔作業（3項）</div>
+          ${makeInspCheckRows('sp-saf-pl', PL, safPL)}
+        </div>
+        <div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--border)">
           <div class="dl" style="margin-bottom:6px">環安衛確認簽名</div>
-          ${r.safetySig ? `<img class="sig-img" src="${r.safetySig}" style="display:block;margin-bottom:8px">` : ''}
+          ${r.safetySig ? `<img class="sig-img" src="${r.safetySig}" style="display:block;margin-bottom:8px;max-height:80px">` : ''}
           <div class="sig-outer" style="height:110px" id="sp-admin-safety-outer">
             <canvas id="sp-admin-safety-sig" width="300" height="110"></canvas>
             <div class="sig-hint" id="sp-admin-safety-hint">${r.safetySig ? '重新簽名' : '環安衛在此簽名'}</div>
           </div>
-          <div class="sig-tools"><button class="btn btn-sm" onclick="clearAdminSig('sp-admin-safety-sig','sp-admin-safety-hint')">清除</button></div>
+          <div class="sig-tools"><button class="btn btn-sm" onclick="clearAdminSig('sp-admin-safety-sig','sp-admin-safety-hint')">清除簽名</button></div>
+          <div style="margin-top:10px"><button class="btn btn-success" onclick="saveSPSafetyReview()">💾 儲存環安衛巡檢</button></div>
         </div>
       </div>
-      <div style="margin-top:14px">
-        <button class="btn btn-success" onclick="saveSPCounterSig()">💾 儲存補簽</button>
-      </div>
-    </div></div>`;
+    </div>`;
   }
   document.getElementById('detail-content').innerHTML = html;
   if(currentRole === 'admin') {
@@ -4353,6 +4461,8 @@ function exportHotWorkPDF(r) {
   const chk = v => v ? 'ˇ' : '×';
   const pre = r.preChecks || [];
   const post = r.postChecks || [];
+  const supC = r.supervisorChecks || [];
+  const safC = r.safetyChecks || [];
   const co = r.cosigns || {};
   const PRE = ['3公尺內備有可使用/正常操作之自動灑水或手提滅火器','防爆區或侷限空間內作業由工安單位測定可燃性氣體濃度','動火時旁邊有警戒人員','排除管線內可燃性物質','隔離或中斷該區域之火警偵測器','清除工作區域週邊11公尺內的可燃物或使用防火毯覆蓋保護','工作區域易燃性地面予以防火保護','工作區域週邊的地面及牆面不得有開口或使用防火毯覆蓋保護','動火作業人員的安全眼鏡、面罩、手套等防護具','施工產生之火花予以收集，工作區域內用防火布加以保護','建築結構為不易燃性材料建造，或為不易燃性材料覆蓋保護','須移走牆背面的易燃物質（如另一面有易燃物質，須移除之）','電焊機接頭及接地良好，並有自動電擊防止裝置','鋼瓶直立或使用鋼瓶推車固定並有安全逆止閥'];
   const POST = ['每日收工前將火警系統中斷復歸，並檢點施工環境安全','環境整理復歸，材料器材工具收拾整齊','施工完畢後30分鐘動火場所覆查，沒有餘燼或悶燒情形'];
@@ -4373,12 +4483,12 @@ function exportHotWorkPDF(r) {
 </table>
 <table>
   <tr><td colspan="3" style="background:#2c4a6e;color:#fff;font-weight:700;padding:4px 8px">動火檢查表</td></tr>
-  <tr><th class="chk-no">#</th><th>檢查項目</th><th style="width:60px">確認</th></tr>
-  <tr><td colspan="3" class="sub-hdr">動火前巡檢</td></tr>
-  ${PRE.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${pre[i]?'#16a34a':'#dc2626'}">${chk(pre[i])}</td></tr>`).join('')}
-  <tr><td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:right;padding-right:8px">申請人簽名：${X(r.signee||'')}</td><td class="chk-val">${r.signature?`<img class="sig-img" src="${r.signature}" style="max-height:40px;max-width:80px">`:''}</td></tr>
-  <tr><td colspan="3" class="sub-hdr">收工後巡檢</td></tr>
-  ${POST.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${post[i]?'#16a34a':'#dc2626'}">${chk(post[i])}</td></tr>`).join('')}
+  <tr><th class="chk-no">#</th><th>檢查項目</th><th style="width:42px">承攬商</th><th style="width:42px">監工</th><th style="width:42px">環安衛</th></tr>
+  <tr><td colspan="5" class="sub-hdr">動火前巡檢</td></tr>
+  ${PRE.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${pre[i]?'#16a34a':'#dc2626'}">${chk(pre[i])}</td><td class="chk-val" style="color:${supC[i]?'#16a34a':'#999'}">${supC.length?chk(supC[i]):'—'}</td><td class="chk-val" style="color:${safC[i]?'#16a34a':'#999'}">${safC.length?chk(safC[i]):'—'}</td></tr>`).join('')}
+  <tr><td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:right;padding-right:8px">申請人簽名：${X(r.signee||'')}</td><td class="chk-val" colspan="3">${r.signature?`<img class="sig-img" src="${r.signature}" style="max-height:40px;max-width:80px">`:''}</td></tr>
+  <tr><td colspan="5" class="sub-hdr">收工後巡檢</td></tr>
+  ${POST.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${post[i]?'#16a34a':'#dc2626'}">${chk(post[i])}</td><td class="chk-val" style="color:${supC[14+i]?'#16a34a':'#999'}">${supC.length?chk(supC[14+i]):'—'}</td><td class="chk-val" style="color:${safC[14+i]?'#16a34a':'#999'}">${safC.length?chk(safC[14+i]):'—'}</td></tr>`).join('')}
 </table>
 <div class="note-box"><strong>說明：</strong><br>1. 表單簽核後由監工貼於施工區域，作業結束由監工收回並交工安單位存檔。<br>2. 動火作業一日為限逾期重新申請。</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;border:1px solid #ccc;padding:8px">
@@ -4433,38 +4543,102 @@ function clearAdminSig(canvasId, hintId) {
   const h = document.getElementById(hintId); if(h) h.style.display='';
 }
 
-async function saveHWCounterSig() {
+async function saveHWSupervisorReview() {
   const r = _currentRecord;
   if(!r) return;
-  const superState  = _adminSigStates['hw-admin-super-sig'];
-  const safetyState = _adminSigStates['hw-admin-safety-sig'];
-  const updated = { ...r };
-  if(superState?.hasData)  updated.supervisorSig = document.getElementById('hw-admin-super-sig').toDataURL('image/png');
-  if(safetyState?.hasData) updated.safetySig     = document.getElementById('hw-admin-safety-sig').toDataURL('image/png');
-  showLoading('儲存補簽中…');
+  const supervisorChecks = [
+    ...Array.from({length:14}, (_,i) => document.getElementById(`hw-sup-pre-${i}`)?.checked || false),
+    ...Array.from({length:3},  (_,i) => document.getElementById(`hw-sup-post-${i}`)?.checked || false),
+  ];
+  const state = _adminSigStates['hw-admin-super-sig'];
+  let supervisorSig = r.supervisorSig || null;
+  if(state?.hasData) supervisorSig = document.getElementById('hw-admin-super-sig').toDataURL('image/png');
+  if(!supervisorSig) return toast('請先完成監工簽名再儲存', 'bad');
+  const updated = { ...r, supervisorChecks, supervisorSig, checkStatus: 'supervisor' };
+  showLoading('儲存監工巡檢中…');
   try {
     const res = await apiPost({ action: 'update', id: r.id, data: updated });
-    if(!res.success) throw new Error(res.error||'儲存失敗');
+    if(!res.ok && !res.success) throw new Error(res.error||'儲存失敗');
     _currentRecord = updated;
-    toast('補簽已儲存', 'ok');
+    toast('監工巡檢已儲存 ✓', 'ok');
+    renderHotWorkDetail(updated);
+    setTimeout(()=>{ initAdminSig('hw-admin-super-sig','hw-admin-super-hint'); initAdminSig('hw-admin-safety-sig','hw-admin-safety-hint'); }, 100);
   } catch(ex) { toast('儲存失敗：'+ex.message, 'bad'); }
   finally { hideLoading(); }
 }
 
-async function saveSPCounterSig() {
+async function saveHWSafetyReview() {
   const r = _currentRecord;
   if(!r) return;
-  const superState  = _adminSigStates['sp-admin-super-sig'];
-  const safetyState = _adminSigStates['sp-admin-safety-sig'];
-  const updated = { ...r };
-  if(superState?.hasData)  updated.supervisorSig = document.getElementById('sp-admin-super-sig').toDataURL('image/png');
-  if(safetyState?.hasData) updated.safetySig     = document.getElementById('sp-admin-safety-sig').toDataURL('image/png');
-  showLoading('儲存補簽中…');
+  const safetyChecks = [
+    ...Array.from({length:14}, (_,i) => document.getElementById(`hw-saf-pre-${i}`)?.checked || false),
+    ...Array.from({length:3},  (_,i) => document.getElementById(`hw-saf-post-${i}`)?.checked || false),
+  ];
+  const state = _adminSigStates['hw-admin-safety-sig'];
+  let safetySig = r.safetySig || null;
+  if(state?.hasData) safetySig = document.getElementById('hw-admin-safety-sig').toDataURL('image/png');
+  if(!safetySig) return toast('請先完成環安衛簽名再儲存', 'bad');
+  const updated = { ...r, safetyChecks, safetySig, checkStatus: 'complete' };
+  showLoading('儲存環安衛巡檢中…');
   try {
     const res = await apiPost({ action: 'update', id: r.id, data: updated });
-    if(!res.success) throw new Error(res.error||'儲存失敗');
+    if(!res.ok && !res.success) throw new Error(res.error||'儲存失敗');
     _currentRecord = updated;
-    toast('補簽已儲存', 'ok');
+    toast('環安衛巡檢已儲存 ✓', 'ok');
+    renderHotWorkDetail(updated);
+    setTimeout(()=>{ initAdminSig('hw-admin-super-sig','hw-admin-super-hint'); initAdminSig('hw-admin-safety-sig','hw-admin-safety-hint'); }, 100);
+  } catch(ex) { toast('儲存失敗：'+ex.message, 'bad'); }
+  finally { hideLoading(); }
+}
+
+async function saveSPSupervisorReview() {
+  const r = _currentRecord;
+  if(!r) return;
+  const supervisorChecks = [
+    ...Array.from({length:6}, (_,i) => document.getElementById(`sp-sup-cs-${i}`)?.checked || false),
+    ...Array.from({length:6}, (_,i) => document.getElementById(`sp-sup-lf-${i}`)?.checked || false),
+    ...Array.from({length:4}, (_,i) => document.getElementById(`sp-sup-el-${i}`)?.checked || false),
+    ...Array.from({length:3}, (_,i) => document.getElementById(`sp-sup-pl-${i}`)?.checked || false),
+  ];
+  const state = _adminSigStates['sp-admin-super-sig'];
+  let supervisorSig = r.supervisorSig || null;
+  if(state?.hasData) supervisorSig = document.getElementById('sp-admin-super-sig').toDataURL('image/png');
+  if(!supervisorSig) return toast('請先完成監工簽名再儲存', 'bad');
+  const updated = { ...r, supervisorChecks, supervisorSig, checkStatus: 'supervisor' };
+  showLoading('儲存監工巡檢中…');
+  try {
+    const res = await apiPost({ action: 'update', id: r.id, data: updated });
+    if(!res.ok && !res.success) throw new Error(res.error||'儲存失敗');
+    _currentRecord = updated;
+    toast('監工巡檢已儲存 ✓', 'ok');
+    renderSpecialDetail(updated);
+    setTimeout(()=>{ initAdminSig('sp-admin-super-sig','sp-admin-super-hint'); initAdminSig('sp-admin-safety-sig','sp-admin-safety-hint'); }, 100);
+  } catch(ex) { toast('儲存失敗：'+ex.message, 'bad'); }
+  finally { hideLoading(); }
+}
+
+async function saveSPSafetyReview() {
+  const r = _currentRecord;
+  if(!r) return;
+  const safetyChecks = [
+    ...Array.from({length:6}, (_,i) => document.getElementById(`sp-saf-cs-${i}`)?.checked || false),
+    ...Array.from({length:6}, (_,i) => document.getElementById(`sp-saf-lf-${i}`)?.checked || false),
+    ...Array.from({length:4}, (_,i) => document.getElementById(`sp-saf-el-${i}`)?.checked || false),
+    ...Array.from({length:3}, (_,i) => document.getElementById(`sp-saf-pl-${i}`)?.checked || false),
+  ];
+  const state = _adminSigStates['sp-admin-safety-sig'];
+  let safetySig = r.safetySig || null;
+  if(state?.hasData) safetySig = document.getElementById('sp-admin-safety-sig').toDataURL('image/png');
+  if(!safetySig) return toast('請先完成環安衛簽名再儲存', 'bad');
+  const updated = { ...r, safetyChecks, safetySig, checkStatus: 'complete' };
+  showLoading('儲存環安衛巡檢中…');
+  try {
+    const res = await apiPost({ action: 'update', id: r.id, data: updated });
+    if(!res.ok && !res.success) throw new Error(res.error||'儲存失敗');
+    _currentRecord = updated;
+    toast('環安衛巡檢已儲存 ✓', 'ok');
+    renderSpecialDetail(updated);
+    setTimeout(()=>{ initAdminSig('sp-admin-super-sig','sp-admin-super-hint'); initAdminSig('sp-admin-safety-sig','sp-admin-safety-hint'); }, 100);
   } catch(ex) { toast('儲存失敗：'+ex.message, 'bad'); }
   finally { hideLoading(); }
 }
@@ -4476,14 +4650,16 @@ function exportSpecialPDF(r) {
   const fd = d => (d||'').replace(/-/g,'/');
   const chk = v => v ? 'ˇ' : '×';
   const co = r.cosigns || {};
+  const supC = r.supervisorChecks || [];
+  const safC = r.safetyChecks || [];
   const CS = ['指派一人以上之安全警戒人員，隨時監視、聯絡作業？','工安單位測定作業場所空氣中氧氣濃度在19%以上？','工安單位測定危害物濃度達法定容許濃度以下？','備有空氣呼吸氣器、安全帶（索）等防護器具使勞工確實戴用？','告知作業之勞工施予必要安全注意事項及訓練？','送風機進行充份通風換氣？'];
   const LF = ['起重機操作及吊掛人員是否有訓練合格證書？','起重機/吊籠是否有在有效期限內的檢查合格證，且機具與證照相符？','鍊條是否有龜裂或腐蝕情形？吊勾是否有防滑舌片？','吊籠操作人員配戴安全帶？安全帶獨立拉掛固定，不得掛在吊籠之吊索上？','吊掛作業前後左右是否有警告禁止進入標示？','吊車支撐桿是否平衡固定？'];
   const EL = ['指定安全警戒人員，隨時監視、指揮作業？','固定安全梯，不可用身體搖晃來移動工作梯？','搭架作業之鷹架腳應固定於地面，並有交叉連桿、30cm以上安全踏板？','工作場所邊緣及開孔設立堅固之護欄或護蓋或安全帶索或安全網避免墜落？'];
   const PL = ['應確認管路內的內容物之化性及物性？','施工前，確認管路內是否有原殘留物質並告知作適當之防護及處理？','執行相關閥件之操作並確認相關閥件為關閉狀態後掛牌標示。'];
-  const css = `*{box-sizing:border-box;margin:0;padding:0;}body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:10.5pt;color:#000;background:#fff;}.page{width:210mm;min-height:297mm;padding:12mm 14mm;margin:0 auto;}table{width:100%;border-collapse:collapse;}td,th{border:1px solid #333;padding:3px 5px;font-size:9.5pt;vertical-align:middle;}th{background:#dce3ed;font-weight:700;text-align:center;}.lbl{font-weight:700;background:#f0f0f0;font-size:9pt;}.sub-hdr{background:#2c4a6e;color:#fff;font-weight:700;font-size:9pt;text-align:center;padding:4px;}.chk-no{text-align:center;width:24px;font-weight:700;}.chk-val{text-align:center;width:52px;font-weight:700;}.co-hdr{display:flex;align-items:center;gap:10px;margin-bottom:6px;}.co-hdr img{height:36px;}.co-name{font-size:13pt;font-weight:700;}.doc-title{font-size:15pt;font-weight:700;text-align:center;margin:6px 0 2px;}.doc-no{font-size:8.5pt;text-align:center;color:#555;margin-bottom:8px;}.note-box{border:1px solid #999;padding:6px 8px;font-size:8.5pt;line-height:1.8;margin-top:6px;}.footer{font-size:8pt;color:#666;text-align:right;margin-top:4px;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}`;
-  const renderSection = (title, items, checks) =>
-    `<tr><td colspan="3" class="sub-hdr">${title}</td></tr>` +
-    items.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${(checks||[])[i]?'#16a34a':'#dc2626'}">${chk((checks||[])[i])}</td></tr>`).join('');
+  const css = `*{box-sizing:border-box;margin:0;padding:0;}body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:10.5pt;color:#000;background:#fff;}.page{width:210mm;min-height:297mm;padding:12mm 14mm;margin:0 auto;}table{width:100%;border-collapse:collapse;}td,th{border:1px solid #333;padding:3px 5px;font-size:9.5pt;vertical-align:middle;}th{background:#dce3ed;font-weight:700;text-align:center;}.lbl{font-weight:700;background:#f0f0f0;font-size:9pt;}.sub-hdr{background:#2c4a6e;color:#fff;font-weight:700;font-size:9pt;text-align:center;padding:4px;}.chk-no{text-align:center;width:24px;font-weight:700;}.chk-val{text-align:center;width:38px;font-weight:700;}.co-hdr{display:flex;align-items:center;gap:10px;margin-bottom:6px;}.co-hdr img{height:36px;}.co-name{font-size:13pt;font-weight:700;}.doc-title{font-size:15pt;font-weight:700;text-align:center;margin:6px 0 2px;}.doc-no{font-size:8.5pt;text-align:center;color:#555;margin-bottom:8px;}.note-box{border:1px solid #999;padding:6px 8px;font-size:8.5pt;line-height:1.8;margin-top:6px;}.footer{font-size:8pt;color:#666;text-align:right;margin-top:4px;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}`;
+  const renderSection = (title, items, ctrChecks, supChecks, safChecks) =>
+    `<tr><td colspan="5" class="sub-hdr">${title}</td></tr>` +
+    items.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${(ctrChecks||[])[i]?'#16a34a':'#dc2626'}">${chk((ctrChecks||[])[i])}</td><td class="chk-val" style="color:${(supChecks||[])[i]?'#16a34a':'#999'}">${supC.length?chk((supChecks||[])[i]):'—'}</td><td class="chk-val" style="color:${(safChecks||[])[i]?'#16a34a':'#999'}">${safC.length?chk((safChecks||[])[i]):'—'}</td></tr>`).join('');
   const pg = `<div class="page">
 <div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div><div class="co-name">大豐環保科技股份有限公司</div></div></div>
 <div class="doc-title">特 殊 危 害 作 業 許 可 證</div>
@@ -4500,13 +4676,13 @@ function exportSpecialPDF(r) {
   <tr><td class="lbl">監工人員</td><td colspan="3">${X(co.supervisor||'—')}</td></tr>
 </table>
 <table>
-  <tr><td colspan="3" style="background:#2c4a6e;color:#fff;font-weight:700;padding:4px 8px">特殊危險作業檢查表</td></tr>
-  <tr><th class="chk-no">#</th><th>檢查項目</th><th style="width:60px">確認</th></tr>
-  ${renderSection('一、局限空間作業', CS, r.confinedSpaceChecks)}
-  ${renderSection('二、吊掛作業', LF, r.liftingChecks)}
-  ${renderSection('三、高架作業', EL, r.elevatedChecks)}
-  ${renderSection('四、危險管路拆卸、鑽孔作業', PL, r.pipelineChecks)}
-  <tr><td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:right;padding-right:8px">申請人簽名：${X(r.signee||'')}</td><td class="chk-val">${r.signature?`<img src="${r.signature}" style="max-height:40px;max-width:80px">`:''}</td></tr>
+  <tr><td colspan="5" style="background:#2c4a6e;color:#fff;font-weight:700;padding:4px 8px">特殊危險作業檢查表</td></tr>
+  <tr><th class="chk-no">#</th><th>檢查項目</th><th style="width:42px">承攬商</th><th style="width:42px">監工</th><th style="width:42px">環安衛</th></tr>
+  ${renderSection('一、局限空間作業', CS, r.confinedSpaceChecks, supC.slice(0,6), safC.slice(0,6))}
+  ${renderSection('二、吊掛作業', LF, r.liftingChecks, supC.slice(6,12), safC.slice(6,12))}
+  ${renderSection('三、高架作業', EL, r.elevatedChecks, supC.slice(12,16), safC.slice(12,16))}
+  ${renderSection('四、危險管路拆卸、鑽孔作業', PL, r.pipelineChecks, supC.slice(16,19), safC.slice(16,19))}
+  <tr><td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:right;padding-right:8px">申請人簽名：${X(r.signee||'')}</td><td class="chk-val" colspan="3">${r.signature?`<img src="${r.signature}" style="max-height:40px;max-width:80px">`:''}</td></tr>
 </table>
 <div class="note-box"><strong>說明：</strong><br>1. 表單由監工貼於施工區域，作業結束由監工收回並交由工安單位存檔。<br>2. 特殊危害作業以一日為限，逾期重新申請。</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;border:1px solid #ccc;padding:8px">
