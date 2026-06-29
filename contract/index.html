@@ -393,6 +393,24 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
       </div>
     </div>
   </div>
+
+  <div style="margin-top:24px">
+    <div style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">線上作業許可申請</div>
+    <div class="home-cards">
+      <div class="home-card" onclick="startHotWork()">
+        <div class="hc-icon">🔥</div>
+        <div class="hc-title">動火作業申請</div>
+        <div class="hc-desc">電焊、切割、研磨等動火作業許可申請，含動火前14項及收工後3項安全確認，完成電子簽名後送出留底</div>
+        <div class="hc-btn">開始申請 →</div>
+      </div>
+      <div class="home-card" onclick="startSpecial()">
+        <div class="hc-icon">⚠️</div>
+        <div class="hc-title">特殊危害作業申請</div>
+        <div class="hc-desc">局限空間、吊掛、高架、危險管路及送電等特殊危害作業許可申請，含依作業類別分組的安全確認</div>
+        <div class="hc-btn">開始申請 →</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ════ View: Wizard ════ -->
@@ -623,6 +641,274 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
 
 </div><!-- /v-wizard -->
 
+<!-- ════ View: Wizard — 動火作業申請 ════ -->
+<div id="v-wizard-hotwork" style="display:none">
+  <!-- Inline step bar -->
+  <div style="background:#fff;border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:flex-start;max-width:680px;margin:0 auto;position:relative;gap:0" id="hw-stepbar">
+    <div class="step-item active" id="hw-si-1"><div class="step-circle">1</div><div class="step-lbl">基本資料</div></div>
+    <div class="step-conn" id="hw-sc-1"></div>
+    <div class="step-item" id="hw-si-2"><div class="step-circle">2</div><div class="step-lbl">安全確認</div></div>
+    <div class="step-conn" id="hw-sc-2"></div>
+    <div class="step-item" id="hw-si-3"><div class="step-circle">3</div><div class="step-lbl">簽名送出</div></div>
+  </div>
+
+  <div id="hw-step-1" style="padding:16px 20px;max-width:840px;margin:0 auto">
+    <div class="fsec">
+      <div class="fsec-hdr">🔥 動火作業申請書</div>
+      <div class="fsec-body">
+        <div class="fsec-note">FM-D3-EM-001-01C｜電焊、切割、研磨等產生火花或明火之作業，申請前請確認作業環境安全</div>
+        <div class="fg">
+          <label>進行作業人員</label>
+          <div class="chk-wrap" id="hw-worker-type-wrap">
+            <label class="chk-chip sel"><input type="checkbox" checked onchange="chipChange(this)">本公司</label>
+            <label class="chk-chip"><input type="checkbox" onchange="chipChange(this)">承攬商</label>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>承攬商名稱</label><input class="fi" id="hw-company" placeholder="（無則免填）"/></div>
+          <div class="fg"><label class="req">承攬工程名稱</label><input class="fi" id="hw-workname" placeholder="請輸入工程或作業名稱"/></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label class="req">申請日期</label><input class="fi" id="hw-date" type="date"/></div>
+          <div class="fg"><label>申請時段</label>
+            <div class="chk-wrap" id="hw-shift-wrap">
+              <label class="chk-chip sel"><input type="checkbox" checked onchange="chipChange(this)">日班</label>
+              <label class="chk-chip"><input type="checkbox" onchange="chipChange(this)">假日</label>
+            </div>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label class="req">地點／建物／樓層</label><input class="fi" id="hw-location" placeholder="作業地點"/></div>
+          <div class="fg"><label>動火設備</label><input class="fi" id="hw-equipment" placeholder="電焊機、氣焊等"/></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>承攬商監工</label><input class="fi" id="hw-supervisor" placeholder="監工姓名"/></div>
+          <div class="fg"><label>連絡電話</label><input class="fi" id="hw-phone" type="tel" placeholder="手機或市話"/></div>
+        </div>
+        <div class="fg">
+          <label>作業時間</label>
+          <div class="frow">
+            <input class="fi" id="hw-time-start" type="time" placeholder="開始時間"/>
+            <input class="fi" id="hw-time-end" type="time" placeholder="結束時間"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn" onclick="showView('home')">✕ 取消</button>
+      <button class="btn btn-primary" onclick="goNextHW(1)">下一步 →</button>
+    </div>
+  </div>
+
+  <div id="hw-step-2" style="display:none;padding:16px 20px;max-width:840px;margin:0 auto">
+    <div class="fsec">
+      <div class="fsec-hdr">✅ 動火前安全確認</div>
+      <div class="fsec-body">
+        <p style="font-size:12px;color:var(--sub);margin-bottom:14px">請確認以下安全檢查項目均已完成或不適用後，方可進行動火作業。請勾選所有已確認項目。</p>
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin:0 0 8px;padding:6px 10px;background:#eff6ff;border-radius:6px">動火前巡檢（共14項）</div>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-1" checked onchange="syncConfirmRow('hw-pre-1',this)"><span>3公尺內備有可使用/正常操作之自動灑水或手提滅火器</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-2" checked onchange="syncConfirmRow('hw-pre-2',this)"><span>防爆區或侷限空間內作業由工安單位測定可燃性氣體濃度</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-3" checked onchange="syncConfirmRow('hw-pre-3',this)"><span>動火時旁邊有警戒人員</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-4" checked onchange="syncConfirmRow('hw-pre-4',this)"><span>排除管線內可燃性物質</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-5" checked onchange="syncConfirmRow('hw-pre-5',this)"><span>隔離或中斷該區域之火警偵測器</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-6" checked onchange="syncConfirmRow('hw-pre-6',this)"><span>清除工作區域週邊11公尺內的可燃物或使用防火毯覆蓋保護</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-7" checked onchange="syncConfirmRow('hw-pre-7',this)"><span>工作區域易燃性地面予以防火保護</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-8" checked onchange="syncConfirmRow('hw-pre-8',this)"><span>工作區域週邊的地面及牆面不得有開口或使用防火毯覆蓋保護</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-9" checked onchange="syncConfirmRow('hw-pre-9',this)"><span>動火作業人員的安全眼鏡、面罩、手套等防護具</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-10" checked onchange="syncConfirmRow('hw-pre-10',this)"><span>施工產生之火花予以收集，工作區域內用防火布加以保護</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-11" checked onchange="syncConfirmRow('hw-pre-11',this)"><span>建築結構為不易燃性材料建造，或為不易燃性材料覆蓋保護</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-12" checked onchange="syncConfirmRow('hw-pre-12',this)"><span>須移走牆背面的易燃物質（如另一面有易燃物質，須移除之）</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-13" checked onchange="syncConfirmRow('hw-pre-13',this)"><span>電焊機接頭及接地良好，並有自動電擊防止裝置</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-pre-14" checked onchange="syncConfirmRow('hw-pre-14',this)"><span>鋼瓶直立或使用鋼瓶推車固定並有安全逆止閥</span></label>
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin:14px 0 8px;padding:6px 10px;background:#f0fdf4;border-radius:6px">收工後巡檢（共3項）</div>
+        <label class="confirm-row"><input type="checkbox" id="hw-post-1" checked onchange="syncConfirmRow('hw-post-1',this)"><span>每日收工前將火警系統中斷復歸，並檢點施工環境安全</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-post-2" checked onchange="syncConfirmRow('hw-post-2',this)"><span>環境整理復歸，材料器材工具收拾整齊</span></label>
+        <label class="confirm-row"><input type="checkbox" id="hw-post-3" checked onchange="syncConfirmRow('hw-post-3',this)"><span>施工完畢後30分鐘動火場所覆查，沒有餘燼或悶燒情形</span></label>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn" onclick="goPrevHW(2)">← 上一步</button>
+      <button class="btn btn-primary" onclick="goNextHW(2)">下一步 →</button>
+    </div>
+  </div>
+
+  <div id="hw-step-3" style="display:none;padding:16px 20px;max-width:840px;margin:0 auto">
+    <div class="fsec">
+      <div class="fsec-hdr">✍️ 電子簽名送出</div>
+      <div class="fsec-body">
+        <div class="fg"><label class="req">申請人姓名</label><input class="fi" id="hw-signee" placeholder="請輸入姓名"/></div>
+        <div class="fg" style="margin-top:10px">
+          <label>電子簽名</label>
+          <div class="sig-outer" style="width:100%;height:140px" id="hw-sig-outer">
+            <canvas id="hw-sig-canvas" width="400" height="140"></canvas>
+            <div class="sig-hint" id="hw-sig-hint">請在此簽名</div>
+          </div>
+          <div class="sig-tools"><button class="btn btn-sm" onclick="clearHWSig()">清除</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn" onclick="goPrevHW(3)">← 上一步</button>
+      <button class="btn btn-success" onclick="submitHotWork()">送出申請 ✓</button>
+    </div>
+  </div>
+
+  <div id="hw-step-done" style="display:none;padding:16px 20px;max-width:840px;margin:0 auto">
+    <div class="success-screen">
+      <div class="success-icon">✅</div>
+      <h2>動火作業申請已送出</h2>
+      <p>您的申請已成功登錄，請保存以下申請編號</p>
+      <div class="success-id" id="hw-success-id">—</div>
+      <div class="success-actions">
+        <button class="btn btn-primary" onclick="showView('home')">返回首頁</button>
+        <button class="btn" onclick="showView('records')">查看紀錄</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ View: Wizard — 特殊危害作業申請 ════ -->
+<div id="v-wizard-special" style="display:none">
+  <!-- Inline step bar -->
+  <div style="background:#fff;border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:flex-start;max-width:680px;margin:0 auto;position:relative;gap:0" id="sp-stepbar">
+    <div class="step-item active" id="sp-si-1"><div class="step-circle">1</div><div class="step-lbl">基本資料</div></div>
+    <div class="step-conn" id="sp-sc-1"></div>
+    <div class="step-item" id="sp-si-2"><div class="step-circle">2</div><div class="step-lbl">安全確認</div></div>
+    <div class="step-conn" id="sp-sc-2"></div>
+    <div class="step-item" id="sp-si-3"><div class="step-circle">3</div><div class="step-lbl">簽名送出</div></div>
+  </div>
+
+  <div id="sp-step-1" style="padding:16px 20px;max-width:840px;margin:0 auto">
+    <div class="fsec">
+      <div class="fsec-hdr">⚠️ 特殊危害作業申請書</div>
+      <div class="fsec-body">
+        <div class="fsec-note">FM-D3-EM-001-02C｜局限空間、吊掛、高架、危險管路及送電等特殊危害作業，申請前請確認已完成危害告知</div>
+        <div class="fg">
+          <label>進行作業人員</label>
+          <div class="chk-wrap" id="sp-worker-type-wrap">
+            <label class="chk-chip sel"><input type="checkbox" checked onchange="chipChange(this)">本公司</label>
+            <label class="chk-chip"><input type="checkbox" onchange="chipChange(this)">承攬商</label>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>承攬商名稱</label><input class="fi" id="sp-company" placeholder="（無則免填）"/></div>
+          <div class="fg"><label class="req">承攬工程名稱</label><input class="fi" id="sp-workname" placeholder="請輸入工程或作業名稱"/></div>
+        </div>
+        <div class="fg">
+          <label class="req">作業類別（可複選）</label>
+          <div class="chk-wrap" id="sp-cat-wrap">
+            <label class="chk-chip"><input type="checkbox" onchange="chipChange(this)">局限空間作業</label>
+            <label class="chk-chip"><input type="checkbox" onchange="chipChange(this)">吊掛作業</label>
+            <label class="chk-chip"><input type="checkbox" onchange="chipChange(this)">高架作業</label>
+            <label class="chk-chip"><input type="checkbox" onchange="chipChange(this)">危險管路拆卸鑽孔作業</label>
+            <label class="chk-chip"><input type="checkbox" onchange="chipChange(this)">送電作業</label>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label class="req">申請日期</label><input class="fi" id="sp-date" type="date"/></div>
+          <div class="fg"><label>申請時段</label>
+            <div class="chk-wrap" id="sp-shift-wrap">
+              <label class="chk-chip sel"><input type="checkbox" checked onchange="chipChange(this)">日班</label>
+              <label class="chk-chip"><input type="checkbox" onchange="chipChange(this)">假日</label>
+            </div>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label class="req">地點／建物／樓層</label><input class="fi" id="sp-location" placeholder="作業地點"/></div>
+          <div class="fg"><label>使用設備</label><input class="fi" id="sp-equipment" placeholder="起重機、移動式施工架等"/></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>承攬商監工</label><input class="fi" id="sp-supervisor" placeholder="監工姓名"/></div>
+          <div class="fg"><label>連絡電話</label><input class="fi" id="sp-phone" type="tel" placeholder="手機或市話"/></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>施工人數</label><input class="fi" id="sp-headcount" type="number" min="1" placeholder="人數"/></div>
+          <div class="fg"><label>作業時間</label>
+            <div class="frow">
+              <input class="fi" id="sp-time-start" type="time"/>
+              <input class="fi" id="sp-time-end" type="time"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn" onclick="showView('home')">✕ 取消</button>
+      <button class="btn btn-primary" onclick="goNextSP(1)">下一步 →</button>
+    </div>
+  </div>
+
+  <div id="sp-step-2" style="display:none;padding:16px 20px;max-width:840px;margin:0 auto">
+    <div class="fsec">
+      <div class="fsec-hdr">✅ 特殊危害作業安全確認</div>
+      <div class="fsec-body">
+        <p style="font-size:12px;color:var(--sub);margin-bottom:14px">請依作業類別確認以下安全檢查項目均已完成或不適用</p>
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin:0 0 8px;padding:6px 10px;background:#eff6ff;border-radius:6px">一、局限空間作業</div>
+        <label class="confirm-row"><input type="checkbox" id="sp-cs-1" checked onchange="syncConfirmRow('sp-cs-1',this)"><span>指派一人以上之安全警戒人員，隨時監視、聯絡作業？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-cs-2" checked onchange="syncConfirmRow('sp-cs-2',this)"><span>工安單位測定作業場所空氣中氧氣濃度在19%以上？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-cs-3" checked onchange="syncConfirmRow('sp-cs-3',this)"><span>工安單位測定危害物濃度達法定容許濃度以下？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-cs-4" checked onchange="syncConfirmRow('sp-cs-4',this)"><span>備有空氣呼吸氣器、安全帶（索）等防護器具使勞工確實戴用？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-cs-5" checked onchange="syncConfirmRow('sp-cs-5',this)"><span>告知作業之勞工施予必要安全注意事項及訓練？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-cs-6" checked onchange="syncConfirmRow('sp-cs-6',this)"><span>送風機進行充份通風換氣？</span></label>
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin:14px 0 8px;padding:6px 10px;background:#eff6ff;border-radius:6px">二、吊掛作業</div>
+        <label class="confirm-row"><input type="checkbox" id="sp-lf-1" checked onchange="syncConfirmRow('sp-lf-1',this)"><span>起重機操作及吊掛人員是否有訓練合格證書？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-lf-2" checked onchange="syncConfirmRow('sp-lf-2',this)"><span>起重機/吊籠是否有在有效期限內的檢查合格證，且機具與證照相符？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-lf-3" checked onchange="syncConfirmRow('sp-lf-3',this)"><span>鍊條是否有龜裂或腐蝕情形？吊勾是否有防滑舌片？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-lf-4" checked onchange="syncConfirmRow('sp-lf-4',this)"><span>吊籠操作人員配戴安全帶？安全帶獨立拉掛固定，不得掛在吊籠之吊索上？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-lf-5" checked onchange="syncConfirmRow('sp-lf-5',this)"><span>吊掛作業前後左右是否有警告禁止進入標示？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-lf-6" checked onchange="syncConfirmRow('sp-lf-6',this)"><span>吊車支撐桿是否平衡固定？</span></label>
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin:14px 0 8px;padding:6px 10px;background:#eff6ff;border-radius:6px">三、高架作業</div>
+        <label class="confirm-row"><input type="checkbox" id="sp-el-1" checked onchange="syncConfirmRow('sp-el-1',this)"><span>指定安全警戒人員，隨時監視、指揮作業？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-el-2" checked onchange="syncConfirmRow('sp-el-2',this)"><span>固定安全梯，不可用身體搖晃來移動工作梯？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-el-3" checked onchange="syncConfirmRow('sp-el-3',this)"><span>搭架作業之鷹架腳應固定於地面，並有交叉連桿、30cm以上安全踏板？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-el-4" checked onchange="syncConfirmRow('sp-el-4',this)"><span>工作場所邊緣及開孔設立堅固之護欄或護蓋或安全帶索或安全網避免墜落？</span></label>
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin:14px 0 8px;padding:6px 10px;background:#eff6ff;border-radius:6px">四、危險管路拆卸、鑽孔作業</div>
+        <label class="confirm-row"><input type="checkbox" id="sp-pl-1" checked onchange="syncConfirmRow('sp-pl-1',this)"><span>應確認管路內的內容物之化性及物性？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-pl-2" checked onchange="syncConfirmRow('sp-pl-2',this)"><span>施工前，確認管路內是否有原殘留物質並告知作適當之防護及處理？</span></label>
+        <label class="confirm-row"><input type="checkbox" id="sp-pl-3" checked onchange="syncConfirmRow('sp-pl-3',this)"><span>執行相關閥件之操作並確認相關閥件為關閉狀態後掛牌標示。</span></label>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn" onclick="goPrevSP(2)">← 上一步</button>
+      <button class="btn btn-primary" onclick="goNextSP(2)">下一步 →</button>
+    </div>
+  </div>
+
+  <div id="sp-step-3" style="display:none;padding:16px 20px;max-width:840px;margin:0 auto">
+    <div class="fsec">
+      <div class="fsec-hdr">✍️ 電子簽名送出</div>
+      <div class="fsec-body">
+        <div class="fg"><label class="req">申請人姓名</label><input class="fi" id="sp-signee" placeholder="請輸入姓名"/></div>
+        <div class="fg" style="margin-top:10px">
+          <label>電子簽名</label>
+          <div class="sig-outer" style="width:100%;height:140px" id="sp-sig-outer">
+            <canvas id="sp-sig-canvas" width="400" height="140"></canvas>
+            <div class="sig-hint" id="sp-sig-hint">請在此簽名</div>
+          </div>
+          <div class="sig-tools"><button class="btn btn-sm" onclick="clearSPSig()">清除</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn" onclick="goPrevSP(3)">← 上一步</button>
+      <button class="btn btn-success" onclick="submitSpecial()">送出申請 ✓</button>
+    </div>
+  </div>
+
+  <div id="sp-step-done" style="display:none;padding:16px 20px;max-width:840px;margin:0 auto">
+    <div class="success-screen">
+      <div class="success-icon">✅</div>
+      <h2>特殊危害作業申請已送出</h2>
+      <p>您的申請已成功登錄，請保存以下申請編號</p>
+      <div class="success-id" id="sp-success-id">—</div>
+      <div class="success-actions">
+        <button class="btn btn-primary" onclick="showView('home')">返回首頁</button>
+        <button class="btn" onclick="showView('records')">查看紀錄</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ════ View: Success ════ -->
 <div id="v-success" style="display:none">
   <div class="success-screen">
@@ -656,6 +942,8 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
       <thead>
         <tr>
           <th>#</th>
+          <th>紀錄編號</th>
+          <th>類型</th>
           <th>申請日期時間</th>
           <th>承攬商名稱</th>
           <th>工程名稱</th>
@@ -920,7 +1208,7 @@ function toast(msg, type=''){
 function showView(name){
   if(name !== 'login' && !currentRole){ showView('login'); return; }
   if((name === 'records' || name === 'eval-overview') && currentRole !== 'admin'){ toast('此帳號無查詢紀錄的權限','bad'); return; }
-  ['login','home','wizard','success','records','rec-detail','eval-overview'].forEach(v=>{
+  ['login','home','wizard','wizard-hotwork','wizard-special','success','records','rec-detail','eval-overview'].forEach(v=>{
     document.getElementById('v-'+v).style.display = 'none';
   });
   document.getElementById('v-'+name).style.display = '';
@@ -1502,16 +1790,28 @@ async function renderRecords(){
   filtered.forEach((r,idx)=>{
     const dt = new Date(r.submittedAt);
     const dtStr = dt.toLocaleDateString('zh-TW')+ ' ' + dt.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
-    const period = r.basic.timePeriod?.join('/') || '—';
-    const nm = q ? r.basic.company.replace(new RegExp(q,'gi'),m=>`<mark>${m}</mark>`) : r.basic.company;
-    const wn = q ? r.basic.workname.replace(new RegExp(q,'gi'),m=>`<mark>${m}</mark>`) : r.basic.workname;
+    const period = r.basic?.timePeriod?.join('/') || (r.basic?.shift) || '—';
+    const companyVal = r.basic?.company || r.basic?.workname || '—';
+    const worknameVal = r.basic?.workname || '—';
+    const nm = q ? companyVal.replace(new RegExp(q,'gi'),m=>`<mark>${m}</mark>`) : companyVal;
+    const wn = q ? worknameVal.replace(new RegExp(q,'gi'),m=>`<mark>${m}</mark>`) : worknameVal;
+    const typeBadge = r.type === 'hotwork'
+      ? `<span class="badge" style="background:#fff7ed;color:#c2410c">動火申請</span>`
+      : r.type === 'special'
+      ? `<span class="badge" style="background:#f5f3ff;color:#6d28d9">特殊危害</span>`
+      : `<span class="badge badge-g">進場申請</span>`;
+    const dateRange = r.basic?.dateStart && r.basic?.dateEnd
+      ? `${r.basic.dateStart} ~ ${r.basic.dateEnd}`
+      : r.basic?.applyDate || '—';
     const tr = document.createElement('tr');
     tr.innerHTML=`
       <td>${idx+1}</td>
+      <td style="font-size:11px;color:var(--sub)">${r.id||'—'}</td>
+      <td>${typeBadge}</td>
       <td>${dtStr}</td>
       <td class="nm">${nm}</td>
       <td class="wn">${wn}</td>
-      <td>${r.basic.dateStart} ~ ${r.basic.dateEnd}</td>
+      <td>${dateRange}</td>
       <td>${period}</td>
       <td><span class="badge badge-g">已提交</span>${currentRole==='admin'&&hasEval(r.id)?'&nbsp;<span class="badge" style="background:#dbeafe;color:#1d4ed8">已評核</span>':''}</td>
       <td>
@@ -1545,6 +1845,10 @@ async function viewRecord(id){
   _currentRecord = r;
   currentDetailId = id;
 
+  if(r.type === 'hotwork') { renderHotWorkDetail(r); document.getElementById('btn-del-record').onclick = ()=>confirmDelete(id); document.getElementById('btn-edit-record').style.display='none'; showView('rec-detail'); return; }
+  if(r.type === 'special') { renderSpecialDetail(r); document.getElementById('btn-del-record').onclick = ()=>confirmDelete(id); document.getElementById('btn-edit-record').style.display='none'; showView('rec-detail'); return; }
+
+  document.getElementById('btn-edit-record').style.display='';
   document.getElementById('detail-title').textContent = r.basic.company + ' — 進場申請紀錄';
   document.getElementById('btn-del-record').onclick = ()=>confirmDelete(id);
   document.getElementById('btn-edit-record').onclick = ()=>openEditModal(id);
@@ -2936,6 +3240,8 @@ window.addEventListener('resize', ()=>{
 function exportPDF(){
   const r = _currentRecord;
   if(!r){ toast('請先開啟紀錄詳情','bad'); return; }
+  if(r.type === 'hotwork') { exportHotWorkPDF(r); return; }
+  if(r.type === 'special') { exportSpecialPDF(r); return; }
   const baseHref = new URL('../', location.href).href;
   const win = window.open('','_blank');
   win.document.write(buildPDFHtml(r, baseHref));
@@ -3561,6 +3867,460 @@ th{background:#dce3ed;font-weight:700;text-align:center;}
   win.document.write(`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><base href="${baseHref}"><title>特殊危害作業許可證 FM-D3-EM-001-02C</title><style>${css}</style></head><body>${pg}</body></html>`);
   win.document.close();
   win.focus();
+  setTimeout(()=>win.print(), 600);
+}
+
+// ════════════════════════════════════════════════
+//  Hot Work Wizard
+// ════════════════════════════════════════════════
+let hwSigCtx = null, hwSigDrawing = false, hwSigHasData = false;
+
+function startHotWork() {
+  document.getElementById('hw-date').value = new Date().toISOString().slice(0,10);
+  hwSigHasData = false;
+  showView('wizard-hotwork');
+  hwGoStep(1);
+  setTimeout(initHWSig, 200);
+}
+
+function hwGoStep(n) {
+  [1,2,3,'done'].forEach(s => {
+    const el = document.getElementById('hw-step-' + s);
+    if(el) el.style.display = (s === n || s === String(n)) ? '' : 'none';
+  });
+  [1,2,3].forEach(s => {
+    const si = document.getElementById('hw-si-'+s);
+    if(si) si.className = 'step-item' + (s < n ? ' done' : s === n ? ' active' : '');
+    const sc = document.getElementById('hw-sc-'+s);
+    if(sc) sc.className = 'step-conn' + (s < n ? ' done' : '');
+  });
+}
+
+function goNextHW(cur) {
+  const err = validateHW(cur);
+  if(err) { toast(err, 'bad'); return; }
+  hwGoStep(cur + 1);
+  if(cur + 1 === 3) { setTimeout(initHWSig, 200); }
+  window.scrollTo(0, 0);
+}
+
+function goPrevHW(cur) {
+  hwGoStep(cur - 1);
+  window.scrollTo(0, 0);
+}
+
+function validateHW(step) {
+  if(step === 1) {
+    if(!document.getElementById('hw-workname').value.trim()) return '請填寫承攬工程名稱';
+    if(!document.getElementById('hw-date').value) return '請填寫申請日期';
+    if(!document.getElementById('hw-location').value.trim()) return '請填寫作業地點';
+  }
+  if(step === 3) {
+    if(!document.getElementById('hw-signee').value.trim()) return '請填寫申請人姓名';
+    if(!hwSigHasData) return '請完成電子簽名';
+  }
+  return null;
+}
+
+function initHWSig() {
+  const canvas = document.getElementById('hw-sig-canvas');
+  if(!canvas) return;
+  const outer = document.getElementById('hw-sig-outer');
+  canvas.width = outer.offsetWidth || 400;
+  canvas.height = 140;
+  hwSigCtx = canvas.getContext('2d');
+  hwSigCtx.strokeStyle = '#1e293b'; hwSigCtx.lineWidth = 2; hwSigCtx.lineCap = 'round'; hwSigCtx.lineJoin = 'round';
+  const pos = e => {
+    const r = canvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return [src.clientX - r.left, src.clientY - r.top];
+  };
+  canvas.onmousedown = e => { hwSigDrawing = true; hwSigCtx.beginPath(); const [x,y]=pos(e); hwSigCtx.moveTo(x,y); };
+  canvas.onmousemove = e => { if(!hwSigDrawing) return; const [x,y]=pos(e); hwSigCtx.lineTo(x,y); hwSigCtx.stroke(); hwSigHasData=true; document.getElementById('hw-sig-hint').style.display='none'; };
+  canvas.onmouseup = () => hwSigDrawing = false;
+  canvas.addEventListener('touchstart', e=>{ e.preventDefault(); hwSigDrawing=true; hwSigCtx.beginPath(); const [x,y]=pos(e); hwSigCtx.moveTo(x,y); }, {passive:false});
+  canvas.addEventListener('touchmove', e=>{ e.preventDefault(); if(!hwSigDrawing) return; const [x,y]=pos(e); hwSigCtx.lineTo(x,y); hwSigCtx.stroke(); hwSigHasData=true; document.getElementById('hw-sig-hint').style.display='none'; }, {passive:false});
+  canvas.addEventListener('touchend', ()=>hwSigDrawing=false);
+}
+
+function clearHWSig() {
+  if(!hwSigCtx) return;
+  const canvas = document.getElementById('hw-sig-canvas');
+  hwSigCtx.clearRect(0,0,canvas.width,canvas.height);
+  hwSigHasData = false;
+  document.getElementById('hw-sig-hint').style.display = '';
+}
+
+function getHWChips(wrapId) {
+  return Array.from(document.querySelectorAll('#'+wrapId+' input[type=checkbox]'))
+    .filter(cb=>cb.checked).map(cb=>cb.parentElement.textContent.trim());
+}
+
+async function submitHotWork() {
+  const err = validateHW(3);
+  if(err) { toast(err, 'bad'); return; }
+  const data = {
+    id: 'HW-' + Date.now().toString(36).toUpperCase(),
+    type: 'hotwork',
+    submittedAt: new Date().toISOString(),
+    basic: {
+      workerType: getHWChips('hw-worker-type-wrap').join('、'),
+      company: document.getElementById('hw-company').value.trim(),
+      workname: document.getElementById('hw-workname').value.trim(),
+      supervisor: document.getElementById('hw-supervisor').value.trim(),
+      phone: document.getElementById('hw-phone').value.trim(),
+      applyDate: document.getElementById('hw-date').value,
+      shift: getHWChips('hw-shift-wrap').join('、'),
+      location: document.getElementById('hw-location').value.trim(),
+      equipment: document.getElementById('hw-equipment').value.trim(),
+      timeStart: document.getElementById('hw-time-start').value,
+      timeEnd: document.getElementById('hw-time-end').value,
+    },
+    preChecks: [1,2,3,4,5,6,7,8,9,10,11,12,13,14].map(i=>document.getElementById('hw-pre-'+i).checked),
+    postChecks: [1,2,3].map(i=>document.getElementById('hw-post-'+i).checked),
+    signee: document.getElementById('hw-signee').value.trim(),
+    signature: document.getElementById('hw-sig-canvas').toDataURL('image/png'),
+  };
+  showLoading('正在送出申請…');
+  try {
+    const res = await apiPost({ action: 'submit', data });
+    if(!res.success) throw new Error(res.error||'送出失敗');
+    document.getElementById('hw-success-id').textContent = data.id;
+    hwGoStep('done');
+    window.scrollTo(0,0);
+  } catch(ex) { toast('送出失敗：' + ex.message, 'bad'); }
+  finally { hideLoading(); }
+}
+
+// ════════════════════════════════════════════════
+//  Special Hazard Wizard
+// ════════════════════════════════════════════════
+let spSigCtx = null, spSigDrawing = false, spSigHasData = false;
+
+function startSpecial() {
+  document.getElementById('sp-date').value = new Date().toISOString().slice(0,10);
+  spSigHasData = false;
+  showView('wizard-special');
+  spGoStep(1);
+  setTimeout(initSPSig, 200);
+}
+
+function spGoStep(n) {
+  [1,2,3,'done'].forEach(s => {
+    const el = document.getElementById('sp-step-' + s);
+    if(el) el.style.display = (s === n || s === String(n)) ? '' : 'none';
+  });
+  [1,2,3].forEach(s => {
+    const si = document.getElementById('sp-si-'+s);
+    if(si) si.className = 'step-item' + (s < n ? ' done' : s === n ? ' active' : '');
+    const sc = document.getElementById('sp-sc-'+s);
+    if(sc) sc.className = 'step-conn' + (s < n ? ' done' : '');
+  });
+}
+
+function goNextSP(cur) {
+  const err = validateSP(cur);
+  if(err) { toast(err, 'bad'); return; }
+  spGoStep(cur + 1);
+  if(cur + 1 === 3) { setTimeout(initSPSig, 200); }
+  window.scrollTo(0, 0);
+}
+
+function goPrevSP(cur) {
+  spGoStep(cur - 1);
+  window.scrollTo(0, 0);
+}
+
+function validateSP(step) {
+  if(step === 1) {
+    if(!document.getElementById('sp-workname').value.trim()) return '請填寫承攬工程名稱';
+    if(!document.getElementById('sp-date').value) return '請填寫申請日期';
+    if(!document.getElementById('sp-location').value.trim()) return '請填寫作業地點';
+    if(!getSPChips('sp-cat-wrap').length) return '請至少勾選一項作業類別';
+  }
+  if(step === 3) {
+    if(!document.getElementById('sp-signee').value.trim()) return '請填寫申請人姓名';
+    if(!spSigHasData) return '請完成電子簽名';
+  }
+  return null;
+}
+
+function initSPSig() {
+  const canvas = document.getElementById('sp-sig-canvas');
+  if(!canvas) return;
+  const outer = document.getElementById('sp-sig-outer');
+  canvas.width = outer.offsetWidth || 400;
+  canvas.height = 140;
+  spSigCtx = canvas.getContext('2d');
+  spSigCtx.strokeStyle = '#1e293b'; spSigCtx.lineWidth = 2; spSigCtx.lineCap = 'round'; spSigCtx.lineJoin = 'round';
+  const pos = e => {
+    const r = canvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return [src.clientX - r.left, src.clientY - r.top];
+  };
+  canvas.onmousedown = e => { spSigDrawing = true; spSigCtx.beginPath(); const [x,y]=pos(e); spSigCtx.moveTo(x,y); };
+  canvas.onmousemove = e => { if(!spSigDrawing) return; const [x,y]=pos(e); spSigCtx.lineTo(x,y); spSigCtx.stroke(); spSigHasData=true; document.getElementById('sp-sig-hint').style.display='none'; };
+  canvas.onmouseup = () => spSigDrawing = false;
+  canvas.addEventListener('touchstart', e=>{ e.preventDefault(); spSigDrawing=true; spSigCtx.beginPath(); const [x,y]=pos(e); spSigCtx.moveTo(x,y); }, {passive:false});
+  canvas.addEventListener('touchmove', e=>{ e.preventDefault(); if(!spSigDrawing) return; const [x,y]=pos(e); spSigCtx.lineTo(x,y); spSigCtx.stroke(); spSigHasData=true; document.getElementById('sp-sig-hint').style.display='none'; }, {passive:false});
+  canvas.addEventListener('touchend', ()=>spSigDrawing=false);
+}
+
+function clearSPSig() {
+  if(!spSigCtx) return;
+  const canvas = document.getElementById('sp-sig-canvas');
+  spSigCtx.clearRect(0,0,canvas.width,canvas.height);
+  spSigHasData = false;
+  document.getElementById('sp-sig-hint').style.display = '';
+}
+
+function getSPChips(wrapId) {
+  return Array.from(document.querySelectorAll('#'+wrapId+' input[type=checkbox]'))
+    .filter(cb=>cb.checked).map(cb=>cb.parentElement.textContent.trim());
+}
+
+async function submitSpecial() {
+  const err = validateSP(3);
+  if(err) { toast(err, 'bad'); return; }
+  const data = {
+    id: 'SP-' + Date.now().toString(36).toUpperCase(),
+    type: 'special',
+    submittedAt: new Date().toISOString(),
+    basic: {
+      workerType: getSPChips('sp-worker-type-wrap').join('、'),
+      company: document.getElementById('sp-company').value.trim(),
+      workname: document.getElementById('sp-workname').value.trim(),
+      categories: getSPChips('sp-cat-wrap'),
+      supervisor: document.getElementById('sp-supervisor').value.trim(),
+      phone: document.getElementById('sp-phone').value.trim(),
+      applyDate: document.getElementById('sp-date').value,
+      shift: getSPChips('sp-shift-wrap').join('、'),
+      location: document.getElementById('sp-location').value.trim(),
+      equipment: document.getElementById('sp-equipment').value.trim(),
+      headcount: document.getElementById('sp-headcount').value,
+      timeStart: document.getElementById('sp-time-start').value,
+      timeEnd: document.getElementById('sp-time-end').value,
+    },
+    confinedSpaceChecks: [1,2,3,4,5,6].map(i=>document.getElementById('sp-cs-'+i).checked),
+    liftingChecks: [1,2,3,4,5,6].map(i=>document.getElementById('sp-lf-'+i).checked),
+    elevatedChecks: [1,2,3,4].map(i=>document.getElementById('sp-el-'+i).checked),
+    pipelineChecks: [1,2,3].map(i=>document.getElementById('sp-pl-'+i).checked),
+    signee: document.getElementById('sp-signee').value.trim(),
+    signature: document.getElementById('sp-sig-canvas').toDataURL('image/png'),
+  };
+  showLoading('正在送出申請…');
+  try {
+    const res = await apiPost({ action: 'submit', data });
+    if(!res.success) throw new Error(res.error||'送出失敗');
+    document.getElementById('sp-success-id').textContent = data.id;
+    spGoStep('done');
+    window.scrollTo(0,0);
+  } catch(ex) { toast('送出失敗：' + ex.message, 'bad'); }
+  finally { hideLoading(); }
+}
+
+// ════════════════════════════════════════════════
+//  Hotwork / Special record detail renderers
+// ════════════════════════════════════════════════
+function renderHotWorkDetail(r) {
+  const X = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const b = r.basic || {};
+  const fd = d => (d||'—').replace(/-/g,'/');
+  const chk = v => v ? '✓' : '✗';
+  const pre = r.preChecks || [];
+  const post = r.postChecks || [];
+  const PRE_ITEMS = [
+    '3公尺內備有可使用/正常操作之自動灑水或手提滅火器',
+    '防爆區或侷限空間內作業由工安單位測定可燃性氣體濃度',
+    '動火時旁邊有警戒人員','排除管線內可燃性物質',
+    '隔離或中斷該區域之火警偵測器',
+    '清除工作區域週邊11公尺內的可燃物或使用防火毯覆蓋保護',
+    '工作區域易燃性地面予以防火保護',
+    '工作區域週邊的地面及牆面不得有開口或使用防火毯覆蓋保護',
+    '動火作業人員的安全眼鏡、面罩、手套等防護具',
+    '施工產生之火花予以收集，工作區域內用防火布加以保護',
+    '建築結構為不易燃性材料建造，或為不易燃性材料覆蓋保護',
+    '須移走牆背面的易燃物質（如另一面有易燃物質，須移除之）',
+    '電焊機接頭及接地良好，並有自動電擊防止裝置',
+    '鋼瓶直立或使用鋼瓶推車固定並有安全逆止閥',
+  ];
+  const POST_ITEMS = [
+    '每日收工前將火警系統中斷復歸，並檢點施工環境安全',
+    '環境整理復歸，材料器材工具收拾整齊',
+    '施工完畢後30分鐘動火場所覆查，沒有餘燼或悶燒情形',
+  ];
+  let html = `<div class="detail-hdr">
+    <button class="btn btn-sm" onclick="showView('records')">← 返回清單</button>
+    <h2 id="detail-title">動火作業申請 ${X(r.id)}</h2>
+    <button class="btn btn-sm" onclick="window.print()">🖨️ 列印</button>
+    <button class="btn btn-sm btn-primary" onclick="exportPDF()">📄 匯出 PDF</button>
+    <button class="btn btn-sm btn-danger" id="btn-del-record" onclick="confirmDelete('${X(r.id)}')">🗑️ 刪除</button>
+  </div>`;
+  html += `<div class="detail-blk"><div class="detail-blk-hdr">基本資料</div><div class="detail-blk-body">
+    <div class="detail-grid">
+      <div><div class="dl">申請編號</div><div class="dv">${X(r.id)}</div></div>
+      <div><div class="dl">送出時間</div><div class="dv">${(r.submittedAt||'').slice(0,16).replace('T',' ')}</div></div>
+      <div><div class="dl">承攬商名稱</div><div class="dv">${X(b.company||'—')}</div></div>
+      <div><div class="dl">承攬工程名稱</div><div class="dv">${X(b.workname||'—')}</div></div>
+      <div><div class="dl">申請日期</div><div class="dv">${fd(b.applyDate)}</div></div>
+      <div><div class="dl">申請時段</div><div class="dv">${X(b.shift||'—')}</div></div>
+      <div><div class="dl">作業地點</div><div class="dv">${X(b.location||'—')}</div></div>
+      <div><div class="dl">動火設備</div><div class="dv">${X(b.equipment||'—')}</div></div>
+      <div><div class="dl">承攬商監工</div><div class="dv">${X(b.supervisor||'—')}</div></div>
+      <div><div class="dl">連絡電話</div><div class="dv">${X(b.phone||'—')}</div></div>
+      <div><div class="dl">作業時間</div><div class="dv">${X(b.timeStart||'—')} ～ ${X(b.timeEnd||'—')}</div></div>
+      <div><div class="dl">作業人員</div><div class="dv">${X(b.workerType||'—')}</div></div>
+    </div></div></div>`;
+  html += `<div class="detail-blk"><div class="detail-blk-hdr">動火前巡檢（14項）</div><div class="detail-blk-body">
+    ${PRE_ITEMS.map((item,i)=>`<div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="font-weight:700;color:${pre[i]?'var(--green)':'var(--red)'};min-width:18px">${chk(pre[i])}</span><span>${item}</span></div>`).join('')}
+  </div></div>`;
+  html += `<div class="detail-blk"><div class="detail-blk-hdr">收工後巡檢（3項）</div><div class="detail-blk-body">
+    ${POST_ITEMS.map((item,i)=>`<div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="font-weight:700;color:${post[i]?'var(--green)':'var(--red)'}; min-width:18px">${chk(post[i])}</span><span>${item}</span></div>`).join('')}
+  </div></div>`;
+  html += `<div class="detail-blk"><div class="detail-blk-hdr">申請人簽名</div><div class="detail-blk-body">
+    <div class="detail-grid">
+      <div><div class="dl">申請人</div><div class="dv">${X(r.signee||'—')}</div></div>
+    </div>
+    ${r.signature ? `<img class="sig-img" src="${r.signature}" style="margin-top:10px">` : ''}
+  </div></div>`;
+  document.getElementById('detail-content').innerHTML = html;
+}
+
+function renderSpecialDetail(r) {
+  const X = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const b = r.basic || {};
+  const fd = d => (d||'—').replace(/-/g,'/');
+  const chk = v => v ? '✓' : '✗';
+  const CS = ['指派一人以上之安全警戒人員，隨時監視、聯絡作業？','工安單位測定作業場所空氣中氧氣濃度在19%以上？','工安單位測定危害物濃度達法定容許濃度以下？','備有空氣呼吸氣器、安全帶（索）等防護器具使勞工確實戴用？','告知作業之勞工施予必要安全注意事項及訓練？','送風機進行充份通風換氣？'];
+  const LF = ['起重機操作及吊掛人員是否有訓練合格證書？','起重機/吊籠是否有在有效期限內的檢查合格證，且機具與證照相符？','鍊條是否有龜裂或腐蝕情形？吊勾是否有防滑舌片？','吊籠操作人員配戴安全帶？安全帶獨立拉掛固定，不得掛在吊籠之吊索上？','吊掛作業前後左右是否有警告禁止進入標示？','吊車支撐桿是否平衡固定？'];
+  const EL = ['指定安全警戒人員，隨時監視、指揮作業？','固定安全梯，不可用身體搖晃來移動工作梯？','搭架作業之鷹架腳應固定於地面，並有交叉連桿、30cm以上安全踏板？','工作場所邊緣及開孔設立堅固之護欄或護蓋或安全帶索或安全網避免墜落？'];
+  const PL = ['應確認管路內的內容物之化性及物性？','施工前，確認管路內是否有原殘留物質並告知作適當之防護及處理？','執行相關閥件之操作並確認相關閥件為關閉狀態後掛牌標示。'];
+  const renderSection = (title, items, checks) =>
+    `<div class="detail-blk"><div class="detail-blk-hdr">${title}</div><div class="detail-blk-body">
+      ${items.map((item,i)=>`<div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="font-weight:700;color:${(checks||[])[i]?'var(--green)':'var(--red)'};min-width:18px">${chk((checks||[])[i])}</span><span>${item}</span></div>`).join('')}
+    </div></div>`;
+  let html = `<div class="detail-hdr">
+    <button class="btn btn-sm" onclick="showView('records')">← 返回清單</button>
+    <h2 id="detail-title">特殊危害作業申請 ${X(r.id)}</h2>
+    <button class="btn btn-sm" onclick="window.print()">🖨️ 列印</button>
+    <button class="btn btn-sm btn-primary" onclick="exportPDF()">📄 匯出 PDF</button>
+    <button class="btn btn-sm btn-danger" id="btn-del-record" onclick="confirmDelete('${X(r.id)}')">🗑️ 刪除</button>
+  </div>`;
+  html += `<div class="detail-blk"><div class="detail-blk-hdr">基本資料</div><div class="detail-blk-body">
+    <div class="detail-grid">
+      <div><div class="dl">申請編號</div><div class="dv">${X(r.id)}</div></div>
+      <div><div class="dl">送出時間</div><div class="dv">${(r.submittedAt||'').slice(0,16).replace('T',' ')}</div></div>
+      <div><div class="dl">承攬商名稱</div><div class="dv">${X(b.company||'—')}</div></div>
+      <div><div class="dl">承攬工程名稱</div><div class="dv">${X(b.workname||'—')}</div></div>
+      <div><div class="dl">作業類別</div><div class="dv">${(b.categories||[]).join('、')||'—'}</div></div>
+      <div><div class="dl">申請日期</div><div class="dv">${fd(b.applyDate)}</div></div>
+      <div><div class="dl">申請時段</div><div class="dv">${X(b.shift||'—')}</div></div>
+      <div><div class="dl">作業地點</div><div class="dv">${X(b.location||'—')}</div></div>
+      <div><div class="dl">使用設備</div><div class="dv">${X(b.equipment||'—')}</div></div>
+      <div><div class="dl">承攬商監工</div><div class="dv">${X(b.supervisor||'—')}</div></div>
+      <div><div class="dl">連絡電話</div><div class="dv">${X(b.phone||'—')}</div></div>
+      <div><div class="dl">施工人數</div><div class="dv">${X(b.headcount||'—')} 人</div></div>
+      <div><div class="dl">作業時間</div><div class="dv">${X(b.timeStart||'—')} ～ ${X(b.timeEnd||'—')}</div></div>
+    </div></div></div>`;
+  html += renderSection('一、局限空間作業', CS, r.confinedSpaceChecks);
+  html += renderSection('二、吊掛作業', LF, r.liftingChecks);
+  html += renderSection('三、高架作業', EL, r.elevatedChecks);
+  html += renderSection('四、危險管路拆卸、鑽孔作業', PL, r.pipelineChecks);
+  html += `<div class="detail-blk"><div class="detail-blk-hdr">申請人簽名</div><div class="detail-blk-body">
+    <div class="detail-grid"><div><div class="dl">申請人</div><div class="dv">${X(r.signee||'—')}</div></div></div>
+    ${r.signature ? `<img class="sig-img" src="${r.signature}" style="margin-top:10px">` : ''}
+  </div></div>`;
+  document.getElementById('detail-content').innerHTML = html;
+}
+
+// ════════════════════════════════════════════════
+//  Hotwork / Special PDF Export
+// ════════════════════════════════════════════════
+function exportHotWorkPDF(r) {
+  const baseHref = new URL('../', location.href).href;
+  const X = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const b = r.basic || {};
+  const fd = d => (d||'').replace(/-/g,'/');
+  const chk = v => v ? 'ˇ' : '×';
+  const pre = r.preChecks || [];
+  const post = r.postChecks || [];
+  const PRE = ['3公尺內備有可使用/正常操作之自動灑水或手提滅火器','防爆區或侷限空間內作業由工安單位測定可燃性氣體濃度','動火時旁邊有警戒人員','排除管線內可燃性物質','隔離或中斷該區域之火警偵測器','清除工作區域週邊11公尺內的可燃物或使用防火毯覆蓋保護','工作區域易燃性地面予以防火保護','工作區域週邊的地面及牆面不得有開口或使用防火毯覆蓋保護','動火作業人員的安全眼鏡、面罩、手套等防護具','施工產生之火花予以收集，工作區域內用防火布加以保護','建築結構為不易燃性材料建造，或為不易燃性材料覆蓋保護','須移走牆背面的易燃物質（如另一面有易燃物質，須移除之）','電焊機接頭及接地良好，並有自動電擊防止裝置','鋼瓶直立或使用鋼瓶推車固定並有安全逆止閥'];
+  const POST = ['每日收工前將火警系統中斷復歸，並檢點施工環境安全','環境整理復歸，材料器材工具收拾整齊','施工完畢後30分鐘動火場所覆查，沒有餘燼或悶燒情形'];
+  const css = `*{box-sizing:border-box;margin:0;padding:0;}body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:10.5pt;color:#000;background:#fff;}.page{width:210mm;min-height:297mm;padding:12mm 14mm;margin:0 auto;}table{width:100%;border-collapse:collapse;}td,th{border:1px solid #333;padding:3px 5px;font-size:9.5pt;vertical-align:middle;}th{background:#dce3ed;font-weight:700;text-align:center;}.lbl{font-weight:700;background:#f0f0f0;font-size:9pt;}.sub-hdr{background:#2c4a6e;color:#fff;font-weight:700;font-size:9pt;text-align:center;padding:4px;}.chk-no{text-align:center;width:24px;font-weight:700;}.chk-val{text-align:center;width:52px;font-weight:700;}.co-hdr{display:flex;align-items:center;gap:10px;margin-bottom:6px;}.co-hdr img{height:36px;}.co-name{font-size:13pt;font-weight:700;}.doc-title{font-size:15pt;font-weight:700;text-align:center;margin:6px 0 2px;}.doc-no{font-size:8.5pt;text-align:center;color:#555;margin-bottom:8px;}.note-box{border:1px solid #999;padding:6px 8px;font-size:8.5pt;line-height:1.8;margin-top:6px;}.footer{font-size:8pt;color:#666;text-align:right;margin-top:4px;}.sig-img{max-height:80px;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}`;
+  const pg = `<div class="page">
+<div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div><div class="co-name">大豐環保科技股份有限公司</div></div></div>
+<div class="doc-title">動 火 作 業 許 可 證</div>
+<div class="doc-no">FM-D3-EM-001-01C　　申請編號：${X(r.id)}</div>
+<table style="margin-bottom:6px">
+  <tr><td class="lbl" style="width:22%">進行作業人員</td><td>${X(b.workerType||'—')}</td><td class="lbl" style="width:20%">申請日期</td><td>${fd(b.applyDate)}</td></tr>
+  <tr><td class="lbl">承攬商名稱</td><td>${X(b.company||'—')}</td><td class="lbl">申請時段</td><td>${X(b.shift||'—')}</td></tr>
+  <tr><td class="lbl">承攬工程名稱</td><td colspan="3">${X(b.workname||'—')}</td></tr>
+  <tr><td class="lbl">地點／建物／樓層</td><td colspan="3">${X(b.location||'—')}</td></tr>
+  <tr><td class="lbl">動火設備</td><td>${X(b.equipment||'—')}</td><td class="lbl">承攬商監工</td><td>${X(b.supervisor||'—')}</td></tr>
+  <tr><td class="lbl">連絡電話</td><td>${X(b.phone||'—')}</td><td class="lbl">作業時間</td><td>${X(b.timeStart||'—')} ～ ${X(b.timeEnd||'—')}</td></tr>
+</table>
+<table>
+  <tr><td colspan="3" style="background:#2c4a6e;color:#fff;font-weight:700;padding:4px 8px">動火檢查表</td></tr>
+  <tr><th class="chk-no">#</th><th>檢查項目</th><th style="width:60px">確認</th></tr>
+  <tr><td colspan="3" class="sub-hdr">動火前巡檢</td></tr>
+  ${PRE.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${pre[i]?'#16a34a':'#dc2626'}">${chk(pre[i])}</td></tr>`).join('')}
+  <tr><td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:right;padding-right:8px">申請人簽名：${X(r.signee||'')}</td><td class="chk-val">${r.signature?`<img class="sig-img" src="${r.signature}" style="max-height:40px;max-width:80px">`:''}</td></tr>
+  <tr><td colspan="3" class="sub-hdr">收工後巡檢</td></tr>
+  ${POST.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${post[i]?'#16a34a':'#dc2626'}">${chk(post[i])}</td></tr>`).join('')}
+</table>
+<div class="note-box"><strong>說明：</strong><br>1. 表單簽核後由監工貼於施工區域，作業結束由監工收回並交工安單位存檔。<br>2. 動火作業一日為限逾期重新申請。</div>
+<div class="footer">FM-D3-EM-001-01C ／ 大豐環保科技股份有限公司 ／ 送出時間：${(r.submittedAt||'').slice(0,16).replace('T',' ')}</div>
+</div>`;
+  const win = window.open('','_blank');
+  if(!win){ toast('請允許瀏覽器開啟彈出視窗','bad'); return; }
+  win.document.write(`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><base href="${baseHref}"><title>動火作業許可證 ${r.id}</title><style>${css}</style></head><body>${pg}</body></html>`);
+  win.document.close(); win.focus();
+  setTimeout(()=>win.print(), 600);
+}
+
+function exportSpecialPDF(r) {
+  const baseHref = new URL('../', location.href).href;
+  const X = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const b = r.basic || {};
+  const fd = d => (d||'').replace(/-/g,'/');
+  const chk = v => v ? 'ˇ' : '×';
+  const CS = ['指派一人以上之安全警戒人員，隨時監視、聯絡作業？','工安單位測定作業場所空氣中氧氣濃度在19%以上？','工安單位測定危害物濃度達法定容許濃度以下？','備有空氣呼吸氣器、安全帶（索）等防護器具使勞工確實戴用？','告知作業之勞工施予必要安全注意事項及訓練？','送風機進行充份通風換氣？'];
+  const LF = ['起重機操作及吊掛人員是否有訓練合格證書？','起重機/吊籠是否有在有效期限內的檢查合格證，且機具與證照相符？','鍊條是否有龜裂或腐蝕情形？吊勾是否有防滑舌片？','吊籠操作人員配戴安全帶？安全帶獨立拉掛固定，不得掛在吊籠之吊索上？','吊掛作業前後左右是否有警告禁止進入標示？','吊車支撐桿是否平衡固定？'];
+  const EL = ['指定安全警戒人員，隨時監視、指揮作業？','固定安全梯，不可用身體搖晃來移動工作梯？','搭架作業之鷹架腳應固定於地面，並有交叉連桿、30cm以上安全踏板？','工作場所邊緣及開孔設立堅固之護欄或護蓋或安全帶索或安全網避免墜落？'];
+  const PL = ['應確認管路內的內容物之化性及物性？','施工前，確認管路內是否有原殘留物質並告知作適當之防護及處理？','執行相關閥件之操作並確認相關閥件為關閉狀態後掛牌標示。'];
+  const css = `*{box-sizing:border-box;margin:0;padding:0;}body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:10.5pt;color:#000;background:#fff;}.page{width:210mm;min-height:297mm;padding:12mm 14mm;margin:0 auto;}table{width:100%;border-collapse:collapse;}td,th{border:1px solid #333;padding:3px 5px;font-size:9.5pt;vertical-align:middle;}th{background:#dce3ed;font-weight:700;text-align:center;}.lbl{font-weight:700;background:#f0f0f0;font-size:9pt;}.sub-hdr{background:#2c4a6e;color:#fff;font-weight:700;font-size:9pt;text-align:center;padding:4px;}.chk-no{text-align:center;width:24px;font-weight:700;}.chk-val{text-align:center;width:52px;font-weight:700;}.co-hdr{display:flex;align-items:center;gap:10px;margin-bottom:6px;}.co-hdr img{height:36px;}.co-name{font-size:13pt;font-weight:700;}.doc-title{font-size:15pt;font-weight:700;text-align:center;margin:6px 0 2px;}.doc-no{font-size:8.5pt;text-align:center;color:#555;margin-bottom:8px;}.note-box{border:1px solid #999;padding:6px 8px;font-size:8.5pt;line-height:1.8;margin-top:6px;}.footer{font-size:8pt;color:#666;text-align:right;margin-top:4px;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}`;
+  const renderSection = (title, items, checks) =>
+    `<tr><td colspan="3" class="sub-hdr">${title}</td></tr>` +
+    items.map((item,i)=>`<tr><td class="chk-no">${i+1}</td><td style="font-size:9pt">${item}</td><td class="chk-val" style="color:${(checks||[])[i]?'#16a34a':'#dc2626'}">${chk((checks||[])[i])}</td></tr>`).join('');
+  const pg = `<div class="page">
+<div class="co-hdr"><img src="${baseHref}dafon-logo.png" alt="大豐環保科技"><div><div class="co-name">大豐環保科技股份有限公司</div></div></div>
+<div class="doc-title">特 殊 危 害 作 業 許 可 證</div>
+<div class="doc-no">FM-D3-EM-001-02C　　申請編號：${X(r.id)}</div>
+<table style="margin-bottom:6px">
+  <tr><td class="lbl" style="width:22%">進行作業人員</td><td>${X(b.workerType||'—')}</td><td class="lbl" style="width:20%">申請日期</td><td>${fd(b.applyDate)}</td></tr>
+  <tr><td class="lbl">承攬商名稱</td><td>${X(b.company||'—')}</td><td class="lbl">申請時段</td><td>${X(b.shift||'—')}</td></tr>
+  <tr><td class="lbl">承攬工程名稱</td><td colspan="3">${X(b.workname||'—')}</td></tr>
+  <tr><td class="lbl">作業類別</td><td colspan="3">${(b.categories||[]).join('　')}</td></tr>
+  <tr><td class="lbl">地點／建物／樓層</td><td>${X(b.location||'—')}</td><td class="lbl">使用設備</td><td>${X(b.equipment||'—')}</td></tr>
+  <tr><td class="lbl">承攬商監工</td><td>${X(b.supervisor||'—')}</td><td class="lbl">連絡電話</td><td>${X(b.phone||'—')}</td></tr>
+  <tr><td class="lbl">施工人數</td><td>${X(b.headcount||'—')} 人</td><td class="lbl">作業時間</td><td>${X(b.timeStart||'—')} ～ ${X(b.timeEnd||'—')}</td></tr>
+</table>
+<table>
+  <tr><td colspan="3" style="background:#2c4a6e;color:#fff;font-weight:700;padding:4px 8px">特殊危險作業檢查表</td></tr>
+  <tr><th class="chk-no">#</th><th>檢查項目</th><th style="width:60px">確認</th></tr>
+  ${renderSection('一、局限空間作業', CS, r.confinedSpaceChecks)}
+  ${renderSection('二、吊掛作業', LF, r.liftingChecks)}
+  ${renderSection('三、高架作業', EL, r.elevatedChecks)}
+  ${renderSection('四、危險管路拆卸、鑽孔作業', PL, r.pipelineChecks)}
+  <tr><td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:right;padding-right:8px">申請人簽名：${X(r.signee||'')}</td><td class="chk-val">${r.signature?`<img src="${r.signature}" style="max-height:40px;max-width:80px">`:''}</td></tr>
+</table>
+<div class="note-box"><strong>說明：</strong><br>1. 表單由監工貼於施工區域，作業結束由監工收回並交由工安單位存檔。<br>2. 特殊危害作業以一日為限，逾期重新申請。</div>
+<div class="footer">FM-D3-EM-001-02C ／ 大豐環保科技股份有限公司 ／ 送出時間：${(r.submittedAt||'').slice(0,16).replace('T',' ')}</div>
+</div>`;
+  const win = window.open('','_blank');
+  if(!win){ toast('請允許瀏覽器開啟彈出視窗','bad'); return; }
+  win.document.write(`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><base href="${baseHref}"><title>特殊危害作業許可證 ${r.id}</title><style>${css}</style></head><body>${pg}</body></html>`);
+  win.document.close(); win.focus();
   setTimeout(()=>win.print(), 600);
 }
 </script>
