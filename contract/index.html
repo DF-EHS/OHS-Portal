@@ -341,62 +341,15 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
     <h2>歡迎使用承攬商管理系統</h2>
     <p>承攬商進場前請依序完成危害告知確認、安衛切結書及作業許可申請書<br>填寫完成並電子簽名後，資料將自動留存於本系統供職安人員查閱</p>
   </div>
-  <div class="home-cards">
-    <div class="home-card" onclick="startWizard()">
-      <div class="hc-icon">✍️</div>
-      <div class="hc-title">填寫進場申請</div>
-      <div class="hc-desc">新進承攬商依序填寫危害告知確認書、安衛管理切結書及作業許可申請書，完成電子簽名後送出留底</div>
-      <div class="hc-btn">開始填寫 →</div>
-    </div>
-    <div class="home-card" id="card-records" onclick="showView('records')">
-      <div class="hc-icon">📂</div>
-      <div class="hc-title">進場紀錄查詢</div>
-      <div class="hc-desc">查詢、列印或管理所有已提交的承攬商進場申請紀錄，支援關鍵字搜尋及 CSV 匯出功能</div>
-      <div class="hc-btn">查詢紀錄 →</div>
-    </div>
-    <div class="home-card" id="card-eval" onclick="showView('eval-overview')" style="display:none">
-      <div class="hc-icon">📊</div>
-      <div class="hc-title">承攬商評鑑</div>
-      <div class="hc-desc">完工後對承攬商進行安衛評核，一覽各廠商評鑑狀態、得分及綜合結果</div>
-      <div class="hc-btn">前往評鑑 →</div>
-    </div>
-  </div>
-  <div class="info-grid">
-    <div class="info-card">
-      <div class="info-card-lbl">包含文件</div>
-      <p>📄 大豐環保危害告知書（114.01）<br>📝 承攬商環安衛管理告知切結書<br>📋 作業許可申請書</p>
-    </div>
-    <div class="info-card">
-      <div class="info-card-lbl">填寫流程</div>
-      <p>1️⃣ 填寫承攬商基本資料<br>2️⃣ 閱讀危害告知書並確認<br>3️⃣ 勾選適用作業類型並切結<br>4️⃣ 填寫作業許可申請書<br>5️⃣ 電子簽名後送出留底</p>
-    </div>
-  </div>
-
-  <div style="margin-top:20px">
-    <div style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">作業許可證（空白表單下載）</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
-      <div class="info-card" style="display:flex;align-items:center;gap:14px;cursor:pointer" onclick="downloadHotWorkPermit()">
-        <div style="font-size:36px;flex-shrink:0">🔥</div>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px">動火作業許可證</div>
-          <div style="font-size:11px;color:var(--sub);line-height:1.6">FM-D3-EM-001-01C｜動火前 14 項檢查 + 收工後 3 項確認</div>
-        </div>
-        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();downloadHotWorkPermit()" style="flex-shrink:0">📄 下載 PDF</button>
-      </div>
-      <div class="info-card" style="display:flex;align-items:center;gap:14px;cursor:pointer" onclick="downloadSpecialPermit()">
-        <div style="font-size:36px;flex-shrink:0">⚠️</div>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px">特殊危害作業許可證</div>
-          <div style="font-size:11px;color:var(--sub);line-height:1.6">FM-D3-EM-001-02C｜局限空間／吊掛／高架／危險管路／送電</div>
-        </div>
-        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();downloadSpecialPermit()" style="flex-shrink:0">📄 下載 PDF</button>
-      </div>
-    </div>
-  </div>
-
-  <div style="margin-top:24px">
-    <div style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">線上作業許可申請</div>
+  <!-- ── Guest 版面（4 卡片 auto-fit）── -->
+  <div id="home-guest-layout">
     <div class="home-cards">
+      <div class="home-card" onclick="startWizard()">
+        <div class="hc-icon">✍️</div>
+        <div class="hc-title">填寫進場申請</div>
+        <div class="hc-desc">新進承攬商依序填寫危害告知確認書、安衛管理切結書及作業許可申請書，完成電子簽名後送出留底</div>
+        <div class="hc-btn">開始填寫 →</div>
+      </div>
       <div class="home-card" onclick="startHotWork()">
         <div class="hc-icon">🔥</div>
         <div class="hc-title">動火作業申請</div>
@@ -409,6 +362,61 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
         <div class="hc-desc">局限空間、吊掛、高架、危險管路及送電等特殊危害作業許可申請，含依作業類別分組的安全確認</div>
         <div class="hc-btn">開始申請 →</div>
       </div>
+      <div class="home-card" onclick="showView('records')">
+        <div class="hc-icon">📂</div>
+        <div class="hc-title">進場紀錄查詢</div>
+        <div class="hc-desc">查詢、列印或管理所有已提交的承攬商進場申請紀錄，支援關鍵字搜尋及 CSV 匯出功能</div>
+        <div class="hc-btn">查詢紀錄 →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Admin 版面（上二 + 下三）── -->
+  <div id="home-admin-layout" style="display:none">
+    <div class="home-cards" style="grid-template-columns:1fr 1fr">
+      <div class="home-card" onclick="showView('records')">
+        <div class="hc-icon">📂</div>
+        <div class="hc-title">進場紀錄查詢</div>
+        <div class="hc-desc">查詢、列印或管理所有已提交的承攬商進場申請紀錄，支援關鍵字搜尋及 CSV 匯出功能</div>
+        <div class="hc-btn">查詢紀錄 →</div>
+      </div>
+      <div class="home-card" onclick="showView('eval-overview')">
+        <div class="hc-icon">📊</div>
+        <div class="hc-title">承攬商評鑑</div>
+        <div class="hc-desc">完工後對承攬商進行安衛評核，一覽各廠商評鑑狀態、得分及綜合結果</div>
+        <div class="hc-btn">前往評鑑 →</div>
+      </div>
+    </div>
+    <div class="home-cards" style="margin-top:20px;grid-template-columns:1fr 1fr 1fr">
+      <div class="home-card" onclick="startWizard()">
+        <div class="hc-icon">✍️</div>
+        <div class="hc-title">填寫進場申請</div>
+        <div class="hc-desc">新進承攬商依序填寫危害告知確認書、安衛管理切結書及作業許可申請書，完成電子簽名後送出留底</div>
+        <div class="hc-btn">開始填寫 →</div>
+      </div>
+      <div class="home-card" onclick="startHotWork()">
+        <div class="hc-icon">🔥</div>
+        <div class="hc-title">動火作業申請</div>
+        <div class="hc-desc">電焊、切割、研磨等動火作業許可申請，含動火前14項及收工後3項安全確認，完成電子簽名後送出留底</div>
+        <div class="hc-btn">開始申請 →</div>
+      </div>
+      <div class="home-card" onclick="startSpecial()">
+        <div class="hc-icon">⚠️</div>
+        <div class="hc-title">特殊危害作業申請</div>
+        <div class="hc-desc">局限空間、吊掛、高架、危險管路及送電等特殊危害作業許可申請，含依作業類別分組的安全確認</div>
+        <div class="hc-btn">開始申請 →</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid" style="margin-top:20px">
+    <div class="info-card">
+      <div class="info-card-lbl">包含文件</div>
+      <p>📄 大豐環保危害告知書（114.01）<br>📝 承攬商環安衛管理告知切結書<br>📋 作業許可申請書</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-lbl">填寫流程</div>
+      <p>1️⃣ 填寫承攬商基本資料<br>2️⃣ 閱讀危害告知書並確認<br>3️⃣ 勾選適用作業類型並切結<br>4️⃣ 填寫作業許可申請書<br>5️⃣ 電子簽名後送出留底</p>
     </div>
   </div>
 </div>
@@ -1177,8 +1185,8 @@ function doLogin(){
   document.getElementById('hdr-logout').style.display  = '';
   document.getElementById('hdr-role').style.display    = '';
   document.getElementById('hdr-role').textContent      = isAdmin ? '管理者' : '承攬商';
-  document.getElementById('card-records').style.display = isAdmin ? '' : 'none';
-  document.getElementById('card-eval').style.display    = isAdmin ? '' : 'none';
+  document.getElementById('home-guest-layout').style.display = isAdmin ? 'none' : '';
+  document.getElementById('home-admin-layout').style.display = isAdmin ? '' : 'none';
   showView('home');
 }
 
