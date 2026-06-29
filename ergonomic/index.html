@@ -225,6 +225,14 @@ body.dark .login-card h2 { color: #e2e8f0; }
 body.dark .score-editor { background: #0c2d3d; }
 body.dark .pill { background: #1e293b; color: #e2e8f0; }
 body.dark .filter-bar input, body.dark .filter-bar select { background: #1e293b; color: #e2e8f0; }
+/* Case flow badges & action buttons */
+.case-badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+.case-badge.has  { background: #fffbeb; color: #92400e; }
+.case-badge.done { background: #f0fdf4; color: #16a34a; }
+.case-badge.none { background: #f1f5f9; color: #64748b; }
+.act-btn { padding: 4px 9px; border-radius: 6px; font-size: 11px; font-weight: 700; border: 1.5px solid; cursor: pointer; background: none; white-space: nowrap; font-family: inherit; transition: background .12s; }
+.act-btn-imp { border-color: #7c3aed; color: #7c3aed; }
+.act-btn-imp:hover { background: #ede9fe; }
 </style>
 </head>
 <body>
@@ -738,27 +746,37 @@ async function saveResp(id) {
 async function loadHaz() {
   V('haz-wrap').innerHTML='<div class="notice info">載入中…</div>';
   try {
-    const d = await post({ action:'listHaz', token:ADMIN_TOKEN });
-    allHaz = d.rows||[]; renderHaz();
+    const [hd, id] = await Promise.all([
+      post({ action:'listHaz', token:ADMIN_TOKEN }),
+      post({ action:'listImp', token:ADMIN_TOKEN }),
+    ]);
+    allHaz = hd.rows||[]; allImp = id.rows||[]; renderHaz();
   } catch(e) { V('haz-wrap').innerHTML=`<div class="notice err">載入失敗：${e.message}</div>`; }
 }
 
 function renderHaz() {
   if (!allHaz.length) { V('haz-wrap').innerHTML='<div class="empty"><div class="icon">⚠️</div><p>尚未建立作業危害記錄<br><small>點擊「新增作業危害」開始盤點</small></p></div>'; return; }
   V('haz-wrap').innerHTML=`<table class="tbl"><thead><tr>
-    <th>作業名稱</th><th>工作站</th><th>危害類型</th><th>頻率</th><th>強度</th><th>風險等級</th><th>操作</th>
+    <th>作業名稱</th><th>工作站</th><th>危害類型</th><th>頻率</th><th>強度</th><th>風險等級</th><th>改善措施</th><th>操作</th>
   </tr></thead><tbody>${allHaz.map(h=>{
     const types = safeJson(h.types,[]);
     const rCls = h.risk==='高'?'b-high':h.risk==='中'?'b-mid':'b-low';
+    const impRecs = allImp.filter(i=>i.hazardId===h.id);
+    const impDone = impRecs.filter(i=>i.status==='已完成').length;
+    const impBadge = impRecs.length
+      ? `<span class="case-badge ${impDone===impRecs.length?'done':'has'}">${impDone}/${impRecs.length} 完成</span>`
+      : `<span class="case-badge none">無措施</span>`;
     return `<tr onclick="openHazPanel('${h.id}')">
       <td><strong>${esc(h.taskName)}</strong></td>
       <td>${esc(h.station||'—')}</td>
       <td>${types.map(t=>{const ht=HAZ_TYPES.find(x=>x.key===t);return ht?`<span class="haz-tag ${ht.cls}">${ht.label}</span>`:''}).join('')}</td>
       <td>${esc(h.freq||'—')}</td><td>${esc(h.intensity||'—')}</td>
       <td><span class="badge ${rCls}">${esc(h.risk||'—')}</span></td>
-      <td onclick="event.stopPropagation()">
-        <button class="btn-secondary" style="font-size:12px;padding:4px 10px" onclick="openHazPanel('${h.id}')">編輯</button>
-        <button class="btn-secondary" style="font-size:12px;padding:4px 10px;color:var(--red);margin-left:4px" onclick="delHaz('${h.id}')">刪除</button>
+      <td>${impBadge}</td>
+      <td onclick="event.stopPropagation()" style="white-space:nowrap;display:flex;gap:4px;padding:8px 12px">
+        <button class="act-btn act-btn-imp" onclick="openImpPanel(null,'${h.id}')">🔧 改善措施</button>
+        <button class="btn-secondary" style="font-size:11px;padding:4px 8px" onclick="openHazPanel('${h.id}')">編輯</button>
+        <button class="btn-secondary" style="font-size:11px;padding:4px 8px;color:var(--red)" onclick="delHaz('${h.id}')">刪除</button>
       </td>
     </tr>`;
   }).join('')}</tbody></table>`;
@@ -851,17 +869,29 @@ function renderImp() {
   }).join('')}</tbody></table>`;
 }
 
-function openImpPanel(id) {
+function openImpPanel(id, prefillHazId = null) {
   const imp = id ? allImp.find(x=>x.id===id) : null;
+  const srcHazId = imp?.hazardId || prefillHazId || '';
+  const srcHaz = srcHazId ? allHaz.find(h=>h.id===srcHazId) : null;
+  let hazNote = '';
+  if (srcHaz) {
+    const rCls = srcHaz.risk==='高'?'err':srcHaz.risk==='中'?'info':'ok';
+    const types = safeJson(srcHaz.types,[]).map(t=>{const ht=HAZ_TYPES.find(x=>x.key===t);return ht?ht.label:'';}).filter(Boolean).join('、');
+    hazNote = `<div class="notice ${rCls}" style="margin-bottom:14px">
+      ⚠️ 關聯危害：<strong>${esc(srcHaz.taskName)}</strong>（${esc(srcHaz.station||'—')}）<br>
+      <span style="font-size:12px;opacity:.85">危害類型：${esc(types||'—')}・風險等級：${esc(srcHaz.risk||'—')}</span>
+    </div>`;
+  }
   V('panel-title').textContent = imp ? '編輯改善措施' : '新增改善措施';
   V('panel-body').innerHTML=`
+    ${hazNote}
     <div class="field"><label>改善措施說明 *</label><textarea id="imp-m" rows="3">${esc(imp?.measure||'')}</textarea></div>
     <div class="field"><label>改善類型</label><select id="imp-type">
       ${['工程控制','行政控制','個人防護具','其他'].map(o=>`<option ${imp?.type===o?'selected':''}>${o}</option>`).join('')}
     </select></div>
     <div class="field"><label>關聯作業危害</label><select id="imp-haz">
       <option value="">（無）</option>
-      ${allHaz.map(h=>`<option value="${h.id}" ${imp?.hazardId===h.id?'selected':''}>${esc(h.taskName)}</option>`).join('')}
+      ${allHaz.map(h=>`<option value="${h.id}" ${h.id===srcHazId?'selected':''}>${esc(h.taskName)}</option>`).join('')}
     </select></div>
     <div class="field"><label>負責人</label><input type="text" id="imp-owner" value="${esc(imp?.owner||'')}"></div>
     <div class="field"><label>目標完成日期</label><input type="date" id="imp-due" value="${esc(imp?.dueDate||'')}"></div>

@@ -223,6 +223,14 @@ main { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
   .q-item { flex-direction: column; align-items: flex-start; }
   .admin-tabs { overflow-x: auto; }
 }
+/* Case flow badges & action buttons */
+.case-badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+.case-badge.has  { background: #fef9c3; color: #854d0e; }
+.case-badge.done { background: #dcfce7; color: #15803d; }
+.case-badge.none { background: #f1f5f9; color: #64748b; }
+.act-btn { padding: 4px 9px; border-radius: 6px; font-size: 11px; font-weight: 700; border: 1.5px solid; cursor: pointer; background: none; white-space: nowrap; font-family: inherit; transition: background .12s; }
+.act-btn-iv  { border-color: #0891b2; color: #0891b2; }
+.act-btn-iv:hover  { background: #e0f2fe; }
 </style>
 </head>
 <body>
@@ -672,8 +680,11 @@ async function post(params) {
 async function loadResp() {
   V('resp-wrap').innerHTML='<div class="notice info">載入中…</div>';
   try {
-    const d = await post({ action:'listResp', token:ADMIN_TOKEN });
-    allResp = d.rows||[]; renderResp();
+    const [rd, id] = await Promise.all([
+      post({ action:'listResp',      token:ADMIN_TOKEN }),
+      post({ action:'listInterview', token:ADMIN_TOKEN }),
+    ]);
+    allResp = rd.rows||[]; allInterview = id.rows||[]; renderResp();
   } catch(e) { V('resp-wrap').innerHTML=`<div class="notice err">載入失敗：${e.message}</div>`; }
 }
 
@@ -689,7 +700,7 @@ function renderResp() {
   if (!rows.length) { V('resp-wrap').innerHTML='<div class="empty"><div class="icon">📋</div><p>目前無符合的問卷回覆</p></div>'; return; }
   V('resp-wrap').innerHTML=`<table class="tbl"><thead><tr>
     <th>員工編號</th><th>姓名</th><th>部門</th><th>填寫日期</th>
-    <th>個人疲勞</th><th>工作疲勞</th><th>過負荷等級</th><th>諮詢建議</th><th>狀態</th>
+    <th>個人疲勞</th><th>工作疲勞</th><th>過負荷等級</th><th>諮詢建議</th><th>面談</th><th>操作</th>
   </tr></thead><tbody>${rows.map(r=>{
     const pLv = personalLevel(Number(r.personalScore)||0);
     const wLv = workLevel(Number(r.workScore)||0);
@@ -697,6 +708,11 @@ function renderResp() {
     const cr = consultRecommend(ovLv.label==='高度'?2:ovLv.label==='中度'?1:0, r.cvRisk||'低');
     const st = r.status||'待審查';
     const stCls = st==='已結案'?'b-done':st==='評估中'?'b-prog':'b-todo';
+    const ivRecs = allInterview.filter(i=>String(i.empId)===String(r.empId));
+    const ivBadge = ivRecs.length
+      ? `<span class="case-badge done">${ivRecs.length}筆</span>`
+      : `<span class="case-badge none">未面談</span>`;
+    const empIdStr = esc(String(r.empId));
     return `<tr onclick="openRespPanel('${r.id}')">
       <td><strong>${esc(r.empId)}</strong></td>
       <td>${esc(r.empName||'—')}</td><td>${esc(r.empDept||'—')}</td>
@@ -705,7 +721,10 @@ function renderResp() {
       <td><span class="badge ${wLv.cls}">${Number(r.workScore)||0}分 ${wLv.label}</span></td>
       <td><span class="badge ${ovLv.cls}">${esc(r.overallLevel||'—')}</span></td>
       <td><span class="badge ${cr.cls}">${cr.label}</span></td>
-      <td><span class="badge ${stCls}">${esc(st)}</span></td>
+      <td>${ivBadge}</td>
+      <td style="white-space:nowrap">
+        <button class="act-btn act-btn-iv" onclick="event.stopPropagation();openIvPanel(null,'${empIdStr}')">🩺 新增面談</button>
+      </td>
     </tr>`;
   }).join('')}</tbody></table>`;
 }
@@ -918,13 +937,29 @@ function renderInterview() {
     </tr>`;
   }).join('')}</tbody></table>`;
 }
-function openIvPanel(id) {
-  const r = id ? allInterview.find(x=>x.id===id) : null;
+function openIvPanel(id, prefillEmpId = null) {
+  const r  = id ? allInterview.find(x=>x.id===id) : null;
+  const qr = prefillEmpId ? allResp.find(x=>String(x.empId)===String(prefillEmpId)) : null;
+  const empId   = r?.empId   || qr?.empId   || prefillEmpId || '';
+  const empName = r?.empName || qr?.empName || '';
+  const empDept = r?.empDept || qr?.empDept || '';
+  let qNote = '';
+  if (qr) {
+    const pLv = personalLevel(Number(qr.personalScore)||0);
+    const wLv = workLevel(Number(qr.workScore)||0);
+    const ovLv = qr.overallLevel==='高度'?{cls:'b-high',label:'高度'}:qr.overallLevel==='中度'?{cls:'b-mid',label:'中度'}:{cls:'b-low',label:'低度'};
+    const cr  = consultRecommend(ovLv.label==='高度'?2:ovLv.label==='中度'?1:0, qr.cvRisk||'低');
+    qNote = `<div class="notice ${cr.cls==='b-high'?'err':cr.cls==='b-mid'?'info':'ok'}" style="margin-bottom:14px">
+      📋 疲勞問卷結果（${esc(qr.submitDate||'')}）：<strong>${cr.label}</strong><br>
+      <span style="font-size:12px;opacity:.85">個人疲勞 ${Number(qr.personalScore)||0}分（${pLv.label}）・工作疲勞 ${Number(qr.workScore)||0}分（${wLv.label}）・過負荷等級：${esc(qr.overallLevel||'—')}</span>
+    </div>`;
+  }
   V('panel-title').textContent = r ? '編輯面談紀錄' : '新增面談紀錄';
   V('panel-body').innerHTML=`
-    <div class="field"><label>員工編號 *</label><input type="text" id="iv-emp" value="${esc(r?.empId||'')}"></div>
-    <div class="field"><label>姓名</label><input type="text" id="iv-name" value="${esc(r?.empName||'')}"></div>
-    <div class="field"><label>部門</label><input type="text" id="iv-dept" value="${esc(r?.empDept||'')}"></div>
+    ${qNote}
+    <div class="field"><label>員工編號 *</label><input type="text" id="iv-emp" value="${esc(empId)}"></div>
+    <div class="field"><label>姓名</label><input type="text" id="iv-name" value="${esc(empName)}"></div>
+    <div class="field"><label>部門</label><input type="text" id="iv-dept" value="${esc(empDept)}"></div>
     <div class="field"><label>面談日期</label><input type="date" id="iv-date" value="${esc(r?.interviewDate||'')}"></div>
     <div class="field"><label>護理師姓名</label><input type="text" id="iv-nurse" value="${esc(r?.nurse||'')}"></div>
     <div class="field"><label>醫師姓名</label><input type="text" id="iv-doctor" value="${esc(r?.doctor||'')}"></div>
