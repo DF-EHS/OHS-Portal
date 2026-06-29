@@ -244,7 +244,14 @@ main { max-width: 980px; margin: 0 auto; padding: 28px 20px 60px; }
     </div>
     <div class="form-section-title">目前症狀（可複選）</div>
     <div class="check-group" id="e-symptoms-group">
-      ${['噁心/嘔吐','疲倦/頭暈','腰背痠痛','下肢水腫','睡眠困難','情緒波動','腹部不適','無明顯症狀'].map(s=>`<label class="check-tag"><input type="checkbox" value="${s}" onchange="toggleCheckTag(this)"> ${s}</label>`).join('')}
+      <label class="check-tag"><input type="checkbox" value="噁心/嘔吐" onchange="toggleCheckTag(this)"> 噁心/嘔吐</label>
+      <label class="check-tag"><input type="checkbox" value="疲倦/頭暈" onchange="toggleCheckTag(this)"> 疲倦/頭暈</label>
+      <label class="check-tag"><input type="checkbox" value="腰背痠痛" onchange="toggleCheckTag(this)"> 腰背痠痛</label>
+      <label class="check-tag"><input type="checkbox" value="下肢水腫" onchange="toggleCheckTag(this)"> 下肢水腫</label>
+      <label class="check-tag"><input type="checkbox" value="睡眠困難" onchange="toggleCheckTag(this)"> 睡眠困難</label>
+      <label class="check-tag"><input type="checkbox" value="情緒波動" onchange="toggleCheckTag(this)"> 情緒波動</label>
+      <label class="check-tag"><input type="checkbox" value="腹部不適" onchange="toggleCheckTag(this)"> 腹部不適</label>
+      <label class="check-tag"><input type="checkbox" value="無明顯症狀" onchange="toggleCheckTag(this)"> 無明顯症狀</label>
     </div>
     <div class="form-section-title">工作環境疑慮</div>
     <div class="field"><label>是否接觸化學品？</label>
