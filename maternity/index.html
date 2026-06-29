@@ -410,6 +410,28 @@ const RISK_LABELS = {
 const ENV_LABELS = ['第一級（<1/10 容許標準）','第二級（1/10–1/2 容許標準）','第三級（≥1/2 容許標準）'];
 const HEALTH_LABELS = ['第一級（無明顯影響）','第二級（可能受影響）','第三級（有危害）'];
 
+// 附錄二 母性健康保護危害風險分級參考表 — 依危害項目對應建議環境等級
+const HAZ_LEVEL_MAP = {
+  // 物理性 第三級
+  '噪音（≥85dB）':3, '異常氣壓':3,
+  // 物理性 第二級
+  '全身振動':2, '局部振動':2, '高溫環境':2, '低溫環境':2, '電磁輻射':2,
+  // 化學性 第三級（列於特定有害物清單或生殖毒性第一級）
+  '二硫化碳':3, '三氯乙烯':3, '環氧乙烷':3, '鉛及其化合物':3, '汞及其化合物':3, '抗細胞分裂藥物':3,
+  // 化學性 第二級
+  '鎘及其化合物':2, '其他生殖毒性物質':2,
+  // 生物性 第二級（接觸即有危害風險）
+  '弓形蟲（貓科排泄物）':2, '德國麻疹病毒':2, 'B型肝炎病毒':2, '水痘帶狀疱疹病毒':2, 'C型肝炎病毒':2, 'HIV':2, '肺結核桿菌':2,
+  // 人因性 第三級（搬運重物超過規定值）
+  '搬運重物（>5kg 初期 / >3kg 中晚期）':3,
+  // 人因性 第二級
+  '重複性動作':2, '機台高度不良（需彎腰/踮腳）':2, '長時間站立（>4小時/日）':2,
+  // 工作型態 第三級（職安法第30條明定禁止）
+  '夜間工作':3,
+  // 工作型態 第二級
+  '輪班工作':2, '國際出差或旅遊':2, '長時間加班（>9小時/日）':2, '獨自作業':2, '異常工作負荷':2,
+};
+
 // ─────────────── State ────────────────
 let isAdmin = false;
 let allPersonnel = [], allSelfAssess = [], allHazard = [], allInterview = [];
@@ -672,16 +694,17 @@ function openHazardPanel(id, prefillEmpId = null) {
         <div class="haz-section-hdr">${c.icon} ${c.label}</div>
         <div class="haz-section-body">${c.items.map(item=>`
           <label class="check-tag ${selHaz[c.key].includes(item)?'checked':''}">
-            <input type="checkbox" id="hc-${c.key}-${item}" value="${item}" ${selHaz[c.key].includes(item)?'checked':''} onchange="toggleCheckTag(this)"> ${item}
+            <input type="checkbox" id="hc-${c.key}-${item}" value="${item}" ${selHaz[c.key].includes(item)?'checked':''} onchange="toggleCheckTag(this);updateSuggestedEnvLevel()"> ${item}
           </label>`).join('')}
         </div>
       </div>`).join('')}
 
     <div class="form-section-title">健康風險評估（FM-024-03）</div>
-    <div class="field"><label>環境危害等級</label>
+    <div class="field"><label>環境危害等級 <small style="font-weight:400;color:var(--sub)">依勾選項目自動建議，可手動調整</small></label>
       <select id="h-env" onchange="updateRiskPreview()">
         ${ENV_LABELS.map((l,i)=>`<option value="${i+1}" ${envLv===(i+1)?'selected':''}>${l}</option>`).join('')}
       </select>
+      <div id="h-env-note" style="font-size:12px;color:var(--sub);margin-top:4px;${r?'':'display:none'}"></div>
     </div>
     <div class="field"><label>員工健康等級</label>
       <select id="h-health" onchange="updateRiskPreview()">
@@ -693,7 +716,7 @@ function openHazardPanel(id, prefillEmpId = null) {
     <div class="field"><label>評估人員</label><input type="text" id="h-assessor" value="${esc(r?.assessor||'')}"></div>
     <div class="field"><label>備註</label><textarea id="h-note" rows="2">${esc(r?.note||'')}</textarea></div>
     <div id="h-err" class="notice err" style="display:none"></div>`;
-  updateRiskPreview();
+  if (r) updateSuggestedEnvLevel(); else updateRiskPreview();
   V('panel-foot').innerHTML=`
     <button class="btn-primary" onclick="saveHazard('${id||''}')">儲存</button>
     <button class="btn-secondary" onclick="aiHazardAdvice('${id||''}')">✨ AI 建議</button>
@@ -705,6 +728,35 @@ function openHazardPanel(id, prefillEmpId = null) {
 function openInterviewFromHazard() {
   const empId = V('h-emp')?.value || '';
   openInterviewPanel(null, empId);
+}
+function updateSuggestedEnvLevel() {
+  let maxLv = 1;
+  const t3 = [], t2 = [];
+  HAZ_CATEGORIES.forEach(c => {
+    document.querySelectorAll(`[id^="hc-${c.key}-"]:checked`).forEach(el => {
+      const lv = HAZ_LEVEL_MAP[el.value] || 1;
+      if (lv === 3) t3.push(el.value);
+      else if (lv === 2) t2.push(el.value);
+      if (lv > maxLv) maxLv = lv;
+    });
+  });
+  const sel = V('h-env');
+  if (!sel) return;
+  sel.value = String(maxLv);
+  const note = V('h-env-note');
+  if (note) {
+    const all = [...t3, ...t2];
+    if (all.length) {
+      const lbl = maxLv === 3 ? '第三級' : maxLv === 2 ? '第二級' : '第一級';
+      const sample = t3[0] || t2[0];
+      note.textContent = `依附錄二自動建議 ${lbl}（${sample}${all.length > 1 ? `等 ${all.length} 項` : ''}危害）`;
+      note.style.display = '';
+    } else {
+      note.textContent = '無勾選危害，預設第一級';
+      note.style.display = '';
+    }
+  }
+  updateRiskPreview();
 }
 function updateRiskPreview() {
   const e = parseInt(V('h-env')?.value)||1;
@@ -734,9 +786,11 @@ async function aiHazardAdvice(id) {
 風險分級：${rl.label}
 請依法規（職安法第30、31條）說明應採取的保護措施。`;
   try {
-    const res=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:prompt})});
+    const res=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:prompt})});
+    if(!res.ok){const err=await res.json().catch(()=>({}));throw new Error(err?.error?.message||err?.message||'API 錯誤 '+res.status);}
     const d=await res.json();
-    V('h-measures').value=(d.reply||d.response||d.message||'（AI 無回應）');
+    const txt=d?.data||d?.choices?.[0]?.message?.content||d?.text||d?.reply||'';
+    V('h-measures').value=txt||'（AI 無回應，請稍後再試）';
   }catch(e){V('h-measures').value='AI 建議失敗：'+e.message;}
   if(btn){btn.textContent='✨ AI 建議';btn.disabled=false;}
 }
