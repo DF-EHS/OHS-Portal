@@ -371,6 +371,28 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
       <p>1️⃣ 填寫承攬商基本資料<br>2️⃣ 閱讀危害告知書並確認<br>3️⃣ 勾選適用作業類型並切結<br>4️⃣ 填寫作業許可申請書<br>5️⃣ 電子簽名後送出留底</p>
     </div>
   </div>
+
+  <div style="margin-top:20px">
+    <div style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">作業許可證（空白表單下載）</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <div class="info-card" style="display:flex;align-items:center;gap:14px;cursor:pointer" onclick="downloadHotWorkPermit()">
+        <div style="font-size:36px;flex-shrink:0">🔥</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px">動火作業許可證</div>
+          <div style="font-size:11px;color:var(--sub);line-height:1.6">FM-D3-EM-001-01C｜動火前 14 項檢查 + 收工後 3 項確認</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();downloadHotWorkPermit()" style="flex-shrink:0">📄 下載 PDF</button>
+      </div>
+      <div class="info-card" style="display:flex;align-items:center;gap:14px;cursor:pointer" onclick="downloadSpecialPermit()">
+        <div style="font-size:36px;flex-shrink:0">⚠️</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px">特殊危害作業許可證</div>
+          <div style="font-size:11px;color:var(--sub);line-height:1.6">FM-D3-EM-001-02C｜局限空間／吊掛／高架／危險管路／送電</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();downloadSpecialPermit()" style="flex-shrink:0">📄 下載 PDF</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ════ View: Wizard ════ -->
@@ -3242,6 +3264,304 @@ th{background:#d1d5db;font-weight:700;text-align:center;white-space:nowrap}
 </div>`;
 
   return `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><base href="${baseHref}"><title>承攬商進場文件 — ${X(b.company)}</title><style>${css}</style></head><body>${d1}${d2}${d3}</body></html>`;
+}
+
+// ════════════════════════════════════════════════
+//  動火作業許可證（空白表單）FM-D3-EM-001-01C
+// ════════════════════════════════════════════════
+function downloadHotWorkPermit(){
+  const baseHref = new URL('../', location.href).href;
+  const css = `
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:10.5pt;color:#000;background:#fff;}
+.page{width:210mm;min-height:297mm;padding:12mm 14mm;margin:0 auto;page-break-after:always;}
+.page:last-child{page-break-after:auto;}
+.co-hdr{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.co-hdr img{height:36px;object-fit:contain;}
+.co-name{font-size:13pt;font-weight:700;}
+.co-sub{font-size:8.5pt;color:#444;}
+.doc-title{font-size:15pt;font-weight:700;text-align:center;margin:6px 0 2px;letter-spacing:.05em;}
+.doc-no{font-size:8.5pt;text-align:center;color:#555;margin-bottom:8px;}
+table{width:100%;border-collapse:collapse;}
+td,th{border:1px solid #333;padding:3px 5px;font-size:9.5pt;vertical-align:middle;}
+th{background:#dce3ed;font-weight:700;text-align:center;}
+.hd-tbl td{border:1px solid #333;padding:3px 6px;}
+.lbl{font-weight:700;white-space:nowrap;background:#f0f0f0;width:22%;font-size:9pt;}
+.val{width:28%;min-height:18px;}
+.section-hdr{background:#2c4a6e;color:#fff;font-weight:700;font-size:9.5pt;padding:4px 8px;text-align:center;}
+.check-hdr{background:#c8d6e5;font-weight:700;text-align:center;font-size:9pt;}
+.chk-no{text-align:center;width:24px;font-weight:700;}
+.chk-col{text-align:center;width:52px;}
+.note-box{border:1px solid #999;padding:6px 8px;font-size:8.5pt;line-height:1.8;margin-top:6px;}
+.footer{font-size:8pt;color:#666;text-align:right;margin-top:4px;}
+.sign-row td{height:28px;}
+.sub-hdr{background:#e8eef5;font-weight:700;font-size:9pt;text-align:center;padding:3px;}
+@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{page-break-after:always}.page:last-child{page-break-after:auto}}
+`;
+
+  const pg = `<div class="page">
+<div class="co-hdr">
+  <img src="${baseHref}dafon-logo.png" alt="大豐環保科技">
+  <div><div class="co-name">大豐環保科技股份有限公司</div><div class="co-sub">Dafon Environmental Technology Co., Ltd.</div></div>
+</div>
+<div class="doc-title">動 火 作 業 許 可 證</div>
+<div class="doc-no">FM-D3-EM-001-01C</div>
+
+<table class="hd-tbl" style="margin-bottom:6px">
+  <tr>
+    <td class="lbl">進行動火作業人員</td><td class="val" colspan="3">□ 本公司&nbsp;&nbsp;□ 承攬商</td>
+    <td class="lbl">申請日期</td><td class="val">　　年　　月　　日</td>
+  </tr>
+  <tr>
+    <td class="lbl">承攬商名稱</td><td class="val" colspan="3"></td>
+    <td class="lbl">申請時段</td><td class="val">□ 日班&nbsp;&nbsp;□ 假日</td>
+  </tr>
+  <tr>
+    <td class="lbl">承攬工程名稱</td><td class="val" colspan="3"></td>
+    <td class="lbl">動火設備</td><td class="val"></td>
+  </tr>
+  <tr>
+    <td class="lbl">地點／建物／樓層</td><td class="val" colspan="3"></td>
+    <td class="lbl">承攬商監工</td><td class="val"></td>
+  </tr>
+  <tr>
+    <td class="lbl">作業期間</td>
+    <td colspan="3">　　月　　日　　時 ～　　時（動火作業一日為限，逾期重新申請）</td>
+    <td class="lbl">連絡電話</td><td class="val"></td>
+  </tr>
+</table>
+
+<table style="margin-bottom:6px">
+  <tr>
+    <th style="width:15%">會簽</th>
+    <th style="width:28%">部門主管</th>
+    <th style="width:33%">施工單位職安衛業務主管<br><span style="font-size:8pt;font-weight:400">（作業危害風險告知及防範說明）</span></th>
+    <th style="width:24%">應會簽部門</th>
+  </tr>
+  <tr style="height:32px">
+    <td style="text-align:center;font-weight:700">施工單位</td>
+    <td></td><td></td><td></td>
+  </tr>
+  <tr style="height:32px">
+    <td style="text-align:center;font-weight:700">監工</td>
+    <td></td>
+    <td style="text-align:center">監工人員</td>
+    <td></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="4" style="background:#2c4a6e;color:#fff;font-weight:700;font-size:9.5pt;padding:4px 8px">
+      動火檢查表&emsp;<span style="font-weight:400;font-size:8.5pt">承攬商及本公司監工須於動火及收工前進行下列重點檢查</span>&emsp;
+      <span style="font-weight:400;font-size:8.5pt">ˇ代表OK&nbsp;×代表未完成&nbsp;△代表不適用</span>
+    </td>
+  </tr>
+  <tr>
+    <th class="chk-no">#</th>
+    <th>檢查重點</th>
+    <th class="chk-col">1.承攬商</th>
+    <th class="chk-col">2.監工</th>
+  </tr>
+  <tr><td colspan="4" class="sub-hdr">動火前巡檢</td></tr>
+  <tr><td class="chk-no">1</td><td>3公尺內備有可使用/正常操作之自動灑水或手提滅火器</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">2</td><td>防爆區或侷限空間內作業由工安單位測定可燃性氣體濃度</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">3</td><td>動火時旁邊有警戒人員</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">4</td><td>排除管線內可燃性物質</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">5</td><td>隔離或中斷該區域之火警偵測器</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">6</td><td>清除工作區域週邊 11 公尺內的可燃物或使用防火毯覆蓋保護</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">7</td><td>工作區域易燃性地面予以防火保護</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">8</td><td>工作區域週邊的地面及牆面不得有開口或使用防火毯覆蓋保護</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">9</td><td>動火作業人員的安全眼鏡、面罩、手套等防護具</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">10</td><td>施工產生之火花予以收集，工作區域內用防火布加以保護</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">11</td><td>建築結構為不易燃性材料建造，或為不易燃性材料覆蓋保護</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">12</td><td>須移走牆背面的易燃物質（如另一面有易燃物質，須移除之）</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">13</td><td>電焊機接頭及接地良好，並有自動電擊防止裝置</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">14</td><td>鋼瓶直立或使用鋼瓶推車固定並有安全逆止閥</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr>
+    <td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:center">動火前檢查後簽名</td>
+    <td class="chk-col" style="height:28px"></td>
+    <td class="chk-col"></td>
+  </tr>
+  <tr><td colspan="4" class="sub-hdr">收工後巡檢</td></tr>
+  <tr><td class="chk-no">1</td><td>每日收工前將火警系統中斷復歸，並檢點施工環境安全</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">2</td><td>環境整理復歸，材料器材工具收拾整齊</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">3</td><td>施工完畢後 30 分鐘動火場所覆查，沒有餘燼或悶燒情形</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr>
+    <td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:center">收工後檢查現場環境復歸後簽名</td>
+    <td class="chk-col" style="height:28px"></td>
+    <td class="chk-col"></td>
+  </tr>
+</table>
+
+<div class="note-box">
+  <strong>說明：</strong><br>
+  1. 表單簽核後由監工貼於施工區域，承攬商及監工應進行作業前中後安全檢點並簽名，工安單位巡檢時進行檢查並簽名。作業結束由監工收回並交工安單位存檔。<br>
+  2. 動火作業一日為限逾期重新申請，若當日因故未進行動火作業，請在表單空白處註明以玆鑑別查核。
+</div>
+<div class="footer">FM-D3-EM-001-01C ／ 大豐環保科技股份有限公司</div>
+</div>`;
+
+  const win = window.open('','_blank');
+  if(!win){ toast('請允許瀏覽器開啟彈出視窗','bad'); return; }
+  win.document.write(`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><base href="${baseHref}"><title>動火作業許可證 FM-D3-EM-001-01C</title><style>${css}</style></head><body>${pg}</body></html>`);
+  win.document.close();
+  win.focus();
+  setTimeout(()=>win.print(), 600);
+}
+
+// ════════════════════════════════════════════════
+//  特殊危害作業許可證（空白表單）FM-D3-EM-001-02C
+// ════════════════════════════════════════════════
+function downloadSpecialPermit(){
+  const baseHref = new URL('../', location.href).href;
+  const css = `
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;font-size:10.5pt;color:#000;background:#fff;}
+.page{width:210mm;min-height:297mm;padding:12mm 14mm;margin:0 auto;page-break-after:always;}
+.page:last-child{page-break-after:auto;}
+.co-hdr{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.co-hdr img{height:36px;object-fit:contain;}
+.co-name{font-size:13pt;font-weight:700;}
+.co-sub{font-size:8.5pt;color:#444;}
+.doc-title{font-size:15pt;font-weight:700;text-align:center;margin:6px 0 2px;letter-spacing:.05em;}
+.doc-no{font-size:8.5pt;text-align:center;color:#555;margin-bottom:8px;}
+table{width:100%;border-collapse:collapse;}
+td,th{border:1px solid #333;padding:3px 5px;font-size:9.5pt;vertical-align:middle;}
+th{background:#dce3ed;font-weight:700;text-align:center;}
+.hd-tbl td{border:1px solid #333;padding:3px 6px;}
+.lbl{font-weight:700;white-space:nowrap;background:#f0f0f0;width:22%;font-size:9pt;}
+.val{width:28%;min-height:18px;}
+.chk-no{text-align:center;width:24px;font-weight:700;}
+.chk-col{text-align:center;width:52px;}
+.sub-hdr{background:#2c4a6e;color:#fff;font-weight:700;font-size:9pt;text-align:center;padding:4px 6px;}
+.note-box{border:1px solid #999;padding:6px 8px;font-size:8.5pt;line-height:1.8;margin-top:6px;}
+.footer{font-size:8pt;color:#666;text-align:right;margin-top:4px;}
+@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{page-break-after:always}.page:last-child{page-break-after:auto}}
+`;
+
+  const pg = `<div class="page">
+<div class="co-hdr">
+  <img src="${baseHref}dafon-logo.png" alt="大豐環保科技">
+  <div><div class="co-name">大豐環保科技股份有限公司</div><div class="co-sub">Dafon Environmental Technology Co., Ltd.</div></div>
+</div>
+<div class="doc-title">特 殊 危 害 作 業 許 可 證</div>
+<div class="doc-no">FM-D3-EM-001-02C</div>
+
+<table class="hd-tbl" style="margin-bottom:6px">
+  <tr>
+    <td class="lbl">進行特殊危害作業人員</td><td colspan="3">□ 本公司&nbsp;&nbsp;□ 承攬商</td>
+    <td class="lbl">申請日期</td><td>　　年　　月　　日</td>
+  </tr>
+  <tr>
+    <td class="lbl">承攬商名稱</td><td colspan="3"></td>
+    <td class="lbl">申請時段</td><td>□ 日班&nbsp;&nbsp;□ 假日</td>
+  </tr>
+  <tr>
+    <td class="lbl">承攬工程名稱</td><td colspan="3"></td>
+    <td class="lbl">使用設備</td><td></td>
+  </tr>
+  <tr>
+    <td class="lbl">作業類別</td>
+    <td colspan="5" style="font-size:9pt">
+      □ 局限空間作業&ensp;□ 吊掛作業&ensp;□ 高架作業&ensp;□ 危險管路拆卸鑽孔作業&ensp;□ 送電作業
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl">地點／建物／樓層</td><td colspan="3"></td>
+    <td class="lbl">承攬商監工</td><td></td>
+  </tr>
+  <tr>
+    <td class="lbl">作業期間</td>
+    <td colspan="2">　　月　　日　　時 ～　　時（特殊危險作業一日為限，逾期重新申請）</td>
+    <td class="lbl">施工人數</td><td></td>
+    <td class="lbl" style="width:auto">連絡電話</td>
+  </tr>
+</table>
+
+<table style="margin-bottom:6px">
+  <tr>
+    <th style="width:15%">會簽</th>
+    <th style="width:28%">部門主管</th>
+    <th style="width:33%">施工單位職安衛業務主管<br><span style="font-size:8pt;font-weight:400">（作業危害風險告知及防範說明）</span></th>
+    <th style="width:24%">應會簽部門</th>
+  </tr>
+  <tr style="height:32px">
+    <td style="text-align:center;font-weight:700">施工單位</td>
+    <td></td><td></td><td></td>
+  </tr>
+  <tr style="height:32px">
+    <td style="text-align:center;font-weight:700">監工</td>
+    <td></td>
+    <td style="text-align:center">監工人員</td>
+    <td></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="4" style="background:#2c4a6e;color:#fff;font-weight:700;font-size:9.5pt;padding:4px 8px">
+      特殊危險作業檢查表&emsp;<span style="font-weight:400;font-size:8.5pt">承攬商及本公司監工須於特殊危害作業施工前及收工前進行下列重點檢查</span>&emsp;
+      <span style="font-weight:400;font-size:8.5pt">ˇ代表OK&nbsp;×代表未完成&nbsp;△代表不適用</span>
+    </td>
+  </tr>
+  <tr>
+    <th class="chk-no">#</th>
+    <th>檢查重點</th>
+    <th class="chk-col">1.承攬商</th>
+    <th class="chk-col">2.監工</th>
+  </tr>
+  <tr><td colspan="4" class="sub-hdr">一、局限空間作業</td></tr>
+  <tr><td class="chk-no">1</td><td>指派一人以上之安全警戒人員，隨時監視、聯絡作業？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">2</td><td>工安單位測定作業場所空氣中氧氣濃度在 19% 以上？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">3</td><td>工安單位測定危害物濃度達法定容許濃度以下？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">4</td><td>備有空氣呼吸氣器、安全帶（索）等防護器具使勞工確實戴用？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">5</td><td>告知作業之勞工施予必要安全注意事項及訓練？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">6</td><td>送風機進行充份通風換氣？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td colspan="4" class="sub-hdr">二、吊掛作業</td></tr>
+  <tr><td class="chk-no">1</td><td>起重機操作及吊掛人員是否有訓練合格證書？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">2</td><td>起重機/吊籠是否有在有效期限內的檢查合格證，且機具與證照相符？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">3</td><td>鍊條是否有龜裂或腐蝕情形？吊勾是否有防滑舌片？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">4</td><td>吊籠操作人員配戴安全帶？安全帶獨立拉掛固定，不得掛在吊籠之吊索上？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">5</td><td>吊掛作業前後左右是否有警告禁止進入標示？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">6</td><td>吊車支撐桿是否平衡固定？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td colspan="4" class="sub-hdr">三、高架作業</td></tr>
+  <tr><td class="chk-no">1</td><td>指定安全警戒人員，隨時監視、指揮作業？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">2</td><td>固定安全梯，不可用身體搖晃來移動工作梯？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">3</td><td>搭架作業之鷹架腳應固定於地面，並有交叉連桿、30cm 以上安全踏板？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">4</td><td>工作場所邊緣及開孔設立堅固之護欄或護蓋或安全帶索或安全網避免墜落？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td colspan="4" class="sub-hdr">四、危險管路拆卸、鑽孔作業</td></tr>
+  <tr><td class="chk-no">1</td><td>應確認管路內的內容物之化性及物性？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">2</td><td>施工前，確認管路內是否有原殘留物質並告知作適當之防護及處理？</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr><td class="chk-no">3</td><td>執行相關閥件之操作並確認相關閥件為關閉狀態後掛牌標示。</td><td class="chk-col"></td><td class="chk-col"></td></tr>
+  <tr>
+    <td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:center">施工前檢查後簽名</td>
+    <td class="chk-col" style="height:28px"></td>
+    <td class="chk-col"></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="font-weight:700;background:#f5f5f5;text-align:center">收工後檢查現場環境復歸後簽名</td>
+    <td class="chk-col" style="height:28px"></td>
+    <td class="chk-col"></td>
+  </tr>
+</table>
+
+<div class="note-box">
+  <strong>說明：</strong><br>
+  1. 表單由監工貼於施工區域，承攬商及監工應進行作業前中後安全檢點並簽名，工安單位巡檢時進行檢查並簽名。作業結束由監工收回並交由工安單位存檔。<br>
+  2. 特殊危害作業以一日為限，逾期重新申請，若當日因故未進行特殊危害作業，請在備註欄上說明以玆鑑別查核。
+</div>
+<div class="footer">FM-D3-EM-001-02C ／ 大豐環保科技股份有限公司</div>
+</div>`;
+
+  const win = window.open('','_blank');
+  if(!win){ toast('請允許瀏覽器開啟彈出視窗','bad'); return; }
+  win.document.write(`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><base href="${baseHref}"><title>特殊危害作業許可證 FM-D3-EM-001-02C</title><style>${css}</style></head><body>${pg}</body></html>`);
+  win.document.close();
+  win.focus();
+  setTimeout(()=>win.print(), 600);
 }
 </script>
 
