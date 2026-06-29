@@ -554,6 +554,56 @@ var CASES = [
     s6: '清掃不是只把地面掃乾淨，還包含工具歸位。工具有定位，現場才不會因為「清掃後的工具」又形成新的危害。',
     s6tags: ['整頓', '清掃'],
     photoFit: 'contain'
+  },
+  {
+    num: '013', title: '高處開口未設防護',
+    photo: 'photos_only/013.jpg', date: '2026.6.25',
+    sit: '高處平台邊緣開口未設置護欄或防護網，現場僅以梯子架設供人員攀爬，開口邊緣無任何阻隔措施。',
+    risk: '人員於高處作業時若失足或重心不穩，可能從開口處墜落，造成嚴重傷亡。',
+    riskTags: ['防護失效'],
+    impr: '高處開口應立即加設護欄、安全網或蓋板，並標示禁止通行。非必要時梯子應移除或固定，禁止未做防護即進行高處作業。',
+    s6: '高處防護設施應視為現場固定設備，定位設置、定期檢查，不可因作業方便而擅自移除。',
+    s6tags: ['安全']
+  },
+  {
+    num: '014', title: '人車動線重疊',
+    photo: 'photos_only/014.jpg', date: '2026.6.25',
+    sit: '廠區內機車與大型機具（怪手）行進動線重疊，人員騎乘機車穿越機具作業區域，未能有效人車分離。',
+    risk: '大型機具視野死角多、轉向範圍廣，與小型車輛或行人動線交叉極易發生碰撞事故，後果嚴重。',
+    riskTags: ['碰撞', '動線受阻'],
+    impr: '應依作業區域劃設人行與車行動線，並以地面標線、隔離桿或警示標誌明確區隔。機具作業時應禁止無關人員或車輛進入作業範圍。',
+    s6: '動線管理是整頓的核心。人車動線應依作業習慣規劃，讓現場人員可以預測設備移動方向，避免視線死角造成的事故。',
+    s6tags: ['整頓', '安全']
+  },
+  {
+    num: '015', title: '手推車未定位管理',
+    photo: 'photos_only/015.jpg', date: '2026.6.25',
+    sit: '多台手推車分散停放於回收分類區旁，未歸定位集中管理，車輛橫置或斜放於通道旁。',
+    risk: '手推車佔用通道空間，影響人員行走及搬運作業，也可能在機具通過時造成絆倒或碰撞事故。',
+    riskTags: ['絆倒', '動線受阻'],
+    impr: '設置手推車固定停放區並標示地面，使用後應立即歸位。作業結束後主管應確認所有手推車已歸定位。',
+    s6: '搬運工具也需要定位管理。整頓時應為每類工具設定放置區，避免工具本身成為現場的危害源。',
+    s6tags: ['整頓']
+  },
+  {
+    num: '016', title: '回收物料未依區域放置',
+    photo: 'photos_only/016.jpg', date: '2026.6.25',
+    sit: '回收物料及垃圾袋散落於分類回收區地面，未依規定投入對應收置桶，通道同時受到手推車佔用。',
+    risk: '散落物料佔用通道，增加絆倒與滑倒風險；未分類物料也會影響後續處理效率及環境衛生。',
+    riskTags: ['絆倒'],
+    impr: '作業人員應依標示將物料投入對應分類回收桶，禁止隨意棄置於通道或地面。定期巡視並維持分類區整潔。',
+    s6: '整理的重點是「該放哪裡就放哪裡」，整頓的重點是「放回原位，清楚可辨」。散落的回收物是整理與整頓雙重缺失的結果。',
+    s6tags: ['整理', '整頓', '清掃']
+  },
+  {
+    num: '017', title: '管線置放地面阻礙通行',
+    photo: 'photos_only/017.jpg', date: '2026.6.25',
+    sit: '水管或氣管盤繞置放於廠區出入口地面，橫跨人員進出通道，未加懸掛或收納。',
+    risk: '管線橫跨通道易造成絆倒；搬運車輛輾壓可能損壞管線，若為氣管或水管更可能造成漏氣或漏水危害。',
+    riskTags: ['絆倒'],
+    impr: '管線使用後應捲收並懸掛固定，禁止橫跨通道盤放。若需臨時使用，應以護線槽覆蓋並貼警示，或選擇不影響通行的走線路徑。',
+    s6: '管線是容易被忽略的隱患。整頓時應確認管線有固定的收納方式，清掃時也要確認地面不被管線阻隔。',
+    s6tags: ['整頓', '清掃']
   }
 ];
 
@@ -616,10 +666,11 @@ function buildSlides() {
       '<tbody>' + rows + '</tbody></table>';
   }
   html += '<section><div class="info-open">' +
-    '<div class="open-title">12個現場案例總覽</div>' +
-    '<div class="open-body" style="display:flex;gap:20px;padding:0;">' +
+    '<div class="open-title">17個現場案例總覽</div>' +
+    '<div class="open-body" style="display:flex;gap:16px;padding:0;">' +
     '<div style="flex:1;">' + overviewTable(CASES.slice(0,6)) + '</div>' +
     '<div style="flex:1;">' + overviewTable(CASES.slice(6,12)) + '</div>' +
+    '<div style="flex:1;">' + overviewTable(CASES.slice(12,17)) + '</div>' +
     '</div></div>' + SCENERY + '</section>';
 
   /* 6–17. Cases */
@@ -634,7 +685,7 @@ function buildSlides() {
       '<div class="case-header disc-hdr">' +
       '<span class="cnum">案例 ' + c.num + '</span>' +
       '<span class="ctitle">' + c.title + '</span>' +
-      '<span class="cright">第 ' + n + '／12 案</span>' +
+      '<span class="cright">第 ' + n + '／17 案</span>' +
       '</div>' +
       '<div class="disc-body">' +
       '<div class="photo-box"' + (c.photoFit ? ' style="display:flex;justify-content:center;align-items:center;"' : '') + '>' +
