@@ -518,7 +518,7 @@ function renderPersonnel() {
     return (!q||txt.includes(q))&&(!stF||stage===stF);
   });
   // Self-assess alerts
-  const newForms = allSelfAssess.filter(s => !allPersonnel.find(p=>p.empId===s.empId));
+  const newForms = allSelfAssess.filter(s => !allPersonnel.find(p=>String(p.empId)===String(s.empId)));
   const alertHtml = newForms.length ? `
     <div class="notice err" style="margin-bottom:12px">
       <strong>⚠️ ${newForms.length} 名員工已填寫自我評估表，尚未建立人員名冊：</strong>
@@ -556,8 +556,8 @@ function renderPersonnel() {
 function openPersonnelPanel(id, saEmpId = null) {
   const r = id ? allPersonnel.find(x=>x.id===id) : null;
   // Check self-assess data for pre-fill
-  const sa = r ? allSelfAssess.find(s=>s.empId===r.empId)
-             : saEmpId ? allSelfAssess.find(s=>s.empId===saEmpId) : null;
+  const sa = r ? allSelfAssess.find(s=>String(s.empId)===String(r.empId))
+             : saEmpId ? allSelfAssess.find(s=>String(s.empId)===String(saEmpId)) : null;
   V('panel-title').textContent = r ? '編輯人員資料' : '新增受保護人員';
   V('panel-body').innerHTML=`
     <div class="field"><label>員工編號 *</label><input type="text" id="per-id" value="${esc(r?.empId||sa?.empId||'')}"></div>
