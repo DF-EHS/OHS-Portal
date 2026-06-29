@@ -93,7 +93,8 @@ main { max-width: 980px; margin: 0 auto; padding: 28px 20px 60px; }
 .b-done { background: #f0fdf4; color: #15803d; }
 
 /* Admin tabs */
-.admin-tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 20px; overflow-x: auto; }
+.admin-tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 20px; overflow-x: auto; scrollbar-width: none; }
+.admin-tabs::-webkit-scrollbar { display: none; }
 .tab-btn { padding: 10px 16px; font-size: 13px; font-weight: 700; font-family: inherit; border: none; background: none; cursor: pointer; color: var(--sub); border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all .15s; white-space: nowrap; }
 .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 .tab-btn:hover:not(.active) { color: var(--text); }
