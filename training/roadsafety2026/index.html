@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>道路交通安全教育訓練 ｜ 大豐環保科技</title>
+<style>
+:root {
+  --bg:    #fef7ed;
+  --p:     #d97706;
+  --pl:    #fed7aa;
+  --sky:   #0284c7;
+  --skyl:  #bae6fd;
+  --grn:   #16a34a;
+  --grnl:  #bbf7d0;
+  --rose:  #e11d48;
+  --rosel: #fecdd3;
+  --text:  #1c1917;
+  --sub:   #44403c;
+  --muted: #a8a29e;
+  --bdr:   #fed7aa;
+  --card:  #ffffff;
+  --sh:    0 6px 32px rgba(217,119,6,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;
+  background:var(--bg);
+  font-family:"Microsoft JhengHei","Noto Sans TC","PingFang TC",sans-serif;
+  color:var(--text)}
+
+/* ── Deck ── */
+#deck{
+  position:relative;width:100vw;height:100vh;
+  background:
+    radial-gradient(ellipse at 15% 60%,rgba(253,211,77,.18) 0%,transparent 55%),
+    radial-gradient(ellipse at 85% 20%,rgba(217,119,6,.10) 0%,transparent 50%),
+    linear-gradient(135deg,#fef7ed 0%,#fffbf2 50%,#fef3c7 100%)
+}
+
+/* ── Slide base ── */
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;
+  transition:opacity .35s ease;
+  overflow:hidden
+}
+.slide.active{opacity:1;pointer-events:auto}
+
+/* ── Progress bar ── */
+#prog{
+  position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--p),#f59e0b);
+  transition:width .3s ease;z-index:200
+}
+
+/* ── Navigation ── */
+#nav{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:16px;
+  background:rgba(255,255,255,.88);backdrop-filter:blur(10px);
+  padding:7px 18px;border-radius:40px;
+  box-shadow:0 2px 20px rgba(217,119,6,.18);
+  border:1px solid rgba(254,215,170,.8);
+  z-index:200
+}
+.nb{
+  width:45px;height:45px;border-radius:50%;
+  background:var(--p);color:#fff;border:none;cursor:pointer;
+  font-size:21px;display:flex;align-items:center;justify-content:center;
+  transition:background .15s,transform .1s
+}
+.nb:hover{background:#b45309;transform:scale(1.06)}
+.nb:disabled{background:var(--pl);cursor:default;transform:none;color:var(--muted)}
+#ctr{font-size:16px;color:var(--sub);font-weight:600;min-width:48px;text-align:center}
+
+/* ════════════════════════════════════
+   COVER
+════════════════════════════════════ */
+.s-cover{
+  background:linear-gradient(148deg,rgba(253,211,77,.70) 0%,rgba(254,243,199,.78) 45%,rgba(255,251,235,.84) 100%);
+  align-items:center;justify-content:center;text-align:center;
+  padding:40px 60px 80px
+}
+.cv-deco{
+  position:absolute;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,255,255,.5) 0%,transparent 70%)
+}
+.cv-badge{
+  background:rgba(255,255,255,.75);border:1px solid var(--pl);
+  border-radius:20px;padding:6px 22px;
+  font-size:18px;color:var(--sub);font-weight:600;letter-spacing:1px;
+  margin-bottom:22px
+}
+.cv-title{
+  font-size:clamp(47px,6.9vw,85px);font-weight:800;color:var(--text);
+  line-height:1.15;margin-bottom:6px
+}
+.cv-title span{color:var(--p)}
+.cv-sub{
+  font-size:clamp(19px,2.5vw,25px);color:var(--sub);
+  margin-bottom:28px;font-weight:500;letter-spacing:.5px
+}
+.cv-chips{
+  display:flex;gap:9px;flex-wrap:wrap;
+  justify-content:center;margin-bottom:32px
+}
+.cv-chip{
+  padding:5px 15px;border-radius:20px;font-size:18px;font-weight:600;
+  background:rgba(255,255,255,.65);border:1px solid rgba(217,119,6,.22);
+  color:var(--sub)
+}
+.cv-law{
+  font-size:16px;color:var(--muted);
+  background:rgba(255,255,255,.55);border:1px solid var(--bdr);
+  padding:8px 22px;border-radius:12px;line-height:1.7
+}
+
+/* ════════════════════════════════════
+   SECTION DIVIDER
+════════════════════════════════════ */
+.s-sec{
+  align-items:center;justify-content:center;text-align:center;
+  padding:60px 80px 90px
+}
+.s-sec .unit-no{
+  font-size:16px;font-weight:700;letter-spacing:4px;
+  text-transform:uppercase;opacity:.65;margin-bottom:14px
+}
+.s-sec .sec-ttl{
+  font-size:clamp(42px,6.2vw,75px);font-weight:800;margin-bottom:8px
+}
+.s-sec .sec-sub{
+  font-size:clamp(19px,2.3vw,25px);opacity:.7;margin-bottom:28px;font-weight:400
+}
+.s-divider{
+  width:56px;height:3px;border-radius:2px;margin:0 auto 28px
+}
+.s-pts{list-style:none;display:flex;flex-direction:column;gap:11px;max-width:540px;text-align:left}
+.s-pts li{display:flex;align-items:flex-start;gap:10px;font-size:20px;line-height:1.65}
+.s-pts li::before{content:'✦';font-size:9px;margin-top:6px;flex-shrink:0;opacity:.8}
+
+/* ════════════════════════════════════
+   IMAGE SLIDE
+════════════════════════════════════ */
+.s-img{
+  background:rgba(254,247,237,.82);
+  align-items:center;justify-content:center;
+  padding:16px 20px 78px
+}
+.img-badge{
+  position:absolute;top:16px;left:22px;
+  font-size:15px;font-weight:700;letter-spacing:1.5px;
+  padding:4px 13px;border-radius:12px;
+  background:rgba(255,255,255,.82);border:1px solid var(--bdr);
+  color:var(--sub)
+}
+.img-wrap{
+  max-width:1267px;width:100%;
+  display:flex;flex-direction:column;align-items:center;gap:14px
+}
+.img-wrap img{
+  width:100%;max-height:calc(100vh - 100px);
+  object-fit:contain;
+  border-radius:16px;
+  box-shadow:var(--sh);
+  background:#fff
+}
+.img-cap{
+  font-size:19px;color:var(--muted);
+  text-align:center;font-weight:500;line-height:1.6
+}
+
+/* ════════════════════════════════════
+   VIDEO SLIDE
+════════════════════════════════════ */
+.s-vid{
+  background:#111827;
+  align-items:center;justify-content:center;
+  padding:20px 40px 90px
+}
+.s-vid .img-badge{
+  background:rgba(30,30,40,.85);border-color:rgba(255,255,255,.15);color:#d1d5db
+}
+.vid-wrap{
+  width:100%;max-width:1100px;
+  aspect-ratio:16/9
+}
+.vid-wrap iframe{
+  width:100%;height:100%;
+  border-radius:14px;border:none;
+  box-shadow:0 8px 48px rgba(0,0,0,.5)
+}
+
+/* ════════════════════════════════════
+   CONTENT SLIDES
+════════════════════════════════════ */
+.s-ctn{
+  align-items:center;justify-content:center;
+  padding:38px 60px 80px;overflow-y:auto
+}
+.ctn-inner{max-width:820px;width:100%}
+.ctn-unit{font-size:15px;font-weight:700;letter-spacing:3px;opacity:.6;margin-bottom:10px;text-transform:uppercase}
+.ctn-ttl{font-size:clamp(30px,3.9vw,49px);font-weight:800;margin-bottom:6px}
+.ctn-sub{font-size:20px;opacity:.68;margin-bottom:22px}
+.ctn-hr{height:2px;background:rgba(0,0,0,.08);margin-bottom:20px;border-radius:1px}
+
+/* Overview grid */
+.ov-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.ov-card{
+  background:rgba(255,255,255,.72);border-radius:14px;
+  padding:16px 18px;
+  box-shadow:0 2px 10px rgba(0,0,0,.07)
+}
+.ov-no{font-size:13px;font-weight:800;letter-spacing:3px;opacity:.45;margin-bottom:6px;color:var(--p)}
+.ov-ttl{font-size:20px;font-weight:800;margin-bottom:5px}
+.ov-sub{font-size:15px;color:var(--sub);opacity:.8;line-height:1.6}
+
+/* Key numbers */
+.kn-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.kn-card{
+  background:rgba(255,255,255,.78);border-radius:14px;
+  padding:20px 16px;text-align:center;
+  box-shadow:0 2px 12px rgba(217,119,6,.10)
+}
+.kn-num{font-size:clamp(42px,6vw,72px);font-weight:800;color:var(--p);line-height:1.1}
+.kn-lbl{font-size:16px;color:var(--sub);margin-top:8px;line-height:1.5}
+.note-box{
+  margin-top:16px;padding:13px 18px;
+  background:rgba(255,255,255,.7);border-radius:10px;
+  font-size:18px;color:var(--sub);
+  border-left:4px solid var(--p);line-height:1.75
+}
+
+/* Case study */
+.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.case-card{
+  background:rgba(255,255,255,.75);border-radius:14px;
+  padding:16px 18px;
+  box-shadow:0 2px 10px rgba(0,0,0,.07)
+}
+.case-label{
+  font-size:13px;font-weight:700;letter-spacing:2px;
+  margin-bottom:10px;padding-bottom:8px;
+  border-bottom:2px solid var(--rosel);color:var(--sub)
+}
+.case-pts{list-style:none;display:flex;flex-direction:column;gap:8px}
+.case-pts li{font-size:17px;line-height:1.6;display:flex;gap:7px}
+.case-pts li::before{content:'▸';flex-shrink:0;font-weight:700;color:var(--rose);margin-top:1px}
+.case-sop{
+  background:rgba(255,255,255,.7);border-radius:10px;
+  padding:12px 16px;margin-top:12px;
+  font-size:16px;line-height:1.75;
+  border-left:4px solid var(--grn);color:var(--sub)
+}
+
+/* ════════════════════════════════════
+   CLOSING SLIDE
+════════════════════════════════════ */
+.s-close{
+  background:linear-gradient(148deg,rgba(134,239,172,.72) 0%,rgba(187,247,208,.80) 45%,rgba(220,252,231,.86) 100%);
+  align-items:center;justify-content:center;text-align:center;
+  padding:40px 60px 80px
+}
+.close-icon{font-size:72px;margin-bottom:18px}
+.close-ttl{font-size:clamp(30px,4.4vw,55px);font-weight:800;margin-bottom:14px}
+.close-body{font-size:clamp(19px,2.2vw,24px);opacity:.72;line-height:2.1;margin-bottom:28px}
+.close-chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:24px}
+.close-chip{
+  padding:6px 18px;border-radius:20px;font-size:18px;font-weight:600;
+  background:rgba(255,255,255,.65);border:1px solid rgba(22,163,74,.25);color:var(--sub)
+}
+.close-foot{font-size:15px;color:var(--muted)}
+
+/* ════════════════════════════════════
+   THEME COLOURS
+════════════════════════════════════ */
+.th-amber{background:linear-gradient(148deg,rgba(252,211,77,.80) 0%,rgba(254,243,199,.84) 100%)}
+.th-amber .s-divider{background:var(--p)}
+.th-amber .s-pts li::before{color:var(--p)}
+.th-amber .ov-no{color:var(--p)}
+
+.th-sky  {background:linear-gradient(148deg,rgba(125,211,252,.80) 0%,rgba(186,230,253,.84) 100%)}
+.th-sky .s-divider{background:var(--sky)}
+.th-sky .s-pts li::before{color:var(--sky)}
+.th-sky .note-box{border-color:var(--sky)}
+.th-sky .kn-num{color:var(--sky)}
+.th-sky .img-badge{border-color:var(--skyl)}
+
+.th-grn  {background:linear-gradient(148deg,rgba(134,239,172,.80) 0%,rgba(187,247,208,.84) 100%)}
+.th-grn .s-divider{background:var(--grn)}
+.th-grn .s-pts li::before{color:var(--grn)}
+.th-grn .img-badge{border-color:var(--grnl)}
+
+.th-rose {background:linear-gradient(148deg,rgba(253,164,175,.80) 0%,rgba(254,205,211,.84) 100%)}
+.th-rose .s-divider{background:var(--rose)}
+.th-rose .s-pts li::before{color:var(--rose)}
+.th-rose .img-badge{border-color:var(--rosel)}
+
+/* ── Unit Quick Nav ── */
+#unit-nav{
+  position:fixed;bottom:20px;left:20px;z-index:200;
+  display:flex;flex-direction:column;align-items:flex-start;gap:8px
+}
+#unit-toggle{
+  display:flex;align-items:center;gap:7px;
+  padding:7px 14px;border-radius:40px;border:1px solid rgba(254,215,170,.8);
+  background:rgba(255,255,255,.88);backdrop-filter:blur(10px);
+  box-shadow:0 2px 20px rgba(217,119,6,.18);
+  color:var(--sub);font-size:13px;font-weight:700;cursor:pointer;
+  font-family:inherit;transition:background .15s,color .15s
+}
+#unit-toggle:hover{background:var(--p);color:#fff;border-color:var(--p)}
+#unit-list{
+  display:flex;flex-direction:column;gap:5px;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(12px);
+  border:1px solid rgba(254,215,170,.8);border-radius:14px;
+  padding:10px 8px;box-shadow:0 4px 24px rgba(217,119,6,.16);
+  opacity:0;pointer-events:none;
+  transform:translateY(8px);
+  transition:opacity .22s ease,transform .22s ease
+}
+#unit-list.open{opacity:1;pointer-events:auto;transform:translateY(0)}
+.ul-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 14px;border-radius:10px;border:none;
+  background:transparent;color:var(--sub);
+  font-size:13px;font-weight:600;cursor:pointer;
+  font-family:inherit;white-space:nowrap;text-align:left;
+  transition:background .12s,color .12s
+}
+.ul-btn:hover{background:var(--pl);color:var(--text)}
+.ul-btn.active{background:var(--p);color:#fff}
+.ul-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ── Password Gate ── */
+#pw-gate{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(148deg,#fcd34d 0%,#fde68a 50%,#fef3c7 100%);
+  display:flex;align-items:center;justify-content:center
+}
+#pw-box{
+  background:rgba(255,255,255,.92);backdrop-filter:blur(14px);
+  border-radius:22px;padding:44px 52px;
+  box-shadow:0 8px 48px rgba(217,119,6,.22);
+  text-align:center;max-width:360px;width:90%
+}
+#pw-icon{font-size:52px;margin-bottom:18px}
+#pw-title{font-size:21px;font-weight:800;color:#1c1917;margin-bottom:6px}
+#pw-sub{font-size:13px;color:#78716c;margin-bottom:26px;line-height:1.6}
+#pw-input{
+  width:100%;padding:11px 16px;border-radius:11px;
+  border:1.5px solid #fcd34d;font-size:15px;
+  font-family:inherit;outline:none;margin-bottom:13px;
+  transition:border-color .15s;text-align:center;letter-spacing:2px
+}
+#pw-input:focus{border-color:var(--p)}
+#pw-btn{
+  width:100%;padding:11px 0;border-radius:11px;
+  background:var(--p);color:#fff;border:none;
+  font-size:15px;font-weight:700;cursor:pointer;
+  font-family:inherit;transition:background .15s
+}
+#pw-btn:hover{background:#b45309}
+#pw-err{font-size:12px;color:var(--rose);margin-top:10px;min-height:18px;font-weight:600}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .s-sec,.s-ctn{padding:28px 22px 80px}
+  .s-img,.s-vid{padding:16px 14px 78px}
+  .s-cover{padding:28px 24px 80px}
+  .ctn-inner{max-width:100%}
+  .case-grid,.kn-grid,.ov-grid{grid-template-columns:1fr}
+  .cv-title{font-size:38px}
+  .vid-wrap{max-width:100%}
+  .s-vid{padding:20px 16px 90px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── Password Gate ── -->
+<div id="pw-gate">
+  <div id="pw-box">
+    <div id="pw-icon">🚗</div>
+    <div id="pw-title">道路交通安全教育訓練</div>
+    <div id="pw-sub">此課程教材受密碼保護<br>請輸入存取密碼以繼續</div>
+    <input type="password" id="pw-input" placeholder="輸入密碼" autocomplete="off">
+    <button id="pw-btn" onclick="checkPw()">確認進入</button>
+    <div id="pw-err"></div>
+  </div>
+</div>
+
+<div id="prog"></div>
+
+<div id="deck">
+
+<!-- ══════════════════════════════════════════
+     SLIDE 1 ─ 封面
+══════════════════════════════════════════ -->
+<div class="slide s-cover active">
+  <div class="cv-deco" style="width:500px;height:500px;top:-140px;right:-120px;opacity:.32"></div>
+  <div class="cv-deco" style="width:360px;height:360px;bottom:-80px;left:-80px;opacity:.25"></div>
+  <div class="cv-deco" style="width:200px;height:200px;top:40%;left:5%;opacity:.18"></div>
+  <div class="cv-badge">大豐環保科技股份有限公司 ｜ 職安教育訓練</div>
+  <div class="cv-title">道路交通安全<br><span>教育訓練</span></div>
+  <div class="cv-sub">認識大型車特性・拒絕分心疲勞・做好出車前安全檢查</div>
+  <div class="cv-chips">
+    <span class="cv-chip">司機員</span>
+    <span class="cv-chip">外站點人員</span>
+    <span class="cv-chip">115年7月25日・8月15日</span>
+  </div>
+  <div class="cv-law">
+    依職業安全衛生法施行細則第 31 條<br>
+    職業駕駛人教育訓練 ─ 道路安全實務
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 2 ─ 課程總覽
+══════════════════════════════════════════ -->
+<div class="slide s-ctn th-amber">
+  <div class="ctn-inner">
+    <div class="ctn-unit">課程總覽</div>
+    <div class="ctn-ttl">道路交通安全</div>
+    <div class="ctn-sub">本節課程共 4 個單元，約 25 分鐘</div>
+    <div class="ctn-hr"></div>
+    <div class="ov-grid">
+      <div class="ov-card">
+        <div class="ov-no">UNIT 01</div>
+        <div class="ov-ttl">大型車特性</div>
+        <div class="ov-sub">內輪差 · 視野死角 · 強力氣流 · 煞車距離</div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-no">UNIT 02</div>
+        <div class="ov-ttl">分心與疲勞駕駛</div>
+        <div class="ov-sub">常見分心行為 · 疲勞警訊 · 出勤時間規定</div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-no">UNIT 03</div>
+        <div class="ov-ttl">行車前安全檢查</div>
+        <div class="ov-sub">5油 · 6燈 · 3水 · 1輪──出車前必做確認</div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-no">UNIT 04</div>
+        <div class="ov-ttl">重大事故案例</div>
+        <div class="ov-sub">視野死角 · 行人路權 · 國道二次事故</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 3 ─ 單元 01 分隔頁
+══════════════════════════════════════════ -->
+<div class="slide s-sec th-amber">
+  <div class="unit-no">單元 01</div>
+  <div class="sec-ttl">大型車特性</div>
+  <div class="sec-sub">了解大型車的危險，才能避開危險</div>
+  <div class="s-divider"></div>
+  <ul class="s-pts">
+    <li>大型車的物理特性與一般轎車截然不同，危險往往在無感知中發生</li>
+    <li>內輪差造成的轉彎盲區，是最常見的碰撞原因</li>
+    <li>視野死角廣、氣流影響大、煞車距離長──需要更大的安全間距</li>
+    <li>先看影片，建立對大型車的正確認識</li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 4 ─ 影片
+══════════════════════════════════════════ -->
+<div class="slide s-vid">
+  <span class="img-badge">單元 01 ─ 大型車特性</span>
+  <div class="vid-wrap">
+    <iframe src="https://www.youtube.com/embed/2YtEacfcwMA?rel=0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 5 ─ 內輪差
+══════════════════════════════════════════ -->
+<div class="slide s-img th-amber">
+  <span class="img-badge">單元 01 ─ 大型車特性</span>
+  <div class="img-wrap">
+    <img src="image/bigcar_02.jpg" alt="大型車轉彎內輪差">
+    <div class="img-cap">轉彎時前後輪走的路徑不同──靠路邊站立或騎車絕對危險，請遠離大型車轉彎範圍</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 6 ─ 視野死角
+══════════════════════════════════════════ -->
+<div class="slide s-img th-amber">
+  <span class="img-badge">單元 01 ─ 大型車特性</span>
+  <div class="img-wrap">
+    <img src="image/bigcar_03.jpg" alt="大型車視野死角">
+    <div class="img-cap">後視鏡有涵蓋不到的死角──轉彎前必須親眼繞行確認，不能只靠鏡子判斷</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 7 ─ 強力氣流
+══════════════════════════════════════════ -->
+<div class="slide s-img th-amber">
+  <span class="img-badge">單元 01 ─ 大型車特性</span>
+  <div class="img-wrap">
+    <img src="image/bigcar_04.jpg" alt="大型車行駛氣流">
+    <div class="img-cap">大型車高速行駛產生強力氣流，對附近的機車、自行車、行人有吸力效果，切勿緊貼行駛</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 8 ─ 煞車距離
+══════════════════════════════════════════ -->
+<div class="slide s-img th-amber">
+  <span class="img-badge">單元 01 ─ 大型車特性</span>
+  <div class="img-wrap">
+    <img src="image/bigcar_05.jpg" alt="大型車煞車距離">
+    <div class="img-cap">大型車滿載時煞車距離是一般轎車的 2～3 倍──保持充分安全距離，絕對不搶快</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 9 ─ 單元 02 分隔頁
+══════════════════════════════════════════ -->
+<div class="slide s-sec th-sky">
+  <div class="unit-no">單元 02</div>
+  <div class="sec-ttl">分心與疲勞駕駛</div>
+  <div class="sec-sub">一秒的恍神，可能是一輩子的遺憾</div>
+  <div class="s-divider"></div>
+  <ul class="s-pts">
+    <li>分心與疲勞是造成嚴重交通事故的最主要人為因素</li>
+    <li>職業駕駛的高頻次、長時間作業特性，使疲勞風險更高</li>
+    <li>法規明定每日駕車時限與強制休息規定，違反即屬違法</li>
+    <li>認識症狀，學會在上路前做好自我評估</li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 10 ─ 分心疲勞封面
+══════════════════════════════════════════ -->
+<div class="slide s-img th-sky">
+  <span class="img-badge">單元 02 ─ 分心與疲勞駕駛</span>
+  <div class="img-wrap">
+    <img src="image/fatigue_01.jpg" alt="拒絕分心疲勞駕駛">
+    <div class="img-cap">別讓危險與你同行──分心與疲勞不是態度問題，是生命安全問題</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 11 ─ 分心疲勞易發生事故
+══════════════════════════════════════════ -->
+<div class="slide s-img th-sky">
+  <span class="img-badge">單元 02 ─ 分心與疲勞駕駛</span>
+  <div class="img-wrap">
+    <img src="image/fatigue_02.jpg" alt="分心疲勞容易發生事故">
+    <div class="img-cap">數據不會騙人──分心與疲勞是造成重大交通事故死亡的主因之一</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 12 ─ 常見分心行為
+══════════════════════════════════════════ -->
+<div class="slide s-img th-sky">
+  <span class="img-badge">單元 02 ─ 分心與疲勞駕駛</span>
+  <div class="img-wrap">
+    <img src="image/fatigue_03.jpg" alt="駕駛常見分心行為">
+    <div class="img-cap">使用手機是最常見的分心行為──行駛中使用手機，罰鍰最高 18,000 元、記違規點數</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 13 ─ 疲勞症狀
+══════════════════════════════════════════ -->
+<div class="slide s-img th-sky">
+  <span class="img-badge">單元 02 ─ 分心與疲勞駕駛</span>
+  <div class="img-wrap">
+    <img src="image/fatigue_04.jpg" alt="疲勞駕駛症狀">
+    <div class="img-cap">出現這些症狀就是警訊──不要強撐，立刻找安全地點停車休息再繼續</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 14 ─ 避免分心疲勞
+══════════════════════════════════════════ -->
+<div class="slide s-img th-sky">
+  <span class="img-badge">單元 02 ─ 分心與疲勞駕駛</span>
+  <div class="img-wrap">
+    <img src="image/fatigue_05.jpg" alt="避免分心疲勞駕駛">
+    <div class="img-cap">這樣做才對──事前充足睡眠、定時休息、不帶情緒上路，是每位職業駕駛的基本功</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 15 ─ 出勤時間規定
+══════════════════════════════════════════ -->
+<div class="slide s-ctn th-sky">
+  <div class="ctn-inner">
+    <div class="ctn-unit">單元 02 ─ 分心與疲勞駕駛</div>
+    <div class="ctn-ttl">出勤時間規定</div>
+    <div class="ctn-sub">職業駕駛法定工時限制（大客車、大貨車一體適用）</div>
+    <div class="ctn-hr"></div>
+    <div class="kn-grid" style="max-width:560px">
+      <div class="kn-card">
+        <div class="kn-num" style="color:var(--p)">10<small style="font-size:.4em;font-weight:600"> 小時</small></div>
+        <div class="kn-lbl">每日最長駕車時間上限</div>
+      </div>
+      <div class="kn-card">
+        <div class="kn-num" style="color:var(--rose)">4<small style="font-size:.4em;font-weight:600"> 小時</small></div>
+        <div class="kn-lbl">連續駕車上限<br>超過即須休息至少 <strong>30 分鐘</strong></div>
+      </div>
+    </div>
+    <div class="note-box">
+      ⚠️ 無論是<strong>營業用</strong>或<strong>自用</strong>大客貨車，以上規定均一體適用。<br>
+      疲勞駕駛肇事，依法須負刑事及民事雙重責任。
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 16 ─ 單元 03 分隔頁
+══════════════════════════════════════════ -->
+<div class="slide s-sec th-grn">
+  <div class="unit-no">單元 03</div>
+  <div class="sec-ttl">行車前安全檢查</div>
+  <div class="sec-sub">出車前的 5 分鐘，換來一整天的平安</div>
+  <div class="s-divider"></div>
+  <ul class="s-pts">
+    <li>每次出車前務必執行「5油 6燈 3水 1輪」系統性檢查</li>
+    <li>養成指差確認習慣，讓檢查確實落地，不流於形式</li>
+    <li>車況不佳立即回報，不帶「問題車」出門</li>
+    <li>你的安全，也是他人的安全</li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 17 ─ 安全檢查總覽
+══════════════════════════════════════════ -->
+<div class="slide s-img th-grn">
+  <span class="img-badge">單元 03 ─ 行車前安全檢查</span>
+  <div class="img-wrap">
+    <img src="image/check_01.jpg" alt="行車前安全檢查">
+    <div class="img-cap">行車前安全檢查──5油 6燈 3水 1輪，缺一不可，每次出車前確實執行</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 18 ─ 5油 (上)
+══════════════════════════════════════════ -->
+<div class="slide s-img th-grn">
+  <span class="img-badge">單元 03 ─ 5油 6燈 3水 1輪（1／4）</span>
+  <div class="img-wrap">
+    <img src="image/check_02.jpg" alt="5油：動力方向機油、機油">
+    <div class="img-cap">【5油 上】動力方向機油、機油──目視液面高度，確認在上下限刻度之間</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 19 ─ 5油 (下)
+══════════════════════════════════════════ -->
+<div class="slide s-img th-grn">
+  <span class="img-badge">單元 03 ─ 5油 6燈 3水 1輪（1／4）</span>
+  <div class="img-wrap">
+    <img src="image/check_03.jpg" alt="5油：自動變速箱油、煞車油、燃油">
+    <div class="img-cap">【5油 下】自動變速箱油、煞車油、燃油──煞車油不足屬高危險狀況，禁止出車</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 20 ─ 6燈
+══════════════════════════════════════════ -->
+<div class="slide s-img th-grn">
+  <span class="img-badge">單元 03 ─ 5油 6燈 3水 1輪（2／4）</span>
+  <div class="img-wrap">
+    <img src="image/check_04.jpg" alt="6燈">
+    <div class="img-cap">【6燈】頭燈、方向燈、煞車燈、倒車燈、儀表板燈、霧燈──缺燈上路不僅違規，更影響行車安全</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 21 ─ 3水
+══════════════════════════════════════════ -->
+<div class="slide s-img th-grn">
+  <span class="img-badge">單元 03 ─ 5油 6燈 3水 1輪（3／4）</span>
+  <div class="img-wrap">
+    <img src="image/check_05.jpg" alt="3水">
+    <div class="img-cap">【3水】雨刷水、電瓶水、水箱水──夏季高溫時水箱水特別容易耗損，須特別注意</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 22 ─ 1輪
+══════════════════════════════════════════ -->
+<div class="slide s-img th-grn">
+  <span class="img-badge">單元 03 ─ 5油 6燈 3水 1輪（4／4）</span>
+  <div class="img-wrap">
+    <img src="image/check_06.jpg" alt="1輪">
+    <div class="img-cap">【1輪】胎紋深度、胎壓是否正常、輪胎外觀有無裂傷或異物嵌入──每次出車前四輪都要看</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 23 ─ 1輪 細節
+══════════════════════════════════════════ -->
+<div class="slide s-img th-grn">
+  <span class="img-badge">單元 03 ─ 5油 6燈 3水 1輪（4／4）</span>
+  <div class="img-wrap">
+    <img src="image/check_07.jpg" alt="1輪細節說明">
+    <div class="img-cap">胎紋深度低於 1.6mm 即應更換──磨損輪胎在濕地的煞車距離大幅拉長，危險倍增</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 24 ─ 單元 04 分隔頁
+══════════════════════════════════════════ -->
+<div class="slide s-sec th-rose">
+  <div class="unit-no">單元 04</div>
+  <div class="sec-ttl">重大事故案例</div>
+  <div class="sec-sub">真實事故，真實教訓</div>
+  <div class="s-divider"></div>
+  <ul class="s-pts">
+    <li>接下來 3 個案例均取自真實交通事故紀錄與法規宣導</li>
+    <li>視野死角、行人路權、國道二次事故──都是可以預防的</li>
+    <li>請思考：如果是你，你會怎麼做？</li>
+    <li>事故的代價往往是生命，預防的代價只是多幾秒鐘的謹慎</li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 25 ─ 案例 1：視野死角確認
+══════════════════════════════════════════ -->
+<div class="slide s-ctn th-rose">
+  <div class="ctn-inner">
+    <div class="ctn-unit">單元 04 ─ 案例 1</div>
+    <div class="ctn-ttl">視野死角確認</div>
+    <div class="ctn-sub">大型車轉彎時，盲區裡的生死一線</div>
+    <div class="ctn-hr"></div>
+    <div class="case-grid">
+      <div class="case-card">
+        <div class="case-label">事故情境</div>
+        <ul class="case-pts">
+          <li>大型車準備右轉，駕駛以後視鏡確認後啟動</li>
+          <li>A 柱與車身結構造成右後方存在視野死角</li>
+          <li>機車騎士恰在死角內超車，轉彎時發生碰撞</li>
+          <li>碰撞後機車騎士遭後輪輾壓，傷亡慘重</li>
+        </ul>
+      </div>
+      <div class="case-card">
+        <div class="case-label">預防要點</div>
+        <ul class="case-pts">
+          <li>轉彎前下車繞行，親眼確認四周無人無車</li>
+          <li>以「指差確認」大聲說出「後方確認，安全！」</li>
+          <li>轉彎速度放慢，給其他用路人充足反應時間</li>
+          <li>善用盲區偵測警示輔助系統（BSM）</li>
+        </ul>
+        <div class="case-sop">⚠️ 後視鏡無法取代親眼確認──每次轉彎，請多花 10 秒確認死角</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 26 ─ 案例 2：車輛未停讓行人
+══════════════════════════════════════════ -->
+<div class="slide s-ctn th-rose">
+  <div class="ctn-inner">
+    <div class="ctn-unit">單元 04 ─ 案例 2</div>
+    <div class="ctn-ttl">車輛未停讓行人</div>
+    <div class="ctn-sub">行人路權修法後，不讓就是違法</div>
+    <div class="ctn-hr"></div>
+    <div class="case-grid">
+      <div class="case-card">
+        <div class="case-label">法規重點</div>
+        <ul class="case-pts">
+          <li>道路交通管理處罰條例修正，行人有優先通行權</li>
+          <li>行人「正在穿越」或「準備穿越」均須停讓</li>
+          <li>不停讓：罰鍰 6,000 至 18,000 元，記違規點數 3 點</li>
+          <li>肇事致人傷亡：吊扣或吊銷駕照，負刑事責任</li>
+        </ul>
+      </div>
+      <div class="case-card">
+        <div class="case-label">預防要點</div>
+        <ul class="case-pts">
+          <li>接近路口提前減速，觀察行人動態</li>
+          <li>路口視線受阻時，停車後慢慢探出確認</li>
+          <li>絕對不搶黃燈、不闖斑馬線</li>
+          <li>大型車轉彎視角低，特別注意兒童及輪椅使用者</li>
+        </ul>
+        <div class="case-sop">✅ 讓行人先走只是多等幾秒──不停讓的代價是罰款、吊照、甚至牢獄</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 27 ─ 案例 3：國道二次事故
+══════════════════════════════════════════ -->
+<div class="slide s-ctn th-rose">
+  <div class="ctn-inner">
+    <div class="ctn-unit">單元 04 ─ 案例 3</div>
+    <div class="ctn-ttl">避免國道二次事故</div>
+    <div class="ctn-sub">第一次事故你可能是受害者，第二次事故你不能成為犧牲者</div>
+    <div class="ctn-hr"></div>
+    <div class="case-grid">
+      <div class="case-card">
+        <div class="case-label">危險情境</div>
+        <ul class="case-pts">
+          <li>車輛在國道發生事故或故障，停在路肩或車道</li>
+          <li>後方高速來車反應時間不足，易發生追撞</li>
+          <li>二次事故死亡率為一次事故的 3 倍以上</li>
+          <li>留在車旁「等候救援」是最危險的行為</li>
+        </ul>
+      </div>
+      <div class="case-card">
+        <div class="case-label">標準處置 SOP</div>
+        <ul class="case-pts">
+          <li>① 立即開啟雙黃燈（危險警示燈）</li>
+          <li>② 乘員迅速下車，越過護欄到安全區域</li>
+          <li>③ 在車後方 200 公尺放置警告三角架</li>
+          <li>④ 撥打 1968（道路救援）或 110 報警</li>
+        </ul>
+        <div class="case-sop">🚨 離開車輛！人的安全優先於財物──絕對不要留在車道或路肩旁等待</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 28 ─ 結語
+══════════════════════════════════════════ -->
+<div class="slide s-close">
+  <div class="cv-deco" style="width:420px;height:420px;top:-100px;right:-80px;opacity:.28"></div>
+  <div class="cv-deco" style="width:280px;height:280px;bottom:-50px;left:-50px;opacity:.20"></div>
+  <div class="close-icon">🛡️</div>
+  <div class="close-ttl">平安回家，是最重要的任務</div>
+  <div class="close-body">
+    每一趟出車，都是對自己和家人的承諾。<br>
+    認識危險、做好準備、保持清醒──<br>
+    讓平安成為習慣，讓回家成為理所當然。
+  </div>
+  <div class="close-chips">
+    <span class="close-chip">感謝您的參與</span>
+    <span class="close-chip">道路安全是每個人的責任</span>
+    <span class="close-chip">民國 115 年</span>
+  </div>
+  <div class="close-foot">大豐環保科技股份有限公司 ｜ 職業安全衛生部門</div>
+</div>
+
+</div><!-- end #deck -->
+
+<!-- ── Unit Quick Navigation ── -->
+<div id="unit-nav">
+  <div id="unit-list">
+    <button class="ul-btn" onclick="jumpTo(0)"><span class="ul-dot" style="background:#fde68a"></span>封面</button>
+    <button class="ul-btn" onclick="jumpTo(1)"><span class="ul-dot" style="background:#fde68a"></span>課程總覽</button>
+    <button class="ul-btn" onclick="jumpTo(2)"><span class="ul-dot" style="background:#d97706"></span>01 大型車特性</button>
+    <button class="ul-btn" onclick="jumpTo(8)"><span class="ul-dot" style="background:#0284c7"></span>02 分心與疲勞</button>
+    <button class="ul-btn" onclick="jumpTo(15)"><span class="ul-dot" style="background:#16a34a"></span>03 行車前安全檢查</button>
+    <button class="ul-btn" onclick="jumpTo(23)"><span class="ul-dot" style="background:#e11d48"></span>04 重大事故案例</button>
+    <button class="ul-btn" onclick="jumpTo(27)"><span class="ul-dot" style="background:#16a34a"></span>結語</button>
+  </div>
+  <button id="unit-toggle" onclick="toggleUnitNav()">☰ 單元</button>
+</div>
+
+<!-- ── Navigation ── -->
+<div id="nav">
+  <button class="nb" id="prev" onclick="go(-1)" disabled>&#8592;</button>
+  <span id="ctr">1 / 28</span>
+  <button class="nb" id="next" onclick="go(1)">&#8594;</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total  = slides.length;
+let cur = 0;
+
+document.getElementById('ctr').textContent = '1 / ' + total;
+document.getElementById('prog').style.width = (1 / total * 100) + '%';
+
+function go(dir) {
+  slides[cur].classList.remove('active');
+  cur = Math.max(0, Math.min(total - 1, cur + dir));
+  slides[cur].classList.add('active');
+  document.getElementById('ctr').textContent = (cur + 1) + ' / ' + total;
+  document.getElementById('prev').disabled = cur === 0;
+  document.getElementById('next').disabled = cur === total - 1;
+  document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+  updateUnitActive();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+    e.preventDefault(); if (cur < total - 1) go(1);
+  }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    e.preventDefault(); if (cur > 0) go(-1);
+  }
+  if (e.key === 'Home') jumpTo(0);
+  if (e.key === 'End')  jumpTo(total - 1);
+});
+
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+document.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+});
+
+// Password gate
+function checkPw() {
+  const val = document.getElementById('pw-input').value;
+  if (val === 'Da0725fon2026%') {
+    document.getElementById('pw-gate').style.display = 'none';
+    sessionStorage.setItem('roadsafety2026-auth', '1');
+  } else {
+    document.getElementById('pw-err').textContent = '密碼錯誤，請重新輸入';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPw();
+});
+if (sessionStorage.getItem('roadsafety2026-auth') === '1') {
+  document.getElementById('pw-gate').style.display = 'none';
+}
+
+// Unit quick nav
+const unitList = document.getElementById('unit-list');
+const ulBtns   = document.querySelectorAll('.ul-btn');
+const starts   = [0, 1, 2, 8, 15, 23, 27];
+
+function toggleUnitNav() {
+  unitList.classList.toggle('open');
+}
+
+function jumpTo(idx) {
+  slides[cur].classList.remove('active');
+  cur = Math.max(0, Math.min(total - 1, idx));
+  slides[cur].classList.add('active');
+  document.getElementById('ctr').textContent = (cur + 1) + ' / ' + total;
+  document.getElementById('prev').disabled = cur === 0;
+  document.getElementById('next').disabled = cur === total - 1;
+  document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+  unitList.classList.remove('open');
+  updateUnitActive();
+}
+
+function updateUnitActive() {
+  let active = 0;
+  for (let i = 0; i < starts.length; i++) {
+    if (cur >= starts[i]) active = i;
+  }
+  ulBtns.forEach((b, i) => b.classList.toggle('active', i === active));
+}
+
+updateUnitActive();
+
+document.addEventListener('click', e => {
+  if (!document.getElementById('unit-nav').contains(e.target)) {
+    unitList.classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>
