@@ -74,6 +74,7 @@ html,body{width:100%;height:100%;overflow:hidden;
 .nb:hover{background:#b45309;transform:scale(1.06)}
 .nb:disabled{background:var(--pl);cursor:default;transform:none;color:var(--muted)}
 #ctr{font-size:16px;color:var(--sub);font-weight:600;min-width:48px;text-align:center}
+.nav-sep{width:1px;height:22px;background:rgba(0,0,0,.12);margin:0 2px;flex-shrink:0}
 
 /* ════════════════════════════════════
    COVER
@@ -177,7 +178,7 @@ html,body{width:100%;height:100%;overflow:hidden;
 ════════════════════════════════════ */
 .s-vid{
   background:#111827;
-  align-items:center;justify-content:center;
+  align-items:center;justify-content:center;gap:10px;
   padding:20px 40px 90px
 }
 .s-vid .img-badge{
@@ -185,13 +186,51 @@ html,body{width:100%;height:100%;overflow:hidden;
 }
 .vid-wrap{
   width:100%;max-width:1100px;
-  aspect-ratio:16/9
+  aspect-ratio:16/9;
+  position:relative
 }
+/* thumbnail (before activation) */
+.vid-thumb{
+  position:absolute;inset:0;
+  cursor:pointer;border-radius:14px;overflow:hidden;
+  background:#000
+}
+.vid-thumb img{
+  width:100%;height:100%;
+  object-fit:cover;display:block;
+  opacity:.82;transition:opacity .2s
+}
+.vid-thumb:hover img{opacity:.62}
+.vid-play-overlay{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:14px
+}
+.vid-play-circle{
+  width:82px;height:82px;border-radius:50%;
+  background:rgba(220,0,0,.88);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;
+  transition:transform .15s,background .15s
+}
+.vid-thumb:hover .vid-play-circle{transform:scale(1.1);background:#dc0000}
+.vid-play-label{
+  color:#fff;font-size:17px;font-weight:600;
+  text-shadow:0 1px 5px rgba(0,0,0,.7)
+}
+/* activated iframe */
 .vid-wrap iframe{
+  position:absolute;inset:0;
   width:100%;height:100%;
   border-radius:14px;border:none;
   box-shadow:0 8px 48px rgba(0,0,0,.5)
 }
+/* fallback link */
+.vid-ext-link{
+  color:rgba(255,255,255,.45);font-size:13px;font-weight:500;
+  text-decoration:none;transition:color .15s;flex-shrink:0
+}
+.vid-ext-link:hover{color:rgba(255,255,255,.85)}
 
 /* ════════════════════════════════════
    CONTENT SLIDES
@@ -472,11 +511,20 @@ html,body{width:100%;height:100%;overflow:hidden;
 ══════════════════════════════════════════ -->
 <div class="slide s-vid">
   <span class="img-badge">單元 01 ─ 大型車特性</span>
-  <div class="vid-wrap">
-    <iframe src="https://www.youtube.com/embed/2YtEacfcwMA?rel=0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen></iframe>
+  <div class="vid-wrap" id="vid-container">
+    <div class="vid-thumb" onclick="activateVideo()">
+      <img src="https://img.youtube.com/vi/2YtEacfcwMA/maxresdefault.jpg"
+           onerror="this.src='https://img.youtube.com/vi/2YtEacfcwMA/hqdefault.jpg'"
+           alt="大型車上路安全知多少">
+      <div class="vid-play-overlay">
+        <div class="vid-play-circle">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="34" height="34" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="vid-play-label">點擊播放影片</div>
+      </div>
+    </div>
   </div>
+  <a href="https://www.youtube.com/watch?v=2YtEacfcwMA" target="_blank" rel="noopener" class="vid-ext-link">⧉ 在 YouTube 開啟</a>
 </div>
 
 <!-- ══════════════════════════════════════════
@@ -867,9 +915,15 @@ html,body{width:100%;height:100%;overflow:hidden;
 
 <!-- ── Navigation ── -->
 <div id="nav">
-  <button class="nb" id="prev" onclick="go(-1)" disabled>&#8592;</button>
+  <button type="button" class="nb" id="prev" onclick="go(-1)" disabled>&#8592;</button>
   <span id="ctr">1 / 28</span>
-  <button class="nb" id="next" onclick="go(1)">&#8594;</button>
+  <button type="button" class="nb" id="next" onclick="go(1)">&#8594;</button>
+  <span class="nav-sep"></span>
+  <button type="button" class="nb" id="fs-btn" onclick="toggleFullscreen()" title="全螢幕">
+    <svg id="fs-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="19" height="19" aria-hidden="true">
+      <path id="fs-path" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+    </svg>
+  </button>
 </div>
 
 <script>
@@ -900,6 +954,7 @@ document.addEventListener('keydown', e => {
   }
   if (e.key === 'Home') jumpTo(0);
   if (e.key === 'End')  jumpTo(total - 1);
+  if (e.key === 'f' || e.key === 'F') toggleFullscreen();
 });
 
 let tx = 0;
@@ -962,6 +1017,38 @@ updateUnitActive();
 document.addEventListener('click', e => {
   if (!document.getElementById('unit-nav').contains(e.target)) {
     unitList.classList.remove('open');
+  }
+});
+
+// Video activation (click-to-load)
+function activateVideo() {
+  document.getElementById('vid-container').innerHTML =
+    '<iframe src="https://www.youtube.com/embed/2YtEacfcwMA?si=Sh9bLR7YPw-MURey&autoplay=1" ' +
+    'title="YouTube video player" frameborder="0" ' +
+    'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+    'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+}
+
+// Fullscreen
+const FS_EXPAND   = 'M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3';
+const FS_COMPRESS = 'M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3';
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+document.addEventListener('fullscreenchange', () => {
+  const path = document.getElementById('fs-path');
+  const btn  = document.getElementById('fs-btn');
+  if (document.fullscreenElement) {
+    path.setAttribute('d', FS_COMPRESS);
+    btn.title = '離開全螢幕';
+  } else {
+    path.setAttribute('d', FS_EXPAND);
+    btn.title = '全螢幕';
   }
 });
 </script>
