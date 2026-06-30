@@ -1,6 +1,116 @@
 {
   "items": [
     {
+      "key": "4f931d9c30848007",
+      "title": "公告115年第2梯次申請認可辦理勞工體格及健康檢查之醫療機構名單",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/207274/",
+      "pubDate": "Tue, 30 Jun 2026 10:16:23 GMT",
+      "pubTs": 1782814583.0,
+      "desc": "辦理勞工體格與健康檢查之認可醫療機構名單、認可類別及認可期間表（115年第2梯次），詳如附件檔。",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "38cdc1c19c22a9f8",
+      "title": "勞動部修正發布「職業安全衛生教育訓練規則」部分條文",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/207144/",
+      "pubDate": "Tue, 30 Jun 2026 10:00:40 GMT",
+      "pubTs": 1782813640.0,
+      "desc": "一、依勞動部115年6月25日勞職授字第1150252196號令辦理。 二、職業安全衛生教育訓練規則修正重點如下： （一）事業單位以數位方式經營商品交易或運送，且交付無僱傭關係之個人親自履行外送作業時，其安全衛生教育訓練之時數、內容、師資。 （二）依營造安全衛生設施標準第十一條之二規定，經營造作業安…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "2c5c7ed5f04f7d1f",
+      "title": "職安新法7月上路死亡職災罰鍰提高、防職場霸凌| 生活",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5WRzRlc2xqem5Cc1ZJRXI0Wk1Yd2NObjdJYmpDNXNNXzJYRENrc1B6ZWZHOTBaeTg0U3VHNTR2UUZSUXJrUlkzRnk4dktOTjFYT0lCeWJDQUlNdjRGQ2pZ?oc=5",
+      "pubDate": "Tue, 30 Jun 2026 04:26:00 GMT",
+      "pubTs": 1782793560.0,
+      "desc": "職安新法7月上路死亡職災罰鍰提高、防職場霸凌| 生活&nbsp;&nbsp;中央社 CNA",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "54a3a4d255675e33",
+      "title": "臺中地區檢察大樓新建工程上梁、職業安全衛生工地觀摩會 本月圓滿完成",
+      "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5EU0NxN0VSdnpaSnM2RFY3RW8zZ2lUaWlnR0MzNGVUR1JMZGtqUDdySnJ2Wm81aEhQdXRzd2NXMlBwMXdvcUFrZEliV09GcWtpQzVCR3pCaEFJRG1TZDdtckhuRUE4UdIBa0FVX3lxTFBFWld1T0FwVWQ2T0o4QzJnYThUejRMWWU5Q29FeFZteFVxRzF0Q24wdUVPUDJxYjUtQVlWTWY0Ymp6SDU5YVpUa0czamZrSDFadkNTcmRjSlNNY2RQa3FuMVVqaDFYZG5KbFdV?oc=5",
+      "pubDate": "Mon, 29 Jun 2026 23:49:00 GMT",
+      "pubTs": 1782776940.0,
+      "desc": "臺中地區檢察大樓新建工程上梁、職業安全衛生工地觀摩會 本月圓滿完成&nbsp;&nbsp;鏡週刊Mirror Media",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "45d3297b966f4e52",
+      "title": "勞動部預告推土機等6類高風險機械列為「其他特定機械」 強化操作資格管理及保障作業安全",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5Zby1zNnh1YjBCWTFkUE11WElnMVRGT19nbnhjMGhERExCTDhxQUNQZ29Odm9UMHRRNU5kcU1pcUpMVnRpbHhhbUN3ck81VDFHdFE?oc=5",
+      "pubDate": "Mon, 29 Jun 2026 23:27:00 GMT",
+      "pubTs": 1782775620.0,
+      "desc": "勞動部預告推土機等6類高風險機械列為「其他特定機械」 強化操作資格管理及保障作業安全&nbsp;&nbsp;蕃新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "2c8556af6347c42c",
+      "title": "職安法新制上路 南投推「反霸凌」與AI 防災平台",
+      "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE4yWjBqdXp5UndsMmdHLWZWT3ZkQ3hITDFiVXRxRTl0djViX3ZYV1huS2ZvSWV0SlJYbXlYWkYtZ2pNWkpNOE5aQmJrWENMdVJIWUF1cTZNOWNTanhCSGVsYTZnYU7SAWpBVV95cUxOODhzVXplUkQ3ejVzdU9sQkFzT21wT25WNlBlSXlxd2dfQkpoemRFRVhBbDJYRlRjR0hEYTNfOFRCUFZ1dldpS3JVY0JZb3JGS1BXbHZsUVFCWDdyWGtzb28zWE05TUpKZ0p3?oc=5",
+      "pubDate": "Mon, 29 Jun 2026 23:16:20 GMT",
+      "pubTs": 1782774980.0,
+      "desc": "職安法新制上路 南投推「反霸凌」與AI 防災平台&nbsp;&nbsp;自由時報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "9530fbaf7f4a5807",
+      "title": "勞動部推動職災勞工重返職場補助新制，新增「先申請、後購置」輔助設施機制，增進雇主購置意願、加速職災勞工復工",
+      "link": "https://www.osha.gov.tw/48110/48417/48419/207221/",
+      "pubDate": "Mon, 29 Jun 2026 18:12:12 GMT",
+      "pubTs": 1782756732.0,
+      "desc": "勞動部今（29）日修正發布「直轄市及縣市政府辦理協助職業災害勞工重返職場補助辦法」部分條文，新增雇主在購置職災勞工輔助設施前，可先向地方主管機關提出補助申請，經核定補助條件後，再進行購置，透過「先申請、後購置」的新措施，增加雇主購置輔助設施意願，進一步促進職災勞工及早重返職場。 職安署表示，依現行規…",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
+    },
+    {
+      "key": "1ee055083f3ffd49",
+      "title": "勞動部預告推土機等6類高風險機械列為「其他特定機械」 強化操作資格管理及保障作業安全",
+      "link": "https://www.osha.gov.tw/48110/48417/48419/204714/",
+      "pubDate": "Mon, 29 Jun 2026 16:55:13 GMT",
+      "pubTs": 1782752113.0,
+      "desc": "勞動部預告「推土機、挖掘機、鏟裝機、堆高機、高空工作車、非屬危險性機械之起重機」為職業安全衛生法第24條第1項所稱「其他特定機械」，要求雇主僱用經中央主管機關認可之教育訓練或經技能檢定之合格人員擔任操作人員，以強化該等機械之使用安全，保障工作者作業安全。 勞動部表示，根據近5年重大職業災害資料分析，…",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "5eae127b1f7aa1cb",
+      "title": "三重新建案嚴重工安意外 工人觸電命送醫途中恢復生命跡象 | 社會 | CTWANT",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1yWDRPVjRyYmNKeTEyX24zR0UwQ294RTJfTjJ5MkszYnVaZkhwRW96a1lSd3lWRS01YmhkeHRpSGt1Zy1GTjk5UEhfTmxuaW_SAVRBVV95cUxQTmp4MjNtemR6cm45NkQzSXJyNjlfak5raDBXSTI5TVlYQ2JyYjNMcEY0RnpmdWc0SjRiekRQS09LZmRvQXo4MlhyUC1uM1pURjc0QmI?oc=5",
+      "pubDate": "Mon, 29 Jun 2026 08:38:17 GMT",
+      "pubTs": 1782722297.0,
+      "desc": "三重新建案嚴重工安意外 工人觸電命送醫途中恢復生命跡象 | 社會 | CTWANT&nbsp;&nbsp;CTWANT",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "b33c8e9d2ef4a67c",
+      "title": "三重工安意外！55歲工人不慎觸電 命危送醫搶救",
+      "link": "https://news.google.com/rss/articles/CBMivAJBVV95cUxOTWROUTBoa1lKZFdxaGhOVmRDNV9GSEJ6Z3VlVm1QWGJMWTJ0OC1SeGNFZXQyU25BTS1YWTcwMDZGeFdwR3JQYi1XY3c5RXVzbU9WUDNLbFBOcGNaTTE5REJqVnNfd0pWUDNNN0F1TVVtM3NaNkMzLTBuZVdONmlENmdXeWVMcl83RHdUNHpDUkYwUnQwekFZV3NZazNGd2l4U3RuRWJrcTR6cEF6ZnZmdmJraHZiY2ZsLVk0U1V4Qldob2lxSkt0ck5udUZGOFN2TnhXWENaMUt2NnhEbXFfM3FDcG5jbWlRM3NYMjNiVVNIU3Zad0V3LW1DQlA0Ynd2VjBwSWhEQjZDcmUwdDU2TFRrYm1RaHdfeEtNXy1iNW9qMkljRlFLMlQ1OUZ2QU1wOGVMdzRpZVFxU2Vw?oc=5",
+      "pubDate": "Mon, 29 Jun 2026 05:10:41 GMT",
+      "pubTs": 1782709841.0,
+      "desc": "三重工安意外！55歲工人不慎觸電 命危送醫搶救&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "d3da1e515d5ccca6",
       "title": "三重工安意外！55歲工人不慎觸電 命危送醫搶救",
       "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE92em1QWkp1QUhFZlBVWjJvdU5QOGRPci1FTmdVN2xid3llcC0zWU44WG42NG5NbmtaazVkbW9TemNnVjk4TFYyOHV0VWNvMTM0a2l4MExIbw?oc=5",
@@ -29,6 +139,17 @@
       "pubDate": "Mon, 29 Jun 2026 03:34:00 GMT",
       "pubTs": 1782704040.0,
       "desc": "新北三重工安意外！55歲工人施工觸電命危 送醫急救恢復生命跡象&nbsp;&nbsp;壹蘋新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "71235d9da59d0cb0",
+      "title": "三重工安意外！55歲工人施工觸電 命危送醫搶救中 | EBC 東森新聞",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9CSGtQZ1JBNGtZbmdoU0tESmdiYmpkb1NFRUlYSXBpM3NWZGV4Y0RNLXNOdVZqaklZRGNNVm9JWklKWExXb1lIdDNhRWZCRVFDYnlIVnRn?oc=5",
+      "pubDate": "Mon, 29 Jun 2026 03:27:56 GMT",
+      "pubTs": 1782703676.0,
+      "desc": "三重工安意外！55歲工人施工觸電 命危送醫搶救中 | EBC 東森新聞&nbsp;&nbsp;LINE TODAY",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -153,6 +274,17 @@
       "source_id": "osha_announce",
       "source_name": "職安署公告",
       "badge": "green"
+    },
+    {
+      "key": "038a0e9ded03fd8a",
+      "title": "雲林縣政府推動成立鍾慶安衛家族 強化職場安全工作",
+      "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1XZ0hFUGdwSjA4XzB2T1VIOXhQWW9oR3R1VmZBUU9nbEdkVmdSaGZXRjNIcXZETmRPTmdOMFNhT1oxcE9ZeURuOTBGX1duODNYeU1yTU1zdDRldF9yelRzY1ZXTERidWgtcDBQRDhTOHB5VGFBQ1pZ?oc=5",
+      "pubDate": "Fri, 26 Jun 2026 14:55:07 GMT",
+      "pubTs": 1782485707.0,
+      "desc": "雲林縣政府推動成立鍾慶安衛家族 強化職場安全工作&nbsp;&nbsp;yunlin.gov.tw",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "4f5250f625227025",
@@ -1123,39 +1255,6 @@
       "badge": "purple"
     },
     {
-      "key": "a98ae100d06296d5",
-      "title": "遭巨型螢幕砸中癱瘓4年！MIRROR舞者工傷判賠2562萬 4月剛經歷喪父之痛",
-      "link": "https://news.google.com/rss/articles/CBMikgNBVV95cUxPbEFlQ3dBZ21VajZlUHByWS1IRFJQVVlvaVJfZHkxVmVVajBNN1BDSmZ4X1lsczFveXBmQ0FOOGhXOWRCXzg2b2RBTDAwNkdVX3dNaXpveFhyTF9ZU3IteUlTZEdNTHRfQzVvYmV0b3RUUVBEb21USXItdkt2M2lEQ3dwb0Q0TU0wOXFkMTl4TmlHaTFUWVdoNUVCTFZtOGlPZjM2RUM1ZS1jUWJ2RGhnM09BcmwxMTVtUnVLSEEyQXR5R1NEWndCaEU5UEFQUE54TFUteG1CblVEcVBpUFhsQmM0S1VkRTdpU2p4U2Y1dkhHMXFjel9OLWlvZnFyQkR6c0Q0MTFzbjdSYU9HT2Q3WDdJOWNUaHR4Z3p1cWZUUUNreV8zTWRZY2Ewb1B1S25jZGJCNW5ITWg5RF9UQmZEekM4V0dwSWgzM0JDM3dIQWwwNDBXRDBfYkttcWhickVtUDdwc0VrZkpkSjVNM0UzWXllakp2bXhHRjIzZHd4THZpa2VaZ2pVYmp4OENraDVhdVE?oc=5",
-      "pubDate": "Tue, 16 Jun 2026 02:45:52 GMT",
-      "pubTs": 1781577952.0,
-      "desc": "遭巨型螢幕砸中癱瘓4年！MIRROR舞者工傷判賠2562萬 4月剛經歷喪父之痛&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "60775e619b851f4d",
-      "title": "遭巨型螢幕砸中癱瘓4年！MIRROR舞者工傷判賠2562萬 4月剛經歷喪父之痛",
-      "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE03MnhfYlRzQjE0SThVNEllTU1FcmZZT0ZLdjlEbzRwSlEwa3RTWXcwdjBuSXdLOXVUM3FvbzRTUE1qTGpOczMtX2VXM2c3RGNxaUQwcVZoNFRFdw?oc=5",
-      "pubDate": "Tue, 16 Jun 2026 01:56:00 GMT",
-      "pubTs": 1781574960.0,
-      "desc": "遭巨型螢幕砸中癱瘓4年！MIRROR舞者工傷判賠2562萬 4月剛經歷喪父之痛&nbsp;&nbsp;鏡新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "732fd558922ed5d8",
-      "title": "台北文山區死亡工安意外！ 工地內工人遭鋼材壓死",
-      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBiNlN2RlRfN2tIOHVGRzRTaXM0VmJqVVBrRG1YUVJxOHhSdGI4cTNySzdha05MVTg1cjVXQWtpUEN1b1lIV0xhTUJ3UG5qWWhWVmJUSmh4cHNBQnVBQm9XckdyVExmSjc0aTVR?oc=5",
-      "pubDate": "Mon, 15 Jun 2026 23:22:04 GMT",
-      "pubTs": 1781565724.0,
-      "desc": "台北文山區死亡工安意外！ 工地內工人遭鋼材壓死&nbsp;&nbsp;警政時報",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
       "key": "7b211daea8622f83",
       "title": "勞動部『公告受理116年度職業災害預防及職業災害勞工重建補助案申請』",
       "link": "https://www.osha.gov.tw/48110/48417/48423/205704/",
@@ -1165,116 +1264,6 @@
       "source_id": "osha_announce",
       "source_name": "職安署公告",
       "badge": "green"
-    },
-    {
-      "key": "9910d750ac0793d6",
-      "title": "北市文山區傳工安意外 55歲工人慘遭鋼材重壓當場死亡",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBGSzdDODBablFleW9XVFNZb25hajFlNG82WWp5WDlaRTNrRzlzTkRpcUVIYWdJSUp4cW5TVUs5Mk5Yd19wQ19FVVhLVEVYcnJhcmhZbkdn0gFWQVVfeXFMUEZLN0M4MFpuUWV5b1dUU1lvbmFqMWU0bzZZanlYOVpFM2tHOXNORGlxRUhhZ0lJSnhxblNVSzkyTlh3X3BDX0VVWEtURVhycmFyaFluR2c?oc=5",
-      "pubDate": "Mon, 15 Jun 2026 11:05:42 GMT",
-      "pubTs": 1781521542.0,
-      "desc": "北市文山區傳工安意外 55歲工人慘遭鋼材重壓當場死亡&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "05cdb055ff02cd6d",
-      "title": "北市工安意外 文山區工地疑吊掛鋼材掉落壓死1工人",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE92UGgtSUlMX2xZNTlFNXphak5fOWM0cElnT3BTbEdYbzg5d3JsMEJlYlRpTVJUTDI5MXcwWmNnTmYwQi04aDBaZWpiWjd4RHVDN2dzSUpFQ09TMW9HTTVB?oc=5",
-      "pubDate": "Mon, 15 Jun 2026 11:01:00 GMT",
-      "pubTs": 1781521260.0,
-      "desc": "北市工安意外 文山區工地疑吊掛鋼材掉落壓死1工人&nbsp;&nbsp;中央社 CNA",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "d735dc7a665d9ede",
-      "title": "東區職業傷病宣導會職安專家齊聚共創健康職場 | 中華日報",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE54bVdRb2NmQkQzX1JsQ1FWWlNvMEdTOEJjcHR0Wm9VeHlSQUFlWnNsQlk0Qk41YmVwY3JZTkszV2xjTU91OFhUcDBuT0xIbXZtaV9mTHN3?oc=5",
-      "pubDate": "Mon, 15 Jun 2026 10:47:56 GMT",
-      "pubTs": 1781520476.0,
-      "desc": "東區職業傷病宣導會職安專家齊聚共創健康職場 | 中華日報&nbsp;&nbsp;LINE TODAY",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "7875f59e4dd37a98",
-      "title": "因MIRROR演唱會墮屏至癱瘓李啟言獲工傷賠償629.1萬港元另入稟高院向12個涉及單位索償- 本地 - 明周娛樂",
-      "link": "https://news.google.com/rss/articles/CBMi2wJBVV95cUxNT0hUT3VCREZONk1UazBHaWFZN1RNdGFWZktYd05zUVB5cUJQa1lIYVotRlJhSHhIRFJHMnREdk5FZnRDMVZFa1haSWtFdU5vRWticVpwNzA4c0drY1RCZ2xUM2lWN2VXTWZ3aThzb3o3VWNUNzh1LVhpVWoxbWowSUZQb2NDTWNuRkZ1bnJ6VlhrY1czNVpGS244NUsyRU9YajE3SF9uMlB0Ul9UeTNBNm1UcVMzVXBtaXRNaGd0cTdyZFZBcS1RcWJmQjRGWTU5bFhwN3Y3b2p3Mm9HX3lYOWdDYzJJdDNDSlJncTFnQWdSWDFHWFZrU083LUl4eTcwSVhnYVB2ZnNDZTN4UW1ERFlmRGpzcThRRl9yZUVDU3lZcFBpMUd4S3ktOXozeGx6ajdHb2FFY2lCSGdnRnJXbE1TY09mSy13bWNadVJVcGx2My1FZGdDZHQzMA?oc=5",
-      "pubDate": "Mon, 15 Jun 2026 10:47:45 GMT",
-      "pubTs": 1781520465.0,
-      "desc": "因MIRROR演唱會墮屏至癱瘓李啟言獲工傷賠償629.1萬港元另入稟高院向12個涉及單位索償- 本地 - 明周娛樂&nbsp;&nbsp;Ming Pao Weekly",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "73523d33974a5e34",
-      "title": "快訊／北市文山爆工安意外！55歲工人「慘被鋼材重壓」當場死亡 | 三立新聞網",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9aZzdnZnllblZlZm44ajNkREV3ckpQbU95VzFlVHFickJKcDgxUWNTUmQxNHhQNG4wWkZLYUJNRWRseHJ5bTZVS2NyT1FFVmhJck9hQmZB?oc=5",
-      "pubDate": "Mon, 15 Jun 2026 10:37:18 GMT",
-      "pubTs": 1781519838.0,
-      "desc": "快訊／北市文山爆工安意外！55歲工人「慘被鋼材重壓」當場死亡 | 三立新聞網&nbsp;&nbsp;LINE TODAY",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "7d40950b36998261",
-      "title": "北市文山工安意外！55歲工人被鋼材重壓亡",
-      "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1DT212RXVoSUJtQVVMUGIxUTczMzZyZnpKdk9CZjRyTFIzV2QyQ1FmWXZ2dG1OZmNlU2JzejNqWXUyWERqdVNkM3RIRE9xWjVWUW1udzd0NFVLMlRCcThvSWtn0gFiQVVfeXFMTUNPbXZFdWhJQm1BVUxQYjFRNzMzNnJmekp2T0JmNHJMUjNXZDJDUWZZdnZ0bU5mY2VTYnN6M2pZdTJYRGp1U2QzdEhET3FaNVZRbW53N3Q0VUsyVEJxOG9Ja2c?oc=5",
-      "pubDate": "Mon, 15 Jun 2026 10:33:00 GMT",
-      "pubTs": 1781519580.0,
-      "desc": "北市文山工安意外！55歲工人被鋼材重壓亡&nbsp;&nbsp;鏡週刊Mirror Media",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "65625bd04064f421",
-      "title": "快訊／北市文山爆工安意外！55歲工人「慘被鋼材重壓」當場死亡",
-      "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFBRWHJrUHRjb1RNR0REenRRN1VHa2lTTjhyZ1NnOXJQbFk5UFZzV1hhQ0FzQzROb1pCdF9BQmVHVllTRkdMcEFhRlI4YkdsZ0RVbWRrT04tbkvSAV9BVV95cUxOZ2ZGRGNqd2lkQ19ZRVVYejJWeUR2ZEowRVRFSkxwZ290OG50R2tPUTRWQS1Va0ZCOUZ2MEprM0V2RF8xYTBFZVJRZ2w4X01UMUhnckZta3lYSFlGaEFrdw?oc=5",
-      "pubDate": "Mon, 15 Jun 2026 10:33:00 GMT",
-      "pubTs": 1781519580.0,
-      "desc": "快訊／北市文山爆工安意外！55歲工人「慘被鋼材重壓」當場死亡&nbsp;&nbsp;三立新聞網SETN.com",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "90b54f83d82230fc",
-      "title": "北市文山區工安意外！鐵工廠H型鋼材掉落 55歲工人遭砸身亡",
-      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE04UmdRbEhJMHJuZTRSTHh5TUhOWW81X245RXpUV3dESnEwMTZsbGFOcTlJYUhhdWdoZHpRdllkd2haeEc4bVJjdndmUW9mV2ZHYkh4aXcxRQ?oc=5",
-      "pubDate": "Mon, 15 Jun 2026 10:32:12 GMT",
-      "pubTs": 1781519532.0,
-      "desc": "北市文山區工安意外！鐵工廠H型鋼材掉落 55歲工人遭砸身亡&nbsp;&nbsp;台視新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "df7308b94c9f6f48",
-      "title": "北市文山區傳工安意外 55歲工人慘遭鋼材重壓當場死亡",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5WcU5sOW9EUHB1bGFsUHNiNkFMZGVBQ3l1bUNwbS1rOG9xa2k3YllwWHFkS3Ewcl81cEZaZmVnX3JjSUs5NU5PT0F5QWZCMnpw0gFWQVVfeXFMUEZLN0M4MFpuUWV5b1dUU1lvbmFqMWU0bzZZanlYOVpFM2tHOXNORGlxRUhhZ0lJSnhxblNVSzkyTlh3X3BDX0VVWEtURVhycmFyaFluR2c?oc=5",
-      "pubDate": "Mon, 15 Jun 2026 07:00:00 GMT",
-      "pubTs": 1781506800.0,
-      "desc": "北市文山區傳工安意外 55歲工人慘遭鋼材重壓當場死亡&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "d2385bcacd0d76da",
-      "title": "嘉義縣營造主體安衛家族成立 朝「零職災」目標邁進 - 墨新聞-MORE News",
-      "link": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE1pa3BTaGhXOWJ3eTMyRUtkM2s3SF8ybmd6bmRpZGVQMGNlMk8xZnZ3MUQteFRvelUtd3NuVkZYLWFCdw?oc=5",
-      "pubDate": "Mon, 15 Jun 2026 05:30:19 GMT",
-      "pubTs": 1781501419.0,
-      "desc": "嘉義縣營造主體安衛家族成立 朝「零職災」目標邁進&nbsp;&nbsp;墨新聞-MORE News",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
     },
     {
       "key": "a18a9737287616c9",
@@ -1398,5 +1387,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-06-29T05:21:11.462294+00:00"
+  "lastUpdated": "2026-06-30T04:56:01.896417+00:00"
 }
