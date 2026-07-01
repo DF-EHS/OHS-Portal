@@ -154,11 +154,6 @@
         <span class="nav-icon">🏠</span>首頁
       </a>
 
-      <div class="nav-section">法規合規</div>
-      <a class="nav-item" href="${BASE}law/" data-match="/law/">
-        <span class="nav-icon">📋</span>法規鑑別查詢系統
-      </a>
-
       <div class="nav-section">安全衛生</div>
       <a class="nav-item" href="${BASE}risk/" data-match="/risk/">
         <span class="nav-icon">⚠️</span>危害鑑別及風險評估
@@ -166,8 +161,44 @@
       <a class="nav-item" href="${BASE}accident/" data-match="/accident/">
         <span class="nav-icon">📈</span>職業災害分析系統
       </a>
+      <a class="nav-item" href="${BASE}news/" data-match="/news/">
+        <span class="nav-icon">📰</span>職災情報與安衛動態
+      </a>
+
+      <div class="nav-section">機械設備及化學品</div>
+      <a class="nav-item" href="${BASE}equipment/" data-match="/equipment/">
+        <span class="nav-icon">⚙️</span>機械設備管理
+      </a>
       <a class="nav-item" href="${BASE}chemical/" data-match="/chemical/">
         <span class="nav-icon">⚗️</span>危害性化學品管理
+      </a>
+      <a class="nav-item" href="https://check-system.gm.zerozero.tw/dashboard" target="_blank">
+        <span class="nav-icon">📋</span>自動點檢系統
+      </a>
+
+      <div class="nav-section">人員管理</div>
+      <a class="nav-item" href="${BASE}contract/" data-match="/contract/">
+        <span class="nav-icon">🏗️</span>承攬商管理系統
+      </a>
+      <a class="nav-item" href="${BASE}nurse/" data-match="/nurse/">
+        <span class="nav-icon">🏥</span>職護臨場服務
+      </a>
+      <a class="nav-item" href="https://hr-corptraining.zerozero.tw/certificates" target="_blank">
+        <span class="nav-icon">🪪</span>證照管理
+      </a>
+      <a class="nav-item" href="${BASE}training/" data-match="/training/">
+        <span class="nav-icon">🎓</span>教育訓練教材庫
+      </a>
+
+      <div class="nav-section">制度文件</div>
+      <a class="nav-item" href="${BASE}law/" data-match="/law/">
+        <span class="nav-icon">📋</span>法規鑑別查詢系統
+      </a>
+      <a class="nav-item" href="${BASE}committee/" data-match="/committee/">
+        <span class="nav-icon">📊</span>安全衛生委員會
+      </a>
+      <a class="nav-item" href="${BASE}plans/" data-match="/plans/">
+        <span class="nav-icon">🗂️</span>職業安全衛生計畫書
       </a>
 
       <div class="nav-section">四大防護計畫</div>
@@ -184,42 +215,9 @@
         <span class="nav-icon">🤰</span>母性健康保護
       </a>
 
-      <div class="nav-section">人員管理</div>
-      <a class="nav-item" href="${BASE}training/" data-match="/training/">
-        <span class="nav-icon">🎓</span>教育訓練教材庫
-      </a>
-      <a class="nav-item" href="${BASE}nurse/" data-match="/nurse/">
-        <span class="nav-icon">🏥</span>職護臨場服務
-      </a>
-      <a class="nav-item" href="https://hr-corptraining.zerozero.tw/certificates" target="_blank">
-        <span class="nav-icon">🪪</span>證照管理
-      </a>
-      <a class="nav-item" href="${BASE}contract/" data-match="/contract/">
-        <span class="nav-icon">🏗️</span>承攬商管理系統
-      </a>
-
-      <div class="nav-section">制度文件</div>
-      <a class="nav-item" href="${BASE}committee/" data-match="/committee/">
-        <span class="nav-icon">📊</span>安全衛生委員會
-      </a>
-      <a class="nav-item" href="${BASE}plans/" data-match="/plans/">
-        <span class="nav-icon">🗂️</span>職業安全衛生計畫書
-      </a>
-      <a class="nav-item" href="${BASE}news/" data-match="/news/">
-        <span class="nav-icon">📰</span>職災情報與安衛動態
-      </a>
-
-      <div class="nav-section">消防管理</div>
+      <div class="nav-section">消防</div>
       <a class="nav-item" href="${BASE}fire/" data-match="/fire/">
         <span class="nav-icon">🧯</span>消防管理
-      </a>
-
-      <div class="nav-section">機械設備</div>
-      <a class="nav-item" href="${BASE}equipment/" data-match="/equipment/">
-        <span class="nav-icon">⚙️</span>機械設備管理
-      </a>
-      <a class="nav-item" href="https://check-system.gm.zerozero.tw/dashboard" target="_blank">
-        <span class="nav-icon">📋</span>自動點檢系統
       </a>
 
       <div class="nav-section">個人工具</div>
