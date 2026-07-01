@@ -292,6 +292,11 @@ html,body{width:100%;height:100%;overflow:hidden;
 .th-rose .s-pts li::before{color:var(--rose)}
 .th-rose .img-badge{border-color:var(--rosel)}
 
+.th-teal {background:linear-gradient(148deg,rgba(45,212,191,.80) 0%,rgba(153,246,228,.84) 100%)}
+.th-teal .s-divider{background:#0d9488}
+.th-teal .s-pts li::before{color:#0d9488}
+.th-teal .img-badge{border-color:#99f6e4}
+
 /* ── Unit Quick Nav ── */
 #unit-nav{
   position:fixed;bottom:20px;left:20px;z-index:200;
@@ -418,7 +423,7 @@ html,body{width:100%;height:100%;overflow:hidden;
   <div class="ctn-inner">
     <div class="ctn-unit">課程總覽</div>
     <div class="ctn-ttl">道路交通安全</div>
-    <div class="ctn-sub">本節課程共 4 個單元，約 25 分鐘</div>
+    <div class="ctn-sub">本節課程共 5 個單元，約 25 分鐘</div>
     <div class="ctn-hr"></div>
     <div class="ov-grid">
       <div class="ov-card">
@@ -438,6 +443,11 @@ html,body{width:100%;height:100%;overflow:hidden;
       </div>
       <div class="ov-card">
         <div class="ov-no">UNIT 04</div>
+        <div class="ov-ttl">指差確認</div>
+        <div class="ov-sub">眼到 · 手到 · 口到──確認動作外顯化</div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-no">UNIT 05</div>
         <div class="ov-ttl">重大事故案例</div>
         <div class="ov-sub">視野死角 · 行人路權 · 國道二次事故</div>
       </div>
@@ -593,26 +603,11 @@ html,body{width:100%;height:100%;overflow:hidden;
 <!-- ══════════════════════════════════════════
      SLIDE 15 ─ 出勤時間規定
 ══════════════════════════════════════════ -->
-<div class="slide s-ctn th-sky">
-  <div class="ctn-inner">
-    <div class="ctn-unit">單元 02 ─ 分心與疲勞駕駛</div>
-    <div class="ctn-ttl">出勤時間規定</div>
-    <div class="ctn-sub">職業駕駛法定工時限制（大客車、大貨車一體適用）</div>
-    <div class="ctn-hr"></div>
-    <div class="kn-grid" style="max-width:560px">
-      <div class="kn-card">
-        <div class="kn-num" style="color:var(--p)">10<small style="font-size:.4em;font-weight:600"> 小時</small></div>
-        <div class="kn-lbl">每日最長駕車時間上限</div>
-      </div>
-      <div class="kn-card">
-        <div class="kn-num" style="color:var(--rose)">4<small style="font-size:.4em;font-weight:600"> 小時</small></div>
-        <div class="kn-lbl">連續駕車上限<br>超過即須休息至少 <strong>30 分鐘</strong></div>
-      </div>
-    </div>
-    <div class="note-box">
-      ⚠️ 無論是<strong>營業用</strong>或<strong>自用</strong>大客貨車，以上規定均一體適用。<br>
-      疲勞駕駛肇事，依法須負刑事及民事雙重責任。
-    </div>
+<div class="slide s-img th-sky">
+  <span class="img-badge">單元 02 ─ 分心與疲勞駕駛</span>
+  <div class="img-wrap">
+    <img src="image/octime.png" alt="出勤時間規定">
+    <div class="img-cap">每日駕車不得超過 10 小時，連續駕車達 4 小時須強制休息 30 分鐘──違反規定肇事，負刑事及民事雙重責任</div>
   </div>
 </div>
 
@@ -712,8 +707,34 @@ html,body{width:100%;height:100%;overflow:hidden;
 <!-- ══════════════════════════════════════════
      SLIDE 24 ─ 單元 04 分隔頁
 ══════════════════════════════════════════ -->
-<div class="slide s-sec th-rose">
+<div class="slide s-sec th-teal">
   <div class="unit-no">單元 04</div>
+  <div class="sec-ttl">指差確認</div>
+  <div class="sec-sub">眼到、手到、口到──讓安全確認成為習慣</div>
+  <div class="s-divider"></div>
+  <ul class="s-pts">
+    <li>指差確認將確認動作外顯化，有效減少人為疏漏</li>
+    <li>出車前逐一對各檢查項目執行指差確認，確保無一遺漏</li>
+    <li>眼睛看、手指指、嘴巴說──三位一體讓失誤無所遁形</li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 25 ─ 指差確認圖解
+══════════════════════════════════════════ -->
+<div class="slide s-img th-teal">
+  <span class="img-badge">單元 04 ─ 指差確認</span>
+  <div class="img-wrap">
+    <img src="image/fingercall.png" alt="指差確認操作要領">
+    <div class="img-cap">眼睛確認目標、手指明確指向、口語大聲說出──動作、手指、語言三者同步，讓確認不再流於形式</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 26 ─ 單元 05 分隔頁
+══════════════════════════════════════════ -->
+<div class="slide s-sec th-rose">
+  <div class="unit-no">單元 05</div>
   <div class="sec-ttl">重大事故案例</div>
   <div class="sec-sub">真實事故，真實教訓</div>
   <div class="s-divider"></div>
@@ -730,7 +751,7 @@ html,body{width:100%;height:100%;overflow:hidden;
 ══════════════════════════════════════════ -->
 <div class="slide s-ctn th-rose">
   <div class="ctn-inner">
-    <div class="ctn-unit">單元 04 ─ 案例 1</div>
+    <div class="ctn-unit">單元 05 ─ 案例 1</div>
     <div class="ctn-ttl">視野死角確認</div>
     <div class="ctn-sub">大型車轉彎時，盲區裡的生死一線</div>
     <div class="ctn-hr"></div>
@@ -763,7 +784,7 @@ html,body{width:100%;height:100%;overflow:hidden;
 ══════════════════════════════════════════ -->
 <div class="slide s-ctn th-rose">
   <div class="ctn-inner">
-    <div class="ctn-unit">單元 04 ─ 案例 2</div>
+    <div class="ctn-unit">單元 05 ─ 案例 2</div>
     <div class="ctn-ttl">車輛未停讓行人</div>
     <div class="ctn-sub">行人路權修法後，不讓就是違法</div>
     <div class="ctn-hr"></div>
@@ -796,7 +817,7 @@ html,body{width:100%;height:100%;overflow:hidden;
 ══════════════════════════════════════════ -->
 <div class="slide s-ctn th-rose">
   <div class="ctn-inner">
-    <div class="ctn-unit">單元 04 ─ 案例 3</div>
+    <div class="ctn-unit">單元 05 ─ 案例 3</div>
     <div class="ctn-ttl">避免國道二次事故</div>
     <div class="ctn-sub">第一次事故你可能是受害者，第二次事故你不能成為犧牲者</div>
     <div class="ctn-hr"></div>
@@ -855,8 +876,9 @@ html,body{width:100%;height:100%;overflow:hidden;
     <button class="ul-btn" onclick="jumpTo(2)"><span class="ul-dot" style="background:#d97706"></span>01 大型車特性</button>
     <button class="ul-btn" onclick="jumpTo(8)"><span class="ul-dot" style="background:#0284c7"></span>02 分心與疲勞</button>
     <button class="ul-btn" onclick="jumpTo(15)"><span class="ul-dot" style="background:#16a34a"></span>03 行車前安全檢查</button>
-    <button class="ul-btn" onclick="jumpTo(23)"><span class="ul-dot" style="background:#e11d48"></span>04 重大事故案例</button>
-    <button class="ul-btn" onclick="jumpTo(27)"><span class="ul-dot" style="background:#16a34a"></span>結語</button>
+    <button class="ul-btn" onclick="jumpTo(23)"><span class="ul-dot" style="background:#0d9488"></span>04 指差確認</button>
+    <button class="ul-btn" onclick="jumpTo(25)"><span class="ul-dot" style="background:#e11d48"></span>05 重大事故案例</button>
+    <button class="ul-btn" onclick="jumpTo(29)"><span class="ul-dot" style="background:#16a34a"></span>結語</button>
   </div>
   <button id="unit-toggle" onclick="toggleUnitNav()">☰ 單元</button>
 </div>
@@ -934,7 +956,7 @@ if (sessionStorage.getItem('roadsafety2026-auth') === '1') {
 // Unit quick nav
 const unitList = document.getElementById('unit-list');
 const ulBtns   = document.querySelectorAll('.ul-btn');
-const starts   = [0, 1, 2, 8, 15, 23, 27];
+const starts   = [0, 1, 2, 8, 15, 23, 25, 29];
 
 function toggleUnitNav() {
   unitList.classList.toggle('open');
