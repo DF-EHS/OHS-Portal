@@ -285,7 +285,38 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
   .detail-blk{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;}
   body{background:#fff;}
 }
+
+/* ── 填報模式橫幅 ── */
+#fill-mode-banner{display:none;align-items:center;gap:12px;padding:10px 20px;
+  background:#dbeafe;color:#1e40af;font-size:13px;font-weight:600;border-bottom:2px solid #93c5fd;}
+#fill-mode-banner .fmb-vendor{font-size:12px;color:#3b82f6;margin-left:4px;}
+
+/* ── 廠商名冊 view ── */
+#v-vendors .vendor-tbl-wrap{overflow-x:auto;}
+.vendor-tbl{width:100%;border-collapse:collapse;font-size:13px;}
+.vendor-tbl th{background:#f1f5f9;padding:10px 12px;text-align:left;font-weight:600;
+  color:var(--navy);border-bottom:2px solid var(--border);}
+.vendor-tbl td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.vendor-tbl tr:hover td{background:#f8fafc;}
+.vendor-code-badge{display:inline-block;padding:2px 8px;background:#dbeafe;color:#1d4ed8;
+  border-radius:10px;font-size:11px;font-weight:700;letter-spacing:.3px;}
+.add-vendor-row td{background:#f0fdf4;padding:8px 12px;}
+.add-vendor-row input{padding:5px 8px;border:1px solid var(--border);border-radius:6px;
+  font-size:12px;font-family:inherit;width:100%;}
+
+/* ── QR Code Modal ── */
+#qr-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9000;
+  align-items:center;justify-content:center;}
+.qr-box{background:#fff;border-radius:16px;padding:32px;text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);max-width:360px;width:90%;}
+.qr-box h3{font-size:18px;color:var(--navy);margin-bottom:4px;}
+.qr-box .qr-subtitle{font-size:12px;color:var(--sub);margin-bottom:20px;}
+#qr-canvas{display:block;margin:0 auto 16px;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.1);}
+.qr-url{font-size:10px;color:#94a3b8;word-break:break-all;margin-bottom:20px;
+  background:#f8fafc;padding:8px;border-radius:6px;}
+.qr-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
 </head>
 <body>
 
@@ -301,6 +332,12 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
     <span>大豐環保科技</span>
   </div>
 </header>
+
+<!-- ── 填報模式橫幅（掃碼進入時顯示） ── -->
+<div id="fill-mode-banner">
+  <span>📋 大豐環保科技 — 承攬商進場填報</span>
+  <span id="fill-vendor-name" class="fmb-vendor"></span>
+</div>
 
 <!-- ── Step bar ── -->
 <div id="step-bar">
@@ -379,6 +416,20 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
         <div class="hc-title">承攬商評鑑</div>
         <div class="hc-desc">完工後對承攬商進行安衛評核，一覽各廠商評鑑狀態、得分及綜合結果</div>
         <div class="hc-btn">前往評鑑 →</div>
+      </div>
+    </div>
+    <div class="home-cards" style="margin-top:20px;grid-template-columns:1fr 1fr">
+      <div class="home-card" onclick="showView('vendors')">
+        <div class="hc-icon">🏢</div>
+        <div class="hc-title">廠商名冊管理</div>
+        <div class="hc-desc">建立固定合作廠商資料，為每家廠商產生專屬 QR Code，掃碼後自動帶入公司名稱、聯絡人及電話</div>
+        <div class="hc-btn">管理廠商 →</div>
+      </div>
+      <div class="home-card" onclick="showWalkinQR()">
+        <div class="hc-icon">📱</div>
+        <div class="hc-title">產生通用 QR Code</div>
+        <div class="hc-desc">產生通用進場填報 QR Code，適合列印張貼於警衛室或工地入口，臨時廠商掃碼即可填報</div>
+        <div class="hc-btn">產生 QR Code →</div>
       </div>
     </div>
     <div class="home-cards" style="margin-top:20px;grid-template-columns:1fr 1fr 1fr">
@@ -1021,6 +1072,64 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
   <div id="eval-empty" class="empty-state" style="display:none">📭 目前尚無進場申請紀錄</div>
 </div>
 
+<!-- ════ View: Vendors ════ -->
+<div id="v-vendors" style="display:none">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:nowrap">
+    <h2 style="font-size:17px;color:var(--navy);white-space:nowrap">🏢 廠商名冊</h2>
+    <div style="margin-left:auto;display:flex;gap:8px;flex-shrink:0">
+      <button class="btn btn-sm btn-primary" onclick="showWalkinQR()">📱 通用 QR Code</button>
+      <button class="btn btn-sm btn-success" onclick="showAddVendorForm()">＋ 新增廠商</button>
+      <button class="btn btn-sm" onclick="loadVendors()">↺ 重新載入</button>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--sub);margin-bottom:16px">
+    為每家廠商產生專屬 QR Code，廠商掃碼後自動帶入公司名稱、聯絡人及電話，免手動輸入。
+  </p>
+  <div class="vendor-tbl-wrap">
+    <table class="vendor-tbl">
+      <thead>
+        <tr>
+          <th style="width:100px">廠商代碼</th>
+          <th>廠商名稱</th>
+          <th style="width:100px">聯絡人</th>
+          <th style="width:130px">電話</th>
+          <th>備註</th>
+          <th style="width:200px">操作</th>
+        </tr>
+      </thead>
+      <tbody id="vendor-tbody">
+        <tr><td colspan="6" style="text-align:center;padding:20px;color:var(--sub)">載入中…</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- 新增廠商列 -->
+  <div id="add-vendor-row" style="display:none;margin-top:16px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:16px">
+    <div style="font-weight:600;color:#166534;margin-bottom:12px">＋ 新增廠商</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:12px">
+      <div>
+        <label style="font-size:11px;color:var(--sub);display:block;margin-bottom:4px">廠商名稱 *</label>
+        <input id="new-vendor-name" placeholder="例：○○工程行" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;width:100%">
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--sub);display:block;margin-bottom:4px">聯絡人</label>
+        <input id="new-vendor-contact" placeholder="例：王師傅" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;width:100%">
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--sub);display:block;margin-bottom:4px">電話</label>
+        <input id="new-vendor-phone" placeholder="例：0912-345-678" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;width:100%">
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--sub);display:block;margin-bottom:4px">備註</label>
+        <input id="new-vendor-note" placeholder="例：電焊/管路" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;width:100%">
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-sm btn-success" onclick="submitNewVendor()">💾 儲存廠商</button>
+      <button class="btn btn-sm" onclick="hideAddVendorForm()">取消</button>
+    </div>
+  </div>
+</div>
+
 </div><!-- /main -->
 
 <!-- ── Edit Modal ── -->
@@ -1052,6 +1161,21 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
         <button class="btn" onclick="closeEvalModal()">取消</button>
         <button class="btn btn-success" onclick="saveEval()">💾 儲存評核</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── QR Code Modal ── -->
+<div id="qr-modal" onclick="if(event.target===this)closeQRModal()">
+  <div class="qr-box">
+    <h3 id="qr-modal-title">廠商名稱</h3>
+    <div class="qr-subtitle">掃描 QR Code 進入填報頁面</div>
+    <canvas id="qr-canvas" width="256" height="256"></canvas>
+    <div class="qr-url" id="qr-modal-url"></div>
+    <div class="qr-actions">
+      <button class="btn btn-sm btn-primary" onclick="downloadQR()">⬇ 下載 PNG</button>
+      <button class="btn btn-sm" onclick="printQR()">🖨 列印</button>
+      <button class="btn btn-sm" onclick="closeQRModal()">✕ 關閉</button>
     </div>
   </div>
 </div>
@@ -1225,14 +1349,15 @@ function toast(msg, type=''){
 // ════════════════════════════════════════════════
 function showView(name){
   if(name !== 'login' && !currentRole){ showView('login'); return; }
-  if((name === 'records' || name === 'eval-overview') && currentRole !== 'admin'){ toast('此帳號無查詢紀錄的權限','bad'); return; }
-  ['login','home','wizard','wizard-hotwork','wizard-special','success','records','rec-detail','eval-overview'].forEach(v=>{
+  if((name === 'records' || name === 'eval-overview' || name === 'vendors') && currentRole !== 'admin'){ toast('此帳號無查詢紀錄的權限','bad'); return; }
+  ['login','home','wizard','wizard-hotwork','wizard-special','success','records','rec-detail','eval-overview','vendors'].forEach(v=>{
     document.getElementById('v-'+v).style.display = 'none';
   });
   document.getElementById('v-'+name).style.display = '';
   document.getElementById('step-bar').style.display = name==='wizard' ? 'block' : 'none';
   if(name==='records') renderRecords().catch(()=>{});
   if(name==='eval-overview') renderEvalOverview().catch(()=>{});
+  if(name==='vendors') loadVendors().catch(()=>{});
   if(name==='wizard'){
     const t=new Date().toLocaleDateString('sv');
     const sd=document.getElementById('f-date-start');
@@ -4856,6 +4981,228 @@ ${catRow('危險管路拆、鑽孔作業', PL, r.pipelineChecks, supC.slice(16,1
   win.document.close(); win.focus();
   setTimeout(()=>win.print(), 600);
 }
+
+// ════════════════════════════════════════════════
+//  廠商名冊 & QR Code 掃碼填報
+// ════════════════════════════════════════════════
+
+const FILL_BASE = location.origin + location.pathname;
+let _vendorList = [];
+const _esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+// ── URL 參數偵測（掃碼入口）──
+function initFromUrl() {
+  const params = new URLSearchParams(location.search);
+  if (params.get('mode') !== 'fill') return;
+
+  // 隱藏 OHS sidebar
+  const sb = document.getElementById('ohs-sidebar') || document.querySelector('.ohs-sidebar');
+  if (sb) sb.style.display = 'none';
+
+  // 顯示填報模式橫幅
+  document.getElementById('fill-mode-banner').style.display = 'flex';
+
+  // 設定 guest 角色，跳過登入畫面
+  currentRole = 'guest';
+  document.getElementById('hdr-portal').style.display = 'none';
+  document.getElementById('hdr-home').style.display = '';
+  document.getElementById('hdr-logout').style.display = '';
+  document.getElementById('hdr-role').style.display = '';
+  document.getElementById('hdr-role').textContent = '承攬商';
+  document.getElementById('home-guest-layout').style.display = '';
+  document.getElementById('home-admin-layout').style.display = 'none';
+
+  // 直接展開表單
+  startWizard();
+
+  // 若有廠商代碼，從 GAS 載入並預填
+  const vcode = params.get('v');
+  if (vcode) {
+    apiGet({ action: 'listVendors' }).then(res => {
+      if (!res || !res.vendors) return;
+      const vendor = res.vendors.find(v => v.code === vcode);
+      if (vendor) _prefillVendor(vendor);
+    }).catch(() => {});
+  }
+}
+
+function _prefillVendor(vendor) {
+  const tryFill = () => {
+    const fc = document.getElementById('f-company');
+    if (!fc) { setTimeout(tryFill, 150); return; }
+    if (vendor.name)    { fc.value = vendor.name;    fc.style.background = '#eff6ff'; }
+    const fs = document.getElementById('f-supervisor');
+    if (fs && vendor.contact) { fs.value = vendor.contact; fs.style.background = '#eff6ff'; }
+    const fp = document.getElementById('f-phone');
+    if (fp && vendor.phone)   { fp.value = vendor.phone;   fp.style.background = '#eff6ff'; }
+    // 更新橫幅顯示廠商名稱
+    if (vendor.name) document.getElementById('fill-vendor-name').textContent = '｜ 廠商：' + vendor.name;
+  };
+  tryFill();
+}
+
+// ── 廠商名冊 ──
+async function loadVendors() {
+  const tbody = document.getElementById('vendor-tbody');
+  if (tbody) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--sub)">載入中…</td></tr>';
+  try {
+    const res = await apiGet({ action: 'listVendors' });
+    _vendorList = (res && res.vendors) ? res.vendors : [];
+    renderVendors(_vendorList);
+  } catch(e) {
+    if (tbody) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--red);padding:20px">載入失敗，請按「↺ 重新載入」</td></tr>';
+  }
+}
+
+function renderVendors(list) {
+  const tbody = document.getElementById('vendor-tbody');
+  if (!tbody) return;
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:28px;color:var(--sub)">尚無廠商資料，請點「＋ 新增廠商」開始建立</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map((v, i) => `
+    <tr>
+      <td><span class="vendor-code-badge">${_esc(v.code)}</span></td>
+      <td style="font-weight:600">${_esc(v.name)}</td>
+      <td>${_esc(v.contact||'—')}</td>
+      <td>${_esc(v.phone||'—')}</td>
+      <td style="color:var(--sub);font-size:12px">${_esc(v.note||'')}</td>
+      <td>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-sm btn-primary" onclick="_showQRByIdx(${i})">📱 QR Code</button>
+          <button class="btn btn-sm" onclick="_editVendorByIdx(${i})">✏️ 編輯</button>
+          <button class="btn btn-sm btn-danger" onclick="_deleteVendor('${_esc(v.code)}','${_esc(v.name)}')">🗑️</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function _showQRByIdx(i)    { showQRModal(_vendorList[i]); }
+function _editVendorByIdx(i){ editVendorRow(_vendorList[i]); }
+
+function showAddVendorForm() {
+  document.getElementById('add-vendor-row').style.display = '';
+  document.getElementById('new-vendor-name').value    = '';
+  document.getElementById('new-vendor-contact').value = '';
+  document.getElementById('new-vendor-phone').value   = '';
+  document.getElementById('new-vendor-note').value    = '';
+  document.getElementById('new-vendor-name').focus();
+}
+
+function hideAddVendorForm() {
+  document.getElementById('add-vendor-row').style.display = 'none';
+}
+
+async function submitNewVendor() {
+  const name = document.getElementById('new-vendor-name').value.trim();
+  if (!name) { toast('請填寫廠商名稱', 'bad'); return; }
+  const vendor = {
+    name,
+    contact: document.getElementById('new-vendor-contact').value.trim(),
+    phone:   document.getElementById('new-vendor-phone').value.trim(),
+    note:    document.getElementById('new-vendor-note').value.trim(),
+  };
+  try {
+    showLoading('儲存中…');
+    await apiPost({ action: 'saveVendor', vendor });
+    hideLoading();
+    hideAddVendorForm();
+    toast('廠商已新增');
+    await loadVendors();
+  } catch(e) {
+    hideLoading();
+    toast('儲存失敗：' + e.message, 'bad');
+  }
+}
+
+function editVendorRow(vendor) {
+  const name    = prompt('廠商名稱', vendor.name);       if (name    === null) return;
+  const contact = prompt('聯絡人',   vendor.contact||''); if (contact === null) return;
+  const phone   = prompt('電話',     vendor.phone||'');   if (phone   === null) return;
+  const note    = prompt('備註',     vendor.note||'');    if (note    === null) return;
+  apiPost({ action: 'saveVendor', vendor: { code: vendor.code, name, contact, phone, note } })
+    .then(() => { toast('已更新'); loadVendors(); })
+    .catch(e  => toast('更新失敗：' + e.message, 'bad'));
+}
+
+async function _deleteVendor(code, name) {
+  if (!confirm(`確定要刪除廠商「${name}」？此操作無法復原。`)) return;
+  try {
+    showLoading('刪除中…');
+    await apiPost({ action: 'delVendor', code });
+    hideLoading();
+    toast('已刪除');
+    await loadVendors();
+  } catch(e) {
+    hideLoading();
+    toast('刪除失敗：' + e.message, 'bad');
+  }
+}
+
+// ── QR Code 產生 / Modal ──
+function showQRModal(vendor) {
+  const url = FILL_BASE + '?mode=fill&v=' + encodeURIComponent(vendor.code);
+  _openQRModal(vendor.name, url);
+}
+
+function showWalkinQR() {
+  const url = FILL_BASE + '?mode=fill';
+  _openQRModal('通用進場（臨時廠商）', url);
+}
+
+function _openQRModal(title, url) {
+  document.getElementById('qr-modal-title').textContent = title;
+  document.getElementById('qr-modal-url').textContent   = url;
+  const canvas = document.getElementById('qr-canvas');
+  QRCode.toCanvas(canvas, url, { width: 256, margin: 2,
+    color: { dark: '#1e3a5f', light: '#ffffff' } }, err => { if(err) console.error(err); });
+  document.getElementById('qr-modal').style.display = 'flex';
+}
+
+function closeQRModal() {
+  document.getElementById('qr-modal').style.display = 'none';
+}
+
+function downloadQR() {
+  const canvas = document.getElementById('qr-canvas');
+  const title  = document.getElementById('qr-modal-title').textContent;
+  const a = document.createElement('a');
+  a.download = '進場QRCode_' + title.replace(/[^\w一-鿿]/g,'_') + '.png';
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+}
+
+function printQR() {
+  const canvas  = document.getElementById('qr-canvas');
+  const title   = document.getElementById('qr-modal-title').textContent;
+  const url     = document.getElementById('qr-modal-url').textContent;
+  const imgData = canvas.toDataURL('image/png');
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>QR Code — ${title}</title>
+  <style>*{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Microsoft JhengHei",sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px;text-align:center;background:#fff;}
+  .brand{font-size:13px;color:#64748b;margin-bottom:20px;font-weight:600;}
+  .title{font-size:22px;font-weight:700;color:#1e3a5f;margin-bottom:8px;}
+  img{display:block;margin:20px auto;border-radius:8px;box-shadow:0 2px 16px rgba(0,0,0,.12);}
+  .url{font-size:10px;color:#94a3b8;word-break:break-all;margin-top:12px;max-width:300px;}
+  .hint{font-size:13px;color:#64748b;margin-top:16px;}
+  @media print{body{padding:20px;}}</style></head>
+  <body>
+  <div class="brand">大豐環保科技 — 承攬商進場管理系統</div>
+  <div class="title">${title}</div>
+  <div style="font-size:13px;color:#475569;margin-bottom:4px">請掃描 QR Code 填寫進場申請</div>
+  <img src="${imgData}" width="256" height="256">
+  <div class="url">${url}</div>
+  <div class="hint">📱 使用手機掃描上方 QR Code 即可開啟填報表單</div>
+  </body></html>`);
+  w.document.close();
+  setTimeout(() => w.print(), 500);
+}
+
+// ── 頁面載入時偵測 URL 參數 ──
+initFromUrl();
 </script>
 
 <!-- ── Full-screen Signature Overlay ── -->
