@@ -7,6 +7,9 @@
 //  col9  作業結束日期 col10 工作區域   col11 作業時段   col12 作業人員數
 //  col13 負責人姓名  col14 已編輯時間  col15 完整資料JSON（API 讀取用）
 //
+//  廠商名冊分頁欄位（共 6 欄）：
+//  A  廠商代碼(VDR-001)  B  廠商名稱  C  聯絡人  D  電話  E  備註  F  建立時間
+//
 //  更新步驟：
 //  1. 全選→刪除→貼上此程式碼→儲存（Ctrl+S）
 //  2. 部署 → 管理部署 → 鉛筆圖示 → 版本選「新增版本」→ 部署
@@ -38,6 +41,7 @@ function _getRecordsSheet(ss) {
   var sheets = ss.getSheets();
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].getName() === 'evaluations') continue;
+    if (sheets[i].getName() === '廠商名冊') continue;
     if (sheets[i].getLastRow() > 1) return sheets[i];
   }
   var fallback = ss.getSheetByName('進場申請') || ss.insertSheet('進場申請');
@@ -55,7 +59,18 @@ function _getEvalSheet(ss) {
   return sheet;
 }
 
-// 依 col1（紀錄編號）找出所在列號（2-based）
+// 取得廠商名冊分頁（需要時自動建立）
+function _getVendorSheet(ss) {
+  var sheet = ss.getSheetByName('廠商名冊');
+  if (!sheet) {
+    sheet = ss.insertSheet('廠商名冊');
+    sheet.appendRow(['code', 'name', 'contact', 'phone', 'note', 'createdAt']);
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
+}
+
+// 依 col1 找出列號（2-based），找不到回傳 -1
 function _findRow(sheet, id) {
   var last = sheet.getLastRow();
   if (last < 2) return -1;
@@ -117,6 +132,35 @@ function _recordToRow(data) {
   ];
 }
 
+// 將廠商名冊列轉為物件
+function _vendorSheetToObjects(sheet) {
+  var last = sheet.getLastRow();
+  if (last < 2) return [];
+  var rows = sheet.getRange(2, 1, last - 1, 6).getValues();
+  return rows
+    .filter(function(r) { return r[0]; })
+    .map(function(r) {
+      return {
+        code:      String(r[0] || ''),
+        name:      String(r[1] || ''),
+        contact:   String(r[2] || ''),
+        phone:     String(r[3] || ''),
+        note:      String(r[4] || ''),
+        createdAt: String(r[5] || ''),
+      };
+    });
+}
+
+// 自動產生下一個廠商代碼（VDR-001, VDR-002, …）
+function _nextVendorCode(sheet) {
+  var vendors = _vendorSheetToObjects(sheet);
+  if (!vendors.length) return 'VDR-001';
+  var nums = vendors.map(function(v) {
+    return parseInt((v.code || '').replace('VDR-', '')) || 0;
+  });
+  return 'VDR-' + String(Math.max.apply(null, nums) + 1).padStart(3, '0');
+}
+
 // ── doGet ──────────────────────────────────────────────────────────
 function doGet(e) {
   try {
@@ -124,6 +168,7 @@ function doGet(e) {
     var action = params.action || 'list';
     var ss = SpreadsheetApp.getActiveSpreadsheet();
 
+    // ── 列出所有進場申請（摘要）──
     if (action === 'list') {
       var sheet = _getRecordsSheet(ss);
       var last = sheet.getLastRow();
@@ -137,6 +182,8 @@ function doGet(e) {
         records.push({
           id: rec.id,
           submittedAt: rec.submittedAt,
+          editedAt: rec.editedAt || null,
+          type: rec.type || 'regular',
           basic: {
             company:    (rec.basic && rec.basic.company)    || '',
             workname:   (rec.basic && rec.basic.workname)   || '',
@@ -150,6 +197,7 @@ function doGet(e) {
       return _resp({ success: true, records: records });
     }
 
+    // ── 取得單筆完整紀錄 ──
     if (action === 'get') {
       var id = params.id;
       if (!id) return _resp({ success: false, error: '缺少 id 參數' });
@@ -161,6 +209,7 @@ function doGet(e) {
       return _resp({ success: true, record: _rowToRecord(row) });
     }
 
+    // ── 取得單筆評核 ──
     if (action === 'getEval') {
       var id = params.id;
       if (!id) return _resp({ ok: false, data: null });
@@ -172,12 +221,20 @@ function doGet(e) {
       return _resp({ ok: true, data: JSON.parse(dataStr) });
     }
 
+    // ── 列出所有有評核的紀錄 ID ──
     if (action === 'listEvals') {
       var sheet = ss.getSheetByName('evaluations');
       if (!sheet || sheet.getLastRow() < 2) return _resp({ ok: true, ids: [] });
       var ids = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1)
         .getValues().flat().map(String).filter(Boolean);
       return _resp({ ok: true, ids: ids });
+    }
+
+    // ── 列出所有廠商 ──
+    if (action === 'listVendors') {
+      var sheet = _getVendorSheet(ss);
+      var vendors = _vendorSheetToObjects(sheet);
+      return _resp({ ok: true, vendors: vendors });
     }
 
     return _resp({ success: false, error: '未知的 action: ' + action });
@@ -194,6 +251,7 @@ function doPost(e) {
     var action = payload.action;
     var ss = SpreadsheetApp.getActiveSpreadsheet();
 
+    // ── 新增進場申請 ──
     if (action === 'submit') {
       var data = payload.data;
       if (!data || !data.id) return _resp({ success: false, error: '資料格式錯誤' });
@@ -202,6 +260,7 @@ function doPost(e) {
       return _resp({ success: true, id: data.id });
     }
 
+    // ── 更新進場申請（含動火/特殊危害巡檢）──
     if (action === 'update') {
       var id = payload.id;
       var data = payload.data;
@@ -211,9 +270,10 @@ function doPost(e) {
       if (rowNum < 0) return _resp({ success: false, error: '找不到此紀錄' });
       var row = _recordToRow(data);
       sheet.getRange(rowNum, 1, 1, row.length).setValues([row]);
-      return _resp({ success: true });
+      return _resp({ success: true, ok: true });
     }
 
+    // ── 刪除進場申請 ──
     if (action === 'delete') {
       var id = payload.id;
       if (!id) return _resp({ success: false, error: '缺少 id' });
@@ -224,6 +284,7 @@ function doPost(e) {
       return _resp({ success: true });
     }
 
+    // ── 儲存完工評核 ──
     if (action === 'saveEval') {
       var id = payload.id;
       var data = payload.data;
@@ -237,6 +298,37 @@ function doPost(e) {
       } else {
         sheet.appendRow([String(id), dataStr, now, payload.savedBy || '']);
       }
+      return _resp({ ok: true });
+    }
+
+    // ── 新增或更新廠商 ──
+    if (action === 'saveVendor') {
+      var v = payload.vendor || {};
+      if (!v.name) return _resp({ ok: false, error: 'name required' });
+      var sheet = _getVendorSheet(ss);
+
+      if (!v.code) {
+        // 無代碼 → 新增，自動產生流水號
+        var code = _nextVendorCode(sheet);
+        sheet.appendRow([code, v.name, v.contact || '', v.phone || '', v.note || '', new Date().toISOString()]);
+        return _resp({ ok: true, code: code });
+      } else {
+        // 有代碼 → 找到對應列更新
+        var rowNum = _findRow(sheet, v.code);
+        if (rowNum < 0) return _resp({ ok: false, error: 'vendor not found: ' + v.code });
+        sheet.getRange(rowNum, 2, 1, 4).setValues([[v.name, v.contact || '', v.phone || '', v.note || '']]);
+        return _resp({ ok: true });
+      }
+    }
+
+    // ── 刪除廠商 ──
+    if (action === 'delVendor') {
+      var code = payload.code;
+      if (!code) return _resp({ ok: false, error: 'code required' });
+      var sheet = _getVendorSheet(ss);
+      var rowNum = _findRow(sheet, code);
+      if (rowNum < 0) return _resp({ ok: false, error: 'vendor not found: ' + code });
+      sheet.deleteRow(rowNum);
       return _resp({ ok: true });
     }
 

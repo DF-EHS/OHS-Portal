@@ -1079,6 +1079,7 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
     <div style="margin-left:auto;display:flex;gap:8px;flex-shrink:0">
       <button class="btn btn-sm btn-primary" onclick="showWalkinQR()">📱 通用 QR Code</button>
       <button class="btn btn-sm btn-success" onclick="showAddVendorForm()">＋ 新增廠商</button>
+      <button class="btn btn-sm" style="background:#f0fdf4;border-color:#86efac;color:#166534" onclick="openImportModal()">📥 從進場記錄匯入</button>
       <button class="btn btn-sm" onclick="loadVendors()">↺ 重新載入</button>
     </div>
   </div>
@@ -1176,6 +1177,19 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
       <button class="btn btn-sm btn-primary" onclick="downloadQR()">⬇ 下載 PNG</button>
       <button class="btn btn-sm" onclick="printQR()">🖨 列印</button>
       <button class="btn btn-sm" onclick="closeQRModal()">✕ 關閉</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── 從進場記錄匯入廠商 Modal ── -->
+<div id="import-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9100;align-items:center;justify-content:center" onclick="if(event.target===this)closeImportModal()">
+  <div style="background:#fff;border-radius:16px;padding:28px;max-width:480px;width:90%;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <h3 style="font-size:16px;color:var(--navy);margin-bottom:4px">📥 從進場記錄匯入廠商</h3>
+    <p style="font-size:12px;color:var(--sub);margin-bottom:16px;line-height:1.6">從歷史進場記錄萃取公司名稱，已在廠商名冊中的將不會重複顯示。</p>
+    <div id="import-list" style="flex:1;overflow-y:auto;border:1px solid var(--border);border-radius:8px;min-height:80px;max-height:360px"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
+      <button class="btn btn-sm" onclick="closeImportModal()">取消</button>
+      <button class="btn btn-sm btn-success" onclick="doImportVendors()">✓ 匯入選取</button>
     </div>
   </div>
 </div>
@@ -5155,10 +5169,23 @@ function showWalkinQR() {
 function _openQRModal(title, url) {
   document.getElementById('qr-modal-title').textContent = title;
   document.getElementById('qr-modal-url').textContent   = url;
+  document.getElementById('qr-modal').style.display = 'flex'; // 先開 modal，不讓 QR 錯誤擋住
   const canvas = document.getElementById('qr-canvas');
-  QRCode.toCanvas(canvas, url, { width: 256, margin: 2,
-    color: { dark: '#1e3a5f', light: '#ffffff' } }, err => { if(err) console.error(err); });
-  document.getElementById('qr-modal').style.display = 'flex';
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, 256, 256);
+  try {
+    QRCode.toCanvas(canvas, url, { width: 256, margin: 2,
+      color: { dark: '#1e3a5f', light: '#ffffff' } }, err => { if (err) console.error('QR err:', err); });
+  } catch(e) {
+    ctx.fillStyle = '#f1f5f9';
+    ctx.fillRect(0, 0, 256, 256);
+    ctx.fillStyle = '#64748b';
+    ctx.font = '13px "Microsoft JhengHei",sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('QR Code 產生失敗', 128, 118);
+    ctx.fillText('請確認網路後重試', 128, 140);
+    console.error('QRCode library error:', e);
+  }
 }
 
 function closeQRModal() {
@@ -5199,6 +5226,84 @@ function printQR() {
   </body></html>`);
   w.document.close();
   setTimeout(() => w.print(), 500);
+}
+
+// ── 從進場記錄匯入廠商 ──
+async function openImportModal() {
+  document.getElementById('import-modal').style.display = 'flex';
+  const listEl = document.getElementById('import-list');
+  listEl._candidates = [];
+  listEl.innerHTML = '<div style="text-align:center;padding:24px;color:var(--sub)">載入中…</div>';
+
+  try {
+    const res = await apiGet({ action: 'list' });
+    const records = (res && res.records) ? res.records : [];
+
+    // 萃取唯一公司名，排除已在廠商名冊的
+    const existingNames = new Set(_vendorList.map(v => v.name));
+    const seen = new Set();
+    const candidates = [];
+    records.forEach(r => {
+      const name = (r.basic?.company || '').trim();
+      if (!name || seen.has(name) || existingNames.has(name)) return;
+      seen.add(name);
+      candidates.push({
+        name,
+        contact: r.basic?.supervisor || '',
+        phone:   r.basic?.phone      || '',
+      });
+    });
+
+    listEl._candidates = candidates;
+
+    if (!candidates.length) {
+      listEl.innerHTML = '<div style="text-align:center;padding:24px;color:var(--sub)">沒有可新增的廠商<br><span style="font-size:11px">進場記錄中的公司均已在廠商名冊中</span></div>';
+      return;
+    }
+
+    listEl.innerHTML = candidates.map((c, i) => `
+      <label style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--border)">
+        <input type="checkbox" checked data-idx="${i}" style="margin-top:2px;flex-shrink:0;width:15px;height:15px">
+        <div>
+          <div style="font-weight:600;font-size:13px">${_esc(c.name)}</div>
+          <div style="font-size:11px;color:var(--sub);margin-top:2px">
+            ${c.contact ? '聯絡人：' + _esc(c.contact) : ''}
+            ${c.contact && c.phone ? '　' : ''}
+            ${c.phone   ? '電話：'   + _esc(c.phone)   : ''}
+            ${!c.contact && !c.phone ? '（無聯絡資料）' : ''}
+          </div>
+        </div>
+      </label>
+    `).join('');
+  } catch(e) {
+    listEl.innerHTML = '<div style="text-align:center;padding:24px;color:var(--red)">載入失敗：' + _esc(e.message) + '</div>';
+  }
+}
+
+function closeImportModal() {
+  document.getElementById('import-modal').style.display = 'none';
+}
+
+async function doImportVendors() {
+  const listEl = document.getElementById('import-list');
+  const candidates = listEl._candidates || [];
+  const checked = [...listEl.querySelectorAll('input[type=checkbox]:checked')];
+  if (!checked.length) { toast('請至少勾選一家廠商', 'bad'); return; }
+
+  showLoading(`匯入 ${checked.length} 家廠商中…`);
+  let success = 0, fail = 0;
+  for (const cb of checked) {
+    const c = candidates[parseInt(cb.dataset.idx)];
+    if (!c) continue;
+    try {
+      await apiPost({ action: 'saveVendor', vendor: { name: c.name, contact: c.contact, phone: c.phone } });
+      success++;
+    } catch(_) { fail++; }
+  }
+  hideLoading();
+  closeImportModal();
+  toast(fail ? `已匯入 ${success} 家（${fail} 家失敗）` : `成功匯入 ${success} 家廠商`, fail ? 'bad' : 'ok');
+  await loadVendors();
 }
 
 // ── 頁面載入時偵測 URL 參數 ──
