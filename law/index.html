@@ -1221,6 +1221,11 @@ async function renderAuditPanel(src) {
     </table>` : ''}
     ${historyHtml}
   `;
+
+  // 每季自動執行：若本季尚未盤點且資料已就緒，自動觸發
+  if (src.live_amend_checked && (!latest || latest.quarter !== curAuditQuarter())) {
+    runAudit(src);
+  }
 }
 
 function toggleAuditDetail(id) {
