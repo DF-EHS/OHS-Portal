@@ -316,7 +316,6 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
   background:#f8fafc;padding:8px;border-radius:6px;}
 .qr-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
 </head>
 <body>
 
@@ -1171,7 +1170,7 @@ mark{background:#fef9c3;border-radius:2px;padding:0 2px;}
   <div class="qr-box">
     <h3 id="qr-modal-title">廠商名稱</h3>
     <div class="qr-subtitle">掃描 QR Code 進入填報頁面</div>
-    <canvas id="qr-canvas" width="256" height="256"></canvas>
+    <img id="qr-img" width="256" height="256" style="display:block;margin:0 auto 16px;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.1)" alt="QR Code">
     <div class="qr-url" id="qr-modal-url"></div>
     <div class="qr-actions">
       <button class="btn btn-sm btn-primary" onclick="downloadQR()">⬇ 下載 PNG</button>
@@ -5169,43 +5168,48 @@ function showWalkinQR() {
 function _openQRModal(title, url) {
   document.getElementById('qr-modal-title').textContent = title;
   document.getElementById('qr-modal-url').textContent   = url;
-  document.getElementById('qr-modal').style.display = 'flex'; // 先開 modal，不讓 QR 錯誤擋住
-  const canvas = document.getElementById('qr-canvas');
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, 256, 256);
-  try {
-    QRCode.toCanvas(canvas, url, { width: 256, margin: 2,
-      color: { dark: '#1e3a5f', light: '#ffffff' } }, err => { if (err) console.error('QR err:', err); });
-  } catch(e) {
-    ctx.fillStyle = '#f1f5f9';
-    ctx.fillRect(0, 0, 256, 256);
-    ctx.fillStyle = '#64748b';
-    ctx.font = '13px "Microsoft JhengHei",sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('QR Code 產生失敗', 128, 118);
-    ctx.fillText('請確認網路後重試', 128, 140);
-    console.error('QRCode library error:', e);
-  }
+  document.getElementById('qr-modal').style.display = 'flex';
+  // 使用 QR Server API，無需任何外部 JS library
+  const apiUrl = 'https://api.qrserver.com/v1/create-qr-code/'
+    + '?size=256x256'
+    + '&color=1e3a5f'
+    + '&bgcolor=ffffff'
+    + '&margin=10'
+    + '&data=' + encodeURIComponent(url);
+  const img = document.getElementById('qr-img');
+  img.src = '';
+  img.alt = '載入中…';
+  img.style.opacity = '0.4';
+  img.onload  = () => { img.style.opacity = '1'; img.alt = 'QR Code'; };
+  img.onerror = () => { img.alt = '載入失敗，請確認網路連線'; img.style.opacity = '1'; };
+  img.src = apiUrl;
+  img._qrUrl = url; // 供列印用
 }
 
 function closeQRModal() {
   document.getElementById('qr-modal').style.display = 'none';
 }
 
-function downloadQR() {
-  const canvas = document.getElementById('qr-canvas');
-  const title  = document.getElementById('qr-modal-title').textContent;
-  const a = document.createElement('a');
-  a.download = '進場QRCode_' + title.replace(/[^\w一-鿿]/g,'_') + '.png';
-  a.href = canvas.toDataURL('image/png');
-  a.click();
+async function downloadQR() {
+  const img   = document.getElementById('qr-img');
+  const title = document.getElementById('qr-modal-title').textContent;
+  const fname = '進場QRCode_' + title.replace(/[^\w一-鿿]/g,'_') + '.png';
+  try {
+    const res  = await fetch(img.src);
+    const blob = await res.blob();
+    const burl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.download = fname; a.href = burl; a.click();
+    setTimeout(() => URL.revokeObjectURL(burl), 1000);
+  } catch(_) {
+    window.open(img.src, '_blank'); // fallback
+  }
 }
 
 function printQR() {
-  const canvas  = document.getElementById('qr-canvas');
-  const title   = document.getElementById('qr-modal-title').textContent;
-  const url     = document.getElementById('qr-modal-url').textContent;
-  const imgData = canvas.toDataURL('image/png');
+  const img   = document.getElementById('qr-img');
+  const title = document.getElementById('qr-modal-title').textContent;
+  const url   = document.getElementById('qr-modal-url').textContent;
   const w = window.open('', '_blank');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>QR Code — ${title}</title>
   <style>*{box-sizing:border-box;margin:0;padding:0;}
@@ -5220,12 +5224,12 @@ function printQR() {
   <div class="brand">大豐環保科技 — 承攬商進場管理系統</div>
   <div class="title">${title}</div>
   <div style="font-size:13px;color:#475569;margin-bottom:4px">請掃描 QR Code 填寫進場申請</div>
-  <img src="${imgData}" width="256" height="256">
+  <img src="${img.src}" width="256" height="256">
   <div class="url">${url}</div>
   <div class="hint">📱 使用手機掃描上方 QR Code 即可開啟填報表單</div>
   </body></html>`);
   w.document.close();
-  setTimeout(() => w.print(), 500);
+  setTimeout(() => w.print(), 800);
 }
 
 // ── 從進場記錄匯入廠商 ──
