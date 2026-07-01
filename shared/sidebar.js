@@ -194,6 +194,9 @@
       <a class="nav-item" href="${BASE}law/" data-match="/law/">
         <span class="nav-icon">📋</span>法規鑑別查詢系統
       </a>
+      <a class="nav-item" href="${BASE}monitoring/" data-match="/monitoring/">
+        <span class="nav-icon">🔬</span>作業環境監測
+      </a>
       <a class="nav-item" href="${BASE}committee/" data-match="/committee/">
         <span class="nav-icon">📊</span>安全衛生委員會
       </a>

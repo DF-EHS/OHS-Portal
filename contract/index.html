@@ -5025,8 +5025,8 @@ function initFromUrl() {
   document.getElementById('home-guest-layout').style.display = '';
   document.getElementById('home-admin-layout').style.display = 'none';
 
-  // 直接展開表單
-  startWizard();
+  // 顯示選擇申請類型的首頁（讓使用者選 進場申請 / 動火 / 特殊危害）
+  showView('home');
 
   // 若有廠商代碼，從 GAS 載入並預填
   const vcode = params.get('v');
