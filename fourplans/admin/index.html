@@ -376,7 +376,7 @@ function renderStats(map) {
         <div class="stat-num"><div class="n n-high">${def.high(d)}</div><div class="l">高風險</div></div>
         <div class="stat-num"><div class="n n-pend">${def.pend(d)}</div><div class="l">待處理</div></div>
       </div>
-      <a class="stat-link" href="${s.link}" target="_blank">前往系統 →</a>
+      <a class="stat-link" href="${s.link}">前往系統 →</a>
     </div>`;
   }).join('');
 }
@@ -451,7 +451,7 @@ function renderPending(map) {
         <td><span class="system-tag ${TAG[r.key]}">${SYS[r.key].emoji}</span>${SYS[r.key].name}</td>
         <td>${r.id}</td><td>${r.name}</td><td>${r.dept}</td>
         <td>${r.date}</td><td><span class="badge badge-pend">${r.status}</span></td>
-        <td><a href="${r.link}" target="_blank" style="font-size:12px;color:var(--blue)">前往系統 →</a></td>
+        <td><a href="${r.link}" style="font-size:12px;color:var(--blue)">前往系統 →</a></td>
       </tr>`).join('')
     : '<tr><td colspan="7" class="empty-msg">無待處理案件</td></tr>';
 }
