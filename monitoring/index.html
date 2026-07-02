@@ -187,19 +187,29 @@ body.dark .report-table th, body.dark .val-table th, body.dark .limit-table th {
 body.dark .upload-zone { background:#0c2a3a; border-color:#1e4a6e; }
 body.dark .ai-result { background:#1e293b; }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Dark Toggle ── */
+#dark-toggle {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text); border-radius: 50%;
+  width: 44px; height: 44px; font-size: 20px;
+  cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  display: flex; align-items: center; justify-content: center;
+}
 </style>
 </head>
 <body>
 
+<button type="button" id="dark-toggle" onclick="toggleDark()" title="切換深色／淺色模式">🌙</button>
+
 <header>
-  <span style="font-size:22px">🔬</span>
-  <h1>作業環境監測系統</h1>
+  <a class="hdr-btn" href="../">← 系統首頁</a>
+  <h1>🔬 作業環境監測系統</h1>
   <div class="hdr-brand">
-    <img src="../assets/logo.png" onerror="this.style.display='none'">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
     <span>大豐環保科技</span>
   </div>
-  <button class="hdr-btn" onclick="toggleDark()">🌙</button>
-  <a class="hdr-btn" href="../">首頁</a>
 </header>
 
 <nav class="mod-nav">
@@ -436,7 +446,15 @@ let VALUES = [];
 let curYear = 115;
 
 // ── Dark mode ──
-function toggleDark() { document.body.classList.toggle('dark'); }
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('portal-dark', isDark ? '1' : '0');
+  document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
+}
+if (localStorage.getItem('portal-dark') === '1') {
+  document.body.classList.add('dark');
+  document.getElementById('dark-toggle').textContent = '☀️';
+}
 
 // ── Module navigation ──
 function showMod(n) {
