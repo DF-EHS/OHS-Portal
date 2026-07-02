@@ -741,16 +741,14 @@ async function runModalAI() {
   "summary": "整體合規摘要（50字以內）"
 }`;
 
-    const payload = isImg
-      ? { message: prompt, imageBase64: b64.split(',')[1], imageType: modalFile.type }
-      : { message: prompt, pdfBase64: b64.split(',')[1] };
+    const payload = { text: prompt, images: [b64] };
 
     const res = await fetch(WORKER_URL, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
     const d = await res.json();
-    const raw = (d.reply || d.response || d.message || '').trim();
+    const raw = (d.reply || d.response || d.message || d.text || (d.error ? `[錯誤] ${d.error}` : '')).trim();
 
     let parsed = null;
     try {
@@ -761,8 +759,10 @@ async function runModalAI() {
     if (parsed) {
       lastAIData = parsed;
       renderModalResult(parsed);
+    } else if (raw) {
+      wrap.innerHTML = `<div class="modal-ai-result"><h4>✨ AI 分析結果（原始回應）</h4><pre style="white-space:pre-wrap;font-size:12px;color:var(--text)">${raw}</pre></div>`;
     } else {
-      wrap.innerHTML = `<div class="modal-ai-result"><h4>✨ AI 分析結果</h4><pre style="white-space:pre-wrap;font-size:12px;color:var(--text)">${raw}</pre></div>`;
+      wrap.innerHTML = `<div class="notice warn" style="margin-top:12px">⚠️ AI 回傳空白，請確認檔案格式後重試。</div>`;
     }
   } catch (e) {
     wrap.innerHTML = `<div class="notice warn" style="margin-top:12px">AI 判讀失敗：${e.message}</div>`;
