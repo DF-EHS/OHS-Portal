@@ -56,6 +56,7 @@ main { max-width: 980px; margin: 0 auto; padding: 28px 20px 60px; }
 .notice.info { background: #fdf2f8; border: 1px solid #fbcfe8; color: #9d174d; }
 .notice.err  { background: #fef2f2; border: 1px solid #fecaca; color: var(--red); }
 .notice.ok   { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* Check group */
 .check-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
@@ -298,6 +299,22 @@ main { max-width: 980px; margin: 0 auto; padding: 28px 20px 60px; }
       感謝您填寫自我評估表。<br>工安人員將盡快安排危害評估及後續保護措施，<br>如有緊急健康疑慮請直接聯繫護理師。
     </p>
     <button class="btn-secondary" onclick="showView('view-home')">返回首頁</button>
+    <!-- AI 分析卡片 -->
+    <div id="done-ai-card" style="max-width:520px;margin:16px auto 0;display:none;text-align:left">
+      <div class="card" style="border-left:4px solid #7c3aed;padding:20px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span style="font-size:18px">✨</span>
+          <span style="font-weight:700;color:#7c3aed;font-size:14px">AI 保護建議</span>
+          <span id="done-ai-badge" style="display:none;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px"></span>
+        </div>
+        <div id="done-ai-body" style="font-size:13px;color:var(--sub);line-height:1.8">
+          <div id="done-ai-loading" style="display:flex;align-items:center;gap:8px">
+            <div style="width:14px;height:14px;border:2px solid #7c3aed;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0"></div>
+            <span>AI 正在分析您的評估資料…</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -511,15 +528,49 @@ async function submitEmpForm() {
   if (!id) { V('e-start-err').textContent='請輸入員工編號'; V('e-start-err').style.display=''; return; }
   V('e-start-err').style.display='none';
   const symptoms = getCheckedValues('e-symptoms-group');
+  const stage = V('e-stage').value;
+  const chemExp = V('e-chem').value;
+  const liftHeavy = V('e-lift').value;
+  const shiftWork = V('e-shift').value;
+  const workConcern = V('e-work-concern').value;
   try {
     await post({ action:'submitSelfAssess', empId:id, empName:V('e-name').value,
-      empDept:V('e-dept').value, dueDate:V('e-duedate').value, stage:V('e-stage').value,
-      symptoms:JSON.stringify(symptoms), chemExposure:V('e-chem').value,
-      liftHeavy:V('e-lift').value, shiftWork:V('e-shift').value,
-      workConcern:V('e-work-concern').value, medicalHistory:V('e-medical').value,
+      empDept:V('e-dept').value, dueDate:V('e-duedate').value, stage,
+      symptoms:JSON.stringify(symptoms), chemExposure:chemExp,
+      liftHeavy, shiftWork,
+      workConcern, medicalHistory:V('e-medical').value,
       note:V('e-note').value });
     showView('view-emp-done');
+    // 觸發 AI 保護建議
+    V('done-ai-card').style.display = '';
+    const sympList = symptoms.length ? symptoms.join('、') : '無';
+    const prompt = `你是職業安全衛生師，請根據以下母性健康保護評估結果，用繁體中文200字以內提供：1.風險等級（低/中/高）2.具體工作調整建議 3.是否需安排護理師或醫師面談。\n孕期狀態：${stage}\n自覺症狀：${sympList}\n化學品暴露：${chemExp||'無'}\n搬運重物：${liftHeavy||'無'}\n輪班/夜班：${shiftWork||'無'}\n工作疑慮：${workConcern||'無'}`;
+    runDoneAI(prompt);
   } catch(e) { V('e-start-err').textContent='送出失敗：'+e.message; V('e-start-err').style.display=''; }
+}
+
+async function runDoneAI(prompt) {
+  try {
+    const res = await fetch(WORKER_URL, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ text: prompt })
+    });
+    const d = await res.json();
+    const txt = (d.reply||d.response||d.message||'（無回應）').trim();
+    let badge='', bdgStyle='';
+    if (/高風險|高度/.test(txt))      { badge='高風險'; bdgStyle='background:#fee2e2;color:#991b1b'; }
+    else if (/中風險|中度/.test(txt)) { badge='中風險'; bdgStyle='background:#fef3c7;color:#92400e'; }
+    else if (/低風險|低度/.test(txt)) { badge='低風險'; bdgStyle='background:#d1fae5;color:#065f46'; }
+    V('done-ai-loading').style.display = 'none';
+    V('done-ai-body').innerHTML = txt.replace(/\n/g,'<br>');
+    if (badge) {
+      const b = V('done-ai-badge');
+      b.textContent = badge; b.setAttribute('style', `display:inline-block;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;${bdgStyle}`);
+    }
+  } catch {
+    V('done-ai-loading').style.display = 'none';
+    V('done-ai-body').textContent = 'AI 建議暫時無法使用，請稍後再試。';
+  }
 }
 
 // ─────────────── API ──────────────────

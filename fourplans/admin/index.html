@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>四大計畫統一後台 | 大豐環保科技</title>
+  <style>
+  :root {
+    --navy: #1e3a5f; --blue: #2563eb;
+    --bg: #f1f5f9; --card: #fff; --border: #e2e8f0;
+    --text: #1e293b; --sub: #64748b;
+    --red: #dc2626; --orange: #d97706; --green: #16a34a;
+    --teal: #0891b2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* ── Login ── */
+  #v-login {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 60%, #60a5fa 100%);
+  }
+  .login-box {
+    background: #fff; border-radius: 20px; padding: 40px 36px; width: 340px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.25); text-align: center;
+  }
+  .login-box h1 { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+  .login-box p  { font-size: 13px; color: var(--sub); margin-bottom: 24px; }
+  .login-box input {
+    width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    font-size: 14px; margin-bottom: 12px; font-family: inherit;
+  }
+  .login-box input:focus { outline: none; border-color: var(--blue); }
+  .login-err { font-size: 12px; color: var(--red); min-height: 16px; margin-bottom: 8px; }
+  .btn-login {
+    width: 100%; padding: 12px; background: var(--blue); color: #fff;
+    border: none; border-radius: 8px; font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: inherit; transition: background .15s;
+  }
+  .btn-login:hover { background: #1d4ed8; }
+
+  /* ── Dashboard ── */
+  header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 55%, #60a5fa 100%);
+    color: #fff; padding: 14px 24px;
+    display: flex; align-items: center; gap: 12px;
+    position: sticky; top: 0; z-index: 200;
+    box-shadow: 0 2px 16px rgba(0,0,0,.3);
+  }
+  header h1 { font-size: 17px; font-weight: 700; flex: 1; }
+  .hdr-btn {
+    padding: 5px 12px; border-radius: 6px;
+    border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.1);
+    color: #fff; font-size: 12px; cursor: pointer; font-family: inherit; transition: background .15s;
+    text-decoration: none;
+  }
+  .hdr-btn:hover { background: rgba(255,255,255,.2); }
+
+  main { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* ── Stat cards ── */
+  .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 28px; }
+  @media(max-width:768px) { .stat-grid { grid-template-columns: repeat(2,1fr); } }
+  .stat-card {
+    background: var(--card); border-radius: 14px; padding: 18px 20px;
+    border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    border-top: 4px solid var(--accent,#2563eb);
+  }
+  .stat-top { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .stat-emoji { font-size: 22px; }
+  .stat-name  { font-size: 13px; font-weight: 700; color: var(--text); }
+  .stat-nums  { display: flex; gap: 16px; }
+  .stat-num   { text-align: center; }
+  .stat-num .n { font-size: 26px; font-weight: 900; line-height: 1; }
+  .stat-num .l { font-size: 11px; color: var(--sub); margin-top: 2px; }
+  .n-total { color: var(--navy); }
+  .n-high  { color: var(--red); }
+  .n-pend  { color: var(--orange); }
+  .stat-link { font-size: 11px; color: var(--blue); text-decoration: none; margin-top: 10px; display: block; }
+  .stat-link:hover { text-decoration: underline; }
+
+  /* ── Tabs ── */
+  .tab-bar { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
+  .tab-btn {
+    padding: 10px 20px; font-size: 14px; font-weight: 600; background: none;
+    border: none; border-bottom: 3px solid transparent; margin-bottom: -2px;
+    cursor: pointer; color: var(--sub); font-family: inherit; transition: color .15s;
+  }
+  .tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+  /* ── Table ── */
+  .tbl-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f8fafc; padding: 10px 12px; text-align: left; font-size: 12px; font-weight: 700;
+       color: var(--sub); border-bottom: 2px solid var(--border); white-space: nowrap; }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: #f8fafc; }
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 20px; white-space: nowrap;
+  }
+  .badge-high   { background: #fee2e2; color: #991b1b; }
+  .badge-mid    { background: #fef3c7; color: #92400e; }
+  .badge-low    { background: #d1fae5; color: #065f46; }
+  .badge-new    { background: #dbeafe; color: #1e40af; }
+  .badge-pend   { background: #fef3c7; color: #92400e; }
+  .badge-done   { background: #f0fdf4; color: #15803d; }
+  .system-tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 1px 6px; border-radius: 4px; margin-right: 4px; vertical-align: middle;
+  }
+  .tag-ergo { background: #ecfdf5; color: #065f46; }
+  .tag-over { background: #fff7ed; color: #9a3412; }
+  .tag-hara { background: #fdf4ff; color: #6b21a8; }
+  .tag-mat  { background: #fff1f2; color: #9f1239; }
+
+  /* ── Section header ── */
+  .section-hd {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 15px; font-weight: 800; color: var(--navy);
+    margin-bottom: 12px; margin-top: 4px;
+  }
+  .section-hd small { font-size: 12px; font-weight: 400; color: var(--sub); }
+
+  /* ── Loading/Empty ── */
+  .loading-row td { text-align: center; color: var(--sub); padding: 32px; }
+  .empty-msg { text-align: center; padding: 40px; color: var(--sub); font-size: 13px; }
+
+  /* Dark mode */
+  body.dark { background: #0f172a; color: #e2e8f0; }
+  body.dark .login-box,
+  body.dark .stat-card,
+  body.dark table th { background: #1e293b; }
+  body.dark .stat-card { border-color: #334155; }
+  body.dark th { background: #1e293b; color: #94a3b8; border-color: #334155; }
+  body.dark td { border-color: #334155; }
+  body.dark tr:hover td { background: #1e293b; }
+  body.dark .tab-bar { border-color: #334155; }
+  body.dark header,
+  body.dark #v-login { /* keep gradient */ }
+  </style>
+</head>
+<body>
+
+<!-- ── Login ── -->
+<div id="v-login">
+  <div class="login-box">
+    <div style="font-size:40px;margin-bottom:12px">📋</div>
+    <h1>四大計畫統一後台</h1>
+    <p>人因・過勞・不法侵害・母性健康</p>
+    <input type="password" id="pw-input" placeholder="管理員密碼" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="login-err" id="login-err"></div>
+    <button class="btn-login" onclick="doLogin()">登入</button>
+  </div>
+</div>
+
+<!-- ── Dashboard ── -->
+<div id="v-dash" style="display:none">
+  <header>
+    <span style="font-size:22px">📋</span>
+    <h1>四大特定危害預防計畫 · 統一管理後台</h1>
+    <span id="refresh-status" style="font-size:12px;opacity:.7"></span>
+    <button class="hdr-btn" onclick="loadAll()">🔄 重整</button>
+    <button class="hdr-btn" onclick="toggleDark()">🌙</button>
+    <button class="hdr-btn" onclick="doLogout()">登出</button>
+    <a class="hdr-btn" href="../../">首頁</a>
+  </header>
+  <main>
+    <!-- Stat Cards -->
+    <div class="stat-grid" id="stat-grid"></div>
+
+    <!-- Tabs -->
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tb-high" onclick="switchTab('high')">🔴 高風險人員</button>
+      <button class="tab-btn"        id="tb-pend" onclick="switchTab('pend')">🟡 待處理案件</button>
+      <button class="tab-btn"        id="tb-all"  onclick="switchTab('all')">📊 全部記錄</button>
+    </div>
+
+    <div id="tab-high">
+      <div class="section-hd">高風險人員彙整 <small>各系統評估為高度風險之人員</small></div>
+      <div class="tbl-wrap"><table id="tbl-high">
+        <thead><tr>
+          <th>系統</th><th>員工編號</th><th>姓名</th><th>部門</th>
+          <th>風險等級</th><th>填報日期</th><th>狀態</th>
+        </tr></thead>
+        <tbody id="tbody-high"><tr class="loading-row"><td colspan="7">載入中…</td></tr></tbody>
+      </table></div>
+    </div>
+
+    <div id="tab-pend" style="display:none">
+      <div class="section-hd">待處理案件 <small>尚未結案或尚未安排面談</small></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr>
+          <th>系統</th><th>員工編號</th><th>姓名</th><th>部門</th>
+          <th>填報日期</th><th>狀態</th><th>操作</th>
+        </tr></thead>
+        <tbody id="tbody-pend"><tr class="loading-row"><td colspan="7">載入中…</td></tr></tbody>
+      </table></div>
+    </div>
+
+    <div id="tab-all" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <!-- Ergonomic -->
+        <div>
+          <div class="section-hd" style="color:#059669">🧍 人因性危害預防 <small id="ergo-cnt"></small></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>員工</th><th>部門</th><th>日期</th><th>風險</th><th>狀態</th></tr></thead>
+            <tbody id="tbody-ergo"></tbody>
+          </table></div>
+        </div>
+        <!-- Overload -->
+        <div>
+          <div class="section-hd" style="color:#ea580c">😰 異常工作負荷預防 <small id="over-cnt"></small></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>員工</th><th>部門</th><th>日期</th><th>負荷等級</th><th>諮詢建議</th></tr></thead>
+            <tbody id="tbody-over"></tbody>
+          </table></div>
+        </div>
+        <!-- Harassment -->
+        <div>
+          <div class="section-hd" style="color:#7c3aed">🚫 不法侵害防治 <small id="hara-cnt"></small></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>案件編號</th><th>姓名</th><th>部門</th><th>類型</th><th>填報日期</th></tr></thead>
+            <tbody id="tbody-hara"></tbody>
+          </table></div>
+        </div>
+        <!-- Maternity -->
+        <div>
+          <div class="section-hd" style="color:#db2777">🤰 母性健康保護 <small id="mat-cnt"></small></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>員工</th><th>部門</th><th>孕期</th><th>預產期</th><th>化學暴露</th></tr></thead>
+            <tbody id="tbody-mat"></tbody>
+          </table></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const PASS = 'admin';
+
+const SYS = {
+  ergo: {
+    name:'人因性危害預防', emoji:'🧍', color:'#059669',
+    api:'https://script.google.com/macros/s/AKfycbxoIceOzBVrPzWjpETR2ooJHeOVjY-ksjEDNgSUXZL1s-epVzMroRsmZi-TLxBYx1kD/exec',
+    token:'ergo-admin-2025', action:'listResp', link:'../../ergonomic/'
+  },
+  over: {
+    name:'異常工作負荷預防', emoji:'😰', color:'#ea580c',
+    api:'https://script.google.com/macros/s/AKfycbyjXLgjKG53D_ztE53mphd_rPKuC22DuOCA1LjYwO3Y0hHpn3COScVKIO3dxAG0Td_J/exec',
+    token:'overload-admin-2025', action:'listResp', link:'../../overload/'
+  },
+  hara: {
+    name:'不法侵害防治', emoji:'🚫', color:'#7c3aed',
+    api:'https://script.google.com/macros/s/AKfycbwTR5ZoMRW9HwtqeYWNCOhwxPzd7QsZVIazX_KPdHNuSjSKI0oWxPKphoBewBRzW46P/exec',
+    token:'admin', action:null, link:'../../harassment/'
+  },
+  mat: {
+    name:'母性健康保護', emoji:'🤰', color:'#db2777',
+    api:'https://script.google.com/macros/s/AKfycbydcnqgra8ULMbqd-H7vd2PzXhXR5YGSZYN5Kyh137pT1p2tf-ygM8g4oo52ECmmRLq/exec',
+    token:'maternity-admin-2025', action:'listSelfAssess', link:'../../maternity/'
+  }
+};
+
+const safeJson = (s,f) => { try { return JSON.parse(s); } catch { return f; } };
+const V = id => document.getElementById(id);
+
+// ── Auth ──
+function doLogin() {
+  const pw = V('pw-input').value;
+  if (pw !== PASS) { V('login-err').textContent = '密碼錯誤'; return; }
+  V('v-login').style.display = 'none';
+  V('v-dash').style.display = '';
+  loadAll();
+}
+function doLogout() { V('v-dash').style.display='none'; V('v-login').style.display=''; V('pw-input').value=''; }
+function toggleDark() { document.body.classList.toggle('dark'); }
+
+// ── Fetch ──
+async function fetchSys(key) {
+  const s = SYS[key];
+  try {
+    let data;
+    if (key === 'hara') {
+      const r = await fetch(s.api);
+      const d = await r.json();
+      data = d.cases || [];
+    } else {
+      const fd = new FormData();
+      fd.append('action', s.action);
+      fd.append('token', s.token);
+      const r = await fetch(s.api, { method:'POST', body:fd });
+      const d = await r.json();
+      data = d.list || d.responses || d.data || [];
+    }
+    return { key, data, ok:true };
+  } catch(e) {
+    return { key, data:[], ok:false, err:e.message };
+  }
+}
+
+async function loadAll() {
+  V('refresh-status').textContent = '載入中…';
+  const results = await Promise.all(Object.keys(SYS).map(k => fetchSys(k)));
+  const map = {};
+  results.forEach(r => map[r.key] = r);
+  renderStats(map);
+  renderHighRisk(map);
+  renderPending(map);
+  renderAll(map);
+  const now = new Date().toLocaleTimeString('zh-TW');
+  V('refresh-status').textContent = `最後更新：${now}`;
+}
+
+// ── Risk helpers ──
+function ergoRisk(r) {
+  const s = safeJson(r.symptoms, {});
+  const max = Math.max(0, ...Object.values(s).map(v=>v.score||0));
+  if (max >= 4) return 'high';
+  if (max >= 2) return 'mid';
+  return 'low';
+}
+function overRisk(r) {
+  const lv = (r.overallLevel||'').replace('度','');
+  if (lv==='高') return 'high';
+  if (lv==='中') return 'mid';
+  return 'low';
+}
+function matRisk(r) {
+  if (r.chemExposure==='是') return 'high';
+  const syms = safeJson(r.symptoms, []);
+  if (syms.length > 2) return 'mid';
+  return 'low';
+}
+const RISK_BADGE = {
+  high: '<span class="badge badge-high">高風險</span>',
+  mid:  '<span class="badge badge-mid">中風險</span>',
+  low:  '<span class="badge badge-low">低風險</span>'
+};
+
+// ── Render Stats ──
+function renderStats(map) {
+  const defs = [
+    { key:'ergo', accent:'#059669',
+      total: d=>d.length,
+      high:  d=>d.filter(r=>ergoRisk(r)==='high').length,
+      pend:  d=>d.filter(r=>!r.status||r.status==='待評估').length },
+    { key:'over', accent:'#ea580c',
+      total: d=>d.length,
+      high:  d=>d.filter(r=>overRisk(r)==='high').length,
+      pend:  d=>d.filter(r=>r.consultRec==='需要諮詢'||r.consultRec==='建議諮詢').length },
+    { key:'hara', accent:'#7c3aed',
+      total: d=>d.length,
+      high:  d=>d.filter(r=>r.riskLevel==='高度'||r.riskLevel==='高風險').length,
+      pend:  d=>d.filter(r=>!r.status||r.status==='新案').length },
+    { key:'mat', accent:'#db2777',
+      total: d=>d.length,
+      high:  d=>d.filter(r=>matRisk(r)==='high').length,
+      pend:  d=>d.filter(r=>r.stage&&r.stage!=='保護結束').length },
+  ];
+  V('stat-grid').innerHTML = defs.map(def => {
+    const s = SYS[def.key];
+    const d = map[def.key]?.data || [];
+    const ok = map[def.key]?.ok;
+    return `<div class="stat-card" style="--accent:${def.accent}">
+      <div class="stat-top">
+        <span class="stat-emoji">${s.emoji}</span>
+        <span class="stat-name">${s.name}</span>
+        ${!ok ? '<span class="badge badge-high" style="margin-left:auto">連線失敗</span>' : ''}
+      </div>
+      <div class="stat-nums">
+        <div class="stat-num"><div class="n n-total">${def.total(d)}</div><div class="l">總記錄</div></div>
+        <div class="stat-num"><div class="n n-high">${def.high(d)}</div><div class="l">高風險</div></div>
+        <div class="stat-num"><div class="n n-pend">${def.pend(d)}</div><div class="l">待處理</div></div>
+      </div>
+      <a class="stat-link" href="${s.link}" target="_blank">前往系統 →</a>
+    </div>`;
+  }).join('');
+}
+
+// ── Render High-Risk ──
+function renderHighRisk(map) {
+  const rows = [];
+
+  // Ergonomic
+  (map.ergo?.data||[]).filter(r=>ergoRisk(r)!=='low').forEach(r => {
+    rows.push({ key:'ergo', id:r.empId||'', name:r.empName||'', dept:r.empDept||'',
+      risk:ergoRisk(r), date:r.date||'', status:r.status||'待評估' });
+  });
+  // Overload
+  (map.over?.data||[]).filter(r=>overRisk(r)!=='low').forEach(r => {
+    rows.push({ key:'over', id:r.empId||'', name:r.empName||'', dept:r.empDept||'',
+      risk:overRisk(r), date:r.date||'', status:r.consultRec||'' });
+  });
+  // Harassment - show all (each case is worth attention)
+  (map.hara?.data||[]).slice(0,20).forEach(r => {
+    rows.push({ key:'hara', id:r.caseNo||'', name:r.name||'', dept:r.dept||'',
+      risk:'new', date:r.submitDate||'', status:r.status||'新案' });
+  });
+  // Maternity - high+mid
+  (map.mat?.data||[]).filter(r=>matRisk(r)!=='low').forEach(r => {
+    rows.push({ key:'mat', id:r.empId||'', name:r.empName||'', dept:r.empDept||'',
+      risk:matRisk(r), date:r.date||r.createdAt||'', status:r.stage||'' });
+  });
+
+  rows.sort((a,b) => { const o={high:0,new:1,mid:2,low:3}; return (o[a.risk]||3)-(o[b.risk]||3); });
+
+  const TAG = { ergo:'tag-ergo', over:'tag-over', hara:'tag-hara', mat:'tag-mat' };
+  const RBADGE = {
+    high:'<span class="badge badge-high">高風險</span>',
+    mid: '<span class="badge badge-mid">中風險</span>',
+    new: '<span class="badge badge-new">新案件</span>',
+    low: '<span class="badge badge-low">低風險</span>'
+  };
+  V('tbody-high').innerHTML = rows.length
+    ? rows.map(r=>`<tr>
+        <td><span class="system-tag ${TAG[r.key]}">${SYS[r.key].emoji} ${SYS[r.key].name}</span></td>
+        <td>${r.id}</td><td>${r.name}</td><td>${r.dept}</td>
+        <td>${RBADGE[r.risk]||''}</td><td>${r.date}</td>
+        <td>${r.status}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="7" class="empty-msg">無高風險人員</td></tr>';
+}
+
+// ── Render Pending ──
+function renderPending(map) {
+  const rows = [];
+  (map.ergo?.data||[]).filter(r=>!r.status||r.status==='待評估').forEach(r => {
+    rows.push({ key:'ergo', id:r.empId||'', name:r.empName||'', dept:r.empDept||'',
+      date:r.date||'', status:'待評估', link:SYS.ergo.link });
+  });
+  (map.over?.data||[]).filter(r=>r.consultRec==='需要諮詢'||r.consultRec==='建議諮詢').forEach(r => {
+    rows.push({ key:'over', id:r.empId||'', name:r.empName||'', dept:r.empDept||'',
+      date:r.date||'', status:r.consultRec||'', link:SYS.over.link });
+  });
+  (map.hara?.data||[]).filter(r=>!r.status||r.status==='新案').forEach(r => {
+    rows.push({ key:'hara', id:r.caseNo||'', name:r.name||'', dept:r.dept||'',
+      date:r.submitDate||'', status:'新案', link:SYS.hara.link });
+  });
+  (map.mat?.data||[]).filter(r=>r.stage&&r.stage!=='保護結束').forEach(r => {
+    rows.push({ key:'mat', id:r.empId||'', name:r.empName||'', dept:r.empDept||'',
+      date:r.date||r.createdAt||'', status:r.stage||'', link:SYS.mat.link });
+  });
+
+  const TAG = { ergo:'tag-ergo', over:'tag-over', hara:'tag-hara', mat:'tag-mat' };
+  V('tbody-pend').innerHTML = rows.length
+    ? rows.map(r=>`<tr>
+        <td><span class="system-tag ${TAG[r.key]}">${SYS[r.key].emoji}</span>${SYS[r.key].name}</td>
+        <td>${r.id}</td><td>${r.name}</td><td>${r.dept}</td>
+        <td>${r.date}</td><td><span class="badge badge-pend">${r.status}</span></td>
+        <td><a href="${r.link}" target="_blank" style="font-size:12px;color:var(--blue)">前往系統 →</a></td>
+      </tr>`).join('')
+    : '<tr><td colspan="7" class="empty-msg">無待處理案件</td></tr>';
+}
+
+// ── Render All ──
+function renderAll(map) {
+  // Ergonomic
+  const ergoData = map.ergo?.data||[];
+  V('ergo-cnt').textContent = `共 ${ergoData.length} 筆`;
+  V('tbody-ergo').innerHTML = ergoData.length
+    ? ergoData.map(r => {
+        const s=safeJson(r.symptoms,{}), max=Math.max(0,...Object.values(s).map(v=>v.score||0));
+        const risk=ergoRisk(r);
+        return `<tr><td>${r.empName||r.empId||''}</td><td>${r.empDept||''}</td><td>${r.date||''}</td>
+          <td>${RISK_BADGE[risk]||''}</td>
+          <td>${r.status||'待評估'}</td></tr>`;
+      }).join('')
+    : '<tr><td colspan="5" class="empty-msg">無資料</td></tr>';
+
+  // Overload
+  const overData = map.over?.data||[];
+  V('over-cnt').textContent = `共 ${overData.length} 筆`;
+  V('tbody-over').innerHTML = overData.length
+    ? overData.map(r => `<tr>
+        <td>${r.empName||r.empId||''}</td><td>${r.empDept||''}</td><td>${r.date||''}</td>
+        <td>${RISK_BADGE[overRisk(r)]||''}</td>
+        <td><span class="badge ${r.consultRec==='需要諮詢'?'badge-high':r.consultRec==='建議諮詢'?'badge-pend':'badge-low'}">${r.consultRec||'不需諮詢'}</span></td>
+      </tr>`).join('')
+    : '<tr><td colspan="5" class="empty-msg">無資料</td></tr>';
+
+  // Harassment
+  const haraData = map.hara?.data||[];
+  V('hara-cnt').textContent = `共 ${haraData.length} 筆`;
+  V('tbody-hara').innerHTML = haraData.length
+    ? haraData.map(r => `<tr>
+        <td><span style="font-size:11px;color:var(--sub)">${r.caseNo||''}</span></td>
+        <td>${r.name||''}</td><td>${r.dept||''}</td>
+        <td>${r.formType||''}</td><td>${r.submitDate||''}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="5" class="empty-msg">無資料</td></tr>';
+
+  // Maternity
+  const matData = map.mat?.data||[];
+  V('mat-cnt').textContent = `共 ${matData.length} 筆`;
+  V('tbody-mat').innerHTML = matData.length
+    ? matData.map(r => `<tr>
+        <td>${r.empName||r.empId||''}</td><td>${r.empDept||''}</td>
+        <td>${r.stage||''}</td><td>${r.dueDate||''}</td>
+        <td>${r.chemExposure==='是'?'<span class="badge badge-high">是</span>':'<span class="badge badge-low">否</span>'}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="5" class="empty-msg">無資料</td></tr>';
+}
+
+function switchTab(t) {
+  ['high','pend','all'].forEach(k => {
+    V(`tb-${k}`).classList.toggle('active', k===t);
+    V(`tab-${k}`).style.display = k===t ? '' : 'none';
+  });
+}
+</script>
+
+<script>
+window.OHS_SIDEBAR_BASE = '../../';
+</script>
+<script src="../../shared/sidebar.js"></script>
+</body>
+</html>
