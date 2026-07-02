@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作業環境監測 | 大豐環保科技</title>
+<style>
+:root {
+  --mon:        #0284c7;
+  --mon-dark:   #0369a1;
+  --mon-darker: #0c4a6e;
+  --mon-light:  #f0f9ff;
+  --mon-border: #bae6fd;
+  --green:  #16a34a; --green-light: #f0fdf4; --green-border: #bbf7d0;
+  --red:    #dc2626; --red-light:   #fef2f2; --red-border:   #fecaca;
+  --amber:  #d97706; --amber-light: #fffbeb; --amber-border: #fde68a;
+  --navy:   #1e3a5f;
+  --bg:     #f0f9ff; --card: #fff; --border: #e0f2fe; --text: #0c4a6e; --sub: #64748b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ── Header ── */
+header {
+  background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%);
+  color: #fff; padding: 12px 20px;
+  display: flex; align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.4);
+}
+header h1 { font-size: 17px; font-weight: 700; flex: 1; }
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer; transition: background .15s;
+  font-family: inherit; flex-shrink: 0; text-decoration: none; display: inline-flex; align-items: center;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.2); }
+.hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 12px; color: #bae6fd; font-weight: 600; white-space: nowrap; }
+
+/* ── Nav tabs ── */
+.mod-nav {
+  background: #fff; border-bottom: 2px solid var(--border);
+  display: flex; gap: 0; padding: 0 24px; overflow-x: auto;
+  position: sticky; top: 49px; z-index: 100;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.mod-btn {
+  padding: 13px 20px; font-size: 13px; font-weight: 600; white-space: nowrap;
+  background: none; border: none; border-bottom: 3px solid transparent;
+  margin-bottom: -2px; cursor: pointer; color: var(--sub); font-family: inherit;
+  transition: color .15s;
+}
+.mod-btn.active { color: var(--mon); border-bottom-color: var(--mon); }
+.mod-btn:hover:not(.active) { color: var(--mon-dark); }
+
+/* ── Main ── */
+main { flex: 1; max-width: 1020px; margin: 0 auto; width: 100%; padding: 28px 20px 60px; }
+
+/* ── Cards ── */
+.card { background: var(--card); border-radius: 14px; padding: 22px; box-shadow: 0 2px 12px rgba(0,0,0,.07); border: 1px solid var(--border); }
+.section-hd { font-size: 16px; font-weight: 800; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.section-hd small { font-size: 12px; font-weight: 400; color: var(--sub); }
+
+/* ── Stat row ── */
+.stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 24px; }
+@media(max-width:768px){ .stat-row { grid-template-columns: repeat(2,1fr); } }
+.stat-card {
+  background: var(--card); border-radius: 12px; padding: 16px 18px;
+  border: 1px solid var(--border); border-top: 3px solid var(--mon);
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.stat-n  { font-size: 28px; font-weight: 900; color: var(--mon-dark); line-height: 1; }
+.stat-lbl{ font-size: 12px; color: var(--sub); margin-top: 4px; }
+
+/* ── Badge ── */
+.badge {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  padding: 2px 8px; border-radius: 20px; white-space: nowrap;
+}
+.bd-done   { background: var(--green-light); color: var(--green); border: 1px solid var(--green-border); }
+.bd-pend   { background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber-border); }
+.bd-miss   { background: var(--red-light);   color: var(--red);   border: 1px solid var(--red-border); }
+.bd-na     { background: #f8fafc; color: #94a3b8; border: 1px solid #e2e8f0; }
+.bd-over   { background: var(--red-light);   color: var(--red); border: 1px solid var(--red-border); }
+.bd-ok     { background: var(--green-light); color: var(--green); border: 1px solid var(--green-border); }
+
+/* ── Year tabs ── */
+.yr-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+.yr-btn {
+  padding: 7px 18px; border-radius: 8px; font-size: 13px; font-weight: 700;
+  background: #fff; border: 2px solid var(--border); cursor: pointer; color: var(--sub);
+  font-family: inherit; transition: all .15s;
+}
+.yr-btn.active { background: var(--mon); color: #fff; border-color: var(--mon); }
+.yr-btn:hover:not(.active) { border-color: var(--mon); color: var(--mon); }
+
+/* ── Report matrix table ── */
+.report-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+.report-table th {
+  background: var(--mon-light); padding: 10px 12px; text-align: left;
+  font-size: 11px; font-weight: 700; color: var(--mon-dark);
+  border-bottom: 2px solid var(--mon-border); white-space: nowrap;
+}
+.report-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.report-table tr:last-child td { border-bottom: none; }
+.report-table tr:hover td { background: var(--mon-light); }
+.doc-links { display: flex; gap: 6px; flex-wrap: wrap; }
+.doc-btn {
+  font-size: 11px; padding: 3px 10px; border-radius: 6px; font-weight: 600;
+  background: var(--mon-light); color: var(--mon-dark); border: 1px solid var(--mon-border);
+  text-decoration: none; display: inline-block; transition: background .12s;
+}
+.doc-btn:hover { background: var(--mon-border); }
+.doc-btn.disabled { opacity: .4; pointer-events: none; }
+
+/* ── Values table ── */
+.val-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.val-table th {
+  background: var(--mon-light); padding: 9px 12px; text-align: left;
+  font-size: 11px; font-weight: 700; color: var(--mon-dark);
+  border-bottom: 2px solid var(--mon-border); white-space: nowrap;
+}
+.val-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+.val-table tr:hover td { background: var(--mon-light); }
+.val-over { color: var(--red); font-weight: 700; }
+.val-ok   { color: var(--green); font-weight: 700; }
+
+/* ── AI Upload ── */
+.upload-zone {
+  border: 2.5px dashed var(--mon-border); border-radius: 12px;
+  padding: 40px 24px; text-align: center; background: var(--mon-light);
+  cursor: pointer; transition: border-color .2s, background .2s;
+}
+.upload-zone:hover, .upload-zone.dragover { border-color: var(--mon); background: #e0f2fe; }
+.upload-zone input[type=file] { display: none; }
+.upload-icon { font-size: 40px; margin-bottom: 12px; }
+.upload-lbl  { font-size: 15px; font-weight: 700; color: var(--mon-dark); margin-bottom: 6px; }
+.upload-sub  { font-size: 12px; color: var(--sub); }
+.btn-mon {
+  background: var(--mon); color: #fff; border: none; padding: 10px 24px;
+  border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;
+  font-family: inherit; transition: background .15s;
+}
+.btn-mon:hover { background: var(--mon-dark); }
+.btn-mon:disabled { opacity: .5; cursor: default; }
+.btn-sec {
+  background: var(--mon-light); color: var(--mon-dark); border: 1.5px solid var(--mon-border);
+  padding: 9px 20px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.btn-sec:hover { background: var(--mon-border); }
+
+/* AI result card */
+.ai-result {
+  background: var(--card); border-radius: 12px; border-left: 4px solid var(--mon);
+  padding: 20px; margin-top: 20px;
+}
+.ai-result h3 { font-size: 14px; font-weight: 800; color: var(--mon-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.ai-item-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.ai-item-row:last-child { border-bottom: none; }
+
+/* Limit info table */
+.limit-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+.limit-table th {
+  background: var(--mon-light); padding: 8px 12px;
+  font-size: 11px; font-weight: 700; color: var(--mon-dark);
+  border-bottom: 2px solid var(--mon-border); text-align: left;
+}
+.limit-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+
+/* Notice */
+.notice { padding: 12px 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
+.notice.info { background: var(--mon-light); border: 1px solid var(--mon-border); color: var(--mon-darker); }
+.notice.warn { background: var(--amber-light); border: 1px solid var(--amber-border); color: #78350f; }
+
+/* Dark mode */
+body.dark { --bg:#0f172a; --card:#1e293b; --border:#334155; --text:#e2e8f0; --sub:#94a3b8; --mon-light:#0c2a3a; --mon-border:#1e4a6e; }
+body.dark .mod-nav { background:#1e293b; }
+body.dark .stat-card { background:#1e293b; border-color:#334155; }
+body.dark .yr-btn { background:#1e293b; border-color:#334155; color:#94a3b8; }
+body.dark .yr-btn.active { background:var(--mon); color:#fff; }
+body.dark .report-table th, body.dark .val-table th, body.dark .limit-table th { background:#0c2a3a; }
+body.dark .upload-zone { background:#0c2a3a; border-color:#1e4a6e; }
+body.dark .ai-result { background:#1e293b; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<header>
+  <span style="font-size:22px">🔬</span>
+  <h1>作業環境監測系統</h1>
+  <div class="hdr-brand">
+    <img src="../assets/logo.png" onerror="this.style.display='none'">
+    <span>大豐環保科技</span>
+  </div>
+  <button class="hdr-btn" onclick="toggleDark()">🌙</button>
+  <a class="hdr-btn" href="../">首頁</a>
+</header>
+
+<nav class="mod-nav">
+  <button class="mod-btn active" id="mb-0" onclick="showMod(0)">📋 合規概覽</button>
+  <button class="mod-btn"        id="mb-1" onclick="showMod(1)">📁 歷年報告</button>
+  <button class="mod-btn"        id="mb-2" onclick="showMod(2)">📊 監測數值</button>
+  <button class="mod-btn"        id="mb-3" onclick="showMod(3)">⚖️ 容許濃度標準</button>
+  <button class="mod-btn"        id="mb-4" onclick="showMod(4)">🤖 AI 文件判讀</button>
+</nav>
+
+<main>
+
+<!-- ── 模組 0：合規概覽 ── -->
+<div id="mod-0">
+  <div class="notice info">
+    📌 依《作業環境監測實施辦法》，特定有害作業場所應每半年監測一次，紀錄須留存 <strong>3 年</strong>。本系統涵蓋 112～115 年度共 4 個年度。
+  </div>
+
+  <div class="stat-row" id="stat-row"></div>
+
+  <!-- 115年度當前狀況 -->
+  <div class="card" style="margin-bottom:20px">
+    <div class="section-hd">🏭 115 年度監測進度 <small>（2026 年，本系統涵蓋當年度）</small></div>
+    <div style="overflow-x:auto"><table class="report-table" id="progress-115"></table></div>
+  </div>
+
+  <!-- 合規行事曆 -->
+  <div class="card">
+    <div class="section-hd">📅 監測行事曆</div>
+    <div id="calendar-wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:12px"></div>
+  </div>
+</div>
+
+<!-- ── 模組 1：歷年報告 ── -->
+<div id="mod-1" style="display:none">
+  <div class="yr-tabs" id="yr-tabs"></div>
+  <div class="card">
+    <div id="yr-report-content"></div>
+  </div>
+</div>
+
+<!-- ── 模組 2：監測數值 ── -->
+<div id="mod-2" style="display:none">
+  <div class="notice warn">
+    📝 監測數值取自各年度留底報告，待 SharePoint 連結建立後，可由 AI 判讀功能自動填入。目前顯示已知數據，空白欄位請參閱原始 PDF。
+  </div>
+  <div class="card">
+    <div class="section-hd">📊 歷年監測數值記錄</div>
+    <div style="overflow-x:auto">
+      <table class="val-table" id="val-table">
+        <thead><tr>
+          <th>年度</th><th>半年</th><th>站點</th>
+          <th>監測項目</th><th>測定點位</th><th>測定值</th><th>單位</th>
+          <th>容許標準</th><th>判定</th>
+        </tr></thead>
+        <tbody id="val-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ── 模組 3：容許濃度標準 ── -->
+<div id="mod-3" style="display:none">
+  <div class="card">
+    <div class="section-hd">⚖️ 全興廠常見監測項目容許標準</div>
+    <div class="notice info">標準依據：職業安全衛生設施規則、勞工作業場所容許暴露標準（最新版）</div>
+    <div style="overflow-x:auto">
+      <table class="limit-table">
+        <thead><tr>
+          <th>監測項目</th><th>中文名稱</th><th>TWA（8小時）</th>
+          <th>STEL（15分鐘）</th><th>單位</th><th>備註</th>
+        </tr></thead>
+        <tbody id="limit-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ── 模組 4：AI 文件判讀 ── -->
+<div id="mod-4" style="display:none">
+  <div class="notice info">
+    🤖 上傳監測報告 PDF，AI 自動辨識監測日期、站點、各測定點數值，並比對容許濃度標準。目前支援：噪音、粉塵、有機溶劑類報告。
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="section-hd">📎 上傳監測報告</div>
+    <div class="upload-zone" id="upload-zone"
+         ondragover="event.preventDefault();this.classList.add('dragover')"
+         ondragleave="this.classList.remove('dragover')"
+         ondrop="handleDrop(event)"
+         onclick="document.getElementById('file-input').click()">
+      <input type="file" id="file-input" accept="application/pdf,image/*" onchange="handleFile(this.files[0])">
+      <div class="upload-icon">📄</div>
+      <div class="upload-lbl">點擊或拖曳監測報告至此</div>
+      <div class="upload-sub">支援 PDF、JPG、PNG ｜ 單次一份報告</div>
+    </div>
+
+    <div id="file-info" style="margin-top:16px;display:none">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--mon-light);border-radius:8px;border:1px solid var(--mon-border)">
+        <span style="font-size:20px">📄</span>
+        <span id="file-name" style="flex:1;font-size:13px;font-weight:600;color:var(--mon-dark)"></span>
+        <button class="btn-sec" onclick="clearFile()" style="padding:5px 12px;font-size:11px">✕ 清除</button>
+      </div>
+    </div>
+
+    <div id="ai-year-site" style="margin-top:14px;display:none">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <div>
+          <label style="font-size:12px;font-weight:700;color:var(--sub);display:block;margin-bottom:4px">年度（供儲存用）</label>
+          <select id="sel-year" style="padding:7px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:inherit">
+            <option value="115">115年度</option><option value="114">114年度</option>
+            <option value="113">113年度</option><option value="112">112年度</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:700;color:var(--sub);display:block;margin-bottom:4px">半年</label>
+          <select id="sel-half" style="padding:7px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:inherit">
+            <option value="H1">上半年</option><option value="H2">下半年</option>
+          </select>
+        </div>
+        <div style="margin-top:18px">
+          <button class="btn-mon" onclick="runAI()" id="ai-btn">✨ 開始 AI 判讀</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Result -->
+  <div id="ai-result-wrap"></div>
+</div>
+
+</main>
+
+<footer style="text-align:center;padding:18px;font-size:11px;color:var(--sub);border-top:1px solid var(--border);margin-top:auto">
+  大豐環保科技股份有限公司 · 職業安全衛生管理系統
+</footer>
+
+<script>
+const WORKER_URL = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+
+// ── 監測站點定義 ──
+const SITES = [
+  { id:'qx', name:'全興廠（彰化）', emoji:'🏭' },
+  { id:'tc', name:'台中廠',         emoji:'🏭' },
+  { id:'b3', name:'業務部北三課',   emoji:'🏢' },
+  { id:'hw', name:'宏偉廠',         emoji:'🏭' },
+  { id:'hq', name:'總公司',         emoji:'🏢' },
+];
+
+// ── 容許濃度標準 ──
+const LIMITS = [
+  { id:'noise', name:'噪音', zh:'連續性噪音（8小時）', twa:'85', stel:'—', unit:'dB(A)', note:'超過 85 dB(A) 須實施工程控制或個人防護' },
+  { id:'dust',  name:'總粉塵', zh:'可呼吸性粉塵', twa:'10', stel:'20', unit:'mg/m³', note:'作業場所粉塵（非矽性）' },
+  { id:'rdust', name:'可呼吸性粉塵', zh:'可呼吸性粉塵', twa:'5', stel:'10', unit:'mg/m³', note:'含游離二氧化矽 < 1%' },
+  { id:'co',    name:'一氧化碳', zh:'CO', twa:'25', stel:'100', unit:'ppm', note:'密閉空間特別注意' },
+  { id:'tol',   name:'甲苯', zh:'Toluene', twa:'100', stel:'150', unit:'ppm', note:'有機溶劑，皮膚吸收' },
+  { id:'xyl',   name:'二甲苯', zh:'Xylene', twa:'100', stel:'150', unit:'ppm', note:'有機溶劑' },
+  { id:'pb',    name:'鉛及其化合物', zh:'Lead', twa:'0.05', stel:'—', unit:'mg/m³', note:'廢電池/金屬回收需注意' },
+  { id:'hg',    name:'汞及其化合物', zh:'Mercury', twa:'0.025', stel:'—', unit:'mg/m³', note:'廢螢光燈管/電子廢棄物' },
+];
+
+// ── 歷年報告資料 ──
+// status: 'done' | 'pending' | 'na'（該站點該期未監測）
+// urls: SharePoint 連結（待補）
+const RECORDS = {
+  115: {
+    qx: {
+      H1: { date:'2026-05', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+      H2: { date:'2026-11', status:'pending' },
+    },
+    tc: { H1:{ date:'2026', status:'pending' }, H2:{ date:'2026', status:'pending' } },
+    b3: { H1:{ date:'2026', status:'pending' }, H2:{ date:'2026', status:'pending' } },
+    hw: { H1:{ date:'2026', status:'pending' }, H2:{ date:'2026', status:'pending' } },
+    hq: {
+      H1: { date:'2026-05', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+      H2: { date:'2026-11', status:'pending' },
+    },
+  },
+  114: {
+    qx: {
+      H1: { date:'2025-05', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+      H2: { date:'2025-11', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+    },
+    tc: { H1:{ date:'2025', status:'na' }, H2:{ date:'2025', status:'na' } },
+    b3: {
+      H1: { date:'2025', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+      H2: { date:'2025', status:'na' },
+    },
+    hw: { H1:{ date:'2025', status:'na' }, H2:{ date:'2025', status:'na' } },
+    hq: {
+      H1: { date:'2025', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+      H2: { date:'2025', status:'na' },
+    },
+  },
+  113: {
+    qx: {
+      H1: { date:'2024-05', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+      H2: { date:'2024-11', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+    },
+    tc: {
+      H1: { date:'2024-05', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+      H2: { date:'2024-11', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+    },
+    b3: {
+      H1: { date:'2024-01', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+      H2: { date:'2024-07', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+    },
+    hw: {
+      H1: { date:'2024-05', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+      H2: { date:'2024', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+    },
+    hq: { H1:{ date:'2024', status:'na' }, H2:{ date:'2024', status:'na' } },
+  },
+  112: {
+    qx: {
+      H1: { date:'2023-05', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+      H2: { date:'2023-11', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+    },
+    tc: {
+      H1: { date:'2023-05', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+      H2: { date:'2023-11', status:'done', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+    },
+    b3: { H1:{ date:'2023', status:'na' }, H2:{ date:'2023', status:'na' } },
+    hw: { H1:{ date:'2023', status:'na' }, H2:{ date:'2023', status:'na' } },
+    hq: { H1:{ date:'2023', status:'na' }, H2:{ date:'2023', status:'na' } },
+  },
+};
+
+// ── 歷年監測數值（AI 判讀後填入，目前為空） ──
+// 格式：{ year, half, site, item, location, value, unit, limit, pass }
+let VALUES = [];
+
+// ── 選中年度 ──
+let curYear = 115;
+
+// ── Dark mode ──
+function toggleDark() { document.body.classList.toggle('dark'); }
+
+// ── Module navigation ──
+function showMod(n) {
+  for (let i = 0; i < 5; i++) {
+    document.getElementById(`mod-${i}`).style.display = i === n ? '' : 'none';
+    document.getElementById(`mb-${i}`).classList.toggle('active', i === n);
+  }
+  if (n === 1) renderYearReport(curYear);
+  if (n === 2) renderValues();
+  if (n === 3) renderLimits();
+}
+
+// ── 模組 0：合規概覽 ──
+function renderOverview() {
+  // Stats
+  const years = [112,113,114,115];
+  let totalDone = 0, totalPend = 0, totalNa = 0;
+  years.forEach(y => {
+    SITES.forEach(s => {
+      ['H1','H2'].forEach(h => {
+        const r = RECORDS[y]?.[s.id]?.[h];
+        if (!r || r.status === 'na') totalNa++;
+        else if (r.status === 'done') totalDone++;
+        else totalPend++;
+      });
+    });
+  });
+  document.getElementById('stat-row').innerHTML = `
+    <div class="stat-card"><div class="stat-n">${years.length}</div><div class="stat-lbl">涵蓋年度</div></div>
+    <div class="stat-card"><div class="stat-n">${SITES.length}</div><div class="stat-lbl">監測站點</div></div>
+    <div class="stat-card" style="border-top-color:#16a34a"><div class="stat-n" style="color:#15803d">${totalDone}</div><div class="stat-lbl">已完成監測次數</div></div>
+    <div class="stat-card" style="border-top-color:#d97706"><div class="stat-n" style="color:#d97706">${totalPend}</div><div class="stat-lbl">本年度待完成</div></div>
+  `;
+
+  // 115年進度表
+  const rows115 = SITES.map(s => {
+    const h1 = RECORDS[115]?.[s.id]?.H1 || { status:'na' };
+    const h2 = RECORDS[115]?.[s.id]?.H2 || { status:'na' };
+    return `<tr>
+      <td>${s.emoji} ${s.name}</td>
+      <td>${statusBadge(h1.status)}${h1.date ? ` <span style="font-size:11px;color:var(--sub)">${h1.date}</span>`:''}</td>
+      <td>${statusBadge(h2.status)}${h2.date ? ` <span style="font-size:11px;color:var(--sub)">${h2.date}</span>`:''}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('progress-115').innerHTML = `
+    <thead><tr><th>站點</th><th>上半年（目標 5-6 月）</th><th>下半年（目標 11-12 月）</th></tr></thead>
+    <tbody>${rows115}</tbody>
+  `;
+
+  // 行事曆
+  const cal = [
+    { m:'1月', items:['業務部北三課定期評估'] },
+    { m:'5月', items:['全興廠上半年監測','台中廠上半年監測','總公司（視需要）'] },
+    { m:'7月', items:['業務部北三課（若調整）'] },
+    { m:'11月', items:['全興廠下半年監測','台中廠下半年監測','宏偉廠（視需要）'] },
+  ];
+  document.getElementById('calendar-wrap').innerHTML = cal.map(c=>`
+    <div style="padding:14px;background:var(--mon-light);border-radius:10px;border:1px solid var(--mon-border)">
+      <div style="font-weight:800;color:var(--mon-dark);margin-bottom:8px">📅 ${c.m}</div>
+      ${c.items.map(i=>`<div style="font-size:12px;color:var(--text);padding:2px 0">• ${i}</div>`).join('')}
+    </div>
+  `).join('');
+}
+
+function statusBadge(s) {
+  if (s === 'done')    return '<span class="badge bd-done">✅ 已完成</span>';
+  if (s === 'pending') return '<span class="badge bd-pend">⏳ 待辦</span>';
+  return '<span class="badge bd-na">—</span>';
+}
+
+// ── 模組 1：歷年報告 ──
+function initYearTabs() {
+  const el = document.getElementById('yr-tabs');
+  el.innerHTML = [115,114,113,112].map(y =>
+    `<button class="yr-btn${y===curYear?' active':''}" onclick="selectYear(${y})">${y} 年度</button>`
+  ).join('');
+}
+function selectYear(y) {
+  curYear = y;
+  initYearTabs();
+  renderYearReport(y);
+}
+function renderYearReport(y) {
+  const rec = RECORDS[y] || {};
+  const rows = SITES.map(s => {
+    const h1 = rec[s.id]?.H1;
+    const h2 = rec[s.id]?.H2;
+    return `<tr>
+      <td><strong>${s.emoji} ${s.name}</strong></td>
+      <td>${h1 ? docCell(h1) : '<span class="badge bd-na">—</span>'}</td>
+      <td>${h2 ? docCell(h2) : '<span class="badge bd-na">—</span>'}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('yr-report-content').innerHTML = `
+    <div style="font-size:15px;font-weight:800;color:var(--mon-dark);margin-bottom:14px">${y} 年度（民國 ${y} 年）監測報告</div>
+    <div style="overflow-x:auto">
+    <table class="report-table">
+      <thead><tr>
+        <th>站點</th>
+        <th>上半年</th>
+        <th>下半年</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    </div>
+    <div style="margin-top:12px;font-size:11px;color:var(--sub)">
+      ⚠️ SharePoint 連結待補：連結空白表示尚未設定，請將 SharePoint 分享連結填入 RECORDS 資料（聯繫工安人員）
+    </div>
+  `;
+}
+function docCell(r) {
+  if (r.status === 'na') return '<span class="badge bd-na">—（未監測）</span>';
+  const pdfLinks = [
+    { label:'📋 計畫書', url: r.planUrl },
+    { label:'📄 留底報告', url: r.reportUrl },
+    { label:'📢 公告', url: r.announceUrl },
+    { label:'✅ 申報憑證', url: r.certUrl },
+  ];
+  const linksHtml = pdfLinks.map(l =>
+    l.url
+      ? `<a class="doc-btn" href="${l.url}" target="_blank">${l.label}</a>`
+      : `<span class="doc-btn disabled">${l.label}</span>`
+  ).join('');
+  return `${statusBadge(r.status)}<div class="doc-links" style="margin-top:6px">${linksHtml}</div>`;
+}
+
+// ── 模組 2：監測數值 ──
+function renderValues() {
+  const tbody = document.getElementById('val-tbody');
+  if (!VALUES.length) {
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--sub)">
+      尚無數值記錄。請使用「🤖 AI 文件判讀」模組上傳監測報告，AI 將自動提取數據。
+    </td></tr>`;
+    return;
+  }
+  tbody.innerHTML = VALUES.map(v => {
+    const limit = LIMITS.find(l => l.name === v.item);
+    const twa = limit ? parseFloat(limit.twa) : null;
+    const val = parseFloat(v.value);
+    const pass = twa ? val <= twa : true;
+    return `<tr>
+      <td>${v.year}年</td>
+      <td>${v.half === 'H1' ? '上半年' : '下半年'}</td>
+      <td>${SITES.find(s=>s.id===v.site)?.name||v.site}</td>
+      <td>${v.item}</td>
+      <td>${v.location}</td>
+      <td class="${pass?'val-ok':'val-over'}">${v.value}</td>
+      <td>${v.unit}</td>
+      <td>${twa ? twa + ' ' + (limit?.unit||'') : '—'}</td>
+      <td>${pass ? '<span class="badge bd-ok">符合</span>' : '<span class="badge bd-over">超標</span>'}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── 模組 3：容許濃度 ──
+function renderLimits() {
+  document.getElementById('limit-tbody').innerHTML = LIMITS.map(l => `
+    <tr>
+      <td><strong>${l.name}</strong></td>
+      <td>${l.zh}</td>
+      <td><strong>${l.twa}</strong></td>
+      <td>${l.stel}</td>
+      <td>${l.unit}</td>
+      <td style="font-size:12px;color:var(--sub)">${l.note}</td>
+    </tr>
+  `).join('');
+}
+
+// ── 模組 4：AI 文件判讀 ──
+let selectedFile = null;
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.remove('dragover');
+  const f = e.dataTransfer.files[0];
+  if (f) handleFile(f);
+}
+function handleFile(f) {
+  if (!f) return;
+  selectedFile = f;
+  document.getElementById('file-name').textContent = f.name;
+  document.getElementById('file-info').style.display = '';
+  document.getElementById('ai-year-site').style.display = '';
+  document.getElementById('ai-result-wrap').innerHTML = '';
+}
+function clearFile() {
+  selectedFile = null;
+  document.getElementById('file-input').value = '';
+  document.getElementById('file-info').style.display = 'none';
+  document.getElementById('ai-year-site').style.display = 'none';
+  document.getElementById('ai-result-wrap').innerHTML = '';
+}
+
+async function runAI() {
+  if (!selectedFile) return;
+  const btn = document.getElementById('ai-btn');
+  btn.disabled = true; btn.textContent = '判讀中…';
+  const wrap = document.getElementById('ai-result-wrap');
+  wrap.innerHTML = `<div style="display:flex;align-items:center;gap:10px;padding:20px;color:var(--sub)">
+    <div style="width:18px;height:18px;border:2px solid var(--mon);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite"></div>
+    <span>AI 正在分析監測報告，請稍候…</span>
+  </div>`;
+
+  try {
+    const b64 = await toBase64(selectedFile);
+    const isImg = selectedFile.type.startsWith('image/');
+    const prompt = `你是職業衛生師，請仔細分析這份作業環境監測報告，以繁體中文回答，並嚴格按照以下 JSON 格式輸出（不要輸出 JSON 以外的任何文字）：
+{
+  "reportDate": "報告日期（格式 YYYY-MM）",
+  "site": "監測站點名稱",
+  "period": "上半年或下半年",
+  "items": [
+    {
+      "name": "監測項目名稱（如：噪音、總粉塵、甲苯等）",
+      "unit": "單位（如：dB(A)、mg/m³、ppm）",
+      "twa": "法規TWA限值（數字，無單位）",
+      "locations": [
+        { "location": "測定點位名稱", "value": "測定值（數字）", "pass": true }
+      ]
+    }
+  ],
+  "summary": "整體合規摘要（50字以內）"
+}`;
+
+    const payload = isImg
+      ? { message: prompt, imageBase64: b64.split(',')[1], imageType: selectedFile.type }
+      : { message: prompt, pdfBase64: b64.split(',')[1] };
+
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const d = await res.json();
+    const raw = (d.reply || d.response || d.message || '').trim();
+
+    // parse JSON from AI response
+    let parsed;
+    try {
+      const match = raw.match(/\{[\s\S]*\}/);
+      parsed = match ? JSON.parse(match[0]) : null;
+    } catch { parsed = null; }
+
+    if (parsed) {
+      renderAIResult(parsed);
+    } else {
+      // fallback: show raw text
+      wrap.innerHTML = `<div class="ai-result"><h3>✨ AI 分析結果</h3><pre style="white-space:pre-wrap;font-size:12px;color:var(--text)">${raw}</pre></div>`;
+    }
+  } catch (e) {
+    wrap.innerHTML = `<div class="notice warn">AI 判讀失敗：${e.message}</div>`;
+  }
+  btn.disabled = false; btn.textContent = '✨ 開始 AI 判讀';
+}
+
+function renderAIResult(data) {
+  const year = parseInt(document.getElementById('sel-year').value);
+  const half = document.getElementById('sel-half').value;
+  const items = data.items || [];
+
+  let overCount = 0, totalMeasure = 0;
+  const itemsHtml = items.map(item => {
+    const locs = item.locations || [];
+    totalMeasure += locs.length;
+    const overLocs = locs.filter(l => l.pass === false || parseFloat(l.value) > parseFloat(item.twa));
+    overCount += overLocs.length;
+    const locHtml = locs.map(l => {
+      const pass = l.pass !== false && parseFloat(l.value) <= parseFloat(item.twa || Infinity);
+      return `<div class="ai-item-row">
+        <span style="font-size:12px;color:var(--sub);min-width:120px">${l.location}</span>
+        <strong class="${pass?'val-ok':'val-over'}">${l.value} ${item.unit}</strong>
+        <span style="font-size:11px;color:var(--sub)">（TWA ≤ ${item.twa} ${item.unit}）</span>
+        <span class="badge ${pass?'bd-ok':'bd-over'}">${pass?'符合':'⚠️ 超標'}</span>
+      </div>`;
+    }).join('');
+    return `<div style="margin-bottom:16px">
+      <div style="font-size:13px;font-weight:800;color:var(--mon-dark);margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--mon-border)">
+        🔬 ${item.name}
+      </div>${locHtml}
+    </div>`;
+  }).join('');
+
+  const passAll = overCount === 0;
+  const wrap = document.getElementById('ai-result-wrap');
+  wrap.innerHTML = `
+    <div class="ai-result">
+      <h3>✨ AI 判讀結果</h3>
+      <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+        <div style="padding:10px 16px;background:var(--mon-light);border-radius:8px;border:1px solid var(--mon-border)">
+          <div style="font-size:11px;color:var(--sub)">報告日期</div>
+          <div style="font-weight:800;color:var(--mon-dark)">${data.reportDate||'—'}</div>
+        </div>
+        <div style="padding:10px 16px;background:var(--mon-light);border-radius:8px;border:1px solid var(--mon-border)">
+          <div style="font-size:11px;color:var(--sub)">監測站點</div>
+          <div style="font-weight:800;color:var(--mon-dark)">${data.site||'—'}</div>
+        </div>
+        <div style="padding:10px 16px;background:var(--mon-light);border-radius:8px;border:1px solid var(--mon-border)">
+          <div style="font-size:11px;color:var(--sub)">測定點位數</div>
+          <div style="font-weight:800;color:var(--mon-dark)">${totalMeasure} 點</div>
+        </div>
+        <div style="padding:10px 16px;background:${passAll?'var(--green-light)':'var(--red-light)'};border-radius:8px;border:1px solid ${passAll?'var(--green-border)':'var(--red-border)'}">
+          <div style="font-size:11px;color:var(--sub)">整體判定</div>
+          <div style="font-weight:800;color:${passAll?'var(--green)':'var(--red)'}">${passAll?'✅ 全數符合標準':'⚠️ 有 '+overCount+' 點超標'}</div>
+        </div>
+      </div>
+      ${itemsHtml}
+      ${data.summary ? `<div style="margin-top:12px;padding:12px;background:var(--mon-light);border-radius:8px;font-size:13px;color:var(--mon-darker)">📝 ${data.summary}</div>` : ''}
+      <div style="margin-top:16px;display:flex;gap:10px">
+        <button class="btn-mon" onclick="saveAIValues(${JSON.stringify(data).replace(/"/g,'&quot;')},${year},'${half}')">💾 加入數值記錄</button>
+        <button class="btn-sec" onclick="clearFile();document.getElementById('ai-result-wrap').innerHTML=''">清除</button>
+      </div>
+    </div>
+  `;
+}
+
+function saveAIValues(data, year, half) {
+  const items = data.items || [];
+  const siteId = SITES.find(s => (data.site||'').includes(s.name.replace('（','').replace('）','')))?.id || 'qx';
+  items.forEach(item => {
+    (item.locations||[]).forEach(loc => {
+      VALUES.push({
+        year, half, site: siteId, item: item.name,
+        location: loc.location, value: loc.value, unit: item.unit,
+        limit: item.twa, pass: loc.pass !== false
+      });
+    });
+  });
+  alert(`已新增 ${VALUES.reduce((a,v)=>v.year===year&&v.half===half?a+1:a,0)} 筆數值記錄，請至「📊 監測數值」查看。`);
+}
+
+function toBase64(file) {
+  return new Promise((res,rej) => {
+    const r = new FileReader();
+    r.onload = e => res(e.target.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+// ── Init ──
+renderOverview();
+initYearTabs();
+</script>
+
+<script>window.OHS_SIDEBAR_BASE = '../';</script>
+<script src="../shared/sidebar.js"></script>
+</body>
+</html>
