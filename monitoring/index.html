@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>作業環境監測 | 大豐環保科技</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
 :root {
   --mon:        #0284c7;
@@ -710,19 +711,57 @@ function clearModalFile() {
   document.getElementById('modal-ai-btn').disabled = true;
 }
 
+// ── PDF → JPEG 頁面陣列（供 images 欄位使用）──────────────────
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+async function pdfToImages(file) {
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+  const pages = Math.min(pdf.numPages, 15);
+  const imgs = [];
+  for (let p = 1; p <= pages; p++) {
+    const page = await pdf.getPage(p);
+    const vp = page.getViewport({ scale: 1.5 });
+    const canvas = document.createElement('canvas');
+    canvas.width = vp.width; canvas.height = vp.height;
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+    imgs.push(canvas.toDataURL('image/jpeg', 0.85));
+  }
+  return imgs;
+}
+
 async function runModalAI() {
   if (!modalFile) return;
   const btn = document.getElementById('modal-ai-btn');
   btn.disabled = true; btn.textContent = '判讀中…';
   const wrap = document.getElementById('modal-ai-result');
-  wrap.innerHTML = `<div style="display:flex;align-items:center;gap:10px;padding:18px 0;color:var(--sub)">
-    <div style="width:16px;height:16px;border:2px solid var(--mon);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0"></div>
-    <span style="font-size:13px">AI 正在分析監測報告，請稍候…</span>
-  </div>`;
+
+  const spin = `<div style="width:16px;height:16px;border:2px solid var(--mon);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0"></div>`;
 
   try {
-    const b64 = await toBase64(modalFile);
+    const isPdf = modalFile.type === 'application/pdf';
     const isImg = modalFile.type.startsWith('image/');
+
+    if (!isPdf && !isImg) {
+      wrap.innerHTML = `<div class="notice warn">⚠️ 不支援此檔案格式，請上傳 PDF 或圖片。</div>`;
+      btn.disabled = false; btn.textContent = '✨ 開始 AI 判讀';
+      return;
+    }
+
+    wrap.innerHTML = `<div style="display:flex;align-items:center;gap:10px;padding:18px 0;color:var(--sub)">${spin}<span id="ai-status" style="font-size:13px">PDF 轉圖中，請稍候…</span></div>`;
+
+    let images;
+    if (isPdf) {
+      images = await pdfToImages(modalFile);
+      const st = document.getElementById('ai-status');
+      if (st) st.textContent = `AI 正在分析 ${images.length} 頁監測報告，請稍候…`;
+    } else {
+      images = [await toBase64(modalFile)];
+      const st = document.getElementById('ai-status');
+      if (st) st.textContent = 'AI 正在分析監測報告，請稍候…';
+    }
+
     const prompt = `你是職業衛生師，請仔細分析這份作業環境監測報告，以繁體中文回答，並嚴格按照以下 JSON 格式輸出（不要輸出 JSON 以外的任何文字）：
 {
   "reportDate": "報告日期（格式 YYYY-MM）",
@@ -741,11 +780,9 @@ async function runModalAI() {
   "summary": "整體合規摘要（50字以內）"
 }`;
 
-    const payload = { text: prompt, images: [b64] };
-
     const res = await fetch(WORKER_URL, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ text: prompt, images })
     });
     const d = await res.json();
     const raw = (d.reply || d.response || d.message || d.text || (d.error ? `[錯誤] ${d.error}` : '')).trim();
