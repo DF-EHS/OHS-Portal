@@ -334,7 +334,6 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
     <a id="nav-m2" onclick="showModule(2)">📁 歷年報告<span class="nav-badge">已啟用</span></a>
     <a id="nav-m3" onclick="showModule(3)">📊 監測數值<span class="nav-badge">已啟用</span></a>
     <a id="nav-m4" onclick="showModule(4)">⚖️ 容許濃度標準<span class="nav-badge">已啟用</span></a>
-    <a id="nav-m5" onclick="showModule(5)">🤖 AI 文件判讀<span class="nav-badge">已啟用</span></a>
   </div>
 
   <!-- ══ Module 1：監測行事曆 ══ -->
@@ -394,18 +393,6 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
     </div>
   </div>
 
-  <!-- ══ Module 5：AI 文件判讀 ══ -->
-  <div class="section-block hidden" id="m5">
-    <div class="section-label">模組五・AI 文件判讀 <span class="mod-tag active">已啟用</span></div>
-    <div class="notice info">
-      🤖 上傳監測報告 PDF，AI 自動辨識監測日期、站點、各測定點數值，並比對容許濃度標準。確認後同步更新「歷年報告」進度。
-    </div>
-    <div class="upload-trigger-card" onclick="openModal(115,'qx','H1')">
-      <div class="trigger-icon">📄</div>
-      <div class="trigger-lbl">點擊開啟上傳視窗</div>
-      <div class="trigger-sub">亦可直接點擊歷年報告中各筆記錄的「📎 上傳報告」按鈕，自動帶入對應年度與站點</div>
-    </div>
-  </div>
 
 </main>
 
@@ -487,7 +474,7 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
 <script>
 // ── Module switching ──────────────────────────────────────────
 function showModule(n) {
-  [1, 2, 3, 4, 5].forEach(i => {
+  [1, 2, 3, 4].forEach(i => {
     document.getElementById('m' + i).classList.toggle('hidden', i !== n);
     document.getElementById('nav-m' + i).classList.toggle('active', i === n);
   });
@@ -515,7 +502,7 @@ const RECORDS = {
   115: {
     qx: { H1:{ date:'2026-05', status:'done',    reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
           H2:{ date:'2026-11', status:'pending' } },
-    hq: { H1:{ date:'2026-05', status:'done',    reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
+    hq: { H1:{ date:'2026-05', status:'pending', reportUrl:'', announceUrl:'', certUrl:'', planUrl:'' },
           H2:{ date:'2026-11', status:'pending' } },
   },
   114: {
@@ -630,7 +617,7 @@ function renderValues() {
   const tbody = document.getElementById('val-tbody');
   if (!VALUES.length) {
     tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--sub)">
-      尚無數值記錄。請使用「🤖 AI 文件判讀」上傳報告後確認加入。
+      尚無數值記錄。請在「歷年報告」點擊「📎 上傳報告」，AI 判讀確認後數值將自動加入。
     </td></tr>`;
     return;
   }
@@ -838,11 +825,13 @@ function confirmAndUpdate() {
   if (!lastAIData) return;
   const { year, site, half } = modalCtx;
 
+  const SP_FOLDER = 'https://dfrecyclecom.sharepoint.com/:f:/g/HR/IgBHmFEiVJQ8SoKrHTBNufrqAX32FJWtJMsKe8yZ2FSzgE8?e=MCBK03';
+
   // Update RECORDS status
   if (RECORDS[year]?.[site]?.[half]) {
     RECORDS[year][site][half].status = 'done';
     if (!RECORDS[year][site][half].reportUrl) {
-      RECORDS[year][site][half].reportUrl = '';
+      RECORDS[year][site][half].reportUrl = SP_FOLDER;
     }
   }
 
