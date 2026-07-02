@@ -4,7 +4,7 @@
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>四大計畫統一後台 | 大豐環保科技</title>
+  <title>四大計畫管理後台 | 大豐環保科技</title>
   <style>
   :root {
     --navy: #1e3a5f; --blue: #2563eb;
@@ -147,7 +147,7 @@
 <div id="v-login">
   <div class="login-box">
     <div style="font-size:40px;margin-bottom:12px">🩺</div>
-    <h1>四大計畫統一後台</h1>
+    <h1>四大計畫管理後台</h1>
     <p>人因・過勞・不法侵害・母性健康</p>
     <input type="password" id="pw-input" placeholder="管理員密碼" onkeydown="if(event.key==='Enter')doLogin()">
     <div class="login-err" id="login-err"></div>
@@ -158,8 +158,8 @@
 <!-- ── Dashboard ── -->
 <div id="v-dash" style="display:none">
   <header>
-    <span style="font-size:22px">📋</span>
-    <h1>四大特定危害預防計畫 · 統一管理後台</h1>
+    <span style="font-size:22px">🩺</span>
+    <h1>四大防護計畫‧管理後台</h1>
     <span id="refresh-status" style="font-size:12px;opacity:.7"></span>
     <button class="hdr-btn" onclick="loadAll()">🔄 重整</button>
     <button class="hdr-btn" onclick="toggleDark()">🌙</button>
@@ -288,12 +288,13 @@ async function fetchSys(key) {
       const d = await r.json();
       data = d.cases || [];
     } else {
-      const fd = new FormData();
-      fd.append('action', s.action);
-      fd.append('token', s.token);
-      const r = await fetch(s.api, { method:'POST', body:fd });
+      const r = await fetch(s.api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ action: s.action, token: s.token })
+      });
       const d = await r.json();
-      data = d.list || d.responses || d.data || [];
+      data = d.rows || [];
     }
     return { key, data, ok:true };
   } catch(e) {
