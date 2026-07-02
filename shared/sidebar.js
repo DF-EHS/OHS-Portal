@@ -235,6 +235,9 @@
       <a class="nav-item" href="${BASE}risk/?chat=1">
         <span class="nav-icon">🔍</span>風險評估機器人
       </a>
+      <a class="nav-item" href="${BASE}chemical/?chat=1">
+        <span class="nav-icon">🧪</span>化學品緊急應變機器人
+      </a>
       <a class="nav-item" href="${BASE}harassment/?chat=1">
         <span class="nav-icon">🤝</span>霸凌行為諮詢
       </a>

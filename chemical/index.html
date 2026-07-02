@@ -371,12 +371,104 @@ body.dark .ghs-none   { background: #263349; color: #475569; }
 body.dark .chem-sds-btn { background: #263349; }
 body.dark .decl-icon  { background: #451a03; }
 
+/* ── Chemical AI Chat FAB + Panel ── */
+#chem-fab {
+  position: fixed; bottom: 76px; right: 24px;
+  background: var(--chem); color: #fff; border: none; border-radius: 28px;
+  padding: 13px 22px; font-size: 15px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,.25); z-index: 1000;
+  display: flex; align-items: center; gap: 8px; transition: background .15s;
+  font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+}
+#chem-fab:hover { background: var(--chem-dark); }
+#chem-panel {
+  position: fixed; bottom: 148px; right: 24px;
+  width: min(420px, calc(100vw - 32px));
+  background: #fff; border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.22);
+  z-index: 1001; display: none; flex-direction: column;
+  overflow: hidden; max-height: 580px;
+}
+body.dark #chem-panel { background: #1e293b; }
+#chem-panel-header {
+  background: linear-gradient(135deg, #78350f 0%, #b45309 45%, #d97706 100%);
+  color: #fff; padding: 12px 16px;
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+}
+.chem-ph-icon { font-size: 22px; flex-shrink: 0; }
+.chem-ph-text { flex: 1; }
+.chem-ph-title { font-size: 14px; font-weight: 700; }
+.chem-ph-sub   { font-size: 11px; color: rgba(255,255,255,.75); margin-top: 1px; }
+#chem-panel-close {
+  background: rgba(255,255,255,.18); border: none; border-radius: 6px;
+  color: #fff; font-size: 16px; cursor: pointer; padding: 4px 9px;
+  font-family: inherit; flex-shrink: 0;
+}
+#chem-panel-close:hover { background: rgba(255,255,255,.32); }
+.chem-warn-bar {
+  background: #fff7ed; border-bottom: 1px solid #fed7aa;
+  padding: 7px 14px; font-size: 11px; color: #92400e;
+  display: flex; gap: 6px; align-items: flex-start; flex-shrink: 0;
+}
+.chem-chat-msgs {
+  flex: 1; overflow-y: auto; min-height: 0; padding: 14px;
+  display: flex; flex-direction: column; gap: 10px; background: var(--bg);
+}
+.chem-msg-user {
+  align-self: flex-end; background: var(--chem); color: #fff;
+  padding: 8px 14px; border-radius: 18px 18px 4px 18px;
+  max-width: 80%; font-size: 13px; word-break: break-word;
+}
+.chem-msg-bot { align-self: flex-start; max-width: 100%; font-size: 13px; width: 100%; }
+.chem-ai-bubble {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 14px; font-size: 13px; line-height: 1.8; word-break: break-word;
+}
+.chem-ai-bubble strong { color: var(--navy); }
+.chem-ai-bubble code { background: #fde68a; color: #78350f; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+.chem-ai-bubble ul, .chem-ai-bubble ol { padding-left: 20px; }
+.chem-ai-bubble li { margin-bottom: 4px; }
+.chem-quick-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chem-quick-chip {
+  background: #fffbeb; color: var(--chem-dark); border: 1px solid #fde68a;
+  border-radius: 16px; padding: 5px 12px; font-size: 12px; cursor: pointer; transition: background .15s;
+}
+.chem-quick-chip:hover { background: #fef3c7; }
+.chem-chat-input-area {
+  display: flex; gap: 8px; padding: 10px 14px;
+  border-top: 1px solid var(--border); background: var(--card); flex-shrink: 0;
+}
+#chem-chat-input {
+  flex: 1; border: 1px solid var(--border); border-radius: 20px;
+  padding: 7px 14px; font-size: 13px; outline: none; font-family: inherit;
+}
+#chem-chat-input:focus { border-color: var(--chem); }
+#chem-chat-send {
+  background: var(--chem); color: #fff; border: none; border-radius: 20px;
+  padding: 7px 18px; font-size: 13px; cursor: pointer; font-family: inherit; font-weight: 700; transition: background .15s;
+}
+#chem-chat-send:hover { background: var(--chem-dark); }
+#chem-chat-send:disabled { opacity: .5; cursor: not-allowed; }
+.chat-typing { display: flex; gap: 5px; align-items: center; padding: 8px 2px; }
+.chat-typing span { width: 8px; height: 8px; border-radius: 50%; background: var(--sub); animation: chat-bounce 1.2s ease-in-out infinite; }
+.chat-typing span:nth-child(2) { animation-delay: .2s; }
+.chat-typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes chat-bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-7px)} }
+body.dark .chem-chat-msgs  { background: #0f172a; }
+body.dark .chem-ai-bubble  { background: #1e293b; border-color: #334155; }
+body.dark .chem-quick-chip { background: #451a03; border-color: #78350f; color: #fde68a; }
+body.dark .chem-quick-chip:hover { background: #5c2806; }
+body.dark #chem-chat-input { background: #1e293b; color: var(--text); }
+body.dark .chem-warn-bar   { background: #451a03; border-color: #78350f; color: #fde68a; }
+body.dark .chem-chat-input-area { background: #1e293b; }
+
 @media (max-width: 700px) {
   .stats-row  { grid-template-columns: 1fr 1fr; }
   .decl-grid  { grid-template-columns: 1fr; }
   main { padding: 20px 16px 48px; }
   .page-hero { flex-direction: column; text-align: center; padding: 22px 20px; }
   .chem-table th:nth-child(3), .chem-table td:nth-child(3) { display: none; }
+  .chem-chat-msgs { height: 320px; }
 }
 </style>
 </head>
@@ -512,9 +604,52 @@ body.dark .decl-icon  { background: #451a03; }
   </div>
 
 
+
 </main>
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+
+<!-- Chemical AI Chat FAB -->
+<button type="button" id="chem-fab" onclick="toggleChemChat()">🧪 化學品緊急應變機器人</button>
+
+<!-- Chemical AI Chat Panel -->
+<div id="chem-panel">
+  <div id="chem-panel-header">
+    <span class="chem-ph-icon">🧪</span>
+    <div class="chem-ph-text">
+      <div class="chem-ph-title">化學品緊急應變機器人</div>
+      <div class="chem-ph-sub">整合全興廠 24 種化學品 SDS・Gemini 2.5 Flash</div>
+    </div>
+    <button type="button" id="chem-panel-close" onclick="toggleChemChat()">✕</button>
+  </div>
+  <div class="chem-warn-bar">
+    ⚠️ 僅供初步應變參考，不取代醫療診斷。情況危急請立即撥打 <strong>119</strong>。
+  </div>
+  <div class="chem-chat-msgs" id="chem-chat-msgs">
+    <div class="chem-msg-bot">
+      <div class="chem-ai-bubble">
+        您好！我已整合全興廠所有化學品的 SDS 安全資料。可協助以下情境：<br><br>
+        • <strong>緊急處置</strong>：皮膚/眼睛沾染、吸入、誤食的即時步驟<br>
+        • <strong>洩漏應變</strong>：圍堵、清理、人員疏散方式<br>
+        • <strong>PPE 選擇</strong>：各化學品適用的個人防護具<br>
+        • <strong>儲存安全</strong>：不相容物質與儲存注意事項<br>
+        <div class="chem-quick-chips">
+          <span class="chem-quick-chip" onclick="chemChip(this)">皮膚沾到液鹼怎麼處理</span>
+          <span class="chem-quick-chip" onclick="chemChip(this)">柴油洩漏如何圍堵清理</span>
+          <span class="chem-quick-chip" onclick="chemChip(this)">次氯酸鈉混放有何風險</span>
+          <span class="chem-quick-chip" onclick="chemChip(this)">消石灰粉塵吸入的處理</span>
+          <span class="chem-quick-chip" onclick="chemChip(this)">WD-40 附近有明火怎麼辦</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chem-chat-input-area">
+    <input type="text" id="chem-chat-input"
+      placeholder="例如：硫酸鋁噴濺到眼睛怎麼辦？"
+      onkeydown="if(event.key==='Enter'&&!event.isComposing)sendChemChat()">
+    <button type="button" id="chem-chat-send" onclick="sendChemChat()">送出</button>
+  </div>
+</div>
 
 <!-- Safety Info Drawer -->
 <div id="safety-overlay" onclick="closeSafetyDrawer()"></div>
@@ -524,7 +659,7 @@ body.dark .decl-icon  { background: #451a03; }
       <div class="safety-head-label">SDS 安全快速資訊</div>
       <div class="safety-head-name" id="safety-name">—</div>
     </div>
-    <button class="safety-close" onclick="closeSafetyDrawer()">✕</button>
+    <button type="button" class="safety-close" onclick="closeSafetyDrawer()">✕</button>
   </div>
   <div class="safety-body" id="safety-body"></div>
 </div>
@@ -984,12 +1119,153 @@ function toggleDark() {
 })();
 
 // ─────────────────────────────────────────────────────────────
+//  Chemical AI Chat
+// ─────────────────────────────────────────────────────────────
+const CHEM_AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+
+let chemChatOpen = false;
+function toggleChemChat() {
+  chemChatOpen = !chemChatOpen;
+  document.getElementById('chem-panel').style.display = chemChatOpen ? 'flex' : 'none';
+  if (chemChatOpen) document.getElementById('chem-chat-input').focus();
+}
+
+function buildChemContext() {
+  const areaLabel = { wastewater: '廢水廠', site: '現場/油品' };
+  return CHEMICALS.map(c => {
+    const ghsLabels = c.ghs.map(g => GHS_DEF[g]?.label || g).join('、');
+    const det = SDS_DETAILS[c.name];
+    if (!det) return `・${c.name}（${areaLabel[c.area]}）GHS：${ghsLabels}`;
+    return [
+      `・${c.name}（${areaLabel[c.area]}）GHS：${ghsLabels}`,
+      `  健康危害：${det.healthHazard}`,
+      `  物理危害：${det.physicalHazard}`,
+      `  PPE：${det.ppe}`,
+      `  洩漏處理：${det.spillResponse}`,
+      `  儲存：${det.storage}`,
+    ].join('\n');
+  }).join('\n\n');
+}
+
+function chemMdToHtml(md) {
+  const e = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return e(md)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,     '<em>$1</em>')
+    .replace(/`(.+?)`/g,       '<code>$1</code>')
+    .replace(/^#{3} (.+)$/gm,  '<h4 style="margin:8px 0 4px;font-size:13px;color:var(--navy)">$1</h4>')
+    .replace(/^#{2} (.+)$/gm,  '<h3 style="margin:8px 0 4px;font-size:14px;color:var(--navy)">$1</h3>')
+    .replace(/^#{1} (.+)$/gm,  '<h2 style="margin:8px 0 4px;font-size:15px;color:var(--navy)">$1</h2>')
+    .replace(/^[-*]\s+(.+)$/gm,'<li>$1</li>')
+    .replace(/(<li>[\s\S]*?<\/li>\n?)+/g, s => '<ul>' + s + '</ul>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g,   '<br>');
+}
+
+function chemEsc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function appendChemMsg(text, isUser) {
+  const msgs = document.getElementById('chem-chat-msgs');
+  const div = document.createElement('div');
+  div.className = isUser ? 'chem-msg-user' : 'chem-msg-bot';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showChemTyping() {
+  const msgs = document.getElementById('chem-chat-msgs');
+  const div = document.createElement('div');
+  div.id = 'chem-typing-el';
+  div.className = 'chem-msg-bot';
+  div.innerHTML = '<div class="chat-typing"><span></span><span></span><span></span></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+async function sendChemChat() {
+  const inp     = document.getElementById('chem-chat-input');
+  const sendBtn = document.getElementById('chem-chat-send');
+  const q = inp.value.trim();
+  if (!q) return;
+
+  inp.value = '';
+  inp.disabled = true;
+  sendBtn.disabled = true;
+
+  appendChemMsg(q, true);
+
+  const systemPrompt =
+    '你是大豐環保科技股份有限公司（全興廠）的化學品緊急應變諮詢助理。\n' +
+    '以下是本廠目前在用化學品的完整 SDS 安全資訊：\n\n' +
+    buildChemContext() +
+    '\n\n回答原則：\n' +
+    '1. 直接給出現場可立即執行的步驟，條列清楚（使用 - 或數字）\n' +
+    '2. 緊急處置優先（皮膚/眼睛沾染、吸入、誤食）\n' +
+    '3. 使用粗體標示化學品名稱\n' +
+    '4. 若問題涉及的化學品不在清單中，請說明並依一般職安原則回答\n' +
+    '5. 結尾固定加上：⚠️ 情況嚴重或有傷亡請立即撤離並撥打 119\n' +
+    '6. 語氣冷靜、條列清楚，適合現場人員快速閱讀\n\n' +
+    '問題：' + q;
+
+  const typingEl = showChemTyping();
+
+  try {
+    const resp = await fetch(CHEM_AI_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: systemPrompt }),
+    });
+
+    if (!resp.ok) {
+      const body = await resp.json().catch(() => ({}));
+      throw new Error(body?.error?.message || body?.message || 'API 錯誤 ' + resp.status);
+    }
+
+    const data = await resp.json();
+    const aiText = data?.data || data?.choices?.[0]?.message?.content || data?.text || '';
+    if (!aiText) throw new Error('AI 回應為空，請稍後再試');
+
+    typingEl.remove();
+
+    const msgs   = document.getElementById('chem-chat-msgs');
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'chem-msg-bot';
+    const bubble = document.createElement('div');
+    bubble.className = 'chem-ai-bubble';
+    bubble.innerHTML = chemMdToHtml(aiText);
+    msgDiv.appendChild(bubble);
+    msgs.appendChild(msgDiv);
+    msgs.scrollTop = msgs.scrollHeight;
+
+  } catch (err) {
+    typingEl.remove();
+    appendChemMsg('⚠️ ' + err.message, false);
+  } finally {
+    inp.disabled = false;
+    sendBtn.disabled = false;
+    inp.focus();
+  }
+}
+
+function chemChip(el) {
+  document.getElementById('chem-chat-input').value = el.textContent;
+  sendChemChat();
+}
+
+// ─────────────────────────────────────────────────────────────
 //  Init
 // ─────────────────────────────────────────────────────────────
 buildOverview();
 renderChemTable();
 buildDeclMatrix();
 buildPriorityTable();
+if (new URLSearchParams(location.search).get('chat') === '1') {
+  setTimeout(toggleChemChat, 300);
+}
 </script>
 <script src="../shared/sidebar.js"></script>
 </body>
