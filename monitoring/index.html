@@ -68,11 +68,13 @@ main { flex: 1; max-width: 1020px; margin: 0 auto; width: 100%; padding: 32px 24
   border: 1.5px solid var(--border);
   background: var(--card); color: var(--text); transition: all .15s;
 }
-.module-nav a:hover { border-color: var(--mon); color: var(--mon); }
+.module-nav a.active { background: var(--mon); color: #fff; border-color: var(--mon); }
+.module-nav a:hover:not(.active) { border-color: var(--mon); color: var(--mon); }
 .module-nav a .nav-badge {
   font-size: 10px; padding: 1px 6px; border-radius: 10px;
-  font-weight: 700; background: #f1f5f9; color: var(--sub);
+  font-weight: 700; background: rgba(255,255,255,.2); color: inherit;
 }
+.module-nav a:not(.active) .nav-badge { background: #f1f5f9; color: var(--sub); }
 
 /* ── Section Label ── */
 .section-label {
@@ -89,6 +91,7 @@ main { flex: 1; max-width: 1020px; margin: 0 auto; width: 100%; padding: 32px 24
 
 /* ── Section Block ── */
 .section-block { margin-bottom: 48px; }
+.section-block.hidden { display: none; }
 
 /* ── Cards ── */
 .card {
@@ -283,8 +286,8 @@ body.dark .yr-btn.active { background:var(--mon); color:#fff; }
 body.dark .report-table th, body.dark .val-table th, body.dark .limit-table th { background:#0c2a3a; }
 body.dark .upload-trigger-card { border-color:#1e4a6e; }
 body.dark .upload-trigger-card:hover { background:#0c2a3a; }
-body.dark .module-nav a { background:#1e293b; border-color:#334155; color:#e2e8f0; }
-body.dark .module-nav a:hover { border-color:var(--mon); color:var(--mon); }
+body.dark .module-nav a:not(.active) { background:#1e293b; border-color:#334155; color:#e2e8f0; }
+body.dark .module-nav a:hover:not(.active) { border-color:var(--mon); color:var(--mon); }
 body.dark .modal-upload-zone { background:#0c2a3a; border-color:#1e4a6e; }
 body.dark .modal-hd { background:#1e293b; }
 body.dark .modal-ai-result { background:#0c2a3a; }
@@ -327,11 +330,11 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
 
   <!-- Module Nav -->
   <div class="module-nav">
-    <a href="#m1">📅 監測行事曆<span class="nav-badge">已啟用</span></a>
-    <a href="#m2">📁 歷年報告<span class="nav-badge">已啟用</span></a>
-    <a href="#m3">📊 監測數值<span class="nav-badge">已啟用</span></a>
-    <a href="#m4">⚖️ 容許濃度標準<span class="nav-badge">已啟用</span></a>
-    <a href="#m5">🤖 AI 文件判讀<span class="nav-badge">已啟用</span></a>
+    <a id="nav-m1" class="active" onclick="showModule(1)">📅 監測行事曆<span class="nav-badge">已啟用</span></a>
+    <a id="nav-m2" onclick="showModule(2)">📁 歷年報告<span class="nav-badge">已啟用</span></a>
+    <a id="nav-m3" onclick="showModule(3)">📊 監測數值<span class="nav-badge">已啟用</span></a>
+    <a id="nav-m4" onclick="showModule(4)">⚖️ 容許濃度標準<span class="nav-badge">已啟用</span></a>
+    <a id="nav-m5" onclick="showModule(5)">🤖 AI 文件判讀<span class="nav-badge">已啟用</span></a>
   </div>
 
   <!-- ══ Module 1：監測行事曆 ══ -->
@@ -344,7 +347,7 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
   </div>
 
   <!-- ══ Module 2：歷年報告 ══ -->
-  <div class="section-block" id="m2">
+  <div class="section-block hidden" id="m2">
     <div class="section-label">模組二・歷年報告 <span class="mod-tag active">已啟用</span></div>
     <div class="yr-tabs" id="yr-tabs"></div>
     <div class="card">
@@ -353,7 +356,7 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
   </div>
 
   <!-- ══ Module 3：監測數值 ══ -->
-  <div class="section-block" id="m3">
+  <div class="section-block hidden" id="m3">
     <div class="section-label">模組三・監測數值 <span class="mod-tag active">已啟用</span></div>
     <div class="notice warn">
       📝 監測數值由「🤖 AI 文件判讀」上傳報告後自動填入，每次新報告確認後即更新此表。
@@ -374,7 +377,7 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
   </div>
 
   <!-- ══ Module 4：容許濃度標準 ══ -->
-  <div class="section-block" id="m4">
+  <div class="section-block hidden" id="m4">
     <div class="section-label">模組四・容許濃度標準 <span class="mod-tag active">已啟用</span></div>
     <div class="card">
       <div class="section-hd">⚖️ 常見監測項目容許標準</div>
@@ -392,7 +395,7 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
   </div>
 
   <!-- ══ Module 5：AI 文件判讀 ══ -->
-  <div class="section-block" id="m5">
+  <div class="section-block hidden" id="m5">
     <div class="section-label">模組五・AI 文件判讀 <span class="mod-tag active">已啟用</span></div>
     <div class="notice info">
       🤖 上傳監測報告 PDF，AI 自動辨識監測日期、站點、各測定點數值，並比對容許濃度標準。確認後同步更新「歷年報告」進度。
@@ -482,6 +485,14 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
 </div>
 
 <script>
+// ── Module switching ──────────────────────────────────────────
+function showModule(n) {
+  [1, 2, 3, 4, 5].forEach(i => {
+    document.getElementById('m' + i).classList.toggle('hidden', i !== n);
+    document.getElementById('nav-m' + i).classList.toggle('active', i === n);
+  });
+}
+
 const WORKER_URL = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
 
 const SITES = [

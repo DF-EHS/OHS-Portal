@@ -208,6 +208,7 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24p
 
 /* ── Section spacer ── */
 .section-block { margin-bottom: 40px; }
+.section-block.hidden { display: none; }
 
 /* ── Drill Dashboard ── */
 .drill-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
@@ -407,19 +408,19 @@ body.dark .alert-amber .alert-mail  { background:#78350f; color:#fde68a; border-
 
   <!-- Module Nav -->
   <div class="module-nav">
-    <a href="#m1">
+    <a id="nav-m1" class="active" onclick="showModule(1)">
       📊 各年度消防演練紀錄
       <span class="nav-badge">已啟用</span>
     </a>
-    <a href="#m2">
+    <a id="nav-m2" onclick="showModule(2)">
       📋 年度檢修申報
       <span class="nav-badge">已啟用</span>
     </a>
-    <a href="#m3" class="active">
+    <a id="nav-m3" onclick="showModule(3)">
       👤 防火管理人名冊
       <span class="nav-badge">已啟用</span>
     </a>
-    <a href="#m4">
+    <a id="nav-m4" onclick="showModule(4)">
       📁 文件快速存取
       <span class="nav-badge">已啟用</span>
     </a>
@@ -440,7 +441,7 @@ body.dark .alert-amber .alert-mail  { background:#78350f; color:#fde68a; border-
   </div>
 
   <!-- ══ Module 2：年度消防設備檢修申報 ══ -->
-  <div class="section-block" id="m2">
+  <div class="section-block hidden" id="m2">
     <div class="section-label">
       模組二・年度消防設備檢修申報
       <span class="mod-tag active">已啟用</span>
@@ -453,7 +454,7 @@ body.dark .alert-amber .alert-mail  { background:#78350f; color:#fde68a; border-
   </div>
 
   <!-- ══ Module 3：防火管理人名冊（啟用） ══ -->
-  <div class="section-block" id="m3">
+  <div class="section-block hidden" id="m3">
     <div class="section-label">
       模組三・防火管理人名冊
       <span class="mod-tag active">已啟用</span>
@@ -464,7 +465,7 @@ body.dark .alert-amber .alert-mail  { background:#78350f; color:#fde68a; border-
   </div>
 
   <!-- ══ Module 4：文件快速存取（啟用） ══ -->
-  <div class="section-block" id="m4">
+  <div class="section-block hidden" id="m4">
     <div class="section-label">
       模組四・文件快速存取
       <span class="mod-tag active">已啟用</span>
@@ -548,6 +549,14 @@ body.dark .alert-amber .alert-mail  { background:#78350f; color:#fde68a; border-
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
 
 <script>
+// ── Module switching ──────────────────────
+function showModule(n) {
+  [1, 2, 3, 4].forEach(i => {
+    document.getElementById('m' + i).classList.toggle('hidden', i !== n);
+    document.getElementById('nav-m' + i).classList.toggle('active', i === n);
+  });
+}
+
 // ─────────────────────────────────────────────
 //  消防演練合規矩陣
 //  s: 'done'=已完成  'missing'=未記錄  'pending'=待補上傳  'future'=未到期

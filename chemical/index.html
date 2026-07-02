@@ -100,6 +100,7 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24p
 
 /* ── Section Block ── */
 .section-block { margin-bottom: 48px; }
+.section-block.hidden { display: none; }
 
 /* ── Stats Row ── */
 .stats-row {
@@ -499,8 +500,8 @@ body.dark .chem-chat-input-area { background: #1e293b; }
 
   <!-- Module Nav -->
   <div class="module-nav">
-    <a href="#m1">📊 合規概覽 &amp; 申報追蹤<span class="nav-badge">已啟用</span></a>
-    <a href="#m2">🧪 化學品清冊 &amp; SDS<span class="nav-badge">已啟用</span></a>
+    <a id="nav-m1" class="active" onclick="showModule(1)">📊 合規概覽 &amp; 申報追蹤<span class="nav-badge">已啟用</span></a>
+    <a id="nav-m2" onclick="showModule(2)">🧪 化學品清冊 &amp; SDS<span class="nav-badge">已啟用</span></a>
   </div>
 
   <!-- ══ Module 1：合規概覽 & 申報追蹤 ══ -->
@@ -565,7 +566,7 @@ body.dark .chem-chat-input-area { background: #1e293b; }
   </div>
 
   <!-- ══ Module 2：化學品清冊 & SDS ══ -->
-  <div class="section-block" id="m2">
+  <div class="section-block hidden" id="m2">
     <div class="section-label">
       模組二・化學品清冊 &amp; SDS 索引（全興廠，民114年）
       <span class="mod-tag active">已啟用</span>
@@ -674,6 +675,14 @@ body.dark .chem-chat-input-area { background: #1e293b; }
 </dialog>
 
 <script>
+// ── Module switching ──────────────────────────────────────────
+function showModule(n) {
+  [1, 2].forEach(i => {
+    document.getElementById('m' + i).classList.toggle('hidden', i !== n);
+    document.getElementById('nav-m' + i).classList.toggle('active', i === n);
+  });
+}
+
 // ─────────────────────────────────────────────────────────────
 //  SDS 五項核心安全資訊（提煉自各 SDS 第 2/6/7/8 節）
 //  標注 (推估) 者為掃描版 PDF 依化學品性質推估，請以實際 SDS 為準
