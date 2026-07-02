@@ -576,24 +576,16 @@ function statusBadge(s) {
 function docCell(r, year, siteId, half) {
   if (r.status === 'na') return '<span class="badge bd-na">—（未監測）</span>';
 
-  const links = [
-    { label:'📋 計畫書',   url: r.planUrl },
-    { label:'📄 留底報告', url: r.reportUrl },
-    { label:'📢 公告',     url: r.announceUrl },
-    { label:'✅ 申報憑證', url: r.certUrl },
-  ];
-  const linksHtml = links.map(l =>
-    l.url
-      ? `<a class="doc-btn" href="${l.url}" target="_blank">${l.label}</a>`
-      : `<span class="doc-btn disabled">${l.label}</span>`
-  ).join('');
+  const reportLink = r.reportUrl
+    ? `<a class="doc-btn" href="${r.reportUrl}" target="_blank">📄 監測結果報告書</a>`
+    : `<span class="doc-btn disabled">📄 監測結果報告書</span>`;
 
   const uploadLabel = r.status === 'done' ? '📎 重新上傳' : '📎 上傳報告';
   const btnClass = r.status === 'done' ? 'upload-row-btn secondary' : 'upload-row-btn';
 
   return `
     ${statusBadge(r.status)}
-    <div class="doc-links">${linksHtml}</div>
+    <div class="doc-links">${reportLink}</div>
     <button type="button" class="${btnClass}" onclick="openModal(${year},'${siteId}','${half}')">${uploadLabel}</button>
   `;
 }
