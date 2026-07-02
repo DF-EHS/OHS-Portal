@@ -218,7 +218,7 @@
         <span class="nav-icon">🤰</span>母性健康保護
       </a>
       <a class="nav-item" href="${BASE}fourplans/admin/" data-match="/fourplans/">
-        <span class="nav-icon">📋</span>四大計畫統一後台
+        <span class="nav-icon">🩺</span>四大計畫統一後台
       </a>
 
       <div class="nav-section">消防</div>
