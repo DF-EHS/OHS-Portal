@@ -769,7 +769,7 @@ async function aiAnalyzeResp(id) {
       body: JSON.stringify({ message: prompt })
     });
     const d = await res.json();
-    const aiText = d.reply || d.response || d.message || '（AI 無回應）';
+    const aiText = d.reply || d.response || d.message || d.text || d.data || '（AI 無回應）';
     V('rp-ai').value = aiText;
   } catch(e) { V('rp-ai').value = '分析失敗：' + e.message; }
   if (btn) { btn.textContent='✨ AI 分析'; btn.disabled=false; }
