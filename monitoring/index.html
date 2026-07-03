@@ -331,23 +331,13 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
 
   <!-- Module Nav -->
   <div class="module-nav">
-    <a id="nav-m1" class="active" onclick="showModule(1)">📅 監測行事曆<span class="nav-badge">已啟用</span></a>
-    <a id="nav-m2" onclick="showModule(2)">📁 歷年報告<span class="nav-badge">已啟用</span></a>
+    <a id="nav-m2" class="active" onclick="showModule(2)">📁 歷年報告<span class="nav-badge">已啟用</span></a>
     <a id="nav-m3" onclick="showModule(3)">📊 監測數值<span class="nav-badge">已啟用</span></a>
     <a id="nav-m4" onclick="showModule(4)">⚖️ 容許濃度標準<span class="nav-badge">已啟用</span></a>
   </div>
 
-  <!-- ══ Module 1：監測行事曆 ══ -->
-  <div class="section-block" id="m1">
-    <div class="section-label">模組一・監測行事曆 <span class="mod-tag active">已啟用</span></div>
-    <div class="card">
-      <div class="section-hd">📅 年度監測行事曆</div>
-      <div id="calendar-wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:12px"></div>
-    </div>
-  </div>
-
   <!-- ══ Module 2：歷年報告 ══ -->
-  <div class="section-block hidden" id="m2">
+  <div class="section-block" id="m2">
     <div class="section-label">模組二・歷年報告 <span class="mod-tag active">已啟用</span></div>
     <div class="yr-tabs" id="yr-tabs"></div>
     <div class="card">
@@ -475,7 +465,7 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
 <script>
 // ── Module switching ──────────────────────────────────────────
 function showModule(n) {
-  [1, 2, 3, 4].forEach(i => {
+  [2, 3, 4].forEach(i => {
     document.getElementById('m' + i).classList.toggle('hidden', i !== n);
     document.getElementById('nav-m' + i).classList.toggle('active', i === n);
   });
@@ -538,20 +528,6 @@ function toggleDark() {
 if (localStorage.getItem('portal-dark') === '1') {
   document.body.classList.add('dark');
   document.getElementById('dark-toggle').textContent = '☀️';
-}
-
-// ── 模組一：監測行事曆 ──
-function renderCalendar() {
-  const cal = [
-    { m:'上半年（5–6 月）',  items:['全興廠上半年監測','總公司（視需要）'] },
-    { m:'下半年（11–12 月）', items:['全興廠下半年監測','總公司（視需要）'] },
-  ];
-  document.getElementById('calendar-wrap').innerHTML = cal.map(c => `
-    <div style="padding:16px;background:var(--mon-light);border-radius:12px;border:1px solid var(--mon-border)">
-      <div style="font-weight:800;color:var(--mon-dark);margin-bottom:10px;font-size:14px">📅 ${c.m}</div>
-      ${c.items.map(i => `<div style="font-size:13px;color:var(--text);padding:3px 0">• ${i}</div>`).join('')}
-    </div>
-  `).join('');
 }
 
 // ── 模組二：歷年報告 ──
@@ -911,7 +887,6 @@ function toBase64(file) {
 }
 
 // ── Init ──
-renderCalendar();
 initYearTabs();
 renderYearReport(curYear);
 renderValues();
