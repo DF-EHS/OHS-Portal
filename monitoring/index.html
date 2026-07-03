@@ -769,7 +769,7 @@ async function runModalAI() {
     let d = {};
     try { d = JSON.parse(rawText); } catch { d = { _raw: rawText }; }
 
-    const raw = (d.reply || d.response || d.message || d.text || d.content || d.result || '').trim();
+    const raw = (d.reply || d.response || d.message || d.text || d.content || d.result || d.data || '').trim();
 
     let parsed = null;
     try {
