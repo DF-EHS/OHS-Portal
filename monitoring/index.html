@@ -122,6 +122,8 @@ main { flex: 1; max-width: 1020px; margin: 0 auto; width: 100%; padding: 32px 24
 }
 .yr-btn.active { background: var(--mon); color: #fff; border-color: var(--mon); }
 .yr-btn:hover:not(.active) { border-color: var(--mon); color: var(--mon); }
+.yr-add { border-style: dashed; color: var(--sub); padding: 7px 14px; }
+.yr-add:hover { border-color: var(--mon); color: var(--mon); }
 
 /* ── Report table ── */
 .report-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -284,6 +286,7 @@ body.dark { --bg:#0f172a; --card:#1e293b; --border:#334155; --text:#e2e8f0; --su
 body.dark .card, body.dark .modal-box { background:#1e293b; border-color:#334155; }
 body.dark .yr-btn       { background:#1e293b; border-color:#334155; color:#94a3b8; }
 body.dark .yr-btn.active { background:var(--mon); color:#fff; }
+body.dark .yr-add       { border-color:#475569; color:#64748b; }
 body.dark .report-table th, body.dark .val-table th, body.dark .limit-table th { background:#0c2a3a; }
 body.dark .upload-trigger-card { border-color:#1e4a6e; }
 body.dark .upload-trigger-card:hover { background:#0c2a3a; }
@@ -554,12 +557,67 @@ function docCell(r, year, siteId, half) {
   `;
 }
 
-function initYearTabs() {
-  document.getElementById('yr-tabs').innerHTML = [115,114,113,112].map(y =>
-    `<button type="button" class="yr-btn${y===curYear?' active':''}" onclick="selectYear(${y})">${y} 年度</button>`
-  ).join('');
+const BASE_YEARS = [115, 114, 113, 112];
+
+function loadExtraYears() {
+  try {
+    const extra = JSON.parse(localStorage.getItem('mon-extra-years') || '{}');
+    Object.entries(extra).forEach(([y, rec]) => { RECORDS[parseInt(y)] = rec; });
+  } catch {}
 }
+
+function saveExtraYears() {
+  const extra = {};
+  Object.keys(RECORDS).forEach(y => {
+    if (!BASE_YEARS.includes(parseInt(y))) extra[y] = RECORDS[y];
+  });
+  localStorage.setItem('mon-extra-years', JSON.stringify(extra));
+}
+
+function loadValues() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('mon-values') || '[]');
+    if (Array.isArray(saved)) VALUES.push(...saved);
+  } catch {}
+}
+
+function saveValues() {
+  localStorage.setItem('mon-values', JSON.stringify(VALUES));
+}
+
+function allYearsSorted() {
+  return Object.keys(RECORDS).map(Number).sort((a, b) => b - a);
+}
+
+function initYearTabs() {
+  const years = allYearsSorted();
+  document.getElementById('yr-tabs').innerHTML =
+    years.map(y =>
+      `<button type="button" class="yr-btn${y===curYear?' active':''}" onclick="selectYear(${y})">${y} 年度</button>`
+    ).join('') +
+    `<button type="button" class="yr-btn yr-add" onclick="promptAddYear()" title="新增年度">＋ 新增年度</button>`;
+}
+
 function selectYear(y) {
+  curYear = y;
+  initYearTabs();
+  renderYearReport(y);
+}
+
+function promptAddYear() {
+  const next = Math.max(...allYearsSorted()) + 1;
+  const input = prompt(`請輸入要新增的年度（民國年）：`, String(next));
+  if (!input) return;
+  const y = parseInt(input);
+  if (isNaN(y) || y < 100 || y > 200) { alert('年度格式錯誤，請輸入如 116'); return; }
+  if (RECORDS[y]) { alert(`${y} 年度已存在`); return; }
+  RECORDS[y] = {
+    qx: { H1: { date: `${y}-05`, status: 'pending', reportUrl: '' },
+          H2: { date: `${y}-11`, status: 'pending', reportUrl: '' } },
+    hq: { H1: { date: `${y}-05`, status: 'pending', reportUrl: '' },
+          H2: { date: `${y}-11`, status: 'pending', reportUrl: '' } },
+  };
+  saveExtraYears();
   curYear = y;
   initYearTabs();
   renderYearReport(y);
@@ -869,6 +927,10 @@ function confirmAndUpdate() {
     });
   });
 
+  // Persist changes
+  saveExtraYears();
+  saveValues();
+
   // Re-render Module 2 and 3
   if (curYear === year) renderYearReport(year);
   renderValues();
@@ -915,6 +977,8 @@ function toBase64(file) {
 }
 
 // ── Init ──
+loadExtraYears();
+loadValues();
 initYearTabs();
 renderYearReport(curYear);
 renderValues();
