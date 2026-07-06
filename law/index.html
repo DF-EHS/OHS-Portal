@@ -1174,8 +1174,8 @@ async function runAudit(src) {
   if (btn) { btn.disabled = true; btn.textContent = '🔍 查詢中…'; }
 
   const laws = src.summary.filter(l => l.url);
-  const lawList = laws.map(l => `- ${l.name}`).join('\n');
-  const prompt = `請搜尋全國法規資料庫（law.moj.gov.tw），查詢以下各職安法規的最新修正日期。只回傳 JSON，格式：{"results":[{"name":"法規名稱","latest":"民國XXX年XX月XX日"},...]}。若找不到則 latest 填 null。\n法規清單：\n${lawList}`;
+  const lawList = laws.map(l => `- ${l.name}　${l.url}`).join('\n');
+  const prompt = `請查詢以下各職安法規在全國法規資料庫的最新修正日期。每筆已附上正確的網址，請直接訪問該網址取得「最新修正日期」欄位的值。只回傳 JSON，格式：{"results":[{"name":"法規名稱","latest":"民國XXX年XX月XX日"},...]}。若找不到則 latest 填 null。\n法規清單：\n${lawList}`;
 
   let liveMap = {};
   try {
