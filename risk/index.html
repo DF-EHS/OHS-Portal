@@ -6874,13 +6874,16 @@ function saveItem() {
 
 // 覆寫 confirmDeleteItem：更新記憶體後非同步同步雲端
 function confirmDeleteItem(itemId) {
-  const item = curSheet.items.find(i => i.id === itemId);
-  if (!item) return;
-  openConfirm('刪除危害項目', `確定要刪除「${item.hazard}」（${item.id}）？此動作無法復原。`, () => {
-    const dept   = ALL_DATA.find(d => d.dept_id === curDept.dept_id);
-    const sheet  = findSheet(dept, curSheet.id);
+  try {
+    if (!curSheet) { toast('未選取作業表', 'err'); return; }
+    const item = curSheet.items.find(function(i){ return i.id === itemId; });
+    if (!item) { toast('找不到危害項目', 'err'); return; }
+    if (!window.confirm('確定要刪除危害項目「' + item.hazard + '」？此動作無法復原。')) return;
+    const dept  = ALL_DATA.find(function(d){ return d.dept_id === curDept.dept_id; });
+    const sheet = findSheet(dept, curSheet.id);
+    if (!sheet) { toast('找不到作業表', 'err'); return; }
     const deptId = dept.dept_id, sheetId = sheet.id;
-    sheet.items  = sheet.items.filter(i => i.id !== itemId);
+    sheet.items = sheet.items.filter(function(i){ return i.id !== itemId; });
     curSheet = sheet;
     toast('刪除中，同步雲端…');
     renderMetaBox();
@@ -6888,16 +6891,17 @@ function confirmDeleteItem(itemId) {
     renderStatsBar('detail');
     initHome();
     apiPost({ action: 'delete', dept_id: deptId, sheet_id: sheetId, item_id: itemId })
-      .then(() => toast('已刪除並同步至雲端 ✓'))
-      .catch(() => toast('本機已刪除，但雲端同步失敗，請重新整理', 'err'));
-  });
+      .then(function(){ toast('已刪除並同步至雲端 ✓'); })
+      .catch(function(){ toast('本機已刪除，但雲端同步失敗，請重新整理', 'err'); });
+  } catch(e) {
+    toast('刪除發生錯誤：' + e.message, 'err');
+  }
 }
 
 // 覆寫 confirmReset：從雲端重新載入
 function confirmReset() {
-  openConfirm('確認重新載入', '將重新從 Google Sheets 載入最新資料。確定繼續？', () => {
-    loadFromCloud().then(() => { showHome(); toast('已從雲端重新載入 ✓'); });
-  });
+  if (!window.confirm('將重新從 Google Sheets 載入最新資料。確定繼續？')) return;
+  loadFromCloud().then(function(){ showHome(); toast('已從雲端重新載入 ✓'); });
 }
 
 // 頁面啟動：從雲端載入
