@@ -6682,6 +6682,28 @@ async function apiPost(payload) {
   return res.json();
 }
 
+async function migrateDepts(depts) {
+  const rows = [];
+  for (const dept of depts) {
+    for (const sheet of (dept.sheets || [])) {
+      for (const item of (sheet.items || [])) {
+        rows.push({
+          dept_id: dept.dept_id, sheet_id: sheet.id,
+          sheet_name: sheet.name, category: sheet.category || '',
+          ...item
+        });
+      }
+    }
+  }
+  if (!rows.length) return;
+  try {
+    await apiPost({ action: 'bulkSync', rows });
+    console.log(`已遷移 ${rows.length} 筆資料至 GAS ✓`);
+  } catch(e) {
+    console.error('GAS 遷移失敗:', e);
+  }
+}
+
 async function loadFromCloud() {
   showLoader(true);
   try {
@@ -6694,11 +6716,16 @@ async function loadFromCloud() {
       if (hq) { hq.year = '115'; hq.fill_date = '115.03.11'; hq.author = '王婕誼'; }
       const qx = ALL_DATA.find(d => d.dept_id === 'qx');
       if (qx) { qx.year = '115'; qx.fill_date = '115.05.26'; qx.author = '洪健翔'; }
-      // 合併 DEFAULT_DATA 中雲端沒有的站點（外站資料）
+      // 合併 DEFAULT_DATA 中雲端沒有的站點（外站資料）並自動遷移至 GAS
       const cloudIds = new Set(ALL_DATA.map(d => d.dept_id));
+      const missingDepts = [];
       for (const dept of DEFAULT_DATA) {
-        if (!cloudIds.has(dept.dept_id)) ALL_DATA.push(dept);
+        if (!cloudIds.has(dept.dept_id)) {
+          ALL_DATA.push(dept);
+          missingDepts.push(dept);
+        }
       }
+      if (missingDepts.length > 0) migrateDepts(missingDepts);
     }
     initHome();
     onHashChange();
@@ -6756,7 +6783,7 @@ function saveItem() {
   renderStatsBar('detail');
   populateProcessFilter();
   toast(action === 'add' ? '新增中，同步雲端…' : '更新中，同步雲端…');
-  apiPost({ action, dept_id: deptId, sheet_id: sheetId, item })
+  apiPost({ action, dept_id: deptId, sheet_id: sheetId, sheet_name: sheet.name, category: sheet.category || '', item })
     .then(() => toast(action === 'add' ? '已新增並同步至雲端 ✓' : '已更新並同步至雲端 ✓'))
     .catch(() => toast('本機已更新，但雲端同步失敗，請重新整理', 'err'));
 }

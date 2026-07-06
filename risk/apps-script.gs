@@ -22,7 +22,17 @@ const DEPT_META = {
       {id:'utility',    name:'公用工程與環保設施',  icon:'🏭',  ic:'ic-blue'},
       {id:'admin',      name:'行政實驗室與建物',    icon:'🏢',  ic:'ic-purple'}
     ]
-  }
+  },
+  sg: { dept_name:'神岡站',  dept_icon:'🏭', year:'113', fill_date:'',           author:'林家煜', use_categories:false, categories:[] },
+  hm: { dept_name:'和美站',  dept_icon:'🏭', year:'113', fill_date:'',           author:'劉昌明', use_categories:false, categories:[] },
+  jm: { dept_name:'金馬站',  dept_icon:'🏭', year:'113', fill_date:'2024-06-27', author:'黃奕儒', use_categories:false, categories:[] },
+  s1: { dept_name:'南一',    dept_icon:'🚛', year:'113', fill_date:'112.12.06',  author:'',       use_categories:false, categories:[] },
+  n1: { dept_name:'北一',    dept_icon:'🚛', year:'113', fill_date:'',           author:'',       use_categories:false, categories:[] },
+  n2: { dept_name:'北二',    dept_icon:'🚛', year:'113', fill_date:'',           author:'',       use_categories:false, categories:[] },
+  yl: { dept_name:'員林站',  dept_icon:'🏭', year:'113', fill_date:'',           author:'',       use_categories:false, categories:[] },
+  dl: { dept_name:'斗六站',  dept_icon:'🏭', year:'113', fill_date:'',           author:'',       use_categories:false, categories:[] },
+  s2: { dept_name:'南二',    dept_icon:'🚛', year:'113', fill_date:'',           author:'',       use_categories:false, categories:[] },
+  ct: { dept_name:'草屯站',  dept_icon:'🏭', year:'113', fill_date:'',           author:'',       use_categories:false, categories:[] },
 };
 
 const SHEET_ICONS = [
@@ -55,10 +65,21 @@ function doPost(e) {
   try {
     const p = JSON.parse(e.postData.contents);
     let result;
-    if      (p.action === 'add')    result = addItem(p.item);
-    else if (p.action === 'update') result = updateItem(p.item);
-    else if (p.action === 'delete') result = deleteItem(p.id);
-    else                            result = {ok:false, error:'Unknown action'};
+    if (p.action === 'add' || p.action === 'update') {
+      const item = Object.assign({}, p.item, {
+        dept_id:    p.dept_id    || '',
+        sheet_id:   p.sheet_id   || '',
+        sheet_name: p.sheet_name || '',
+        category:   p.category   || ''
+      });
+      result = p.action === 'add' ? addItem(item) : updateItem(item);
+    } else if (p.action === 'delete') {
+      result = deleteItem(p.item_id || p.id);
+    } else if (p.action === 'bulkSync') {
+      result = bulkSync(p.rows);
+    } else {
+      result = {ok:false, error:'Unknown action'};
+    }
     return respond(result);
   } catch(err) {
     return respond({ok:false, error:err.toString()});
@@ -169,4 +190,14 @@ function deleteItem(id) {
     }
   }
   return { ok: false, error: 'Record not found' };
+}
+
+// ── 批次新增（初始遷移用）────────────────────────────
+function bulkSync(rows) {
+  if (!Array.isArray(rows) || !rows.length) return { ok: true, added: 0 };
+  const { headers } = getAllRows();
+  const sheet = getSheet();
+  const matrix = rows.map(item => headers.map(h => item[h] !== undefined ? item[h] : ''));
+  sheet.getRange(sheet.getLastRow() + 1, 1, matrix.length, headers.length).setValues(matrix);
+  return { ok: true, added: matrix.length };
 }
