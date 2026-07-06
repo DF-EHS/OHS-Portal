@@ -408,12 +408,7 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
       <div class="modal-ctx">
         <div class="ctx-group">
           <span class="ctx-label">年度</span>
-          <select class="ctx-select" id="modal-sel-year" onchange="syncModalCtx()">
-            <option value="115">115年度</option>
-            <option value="114">114年度</option>
-            <option value="113">113年度</option>
-            <option value="112">112年度</option>
-          </select>
+          <select class="ctx-select" id="modal-sel-year" onchange="syncModalCtx()"></select>
         </div>
         <div class="ctx-group">
           <span class="ctx-label">站點</span>
@@ -709,7 +704,10 @@ let lastAIData = null;
 
 function openModal(year, siteId, half) {
   modalCtx = { year: parseInt(year), site: siteId, half };
-  document.getElementById('modal-sel-year').value = year;
+  // Dynamically populate year options so new years are included
+  const sel = document.getElementById('modal-sel-year');
+  sel.innerHTML = allYearsSorted().map(y => `<option value="${y}">${y}年度</option>`).join('');
+  sel.value = year;
   document.getElementById('modal-sel-site').value = siteId;
   document.getElementById('modal-sel-half').value = half;
   syncModalCtx();
@@ -729,7 +727,9 @@ function handleOverlayClick(e) {
 }
 
 function syncModalCtx() {
-  modalCtx.year = parseInt(document.getElementById('modal-sel-year').value);
+  const yearVal = parseInt(document.getElementById('modal-sel-year').value);
+  if (isNaN(yearVal)) return;
+  modalCtx.year = yearVal;
   modalCtx.site = document.getElementById('modal-sel-site').value;
   modalCtx.half = document.getElementById('modal-sel-half').value;
   const site = SITES.find(s => s.id === modalCtx.site);
