@@ -470,6 +470,7 @@ function showModule(n) {
 }
 
 const WORKER_URL = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+const GAS_URL = 'YOUR_GAS_URL'; // 部署 monitoring/apps-script.gs 後填入 Web App URL
 
 const SITES = [
   { id:'qx', name:'全興廠', emoji:'🏭' },
@@ -596,6 +597,73 @@ function saveValues() {
 
 function allYearsSorted() {
   return Object.keys(RECORDS).map(Number).sort((a, b) => b - a);
+}
+
+// ── GAS 跨裝置同步 ────────────────────────────────────────────────
+async function loadFromGAS() {
+  if (!GAS_URL || GAS_URL === 'YOUR_GAS_URL') return;
+  try {
+    const res = await fetch(GAS_URL + '?action=getAll', { redirect: 'follow' });
+    const d = await res.json();
+    if (!d.success) return;
+
+    // 合併狀態：GAS 資料覆蓋預設值
+    (d.data.records || []).forEach(r => {
+      const year = parseInt(r.year);
+      if (!RECORDS[year]) RECORDS[year] = {};
+      if (!RECORDS[year][r.site]) RECORDS[year][r.site] = {};
+      if (!RECORDS[year][r.site][r.half]) RECORDS[year][r.site][r.half] = {};
+      Object.assign(RECORDS[year][r.site][r.half], {
+        status: r.status,
+        reportUrl: r.reportUrl || '',
+      });
+    });
+
+    // 合併數值：GAS 為主
+    VALUES.length = 0;
+    (d.data.values || []).forEach(v => VALUES.push({
+      year: parseInt(v.year), half: v.half, site: v.site,
+      item: v.item, location: v.location, value: v.value,
+      unit: v.unit, limit: v.limit, pass: String(v.pass) !== '0',
+    }));
+
+    // 更新 localStorage 快取
+    saveAllRecords();
+    saveValues();
+
+    // 重新渲染
+    initYearTabs();
+    renderYearReport(curYear);
+    renderValues();
+  } catch (err) {
+    console.warn('GAS 同步失敗，使用本機快取：', err);
+  }
+}
+
+async function saveStatusToGAS(year, site, half, status, reportUrl) {
+  if (!GAS_URL || GAS_URL === 'YOUR_GAS_URL') return;
+  try {
+    await fetch(GAS_URL, {
+      method: 'POST', redirect: 'follow',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'updateStatus', year, site, half, status, reportUrl }),
+    });
+  } catch (err) {
+    console.warn('GAS 狀態儲存失敗：', err);
+  }
+}
+
+async function saveValuesToGAS(year, half, site, items) {
+  if (!GAS_URL || GAS_URL === 'YOUR_GAS_URL' || !items.length) return;
+  try {
+    await fetch(GAS_URL, {
+      method: 'POST', redirect: 'follow',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'addValues', year, half, site, items }),
+    });
+  } catch (err) {
+    console.warn('GAS 數值儲存失敗：', err);
+  }
 }
 
 function initYearTabs() {
@@ -941,11 +1009,22 @@ function confirmAndUpdate() {
     });
   });
 
-  // Persist changes
+  // Persist locally (immediate)
   saveAllRecords();
   saveValues();
 
-  // Re-render Module 2 and 3
+  // Persist to GAS (cross-device, async)
+  saveStatusToGAS(year, siteId, half, 'done', SP_FOLDER);
+  const gasItems = (lastAIData.items || []).flatMap(item =>
+    (item.locations || []).map(loc => ({
+      item: item.name, location: loc.location,
+      value: loc.value, unit: item.unit,
+      limit: item.twa, pass: loc.pass !== false,
+    }))
+  );
+  saveValuesToGAS(year, half, siteId, gasItems);
+
+  // Re-render Module 1 and 2
   if (curYear === year) renderYearReport(year);
   renderValues();
 
@@ -998,6 +1077,7 @@ renderYearReport(curYear);
 renderValues();
 renderLimits();
 syncModalCtx();
+loadFromGAS(); // 非同步：從 GAS 取最新資料，完成後自動更新畫面
 </script>
 
 <script>window.OHS_SIDEBAR_BASE = '../';</script>
