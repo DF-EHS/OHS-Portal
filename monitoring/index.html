@@ -651,8 +651,9 @@ async function loadFromGAS() {
     });
     if (migrations.length) await Promise.all(migrations);
 
-    // 合併數值：只有 GAS 有資料時才覆蓋本機（避免空陣列清掉本機資料）
+    // 數值處理
     if (gasValues.length > 0) {
+      // GAS 有資料 → 以 GAS 為主，覆蓋本機
       VALUES.length = 0;
       gasValues.forEach(v => VALUES.push({
         year: parseInt(v.year), half: v.half, site: v.site,
@@ -660,6 +661,22 @@ async function loadFromGAS() {
         unit: v.unit, limit: v.limit, pass: String(v.pass) !== '0',
       }));
       saveValues();
+    } else if (VALUES.length > 0) {
+      // GAS 是空的，但本機 localStorage 有數值 → 自動遷移到 GAS
+      const valGroups = {};
+      VALUES.forEach(v => {
+        const key = `${v.year}-${v.half}-${v.site}`;
+        if (!valGroups[key]) valGroups[key] = { year: v.year, half: v.half, site: v.site, items: [] };
+        valGroups[key].items.push({
+          item: v.item, location: v.location, value: v.value,
+          unit: v.unit, limit: v.limit, pass: v.pass,
+        });
+      });
+      await Promise.all(
+        Object.values(valGroups).map(g =>
+          gasPost({ action: 'addValues', year: g.year, half: g.half, site: g.site, items: g.items })
+        )
+      );
     }
 
     // 更新 localStorage 快取並重新渲染
