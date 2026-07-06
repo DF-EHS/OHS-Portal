@@ -6457,9 +6457,8 @@ function initHome() {
       '<div class="dept-hdr" style="cursor:pointer" title="進入作業表清單">' +
       '<span class="big-icon">' + dept.dept_icon + '</span>' +
       '<div style="flex:1">' +
-      '<h2 style="display:inline">' + esc(dept.dept_name) + '</h2>' +
-      '<span style="font-size:13px;color:var(--blue);margin-left:8px;font-weight:600">作業表 ›</span>' +
-      '<p style="margin-top:4px">' + dept.year + '年度 ｜ 填表 ' + esc(dept.fill_date) +
+      '<h2>' + esc(dept.dept_name) + '</h2>' +
+      '<p>' + dept.year + '年度 ｜ 填表 ' + esc(dept.fill_date) +
       ' ｜ 共 ' + allItems.length + ' 項危害' +
       (hi > 0 ? ' ｜ <span style="color:#fca5a5">⚠ 高風險 ' + hi + ' 項</span>' : '') +
       '</p></div></div>';
