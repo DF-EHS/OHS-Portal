@@ -254,7 +254,23 @@
 .audit-status.changed { background: #fff3e0; color: #c85a00; }
 .audit-status.fail    { background: #fde8e8; color: #c0392b; }
 .audit-status.anomaly { background: #f3e8ff; color: #7b2fa8; }
-.audit-detail-row td { background: #fafbfe; font-size: 12px; color: #555; padding: 4px 10px 8px 26px; }
+.audit-detail-row td { background: #fafbfe; font-size: 12px; color: #555; padding: 8px 10px 12px 26px; }
+.btn-law-diff { display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:5px 12px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;font-size:12px;font-weight:600;color:#1d4ed8;cursor:pointer;font-family:inherit;transition:background .15s; }
+.btn-law-diff:hover { background:#dbeafe; }
+.btn-law-diff:disabled { opacity:.6;cursor:default; }
+.audit-diff-panel { background:#f0f4fb;border:1px solid #d5dce9;border-radius:10px;padding:16px;margin-top:10px; }
+.adf-title { font-weight:700;font-size:13px;color:#1a3a6a;margin-bottom:10px; }
+.adf-content { font-size:13px;line-height:1.75;color:#334155; }
+.adf-content h1,.adf-content h2,.adf-content h3 { font-size:13px;font-weight:700;margin:8px 0 4px; }
+.adf-content ul,.adf-content ol { padding-left:18px; }
+.adf-content li { margin-bottom:4px; }
+.adf-link { display:inline-block;margin-top:10px;font-size:12px;color:#1d4ed8;text-decoration:none; }
+.adf-link:hover { text-decoration:underline; }
+body.dark .audit-diff-panel { background:#1e293b;border-color:#334155; }
+body.dark .adf-title { color:#bfdbfe; }
+body.dark .adf-content { color:#94a3b8; }
+body.dark .btn-law-diff { background:#1e3a5f;border-color:#2d4a7a;color:#93c5fd; }
+body.dark .btn-law-diff:hover { background:#1e3a7f; }
 .audit-history-panel { margin-top: 12px; border: 1px solid #d5dce9; border-radius: 6px; overflow: hidden; }
 .audit-history-panel summary { padding: 8px 12px; background: #f0f4fb; cursor: pointer; font-size: 13px; font-weight: 600; color: #1a3a6a; }
 .audit-history-row { display: flex; gap: 12px; padding: 6px 12px; border-top: 1px solid #edf0f7; font-size: 12px; }
@@ -1107,24 +1123,40 @@ function curAuditQuarter() {
 
 async function runAudit(src) {
   const btn = document.getElementById('btn-run-audit');
-  if (btn) { btn.disabled = true; btn.textContent = '執行中…'; }
-  if (!src.live_amend_checked) {
-    alert('尚無法規庫快取資料。\n請先執行 _fetch_law_dates.py 再執行 build.py。');
-    if (btn) { btn.disabled = false; btn.textContent = '立即執行'; }
-    return;
-  }
+  if (btn) { btn.disabled = true; btn.textContent = '🔍 查詢中…'; }
+
   const laws = src.summary.filter(l => l.url);
+  const lawList = laws.map(l => `- ${l.name}`).join('\n');
+  const prompt = `請搜尋全國法規資料庫（law.moj.gov.tw），查詢以下各職安法規的最新修正日期。只回傳 JSON，格式：{"results":[{"name":"法規名稱","latest":"民國XXX年XX月XX日"},...]}。若找不到則 latest 填 null。\n法規清單：\n${lawList}`;
+
+  let liveMap = {};
+  try {
+    const resp = await fetch(AI_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt })
+    });
+    const d = await resp.json();
+    const raw = (d.data || d.text || '').replace(/```json\n?|```\n?/g, '').trim();
+    const m = raw.match(/\{[\s\S]*\}/);
+    if (m) {
+      const p = JSON.parse(m[0]);
+      (p.results || []).forEach(r => { if (r.latest) liveMap[r.name] = r.latest; });
+    }
+  } catch(e) { console.warn('AI live fetch failed:', e); }
+
   const results = [];
   for (const law of laws) {
-    const liveDate  = law.live_amend  ? normAuditDate(law.live_amend)  : null;
-    const storedDate = law.amend      ? normAuditDate(law.amend)        : null;
+    const rawLive   = liveMap[law.name] || null;
+    const liveDate  = rawLive ? normAuditDate(rawLive) : null;
+    const storedDate = law.amend ? normAuditDate(law.amend) : null;
     let status;
     if (!liveDate)                   status = 'fail';
     else if (!storedDate)            status = 'changed';
     else if (liveDate > storedDate)  status = 'changed';
     else if (liveDate < storedDate)  status = 'anomaly';
     else                             status = 'ok';
-    results.push({ id: law.id, name: law.name, stored: law.amend || null, live: law.live_amend || null, status });
+    results.push({ id: law.id, name: law.name, stored: law.amend || null, live: rawLive, status });
   }
   const record = {
     quarter: curAuditQuarter(),
@@ -1156,11 +1188,14 @@ async function renderAuditPanel(src) {
       const statusClass = r.status;
       const detailId = `ad-${src.site_id}-${r.id}`;
       const hasDetail = (r.status !== 'ok');
+      const lawUrl = (src.summary.find(l => l.id === r.id) || {}).url || '';
       const detailText = r.status === 'changed'
-        ? `系統記錄：${r.stored ? normAuditDate(r.stored) : '—'}　　法規庫最新：${r.live ? normAuditDate(r.live) : '—'}　→ 請至法規庫確認修正內容後，執行 _mark_reviewed.py`
+        ? `系統記錄：${r.stored ? normAuditDate(r.stored) : '—'}　　法規庫最新：${r.live ? normAuditDate(r.live) : '—'}　→ 請確認修正內容後更新系統資料<br>
+           <button class="btn-law-diff" onclick="event.stopPropagation();loadLawDiff(this,'${encodeURIComponent(r.name)}','${encodeURIComponent(r.stored||'')}','${encodeURIComponent(r.live||'')}','${encodeURIComponent(lawUrl)}')">🔍 查看修改內容</button>
+           <div class="audit-diff-panel" style="display:none"></div>`
         : r.status === 'anomaly'
         ? `系統記錄 (${r.stored ? normAuditDate(r.stored) : '—'}) 比法規庫 (${r.live ? normAuditDate(r.live) : '—'}) 更新，請核實系統資料是否正確`
-        : '法規庫未取得修正日期（可重新執行 _fetch_law_dates.py）';
+        : '法規庫未取得修正日期（可重新執行本次鑑別）';
       rows += `<tr${hasDetail ? ` onclick="toggleAuditDetail('${detailId}')" style="cursor:pointer"` : ''}>
         <td>${r.name || r.id}</td>
         <td>${r.stored ? normAuditDate(r.stored) : '—'}</td>
@@ -1173,10 +1208,7 @@ async function renderAuditPanel(src) {
     }
   }
 
-  const checkedDate = src.live_amend_checked || null;
-  const dataSourceBadge = checkedDate
-    ? `<span style="font-size:12px;color:#888">法規庫快取：${checkedDate}</span>`
-    : `<span style="font-size:12px;color:#c0392b">尚無快取資料（請執行 _fetch_law_dates.py）</span>`;
+  const dataSourceBadge = `<span style="font-size:12px;color:#888">資料來源：全國法規資料庫（AI 即時查詢）</span>`;
 
   const latestInfo = latest
     ? `<span class="audit-quarter-badge">${latest.quarter}</span>
@@ -1208,7 +1240,7 @@ async function renderAuditPanel(src) {
       <h3>每季法規鑑別</h3>
       ${dataSourceBadge}
       ${latestInfo}
-      <button id="btn-run-audit" onclick="runAudit(curSource)"${checkedDate ? '' : ' disabled'}>立即執行</button>
+      <button id="btn-run-audit" onclick="runAudit(curSource)">立即執行</button>
     </div>
     ${latest ? `<table class="audit-table">
       <thead><tr>
@@ -1222,8 +1254,8 @@ async function renderAuditPanel(src) {
     ${historyHtml}
   `;
 
-  // 每季自動執行：若本季尚未盤點且資料已就緒，自動觸發
-  if (src.live_amend_checked && (!latest || latest.quarter !== curAuditQuarter())) {
+  // 每季自動執行：若本季尚未盤點，自動觸發
+  if (!latest || latest.quarter !== curAuditQuarter()) {
     runAudit(src);
   }
 }
@@ -1231,6 +1263,49 @@ async function renderAuditPanel(src) {
 function toggleAuditDetail(id) {
   const row = document.getElementById(id);
   if (row) row.style.display = row.style.display === 'none' ? '' : 'none';
+}
+
+async function loadLawDiff(btn, nameEnc, storedEnc, liveEnc, urlEnc) {
+  const name    = decodeURIComponent(nameEnc);
+  const stored  = decodeURIComponent(storedEnc);
+  const live    = decodeURIComponent(liveEnc);
+  const lawUrl  = decodeURIComponent(urlEnc);
+
+  const panel = btn.nextElementSibling;
+  if (panel.style.display !== 'none') { panel.style.display = 'none'; btn.textContent = '🔍 查看修改內容'; return; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ 載入中…';
+
+  const prompt = `請搜尋全國法規資料庫（law.moj.gov.tw），查詢「${name}」從 ${stored||'舊版'} 到 ${live||'最新版'} 的修正重點。
+請以繁體中文說明：
+1. 本次修正的主要條文（列出條號與修正摘要）
+2. 對職業安全衛生管理實務的影響
+3. 建議公司需要更新的相關文件或作業程序
+
+回覆長度適中，使用重點條列。`;
+
+  try {
+    const resp = await fetch(AI_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt })
+    });
+    const d = await resp.json();
+    const text = d.data || d.text || '（未取得回覆）';
+    const linkHtml = lawUrl ? `<a class="adf-link" href="${lawUrl}" target="_blank" rel="noopener">🔗 前往全國法規資料庫查閱全文 ›</a>` : '';
+    panel.innerHTML = `
+      <div class="adf-title">📋 ${name} 修正重點（${stored||'舊版'} → ${live||'最新版'}）</div>
+      <div class="adf-content">${text.replace(/\n/g,'<br>')}</div>
+      ${linkHtml}`;
+    panel.style.display = '';
+    btn.textContent = '▲ 收起';
+  } catch(e) {
+    panel.innerHTML = `<div class="adf-content" style="color:#c0392b">查詢失敗，請稍後再試。</div>`;
+    panel.style.display = '';
+    btn.textContent = '🔍 查看修改內容';
+  }
+  btn.disabled = false;
 }
 
 // ── init ──────────────────────────────────────────────────────
