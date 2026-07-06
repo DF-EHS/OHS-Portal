@@ -6247,10 +6247,12 @@ function saveSheet() {
   initHome();
 }
 function confirmDeleteSheet(sheetId) {
-  const sheet = findSheet(curDept, sheetId);
-  if (!sheet) return;
-  openConfirm('刪除作業表', `確定要刪除「${sheet.name}」作業表及其 ${sheet.items.length} 筆資料？此動作無法復原。`, () => {
-    const dept = ALL_DATA.find(d=>d.dept_id===curDept.dept_id);
+  if (!curDept) { toast('未選取站點', 'err'); return; }
+  const dept = ALL_DATA.find(d=>d.dept_id===curDept.dept_id);
+  if (!dept) { toast('找不到站點', 'err'); return; }
+  const sheet = (dept.sheets||[]).find(s=>s.id===sheetId);
+  if (!sheet) { toast('找不到作業表 ID: ' + sheetId, 'err'); return; }
+  openConfirm('刪除作業表', `確定要刪除「${sheet.name}」作業表及其 ${(sheet.items||[]).length} 筆資料？此動作無法復原。`, () => {
     dept.sheets = dept.sheets.filter(s=>s.id!==sheetId);
     saveData();
     curDept = dept;
@@ -6685,21 +6687,27 @@ async function apiPost(payload) {
 
 // 覆寫 confirmDeleteSheet：本機刪除後非同步同步雲端
 function confirmDeleteSheet(sheetId) {
-  const sheet = findSheet(curDept, sheetId);
-  if (!sheet) return;
-  openConfirm('刪除作業表', `確定要刪除「${sheet.name}」作業表及其 ${sheet.items.length} 筆資料？此動作無法復原。`, () => {
-    const dept  = ALL_DATA.find(d => d.dept_id === curDept.dept_id);
-    const deptId = dept.dept_id;
-    dept.sheets = dept.sheets.filter(s => s.id !== sheetId);
-    curDept = dept;
-    toast('刪除中，同步雲端…');
-    renderSummary();
-    renderStatsBar('summary');
-    initHome();
-    apiPost({ action: 'deleteSheet', dept_id: deptId, sheet_id: sheetId })
-      .then(r => toast(r && r.ok ? `已刪除並同步至雲端 ✓（${r.deleted} 筆）` : '本機已刪除，但雲端同步失敗', r && r.ok ? '' : 'err'))
-      .catch(() => toast('本機已刪除，但雲端連線失敗', 'err'));
-  });
+  try {
+    if (!curDept) { toast('未選取站點，請重新整理頁面', 'err'); return; }
+    const dept = ALL_DATA.find(function(d){ return d.dept_id === curDept.dept_id; });
+    if (!dept) { toast('找不到站點資料，請重新整理頁面', 'err'); return; }
+    const sheet = (dept.sheets || []).find(function(s){ return s.id === sheetId; });
+    if (!sheet) { toast('找不到作業表（ID: ' + sheetId + '），請重新整理頁面', 'err'); return; }
+    const itemCount = (sheet.items || []).length;
+    openConfirm('刪除作業表', '確定要刪除「' + sheet.name + '」作業表及其 ' + itemCount + ' 筆資料？此動作無法復原。', function() {
+      dept.sheets = dept.sheets.filter(function(s){ return s.id !== sheetId; });
+      curDept = dept;
+      toast('刪除中，同步雲端…');
+      renderSummary();
+      renderStatsBar('summary');
+      initHome();
+      apiPost({ action: 'deleteSheet', dept_id: dept.dept_id, sheet_id: sheetId })
+        .then(function(r){ toast(r && r.ok ? '已刪除並同步至雲端 ✓（' + r.deleted + ' 筆）' : '本機已刪除，但雲端同步失敗', r && r.ok ? '' : 'err'); })
+        .catch(function(){ toast('本機已刪除，但雲端連線失敗', 'err'); });
+    });
+  } catch(e) {
+    toast('刪除發生錯誤：' + e.message, 'err');
+  }
 }
 
 async function migrateDepts(depts, showFeedback = false) {
