@@ -318,6 +318,7 @@
   <button class="hdr-btn" onclick="location.href='../'" title="回到職安管理系統入口">← 系統入口</button>
   <h1>⚠️ 危害鑑別及風險評估查詢系統</h1>
   <button class="hdr-btn" onclick="exportHtml()" title="匯出目前資料為 HTML 檔">↓ 匯出 HTML</button>
+  <button class="hdr-btn" id="btn-sync-stations" onclick="manualSyncStations()" title="將外站預設資料同步至 GAS Sheets">☁ 同步外站</button>
   <button class="hdr-btn danger" onclick="confirmReset()" title="清除所有變更，還原至預設資料">↺ 重置資料</button>
   <div class="hdr-brand">
     <img src="../dafon-logo.png" alt="大豐環保科技">
@@ -6682,7 +6683,7 @@ async function apiPost(payload) {
   return res.json();
 }
 
-async function migrateDepts(depts) {
+async function migrateDepts(depts, showFeedback = false) {
   const rows = [];
   for (const dept of depts) {
     for (const sheet of (dept.sheets || [])) {
@@ -6695,12 +6696,45 @@ async function migrateDepts(depts) {
       }
     }
   }
-  if (!rows.length) return;
+  if (!rows.length) {
+    if (showFeedback) toast('外站資料為空，無需同步');
+    return;
+  }
   try {
-    await apiPost({ action: 'bulkSync', rows });
-    console.log(`已遷移 ${rows.length} 筆資料至 GAS ✓`);
+    const res = await apiPost({ action: 'bulkSync', rows });
+    if (res && res.ok) {
+      console.log(`已遷移 ${res.added} 筆資料至 GAS ✓`);
+      if (showFeedback) toast(`已同步 ${res.added} 筆資料至 GAS ✓`);
+    } else {
+      const msg = (res && res.error) ? res.error : 'unknown';
+      console.error('GAS bulkSync 失敗:', msg);
+      if (showFeedback) toast('GAS 同步失敗：' + msg, 'err');
+    }
   } catch(e) {
     console.error('GAS 遷移失敗:', e);
+    if (showFeedback) toast('GAS 連線失敗：' + e.message, 'err');
+  }
+}
+
+async function manualSyncStations() {
+  const btn = document.getElementById('btn-sync-stations');
+  if (btn) { btn.disabled = true; btn.textContent = '☁ 同步中…'; }
+  try {
+    // 從 GAS 取得現有站點清單
+    const res = await fetch(GS_API + '?action=getAll', { redirect: 'follow' });
+    const data = await res.json();
+    const cloudIds = new Set(Array.isArray(data) ? data.map(d => d.dept_id) : []);
+    const missing = DEFAULT_DATA.filter(d => !cloudIds.has(d.dept_id));
+    if (!missing.length) {
+      toast('所有站點已在 GAS 中，無需同步 ✓');
+    } else {
+      toast(`偵測到 ${missing.length} 個站點尚未同步，上傳中…`);
+      await migrateDepts(missing, true);
+    }
+  } catch(e) {
+    toast('無法連線 GAS：' + e.message, 'err');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '☁ 同步外站'; }
   }
 }
 
