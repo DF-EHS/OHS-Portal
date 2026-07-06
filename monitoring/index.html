@@ -518,6 +518,8 @@ const RECORDS = {
 let VALUES = [];
 let curYear = 115;
 
+const SP_FOLDER = 'https://dfrecyclecom.sharepoint.com/:f:/g/HR/IgBHmFEiVJQ8SoKrHTBNufrqAX32FJWtJMsKe8yZ2FSzgE8?e=MCBK03';
+
 // ── Dark mode ──
 function toggleDark() {
   const isDark = document.body.classList.toggle('dark');
@@ -607,8 +609,14 @@ async function loadFromGAS() {
     const d = await res.json();
     if (!d.success) return;
 
+    const gasRecords = d.data.records || [];
+    const gasValues  = d.data.values  || [];
+
+    // 建立 GAS 已知的 key 集合（用於遷移判斷）
+    const gasRecordSet = new Set(gasRecords.map(r => `${r.year}-${r.site}-${r.half}`));
+
     // 合併狀態：GAS 資料覆蓋預設值
-    (d.data.records || []).forEach(r => {
+    gasRecords.forEach(r => {
       const year = parseInt(r.year);
       if (!RECORDS[year]) RECORDS[year] = {};
       if (!RECORDS[year][r.site]) RECORDS[year][r.site] = {};
@@ -619,17 +627,30 @@ async function loadFromGAS() {
       });
     });
 
-    // 合併數值：GAS 為主
-    VALUES.length = 0;
-    (d.data.values || []).forEach(v => VALUES.push({
-      year: parseInt(v.year), half: v.half, site: v.site,
-      item: v.item, location: v.location, value: v.value,
-      unit: v.unit, limit: v.limit, pass: String(v.pass) !== '0',
-    }));
+    // 自動遷移：把本機 localStorage 中「已完成」但 GAS 不知道的記錄推送上去
+    Object.entries(RECORDS).forEach(([y, sites]) => {
+      Object.entries(sites).forEach(([site, halves]) => {
+        Object.entries(halves).forEach(([half, data]) => {
+          if (data.status === 'done' && !gasRecordSet.has(`${y}-${site}-${half}`)) {
+            saveStatusToGAS(parseInt(y), site, half, 'done', data.reportUrl || SP_FOLDER);
+          }
+        });
+      });
+    });
+
+    // 合併數值：只有 GAS 有資料時才覆蓋本機（避免空陣列清掉本機資料）
+    if (gasValues.length > 0) {
+      VALUES.length = 0;
+      gasValues.forEach(v => VALUES.push({
+        year: parseInt(v.year), half: v.half, site: v.site,
+        item: v.item, location: v.location, value: v.value,
+        unit: v.unit, limit: v.limit, pass: String(v.pass) !== '0',
+      }));
+      saveValues();
+    }
 
     // 更新 localStorage 快取
     saveAllRecords();
-    saveValues();
 
     // 重新渲染
     initYearTabs();
@@ -985,8 +1006,6 @@ function renderModalResult(data) {
 function confirmAndUpdate() {
   if (!lastAIData) return;
   const { year, site, half } = modalCtx;
-
-  const SP_FOLDER = 'https://dfrecyclecom.sharepoint.com/:f:/g/HR/IgBHmFEiVJQ8SoKrHTBNufrqAX32FJWtJMsKe8yZ2FSzgE8?e=MCBK03';
 
   // Update RECORDS status
   if (RECORDS[year]?.[site]?.[half]) {
