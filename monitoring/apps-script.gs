@@ -19,6 +19,7 @@ function doGet(e) {
 function doPost(e) {
   try {
     const p = JSON.parse(e.postData.contents);
+    if (p.action === 'getAll')       return handleGetAll();
     if (p.action === 'updateStatus') return handleUpdateStatus(p);
     if (p.action === 'addValues')    return handleAddValues(p);
     return json({ error: 'unknown action' });

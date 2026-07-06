@@ -602,12 +602,20 @@ function allYearsSorted() {
 }
 
 // ── GAS 跨裝置同步 ────────────────────────────────────────────────
+// 注意：不加 Content-Type header，瀏覽器用 text/plain 送出，避免 CORS 預檢被 GAS 擋
+function gasPost(payload) {
+  return fetch(GAS_URL, {
+    method: 'POST',
+    redirect: 'follow',
+    body: JSON.stringify(payload),
+  }).then(r => r.json()).catch(() => null);
+}
+
 async function loadFromGAS() {
   if (!GAS_URL || GAS_URL === 'YOUR_GAS_URL') return;
   try {
-    const res = await fetch(GAS_URL + '?action=getAll', { redirect: 'follow' });
-    const d = await res.json();
-    if (!d.success) return;
+    const d = await gasPost({ action: 'getAll' });
+    if (!d || !d.success) return;
 
     const gasRecords = d.data.records || [];
     const gasValues  = d.data.values  || [];
@@ -628,15 +636,20 @@ async function loadFromGAS() {
     });
 
     // 自動遷移：把本機 localStorage 中「已完成」但 GAS 不知道的記錄推送上去
+    const migrations = [];
     Object.entries(RECORDS).forEach(([y, sites]) => {
       Object.entries(sites).forEach(([site, halves]) => {
         Object.entries(halves).forEach(([half, data]) => {
           if (data.status === 'done' && !gasRecordSet.has(`${y}-${site}-${half}`)) {
-            saveStatusToGAS(parseInt(y), site, half, 'done', data.reportUrl || SP_FOLDER);
+            migrations.push(
+              gasPost({ action: 'updateStatus', year: parseInt(y), site, half,
+                        status: 'done', reportUrl: data.reportUrl || SP_FOLDER })
+            );
           }
         });
       });
     });
+    if (migrations.length) await Promise.all(migrations);
 
     // 合併數值：只有 GAS 有資料時才覆蓋本機（避免空陣列清掉本機資料）
     if (gasValues.length > 0) {
@@ -649,10 +662,8 @@ async function loadFromGAS() {
       saveValues();
     }
 
-    // 更新 localStorage 快取
+    // 更新 localStorage 快取並重新渲染
     saveAllRecords();
-
-    // 重新渲染
     initYearTabs();
     renderYearReport(curYear);
     renderValues();
@@ -663,28 +674,12 @@ async function loadFromGAS() {
 
 async function saveStatusToGAS(year, site, half, status, reportUrl) {
   if (!GAS_URL || GAS_URL === 'YOUR_GAS_URL') return;
-  try {
-    await fetch(GAS_URL, {
-      method: 'POST', redirect: 'follow',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'updateStatus', year, site, half, status, reportUrl }),
-    });
-  } catch (err) {
-    console.warn('GAS 狀態儲存失敗：', err);
-  }
+  await gasPost({ action: 'updateStatus', year, site, half, status, reportUrl });
 }
 
 async function saveValuesToGAS(year, half, site, items) {
   if (!GAS_URL || GAS_URL === 'YOUR_GAS_URL' || !items.length) return;
-  try {
-    await fetch(GAS_URL, {
-      method: 'POST', redirect: 'follow',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'addValues', year, half, site, items }),
-    });
-  } catch (err) {
-    console.warn('GAS 數值儲存失敗：', err);
-  }
+  await gasPost({ action: 'addValues', year, half, site, items });
 }
 
 function initYearTabs() {
