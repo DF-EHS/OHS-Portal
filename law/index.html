@@ -1090,16 +1090,22 @@ function auditKey(src) {
   return `lex_audit_${src.site_id}_${src.sub || ''}`;
 }
 
+const _auditCache = {};
+
 async function loadAudits(src) {
+  const ck = auditKey(src);
+  if (_auditCache[ck]) return _auditCache[ck];
   if (AUDIT_GAS_URL) {
     try {
       const q = `?site_id=${encodeURIComponent(src.site_id)}&sub=${encodeURIComponent(src.sub || '')}`;
       const d = await (await fetch(AUDIT_GAS_URL + q)).json();
-      return (d.records || []).map(rec => ({
+      const result = (d.records || []).map(rec => ({
         quarter: rec.quarter, ts: rec.ts,
         results: (() => { try { return JSON.parse(rec.results_json || '[]'); } catch { return []; } })(),
         summary: { ok: +rec.ok, changed: +rec.changed, anomaly: +rec.anomaly, fail: +rec.fail }
       }));
+      _auditCache[ck] = result;
+      return result;
     } catch { return []; }
   }
   try { return JSON.parse(localStorage.getItem(auditKey(src)) || '[]'); }
@@ -1107,6 +1113,11 @@ async function loadAudits(src) {
 }
 
 async function saveAudit(src, record) {
+  const ck = auditKey(src);
+  // Update memory cache immediately so subsequent loadAudits() reflects the change
+  const cached = _auditCache[ck] || [];
+  _auditCache[ck] = [record, ...cached.filter(r => !(r.quarter === record.quarter && r.ts === record.ts))];
+
   if (AUDIT_GAS_URL) {
     await fetch(AUDIT_GAS_URL, {
       method: 'POST',
@@ -1135,23 +1146,24 @@ function setLawOverride(src, lawId, newDate) {
   ov[String(lawId)] = newDate;
   localStorage.setItem(`lex_ov_${src.site_id}_${src.sub||''}`, JSON.stringify(ov));
 }
-function confirmLawUpdate(lawId, newDateEnc) {
+async function confirmLawUpdate(lawId, newDateEnc) {
   const newDate = decodeURIComponent(newDateEnc);
-  setLawOverride(curSource, lawId, newDate);
-  const key = auditKey(curSource);
-  const history = JSON.parse(localStorage.getItem(key) || '[]');
+  setLawOverride(curSource, lawId, newDate);  // localStorage fallback for runAudit()
+  const history = await loadAudits(curSource);
   if (history.length > 0) {
-    const r = history[0].results.find(x => String(x.id) === String(lawId));
+    const record = history[0];
+    const r = record.results.find(x => String(x.id) === String(lawId));
     if (r) {
       r.status = 'ok';
       r.stored = newDate;
-      history[0].summary = {
-        ok:      history[0].results.filter(x => x.status === 'ok').length,
-        changed: history[0].results.filter(x => x.status === 'changed').length,
-        fail:    history[0].results.filter(x => x.status === 'fail').length,
-        anomaly: history[0].results.filter(x => x.status === 'anomaly').length,
+      record.summary = {
+        ok:      record.results.filter(x => x.status === 'ok').length,
+        changed: record.results.filter(x => x.status === 'changed').length,
+        fail:    record.results.filter(x => x.status === 'fail').length,
+        anomaly: record.results.filter(x => x.status === 'anomaly').length,
       };
-      localStorage.setItem(key, JSON.stringify(history));
+      // Saves to GAS (or localStorage); also updates _auditCache immediately
+      await saveAudit(curSource, record);
     }
   }
   renderAuditPanel(curSource);
@@ -1181,12 +1193,20 @@ async function runAudit(src) {
     }
   } catch(e) { console.warn('AI live fetch failed:', e); }
 
+  // Load previous record to use its confirmed stored dates as cross-device baseline
+  const prevHistory = await loadAudits(src);
+  const prevStoredMap = {};
+  if (prevHistory.length > 0) {
+    prevHistory[0].results.forEach(r => { if (r.stored) prevStoredMap[String(r.id)] = r.stored; });
+  }
+
   const overrides = getLawOverrides(src);
   const results = [];
   for (const law of laws) {
     const rawLive    = liveMap[law.name] || null;
     const liveDate   = rawLive ? normAuditDate(rawLive) : null;
-    const storedRaw  = overrides[String(law.id)] || law.amend;
+    // Priority: localStorage override → last GAS record's stored date → law-data.json amend
+    const storedRaw  = overrides[String(law.id)] || prevStoredMap[String(law.id)] || law.amend;
     const storedDate = storedRaw ? normAuditDate(storedRaw) : null;
     let status;
     if (!liveDate)                   status = 'fail';
