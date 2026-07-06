@@ -6760,6 +6760,25 @@ async function loadFromCloud() {
         }
       }
       if (missingDepts.length > 0) migrateDepts(missingDepts);
+      // 從 DEFAULT_DATA 補回 sheet icon / ic（GAS getIcon 關鍵字不完整）
+      const defaultIconMap = {};
+      for (const dept of DEFAULT_DATA) {
+        defaultIconMap[dept.dept_id] = {};
+        for (const sheet of (dept.sheets || [])) {
+          defaultIconMap[dept.dept_id][sheet.id] = { icon: sheet.icon, ic: sheet.ic };
+        }
+      }
+      for (const dept of ALL_DATA) {
+        const dMap = defaultIconMap[dept.dept_id];
+        if (!dMap) continue;
+        for (const sheet of (dept.sheets || [])) {
+          const src = dMap[sheet.id];
+          if (src) {
+            if (src.icon) sheet.icon = src.icon;
+            if (src.ic)   sheet.ic   = src.ic;
+          }
+        }
+      }
     }
     initHome();
     onHashChange();
