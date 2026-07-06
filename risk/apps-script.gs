@@ -29,6 +29,7 @@ const DEPT_META = {
   s1: { dept_name:'南一',    dept_icon:'🚛', year:'113', fill_date:'112.12.06',  author:'',       use_categories:false, categories:[] },
   n1: { dept_name:'北一',    dept_icon:'🚛', year:'113', fill_date:'',           author:'',       use_categories:false, categories:[] },
   n2: { dept_name:'北二',    dept_icon:'🚛', year:'113', fill_date:'',           author:'',       use_categories:false, categories:[] },
+  z1: { dept_name:'中一',    dept_icon:'🚛', year:'114', fill_date:'',           author:'',       use_categories:false, categories:[] },
   yl: { dept_name:'員林站',  dept_icon:'🏭', year:'113', fill_date:'',           author:'',       use_categories:false, categories:[] },
   dl: { dept_name:'斗六站',  dept_icon:'🏭', year:'113', fill_date:'',           author:'',       use_categories:false, categories:[] },
   s2: { dept_name:'南二',    dept_icon:'🚛', year:'113', fill_date:'',           author:'',       use_categories:false, categories:[] },
