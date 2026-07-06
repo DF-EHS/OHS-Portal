@@ -334,23 +334,23 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
 
   <!-- Module Nav -->
   <div class="module-nav">
-    <a id="nav-m2" class="active" onclick="showModule(2)">📁 歷年報告<span class="nav-badge">已啟用</span></a>
-    <a id="nav-m3" onclick="showModule(3)">📊 監測數值<span class="nav-badge">已啟用</span></a>
-    <a id="nav-m4" onclick="showModule(4)">⚖️ 容許濃度標準<span class="nav-badge">已啟用</span></a>
+    <a id="nav-m1" class="active" onclick="showModule(1)">📁 歷年報告<span class="nav-badge">已啟用</span></a>
+    <a id="nav-m2" onclick="showModule(2)">📊 監測數值<span class="nav-badge">已啟用</span></a>
+    <a id="nav-m3" onclick="showModule(3)">⚖️ 容許濃度標準<span class="nav-badge">已啟用</span></a>
   </div>
 
-  <!-- ══ Module 2：歷年報告 ══ -->
-  <div class="section-block" id="m2">
-    <div class="section-label">模組二・歷年報告 <span class="mod-tag active">已啟用</span></div>
+  <!-- ══ Module 1：歷年報告 ══ -->
+  <div class="section-block" id="m1">
+    <div class="section-label">模組一・歷年報告 <span class="mod-tag active">已啟用</span></div>
     <div class="yr-tabs" id="yr-tabs"></div>
     <div class="card">
       <div id="yr-report-content"></div>
     </div>
   </div>
 
-  <!-- ══ Module 3：監測數值 ══ -->
-  <div class="section-block hidden" id="m3">
-    <div class="section-label">模組三・監測數值 <span class="mod-tag active">已啟用</span></div>
+  <!-- ══ Module 2：監測數值 ══ -->
+  <div class="section-block hidden" id="m2">
+    <div class="section-label">模組二・監測數值 <span class="mod-tag active">已啟用</span></div>
     <div class="notice warn">
       📝 監測數值由「🤖 AI 文件判讀」上傳報告後自動填入，每次新報告確認後即更新此表。
     </div>
@@ -369,9 +369,9 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
     </div>
   </div>
 
-  <!-- ══ Module 4：容許濃度標準 ══ -->
-  <div class="section-block hidden" id="m4">
-    <div class="section-label">模組四・容許濃度標準 <span class="mod-tag active">已啟用</span></div>
+  <!-- ══ Module 3：容許濃度標準 ══ -->
+  <div class="section-block hidden" id="m3">
+    <div class="section-label">模組三・容許濃度標準 <span class="mod-tag active">已啟用</span></div>
     <div class="card">
       <div class="section-hd">⚖️ 常見監測項目容許標準</div>
       <div class="notice info">標準依據：職業安全衛生設施規則、勞工作業場所容許暴露標準（最新版）</div>
@@ -468,7 +468,7 @@ footer { text-align:center; padding:18px; font-size:11px; color:var(--sub); bord
 <script>
 // ── Module switching ──────────────────────────────────────────
 function showModule(n) {
-  [2, 3, 4].forEach(i => {
+  [1, 2, 3].forEach(i => {
     document.getElementById('m' + i).classList.toggle('hidden', i !== n);
     document.getElementById('nav-m' + i).classList.toggle('active', i === n);
   });
@@ -559,19 +559,33 @@ function docCell(r, year, siteId, half) {
 
 const BASE_YEARS = [115, 114, 113, 112];
 
-function loadExtraYears() {
+function loadAllRecords() {
   try {
+    // Load saved overrides (status, reportUrl) for all years
+    const saved = JSON.parse(localStorage.getItem('mon-records') || 'null');
+    if (saved) {
+      Object.entries(saved).forEach(([y, sites]) => {
+        const year = parseInt(y);
+        if (!RECORDS[year]) RECORDS[year] = {};
+        Object.entries(sites).forEach(([site, halves]) => {
+          if (!RECORDS[year][site]) RECORDS[year][site] = {};
+          Object.entries(halves).forEach(([half, data]) => {
+            if (!RECORDS[year][site][half]) RECORDS[year][site][half] = {};
+            Object.assign(RECORDS[year][site][half], data);
+          });
+        });
+      });
+    }
+    // Also load legacy extra years key (migration)
     const extra = JSON.parse(localStorage.getItem('mon-extra-years') || '{}');
-    Object.entries(extra).forEach(([y, rec]) => { RECORDS[parseInt(y)] = rec; });
+    Object.entries(extra).forEach(([y, rec]) => {
+      if (!RECORDS[parseInt(y)]) RECORDS[parseInt(y)] = rec;
+    });
   } catch {}
 }
 
-function saveExtraYears() {
-  const extra = {};
-  Object.keys(RECORDS).forEach(y => {
-    if (!BASE_YEARS.includes(parseInt(y))) extra[y] = RECORDS[y];
-  });
-  localStorage.setItem('mon-extra-years', JSON.stringify(extra));
+function saveAllRecords() {
+  localStorage.setItem('mon-records', JSON.stringify(RECORDS));
 }
 
 function loadValues() {
@@ -617,7 +631,7 @@ function promptAddYear() {
     hq: { H1: { date: `${y}-05`, status: 'pending', reportUrl: '' },
           H2: { date: `${y}-11`, status: 'pending', reportUrl: '' } },
   };
-  saveExtraYears();
+  saveAllRecords();
   curYear = y;
   initYearTabs();
   renderYearReport(y);
@@ -928,7 +942,7 @@ function confirmAndUpdate() {
   });
 
   // Persist changes
-  saveExtraYears();
+  saveAllRecords();
   saveValues();
 
   // Re-render Module 2 and 3
@@ -977,7 +991,7 @@ function toBase64(file) {
 }
 
 // ── Init ──
-loadExtraYears();
+loadAllRecords();
 loadValues();
 initYearTabs();
 renderYearReport(curYear);
