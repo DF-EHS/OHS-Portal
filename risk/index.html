@@ -196,6 +196,24 @@
   .risk-assess-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;}
   .risk-assess-row .fg{flex:1;min-width:70px;margin-bottom:0;}
   .sev-ref{margin-top:6px;font-size:11px;color:var(--sub);line-height:1.6;}
+  .ai-photo-section{background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:1px solid #bfdbfe;border-radius:10px;padding:12px 14px;margin-bottom:14px;}
+  .ai-photo-hdr{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#1d4ed8;margin-bottom:8px;}
+  .ai-photo-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .ai-photo-label{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:#fff;border:1.5px solid #93c5fd;border-radius:8px;font-size:12px;font-weight:600;color:#2563eb;cursor:pointer;transition:background .15s;}
+  .ai-photo-label:hover{background:#eff6ff;}
+  .ai-photo-preview{display:none;align-items:center;gap:6px;}
+  .ai-photo-preview img{width:52px;height:52px;object-fit:cover;border-radius:7px;border:1px solid #bfdbfe;}
+  .ai-photo-clear{background:none;border:none;color:#94a3b8;font-size:14px;cursor:pointer;padding:0 2px;}
+  .ai-photo-clear:hover{color:var(--red);}
+  .btn-ai-fill{padding:6px 16px;background:#2563eb;border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s;}
+  .btn-ai-fill:disabled{opacity:.45;cursor:default;}
+  .btn-ai-fill:not(:disabled):hover{background:#1d4ed8;}
+  .ai-fill-status{margin-top:7px;font-size:12px;display:none;}
+  .modal-ai-divider{border:none;border-top:1px dashed var(--border);margin:2px 0 14px;}
+  body.dark .ai-photo-section{background:#1a2d42;border-color:#2d4a7a;}
+  body.dark .ai-photo-hdr{color:#93c5fd;}
+  body.dark .ai-photo-label{background:#1e2d40;border-color:#2d4a7a;color:#93c5fd;}
+  body.dark .ai-photo-label:hover{background:#243550;}
 
   /* confirm dialog */
   .confirm-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1100;
@@ -377,6 +395,20 @@
       <button class="m-close" onclick="closeItemModal()">✕</button>
     </div>
     <div class="mbody">
+      <div class="ai-photo-section">
+        <div class="ai-photo-hdr">📷 拍照辨識危害，AI 自動填入表單</div>
+        <div class="ai-photo-row">
+          <label class="ai-photo-label" for="modal-photo-input">📷 拍照 / 上傳圖片</label>
+          <input id="modal-photo-input" type="file" accept="image/*" capture="environment" style="display:none" onchange="onModalPhoto(this)">
+          <div id="modal-photo-preview" class="ai-photo-preview">
+            <img id="modal-photo-thumb" src="" alt="preview">
+            <button class="ai-photo-clear" onclick="clearModalPhoto()" title="移除照片">✕</button>
+          </div>
+          <button id="btn-ai-fill" class="btn-ai-fill" onclick="analyzeHazardPhoto()" disabled>🤖 AI 自動填入</button>
+        </div>
+        <div id="ai-fill-status" class="ai-fill-status"></div>
+      </div>
+      <hr class="modal-ai-divider">
       <div class="frow2">
         <div class="fg">
           <label>編號（自動產生）</label>
@@ -5973,10 +6005,111 @@ function renderStatsBar(view) {
 // ════════════════════════════════════════════════════════
 // Item Modal
 // ════════════════════════════════════════════════════════
+let modalPhotoB64 = null, modalPhotoMime = null;
+
+function onModalPhoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const img = new Image();
+  img.onload = () => {
+    const MAX = 1024;
+    let w = img.width, h = img.height;
+    if (w > MAX || h > MAX) {
+      if (w >= h) { h = Math.round(h * MAX / w); w = MAX; }
+      else        { w = Math.round(w * MAX / h); h = MAX; }
+    }
+    const cv = document.createElement('canvas');
+    cv.width = w; cv.height = h;
+    cv.getContext('2d').drawImage(img, 0, 0, w, h);
+    const dataUrl = cv.toDataURL('image/jpeg', 0.85);
+    modalPhotoB64 = dataUrl.split(',')[1];
+    modalPhotoMime = 'image/jpeg';
+    document.getElementById('modal-photo-thumb').src = dataUrl;
+    document.getElementById('modal-photo-preview').style.display = 'flex';
+    document.getElementById('btn-ai-fill').disabled = false;
+    const st = document.getElementById('ai-fill-status');
+    st.style.display = 'none'; st.textContent = '';
+  };
+  img.src = URL.createObjectURL(file);
+}
+
+function clearModalPhoto() {
+  modalPhotoB64 = null; modalPhotoMime = null;
+  document.getElementById('modal-photo-preview').style.display = 'none';
+  document.getElementById('modal-photo-thumb').src = '';
+  document.getElementById('modal-photo-input').value = '';
+  document.getElementById('btn-ai-fill').disabled = true;
+  const st = document.getElementById('ai-fill-status');
+  st.style.display = 'none'; st.textContent = '';
+}
+
+async function analyzeHazardPhoto() {
+  if (!modalPhotoB64) return;
+  const btn = document.getElementById('btn-ai-fill');
+  const st  = document.getElementById('ai-fill-status');
+  btn.disabled = true; btn.textContent = '⏳ AI 辨識中…';
+  st.style.display = ''; st.style.color = 'var(--blue)';
+  st.textContent = '正在分析照片，請稍候…';
+
+  const prompt = `你是職業安全衛生危害辨識專家。請分析這張作業現場照片，辨識可見的危害。
+只回傳 JSON，不要加任何說明文字，所有欄位使用繁體中文：
+{
+  "process": "製程或活動（例如：機械作業、搬運作業、高架作業）",
+  "step": "具體步驟或節點（例如：操作衝壓機、堆疊貨物）",
+  "hazard": "危害因子名稱（簡短，例如：旋轉夾捲點、重物墜落）",
+  "cause": "可能發生原因（說明導致危害的原因，2-3句）",
+  "consequence": "後果影響（可能造成的傷害，例如：夾傷、骨折）",
+  "control": "建議控制方法（含現場現有措施及需補強項目）",
+  "severity": "只填 A/B/C/D/E/F 其中之一",
+  "freq": 頻率評分（整數1-10）,
+  "prob": 機率評分（整數1-10）
+}`;
+
+  try {
+    const resp = await fetch(RISK_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt, images: ['data:' + modalPhotoMime + ';base64,' + modalPhotoB64] }),
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const d = await resp.json();
+    const raw = (d.data || d.text || '').replace(/```json\n?|```\n?/g, '').trim();
+    const m = raw.match(/\{[\s\S]*\}/);
+    if (!m) throw new Error('無法解析回應');
+    const p = JSON.parse(m[0]);
+
+    const fill = (id, val) => { if (val != null && val !== '') document.getElementById(id).value = val; };
+    fill('f-process',     p.process);
+    fill('f-step',        p.step);
+    fill('f-hazard',      p.hazard);
+    fill('f-cause',       p.cause);
+    fill('f-consequence', p.consequence);
+    fill('f-control',     p.control);
+    fill('f-freq',        p.freq);
+    fill('f-prob',        p.prob);
+    if (p.severity) {
+      const sel = document.getElementById('f-severity');
+      if ([...sel.options].some(o => o.value === p.severity)) sel.value = p.severity;
+    }
+    autoSuggest();
+
+    st.textContent = '✅ 已自動填入，請逐欄確認後儲存';
+    st.style.color  = 'var(--green)';
+    btn.textContent = '🔄 重新辨識';
+    btn.disabled    = false;
+  } catch(e) {
+    st.textContent = '❌ 辨識失敗，請手動填寫（' + e.message + '）';
+    st.style.color  = 'var(--red)';
+    btn.textContent = '🤖 AI 自動填入';
+    btn.disabled    = false;
+  }
+}
+
 function openAddItemModal() {
   modalMode = 'add'; modalSheetId = curSheet.id; modalItemId = null;
   document.getElementById('item-modal-title').textContent = '新增危害項目';
   clearItemForm();
+  clearModalPhoto();
   document.getElementById('f-id').value = autoId(curSheet);
   populateDlProcess();
   document.getElementById('item-modal').classList.add('open');
@@ -6002,7 +6135,7 @@ function openEditItemModal(itemId) {
   populateDlProcess();
   document.getElementById('item-modal').classList.add('open');
 }
-function closeItemModal() { document.getElementById('item-modal').classList.remove('open'); }
+function closeItemModal() { document.getElementById('item-modal').classList.remove('open'); clearModalPhoto(); }
 function clearItemForm() {
   ['f-process','f-step','f-hazard','f-cause','f-consequence','f-code','f-control','f-freq','f-prob','f-plan'].forEach(id=>{
     document.getElementById(id).value='';
