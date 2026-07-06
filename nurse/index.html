@@ -431,10 +431,19 @@ footer {
 
 <script>
 const API = 'https://script.google.com/macros/s/AKfycbx1shNheNSSfVvmeAcyXQMAhupTLYeNtMUYsCGh_j5ZvL7LZ-hMX1VreF-MSFOpufak/exec';
+const CACHE_KEY = 'nurse-data';
 
 let allData    = [];
 let filtered   = [];
 let currentPerson = null;
+
+// ── localStorage 快取 ──
+function loadCache() {
+  try { return JSON.parse(localStorage.getItem(CACHE_KEY) || '[]'); } catch { return []; }
+}
+function saveCache(data) {
+  try { localStorage.setItem(CACHE_KEY, JSON.stringify(data)); } catch {}
+}
 
 // ── Badge renderers ──
 const B = {
@@ -447,19 +456,34 @@ const B = {
 };
 function b(cls, txt) { return `<span class="badge ${cls}">${txt}</span>`; }
 
-// ── Fetch ──
+// ── Fetch（雙層：先快取即時顯示，背景更新 GAS）──
 async function loadData() {
+  // 第一層：localStorage 快取 → 立即渲染
+  const cached = loadCache();
+  if (cached.length > 0) {
+    allData = cached;
+    buildDeptFilter();
+    renderStats();
+    applyFilters();
+  }
+
+  // 第二層：GAS 最新資料 → 背景更新
   try {
     const res  = await fetch(API + '?action=list&t=' + Date.now(), { redirect: 'follow' });
     const json = await res.json();
     if (!json.ok) throw new Error(json.error);
     allData = json.data;
+    saveCache(allData);
     buildDeptFilter();
     renderStats();
     applyFilters();
   } catch(e) {
-    document.getElementById('table-area').innerHTML =
-      `<div class="state-box"><div class="state-icon">⚠️</div><div>資料載入失敗<br><small style="color:#94a3b8">${e.message}</small></div></div>`;
+    if (allData.length === 0) {
+      document.getElementById('table-area').innerHTML =
+        `<div class="state-box"><div class="state-icon">⚠️</div><div>資料載入失敗<br><small style="color:#94a3b8">${e.message}</small></div></div>`;
+    } else {
+      showToast('⚠️ 網路不佳，顯示快取資料');
+    }
   }
 }
 
@@ -467,6 +491,7 @@ async function loadData() {
 function buildDeptFilter() {
   const depts = [...new Set(allData.map(r => r.部門).filter(Boolean))].sort();
   const sel   = document.getElementById('f-dept');
+  while (sel.options.length > 1) sel.remove(1); // 清除舊選項，保留「全部部門」
   depts.forEach(d => { const o = document.createElement('option'); o.value = o.textContent = d; sel.appendChild(o); });
 }
 
