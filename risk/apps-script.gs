@@ -75,6 +75,8 @@ function doPost(e) {
       result = p.action === 'add' ? addItem(item) : updateItem(item);
     } else if (p.action === 'delete') {
       result = deleteItem(p.item_id || p.id);
+    } else if (p.action === 'deleteSheet') {
+      result = deleteSheet(p.dept_id, p.sheet_id);
     } else if (p.action === 'bulkSync') {
       result = bulkSync(p.rows);
     } else {
@@ -190,6 +192,25 @@ function deleteItem(id) {
     }
   }
   return { ok: false, error: 'Record not found' };
+}
+
+// ── 刪除整個作業表（所有 sheet_id 符合的列）───────────
+function deleteSheet(deptId, sheetId) {
+  const sheet = getSheet();
+  const vals  = sheet.getDataRange().getValues();
+  if (vals.length < 2) return { ok: true, deleted: 0 };
+  const hdr      = vals[0];
+  const deptCol  = hdr.indexOf('dept_id');
+  const sheetCol = hdr.indexOf('sheet_id');
+  let deleted = 0;
+  for (let i = vals.length - 1; i >= 1; i--) {
+    if (String(vals[i][deptCol]) === String(deptId) &&
+        String(vals[i][sheetCol]) === String(sheetId)) {
+      sheet.deleteRow(i + 1);
+      deleted++;
+    }
+  }
+  return { ok: true, deleted };
 }
 
 // ── 批次新增（初始遷移用）────────────────────────────

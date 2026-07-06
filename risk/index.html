@@ -6683,6 +6683,25 @@ async function apiPost(payload) {
   return res.json();
 }
 
+// 覆寫 confirmDeleteSheet：本機刪除後非同步同步雲端
+function confirmDeleteSheet(sheetId) {
+  const sheet = findSheet(curDept, sheetId);
+  if (!sheet) return;
+  openConfirm('刪除作業表', `確定要刪除「${sheet.name}」作業表及其 ${sheet.items.length} 筆資料？此動作無法復原。`, () => {
+    const dept  = ALL_DATA.find(d => d.dept_id === curDept.dept_id);
+    const deptId = dept.dept_id;
+    dept.sheets = dept.sheets.filter(s => s.id !== sheetId);
+    curDept = dept;
+    toast('刪除中，同步雲端…');
+    renderSummary();
+    renderStatsBar('summary');
+    initHome();
+    apiPost({ action: 'deleteSheet', dept_id: deptId, sheet_id: sheetId })
+      .then(r => toast(r && r.ok ? `已刪除並同步至雲端 ✓（${r.deleted} 筆）` : '本機已刪除，但雲端同步失敗', r && r.ok ? '' : 'err'))
+      .catch(() => toast('本機已刪除，但雲端連線失敗', 'err'));
+  });
+}
+
 async function migrateDepts(depts, showFeedback = false) {
   const rows = [];
   for (const dept of depts) {
