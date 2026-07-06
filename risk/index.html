@@ -6797,6 +6797,27 @@ async function loadFromCloud() {
         }
       }
       if (missingDepts.length > 0) migrateDepts(missingDepts);
+      // 從 localStorage 復原在雲端有空白 sheets 但本機有資料的站點
+      try {
+        const lsRaw = localStorage.getItem('ohs_risk_data');
+        if (lsRaw) {
+          const lsData = JSON.parse(lsRaw);
+          const toRecover = [];
+          for (const lsDept of lsData) {
+            if (!Array.isArray(lsDept.sheets) || !lsDept.sheets.length) continue;
+            const cloudDept = ALL_DATA.find(function(d){ return d.dept_id === lsDept.dept_id; });
+            if (cloudDept && (!cloudDept.sheets || !cloudDept.sheets.length)) {
+              cloudDept.sheets = lsDept.sheets;
+              toRecover.push(cloudDept);
+            }
+          }
+          if (toRecover.length) {
+            const names = toRecover.map(function(d){ return d.dept_name; }).join('、');
+            toast('從本機備份復原：' + names + '，同步雲端中…');
+            migrateDepts(toRecover, false);
+          }
+        }
+      } catch(e) { /* 忽略 localStorage 解析錯誤 */ }
       // 依 sheet 名稱補回 emoji（GAS getIcon 關鍵字不完整）
       const SHEET_ICON_TABLE = {
         '訪客':['👥','ic-blue'],'承攬商':['🏗️','ic-blue'],'行政管理':['📋','ic-purple'],
