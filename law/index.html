@@ -271,6 +271,11 @@ body.dark .adf-title { color:#bfdbfe; }
 body.dark .adf-content { color:#94a3b8; }
 body.dark .btn-law-diff { background:#1e3a5f;border-color:#2d4a7a;color:#93c5fd; }
 body.dark .btn-law-diff:hover { background:#1e3a7f; }
+.btn-law-confirm { display:block;margin-top:14px;padding:9px 18px;background:#ecfdf5;border:1.5px solid #6ee7b7;border-radius:8px;font-size:13px;font-weight:700;color:#065f46;cursor:pointer;font-family:inherit;transition:background .15s; }
+.btn-law-confirm:hover { background:#d1fae5; }
+.btn-law-confirm:disabled { opacity:.7;cursor:default; }
+body.dark .btn-law-confirm { background:#064e3b;border-color:#065f46;color:#6ee7b7; }
+body.dark .btn-law-confirm:hover { background:#065f46; }
 .audit-history-panel { margin-top: 12px; border: 1px solid #d5dce9; border-radius: 6px; overflow: hidden; }
 .audit-history-panel summary { padding: 8px 12px; background: #f0f4fb; cursor: pointer; font-size: 13px; font-weight: 600; color: #1a3a6a; }
 .audit-history-row { display: flex; gap: 12px; padding: 6px 12px; border-top: 1px solid #edf0f7; font-size: 12px; }
@@ -1121,6 +1126,37 @@ function curAuditQuarter() {
   return `${now.getFullYear()} Q${q}`;
 }
 
+function getLawOverrides(src) {
+  try { return JSON.parse(localStorage.getItem(`lex_ov_${src.site_id}_${src.sub||''}`) || '{}'); }
+  catch { return {}; }
+}
+function setLawOverride(src, lawId, newDate) {
+  const ov = getLawOverrides(src);
+  ov[String(lawId)] = newDate;
+  localStorage.setItem(`lex_ov_${src.site_id}_${src.sub||''}`, JSON.stringify(ov));
+}
+function confirmLawUpdate(lawId, newDateEnc) {
+  const newDate = decodeURIComponent(newDateEnc);
+  setLawOverride(curSource, lawId, newDate);
+  const key = auditKey(curSource);
+  const history = JSON.parse(localStorage.getItem(key) || '[]');
+  if (history.length > 0) {
+    const r = history[0].results.find(x => String(x.id) === String(lawId));
+    if (r) {
+      r.status = 'ok';
+      r.stored = newDate;
+      history[0].summary = {
+        ok:      history[0].results.filter(x => x.status === 'ok').length,
+        changed: history[0].results.filter(x => x.status === 'changed').length,
+        fail:    history[0].results.filter(x => x.status === 'fail').length,
+        anomaly: history[0].results.filter(x => x.status === 'anomaly').length,
+      };
+      localStorage.setItem(key, JSON.stringify(history));
+    }
+  }
+  renderAuditPanel(curSource);
+}
+
 async function runAudit(src) {
   const btn = document.getElementById('btn-run-audit');
   if (btn) { btn.disabled = true; btn.textContent = '🔍 查詢中…'; }
@@ -1145,18 +1181,20 @@ async function runAudit(src) {
     }
   } catch(e) { console.warn('AI live fetch failed:', e); }
 
+  const overrides = getLawOverrides(src);
   const results = [];
   for (const law of laws) {
-    const rawLive   = liveMap[law.name] || null;
-    const liveDate  = rawLive ? normAuditDate(rawLive) : null;
-    const storedDate = law.amend ? normAuditDate(law.amend) : null;
+    const rawLive    = liveMap[law.name] || null;
+    const liveDate   = rawLive ? normAuditDate(rawLive) : null;
+    const storedRaw  = overrides[String(law.id)] || law.amend;
+    const storedDate = storedRaw ? normAuditDate(storedRaw) : null;
     let status;
     if (!liveDate)                   status = 'fail';
     else if (!storedDate)            status = 'changed';
     else if (liveDate > storedDate)  status = 'changed';
     else if (liveDate < storedDate)  status = 'anomaly';
     else                             status = 'ok';
-    results.push({ id: law.id, name: law.name, stored: law.amend || null, live: rawLive, status });
+    results.push({ id: law.id, name: law.name, stored: storedRaw || null, live: rawLive, status });
   }
   const record = {
     quarter: curAuditQuarter(),
@@ -1191,7 +1229,7 @@ async function renderAuditPanel(src) {
       const lawUrl = (src.summary.find(l => l.id === r.id) || {}).url || '';
       const detailText = r.status === 'changed'
         ? `系統記錄：${r.stored ? normAuditDate(r.stored) : '—'}　　法規庫最新：${r.live ? normAuditDate(r.live) : '—'}　→ 請確認修正內容後更新系統資料<br>
-           <button class="btn-law-diff" onclick="event.stopPropagation();loadLawDiff(this,'${encodeURIComponent(r.name)}','${encodeURIComponent(r.stored||'')}','${encodeURIComponent(r.live||'')}','${encodeURIComponent(lawUrl)}')">🔍 查看修改內容</button>
+           <button class="btn-law-diff" onclick="event.stopPropagation();loadLawDiff(this,${r.id},'${encodeURIComponent(r.name)}','${encodeURIComponent(r.stored||'')}','${encodeURIComponent(r.live||'')}','${encodeURIComponent(lawUrl)}')">🔍 查看修改內容</button>
            <div class="audit-diff-panel" style="display:none"></div>`
         : r.status === 'anomaly'
         ? `系統記錄 (${r.stored ? normAuditDate(r.stored) : '—'}) 比法規庫 (${r.live ? normAuditDate(r.live) : '—'}) 更新，請核實系統資料是否正確`
@@ -1265,7 +1303,7 @@ function toggleAuditDetail(id) {
   if (row) row.style.display = row.style.display === 'none' ? '' : 'none';
 }
 
-async function loadLawDiff(btn, nameEnc, storedEnc, liveEnc, urlEnc) {
+async function loadLawDiff(btn, lawId, nameEnc, storedEnc, liveEnc, urlEnc) {
   const name    = decodeURIComponent(nameEnc);
   const stored  = decodeURIComponent(storedEnc);
   const live    = decodeURIComponent(liveEnc);
@@ -1275,7 +1313,7 @@ async function loadLawDiff(btn, nameEnc, storedEnc, liveEnc, urlEnc) {
   if (panel.style.display !== 'none') { panel.style.display = 'none'; btn.textContent = '🔍 查看修改內容'; return; }
 
   btn.disabled = true;
-  btn.textContent = '⏳ 載入中…';
+  btn.textContent = '⏳ AI 識讀法規修正中…';
 
   const prompt = `請搜尋全國法規資料庫（law.moj.gov.tw），查詢「${name}」從 ${stored||'舊版'} 到 ${live||'最新版'} 的修正重點。
 請以繁體中文說明：
@@ -1294,10 +1332,17 @@ async function loadLawDiff(btn, nameEnc, storedEnc, liveEnc, urlEnc) {
     const d = await resp.json();
     const text = d.data || d.text || '（未取得回覆）';
     const linkHtml = lawUrl ? `<a class="adf-link" href="${lawUrl}" target="_blank" rel="noopener">🔗 前往全國法規資料庫查閱全文 ›</a>` : '';
+    const confirmHtml = live ? `<button class="btn-law-confirm" id="confirm-${lawId}" onclick="
+      this.disabled=true;
+      this.textContent='✓ 已更新（本季起顯示「未變更」）';
+      this.style.cssText='background:#d1fae5;color:#065f46;border-color:#6ee7b7;cursor:default';
+      confirmLawUpdate(${lawId},'${encodeURIComponent(live)}')
+    ">✅ 已閱讀修正內容，將系統版本日期更新為 ${live}</button>` : '';
     panel.innerHTML = `
       <div class="adf-title">📋 ${name} 修正重點（${stored||'舊版'} → ${live||'最新版'}）</div>
       <div class="adf-content">${text.replace(/\n/g,'<br>')}</div>
-      ${linkHtml}`;
+      ${linkHtml}
+      ${confirmHtml}`;
     panel.style.display = '';
     btn.textContent = '▲ 收起';
   } catch(e) {
