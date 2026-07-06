@@ -6763,16 +6763,19 @@ async function loadFromCloud() {
       // 從 DEFAULT_DATA 補回 sheet icon / ic（GAS getIcon 關鍵字不完整）
       const defaultIconMap = {};
       for (const dept of DEFAULT_DATA) {
-        defaultIconMap[dept.dept_id] = {};
+        defaultIconMap[dept.dept_id] = { byId: {}, byName: {} };
         for (const sheet of (dept.sheets || [])) {
-          defaultIconMap[dept.dept_id][sheet.id] = { icon: sheet.icon, ic: sheet.ic };
+          if (sheet.icon) {
+            defaultIconMap[dept.dept_id].byId[sheet.id]     = { icon: sheet.icon, ic: sheet.ic };
+            defaultIconMap[dept.dept_id].byName[sheet.name] = { icon: sheet.icon, ic: sheet.ic };
+          }
         }
       }
       for (const dept of ALL_DATA) {
         const dMap = defaultIconMap[dept.dept_id];
         if (!dMap) continue;
         for (const sheet of (dept.sheets || [])) {
-          const src = dMap[sheet.id];
+          const src = dMap.byId[sheet.id] || dMap.byName[sheet.name];
           if (src) {
             if (src.icon) sheet.icon = src.icon;
             if (src.ic)   sheet.ic   = src.ic;
