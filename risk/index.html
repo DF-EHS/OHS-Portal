@@ -6760,26 +6760,28 @@ async function loadFromCloud() {
         }
       }
       if (missingDepts.length > 0) migrateDepts(missingDepts);
-      // 從 DEFAULT_DATA 補回 sheet icon / ic（GAS getIcon 關鍵字不完整）
-      const defaultIconMap = {};
-      for (const dept of DEFAULT_DATA) {
-        defaultIconMap[dept.dept_id] = { byId: {}, byName: {} };
-        for (const sheet of (dept.sheets || [])) {
-          if (sheet.icon) {
-            defaultIconMap[dept.dept_id].byId[sheet.id]     = { icon: sheet.icon, ic: sheet.ic };
-            defaultIconMap[dept.dept_id].byName[sheet.name] = { icon: sheet.icon, ic: sheet.ic };
-          }
-        }
-      }
+      // 依 sheet 名稱補回 emoji（GAS getIcon 關鍵字不完整）
+      const SHEET_ICON_TABLE = {
+        '訪客':['👥','ic-blue'],'承攬商':['🏗️','ic-blue'],'行政管理':['📋','ic-purple'],
+        '倉儲':['📦','ic-blue'],'倉儲作業':['📦','ic-blue'],
+        '分選':['🔀','ic-blue'],'人員分選':['👷','ic-blue'],
+        '堆高機':['🚜','ic-orange'],'堆高機運送':['🚜','ic-orange'],
+        '紙磚區':['📰','ic-blue'],'鐵盤區':['🔩','ic-blue'],
+        '夾子車清運':['🚛','ic-orange'],'夾子車上貨':['🚛','ic-orange'],
+        '貨車清運':['🚛','ic-orange'],'清運作業':['🚛','ic-orange'],
+        '小貨車上貨':['🚛','ic-orange'],'平板車上貨':['🚛','ic-orange'],
+        '上下貨':['📦','ic-orange'],'進貨作業':['📥','ic-blue'],
+        '乙炔切割作業':['🔥','ic-orange'],'乙炔切割':['🔥','ic-orange'],'氧氣乙炔':['🔥','ic-orange'],
+        '打包機作業':['📦','ic-blue'],'打包機':['📦','ic-blue'],
+        '挖掘機':['⛏️','ic-orange'],
+        '人員拆解':['🔧','ic-purple'],
+        '站區車輛進出引':['🚦','ic-orange'],'車輛開車':['🚗','ic-orange'],
+        '二樓物料上貨':['⬆️','ic-orange'],'人員上下樓梯':['🪜','ic-blue'],
+      };
       for (const dept of ALL_DATA) {
-        const dMap = defaultIconMap[dept.dept_id];
-        if (!dMap) continue;
         for (const sheet of (dept.sheets || [])) {
-          const src = dMap.byId[sheet.id] || dMap.byName[sheet.name];
-          if (src) {
-            if (src.icon) sheet.icon = src.icon;
-            if (src.ic)   sheet.ic   = src.ic;
-          }
+          const hit = SHEET_ICON_TABLE[sheet.name];
+          if (hit) { sheet.icon = hit[0]; sheet.ic = hit[1]; }
         }
       }
     }
