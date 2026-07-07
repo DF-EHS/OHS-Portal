@@ -250,6 +250,115 @@ body.dark .placeholder-box { background: #1e293b; border-color: #334155; }
 body.dark .info-note { background: #1e3a5f; border-color: #1e40af; color: #93c5fd; }
 body.dark #sop-modal { background: #1e293b; }
 
+/* ── Equipment List ── */
+.eq-toolbar {
+  display: flex; gap: 10px; align-items: center;
+  flex-wrap: wrap; margin-bottom: 16px;
+}
+.eq-search {
+  flex: 1; min-width: 180px; max-width: 320px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 8px 14px; font-size: 13px; font-family: inherit;
+  outline: none; background: var(--card); color: var(--text);
+  transition: border-color .15s;
+}
+.eq-search:focus { border-color: var(--eq); }
+.eq-select {
+  border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 8px 10px; font-size: 13px; font-family: inherit;
+  outline: none; background: var(--card); color: var(--text); cursor: pointer;
+}
+.eq-select:focus { border-color: var(--eq); }
+.eq-stats { font-size: 13px; color: var(--sub); margin-left: auto; white-space: nowrap; }
+.eq-table-wrap {
+  overflow-x: auto; border-radius: 12px;
+  border: 1px solid var(--border);
+  max-height: 580px; overflow-y: auto;
+}
+.eq-table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 980px; }
+.eq-table thead th {
+  position: sticky; top: 0; z-index: 1;
+  background: linear-gradient(135deg, #1e3a5f, #1d4ed8);
+  color: #fff; font-weight: 700; font-size: 12px;
+  padding: 10px 12px; text-align: left; white-space: nowrap;
+  border-right: 1px solid rgba(255,255,255,.15);
+}
+.eq-table thead th:last-child { border-right: none; }
+.eq-table tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+.eq-table tbody tr:hover { background: var(--eq-light); }
+.eq-table tbody tr:nth-child(even) { background: #f8fafc; }
+.eq-table tbody td { padding: 7px 12px; vertical-align: middle; }
+.eq-no-data { text-align: center; padding: 60px 20px; color: var(--sub); font-size: 14px; }
+.st-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; white-space: nowrap; display: inline-block; }
+.st-active { background: #dcfce7; color: #15803d; }
+.st-done   { background: #f1f5f9; color: var(--sub); }
+.cat-code  { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px; white-space: nowrap; display: inline-block; }
+.cc-a { background: #f3e8ff; color: #7c3aed; }
+.cc-b { background: #ecfeff; color: #0891b2; }
+.cc-c { background: #ecfdf5; color: #059669; }
+.cc-q { background: #fffbeb; color: #d97706; }
+.cc-x { background: #f1f5f9; color: var(--sub); }
+body.dark .eq-table tbody tr:nth-child(even) { background: #1a2332; }
+body.dark .eq-table tbody tr:hover { background: #1e3a5f; }
+body.dark .eq-search, body.dark .eq-select { background: #1e293b; color: #f1f5f9; }
+
+/* ── Admin Upload Modal ── */
+#admin-overlay {
+  display: none; position: fixed; inset: 0; z-index: 600;
+  background: rgba(0,0,0,.6); align-items: center; justify-content: center;
+}
+#admin-overlay.open { display: flex; }
+#admin-modal {
+  background: var(--card); border-radius: 16px;
+  width: min(680px, 95vw); max-height: 90vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 80px rgba(0,0,0,.45); overflow: hidden;
+}
+#admin-modal-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 20px; flex-shrink: 0;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1d4ed8 100%);
+  color: #fff;
+}
+#admin-modal-head h2 { flex: 1; font-size: 15px; font-weight: 700; }
+.adm-close-btn { background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 0 4px; line-height: 1; }
+#admin-modal-body { flex: 1; overflow-y: auto; padding: 24px; }
+.adm-field { margin-bottom: 16px; }
+.adm-label { font-size: 12px; font-weight: 700; color: var(--sub); margin-bottom: 6px; display: block; letter-spacing: 1px; }
+.adm-input {
+  width: 100%; border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 9px 14px; font-size: 13px; font-family: inherit;
+  outline: none; background: var(--card); color: var(--text); transition: border-color .15s;
+}
+.adm-input:focus { border-color: var(--eq); }
+.adm-file-wrap {
+  border: 2px dashed var(--eq-border); border-radius: 10px;
+  padding: 24px; text-align: center; color: var(--sub);
+  font-size: 13px; cursor: pointer; transition: border-color .15s, background .15s;
+}
+.adm-file-wrap:hover { border-color: var(--eq); background: var(--eq-light); }
+.adm-file-wrap input[type=file] { display: none; }
+#adm-preview { margin-top: 16px; }
+#adm-preview-info { font-size: 13px; color: var(--sub); margin-bottom: 8px; }
+#adm-preview-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); max-height: 180px; overflow-y: auto; }
+.adm-prev-table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 560px; }
+.adm-prev-table th { background: #f1f5f9; color: var(--sub); font-size: 10.5px; padding: 6px 10px; text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+.adm-prev-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); }
+#adm-status { font-size: 13px; margin-top: 12px; padding: 8px 14px; border-radius: 8px; display: none; line-height: 1.6; }
+#adm-status.ok  { background: #dcfce7; color: #15803d; display: block; }
+#adm-status.err { background: #fee2e2; color: #991b1b; display: block; }
+#adm-status.ing { background: var(--eq-light); color: var(--eq-dark); display: block; }
+#admin-modal-foot { padding: 14px 20px; display: flex; gap: 10px; justify-content: flex-end; border-top: 1px solid var(--border); flex-shrink: 0; }
+.adm-btn-cancel { padding: 8px 20px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--card); color: var(--text); font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: background .15s; }
+.adm-btn-cancel:hover { background: #f1f5f9; }
+.adm-btn-confirm { padding: 8px 24px; border-radius: 8px; border: none; background: var(--eq); color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background .15s; }
+.adm-btn-confirm:hover:not(:disabled) { background: #1e40af; }
+.adm-btn-confirm:disabled { background: var(--sub); cursor: not-allowed; }
+body.dark #admin-modal { background: #1e293b; }
+body.dark .adm-input { background: #1e293b; color: #f1f5f9; }
+body.dark .adm-prev-table th { background: #1e293b; }
+body.dark .adm-btn-cancel:hover { background: #334155; }
+
 @media (max-width: 700px) {
   main { padding: 20px 16px 48px; }
   .sop-grid { grid-template-columns: 1fr 1fr; }
@@ -264,6 +373,7 @@ body.dark #sop-modal { background: #1e293b; }
 <header>
   <a class="hdr-btn" href="../">← 系統入口</a>
   <h1>⚙️ 機械設備管理</h1>
+  <button class="hdr-btn" onclick="openAdminModal()">📂 更新清冊</button>
   <div class="hdr-brand">
     <img src="../dafon-logo.png" alt="大豐環保科技">
     <span>大豐環保科技</span>
@@ -284,7 +394,7 @@ body.dark #sop-modal { background: #1e293b; }
 
   <!-- Module Nav -->
   <div class="module-nav">
-    <a id="nav-m1" onclick="showModule(1)">📋 設備清冊<span class="nav-badge">建置中</span></a>
+    <a id="nav-m1" onclick="showModule(1)">📋 設備清冊<span class="nav-badge" id="eq-nav-badge">—</span></a>
     <a id="nav-m2" onclick="showModule(2)" class="active">📄 安全作業標準<span class="nav-badge">29 份</span></a>
   </div>
 
@@ -292,19 +402,50 @@ body.dark #sop-modal { background: #1e293b; }
   <div class="section-block hidden" id="m1">
     <div class="section-label">
       模組一・設備清冊
-      <span class="mod-tag pending">建置中</span>
+      <span class="mod-tag active">已上線</span>
     </div>
     <div class="info-note">
-      📋 設備清冊資料建置中，請提供設備清單後即可匯入。清冊將包含：設備編號、設備名稱、所在位置、保養週期、下次保養日期等資訊。
+      📋 全公司機械設備清冊，資料來源：Crystal Report 財產管理系統（共 <span id="eq-total-lbl">—</span> 筆）。管理員點選「📂 更新清冊」可上傳最新 Excel 同步資料至 Google Sheets。
     </div>
-    <div class="placeholder-box">
-      <div class="placeholder-icon">📋</div>
-      <div class="placeholder-title">設備清冊</div>
-      <div class="placeholder-sub">
-        設備清冊資料建置中，請提供設備清單後即可匯入。<br>
-        清冊將包含：設備編號、設備名稱、所在位置、保養週期、下次保養日期等資訊。
+
+    <div class="eq-toolbar">
+      <input id="eq-search" class="eq-search" type="text" placeholder="🔍 搜尋設備名稱、財產編號、保管人…" oninput="filterEquip()">
+      <select id="eq-filter-cat" class="eq-select" onchange="filterEquip()">
+        <option value="">全部類別</option>
+      </select>
+      <select id="eq-filter-status" class="eq-select" onchange="filterEquip()">
+        <option value="">全部狀態</option>
+        <option value="折舊中">折舊中</option>
+        <option value="折畢">折畢</option>
+      </select>
+      <select id="eq-filter-dept" class="eq-select" onchange="filterEquip()">
+        <option value="">全部部門</option>
+      </select>
+      <span class="eq-stats" id="eq-stats">—</span>
+    </div>
+
+    <div class="eq-table-wrap">
+      <table class="eq-table">
+        <thead>
+          <tr>
+            <th>財產編號</th>
+            <th>設備名稱</th>
+            <th>規格型號</th>
+            <th>類別</th>
+            <th>部門名稱</th>
+            <th>保管人</th>
+            <th>存放位置</th>
+            <th style="text-align:center">數量</th>
+            <th>單位</th>
+            <th>入帳日期</th>
+            <th>資產狀態</th>
+          </tr>
+        </thead>
+        <tbody id="eq-tbody"></tbody>
+      </table>
+      <div id="eq-no-data" class="eq-no-data">
+        尚無設備清冊資料，請管理員點選「📂 更新清冊」上傳 Excel 檔案
       </div>
-      <div class="placeholder-note">⏳ 資料準備中，稍候即可建置</div>
     </div>
   </div>
 
@@ -621,9 +762,312 @@ body.dark #sop-modal { background: #1e293b; }
   </div>
 </div>
 
+<!-- ── Admin Upload Modal ── -->
+<div id="admin-overlay" onclick="if(event.target===this)closeAdminModal()">
+  <div id="admin-modal">
+    <div id="admin-modal-head">
+      <h2>📂 更新設備清冊</h2>
+      <button class="adm-close-btn" onclick="closeAdminModal()" title="關閉">✕</button>
+    </div>
+    <div id="admin-modal-body">
+      <div class="adm-field">
+        <label class="adm-label">管理員密碼</label>
+        <input id="adm-pw" class="adm-input" type="password" placeholder="輸入管理員密碼…" autocomplete="off">
+      </div>
+      <div class="adm-field">
+        <label class="adm-label">設備清冊 Excel 檔案（Crystal Report 格式）</label>
+        <div class="adm-file-wrap" onclick="document.getElementById('adm-file').click()">
+          <div style="font-size:32px;margin-bottom:8px">📂</div>
+          <div id="adm-file-label">點擊選取 .xlsx 或 .xls 檔案</div>
+          <div style="font-size:11px;margin-top:4px">財產系統匯出的 Excel，標題列位於第 9 列</div>
+          <input id="adm-file" type="file" accept=".xlsx,.xls" onchange="onFileSelected(this)">
+        </div>
+      </div>
+      <div id="adm-preview" style="display:none">
+        <div id="adm-preview-info"></div>
+        <div id="adm-preview-wrap">
+          <table class="adm-prev-table">
+            <thead>
+              <tr><th>財產編號</th><th>設備名稱</th><th>類別</th><th>部門</th><th>保管人</th><th>存放位置</th><th>數量</th><th>狀態</th></tr>
+            </thead>
+            <tbody id="adm-prev-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div id="adm-status"></div>
+    </div>
+    <div id="admin-modal-foot">
+      <button class="adm-btn-cancel" onclick="closeAdminModal()">取消</button>
+      <button id="adm-confirm-btn" class="adm-btn-confirm" onclick="confirmImport()" disabled>⬆ 確認匯入</button>
+    </div>
+  </div>
+</div>
+
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
 
 <script>
+// ── Equipment Module ──────────────────────────────────────────
+const GAS_URL  = 'YOUR_GAS_URL_HERE';
+const ADMIN_PW = 'admin';
+
+const CAT_LABELS = { A:'土地', B:'房屋及建築', C:'機械及設備', Q:'其他資產', X:'其他' };
+const CAT_CLASS  = { A:'cc-a', B:'cc-b', C:'cc-c', Q:'cc-q', X:'cc-x' };
+
+// Crystal Report column indices (0-based in sheet_to_json row array)
+const COL = {
+  deptCode:0, deptName:2, keeper:8, location:10,
+  category:12, assetNo:14, name:15, spec:17,
+  qty:19, unit:21, date:27, status:30
+};
+
+let equipData  = [];
+let parsedRows = [];
+
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Load from GAS ─────────────────────────────────────────────
+async function loadEquipmentFromGAS() {
+  if (!GAS_URL || GAS_URL === 'YOUR_GAS_URL_HERE') {
+    document.getElementById('eq-stats').textContent = '（尚未設定 GAS URL）';
+    return;
+  }
+  document.getElementById('eq-stats').textContent = '資料載入中…';
+  try {
+    const res  = await fetch(GAS_URL, { redirect:'follow' });
+    const data = await res.json();
+    if (data.ok && Array.isArray(data.rows)) {
+      equipData = data.rows;
+      buildEqFilters();
+      filterEquip();
+    } else {
+      document.getElementById('eq-stats').textContent = '載入失敗';
+    }
+  } catch(e) {
+    console.error('[loadEquipmentFromGAS]', e);
+    document.getElementById('eq-stats').textContent = '網路錯誤，無法取得資料';
+  }
+}
+
+function buildEqFilters() {
+  const catSel  = document.getElementById('eq-filter-cat');
+  const deptSel = document.getElementById('eq-filter-dept');
+  const cats  = [...new Set(equipData.map(r => r.category).filter(Boolean))].sort();
+  const depts = [...new Set(equipData.map(r => r.deptName).filter(Boolean))].sort();
+  catSel.innerHTML  = '<option value="">全部類別</option>' +
+    cats.map(c => `<option value="${esc(c)}">${esc(c)}${CAT_LABELS[c] ? ' '+CAT_LABELS[c] : ''}</option>`).join('');
+  deptSel.innerHTML = '<option value="">全部部門</option>' +
+    depts.map(d => `<option value="${esc(d)}">${esc(d)}</option>`).join('');
+}
+
+function filterEquip() {
+  const q       = document.getElementById('eq-search').value.trim().toLowerCase();
+  const catF    = document.getElementById('eq-filter-cat').value;
+  const statusF = document.getElementById('eq-filter-status').value;
+  const deptF   = document.getElementById('eq-filter-dept').value;
+
+  const filtered = equipData.filter(r => {
+    if (catF    && r.category !== catF)   return false;
+    if (statusF && r.status   !== statusF) return false;
+    if (deptF   && r.deptName !== deptF)  return false;
+    if (q) {
+      const hay = [r.assetNo, r.name, r.spec, r.keeper, r.location, r.deptName]
+        .join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  renderEquipmentList(filtered);
+
+  const total = equipData.length;
+  const noData = document.getElementById('eq-no-data');
+  const statEl = document.getElementById('eq-stats');
+  if (total === 0) {
+    noData.textContent = '尚無設備清冊資料，請管理員點選「📂 更新清冊」上傳 Excel 檔案';
+    noData.style.display = 'block';
+    statEl.textContent = '—';
+  } else if (filtered.length === 0) {
+    noData.textContent = '找不到符合條件的設備';
+    noData.style.display = 'block';
+    statEl.textContent = `顯示 0 / ${total} 筆`;
+  } else {
+    noData.style.display = 'none';
+    statEl.textContent = `顯示 ${filtered.length} / ${total} 筆`;
+  }
+}
+
+function renderEquipmentList(rows) {
+  const tbody = document.getElementById('eq-tbody');
+  if (!rows.length) { tbody.innerHTML = ''; return; }
+  tbody.innerHTML = rows.map(r => {
+    const stCls  = r.status === '折舊中' ? 'st-active' : 'st-done';
+    const catCls = CAT_CLASS[r.category] || 'cc-x';
+    const catLbl = CAT_LABELS[r.category]
+      ? r.category + ' ' + CAT_LABELS[r.category]
+      : (r.category || '—');
+    return `<tr>
+      <td style="font-family:monospace;font-size:11px;white-space:nowrap;color:var(--sub)">${esc(r.assetNo)||'—'}</td>
+      <td style="font-weight:600;white-space:nowrap">${esc(r.name)||'—'}</td>
+      <td style="font-size:11.5px;color:var(--sub)">${esc(r.spec)||'—'}</td>
+      <td><span class="cat-code ${catCls}">${esc(catLbl)}</span></td>
+      <td style="font-size:12px;white-space:nowrap">${esc(r.deptName)||'—'}</td>
+      <td style="font-size:12px">${esc(r.keeper)||'—'}</td>
+      <td style="font-size:12px">${esc(r.location)||'—'}</td>
+      <td style="text-align:center">${r.qty !== '' && r.qty != null ? r.qty : '—'}</td>
+      <td style="font-size:12px">${esc(r.unit)||'—'}</td>
+      <td style="font-size:11px;white-space:nowrap;color:var(--sub)">${esc(r.date)||'—'}</td>
+      <td><span class="st-badge ${stCls}">${esc(r.status)||'—'}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Admin Modal ───────────────────────────────────────────────
+function openAdminModal() {
+  document.getElementById('admin-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('adm-pw').value = '';
+  document.getElementById('adm-file').value = '';
+  document.getElementById('adm-file-label').textContent = '點擊選取 .xlsx 或 .xls 檔案';
+  document.getElementById('adm-preview').style.display = 'none';
+  document.getElementById('adm-status').className = '';
+  document.getElementById('adm-status').textContent = '';
+  document.getElementById('adm-confirm-btn').disabled = true;
+  parsedRows = [];
+}
+function closeAdminModal() {
+  document.getElementById('admin-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function onFileSelected(input) {
+  const file = input.files[0];
+  if (!file) return;
+  document.getElementById('adm-file-label').textContent = file.name;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      parsedRows = parseEquipmentExcel(e.target.result);
+      showAdmPreview(parsedRows);
+      const st = document.getElementById('adm-status');
+      st.className = 'ok';
+      st.textContent = `✅ 解析完成，共 ${parsedRows.length} 筆設備資料。確認密碼後按「確認匯入」。`;
+      document.getElementById('adm-confirm-btn').disabled = false;
+    } catch(err) {
+      const st = document.getElementById('adm-status');
+      st.className = 'err';
+      st.textContent = '❌ 解析失敗：' + err.message;
+      document.getElementById('adm-preview').style.display = 'none';
+      document.getElementById('adm-confirm-btn').disabled = true;
+      parsedRows = [];
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function parseEquipmentExcel(buf) {
+  const wb  = XLSX.read(buf, { type:'array', cellDates:true });
+  const ws  = wb.Sheets[wb.SheetNames[0]];
+  const raw = XLSX.utils.sheet_to_json(ws, { header:1, defval:'' });
+  // Header row at index 8 (row 9 in Excel); data starts at index 9
+  const rows = [];
+  let lastDeptCode = '', lastDeptName = '';
+  for (let i = 9; i < raw.length; i++) {
+    const r = raw[i];
+    if (!r || r.every(v => v === '' || v === null || v === undefined)) continue;
+    const dc = String(r[COL.deptCode] || '').trim();
+    const dn = String(r[COL.deptName] || '').trim();
+    if (dc) lastDeptCode = dc;
+    if (dn) lastDeptName = dn;
+    const assetNo = String(r[COL.assetNo] || '').trim();
+    const name    = String(r[COL.name]    || '').trim();
+    if (!assetNo && !name) continue;
+    let date = r[COL.date];
+    if (date instanceof Date) {
+      date = date.toISOString().slice(0, 10);
+    } else {
+      date = String(date || '').trim();
+    }
+    rows.push({
+      assetNo:  assetNo,
+      name:     name,
+      spec:     String(r[COL.spec]     || '').trim(),
+      deptCode: lastDeptCode,
+      deptName: lastDeptName,
+      keeper:   String(r[COL.keeper]   || '').trim(),
+      location: String(r[COL.location] || '').trim(),
+      category: String(r[COL.category] || '').trim(),
+      qty:      r[COL.qty] !== '' ? r[COL.qty] : '',
+      unit:     String(r[COL.unit]     || '').trim(),
+      date:     date,
+      status:   String(r[COL.status]   || '').trim(),
+    });
+  }
+  if (!rows.length) throw new Error('未找到任何設備資料，請確認 Excel 格式（標題列應位於第 9 列）');
+  return rows;
+}
+
+function showAdmPreview(rows) {
+  document.getElementById('adm-preview-info').textContent =
+    `預覽前 5 筆（共 ${rows.length} 筆）：`;
+  document.getElementById('adm-prev-tbody').innerHTML = rows.slice(0, 5).map(r => `<tr>
+    <td>${esc(r.assetNo)||'—'}</td><td>${esc(r.name)||'—'}</td>
+    <td>${esc(r.category)||'—'}</td><td>${esc(r.deptName)||'—'}</td>
+    <td>${esc(r.keeper)||'—'}</td><td>${esc(r.location)||'—'}</td>
+    <td>${r.qty||'—'}</td><td>${esc(r.status)||'—'}</td>
+  </tr>`).join('');
+  document.getElementById('adm-preview').style.display = 'block';
+}
+
+async function confirmImport() {
+  const pw = document.getElementById('adm-pw').value.trim();
+  if (pw !== ADMIN_PW) {
+    const st = document.getElementById('adm-status');
+    st.className = 'err'; st.textContent = '❌ 密碼錯誤，請重新確認';
+    return;
+  }
+  if (!parsedRows.length) return;
+  if (!GAS_URL || GAS_URL === 'YOUR_GAS_URL_HERE') {
+    const st = document.getElementById('adm-status');
+    st.className = 'err'; st.textContent = '❌ 尚未設定 GAS_URL，請聯絡系統管理員';
+    return;
+  }
+  const btn = document.getElementById('adm-confirm-btn');
+  btn.disabled = true; btn.textContent = '⏳ 匯入中…';
+  const st = document.getElementById('adm-status');
+  st.className = 'ing';
+  st.textContent = `⏳ 正在匯入 ${parsedRows.length} 筆資料至 Google Sheets，請稍候…`;
+  try {
+    const res  = await fetch(GAS_URL, {
+      method:'POST', redirect:'follow',
+      body: JSON.stringify({ action:'bulkImport', rows:parsedRows })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      st.className = 'ok';
+      st.textContent = `✅ 成功匯入 ${data.added} 筆設備資料！頁面清冊已同步更新。`;
+      equipData = parsedRows.slice();
+      buildEqFilters();
+      filterEquip();
+      const nb = document.getElementById('eq-nav-badge');
+      const tl = document.getElementById('eq-total-lbl');
+      if (nb) nb.textContent = equipData.length + ' 筆';
+      if (tl) tl.textContent = equipData.length;
+    } else {
+      st.className = 'err';
+      st.textContent = '❌ 匯入失敗：' + (data.error || '未知錯誤');
+    }
+  } catch(e) {
+    st.className = 'err';
+    st.textContent = '❌ 網路錯誤：' + e.message;
+  }
+  btn.disabled = false; btn.innerHTML = '⬆ 確認匯入';
+}
+
+document.addEventListener('DOMContentLoaded', loadEquipmentFromGAS);
+document.addEventListener('keydown', e => { if (e.key==='Escape') closeAdminModal(); });
+
 // ── Module switching ─────────────────────────────────────────
 function showModule(n) {
   [1, 2].forEach(i => {
@@ -688,6 +1132,7 @@ function toggleDark() {
   }
 })();
 </script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script src="../shared/sidebar.js"></script>
 </body>
 </html>
