@@ -463,6 +463,95 @@ body.dark #chem-chat-input { background: #1e293b; color: var(--text); }
 body.dark .chem-warn-bar   { background: #451a03; border-color: #78350f; color: #fde68a; }
 body.dark .chem-chat-input-area { background: #1e293b; }
 
+/* ── Declaration Upload ── */
+.drill-tab-add { border-style: dashed; }
+.drill-tab-add:hover:not(.active) { border-color: var(--chem) !important; color: var(--chem) !important; background: var(--chem-light) !important; }
+.decl-edit-btn {
+  margin-left: auto; padding: 5px 11px; border-radius: 8px;
+  border: 1px solid var(--chem-border); background: var(--chem-light);
+  color: var(--chem-dark); font-size: 11px; font-weight: 700;
+  cursor: pointer; font-family: inherit; white-space: nowrap;
+  transition: all .15s; flex-shrink: 0;
+}
+.decl-edit-btn:hover { background: var(--chem); color: #fff; border-color: var(--chem); }
+.decl-manual-btn {
+  padding: 3px 10px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--card); color: var(--sub); font-size: 11px;
+  cursor: pointer; font-family: inherit; transition: all .15s; flex-shrink: 0;
+}
+.decl-manual-btn:hover { border-color: var(--sub); color: var(--text); }
+body.dark .decl-edit-btn { background: #451a03; color: #fde68a; border-color: #78350f; }
+body.dark .decl-edit-btn:hover { background: var(--chem); color: #fff; }
+body.dark .decl-manual-btn { background: #263349; border-color: #334155; }
+
+/* ── Declaration Upload Modal ── */
+#decl-modal {
+  display: none; position: fixed; inset: 0; z-index: 600;
+  background: rgba(0,0,0,.6); align-items: center; justify-content: center;
+}
+#decl-modal.open { display: flex; }
+.dm-box {
+  background: var(--card); border-radius: 16px;
+  width: min(640px, 95vw); max-height: 90vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 80px rgba(0,0,0,.45); overflow: hidden;
+}
+.dm-head {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 14px 20px; flex-shrink: 0;
+  background: linear-gradient(135deg, #78350f 0%, #b45309 45%, #d97706 100%);
+  color: #fff;
+}
+.dm-head-text { flex: 1; }
+.dm-head h2   { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.dm-head-sub  { font-size: 12px; color: rgba(255,255,255,.75); }
+.dm-close-btn { background: rgba(255,255,255,.18); border: none; border-radius: 6px; color: #fff; font-size: 16px; cursor: pointer; padding: 4px 9px; font-family: inherit; flex-shrink: 0; }
+.dm-close-btn:hover { background: rgba(255,255,255,.32); }
+.dm-body { flex: 1; overflow-y: auto; padding: 20px; }
+.dm-ctx { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; align-items: flex-end; }
+.dm-ctx-group { display: flex; flex-direction: column; gap: 4px; }
+.dm-ctx-lbl { font-size: 11px; font-weight: 700; color: var(--sub); letter-spacing: 1px; }
+.dm-select {
+  border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 7px 10px; font-size: 13px; font-family: inherit;
+  outline: none; background: var(--card); color: var(--text); cursor: pointer;
+}
+.dm-select:focus { border-color: var(--chem); }
+.dm-upload-zone {
+  border: 2px dashed var(--chem-border); border-radius: 10px;
+  padding: 28px; text-align: center; cursor: pointer;
+  transition: border-color .15s, background .15s;
+  position: relative; margin-bottom: 14px;
+}
+.dm-upload-zone:hover { border-color: var(--chem); background: var(--chem-light); }
+.dm-upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.dm-file-info {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  background: var(--chem-light); border-radius: 8px;
+  border: 1px solid var(--chem-border); margin-bottom: 14px;
+}
+.dm-actions { display: flex; gap: 10px; margin-bottom: 4px; }
+.btn-chem-up {
+  flex: 1; padding: 9px 0; background: var(--chem); color: #fff; border: none;
+  border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer;
+  font-family: inherit; transition: background .15s;
+}
+.btn-chem-up:hover:not(:disabled) { background: var(--chem-dark); }
+.btn-chem-up:disabled { background: var(--sub); cursor: not-allowed; }
+.btn-sec-dm {
+  padding: 9px 18px; background: var(--card); color: var(--sub);
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: 13px; cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.btn-sec-dm:hover { background: #f1f5f9; }
+@keyframes spin { to { transform: rotate(360deg); } }
+body.dark .dm-box { background: #1e293b; }
+body.dark .dm-select { background: #1e293b; color: #f1f5f9; }
+body.dark .dm-upload-zone { border-color: #78350f; }
+body.dark .dm-upload-zone:hover { background: #451a03; border-color: var(--chem); }
+body.dark .dm-file-info { background: #451a03; border-color: #78350f; }
+body.dark .btn-sec-dm:hover { background: #334155; }
+
 @media (max-width: 700px) {
   .stats-row  { grid-template-columns: 1fr 1fr; }
   .decl-grid  { grid-template-columns: 1fr; }
@@ -964,7 +1053,7 @@ let activeRoc = DECLARATIONS[0].roc;
 
 function declBadgeHtml(item) {
   if (!item) return '<span class="drill-badge future">— 未設定</span>';
-  if (item.s === 'done')         return `<span class="drill-badge done">✓ ${item.d}</span>`;
+  if (item.s === 'done')         return `<span class="drill-badge done">✓ ${item.d || '已完成'}</span>`;
   if (item.s === 'done-nodate')  return `<span class="drill-badge done-nd">✓ 已完成</span>`;
   if (item.s === 'pending')      return `<span class="drill-badge pending">⟳ 待申報</span>`;
   return `<span class="drill-badge future">— 未到期</span>`;
@@ -972,9 +1061,10 @@ function declBadgeHtml(item) {
 
 function renderDeclGrid(roc) {
   activeRoc = roc;
-  document.querySelectorAll('.drill-tab').forEach(t =>
+  document.querySelectorAll('.drill-tab[data-roc]').forEach(t =>
     t.classList.toggle('active', +t.dataset.roc === roc));
   const row = DECLARATIONS.find(r => r.roc === roc);
+  if (!row) return;
   document.getElementById('decl-grid').innerHTML = `
     <div class="decl-card">
       <div class="decl-card-head">
@@ -983,10 +1073,12 @@ function renderDeclGrid(roc) {
           <div class="decl-label">全興廠・上半年申報</div>
           <div class="decl-period">1 月份</div>
         </div>
+        <button class="decl-edit-btn" onclick="openDeclModal(${roc},'jan')">📤 AI 更新</button>
       </div>
       <div class="decl-card-body">
         <span class="half-label">公共危險物品申報</span>
         ${declBadgeHtml(row.jan)}
+        <button class="decl-manual-btn" onclick="manualUpdateDecl(${roc},'jan')">手動標記</button>
       </div>
     </div>
     <div class="decl-card">
@@ -996,10 +1088,12 @@ function renderDeclGrid(roc) {
           <div class="decl-label">全興廠・下半年申報</div>
           <div class="decl-period">7 月份</div>
         </div>
+        <button class="decl-edit-btn" onclick="openDeclModal(${roc},'jul')">📤 AI 更新</button>
       </div>
       <div class="decl-card-body">
         <span class="half-label">公共危險物品申報</span>
         ${declBadgeHtml(row.jul)}
+        <button class="decl-manual-btn" onclick="manualUpdateDecl(${roc},'jul')">手動標記</button>
       </div>
     </div>`;
 }
@@ -1008,7 +1102,7 @@ function buildDeclMatrix() {
   document.getElementById('decl-tabs').innerHTML = DECLARATIONS.map(r =>
     `<button type="button" class="drill-tab${r.roc === activeRoc ? ' active' : ''}"
      data-roc="${r.roc}" onclick="renderDeclGrid(${r.roc})">民${r.roc}年</button>`
-  ).join('');
+  ).join('') + `<button type="button" class="drill-tab drill-tab-add" onclick="promptAddDeclYear()">＋ 新增年度</button>`;
   renderDeclGrid(activeRoc);
 }
 
@@ -1266,15 +1360,318 @@ function chemChip(el) {
 }
 
 // ─────────────────────────────────────────────────────────────
+//  申報記錄 — GAS + localStorage
+// ─────────────────────────────────────────────────────────────
+const CHEM_DECL_GAS = 'YOUR_DECL_GAS_URL';
+const DECL_LS_KEY   = 'chem_declarations_v1';
+
+function saveDeclsLocal() {
+  localStorage.setItem(DECL_LS_KEY, JSON.stringify(DECLARATIONS));
+}
+
+function loadDeclsFromLocal() {
+  try {
+    const raw = localStorage.getItem(DECL_LS_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (!Array.isArray(saved) || !saved.length) return;
+    DECLARATIONS.length = 0;
+    saved.forEach(r => DECLARATIONS.push(r));
+    if (!DECLARATIONS.find(r => r.roc === activeRoc)) activeRoc = DECLARATIONS[0].roc;
+  } catch(e) {}
+}
+
+async function declGasPost(payload) {
+  if (!CHEM_DECL_GAS || CHEM_DECL_GAS === 'YOUR_DECL_GAS_URL') return null;
+  try {
+    const r = await fetch(CHEM_DECL_GAS, {
+      method:'POST', redirect:'follow',
+      body: JSON.stringify(payload)
+    });
+    return await r.json();
+  } catch(e) { return null; }
+}
+
+async function loadDeclsFromGAS() {
+  const res = await declGasPost({ action:'getAll' });
+  if (!res || !res.ok || !res.rows || !res.rows.length) return;
+  // merge GAS rows into DECLARATIONS
+  res.rows.forEach(row => {
+    let entry = DECLARATIONS.find(d => d.roc === Number(row.roc));
+    if (!entry) {
+      entry = { roc: Number(row.roc), jan:{ s:'future' }, jul:{ s:'future' } };
+      DECLARATIONS.push(entry);
+    }
+    const period = row.period; // 'jan' or 'jul'
+    if (period === 'jan' || period === 'jul') {
+      entry[period] = { s: row.status, d: row.date || undefined };
+    }
+  });
+  DECLARATIONS.sort((a,b) => b.roc - a.roc);
+  if (!DECLARATIONS.find(r => r.roc === activeRoc)) activeRoc = DECLARATIONS[0].roc;
+  saveDeclsLocal();
+  buildOverview();
+  buildDeclMatrix();
+}
+
+async function saveDeclToGAS(roc, period, status, date) {
+  await declGasPost({ action:'save', roc, period, status, date: date||'' });
+}
+
+// ─────────────────────────────────────────────────────────────
+//  新增年度
+// ─────────────────────────────────────────────────────────────
+function promptAddDeclYear() {
+  const maxRoc = DECLARATIONS.length ? Math.max(...DECLARATIONS.map(d => d.roc)) : 114;
+  const next = maxRoc + 1;
+  const yes = confirm(`新增民國 ${next} 年度？`);
+  if (!yes) return;
+  DECLARATIONS.unshift({ roc: next, jan:{ s:'future' }, jul:{ s:'future' } });
+  activeRoc = next;
+  saveDeclsLocal();
+  buildOverview();
+  buildDeclMatrix();
+}
+
+// ─────────────────────────────────────────────────────────────
+//  手動標記
+// ─────────────────────────────────────────────────────────────
+function manualUpdateDecl(roc, period) {
+  const row = DECLARATIONS.find(r => r.roc === roc);
+  if (!row) return;
+  const periodLabel = period === 'jan' ? '上半年（1月）' : '下半年（7月）';
+  const cur = row[period];
+  const opts = [
+    '✅ 已完成（輸入日期）',
+    '✅ 已完成（無日期）',
+    '⏳ 待申報',
+    '— 未到期'
+  ];
+  const choice = prompt(
+    `民${roc}年・${periodLabel}\n目前狀態：${cur.s}\n\n請輸入編號：\n1. ${opts[0]}\n2. ${opts[1]}\n3. ${opts[2]}\n4. ${opts[3]}`
+  );
+  if (!choice) return;
+  const idx = parseInt(choice.trim()) - 1;
+  if (idx === 0) {
+    const d = prompt('輸入完成日期（如：2025-01-15）');
+    row[period] = { s:'done', d: d||'' };
+    saveDeclToGAS(roc, period, 'done', d||'');
+  } else if (idx === 1) {
+    row[period] = { s:'done-nodate' };
+    saveDeclToGAS(roc, period, 'done-nodate', '');
+  } else if (idx === 2) {
+    row[period] = { s:'pending' };
+    saveDeclToGAS(roc, period, 'pending', '');
+  } else if (idx === 3) {
+    row[period] = { s:'future' };
+    saveDeclToGAS(roc, period, 'future', '');
+  } else {
+    return;
+  }
+  saveDeclsLocal();
+  buildOverview();
+  renderDeclGrid(activeRoc);
+}
+
+// ─────────────────────────────────────────────────────────────
+//  申報 AI 上傳 Modal
+// ─────────────────────────────────────────────────────────────
+let _declModalRoc = null;
+let _declModalPeriod = null;
+let _declAiResult  = null;
+
+function openDeclModal(roc, period) {
+  _declModalRoc    = roc;
+  _declModalPeriod = period;
+  _declAiResult    = null;
+  const label = period === 'jan' ? '上半年（1月）' : '下半年（7月）';
+  document.getElementById('dm-title').textContent = `📤 民${roc}年・${label}`;
+  document.getElementById('dm-file').value  = '';
+  document.getElementById('dm-result').innerHTML = '';
+  document.getElementById('dm-confirm-btn').style.display = 'none';
+  document.getElementById('dm-spinner').style.display = 'none';
+  document.getElementById('decl-modal').style.display   = 'flex';
+}
+
+function closeDeclModal() {
+  document.getElementById('decl-modal').style.display = 'none';
+}
+
+async function pdfToImagesDecl(file) {
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+  const pages = Math.min(pdf.numPages, 8);
+  const images = [];
+  for (let i = 1; i <= pages; i++) {
+    const page   = await pdf.getPage(i);
+    const vp     = page.getViewport({ scale: 1.5 });
+    const canvas = document.createElement('canvas');
+    canvas.width  = vp.width;
+    canvas.height = vp.height;
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+    images.push(canvas.toDataURL('image/jpeg', 0.85).split(',')[1]);
+  }
+  return images;
+}
+
+async function toBase64Decl(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+async function runDeclAI() {
+  const file = document.getElementById('dm-file').files[0];
+  if (!file) { alert('請先選擇申報文件（PDF 或圖片）'); return; }
+
+  const spinner = document.getElementById('dm-spinner');
+  const result  = document.getElementById('dm-result');
+  const confirm = document.getElementById('dm-confirm-btn');
+
+  spinner.style.display = 'block';
+  result.innerHTML = '';
+  confirm.style.display = 'none';
+  _declAiResult = null;
+
+  try {
+    let images = [];
+    if (file.type === 'application/pdf') {
+      images = await pdfToImagesDecl(file);
+    } else {
+      images = [await toBase64Decl(file)];
+    }
+
+    const periodLabel = _declModalPeriod === 'jan' ? '上半年（1月）' : '下半年（7月）';
+    const prompt = `這是大豐環保科技全興廠民國${_declModalRoc}年${periodLabel}的公共危險物品申報文件。
+請判斷：
+1. 申報是否完成？（是/否）
+2. 申報日期（若有）：格式 YYYY-MM-DD
+3. 申報結果摘要（1-2句話）
+
+請以 JSON 格式回覆，欄位：done (boolean), date (string, 無則空字串), summary (string)`;
+
+    const body = { text: prompt, images };
+    const r = await fetch(CHEM_AI_WORKER + '/chat', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({ messages:[{ role:'user', content: prompt }], images })
+    });
+    const data = await r.json();
+    const text = data.content || data.reply || data.result || '';
+
+    // try parse JSON from response
+    let parsed = null;
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      try { parsed = JSON.parse(jsonMatch[0]); } catch(e) {}
+    }
+
+    if (parsed) {
+      _declAiResult = parsed;
+      result.innerHTML = `
+        <div style="background:var(--chem-light);border:1px solid var(--chem-border);border-radius:8px;padding:12px;margin-top:8px">
+          <div style="font-weight:700;color:var(--chem-dark);margin-bottom:6px">🤖 AI 判讀結果</div>
+          <div>申報完成：<strong>${parsed.done ? '✅ 是' : '❌ 否'}</strong></div>
+          ${parsed.date ? `<div>申報日期：<strong>${parsed.date}</strong></div>` : ''}
+          <div style="margin-top:6px;color:var(--sub);font-size:13px">${parsed.summary || ''}</div>
+        </div>`;
+      confirm.style.display = 'block';
+    } else {
+      result.innerHTML = `<div style="color:var(--sub);font-size:13px;margin-top:8px">AI 回覆：${text.slice(0,300)}</div>`;
+    }
+  } catch(e) {
+    result.innerHTML = `<div style="color:#dc2626;margin-top:8px">❌ 錯誤：${e.message}</div>`;
+  } finally {
+    spinner.style.display = 'none';
+  }
+}
+
+function confirmDeclUpdate() {
+  if (!_declAiResult || _declModalRoc === null) return;
+  const row = DECLARATIONS.find(r => r.roc === _declModalRoc);
+  if (!row) return;
+
+  if (_declAiResult.done) {
+    row[_declModalPeriod] = _declAiResult.date
+      ? { s:'done', d: _declAiResult.date }
+      : { s:'done-nodate' };
+    saveDeclToGAS(_declModalRoc, _declModalPeriod,
+      _declAiResult.date ? 'done' : 'done-nodate', _declAiResult.date || '');
+  } else {
+    row[_declModalPeriod] = { s:'pending' };
+    saveDeclToGAS(_declModalRoc, _declModalPeriod, 'pending', '');
+  }
+
+  saveDeclsLocal();
+  buildOverview();
+  renderDeclGrid(activeRoc);
+  closeDeclModal();
+
+  // SharePoint reminder
+  const pLabel = _declModalPeriod === 'jan' ? '上半年' : '下半年';
+  document.getElementById('dm-sp-banner').style.display = 'block';
+  document.getElementById('dm-sp-banner').innerHTML =
+    `📁 請記得將申報文件上傳至 SharePoint 留底（民${_declModalRoc}年・${pLabel}）`;
+}
+
+// ─────────────────────────────────────────────────────────────
 //  Init
 // ─────────────────────────────────────────────────────────────
+loadDeclsFromLocal();
 buildOverview();
 renderChemTable();
 buildDeclMatrix();
 buildPriorityTable();
+loadDeclsFromGAS();
 if (new URLSearchParams(location.search).get('chat') === '1') {
   setTimeout(toggleChemChat, 300);
 }
+</script>
+
+<!-- 申報文件 AI 上傳 Modal -->
+<div id="decl-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.5);align-items:center;justify-content:center">
+  <div class="dm-box" style="background:var(--card);border-radius:16px;padding:28px;width:min(520px,92vw);max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.25)">
+    <div class="dm-head" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <span id="dm-title" style="font-weight:700;font-size:17px;color:var(--chem-dark)"></span>
+      <button onclick="closeDeclModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--sub)">✕</button>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <label style="display:block;font-size:13px;font-weight:600;color:var(--sub);margin-bottom:6px">上傳申報文件（PDF 或圖片）</label>
+      <input id="dm-file" type="file" accept=".pdf,image/*"
+        style="width:100%;padding:8px;border:1.5px dashed var(--chem-border);border-radius:8px;background:var(--chem-light);font-size:13px;cursor:pointer">
+    </div>
+
+    <button onclick="runDeclAI()"
+      style="width:100%;padding:10px;background:var(--chem-dark);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:12px">
+      ✨ AI 判讀申報結果
+    </button>
+
+    <div id="dm-spinner" style="display:none;text-align:center;padding:16px">
+      <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--chem-border);border-top-color:var(--chem-dark);border-radius:50%;animation:spin .8s linear infinite"></div>
+      <div style="margin-top:8px;font-size:13px;color:var(--sub)">AI 判讀中…</div>
+    </div>
+
+    <div id="dm-result"></div>
+
+    <button id="dm-confirm-btn" onclick="confirmDeclUpdate()"
+      style="display:none;width:100%;margin-top:12px;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer">
+      ✅ 確認並更新申報狀態
+    </button>
+
+    <div id="dm-sp-banner" style="display:none;margin-top:12px;padding:10px 14px;background:#fef9c3;border:1px solid #fde047;border-radius:8px;font-size:13px;color:#854d0e"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
 </script>
 <script src="../shared/sidebar.js"></script>
 </body>
