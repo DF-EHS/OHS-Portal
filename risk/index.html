@@ -209,6 +209,22 @@
   .btn-ai-fill:disabled{opacity:.45;cursor:default;}
   .btn-ai-fill:not(:disabled):hover{background:#1d4ed8;}
   .ai-fill-status{margin-top:7px;font-size:12px;display:none;}
+  .btn-ai-plan{padding:2px 9px;background:#7c3aed;border:none;border-radius:5px;color:#fff;font-size:11px;font-weight:700;cursor:pointer;transition:background .15s;vertical-align:middle;}
+  .btn-ai-plan:disabled{opacity:.45;cursor:default;}
+  .btn-ai-plan:not(:disabled):hover{background:#6d28d9;}
+  #unacceptable-modal{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:3000;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;}
+  #unacceptable-modal.open{display:flex;}
+  .ua-box{background:var(--card);border-radius:18px;width:100%;max-width:1100px;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25);max-height:85vh;}
+  .ua-hdr{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid var(--border);flex-shrink:0;}
+  .ua-hdr h2{flex:1;font-size:16px;color:var(--navy);margin:0;}
+  .ua-body{overflow:auto;padding:12px 22px 20px;}
+  .ua-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  .ua-table th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;position:sticky;top:0;z-index:1;}
+  .ua-table td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+  .ua-table tr:hover td{background:#f8fafc;}
+  .ua-lv4 td{background:#fef9f9;}.ua-lv3 td{background:#fffdf0;}
+  body.dark .ua-box{background:#1e293b;}body.dark .ua-table th{background:#0f172a;}
+  body.dark .ua-lv4 td{background:#2d1515;}body.dark .ua-lv3 td{background:#2a2410;}
   .modal-ai-divider{border:none;border-top:1px dashed var(--border);margin:2px 0 14px;}
   body.dark .ai-photo-section{background:#1a2d42;border-color:#2d4a7a;}
   body.dark .ai-photo-hdr{color:#93c5fd;}
@@ -317,6 +333,7 @@
 <header>
   <button class="hdr-btn" onclick="location.href='../'" title="回到職安管理系統入口">← 系統入口</button>
   <h1>⚠️ 危害鑑別及風險評估查詢系統</h1>
+  <button class="hdr-btn" onclick="openUnacceptableModal()" title="顯示所有等級3/4的不可接受風險項目">⚠ 高風險清單</button>
   <button class="hdr-btn" onclick="exportHtml()" title="匯出目前資料為 HTML 檔">↓ 匯出 HTML</button>
   <button class="hdr-btn" id="btn-sync-stations" onclick="manualSyncStations()" title="將外站預設資料同步至 GAS Sheets">☁ 同步外站</button>
   <button class="hdr-btn danger" onclick="confirmReset()" title="清除所有變更，還原至預設資料">↺ 重置資料</button>
@@ -478,13 +495,43 @@
         <div class="sev-ref">頻率參考：1=極少 2=一次/年 4=一次/月 6=一次/週 8=每天 10=持續｜機率參考：1=幾乎不可能 3=可能 5=頗有可能 7=常常 10=確定</div>
       </div>
       <div class="fg">
-        <label>風險控制規劃</label>
+        <label style="display:flex;align-items:center;gap:8px">
+          風險控制規劃
+          <button id="btn-ai-plan" class="btn-ai-plan" type="button" onclick="aiGenPlan()">✨ AI 建議</button>
+          <span id="ai-plan-status" style="font-size:11px;color:var(--sub)"></span>
+        </label>
         <textarea id="f-plan" class="fta" placeholder="後續改善行動或已接受之說明"></textarea>
       </div>
     </div>
     <div class="mfoot">
       <button class="btn" onclick="closeItemModal()">取消</button>
       <button class="btn btn-primary" onclick="saveItem()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── 不可接受風險清單 Modal ── -->
+<div id="unacceptable-modal" onclick="if(event.target===this)closeUnacceptableModal()">
+  <div class="ua-box">
+    <div class="ua-hdr">
+      <h2>⚠ 不可接受風險清單</h2>
+      <span id="ua-count" style="font-size:12px;color:var(--sub)"></span>
+      <button class="m-close" onclick="closeUnacceptableModal()">✕</button>
+    </div>
+    <div class="ua-body">
+      <table class="ua-table">
+        <thead><tr>
+          <th style="width:90px">等級</th>
+          <th style="width:72px">站點</th>
+          <th style="width:110px">作業表</th>
+          <th style="width:85px">製程</th>
+          <th style="width:85px">步驟</th>
+          <th style="width:110px">危害因子</th>
+          <th>後果影響</th>
+          <th>風險控制規劃</th>
+        </tr></thead>
+        <tbody id="ua-tbody"></tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -7097,6 +7144,90 @@ async function sendRiskChat() {
   } finally {
     inp.disabled = false; btn.disabled = false; inp.focus();
   }
+}
+
+// ── AI 一鍵生成風險控制規劃 ──────────────────────────────
+async function aiGenPlan() {
+  var btn    = document.getElementById('btn-ai-plan');
+  var status = document.getElementById('ai-plan-status');
+  var hazard = document.getElementById('f-hazard').value.trim();
+  if (!hazard) { toast('請先填寫危害因子', 'err'); return; }
+  btn.disabled = true; status.textContent = '生成中…';
+  var prompt = '你是職業安全衛生顧問。請為以下危害項目生成一段風險控制規劃建議（60～120字，繁體中文），列出1～3項具體可行的改善行動，直接輸出內容不要有前言：\n\n' +
+    '製程／活動：' + (document.getElementById('f-process').value.trim() || '—') + '\n' +
+    '步驟／節點：' + (document.getElementById('f-step').value.trim() || '—') + '\n' +
+    '危害因子：' + hazard + '\n' +
+    '可能原因：' + (document.getElementById('f-cause').value.trim() || '—') + '\n' +
+    '後果影響：' + (document.getElementById('f-consequence').value.trim() || '—') + '\n' +
+    '現有控制方法：' + (document.getElementById('f-control').value.trim() || '—') + '\n' +
+    '風險等級：' + (document.getElementById('f-level').value || '未評估') +
+    '（頻率' + (document.getElementById('f-freq').value || '—') +
+    '×機率' + (document.getElementById('f-prob').value || '—') +
+    '，嚴重度' + (document.getElementById('f-severity').value || '—') + '）';
+  try {
+    var resp = await fetch(RISK_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt })
+    });
+    var data = await resp.json();
+    var text = data && (data.data || (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || data.text) || '';
+    if (!text) throw new Error('empty');
+    document.getElementById('f-plan').value = text.trim();
+    status.textContent = '✓ 已生成';
+    setTimeout(function(){ status.textContent = ''; }, 3000);
+  } catch(e) {
+    toast('AI 服務暫時無法使用', 'err');
+    status.textContent = '';
+  }
+  btn.disabled = false;
+}
+
+// ── 不可接受風險清單 ─────────────────────────────────────
+function openUnacceptableModal() {
+  var items = [];
+  ALL_DATA.forEach(function(dept) {
+    (dept.sheets || []).forEach(function(sheet) {
+      (sheet.items || []).forEach(function(item) {
+        if (item.level === 4 || item.level === 3) {
+          items.push({ dept: dept, sheet: sheet, item: item });
+        }
+      });
+    });
+  });
+  items.sort(function(a, b) {
+    if (b.item.level !== a.item.level) return b.item.level - a.item.level;
+    return a.dept.dept_name.localeCompare(b.dept.dept_name);
+  });
+  var l4 = items.filter(function(i){ return i.item.level === 4; }).length;
+  document.getElementById('ua-count').textContent =
+    '共 ' + items.length + ' 項（⛔ 高風險 ' + l4 + ' ｜ ⚠ 需改善 ' + (items.length - l4) + '）';
+  var tbody = document.getElementById('ua-tbody');
+  if (!items.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--sub)">目前沒有等級3或等級4的風險項目 🎉</td></tr>';
+  } else {
+    tbody.innerHTML = items.map(function(r) {
+      var lv = r.item.level;
+      var badge = lv === 4
+        ? '<span style="background:#fecaca;color:#991b1b;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700">⛔ L4 高風險</span>'
+        : '<span style="background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700">⚠ L3 需改善</span>';
+      return '<tr class="' + (lv === 4 ? 'ua-lv4' : 'ua-lv3') + '">' +
+        '<td>' + badge + '</td>' +
+        '<td>' + esc(r.dept.dept_name) + '</td>' +
+        '<td>' + esc(r.sheet.name) + '</td>' +
+        '<td>' + esc(r.item.process) + '</td>' +
+        '<td>' + esc(r.item.step) + '</td>' +
+        '<td>' + esc(r.item.hazard) + '</td>' +
+        '<td>' + esc(r.item.consequence) + '</td>' +
+        '<td>' + esc(r.item.plan || '—') + '</td>' +
+        '</tr>';
+    }).join('');
+  }
+  document.getElementById('unacceptable-modal').classList.add('open');
+}
+
+function closeUnacceptableModal() {
+  document.getElementById('unacceptable-modal').classList.remove('open');
 }
 </script>
 <script src="../shared/sidebar.js"></script>
