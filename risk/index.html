@@ -6108,7 +6108,7 @@ async function analyzeHazardPhoto() {
   const btn = document.getElementById('btn-ai-fill');
   const st  = document.getElementById('ai-fill-status');
   btn.disabled = true; btn.textContent = '⏳ AI 辨識中…';
-  st.style.display = ''; st.style.color = 'var(--blue)';
+  st.style.display = 'block'; st.style.color = 'var(--blue)';
   st.textContent = '正在分析照片，請稍候…';
 
   const prompt = `你是職業安全衛生危害辨識專家。請分析這張作業現場照片，辨識可見的危害。
@@ -6153,15 +6153,19 @@ async function analyzeHazardPhoto() {
     }
     autoSuggest();
 
+    st.style.display = 'block';
     st.textContent = '✅ 已自動填入，請逐欄確認後儲存';
     st.style.color  = 'var(--green)';
     btn.textContent = '🔄 重新辨識';
     btn.disabled    = false;
   } catch(e) {
-    st.textContent = '❌ 辨識失敗，請手動填寫（' + e.message + '）';
+    st.style.display = 'block';
+    st.textContent = '❌ 辨識失敗：' + e.message;
     st.style.color  = 'var(--red)';
     btn.textContent = '🤖 AI 自動填入';
     btn.disabled    = false;
+    toast('AI 辨識失敗：' + e.message, 'err');
+    console.error('[analyzeHazardPhoto]', e);
   }
 }
 
