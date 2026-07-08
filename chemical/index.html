@@ -1497,30 +1497,17 @@ function closeDeclModal() {
   document.getElementById('decl-modal').style.display = 'none';
 }
 
-async function pdfToImagesDecl(file) {
+async function extractPdfText(file) {
   const buf = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
   const pages = Math.min(pdf.numPages, 8);
-  const images = [];
+  const parts = [];
   for (let i = 1; i <= pages; i++) {
-    const page   = await pdf.getPage(i);
-    const vp     = page.getViewport({ scale: 1.5 });
-    const canvas = document.createElement('canvas');
-    canvas.width  = vp.width;
-    canvas.height = vp.height;
-    await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
-    images.push(canvas.toDataURL('image/jpeg', 0.85).split(',')[1]);
+    const page    = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    parts.push(content.items.map(it => it.str).join(' '));
   }
-  return images;
-}
-
-async function toBase64Decl(file) {
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result.split(',')[1]);
-    r.onerror = rej;
-    r.readAsDataURL(file);
-  });
+  return parts.join('\n\n').trim();
 }
 
 async function runDeclAI() {
@@ -1537,31 +1524,39 @@ async function runDeclAI() {
   _declAiResult = null;
 
   try {
-    let images = [];
+    let docText = '';
     if (file.type === 'application/pdf') {
-      images = await pdfToImagesDecl(file);
-    } else {
-      images = [await toBase64Decl(file)];
+      docText = await extractPdfText(file);
+    }
+    if (!docText) {
+      result.innerHTML = `<div style="color:#dc2626;margin-top:8px">❌ 無法擷取文字（可能為掃描版 PDF），請手動填寫申報結果。</div>`;
+      return;
     }
 
     const periodLabel = _declModalPeriod === 'jan' ? '上半年（1月）' : '下半年（7月）';
-    const prompt = `這是大豐環保科技全興廠民國${_declModalRoc}年${periodLabel}的公共危險物品申報文件。
+    const prompt = `這是大豐環保科技全興廠民國${_declModalRoc}年${periodLabel}的公共危險物品申報文件內容。
 請判斷：
 1. 申報是否完成？（是/否）
 2. 申報日期（若有）：格式 YYYY-MM-DD
 3. 申報結果摘要（1-2句話）
 
-請以 JSON 格式回覆，欄位：done (boolean), date (string, 無則空字串), summary (string)`;
+請以 JSON 格式回覆，欄位：done (boolean), date (string, 無則空字串), summary (string)
 
-    const r = await fetch(CHEM_AI_WORKER, {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({ text: prompt, images })
+文件內容：
+${docText.slice(0, 3000)}`;
+
+    const resp = await fetch(CHEM_AI_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt })
     });
-    const data = await r.json();
+    const raw = await resp.text();
+    let data = {};
+    try { data = JSON.parse(raw); } catch(e) {
+      throw new Error('API 回傳非 JSON：' + raw.slice(0, 120));
+    }
     const text = data.content || data.choices?.[0]?.message?.content || data.reply || data.result || data.text || '';
 
-    // try parse JSON from response
     let parsed = null;
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
@@ -1579,7 +1574,7 @@ async function runDeclAI() {
         </div>`;
       confirm.style.display = 'block';
     } else {
-      result.innerHTML = `<div style="color:var(--sub);font-size:13px;margin-top:8px">AI 回覆：${text.slice(0,300)}</div>`;
+      result.innerHTML = `<div style="color:var(--sub);font-size:13px;margin-top:8px">AI 回覆：${text.slice(0, 300)}</div>`;
     }
   } catch(e) {
     result.innerHTML = `<div style="color:#dc2626;margin-top:8px">❌ 錯誤：${e.message}</div>`;
