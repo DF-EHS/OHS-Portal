@@ -1,6 +1,105 @@
 {
   "items": [
     {
+      "key": "3d45b4e4fd082d5e",
+      "title": "北市驚傳3樓墜落工安意外！54歲工人當場無心跳送醫不治",
+      "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFBSZkhOcHFjMWVLZnVIbVVwU1Y2RGVpRE1UakdVU3psUXZOVlMyQ1VqVU5ORkNkbGczUkp2VEdCQlBtS0x3djYxUlFxZVlZNXlBdkl5Rg?oc=5",
+      "pubDate": "Wed, 08 Jul 2026 03:38:08 GMT",
+      "pubTs": 1783481888.0,
+      "desc": "北市驚傳3樓墜落工安意外！54歲工人當場無心跳送醫不治&nbsp;&nbsp;品觀點",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "8b1953dbec90ccd7",
+      "title": "金門縣政府職場安全衛生防護教育訓練 霸凌與性騷擾防治研習",
+      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9CQVE2eUhzRDRNR1RlQUcxMUxKTE9sTUZpeGRsN3VQQWFHalYwMkduTFhEM2lJWWhxa09BRi0xZWp2dVZORGFuOFhNV1dyYjJKNmdV?oc=5",
+      "pubDate": "Wed, 08 Jul 2026 03:36:49 GMT",
+      "pubTs": 1783481809.0,
+      "desc": "金門縣政府職場安全衛生防護教育訓練 霸凌與性騷擾防治研習&nbsp;&nbsp;台灣好報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "c6c55bcbbbded1a4",
+      "title": "北市爆工安意外！工人外牆整修4樓墜地 同事聞巨響送醫不治",
+      "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE0ydzctaUFiQ3VfbU16QzlTc3ZNYV9KMjdkMy1BTnllNEd0Tm1lQWZrWXlhbUI5UEM2Tk5zMWhQa0k2aVdZLTBhYTl3bnZ2X0RwTEI4cHZFLUt2RmRuRUVEU3Q0d0htcEtvRFZpZnNTMA?oc=5",
+      "pubDate": "Tue, 07 Jul 2026 11:00:00 GMT",
+      "pubTs": 1783422000.0,
+      "desc": "北市爆工安意外！工人外牆整修4樓墜地 同事聞巨響送醫不治&nbsp;&nbsp;知新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "50643b51919068e5",
+      "title": "北市工安意外奪命！ 工人整修外牆高處墜落- 社會",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9VcmZlU3VoWHZ4WmJsWGZRWjhpNWVwbEczcHZBTGYzOFJlLTVJd2FmU0dIUXJXeHBvckNya0h2ZUtsUms4OUFHTndHR19GUG1yMVhBT3VhbUxOOWplVlFTMl9sMmhpeHB1WXNiRGt3?oc=5",
+      "pubDate": "Tue, 07 Jul 2026 10:42:22 GMT",
+      "pubTs": 1783420942.0,
+      "desc": "北市工安意外奪命！ 工人整修外牆高處墜落- 社會&nbsp;&nbsp;中時新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "9efb918c0d3822e3",
+      "title": "快訊／北市杭州南路工安事故！男工高處墜落 送醫搶救中",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBydDg0OVdrMC1PQUE5TlcxRWtfUEg1RnMtUGd6eVJHNEd1VU5ZcV8xVjVETG5ETllqVjhOVy1LbzlVZmhuZVpPUTRXc1V5THVqREE?oc=5",
+      "pubDate": "Tue, 07 Jul 2026 10:06:00 GMT",
+      "pubTs": 1783418760.0,
+      "desc": "快訊／北市杭州南路工安事故！男工高處墜落 送醫搶救中&nbsp;&nbsp;鏡報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "1e8038e5b51bc553",
+      "title": "快訊／北市工安意外！男工人墜樓倒臥血泊 命危搶救中",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9QZzZMdGxsdGs0VUxvNE9UYURSc0NzR3JaMzFUbV9WWTZEYUdrYzJBbklHVW9ldFdRUUE2eWUtZHNDYUlaMEUyX3ZTQkNXUVVjc3ZGRnhR?oc=5",
+      "pubDate": "Tue, 07 Jul 2026 09:54:00 GMT",
+      "pubTs": 1783418040.0,
+      "desc": "快訊／北市工安意外！男工人墜樓倒臥血泊 命危搶救中&nbsp;&nbsp;東森新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "ffff6a4182d92f11",
+      "title": "北市中正區工安意外 40歲男工人墜落命危",
+      "link": "https://news.google.com/rss/articles/CBMiowJBVV95cUxPQVVwb2pTX1diVEhDUXlHRGhwTzhVbTVMOUtrZk5NcmR0WmRWSGc0TV9LZ0dVaW1TOTYtQ2o0MXRhWS1CdVJfLTRUalJwYXFDdEV3enFkOUV2WGt4TTZYRTNDTkNaN2V0V0dlZWtVcm1Bei1NSlpiME0zYkVPZXVpbnhZeDRvS1hQbFRHUF93N1dmbTQ0UHFvR3g2VDAxU2Y2cXNJQmNPck4xUUE1Y0ZwVG1jNTAyaDFGSjBPRF81RENVSWZ0T0VqZmlFNlRNYmZ4SFhvOUZmVTN4YldzZHNxaG5zQXNFWkh2a0p4NG55clRJX0drTS1DQUhJUjViVjJfdmgtLVJRaUsxZkpyNXd1Q1BqbmZIV05uUWdLTHlocllSOG8?oc=5",
+      "pubDate": "Tue, 07 Jul 2026 09:49:28 GMT",
+      "pubTs": 1783417768.0,
+      "desc": "北市中正區工安意外 40歲男工人墜落命危&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "2f901be1a8e8ac7b",
+      "title": "快訊/北市工安意外！男子墜落地面無呼吸心跳",
+      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9leWIyZDdYOXhfSzM5V1B6aFlwUDNacWFrQi1FV2N1QW8yWWs5T2xHcGJNV1BVVW9JRzk0Vk9VNVBhbUlkSUsyWjlaX0xwWHE0RHhV?oc=5",
+      "pubDate": "Tue, 07 Jul 2026 09:45:49 GMT",
+      "pubTs": 1783417549.0,
+      "desc": "快訊/北市工安意外！男子墜落地面無呼吸心跳&nbsp;&nbsp;中天新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "554397988b9acafa",
+      "title": "快訊／無呼吸心跳！杭州南路驚傳工安意外 工人墜樓命危送醫",
+      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE95dzFBbU9DWWxKS2c4aWVwUHJTYm9mUERkWWI0OVc5VnZPOGlHcm42V0wxeEU3QXhKVm82WU5CcWlIM0xSOVZsQdIBTEFVX3lxTE9UNTFXd014bm9LMnJJUjRfY0lUV01fS2VPbTJXbHB6NGZiM0dIZlRmZEVrUGhOdHFIUDA4R1RVQ2ljMHZ5U0Y0RTB1TUg?oc=5",
+      "pubDate": "Tue, 07 Jul 2026 09:25:00 GMT",
+      "pubTs": 1783416300.0,
+      "desc": "快訊／無呼吸心跳！杭州南路驚傳工安意外 工人墜樓命危送醫&nbsp;&nbsp;三立新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "b8458c307c7d7f72",
       "title": "個股：世紀風電(2072)承攬商7/5高空作業發生工安事故，相關製造作業已暫停",
       "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNaXZydHd5M3lNSFd2WkgwMTNVREc5YlB3ZmJjTW9uVGdvMTVnU2FKd2FERkN1c1R6OTB5bHRoVXRrSkowYWVaZ1Vfdk1UUlRpZmpZR2wxZDFyODU3a2FRVi1ISkR3SlNocmViODFLRjFkTVVVT1gtUk90VktiX2JUYjh1Q1Y3NUls?oc=5",
@@ -89,6 +188,17 @@
       "badge": "red"
     },
     {
+      "key": "ed703fa58040e3f4",
+      "title": "[職安法13年最大革新首建職場霸凌防治法制]",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1ueWJoYUFzakxGZkhack0ySlV4Uno3MDZuaFlDd2tQd2VwUUw2dFhsRExhOG03OERJOHg3dTZMMG9JdHJZR0RqajRMdENBeEhudVHSAVJBVV95cUxNbnliaGFBc2pMRmZIWnJNMkpVeFJ6NzA2bmhZQ3drUHdlcFFMNnRYbERMYThtNzhESTh4N3U2TDBvSXRyWUdEamo0THRDQXhIbnVR?oc=5",
+      "pubDate": "Mon, 06 Jul 2026 02:39:00 GMT",
+      "pubTs": 1783305540.0,
+      "desc": "[職安法13年最大革新首建職場霸凌防治法制]&nbsp;&nbsp;1111人力銀行",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "71f0332ed65f7260",
       "title": "三峽捷運三鶯線傳工安意外 施工水管墜落砸毀機車",
       "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE0xRkx4czBuR1pCX1l4eFhrOEw5U2ltcm1IR0xENi1xbXBjeUNFanlDTEhPdGE4TTVONEhhVXVWRWRQZWs4UWJzblp3cGF6TFdzX1NZRFQtXy1NNjBTWlZqdWFEbExValVOLWpPcldJSnVuWENsUGszT2pXd9IBVkFVX3lxTE5KRkRkT0JYckJRV3pJdS01c0tLcHBaMWR5a1BjMlNQTlo2ak5WNVk4NWliRGRFLU83SE1mcnhmY2JOYWc1OVMxZWdIX0ttZ0RnU3dVY2lB?oc=5",
@@ -153,6 +263,17 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
+    },
+    {
+      "key": "eddf50abba1c516f",
+      "title": "勞動部重大修法新制！中高齡勞工注意「退休金領錢規定不同了」， 最新變革一文看",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1xZlFuMV9fRnJMZXVMLU5xWG5IWUFTTjV5UWJ5amthLW5ybEd2aXAzaWs1RkRIT2pfSVQ3Mi1uZzIyMzlidUdKa0dIU2pGcHNs?oc=5",
+      "pubDate": "Fri, 03 Jul 2026 03:40:13 GMT",
+      "pubTs": 1783050013.0,
+      "desc": "勞動部重大修法新制！中高齡勞工注意「退休金領錢規定不同了」， 最新變革一文看&nbsp;&nbsp;風傳媒",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
     },
     {
       "key": "6a7ce6f09f96b0ef",
@@ -578,7 +699,7 @@
       "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1ueS1XTjNkUGRhRVdiS1U5Qy00aldXLXhITmdUN3NfdjNuUkdPZWIwSGpyRk1YdERIZURjTkkyb1VlUG5UeUNVTXhGendNRG5L0gFWQVVfeXFMTkNsXzNMVk1ndE5Pc1R5NFFNOFJweTJzZDF5NHpicU5YS09ORlNlUlRDWUMyU2l3YWNDaFFkclFNVUp5Vm9vMl9yTTNNTXVweGthRlpvVEE?oc=5",
       "pubDate": "Tue, 30 Jun 2026 09:01:59 GMT",
       "pubTs": 1782810119.0,
-      "desc": "標案又惹議！藍委爆兒少性剝削前科犯連年得標 勞動部：法規未限制&nbsp;&nbsp;UDN",
+      "desc": "標案又惹議！藍委爆兒少性剝削前科犯連年得標 勞動部：法規未限制&nbsp;&nbsp;聯合新聞網",
       "source_id": "gnews_law",
       "source_name": "法規更新",
       "badge": "teal"
@@ -1184,9 +1305,9 @@
       "pubDate": "Wed, 24 Jun 2026 07:00:00 GMT",
       "pubTs": 1782284400.0,
       "desc": "2026職場霸凌防治專章上路定義了什麼？誰來把關？人資、法務、職安、職醫／職護各該扮演什麼角色？&nbsp;&nbsp;CSR@天下",
-      "source_id": "gnews_law",
-      "source_name": "法規更新",
-      "badge": "teal"
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "7e4646b817565c1e",
@@ -1242,160 +1363,6 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
-    },
-    {
-      "key": "4fefcb3721c4f3f3",
-      "title": "被主管冷落算職場霸凌嗎？7月新制5大認定要件一次看－中央社",
-      "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9JSFN4VG5sSkg5ak5wZ0MyUUFZWjd4RmZQdmNKRmxTbC1OOVRjenU2ZHZBNWhkOU5HYTNhZ2dJYjhpVk54d1dxcm5EYTRERmJOeXNPa1l0M1ZZb3F3VFRrWU53?oc=5",
-      "pubDate": "Wed, 24 Jun 2026 03:38:59 GMT",
-      "pubTs": 1782272339.0,
-      "desc": "被主管冷落算職場霸凌嗎？7月新制5大認定要件一次看－中央社&nbsp;&nbsp;商周",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "2837d178e0c7e7b8",
-      "title": "主管下班傳LINE就算職場霸凌？勞動部揭「判斷標準」、不必然違規",
-      "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNSjNteGVTd3NJcjVuNWxHcVNTbWpHZ1Z5ZWtzZFRCSUxrTWEyRHFQczZ0eEpDd1N4Z2kwLW9ZaTVCQXNyd0U0Q1JKSnUyMHNNaFk3RDV2dDQ4QkJIWVB6cTJrZGk5VmZiSmhJdTQ1TXotbTFRcU5SN3hFd2hodjZGVWo3c0ZxM082UXc?oc=5",
-      "pubDate": "Wed, 24 Jun 2026 02:43:04 GMT",
-      "pubTs": 1782268984.0,
-      "desc": "主管下班傳LINE就算職場霸凌？勞動部揭「判斷標準」、不必然違規&nbsp;&nbsp;104職場力",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "80e1f6dfc0dc752f",
-      "title": "臺南市勞工局攜手日揚科技 強化安衛家族職場安全與健康意識",
-      "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9seFB4Z1k4UGh3VFpOUkktRkU2UWJPYWI2YVhBRkFFTG1kWEpVTmZrZXQxd0xJNnJvU0NmcnRTTW5ock5vQXp4ZUN3R3czVnpDN3dTdWpFcXpoaVNiNUZmNHVR?oc=5",
-      "pubDate": "Wed, 24 Jun 2026 02:20:20 GMT",
-      "pubTs": 1782267620.0,
-      "desc": "臺南市勞工局攜手日揚科技 強化安衛家族職場安全與健康意識&nbsp;&nbsp;g4.village.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "8c8ff7bc99493f02",
-      "title": "職場霸凌防治新法7/1上路 勞動部公布2子法",
-      "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFBraUpXRlpRajRoaFZDSjdyTWRxeHMzMXJ2ZFZkbS1PWk5ncEtqRXVRX0hlSGo4R0MzNW9IbExIVkdlYVF1M0NnRzRqaF9Eb2hiNG1lS3pUbHM?oc=5",
-      "pubDate": "Wed, 24 Jun 2026 01:52:00 GMT",
-      "pubTs": 1782265920.0,
-      "desc": "職場霸凌防治新法7/1上路 勞動部公布2子法&nbsp;&nbsp;梅花新聞網",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "6d1fd7c3e3980d1f",
-      "title": "7月上路…職場霸凌認定 需符5大要件",
-      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBoMURjamw1Q25fU0F0c1kyaVVYdlQ1NGZheks2cVQ3a3RwX3l5cnAxdnFNNE9pcjh4Y0c3aHd5MkQtY195b0J3Uy1jWnlJMzhnalBON0Q2LUlqZnkxVGJUR0V2bDUwdnBwSE5r0gFwQVVfeXFMT3E4NndNSllYUVc3X1lUUXdncDRUZS1MaVFQQldnbDVubEQwTjZZRzJlVGRfQVA5a0ZMc0FWWlJBbmJrcTlzY0Y2M201OE9jOTJ4QzRvclNBcEZtVkV5dDZLd0FsNzFPdjdPUWJPaTA0Rg?oc=5",
-      "pubDate": "Wed, 24 Jun 2026 01:30:00 GMT",
-      "pubTs": 1782264600.0,
-      "desc": "7月上路…職場霸凌認定 需符5大要件&nbsp;&nbsp;好房網News",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "c200b8be23fdbb7c",
-      "title": "職場霸凌新制下月上路 須符合5要件",
-      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE9RVFNGS0xEQWNhNG8zU3pSTnBDSnNwSW9IYXlBZHQwSzZfOVc2TUV1WkRlTHRWbWd3TVBWUEJoSGZyTDZ6RkMtdTdNZ1ZFd1FPOVV0UFdYTFpkN2vSAWBBVV95cUxQVjIwaXJNNDczSEh1aUplWXRnTGxtYkVUWjhob3EzZzZKUk9IZWljSVplcnBVOEpMTm1MSjNDNHRWOVl4WnpCSDNtSjVXTXlYUXBaaFBZY28zV2pfek0tM2s?oc=5",
-      "pubDate": "Tue, 23 Jun 2026 21:30:00 GMT",
-      "pubTs": 1782250200.0,
-      "desc": "職場霸凌新制下月上路 須符合5要件&nbsp;&nbsp;自由時報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "ed71980c1fac15e6",
-      "title": "配合職安法職場霸凌防治新制將上路 勞動部發布子法及配套措施 協助企業落實法遵、打造健康友善職場",
-      "link": "https://www.osha.gov.tw/48110/48417/48419/206967/",
-      "pubDate": "Tue, 23 Jun 2026 17:48:09 GMT",
-      "pubTs": 1782236889.0,
-      "desc": "配合《職業安全衛生法》職場霸凌防治新制將於115年7月1日正式施行，勞動部於6月23日公告《職場霸凌防治措施準則》及《地方主管機關受理最高負責人職場霸凌事件申訴處理辦法》兩項子法。新訂子法明確規範職場霸凌之認定原則、雇主應採行之防治措施，以及最高負責人涉有職場霸凌行為時，由地方主管機關受理申訴及調查…",
-      "source_id": "gnews_law",
-      "source_name": "法規更新",
-      "badge": "teal"
-    },
-    {
-      "key": "3a67538de8e438ff",
-      "title": "霸凌防治子法公布 勞團：救濟程序未完善",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1qc3JCTGttNFZCTk9xRzMxMHZ5N0ozanFobDRUSUtSeHl2WURvNEVrcGM5VjNNUWE3WGRPcjVacUZoM29Jd3RLY1JMdmV0cFdq0gFWQVVfeXFMT09XcTR0RG5kNzhvSzFFS3BnanBzSDRJQldnaFBWbW15cG03ZUxfMlFSUnNPME9ZaGw5eDhpM3NIWF9KaHBtaUc2MWF6VmVBaGNMZ1FOVlE?oc=5",
-      "pubDate": "Tue, 23 Jun 2026 16:26:47 GMT",
-      "pubTs": 1782232007.0,
-      "desc": "霸凌防治子法公布 勞團：救濟程序未完善&nbsp;&nbsp;UDN",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "50e04150952c235c",
-      "title": "職場霸凌防治專章7月將上路 勞動部推出指導手冊",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBoQ2tuTmZYVzE4UWFpLVNWcVFlQzN3RzdYR1RCNGdrMEZSR0xqQ2F2UVpIbEM3UlVvM2piR2ZsdDl5YlhTWnhvUE1OYU41R2JkUFE?oc=5",
-      "pubDate": "Tue, 23 Jun 2026 10:45:12 GMT",
-      "pubTs": 1782211512.0,
-      "desc": "職場霸凌防治專章7月將上路 勞動部推出指導手冊&nbsp;&nbsp;放言Fount Media",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "3f375f7bdc8d66d7",
-      "title": "新北泰山社宅工地意外國家住都中心：檢討管理機制| 政治",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE0zY3FHNGlDZkRGQWZkM0dnckFWS2RfaHFRQlhIRW1hcERrNU1za2Vrcy1VS0dXNXRuZWJDWkdDbWRFMnRuZ3RCVzhLeEc3cWs0SG0zRHV2c2pSeGhrcVcw?oc=5",
-      "pubDate": "Tue, 23 Jun 2026 07:00:00 GMT",
-      "pubTs": 1782198000.0,
-      "desc": "新北泰山社宅工地意外國家住都中心：檢討管理機制| 政治&nbsp;&nbsp;中央社 CNA",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "36f80d67f8305420",
-      "title": "配合職安法職場霸凌防治新制將上路 勞動部發布子法及配套措施協助企業落實法遵、打造健康友善職場",
-      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1rR0NuVXBUNEJFalVMdUNhRl9JeG9KeTZtRk5PR1VLTWRhNl9xYzgxb2ZmOHQ0alVyYWZmOTJMRlpZLUNSSlVnVURtM1VDekVKQVNDdGoydw?oc=5",
-      "pubDate": "Tue, 23 Jun 2026 07:00:00 GMT",
-      "pubTs": 1782198000.0,
-      "desc": "配合職安法職場霸凌防治新制將上路 勞動部發布子法及配套措施協助企業落實法遵、打造健康友善職場&nbsp;&nbsp;mol.gov.tw",
-      "source_id": "gnews_law",
-      "source_name": "法規更新",
-      "badge": "teal"
-    },
-    {
-      "key": "cd579f71ac05c18e",
-      "title": "配合職安法職場霸凌防治新制將上路 勞動部發布子法及配套措施協助企業落實法遵、打造健康友善職場",
-      "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1nZFMzNFRvb0FYbzVSeWZmY3JCbjdDNjR3djFpbm5BZmJndWtrcE0xcDhGLXpkTHZQV0twVEhFZnNqUFBmdkJvWG4tWWt2bWZaVkF4Y0prRHJ4SGZI?oc=5",
-      "pubDate": "Tue, 23 Jun 2026 06:38:12 GMT",
-      "pubTs": 1782196692.0,
-      "desc": "配合職安法職場霸凌防治新制將上路 勞動部發布子法及配套措施協助企業落實法遵、打造健康友善職場&nbsp;&nbsp;mol.gov.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "7dcc33db2410a834",
-      "title": "泰山社宅工地發生工安意外 住都中心：全力協助家屬",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9id1BYRDZFaVl1VXFxZEVqR1V3MFhUYUZaWUpicTVQYzhUYUNzQjBpQWpNNUNTVWF1TVFHTE1ZckRkMDZxcFV2NnRJQ1hib2t2bkdFSVNR0gFWQVVfeXFMT2J3UFhENkVpWXVVcXFkRWpHVXcwWFRhRlpZSmJxNVBjOFRhQ3NCMGlBak01Q1NVYXVNUUdMTVlyRGQwNnFwVXY2dElDWGJva3ZuR0VJU1E?oc=5",
-      "pubDate": "Tue, 23 Jun 2026 06:02:56 GMT",
-      "pubTs": 1782194576.0,
-      "desc": "泰山社宅工地發生工安意外 住都中心：全力協助家屬&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "196d803a8e264401",
-      "title": "Line訊息也算！職場霸凌新法7/1上路 最高開罰百萬元還會公布姓名",
-      "link": "https://news.google.com/rss/articles/CBMinANBVV95cUxNWml1SzBrN21KMWVHT2VWUk9VdFFMdDZwNko1Ny1KTXpkbXFweGdqZ09saVlHSzh2OVVxSnEteUdaWWZzN3c5cWJxcmptbG15RzhZcFR0TTBXbDVNMURkSWx4R1dIeTl3TnhWbmJzRURmc1FqeFlXS21SWEtiYW1DYlpkNFZfZ2hreVJid2FDTHpDUFVwRFhwa3RkUko2ZzRTZWNOLVZFODI2RTdhaThOcjJ6em1iazlDZUZOZV84NFhjaTZEZ0dDVnhjRlFPSmtZQVVzNldtbTY1aXE2dHZCbWk0eWJjZEZSRjNGUXl4Z25XSVVwZG9vVTBMMWVsY1pyVURSSjBwUkc1T240UEo3VnA2T1FTVmU5eGY5MUVzVEl4X0NaTm9RNGlSQkVfLUc3eGtGTkhTa1JCSDVKSzJTeDRrWmhGdURpN2djSlRXeDZZdVBVMTkxNmhQUnZ3RU1IZmVCYk52T21SYXVzOGNvemk5WHg2YzhVanZxY29wMXplRnplNllOMWVvSDQ2dE8wUVItN0VCaEJZZ3Zi?oc=5",
-      "pubDate": "Tue, 23 Jun 2026 05:47:57 GMT",
-      "pubTs": 1782193677.0,
-      "desc": "Line訊息也算！職場霸凌新法7/1上路 最高開罰百萬元還會公布姓名&nbsp;&nbsp;Yahoo股市",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
     },
     {
       "key": "55b7190306be6f43",
@@ -1552,5 +1519,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-07-07T04:40:24.023139+00:00"
+  "lastUpdated": "2026-07-08T04:00:20.943414+00:00"
 }
