@@ -1514,16 +1514,17 @@ async function extractPdfText(file) {
 }
 
 async function runDeclAI() {
-  const file    = document.getElementById('dm-file').files[0];
   const spinner = document.getElementById('dm-spinner');
   const result  = document.getElementById('dm-result');
   const confirm = document.getElementById('dm-confirm-btn');
+  const fileEl  = document.getElementById('dm-file');
+  const file    = fileEl && fileEl.files[0];
 
   if (!file) { alert('請先選擇申報文件（PDF 或圖片）'); return; }
 
-  result.innerHTML = '';
-  confirm.style.display = 'none';
-  spinner.style.display = 'block';
+  if (result)  result.innerHTML = '';
+  if (confirm) confirm.style.display = 'none';
+  if (spinner) spinner.style.display = 'block';
   _declAiResult = null;
 
   try {
@@ -1558,10 +1559,10 @@ ${docText.slice(0, 3000)}`;
     try { data = JSON.parse(raw); } catch(e) {
       throw new Error('API 回傳非 JSON：' + raw.slice(0, 120));
     }
-    const text = data.content || data.choices?.[0]?.message?.content || data.reply || data.result || data.text || '';
+    const aiText = data.content || data.choices?.[0]?.message?.content || data.reply || data.result || data.text || '';
 
     let parsed = null;
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    const jsonMatch = aiText.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
       try { parsed = JSON.parse(jsonMatch[0]); } catch(e) {}
     }
@@ -1577,12 +1578,14 @@ ${docText.slice(0, 3000)}`;
         </div>`;
       confirm.style.display = 'block';
     } else {
-      result.innerHTML = `<div style="color:var(--sub);font-size:13px;margin-top:8px">AI 回覆：${text.slice(0, 300)}</div>`;
+      result.innerHTML = `<div style="color:var(--sub);font-size:13px;margin-top:8px">AI 回覆：${aiText.slice(0, 300)}</div>`;
     }
   } catch(e) {
-    result.innerHTML = `<div style="color:#dc2626;margin-top:8px">❌ 錯誤：${e.message}</div>`;
+    const msg = `❌ 錯誤：${e.message}`;
+    if (result) result.innerHTML = `<div style="color:#dc2626;margin-top:8px">${msg}</div>`;
+    else alert(msg);
   } finally {
-    spinner.style.display = 'none';
+    if (spinner) spinner.style.display = 'none';
   }
 }
 
