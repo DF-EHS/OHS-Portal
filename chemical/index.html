@@ -1553,14 +1553,13 @@ async function runDeclAI() {
 
 請以 JSON 格式回覆，欄位：done (boolean), date (string, 無則空字串), summary (string)`;
 
-    const body = { text: prompt, images };
-    const r = await fetch(CHEM_AI_WORKER + '/chat', {
+    const r = await fetch(CHEM_AI_WORKER, {
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({ messages:[{ role:'user', content: prompt }], images })
+      body: JSON.stringify({ text: prompt, images })
     });
     const data = await r.json();
-    const text = data.content || data.reply || data.result || '';
+    const text = data.content || data.choices?.[0]?.message?.content || data.reply || data.result || data.text || '';
 
     // try parse JSON from response
     let parsed = null;
