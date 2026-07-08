@@ -1498,8 +1498,11 @@ function closeDeclModal() {
 }
 
 async function extractPdfText(file) {
-  const buf = await file.arrayBuffer();
-  const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+  if (typeof pdfjsLib === 'undefined') throw new Error('PDF.js 函式庫未載入，請重新整理頁面');
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const buf  = await file.arrayBuffer();
+  const pdf  = await pdfjsLib.getDocument({ data: buf }).promise;
   const pages = Math.min(pdf.numPages, 8);
   const parts = [];
   for (let i = 1; i <= pages; i++) {
@@ -1511,16 +1514,16 @@ async function extractPdfText(file) {
 }
 
 async function runDeclAI() {
-  const file = document.getElementById('dm-file').files[0];
-  if (!file) { alert('請先選擇申報文件（PDF 或圖片）'); return; }
-
+  const file    = document.getElementById('dm-file').files[0];
   const spinner = document.getElementById('dm-spinner');
   const result  = document.getElementById('dm-result');
   const confirm = document.getElementById('dm-confirm-btn');
 
-  spinner.style.display = 'block';
+  if (!file) { alert('請先選擇申報文件（PDF 或圖片）'); return; }
+
   result.innerHTML = '';
   confirm.style.display = 'none';
+  spinner.style.display = 'block';
   _declAiResult = null;
 
   try {
