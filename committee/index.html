@@ -117,6 +117,32 @@ main { flex: 1; max-width: 980px; margin: 0 auto; width: 100%; padding: 36px 24p
   font-size: 12px; color: var(--sub); font-style: italic;
 }
 
+/* ── Builder entry ── */
+.builder-entry {
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.builder-entry-icon { font-size: 40px; }
+.builder-entry-text { flex: 1; min-width: 180px; }
+.builder-entry-title { font-size: 16px; font-weight: 700; color: var(--navy); }
+.builder-entry-desc  { font-size: 13px; color: var(--sub); margin-top: 4px; }
+.builder-entry-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px;
+  background: var(--navy); color: #fff;
+  border-radius: 8px; text-decoration: none;
+  font-weight: 700; font-size: 14px; flex-shrink: 0;
+  transition: background .15s;
+}
+.builder-entry-btn:hover { background: #153a57; }
+
 /* ── Footer ── */
 footer {
   text-align: center; padding: 18px 24px;
@@ -166,6 +192,19 @@ body.dark .btn-members   { background: #2e1065; color: #d8b4fe; }
 </header>
 
 <main>
+
+  <!-- ── 報告生成器入口 ── -->
+  <div class="year-block">
+    <div class="section-label">工具</div>
+    <div class="builder-entry">
+      <div class="builder-entry-icon">📋</div>
+      <div class="builder-entry-text">
+        <div class="builder-entry-title">委員會報告生成器</div>
+        <div class="builder-entry-desc">平時逐節投料，季末一鍵 AI 生成 HTML 報告並自動發布至 GitHub Pages</div>
+      </div>
+      <a href="builder/" class="builder-entry-btn">🚀 開啟生成器</a>
+    </div>
+  </div>
 
   <!-- ── 2026 年 ── -->
   <div class="year-block">

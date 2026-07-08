@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>委員會報告生成器 | 大豐環保科技</title>
+<style>
+:root{
+  --primary:#1e4a6e;--primary-d:#153a57;--accent:#f59840;
+  --bg:#f1f5f9;--card:#fff;--border:#e2e8f0;
+  --text:#1e293b;--sub:#64748b;
+  --green:#16a34a;--yellow:#f59e0b;--red:#dc2626;--blue:#2563eb;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+
+/* ── header ── */
+header{
+  background:linear-gradient(135deg,#0f2d4e 0%,#1e4a6e 60%,#2a6496 100%);
+  color:#fff;padding:10px 20px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  position:sticky;top:0;z-index:150;
+  box-shadow:0 2px 16px rgba(0,0,0,.3);
+}
+header h1{font-size:16px;font-weight:700;}
+.hdr-badge{font-size:11px;background:rgba(255,255,255,.15);padding:2px 8px;border-radius:10px;color:rgba(255,255,255,.85);flex-shrink:0;}
+.hdr-select{
+  border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);
+  color:#fff;padding:5px 10px;border-radius:6px;font-size:13px;
+  font-family:inherit;cursor:pointer;outline:none;flex-shrink:0;
+}
+.hdr-select option{background:#1e4a6e;color:#fff;}
+.hdr-spacer{flex:1;}
+.hdr-btn{
+  padding:5px 13px;border-radius:6px;border:1px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.1);color:#fff;font-size:12px;cursor:pointer;
+  transition:background .15s;font-family:inherit;flex-shrink:0;
+}
+.hdr-btn:hover{background:rgba(255,255,255,.22);}
+.hdr-btn.accent{background:var(--accent);border-color:var(--accent);}
+.hdr-btn.accent:hover{background:#e08530;}
+
+/* ── config banner ── */
+.config-banner{
+  background:#fff3cd;border:1px solid #ffc107;border-radius:8px;
+  padding:11px 16px;margin:14px 20px 0;font-size:13px;line-height:1.6;
+}
+.config-banner strong{color:#856404;}
+.config-banner code{background:#f8d7a0;padding:1px 6px;border-radius:3px;font-size:12px;}
+
+/* ── progress panel ── */
+.progress-panel{
+  background:var(--card);border-bottom:1px solid var(--border);
+  padding:10px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.progress-dots{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.dot{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;cursor:pointer;
+  transition:transform .15s;border:2px solid transparent;
+  user-select:none;
+}
+.dot:hover{transform:scale(1.12);}
+.dot .dot-lbl{font-size:9px;font-weight:600;line-height:1;}
+.dot.st0{background:#e2e8f0;color:#94a3b8;border-color:#cbd5e1;}
+.dot.st1{background:#fef3c7;color:#92400e;border-color:#f59e0b;}
+.dot.st2{background:#dcfce7;color:#14532d;border-color:#16a34a;}
+.dot.dot-active{outline:3px solid var(--primary);outline-offset:2px;}
+.progress-stat{font-size:12px;color:var(--sub);}
+.progress-stat strong{color:var(--green);font-size:14px;}
+.fill-hint{font-size:11px;color:var(--sub);margin-left:auto;font-style:italic;}
+
+/* ── builder layout ── */
+.builder-layout{display:grid;grid-template-columns:216px 1fr;}
+@media(max-width:768px){.builder-layout{grid-template-columns:1fr;}}
+
+/* ── section nav ── */
+.section-nav{
+  background:var(--card);border-right:1px solid var(--border);
+  position:sticky;top:47px;height:calc(100vh - 47px - 52px);
+  overflow-y:auto;
+}
+.sec-item{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 12px;cursor:pointer;
+  border-left:3px solid transparent;
+  transition:background .12s;font-size:13px;color:var(--text);
+}
+.sec-item:hover{background:#f8fafc;}
+.sec-item.active{background:#eff6ff;border-left-color:var(--primary);font-weight:600;}
+.sec-dot{
+  width:18px;height:18px;border-radius:50%;
+  font-size:9px;font-weight:700;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.sec-dot.st0{background:#e2e8f0;color:#94a3b8;}
+.sec-dot.st1{background:#fef3c7;color:#92400e;}
+.sec-dot.st2{background:#dcfce7;color:#14532d;}
+.sec-icon{font-size:15px;flex-shrink:0;}
+.sec-name{flex:1;line-height:1.3;font-size:12px;}
+.auto-tag{font-size:9px;color:var(--blue);background:#eff6ff;padding:1px 4px;border-radius:3px;flex-shrink:0;}
+
+/* ── section content ── */
+.section-content{padding:18px 20px;overflow-y:auto;max-width:880px;}
+
+/* ── section header ── */
+.sec-hd{margin-bottom:14px;}
+.sec-title{font-size:17px;font-weight:700;color:var(--primary);display:flex;align-items:center;gap:8px;}
+.sec-num{
+  background:var(--primary);color:#fff;width:26px;height:26px;
+  border-radius:50%;font-size:12px;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.sec-subtitle{font-size:12px;color:var(--sub);margin-top:5px;margin-left:34px;line-height:1.5;}
+
+/* ── buttons ── */
+.btn{
+  padding:6px 13px;border-radius:6px;border:1px solid var(--border);
+  background:var(--card);color:var(--text);font-size:13px;cursor:pointer;
+  font-family:inherit;transition:all .15s;display:inline-flex;align-items:center;gap:5px;
+  white-space:nowrap;
+}
+.btn:hover{background:#f1f5f9;border-color:#94a3b8;}
+.btn.primary{background:var(--primary);color:#fff;border-color:var(--primary);}
+.btn.primary:hover{background:var(--primary-d);}
+.btn.success{background:var(--green);color:#fff;border-color:var(--green);}
+.btn.success:hover{background:#15803d;}
+.btn.warning{background:var(--yellow);color:#fff;border-color:var(--yellow);}
+.btn.warning:hover{background:#d97706;}
+.btn.danger{background:var(--red);color:#fff;border-color:var(--red);}
+.btn.danger:hover{background:#b91c1c;}
+.btn.sm{padding:3px 9px;font-size:11px;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+
+/* ── cards ── */
+.card{background:var(--card);border-radius:8px;border:1px solid var(--border);margin-bottom:12px;}
+.card-hd{
+  padding:10px 14px;border-bottom:1px solid var(--border);
+  font-weight:700;font-size:13px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.card-body{padding:14px;}
+
+/* ── tables ── */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;}
+.data-table th{background:#f8fafc;padding:7px 10px;text-align:left;border:1px solid var(--border);font-weight:600;white-space:nowrap;}
+.data-table td{padding:6px 10px;border:1px solid var(--border);vertical-align:top;}
+.data-table tr:hover td{background:#fafcff;}
+.data-table .actions{display:flex;gap:4px;}
+.empty-row td{text-align:center;color:var(--sub);padding:18px;font-size:12px;}
+
+/* ── auto panel ── */
+.auto-panel{
+  background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;
+  padding:12px 16px;margin-bottom:14px;
+}
+.auto-panel .fetch-hd{font-weight:700;font-size:13px;color:#1e40af;margin-bottom:8px;}
+.fetch-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px;}
+.fetch-info{font-size:12px;color:#3b82f6;}
+.fetch-warn{font-size:12px;color:#d97706;background:#fef3c7;padding:4px 8px;border-radius:4px;margin-top:6px;}
+.confirmed-badge{font-size:12px;color:var(--green);font-weight:700;}
+
+/* ── policy text ── */
+.policy-text{
+  background:#f8fafc;border:1px solid var(--border);border-radius:8px;
+  padding:16px;line-height:2;font-size:13px;color:var(--text);
+}
+.policy-text p{margin-bottom:8px;}
+.policy-text p:last-child{margin-bottom:0;}
+
+/* ── status chip ── */
+.status-row{
+  display:flex;align-items:center;gap:10px;
+  margin-top:10px;padding-top:10px;border-top:1px solid var(--border);
+}
+.status-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;padding:3px 10px;border-radius:12px;font-weight:700;
+  cursor:pointer;border:none;font-family:inherit;transition:opacity .15s;
+}
+.status-chip:hover{opacity:.8;}
+.status-chip.st0{background:#f1f5f9;color:#64748b;}
+.status-chip.st1{background:#fef3c7;color:#92400e;}
+.status-chip.st2{background:#dcfce7;color:#14532d;}
+
+/* ── badge ── */
+.badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:9px;font-size:11px;font-weight:700;}
+.badge-ok{background:#dcfce7;color:#14532d;}
+.badge-ng{background:#fee2e2;color:#991b1b;}
+.badge-info{background:#dbeafe;color:#1e40af;}
+.badge-warn{background:#fef3c7;color:#92400e;}
+
+/* ── spinner ── */
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── modal ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.5);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.modal-box{
+  background:#fff;border-radius:12px;width:100%;max-width:560px;
+  max-height:90vh;overflow-y:auto;
+  box-shadow:0 8px 40px rgba(0,0,0,.25);
+}
+.modal-hd{
+  padding:13px 18px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  font-weight:700;font-size:15px;position:sticky;top:0;background:#fff;z-index:1;
+}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--sub);padding:2px;line-height:1;}
+.modal-close:hover{color:var(--text);}
+.modal-body{padding:16px;}
+.form-row{margin-bottom:12px;}
+.form-row label{display:block;font-size:12px;font-weight:700;color:var(--sub);margin-bottom:4px;}
+.form-row input,.form-row select,.form-row textarea{
+  width:100%;border:1px solid var(--border);border-radius:6px;
+  padding:7px 10px;font-size:13px;font-family:inherit;outline:none;
+  transition:border-color .15s;
+}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--primary);}
+.form-row textarea{resize:vertical;min-height:70px;}
+.modal-foot{
+  padding:11px 18px;border-top:1px solid var(--border);
+  display:flex;gap:8px;justify-content:flex-end;
+  position:sticky;bottom:0;background:#fff;z-index:1;
+}
+
+/* ── bottom bar ── */
+.bottom-bar{
+  background:var(--card);border-top:1px solid var(--border);
+  padding:10px 20px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  position:sticky;bottom:0;z-index:140;
+}
+.save-status{font-size:11px;color:var(--sub);margin-left:auto;}
+
+/* ── KPI inputs ── */
+.kpi-input{
+  border:1px solid var(--border);border-radius:4px;
+  padding:4px 8px;font-size:12px;width:100%;font-family:inherit;outline:none;
+}
+.kpi-input:focus{border-color:var(--primary);}
+.kpi-sel{
+  border:1px solid var(--border);border-radius:4px;padding:4px 6px;
+  font-size:12px;font-family:inherit;cursor:pointer;outline:none;width:100%;
+}
+
+/* ── gen modal ── */
+.gen-info-box{
+  border-radius:6px;padding:12px;margin-bottom:10px;font-size:13px;line-height:1.6;
+}
+.gen-info-box code{background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;font-size:12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📋 委員會報告生成器</h1>
+  <span class="hdr-badge">12節辦理事項</span>
+  <div class="hdr-spacer"></div>
+  <select class="hdr-select" id="quarterSel" onchange="switchQuarter(this.value)">
+    <option value="2026Q1">2026年 Q1（115Q1）</option>
+    <option value="2026Q2">2026年 Q2（115Q2）</option>
+    <option value="2026Q3" selected>2026年 Q3（115Q3）</option>
+    <option value="2026Q4">2026年 Q4（115Q4）</option>
+    <option value="2027Q1">2027年 Q1（116Q1）</option>
+    <option value="2027Q2">2027年 Q2（116Q2）</option>
+    <option value="2027Q3">2027年 Q3（116Q3）</option>
+    <option value="2027Q4">2027年 Q4（116Q4）</option>
+  </select>
+  <button class="hdr-btn" id="syncBtn" onclick="syncToGAS()">☁️ 同步 GAS</button>
+  <button class="hdr-btn accent" onclick="openGenerateModal()">🚀 生成報告</button>
+</header>
+
+<div id="configBanner" class="config-banner" style="display:none">
+  <strong>⚙️ 設定提醒：</strong>尚未設定 Builder GAS URL。請先部署
+  <code>committee/builder/apps-script.gs</code>，取得部署網址後將本頁 JS 最上方的
+  <code>BUILDER_GAS</code> 常數改為正確網址，否則資料僅儲存於本機瀏覽器。
+</div>
+
+<div class="progress-panel">
+  <div class="progress-dots" id="progressDots"></div>
+  <span class="progress-stat" id="progressStat"></span>
+  <span class="fill-hint" id="fillHint"></span>
+</div>
+
+<div class="builder-layout">
+  <nav class="section-nav" id="sectionNav"></nav>
+  <div class="section-content" id="sectionContent"></div>
+</div>
+
+<div class="bottom-bar">
+  <button class="btn primary" onclick="saveDraft()">💾 儲存草稿</button>
+  <button class="btn" id="gasBtn" onclick="syncToGAS()">☁️ 同步至 GAS</button>
+  <button class="btn" onclick="exportJSON()">📥 匯出 JSON</button>
+  <span class="save-status" id="saveStatus">尚未儲存</span>
+</div>
+
+<!-- ── Row edit modal ── -->
+<div id="rowModal" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-hd">
+      <span id="modalTitle">新增記錄</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal()">取消</button>
+      <button class="btn primary" onclick="saveModalRow()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Generate modal ── -->
+<div id="genModal" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeGenModal()">
+  <div class="modal-box" style="max-width:600px">
+    <div class="modal-hd">
+      <span>🚀 生成並發布季報</span>
+      <button class="modal-close" onclick="closeGenModal()">✕</button>
+    </div>
+    <div class="modal-body" id="genModalBody"></div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeGenModal()">關閉</button>
+      <button class="btn" onclick="exportJSON()">📥 匯出 JSON</button>
+      <button class="btn primary" id="btnGenNow" onclick="doGenerate()" style="display:none">🚀 立即生成並發布</button>
+    </div>
+  </div>
+</div>
+
+<script src="../../shared/sidebar.js"></script>
+<script>
+// ══════════════════════════════════════════════════════════════
+//  委員會報告生成器  v1.0
+//  大豐環保科技｜職安衛管理系統
+// ══════════════════════════════════════════════════════════════
+
+// ── 設定區（部署後填入正確網址）────────────────────────────────
+const BUILDER_GAS  = 'YOUR_BUILDER_GAS_URL';          // ← 部署 apps-script.gs 後填入
+const WORKER_URL   = 'YOUR_CLOUDFLARE_WORKER_URL';    // ← Phase 3 填入
+
+const ACCIDENT_API   = 'https://script.google.com/macros/s/AKfycbxpgGnRKUtNPK6WmOYtnl_It4pOizk5a1UDbx9QmW8VOYU2mTZtln0FSx6Dbywpaagk2w/exec';
+const MONITORING_API = 'https://script.google.com/macros/s/AKfycbzvU49W063jjwdcvcHU0SenezSF3ME9LdjiYxg99pPh-6KMR-waZxNP5RRhhjH3CjIt/exec';
+const CONTRACT_API   = 'https://script.google.com/macros/s/AKfycbxjWISZCI9RmU-g4pP56vLSC-kOuYnYNeyoUge5Ibshat2ETSkNs15DW7iJ0q9bJrKT/exec';
+const NURSE_API      = 'https://script.google.com/macros/s/AKfycbx1shNheNSSfVvmeAcyXQMAhupTLYeNtMUYsCGh_j5ZvL7LZ-hMX1VreF-MSFOpufak/exec';
+
+// ── 節次定義 ──────────────────────────────────────────────────
+const SEC = {
+  s1:  { num:1,  name:'職安衛政策',           icon:'📜', type:'fixed'   },
+  s2:  { num:2,  name:'管理計畫執行',          icon:'📋', type:'plans'   },
+  s3:  { num:3,  name:'教育訓練',              icon:'🎓', type:'table'   },
+  s4:  { num:4,  name:'作業環境監測',          icon:'🔬', type:'auto',   api:'monitoring' },
+  s5:  { num:5,  name:'健康管理',              icon:'🏥', type:'auto',   api:'nurse'      },
+  s6:  { num:6,  name:'安全衛生提案',          icon:'💡', type:'table'   },
+  s7:  { num:7,  name:'自動檢查稽核',          icon:'🔍', type:'table'   },
+  s8:  { num:8,  name:'機械設備危害防止措施',  icon:'⚙️', type:'table'   },
+  s9:  { num:9,  name:'職業災害調查',          icon:'📈', type:'auto',   api:'accident'   },
+  s10: { num:10, name:'KPI 考核',              icon:'🎯', type:'kpi'     },
+  s11: { num:11, name:'承攬商管理',            icon:'🏗️', type:'auto',   api:'contract'   },
+  s12: { num:12, name:'其他事項',              icon:'📝', type:'notes'   },
+};
+
+// ── KPI 定義（固定 8 項）────────────────────────────────────────
+const KPIS = [
+  {kpiId:1, name:'管理系統文件',     detail:'相關文件表單完成率',          target:'不定期'},
+  {kpiId:2, name:'消防檢修申報',     detail:'消防系統正常運作',            target:'1次/年'},
+  {kpiId:3, name:'管理方案達成率',   detail:'達成數／目標件數',            target:'1次/年'},
+  {kpiId:4, name:'內部稽核',         detail:'改善件數／缺失件數',          target:'1次/年'},
+  {kpiId:5, name:'作業環境監測',     detail:'相關項目符合法規',            target:'2次/年'},
+  {kpiId:6, name:'相關教育訓練',     detail:'消防（上下半年）／在職訓',    target:'2次/年'},
+  {kpiId:7, name:'辦理在職員工健檢', detail:'符合資歷同仁進行健檢',        target:'1次/3年'},
+  {kpiId:8, name:'職護臨場服務',     detail:'實際衛教次數／法定衛教次數',  target:'12次/年'},
+];
+
+// ── 狀態 ──────────────────────────────────────────────────────
+let Q          = '2026Q3';
+let curSec     = 's1';
+let editIdx    = -1;
+let editKey    = '';   // section key being edited in modal
+
+function mkData() {
+  return {
+    s2:  { done:[], todo:[] },
+    s3:  [],
+    s4:  { fetched:false, confirmed:false, records:[], values:[] },
+    s5:  { fetched:false, confirmed:false, data:[] },
+    s6:  [],
+    s7:  [],
+    s8:  [],
+    s9:  { fetched:false, confirmed:false, accidents:[] },
+    s10: KPIS.map(k => ({...k, actual:'', kpiStatus:'pending', note:''})),
+    s11: { fetched:false, confirmed:false, records:[] },
+    s12: [],
+  };
+}
+function mkSt() {
+  return { s1:2, s2:0, s3:0, s4:0, s5:0, s6:0, s7:0, s8:0, s9:0, s10:0, s11:0, s12:0 };
+}
+
+let D  = mkData();
+let ST = mkSt();
+
+// ── 季度工具 ──────────────────────────────────────────────────
+function qRange(qStr) {
+  const yr = parseInt(qStr, 10);
+  const qn = parseInt(qStr.slice(-1), 10);
+  const [m1, m2] = [[1,3],[4,6],[7,9],[10,12]][qn-1];
+  const p = n => String(n).padStart(2,'0');
+  return {
+    start: `${yr}-${p(m1)}-01`,
+    end:   `${yr}-${p(m2)}-${new Date(yr, m2, 0).getDate()}`,
+    year:  String(yr),
+    q:     `Q${qn}`,
+    half:  String(qn <= 2 ? 1 : 2),
+  };
+}
+function inRange(s, r) {
+  if (!s) return false;
+  const d = String(s).replace(/\//g, '-').slice(0, 10);
+  return d >= r.start && d <= r.end;
+}
+function qLabel(qStr) {
+  const yr  = parseInt(qStr, 10);
+  const qn  = parseInt(qStr.slice(-1), 10);
+  const roc = yr - 1911;
+  return `${yr}年 Q${qn}（${roc}Q${qn}）`;
+}
+
+// ── LocalStorage ──────────────────────────────────────────────
+const LS = q => `cb_${q}`;
+
+function loadDraft(q) {
+  try {
+    const raw = localStorage.getItem(LS(q));
+    if (!raw) return;
+    const obj = JSON.parse(raw);
+    if (obj.data) {
+      D = { ...mkData(), ...obj.data };
+      // Ensure s10 keeps all 8 KPI definitions even if structure changes
+      const saved10 = obj.data.s10 || [];
+      D.s10 = KPIS.map((k, i) => {
+        const sv = saved10[i] || {};
+        return { ...k, actual: sv.actual||'', kpiStatus: sv.kpiStatus||'pending', note: sv.note||'' };
+      });
+    }
+    if (obj.statuses) ST = { ...mkSt(), ...obj.statuses };
+    const ts = obj.savedAt ? new Date(obj.savedAt).toLocaleString() : '';
+    if (ts) document.getElementById('saveStatus').textContent = `上次儲存：${ts}`;
+  } catch(e) { /* ignore corrupt draft */ }
+}
+
+function saveDraft() {
+  syncKpiFromDOM(); // flush KPI inputs before saving
+  computeAllSt();
+  localStorage.setItem(LS(Q), JSON.stringify({ data:D, statuses:ST, savedAt:new Date().toISOString() }));
+  document.getElementById('saveStatus').textContent = `上次儲存：${new Date().toLocaleTimeString()}`;
+  renderProgress();
+  renderNav();
+  toast('草稿已儲存至本機');
+}
+
+// ── 狀態計算 ──────────────────────────────────────────────────
+function computeSt(sid) {
+  const d = D;
+  switch(sid) {
+    case 's1':  return 2;
+    case 's2':  return d.s2.done.length > 0 && d.s2.todo.length > 0 ? 2 : d.s2.done.length > 0 || d.s2.todo.length > 0 ? 1 : 0;
+    case 's3':  return d.s3.length >= 2 ? 2 : d.s3.length === 1 ? 1 : 0;
+    case 's4':  return d.s4.confirmed ? 2 : d.s4.fetched ? 1 : 0;
+    case 's5':  return d.s5.confirmed ? 2 : d.s5.fetched ? 1 : 0;
+    case 's6':  return d.s6.length >= 2 ? 2 : d.s6.length === 1 ? 1 : 0;
+    case 's7':  return d.s7.length >= 1 ? (d.s7.length >= 2 ? 2 : 1) : 0;
+    case 's8':  return d.s8.length >= 1 ? 2 : 0;
+    case 's9':  return d.s9.confirmed ? 2 : d.s9.fetched ? 1 : 0;
+    case 's10': { const f = d.s10.filter(k => k.actual && k.actual.trim()).length; return f >= 8 ? 2 : f >= 4 ? 1 : 0; }
+    case 's11': return d.s11.confirmed ? 2 : d.s11.fetched ? 1 : 0;
+    case 's12': return d.s12.length >= 1 ? 2 : 0;
+    default: return 0;
+  }
+}
+function computeAllSt() {
+  Object.keys(SEC).forEach(sid => { ST[sid] = computeSt(sid); });
+}
+
+// ── 進度面板 ──────────────────────────────────────────────────
+function renderProgress() {
+  computeAllSt();
+  const sids = Object.keys(SEC);
+  document.getElementById('progressDots').innerHTML = sids.map(sid => {
+    const s = ST[sid], def = SEC[sid];
+    const active = sid === curSec ? ' dot-active' : '';
+    const lbl = s === 2 ? '✓' : s === 1 ? '…' : def.num;
+    return `<div class="dot st${s}${active}" title="S${def.num} ${def.name}" onclick="selectSec('${sid}')">${lbl}<span class="dot-lbl">S${def.num}</span></div>`;
+  }).join('');
+  const done = Object.values(ST).filter(v => v === 2).length;
+  const partial = Object.values(ST).filter(v => v === 1).length;
+  document.getElementById('progressStat').innerHTML = `<strong>${done}</strong>/${sids.length} 節齊備${partial ? ` · ${partial} 節進行中` : ''}`;
+  // Fill hint: find first incomplete
+  const first = sids.find(s => ST[s] < 2 && s !== 's1');
+  document.getElementById('fillHint').textContent = first ? `→ 下一步：填寫 S${SEC[first].num} ${SEC[first].name}` : done === sids.length ? '全部齊備，可生成報告！' : '';
+}
+
+// ── 節次導覽 ──────────────────────────────────────────────────
+function renderNav() {
+  computeAllSt();
+  document.getElementById('sectionNav').innerHTML = Object.keys(SEC).map(sid => {
+    const def = SEC[sid], s = ST[sid];
+    const auto = def.type === 'auto' ? '<span class="auto-tag">自動</span>' : '';
+    return `<div class="sec-item${sid === curSec ? ' active' : ''}" onclick="selectSec('${sid}')">
+      <div class="sec-dot st${s}">${s===2?'✓':s===1?'…':''}</div>
+      <span class="sec-icon">${def.icon}</span>
+      <span class="sec-name">S${def.num} ${def.name}</span>${auto}
+    </div>`;
+  }).join('');
+}
+
+function selectSec(sid) {
+  syncKpiFromDOM();
+  curSec = sid;
+  renderProgress();
+  renderNav();
+  renderSection(sid);
+}
+
+// ── 節次內容渲染 ───────────────────────────────────────────────
+function renderSection(sid) {
+  const def = SEC[sid];
+  const sub = {
+    s1:'固定文字，無需填入，生成時自動帶入',
+    s2:'本季完成事項 ＋ 下季計畫（隨時新增，季末確認）',
+    s3:'每次訓練後當天填入（日期、主題、地點、人數）',
+    s4:'⚡ 自動從作業環境監測系統讀取，點「讀取資料」後確認',
+    s5:'⚡ 自動從職護臨場服務系統讀取，點「讀取資料」後確認',
+    s6:'各安全衛生提案本季進度（每月底更新）',
+    s7:'每次自動檢查、稽查的缺失與改善紀錄（稽查當天填入）',
+    s8:'本季審議的設備／材料危害防止措施（委員會前填入）',
+    s9:'⚡ 自動從職業災害系統讀取，篩選本季事故後確認',
+    s10:'8 項 KPI 達成值（季末彙整填入後儲存草稿）',
+    s11:'⚡ 自動從承攬商管理系統讀取，篩選本季進場記錄後確認',
+    s12:'本季特別主題、法規動態、其他補充（隨時記錄）',
+  }[sid] || '';
+
+  const hd = `<div class="sec-hd">
+    <div class="sec-title"><div class="sec-num">${def.num}</div>${def.icon} ${def.name}</div>
+    <div class="sec-subtitle">${sub}</div>
+  </div>`;
+
+  let body = '';
+  switch(def.type) {
+    case 'fixed':  body = renderS1(); break;
+    case 'plans':  body = renderS2(); break;
+    case 'table':  body = renderTableSec(sid); break;
+    case 'auto':   body = renderAutoSec(sid); break;
+    case 'kpi':    body = renderS10(); break;
+    case 'notes':  body = renderS12(); break;
+  }
+
+  document.getElementById('sectionContent').innerHTML = hd + body;
+  if (sid === 's10') bindKpi();
+}
+
+// ── S1 政策 ────────────────────────────────────────────────────
+function renderS1() {
+  return `<div class="card"><div class="card-hd">職業安全衛生政策（固定文字）</div>
+  <div class="card-body">
+    <div class="policy-text">
+      <p>大豐環保科技秉持「安全第一、預防為主」之核心理念，致力為全體員工提供安全、健康的工作環境。</p>
+      <p>一、遵守職業安全衛生相關法令規定，持續改善安全衛生績效。</p>
+      <p>二、提供安全衛生所需資源，建立並維持安全衛生管理系統。</p>
+      <p>三、定期執行安全衛生教育訓練，提升全體員工安全意識與技能。</p>
+      <p>四、辨識與評估作業危害，採取預防措施以降低職業災害風險。</p>
+      <p>五、推動員工參與安全衛生事務，落實自主管理與持續改進精神。</p>
+      <p>六、定期溝通、諮詢與審查，確保安全衛生目標與計畫切實落實。</p>
+    </div>
+    <p style="font-size:12px;color:var(--sub);margin-top:10px">此節為固定政策文字，生成報告時自動帶入，無需修改。</p>
+  </div></div>`;
+}
+
+// ── S2 管理計畫 ────────────────────────────────────────────────
+function renderS2() {
+  const mkRows = (arr, type) => arr.length
+    ? arr.map((r, i) => `<tr>
+        <td>${esc(r.date||'—')}</td>
+        <td>${esc(r.item)}</td>
+        <td class="actions">
+          <button class="btn sm" onclick="openModal('s2_${type}',${i})">編輯</button>
+          <button class="btn sm danger" onclick="delRow('s2_${type}',${i})">刪除</button>
+        </td></tr>`).join('')
+    : '<tr class="empty-row"><td colspan="3">尚未新增記錄</td></tr>';
+
+  return `
+  <div class="card">
+    <div class="card-hd">本季完成事項
+      <button class="btn sm primary" onclick="openModal('s2_done',-1)">＋ 新增</button>
+    </div>
+    <div class="card-body">
+      <table class="data-table">
+        <thead><tr><th>完成日期</th><th>事項描述</th><th>操作</th></tr></thead>
+        <tbody>${mkRows(D.s2.done,'done')}</tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hd">下季計畫事項
+      <button class="btn sm primary" onclick="openModal('s2_todo',-1)">＋ 新增</button>
+    </div>
+    <div class="card-body">
+      <table class="data-table">
+        <thead><tr><th>預定日期</th><th>計畫事項</th><th>操作</th></tr></thead>
+        <tbody>${mkRows(D.s2.todo,'todo')}</tbody>
+      </table>
+    </div>
+  </div>
+  ${stChip('s2')}`;
+}
+
+// ── 通用表格節（S3/S6/S7/S8）──────────────────────────────────
+const COL_DEF = {
+  s3:  [{k:'date',l:'訓練日期'},{k:'topic',l:'訓練主題'},{k:'location',l:'地點'},{k:'attendees',l:'人數'},{k:'notes',l:'備註'}],
+  s6:  [{k:'propId',l:'提案編號'},{k:'title',l:'提案名稱'},{k:'status',l:'狀態'},{k:'note',l:'說明'}],
+  s7:  [{k:'date',l:'稽查日期'},{k:'location',l:'地點'},{k:'findings',l:'發現事項'},{k:'improvements',l:'改善結果'}],
+  s8:  [{k:'equipment',l:'設備/材料'},{k:'hazardType',l:'危害類型'},{k:'riskLevel',l:'風險等級'},{k:'measures',l:'採行措施'},{k:'status',l:'執行狀態'}],
+};
+
+function renderTableSec(sid) {
+  const def = SEC[sid], cols = COL_DEF[sid] || [], rows = D[sid] || [];
+  const thead = cols.map(c=>`<th>${c.l}</th>`).join('');
+  const tbody = rows.length
+    ? rows.map((r,i) => `<tr>${cols.map(c=>`<td>${esc(r[c.k]||'')}</td>`).join('')}
+        <td class="actions">
+          <button class="btn sm" onclick="openModal('${sid}',${i})">編輯</button>
+          <button class="btn sm danger" onclick="delRow('${sid}',${i})">刪除</button>
+        </td></tr>`).join('')
+    : `<tr class="empty-row"><td colspan="${cols.length+1}">尚未新增記錄</td></tr>`;
+
+  return `<div class="card">
+    <div class="card-hd">${def.name}紀錄（${rows.length} 筆）
+      <button class="btn sm primary" onclick="openModal('${sid}',-1)">＋ 新增</button>
+    </div>
+    <div class="card-body">
+      <table class="data-table">
+        <thead><tr>${thead}<th>操作</th></tr></thead>
+        <tbody>${tbody}</tbody>
+      </table>
+    </div>
+  </div>${stChip(sid)}`;
+}
+
+// ── 自動讀取節（S4/S5/S9/S11）──────────────────────────────────
+function renderAutoSec(sid) {
+  const def = SEC[sid], d = D[sid], range = qRange(Q);
+  const rangeStr = `${range.start} ～ ${range.end}`;
+  const halfStr  = range.half === '1' ? '上半年' : '下半年';
+
+  let fetchedContent = '';
+  if (d.fetched) {
+    switch(def.api) {
+      case 'monitoring': fetchedContent = renderMonData(d, range); break;
+      case 'nurse':      fetchedContent = renderNurseData(d); break;
+      case 'accident':   fetchedContent = renderAccData(d); break;
+      case 'contract':   fetchedContent = renderContrData(d); break;
+    }
+  }
+
+  const extraInfo = def.api === 'monitoring'
+    ? `篩選：${range.year} 年 ${halfStr}（Q1/Q2→上半年，Q3/Q4→下半年）`
+    : `篩選日期範圍：${rangeStr}`;
+
+  return `
+  <div class="auto-panel">
+    <div class="fetch-hd">⚡ 自動讀取模式</div>
+    <div class="fetch-actions">
+      <button class="btn primary" id="fetchBtn_${sid}" onclick="fetchAuto('${sid}')">🔄 讀取最新資料</button>
+      ${d.fetched  ? `<button class="btn success" onclick="confirmAuto('${sid}')">✅ 確認本季資料正確</button>` : ''}
+      ${d.confirmed? '<span class="confirmed-badge">✅ 已確認</span>' : ''}
+    </div>
+    <div class="fetch-info">${extraInfo}</div>
+    ${!d.fetched ? '<div class="fetch-warn">⚠️ 尚未讀取。點「讀取最新資料」從後端系統抓取本季資料。</div>' : ''}
+  </div>
+  ${fetchedContent}
+  ${stChip(sid)}`;
+}
+
+function renderMonData(d, range) {
+  if (!d.records.length && !d.values.length)
+    return `<div class="card"><div class="card-body" style="color:var(--sub);font-size:13px">本${range.half==='1'?'上':'下'}半年無監測記錄。</div></div>`;
+
+  const rRows = d.records.map(r => `<tr>
+    <td>${esc(r.year)}</td><td>${r.half==='1'?'上半年':'下半年'}</td>
+    <td>${esc(r.site||'')}</td>
+    <td><span class="badge badge-${r.status==='completed'?'ok':'warn'}">${esc(r.status||'')}</span></td>
+    <td>${r.reportUrl?`<a href="${esc(r.reportUrl)}" target="_blank">查看</a>`:'—'}</td></tr>`).join('');
+
+  const vRows = d.values.slice(0,12).map(v => `<tr>
+    <td>${esc(v.site||'')}</td><td>${esc(v.item||'')}</td>
+    <td>${esc(v.location||'')}</td>
+    <td>${esc(v.value||'')} ${esc(v.unit||'')}</td>
+    <td>${esc(v.limit||'')}</td>
+    <td><span class="badge badge-${(v.pass==='true'||v.pass===true)?'ok':'ng'}">${(v.pass==='true'||v.pass===true)?'符合':'不符合'}</span></td></tr>`).join('');
+
+  return `
+  <div class="card">
+    <div class="card-hd">監測狀態（${d.records.length} 筆）</div>
+    <div class="card-body"><table class="data-table">
+      <thead><tr><th>年度</th><th>半年</th><th>廠別</th><th>狀態</th><th>報告</th></tr></thead>
+      <tbody>${rRows||'<tr class="empty-row"><td colspan="5">無資料</td></tr>'}</tbody>
+    </table></div>
+  </div>
+  <div class="card">
+    <div class="card-hd">監測數值（共 ${d.values.length} 筆，顯示前 12 筆）</div>
+    <div class="card-body"><table class="data-table">
+      <thead><tr><th>廠別</th><th>監測項目</th><th>地點</th><th>量測值</th><th>限值</th><th>判定</th></tr></thead>
+      <tbody>${vRows||'<tr class="empty-row"><td colspan="6">無資料</td></tr>'}</tbody>
+    </table></div>
+  </div>`;
+}
+
+function renderNurseData(d) {
+  if (!d.data.length)
+    return `<div class="card"><div class="card-body" style="color:var(--sub);font-size:13px">本季無職護服務紀錄（或面談日期不在此季）。</div></div>`;
+  const rows = d.data.map(r => `<tr>
+    <td>${esc(r['面談日期']||r.date||'')}</td>
+    <td>${esc(r['姓名']||r.name||'')}</td>
+    <td>${esc(r['部門']||r.dept||'')}</td>
+    <td>${esc(r['職護']||r.nurse||'')}</td>
+    <td>${esc(r['備註']||r.note||'')}</td></tr>`).join('');
+  return `<div class="card">
+    <div class="card-hd">職護服務紀錄（本季 ${d.data.length} 筆）</div>
+    <div class="card-body"><table class="data-table">
+      <thead><tr><th>面談日期</th><th>員工姓名</th><th>部門</th><th>職護</th><th>備註</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+  </div>`;
+}
+
+function renderAccData(d) {
+  if (!d.accidents.length)
+    return `<div class="card"><div class="card-body" style="color:var(--sub);font-size:13px">本季無職業災害記錄。</div></div>`;
+  const dis = d.accidents.filter(a => a.restDays > 0).length;
+  const rows = d.accidents.map((a,i) => `<tr>
+    <td>${i+1}</td><td>${esc(a.date||'')}</td>
+    <td>${esc(a.name||'')}（${esc(a.empId||'')}）</td>
+    <td>${esc(a.dept||'')}</td>
+    <td>${esc(a.accType||'')}</td>
+    <td>${a.restDays>0?`<span style="color:var(--red);font-weight:700">失能（${a.restDays}天）</span>`:'0天'}</td></tr>`).join('');
+  return `<div class="card">
+    <div class="card-hd">本季職業災害（${d.accidents.length} 件，失能 ${dis} 件）</div>
+    <div class="card-body"><table class="data-table">
+      <thead><tr><th>#</th><th>發生日期</th><th>員工</th><th>單位</th><th>事故類型</th><th>失能狀況</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+  </div>`;
+}
+
+function renderContrData(d) {
+  if (!d.records.length)
+    return `<div class="card"><div class="card-body" style="color:var(--sub);font-size:13px">本季無承攬商進場記錄（或作業日期不在此季）。</div></div>`;
+  const rows = d.records.map((r,i) => {
+    const b = r.basic || {};
+    return `<tr><td>${i+1}</td><td>${esc(b.company||'')}</td><td>${esc(b.workname||'')}</td>
+      <td>${esc(b.dateStart||'')} ~ ${esc(b.dateEnd||'')}</td>
+      <td>${esc(b.area||b.supervisor||'')}</td></tr>`;
+  }).join('');
+  return `<div class="card">
+    <div class="card-hd">本季承攬商進場記錄（${d.records.length} 件）</div>
+    <div class="card-body"><table class="data-table">
+      <thead><tr><th>#</th><th>承攬商名稱</th><th>工程名稱</th><th>作業期間</th><th>工作區域</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+  </div>`;
+}
+
+// ── S10 KPI ────────────────────────────────────────────────────
+function renderS10() {
+  const stOpts = [
+    {v:'done',      l:'已完成'},
+    {v:'in_progress',l:'進行中'},
+    {v:'pending',   l:'待執行'},
+    {v:'na',        l:'本年不適用'},
+  ];
+  const rows = D.s10.map((k,i) => `<tr>
+    <td>${k.kpiId}</td>
+    <td><strong>${esc(k.name)}</strong><br><span style="font-size:11px;color:var(--sub)">${esc(k.detail)}</span></td>
+    <td style="white-space:nowrap">${esc(k.target)}</td>
+    <td><input class="kpi-input kpi-actual" data-i="${i}" type="text" value="${esc(k.actual||'')}" placeholder="填入實際值"></td>
+    <td><select class="kpi-sel kpi-st" data-i="${i}">${stOpts.map(o=>`<option value="${o.v}"${k.kpiStatus===o.v?' selected':''}>${o.l}</option>`).join('')}</select></td>
+    <td><input class="kpi-input kpi-note" data-i="${i}" type="text" value="${esc(k.note||'')}" placeholder="說明"></td>
+    </tr>`).join('');
+
+  return `<div class="card">
+    <div class="card-hd">KPI 達成狀況</div>
+    <div class="card-body">
+      <table class="data-table">
+        <thead><tr><th>#</th><th>指標名稱</th><th>目標值</th><th>本季實際值</th><th>狀態</th><th>說明/補充</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <p style="font-size:12px;color:var(--sub);margin-top:10px">填入後點底部「💾 儲存草稿」自動保存。</p>
+    </div>
+  </div>${stChip('s10')}`;
+}
+
+function bindKpi() {
+  document.querySelectorAll('.kpi-actual').forEach(el => el.addEventListener('input', e => { D.s10[+e.target.dataset.i].actual = e.target.value; }));
+  document.querySelectorAll('.kpi-st').forEach(el => el.addEventListener('change', e => { D.s10[+e.target.dataset.i].kpiStatus = e.target.value; }));
+  document.querySelectorAll('.kpi-note').forEach(el => el.addEventListener('input', e => { D.s10[+e.target.dataset.i].note = e.target.value; }));
+}
+
+function syncKpiFromDOM() {
+  document.querySelectorAll('.kpi-actual').forEach(el => { if (el.dataset.i !== undefined) D.s10[+el.dataset.i].actual = el.value; });
+  document.querySelectorAll('.kpi-st').forEach(el => { if (el.dataset.i !== undefined) D.s10[+el.dataset.i].kpiStatus = el.value; });
+  document.querySelectorAll('.kpi-note').forEach(el => { if (el.dataset.i !== undefined) D.s10[+el.dataset.i].note = el.value; });
+}
+
+// ── S12 其他事項 ───────────────────────────────────────────────
+function renderS12() {
+  const rows = D.s12;
+  const tbody = rows.length
+    ? rows.map((r,i) => `<tr>
+        <td><strong>${esc(r.title)}</strong></td>
+        <td>${esc(r.content)}</td>
+        <td class="actions">
+          <button class="btn sm" onclick="openModal('s12',${i})">編輯</button>
+          <button class="btn sm danger" onclick="delRow('s12',${i})">刪除</button>
+        </td></tr>`).join('')
+    : '<tr class="empty-row"><td colspan="3">尚未新增記錄</td></tr>';
+  return `<div class="card">
+    <div class="card-hd">其他事項 / 法規動態（${rows.length} 筆）
+      <button class="btn sm primary" onclick="openModal('s12',-1)">＋ 新增</button>
+    </div>
+    <div class="card-body">
+      <table class="data-table">
+        <thead><tr><th>主題</th><th>內容說明</th><th>操作</th></tr></thead>
+        <tbody>${tbody}</tbody>
+      </table>
+    </div>
+  </div>${stChip('s12')}`;
+}
+
+// ── 狀態切換 chip ──────────────────────────────────────────────
+function stChip(sid) {
+  const s = computeSt(sid); ST[sid] = s;
+  const labels = {0:'未填寫',1:'部分填寫',2:'資料齊備'};
+  return `<div class="status-row">
+    <span style="font-size:12px;color:var(--sub)">本節狀態：</span>
+    <button class="status-chip st${s}" onclick="cycleSt('${sid}')">${labels[s]} ▾</button>
+    <span style="font-size:11px;color:var(--sub)">（點擊手動切換）</span>
+  </div>`;
+}
+function cycleSt(sid) {
+  ST[sid] = (ST[sid] + 1) % 3;
+  renderProgress(); renderNav(); renderSection(curSec);
+}
+
+// ── Modal ─────────────────────────────────────────────────────
+const MODAL_FIELDS = {
+  's2_done': [
+    {k:'date',l:'完成日期',t:'date'},
+    {k:'item', l:'完成事項描述',t:'textarea'},
+  ],
+  's2_todo': [
+    {k:'date',l:'預定日期',t:'date'},
+    {k:'item',l:'計畫事項描述',t:'textarea'},
+  ],
+  's3': [
+    {k:'date',     l:'訓練日期',t:'date'},
+    {k:'topic',    l:'訓練主題',p:'例：消防演練、急救訓練'},
+    {k:'location', l:'訓練地點',p:'例：彰化全興廠'},
+    {k:'attendees',l:'出席人數',t:'number'},
+    {k:'notes',    l:'備註（可附照片URL）',t:'textarea',rows:2},
+  ],
+  's6': [
+    {k:'propId',l:'提案編號',p:'例：A2026-01'},
+    {k:'title', l:'提案名稱'},
+    {k:'status',l:'目前狀態',t:'select',opts:['進行中','已完成','下季追蹤','擱置']},
+    {k:'note',  l:'說明',t:'textarea',rows:2},
+  ],
+  's7': [
+    {k:'date',         l:'稽查日期',t:'date'},
+    {k:'location',     l:'稽查地點'},
+    {k:'findings',     l:'發現缺失事項',t:'textarea'},
+    {k:'improvements', l:'改善結果（含完成日期）',t:'textarea'},
+  ],
+  's8': [
+    {k:'equipment',  l:'設備／材料名稱'},
+    {k:'hazardType', l:'危害類型',p:'例：機械夾傷、化學品暴露、火災'},
+    {k:'riskLevel',  l:'風險等級',t:'select',opts:['高','中','低']},
+    {k:'measures',   l:'採行預防措施（審議決議）',t:'textarea'},
+    {k:'status',     l:'執行狀態',t:'select',opts:['已採行','執行中','待採行']},
+  ],
+  's12': [
+    {k:'title',  l:'主題標題'},
+    {k:'content',l:'內容說明',t:'textarea',rows:4},
+  ],
+};
+
+function openModal(key, idx) {
+  editKey = key; editIdx = idx;
+  document.getElementById('modalTitle').textContent = idx === -1 ? '新增記錄' : '編輯記錄';
+  const fields = MODAL_FIELDS[key] || [];
+  const existing = getRow(key, idx);
+  document.getElementById('modalBody').innerHTML = fields.map(f => {
+    const v = existing ? (existing[f.k] || '') : '';
+    let inp = '';
+    if (f.t === 'textarea') {
+      inp = `<textarea name="${f.k}" rows="${f.rows||3}">${esc(v)}</textarea>`;
+    } else if (f.t === 'select') {
+      inp = `<select name="${f.k}">${(f.opts||[]).map(o=>`<option${v===o?' selected':''}>${o}</option>`).join('')}</select>`;
+    } else {
+      inp = `<input type="${f.t||'text'}" name="${f.k}" value="${esc(v)}" placeholder="${esc(f.p||'')}">`;
+    }
+    return `<div class="form-row"><label>${f.l}</label>${inp}</div>`;
+  }).join('');
+  document.getElementById('rowModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('rowModal').style.display = 'none';
+  editKey = ''; editIdx = -1;
+}
+
+function getRow(key, idx) {
+  if (idx === -1) return null;
+  if (key === 's2_done') return D.s2.done[idx];
+  if (key === 's2_todo') return D.s2.todo[idx];
+  return (D[key] || [])[idx];
+}
+
+function saveModalRow() {
+  const inputs = document.querySelectorAll('#modalBody input,#modalBody select,#modalBody textarea');
+  const obj = {};
+  inputs.forEach(el => { if (el.name) obj[el.name] = el.value; });
+
+  if (editKey === 's2_done') {
+    editIdx === -1 ? D.s2.done.push(obj) : (D.s2.done[editIdx] = obj);
+  } else if (editKey === 's2_todo') {
+    editIdx === -1 ? D.s2.todo.push(obj) : (D.s2.todo[editIdx] = obj);
+  } else {
+    if (!Array.isArray(D[editKey])) D[editKey] = [];
+    editIdx === -1 ? D[editKey].push(obj) : (D[editKey][editIdx] = obj);
+  }
+  closeModal();
+  saveDraft();
+  renderSection(curSec);
+}
+
+function delRow(key, idx) {
+  if (!confirm('確定刪除此筆記錄？')) return;
+  if (key === 's2_done') D.s2.done.splice(idx, 1);
+  else if (key === 's2_todo') D.s2.todo.splice(idx, 1);
+  else D[key].splice(idx, 1);
+  saveDraft();
+  renderSection(curSec);
+}
+
+// ── 自動讀取 ──────────────────────────────────────────────────
+async function fetchAuto(sid) {
+  const def = SEC[sid];
+  const btn = document.getElementById(`fetchBtn_${sid}`);
+  if (btn) { btn.innerHTML = '<span class="spinner"></span> 讀取中…'; btn.disabled = true; }
+
+  try {
+    const range = qRange(Q);
+    let ok = false;
+
+    if (def.api === 'monitoring') {
+      const res = await fetch(MONITORING_API, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ action:'getAll' })
+      });
+      const j = await res.json();
+      if (j.success && j.data) {
+        D.s4.records = (j.data.records||[]).filter(r => String(r.year)===range.year && String(r.half)===range.half);
+        D.s4.values  = (j.data.values||[]).filter(r  => String(r.year)===range.year && String(r.half)===range.half);
+        D.s4.fetched = true; ok = true;
+      }
+    }
+
+    if (def.api === 'nurse') {
+      const res = await fetch(NURSE_API);
+      const j = await res.json();
+      if (j.ok && j.data) {
+        D.s5.data = j.data.filter(r => inRange(r['面談日期']||r.date, range));
+        D.s5.fetched = true; ok = true;
+      }
+    }
+
+    if (def.api === 'accident') {
+      const res = await fetch(ACCIDENT_API);
+      const j = await res.json();
+      if (j.accidents) {
+        D.s9.accidents = j.accidents.filter(a => a.year===range.year && a.quarter===range.q);
+        D.s9.fetched = true; ok = true;
+      }
+    }
+
+    if (def.api === 'contract') {
+      const res = await fetch(`${CONTRACT_API}?action=list`);
+      const j = await res.json();
+      if (j.success && j.records) {
+        D.s11.records = j.records.filter(r => {
+          const b = r.basic || {};
+          return inRange(b.dateStart, range) || inRange(b.dateEnd, range);
+        });
+        D.s11.fetched = true; ok = true;
+      }
+    }
+
+    if (ok) { toast(`${def.name}：讀取完成`); saveDraft(); }
+    else    { toast('讀取失敗，請確認 API 可存取', 'error'); }
+  } catch(e) {
+    toast(`讀取失敗：${e.message}`, 'error');
+  }
+
+  renderSection(curSec);
+  renderProgress(); renderNav();
+}
+
+function confirmAuto(sid) {
+  D[sid].confirmed = true;
+  ST[sid] = 2;
+  saveDraft();
+  renderSection(curSec); renderProgress(); renderNav();
+  toast('已確認本季資料正確');
+}
+
+// ── 季度切換 ──────────────────────────────────────────────────
+function switchQuarter(newQ) {
+  syncKpiFromDOM();
+  saveDraft();
+  Q = newQ;
+  D  = mkData();
+  ST = mkSt();
+  loadDraft(Q);
+  computeAllSt();
+  curSec = 's1';
+  renderProgress(); renderNav(); renderSection('s1');
+}
+
+// ── GAS 同步 ──────────────────────────────────────────────────
+async function syncToGAS() {
+  if (BUILDER_GAS === 'YOUR_BUILDER_GAS_URL') {
+    toast('尚未設定 BUILDER_GAS URL，請先部署 apps-script.gs', 'warning'); return;
+  }
+  ['syncBtn','gasBtn'].forEach(id => {
+    const b = document.getElementById(id);
+    if (b) { b.innerHTML = '<span class="spinner"></span>'; b.disabled = true; }
+  });
+  try {
+    await gasPost({ action:'saveStatus', quarter:Q, statuses:ST });
+    for (const sid of ['s3','s6','s7','s8','s12']) {
+      await gasPost({ action:'saveSection', quarter:Q, section:sid, rows: D[sid] });
+    }
+    // S2 combined
+    const s2rows = [...D.s2.done.map(r=>({...r,type:'done'})), ...D.s2.todo.map(r=>({...r,type:'todo'}))];
+    await gasPost({ action:'saveSection', quarter:Q, section:'s2', rows: s2rows });
+    // S10
+    await gasPost({ action:'saveSection', quarter:Q, section:'s10', rows: D.s10 });
+    toast('同步至 GAS 完成');
+  } catch(e) {
+    toast('GAS 同步失敗：' + e.message, 'error');
+  }
+  ['syncBtn','gasBtn'].forEach(id => {
+    const b = document.getElementById(id);
+    if (b) { b.innerHTML = id === 'syncBtn' ? '☁️ 同步 GAS' : '☁️ 同步至 GAS'; b.disabled = false; }
+  });
+}
+
+async function gasPost(body) {
+  const res = await fetch(BUILDER_GAS, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  return res.json();
+}
+
+// ── 匯出 JSON ─────────────────────────────────────────────────
+function exportJSON() {
+  syncKpiFromDOM();
+  const obj = { quarter:Q, label:qLabel(Q), data:D, statuses:ST, exportedAt:new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(obj,null,2)], {type:'application/json'});
+  const a = Object.assign(document.createElement('a'), {href:URL.createObjectURL(blob), download:`committee_${Q}.json`});
+  a.click(); URL.revokeObjectURL(a.href);
+  toast('JSON 已匯出（可供 Python 腳本使用）');
+}
+
+// ── 生成報告 modal ─────────────────────────────────────────────
+function openGenerateModal() {
+  syncKpiFromDOM(); computeAllSt();
+  const notReady = Object.entries(ST).filter(([k,v]) => v < 2 && k !== 's1');
+  const workerOk = WORKER_URL !== 'YOUR_CLOUDFLARE_WORKER_URL';
+  const gasOk    = BUILDER_GAS !== 'YOUR_BUILDER_GAS_URL';
+
+  let html = `<p style="margin-bottom:12px;font-size:14px">生成季度：<strong>${qLabel(Q)}</strong></p>`;
+
+  if (notReady.length) {
+    html += `<div class="gen-info-box" style="background:#fff3cd;border:1px solid #ffc107">
+      <strong>⚠️ 以下節次尚未齊備（仍可生成，但內容可能不完整）：</strong><br>
+      ${notReady.map(([k]) => `S${SEC[k].num} ${SEC[k].name}`).join('、')}
+    </div>`;
+  } else {
+    html += `<div class="gen-info-box" style="background:#dcfce7;border:1px solid #16a34a">
+      <strong>✅ 全部 12 節資料齊備，可以生成！</strong>
+    </div>`;
+  }
+
+  if (!workerOk) {
+    html += `<div class="gen-info-box" style="background:#eff6ff;border:1px solid #bfdbfe">
+      <strong>ℹ️ Cloudflare Worker 尚未設定（Phase 3）</strong><br>
+      Worker 設定後可一鍵 AI 生成 HTML 並自動推送至 GitHub Pages。<br><br>
+      <strong>目前可用的備用方式：</strong><br>
+      1. 點「📥 匯出 JSON」下載本季資料檔<br>
+      2. 執行 <code>python generate_report.py --data committee_${Q}.json</code><br>
+      3. 手動 <code>git push</code> 生成的 HTML 至 GitHub<br><br>
+      <strong>設定步驟：</strong>見 committee/builder/apps-script.gs 部署說明。
+    </div>`;
+  }
+
+  if (!gasOk) {
+    html += `<div class="gen-info-box" style="background:#fff3cd;border:1px solid #ffc107">
+      <strong>⚠️ Builder GAS 尚未設定</strong>：資料僅存在本機，尚未同步至雲端試算表。
+    </div>`;
+  }
+
+  document.getElementById('genModalBody').innerHTML = html;
+  document.getElementById('btnGenNow').style.display = workerOk ? 'inline-flex' : 'none';
+  document.getElementById('genModal').style.display = 'flex';
+}
+
+function closeGenModal() { document.getElementById('genModal').style.display = 'none'; }
+
+async function doGenerate() {
+  if (WORKER_URL === 'YOUR_CLOUDFLARE_WORKER_URL') { toast('Cloudflare Worker 尚未設定', 'error'); return; }
+  const btn = document.getElementById('btnGenNow');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> 生成中…';
+  try {
+    syncKpiFromDOM();
+    const res = await fetch(`${WORKER_URL}/committee-generate`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ quarter:Q, data:D }),
+    });
+    const j = await res.json();
+    if (j.ok && j.url) {
+      document.getElementById('genModalBody').innerHTML += `
+        <div class="gen-info-box" style="background:#dcfce7;border:1px solid #16a34a;margin-top:10px">
+          <strong>✅ 報告已生成並發布！</strong><br>
+          <a href="${esc(j.url)}" target="_blank" style="color:var(--primary);font-weight:700">${esc(j.url)}</a>
+        </div>`;
+    } else { throw new Error(j.error || '生成失敗'); }
+  } catch(e) { toast('生成失敗：' + e.message, 'error'); }
+  btn.disabled = false; btn.innerHTML = '🚀 立即生成並發布';
+}
+
+// ── Toast ─────────────────────────────────────────────────────
+function toast(msg, type) {
+  let el = document.getElementById('_toast');
+  if (!el) {
+    el = document.createElement('div'); el.id = '_toast';
+    Object.assign(el.style, {
+      position:'fixed', bottom:'68px', right:'20px', zIndex:'9999',
+      padding:'10px 18px', borderRadius:'8px', fontSize:'13px',
+      boxShadow:'0 4px 16px rgba(0,0,0,.18)', transition:'opacity .35s',
+      fontFamily:'"Microsoft JhengHei",sans-serif', maxWidth:'340px',
+    });
+    document.body.appendChild(el);
+  }
+  if (type === 'error')   { el.style.background='#fee2e2'; el.style.color='#991b1b'; }
+  else if (type==='warning'){el.style.background='#fff3cd'; el.style.color='#713f12'; }
+  else                    { el.style.background='#dcfce7'; el.style.color='#14532d'; }
+  el.style.opacity = '1'; el.textContent = msg;
+  clearTimeout(el._t); el._t = setTimeout(() => { el.style.opacity='0'; }, 3000);
+}
+
+// ── 工具 ──────────────────────────────────────────────────────
+function esc(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── 初始化 ────────────────────────────────────────────────────
+(function init() {
+  if (BUILDER_GAS === 'YOUR_BUILDER_GAS_URL')
+    document.getElementById('configBanner').style.display = 'block';
+
+  Q = document.getElementById('quarterSel').value;
+  loadDraft(Q);
+  computeAllSt();
+  renderProgress();
+  renderNav();
+  renderSection('s1');
+})();
+</script>
+</body>
+</html>
