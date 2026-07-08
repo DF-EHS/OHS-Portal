@@ -200,9 +200,6 @@
       <a class="nav-item" href="${BASE}committee/" data-match="/committee/">
         <span class="nav-icon">📊</span>安全衛生委員會
       </a>
-      <a class="nav-item" href="${BASE}committee/builder/" data-match="/committee/builder/">
-        <span class="nav-icon">📋</span>委員會報告生成器
-      </a>
       <a class="nav-item" href="${BASE}plans/" data-match="/plans/">
         <span class="nav-icon">🗂️</span>職業安全衛生計畫書
       </a>
