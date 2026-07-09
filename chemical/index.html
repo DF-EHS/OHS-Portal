@@ -1051,9 +1051,14 @@ function renderChemTable() {
 // ─────────────────────────────────────────────────────────────
 let activeRoc = DECLARATIONS[0].roc;
 
+function fmtDeclDate(d) {
+  if (!d) return '已完成';
+  return String(d).slice(0, 10); // 只取 YYYY-MM-DD，去掉時間部分
+}
+
 function declBadgeHtml(item) {
   if (!item) return '<span class="drill-badge future">— 未設定</span>';
-  if (item.s === 'done')         return `<span class="drill-badge done">✓ ${item.d || '已完成'}</span>`;
+  if (item.s === 'done')         return `<span class="drill-badge done">✓ ${fmtDeclDate(item.d)}</span>`;
   if (item.s === 'done-nodate')  return `<span class="drill-badge done-nd">✓ 已完成</span>`;
   if (item.s === 'pending')      return `<span class="drill-badge pending">⟳ 待申報</span>`;
   return `<span class="drill-badge future">— 未到期</span>`;
@@ -1595,11 +1600,12 @@ function confirmDeclUpdate() {
   if (!row) return;
 
   if (_declAiResult.done) {
-    row[_declModalPeriod] = _declAiResult.date
-      ? { s:'done', d: _declAiResult.date }
+    const cleanDate = _declAiResult.date ? String(_declAiResult.date).slice(0, 10) : '';
+    row[_declModalPeriod] = cleanDate
+      ? { s:'done', d: cleanDate }
       : { s:'done-nodate' };
     saveDeclToGAS(_declModalRoc, _declModalPeriod,
-      _declAiResult.date ? 'done' : 'done-nodate', _declAiResult.date || '');
+      cleanDate ? 'done' : 'done-nodate', cleanDate);
   } else {
     row[_declModalPeriod] = { s:'pending' };
     saveDeclToGAS(_declModalRoc, _declModalPeriod, 'pending', '');
