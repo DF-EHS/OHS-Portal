@@ -25,7 +25,7 @@ _SSL_CTX.verify_mode = ssl.CERT_NONE
 
 SCRIPT_DIR   = Path(__file__).parent
 STATE_FILE   = SCRIPT_DIR / "typhoon_state.json"
-LOCAL_COPY   = SCRIPT_DIR / "typhoon" / "災前及災後檢核表.doc"
+LOCAL_COPY   = SCRIPT_DIR / "dispatch" / "typhoon" / "災前及災後檢核表.doc"
 K_DRIVE_DOC  = Path(r"K:\HR-人資\7.工安\18.節日天災宣導資料及檢核表\災前及災後檢核表.doc")
 CWA_KEY      = "CWA-6A18801C-3D96-4113-93F6-8198BD0712F2"
 CWA_API      = (
@@ -143,7 +143,7 @@ def get_attachment_path() -> str:
         f"  K 槽路徑：{K_DRIVE_DOC}\n"
         "請先執行初次備份：\n"
         r'  Copy-Item "K:\HR-人資\7.工安\18.節日天災宣導資料及檢核表\災前及災後檢核表.doc" '
-        r'"C:\Users\gloom.lai\OHS-Portal\typhoon\災前及災後檢核表.doc"'
+        r'"C:\Users\gloom.lai\OHS-Portal\dispatch\typhoon\災前及災後檢核表.doc"'
     )
 
 
