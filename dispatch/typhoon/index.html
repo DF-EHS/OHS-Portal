@@ -28,22 +28,26 @@
   /* ── Topbar ── */
   header.topbar {
     background: var(--dispatch);
-    padding: 0 28px;
+    padding: 0 20px;
     height: 54px;
-    display: flex; align-items: center; gap: 12px;
+    display: flex; align-items: center; gap: 10px;
     flex-shrink: 0;
     position: sticky; top: 0; z-index: 100;
     box-shadow: 0 2px 8px rgba(0,0,0,.18);
   }
-  header.topbar h2 { font-size: 15px; font-weight: 700; color: #fff; }
-  .topbar-sub { font-size: 12px; color: rgba(255,255,255,.6); margin-left: 4px; }
-  .topbar-back {
-    margin-left: auto; font-size: 12px; color: rgba(255,255,255,.7);
-    text-decoration: none; padding: 4px 12px; border-radius: 6px;
-    border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.1);
-    transition: background .15s; white-space: nowrap;
+  .hdr-btn {
+    padding: 5px 12px; border-radius: 6px;
+    border: 1px solid rgba(255,255,255,.3);
+    background: rgba(255,255,255,.1);
+    color: #fff; font-size: 12px; cursor: pointer;
+    transition: background .15s; font-family: inherit; flex-shrink: 0;
+    text-decoration: none; display: inline-flex; align-items: center;
   }
-  .topbar-back:hover { background: rgba(255,255,255,.2); color: #fff; }
+  .hdr-btn:hover { background: rgba(255,255,255,.2); }
+  header.topbar h2 { font-size: 17px; font-weight: 700; color: #fff; flex: 1; }
+  .hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+  .hdr-brand img  { height: 24px; object-fit: contain; }
+  .hdr-brand span { font-size: 12px; color: #d1d5db; font-weight: 600; white-space: nowrap; }
 
   /* ── Main ── */
   main { max-width: 1060px; margin: 0 auto; width: 100%; padding: 32px 28px 52px; }
@@ -129,9 +133,12 @@
 <body>
 
 <header class="topbar">
+  <a class="hdr-btn" href="../">← 派送系統</a>
   <h2>🌀 颱風陸上警報派送</h2>
-  <span class="topbar-sub">— 台中市・彰化縣陸上警報 → 災前及災後檢核表</span>
-  <a class="topbar-back" href="../">← 派送系統</a>
+  <div class="hdr-brand">
+    <img src="../../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
 </header>
 
 <main>
