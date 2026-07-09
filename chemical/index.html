@@ -1559,7 +1559,7 @@ ${docText.slice(0, 3000)}`;
     try { data = JSON.parse(raw); } catch(e) {
       throw new Error('API 回傳非 JSON：' + raw.slice(0, 120));
     }
-    const aiText = data.content || data.choices?.[0]?.message?.content || data.reply || data.result || data.text || '';
+    const aiText = data?.data || data?.choices?.[0]?.message?.content || data?.content || data?.text || '';
 
     let parsed = null;
     const jsonMatch = aiText.match(/\{[\s\S]*\}/);
