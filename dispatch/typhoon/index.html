@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>颱風陸上警報派送 | 大豐環保科技</title>
+<style>
+  :root {
+    --dispatch:       #374151;
+    --dispatch-dark:  #1f2937;
+    --dispatch-light: #f3f4f6;
+    --dispatch-border:#d1d5db;
+    --bg:     #f1f5f9;
+    --card:   #ffffff;
+    --border: #e2e8f0;
+    --text:   #1e293b;
+    --sub:    #64748b;
+    --navy:   #1e3a5f;
+    --green:  #16a34a;
+    --red:    #dc2626;
+    --green-light: #f0fdf4; --green-border: #bbf7d0;
+    --red-light:   #fef2f2; --red-border:   #fecaca;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif; color: var(--text); background: var(--bg); min-height: 100vh; }
+
+  /* ── Topbar ── */
+  header.topbar {
+    background: var(--dispatch);
+    padding: 0 28px;
+    height: 54px;
+    display: flex; align-items: center; gap: 12px;
+    flex-shrink: 0;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,.18);
+  }
+  header.topbar h2 { font-size: 15px; font-weight: 700; color: #fff; }
+  .topbar-sub { font-size: 12px; color: rgba(255,255,255,.6); margin-left: 4px; }
+  .topbar-back {
+    margin-left: auto; font-size: 12px; color: rgba(255,255,255,.7);
+    text-decoration: none; padding: 4px 12px; border-radius: 6px;
+    border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.1);
+    transition: background .15s; white-space: nowrap;
+  }
+  .topbar-back:hover { background: rgba(255,255,255,.2); color: #fff; }
+
+  /* ── Main ── */
+  main { max-width: 1060px; margin: 0 auto; width: 100%; padding: 32px 28px 52px; }
+  .section-label {
+    font-size: 11px; font-weight: 700; color: var(--sub);
+    letter-spacing: 4px; text-transform: uppercase;
+    margin-top: 40px; margin-bottom: 22px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  main > .section-label:first-child { margin-top: 0; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  footer {
+    text-align: center; padding: 18px 24px;
+    font-size: 12px; color: var(--sub);
+    border-top: 1px solid var(--border);
+    background: var(--card);
+  }
+
+  /* ── Status Cards ── */
+  .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .status-card { border-radius: 14px; padding: 20px 22px; border: 2px solid var(--border); background: var(--card); transition: border-color .2s; display: flex; align-items: center; gap: 16px; }
+  .status-card.warning { border-color: var(--red-border); background: var(--red-light); }
+  .status-card.safe    { border-color: var(--green-border); background: var(--green-light); }
+  .status-icon { font-size: 36px; flex-shrink: 0; }
+  .status-body h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .status-body p  { font-size: 12px; color: var(--sub); }
+  .status-card.warning .status-body h3 { color: var(--red); }
+  .status-card.safe    .status-body h3 { color: var(--green); }
+  .refresh-note { font-size: 11px; color: var(--sub); text-align: right; margin-top: 8px; }
+
+  /* ── Alert Banner ── */
+  .alert-banner { background: var(--red-light); border: 2px solid var(--red-border); border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; display: none; align-items: center; gap: 12px; }
+  .alert-banner.show { display: flex; }
+  .alert-banner-icon { font-size: 28px; }
+  .alert-banner-text h3 { font-size: 15px; font-weight: 700; color: var(--red); }
+  .alert-banner-text p  { font-size: 12.5px; color: #7f1d1d; margin-top: 2px; }
+
+  /* ── Info Cards ── */
+  .info-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-bottom: 16px; }
+  .info-card h3 { font-size: 14px; font-weight: 700; color: var(--dispatch); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .info-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .info-table th { text-align: left; padding: 8px 12px; font-weight: 600; background: var(--bg); color: var(--sub); border-bottom: 1px solid var(--border); white-space: nowrap; width: 120px; }
+  .info-table td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; }
+  .info-table tr:last-child td { border-bottom: none; }
+  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-gray { background: #e2e8f0; color: var(--sub); }
+
+  /* ── Email Preview ── */
+  .email-preview { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin-top: 12px; font-size: 12.5px; line-height: 1.8; }
+  .ep-field { display: flex; gap: 10px; margin-bottom: 6px; align-items: flex-start; }
+  .ep-label { font-weight: 700; color: var(--sub); white-space: nowrap; min-width: 52px; padding-top: 1px; }
+  .ep-divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+  .ep-body { color: var(--sub); font-style: italic; }
+
+  /* ── Steps ── */
+  .step-list { display: flex; flex-direction: column; gap: 12px; }
+  .step { display: flex; gap: 14px; align-items: flex-start; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; }
+  .step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--dispatch); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-content h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .step-content p  { font-size: 12.5px; color: var(--sub); line-height: 1.6; }
+  .step-content code { background: var(--dispatch-light); border: 1px solid var(--dispatch-border); border-radius: 4px; padding: 2px 6px; font-size: 11.5px; font-family: "Consolas","Courier New",monospace; color: var(--dispatch); }
+
+  /* ── Dark mode ── */
+  body.dark {
+    --bg: #0f172a; --card: #1e293b; --border: #334155;
+    --text: #f1f5f9; --sub: #94a3b8;
+    --dispatch-light: #1e293b; --dispatch-border: #374151;
+    --green-light: #052e16; --green-border: #14532d;
+    --red-light: #450a0a; --red-border: #7f1d1d;
+  }
+  body.dark header.topbar { background: #1f2937; box-shadow: 0 2px 8px rgba(0,0,0,.4); }
+  body.dark .status-card { background: #1e293b; }
+  body.dark .step-content code { color: #9ca3af; }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    header.topbar { padding: 0 16px; }
+    main { padding: 20px 16px 40px; }
+    .status-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <h2>🌀 颱風陸上警報派送</h2>
+  <span class="topbar-sub">— 台中市・彰化縣陸上警報 → 災前及災後檢核表</span>
+  <a class="topbar-back" href="../">← 派送系統</a>
+</header>
+
+<main>
+
+  <!-- 警報大橫幅 -->
+  <div class="alert-banner" id="alertBanner">
+    <div class="alert-banner-icon">🚨</div>
+    <div class="alert-banner-text">
+      <h3 id="alertTitle">陸上颱風警報生效中</h3>
+      <p id="alertDesc">請確認工作排程器是否正在執行，或手動執行派送腳本。</p>
+    </div>
+  </div>
+
+  <div class="section-label">即時警報狀態</div>
+  <div class="status-grid">
+    <div class="status-card" id="card-taichung">
+      <div class="status-icon" id="icon-taichung">⏳</div>
+      <div class="status-body">
+        <h3>台中市</h3>
+        <p id="desc-taichung">查詢中...</p>
+      </div>
+    </div>
+    <div class="status-card" id="card-changhua">
+      <div class="status-icon" id="icon-changhua">⏳</div>
+      <div class="status-body">
+        <h3>彰化縣</h3>
+        <p id="desc-changhua">查詢中...</p>
+      </div>
+    </div>
+  </div>
+  <p class="refresh-note" id="refreshNote">資料載入中...</p>
+
+  <div class="section-label">派送設定</div>
+  <div class="info-card">
+    <h3>📧 收件設定</h3>
+    <table class="info-table">
+      <tr>
+        <th>收件人</th>
+        <td>神岡站窗口 &nbsp;<span class="badge badge-gray">df09@df-recycle.com.tw</span>
+            &ensp;·&ensp;再生處理窗口 &nbsp;<span class="badge badge-gray">da12@df-recycle.com.tw</span></td>
+      </tr>
+      <tr>
+        <th>副本</th>
+        <td>神岡站主任 &nbsp;<span class="badge badge-gray">01801@df-recycle.com.tw</span>
+            &ensp;·&ensp;再生處理經理 &nbsp;<span class="badge badge-gray">01761@df-recycle.com.tw</span></td>
+      </tr>
+      <tr>
+        <th>附件</th>
+        <td>災前及災後檢核表.doc<br>
+          <span style="font-size:11px;color:var(--sub)">本機備份：OHS-Portal\dispatch\typhoon\災前及災後檢核表.doc</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="info-card">
+    <h3>📝 郵件草稿預覽</h3>
+    <div class="email-preview">
+      <div class="ep-field"><span class="ep-label">主旨：</span><span>【颱風警報】<em>颱風名稱</em> 陸上警報 — <em>影響地區</em> 災前及災後檢核表派送</span></div>
+      <div class="ep-field"><span class="ep-label">收件：</span><span>df09@df-recycle.com.tw；da12@df-recycle.com.tw</span></div>
+      <div class="ep-field"><span class="ep-label">副本：</span><span>01801@df-recycle.com.tw；01761@df-recycle.com.tw</span></div>
+      <hr class="ep-divider">
+      <div class="ep-body">
+        各位好，<br><br>
+        中央氣象署已於 <em>YYYY 年 MM 月 DD 日</em> 對 <em>台中市／彰化縣</em> 發布【<em>颱風名稱</em> 陸上颱風警報】。<br><br>
+        請依附件「災前及災後檢核表」逐項確認，並於颱風過後將填寫結果回傳職安室存查，謝謝配合。
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">系統設定說明</div>
+  <div class="step-list">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>初次設定 — 備份附件至本機</h4>
+        <p>K 槽連線後執行：<br>
+        <code>Copy-Item "K:\HR-人資\7.工安\18.節日天災宣導資料及檢核表\災前及災後檢核表.doc" "C:\Users\gloom.lai\OHS-Portal\dispatch\typhoon\災前及災後檢核表.doc"</code></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>確認 pywin32 已安裝</h4>
+        <p><code>pip install pywin32</code></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>測試 API 回應</h4>
+        <p><code>python typhoon_dispatch.py --test</code></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>測試草稿格式</h4>
+        <p><code>python typhoon_dispatch.py --force</code></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>啟動工作排程器（以系統管理員執行）</h4>
+        <p>在系統管理員 PowerShell 貼入 XML 指令建立任務 <code>OHS-TyphoonDispatch</code>，每日 06:00–22:00 每 30 分鐘自動偵測。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h4>更新附件版本</h4>
+        <p>K 槽版本有修改時，重新執行步驟 1 覆蓋本機備份即可。腳本每次觸發時也會自動嘗試從 K 槽同步。</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+
+<script>
+/* ── 颱風警報狀態 ── */
+(async function(){
+  const KEY='CWA-6A18801C-3D96-4113-93F6-8198BD0712F2';
+  const API='https://opendata.cwa.gov.tw/api/v1/rest/datastore/W-C0034-001?Authorization='+KEY+'&format=JSON';
+  const TARGET={'台中市':'taichung','彰化縣':'changhua'};
+  function setCard(id,state,icon,desc){
+    const c=document.getElementById('card-'+id),i=document.getElementById('icon-'+id),d=document.getElementById('desc-'+id);
+    if(c)c.className='status-card '+state;if(i)i.textContent=icon;if(d)d.textContent=desc;
+  }
+  try{
+    const r=await fetch(API),j=await r.json();
+    const entries=j.records?.info||[];
+    const landAreas=new Set();let typhoonName='';
+    for(const e of(Array.isArray(entries)?entries:[entries])){
+      if(e.urgency==='Past')continue;
+      if(!(e.headline||'').includes('陸上'))continue;
+      typhoonName=e.cwa_typhoon_name||e.typhoon_name||typhoonName;
+      (e.areaDesc||'').replace(/[、,]/g,' ').split(/\s+/).forEach(t=>t&&landAreas.add(t));
+    }
+    let anyWarning=false;
+    for(const[areaName,cardId]of Object.entries(TARGET)){
+      if(landAreas.has(areaName)){setCard(cardId,'warning','🌀',(typhoonName||'颱風')+' 陸上警報生效中');anyWarning=true;}
+      else{setCard(cardId,'safe','✅','目前無陸上颱風警報');}
+    }
+    if(anyWarning){
+      const b=document.getElementById('alertBanner');if(b)b.classList.add('show');
+      const t=document.getElementById('alertTitle');if(t)t.textContent=(typhoonName||'颱風')+' 陸上警報生效中';
+      const d=document.getElementById('alertDesc');if(d)d.textContent='影響地區：'+[...landAreas].join('、')+'。請確認工作排程器是否正在執行，或手動執行：python typhoon_dispatch.py';
+    }
+    const now=new Date();
+    const ns=now.getFullYear()+'/'+(''+(now.getMonth()+1)).padStart(2,'0')+'/'+(''+ now.getDate()).padStart(2,'0')+' '+(''+ now.getHours()).padStart(2,'0')+':'+(''+ now.getMinutes()).padStart(2,'0');
+    const rn=document.getElementById('refreshNote');if(rn)rn.textContent='資料更新時間：'+ns;
+  }catch(e){
+    for(const id of['taichung','changhua'])setCard(id,'','⚠️','資料載入失敗');
+    const rn=document.getElementById('refreshNote');if(rn)rn.textContent='氣象署 API 連線失敗，請稍後重試';
+  }
+})();
+</script>
+<script src="../../shared/sidebar.js"></script>
+</body>
+</html>
