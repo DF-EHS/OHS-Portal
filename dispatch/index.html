@@ -6,269 +6,312 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>文件自動派送系統 | 大豐環保科技</title>
 <style>
-:root {
-  --pri:        #0284c7;
-  --pri-dark:   #0369a1;
-  --pri-darker: #0c4a6e;
-  --pri-light:  #f0f9ff;
-  --pri-border: #bae6fd;
-  --green:  #16a34a; --green-light: #f0fdf4; --green-border: #bbf7d0;
-  --red:    #dc2626; --red-light:   #fef2f2; --red-border:   #fecaca;
-  --navy:   #1e3a5f;
-  --bg: #f8fafc; --card: #fff; --border: #e2e8f0;
-  --text: #1e293b; --sub: #64748b;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif;
-  background: var(--bg); color: var(--text);
-  min-height: 100vh; display: flex; flex-direction: column;
-}
-header {
-  background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%);
-  color: #fff; padding: 12px 20px;
-  display: flex; align-items: center; gap: 10px;
-  position: sticky; top: 0; z-index: 200;
-  box-shadow: 0 2px 16px rgba(0,0,0,.4);
-}
-header h1 { font-size: 17px; font-weight: 700; flex: 1; }
-.hdr-btn {
-  padding: 5px 12px; border-radius: 6px;
-  border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1);
-  color: #fff; font-size: 12px; cursor: pointer; transition: background .15s;
-  font-family: inherit; flex-shrink: 0; text-decoration: none; display: inline-flex; align-items: center;
-}
-.hdr-btn:hover { background: rgba(255,255,255,.2); }
-.hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
-.hdr-brand img  { height: 24px; object-fit: contain; }
-.hdr-brand span { font-size: 12px; color: #bae6fd; font-weight: 600; white-space: nowrap; }
+  :root {
+    --navy:   #1e3a5f;
+    --bg:     #f1f5f9;
+    --card:   #ffffff;
+    --border: #e2e8f0;
+    --text:   #1e293b;
+    --sub:    #64748b;
+    --blue:   #2563eb;
+    --green:  #16a34a;
+    --orange: #d97706;
+    --red:    #dc2626;
+    --sidebar-bg: #1a2d42;
+    --sidebar-w:  260px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body { font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif; color: var(--text); }
 
-main { flex: 1; max-width: 1020px; margin: 0 auto; width: 100%; padding: 32px 24px 60px; }
+  .layout { display: flex; height: 100vh; }
 
-.page-hero {
-  background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%);
-  color: #fff; border-radius: 16px; padding: 28px 32px; margin-bottom: 32px;
-  box-shadow: 0 4px 20px rgba(2,132,199,.25);
-  display: flex; align-items: center; gap: 20px;
-}
-.hero-icon { font-size: 52px; flex-shrink: 0; }
-.hero-text h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
-.hero-text p  { font-size: 13px; color: #bae6fd; line-height: 1.6; }
+  /* ── Sidebar ── */
+  .sidebar { width: var(--sidebar-w); flex-shrink: 0; background: var(--sidebar-bg); display: flex; flex-direction: column; overflow: hidden; }
+  .brand { background: linear-gradient(160deg, #e8821a 0%, #f59840 55%, #f9ad5a 100%); padding: 20px 20px 16px; text-align: center; flex-shrink: 0; }
+  .brand img { height: 110px; display: block; margin: 0 auto 10px; }
+  .brand-sub { font-size: 13px; color: rgba(255,255,255,.88); letter-spacing: 3px; font-weight: 600; }
+  .nav { flex: 1; overflow-y: auto; padding: 6px 0 4px; }
+  .nav::-webkit-scrollbar { width: 4px; }
+  .nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 4px; }
+  .nav-section { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.3); letter-spacing: 3px; text-transform: uppercase; padding: 16px 18px 6px; }
+  .nav-item { display: flex; align-items: center; gap: 11px; padding: 11px 16px 11px 15px; color: rgba(255,255,255,.65); cursor: pointer; transition: background .15s, color .15s; text-decoration: none; font-size: 14px; border-left: 3px solid transparent; }
+  .nav-item:hover { background: rgba(255,255,255,.07); color: #fff; }
+  .nav-item.active { background: rgba(255,255,255,.11); color: #fff; border-left-color: #f59840; }
+  .nav-icon { font-size: 17px; flex-shrink: 0; width: 20px; text-align: center; }
+  .hw-widget { margin: 6px 10px 10px; background: rgba(255,255,255,.07); border-radius: 12px; padding: 11px 13px 9px; border: 1px solid rgba(255,255,255,.1); }
+  .hw-hd { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.45); letter-spacing: 1px; margin-bottom: 8px; }
+  .hw-loading { font-size: 11px; color: rgba(255,255,255,.3); text-align: center; padding: 4px 0 6px; }
+  .hw-vals { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .hw-temp { font-size: 22px; font-weight: 800; color: #fff; }
+  .hw-rh   { font-size: 12px; color: rgba(255,255,255,.45); }
+  .hw-badge { margin-left: auto; padding: 2px 9px; border-radius: 9px; font-size: 11px; font-weight: 700; }
+  .hw-sub  { font-size: 10px; color: rgba(255,255,255,.35); margin-bottom: 7px; }
+  .hw-link { display: block; text-align: center; font-size: 11px; color: rgba(255,255,255,.4); text-decoration: none; padding: 4px; border-radius: 6px; background: rgba(255,255,255,.05); transition: background .15s; }
+  .hw-link:hover { background: rgba(255,255,255,.13); color: rgba(255,255,255,.8); }
+  .hw-err { font-size: 10px; color: rgba(255,100,100,.7); text-align: center; padding: 2px 0 5px; }
+  .sidebar-foot { flex-shrink: 0; padding: 10px 12px; border-top: 1px solid rgba(255,255,255,.08); }
+  .dark-btn { width: 100%; padding: 7px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); color: rgba(255,255,255,.6); font-size: 12px; cursor: pointer; transition: background .15s; display: flex; align-items: center; justify-content: center; gap: 7px; font-family: inherit; }
+  .dark-btn:hover { background: rgba(255,255,255,.13); color: #fff; }
 
-.section-label {
-  font-size: 11px; font-weight: 700; letter-spacing: .08em;
-  color: var(--sub); text-transform: uppercase;
-  display: flex; align-items: center; gap: 10px; margin: 0 0 16px;
-}
-.section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+  /* ── Content ── */
+  .content { flex: 1; overflow-y: auto; background: var(--bg); display: flex; flex-direction: column; }
+  .content-topbar { background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 28px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .content-topbar h2 { font-size: 15px; font-weight: 700; color: var(--text); }
+  .topbar-sub { font-size: 12px; color: var(--sub); margin-left: 4px; }
+  main { flex: 1; max-width: 1060px; margin: 0 auto; width: 100%; padding: 32px 28px 52px; }
+  .section-label { font-size: 11px; font-weight: 700; color: var(--sub); letter-spacing: 4px; text-transform: uppercase; margin-top: 40px; margin-bottom: 22px; display: flex; align-items: center; gap: 12px; }
+  main > .section-label:first-child { margin-top: 0; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  footer { text-align: center; padding: 18px 24px; font-size: 12px; color: var(--sub); border-top: 1px solid var(--border); background: var(--card); }
 
-/* ── Dispatch Rule Cards ── */
-.rule-list { display: flex; flex-direction: column; gap: 16px; }
+  /* ── Dispatch Rule Cards ── */
+  .rule-list { display: flex; flex-direction: column; gap: 16px; }
+  .rule-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden; transition: box-shadow .2s, border-color .2s; cursor: pointer; text-decoration: none; color: inherit; display: block; box-shadow: 0 2px 10px rgba(0,0,0,.05); }
+  .rule-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.1); border-color: #93c5fd; }
+  .rule-card.warning-active { border-color: #fca5a5; box-shadow: 0 2px 16px rgba(220,38,38,.12); }
+  .rule-card.placeholder { border-style: dashed; border-color: var(--border); background: var(--bg); cursor: default; }
+  .rule-card.placeholder:hover { box-shadow: none; border-color: var(--border); }
+  .rule-body { display: flex; align-items: stretch; }
+  .rule-icon-col { width: 72px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 32px; background: #eff6ff; border-right: 1px solid #dbeafe; }
+  .rule-card.warning-active .rule-icon-col { background: #fef2f2; border-color: #fecaca; }
+  .rule-card.placeholder .rule-icon-col { background: var(--bg); border-color: var(--border); }
+  .rule-main { flex: 1; padding: 18px 22px; }
+  .rule-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .rule-trigger { font-size: 12px; color: var(--sub); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+  .rule-trigger::before { content: "⚡"; font-size: 11px; }
+  .rule-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .meta-chip { font-size: 11.5px; padding: 3px 10px; border-radius: 20px; background: #f1f5f9; color: var(--sub); border: 1px solid var(--border); display: flex; align-items: center; gap: 5px; }
+  .meta-chip .chip-label { font-weight: 600; color: var(--navy); margin-right: 2px; }
+  .rule-footer { display: flex; align-items: center; justify-content: space-between; }
+  .rule-status { display: flex; align-items: center; gap: 7px; font-size: 12.5px; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; box-shadow: 0 0 0 3px rgba(22,163,74,.15); animation: pulse 2s infinite; }
+  .status-dot.warning { background: var(--red); box-shadow: 0 0 0 3px rgba(220,38,38,.15); }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 3px rgba(22,163,74,.15)}50%{box-shadow:0 0 0 6px rgba(22,163,74,.05)} }
+  .rule-btn { padding: 7px 18px; border-radius: 8px; background: var(--blue); color: #fff; font-size: 12.5px; font-weight: 600; border: none; cursor: pointer; transition: background .15s; font-family: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+  .rule-btn:hover { background: #1d4ed8; }
+  .rule-card.warning-active .rule-btn { background: var(--red); }
+  .rule-card.warning-active .rule-btn:hover { background: #b91c1c; }
+  .warning-banner { display: none; align-items: center; gap: 10px; background: #fef2f2; border-top: 1px solid #fecaca; padding: 10px 20px; font-size: 12.5px; color: #7f1d1d; }
+  .warning-banner.show { display: flex; }
+  .placeholder-inner { padding: 28px; text-align: center; color: var(--sub); font-size: 13px; width: 100%; }
+  .placeholder-inner .ph-icon { font-size: 28px; margin-bottom: 8px; opacity: .4; }
 
-.rule-card {
-  background: var(--card); border: 1.5px solid var(--border);
-  border-radius: 16px; overflow: hidden;
-  transition: box-shadow .2s, border-color .2s;
-  cursor: pointer;
-  text-decoration: none; color: inherit; display: block;
-}
-.rule-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); border-color: var(--pri-border); }
-.rule-card.warning-active { border-color: var(--red-border); box-shadow: 0 2px 16px rgba(220,38,38,.12); }
-.rule-card.placeholder {
-  border-style: dashed; border-color: #cbd5e1;
-  background: #f8fafc; cursor: default; opacity: .7;
-}
-.rule-card.placeholder:hover { box-shadow: none; border-color: #cbd5e1; }
+  /* ── Dark mode ── */
+  body.dark { --bg:#0f172a; --card:#1e293b; --border:#334155; --text:#f1f5f9; --sub:#94a3b8; --sidebar-bg:#0d1b2a; }
+  body.dark .brand { background: linear-gradient(160deg,#2c1a0e 0%,#3d2010 55%,#4a2712 100%); }
+  body.dark .content-topbar { background:#1e293b; border-color:#334155; }
+  body.dark .rule-card { box-shadow:0 2px 10px rgba(0,0,0,.3); }
+  body.dark .rule-card:hover { box-shadow:0 6px 24px rgba(0,0,0,.4); }
+  body.dark .rule-icon-col { background:#1e3a5f; border-color:#2d4a7a; }
+  body.dark .meta-chip { background:#1e293b; border-color:#334155; }
+  body.dark .rule-card.placeholder { background:#0f172a; }
+  body.dark .rule-card.placeholder .rule-icon-col { background:#0f172a; }
 
-.rule-body { display: flex; align-items: stretch; }
-
-.rule-icon-col {
-  width: 72px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 32px;
-  background: var(--pri-light); border-right: 1px solid var(--pri-border);
-}
-.rule-card.warning-active .rule-icon-col { background: var(--red-light); border-color: var(--red-border); }
-.rule-card.placeholder .rule-icon-col { background: #f1f5f9; border-color: var(--border); }
-
-.rule-main { flex: 1; padding: 18px 20px; }
-.rule-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-.rule-trigger {
-  font-size: 12px; color: var(--sub); margin-bottom: 12px;
-  display: flex; align-items: center; gap: 6px;
-}
-.rule-trigger::before { content: "⚡"; font-size: 11px; }
-
-.rule-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-.meta-chip {
-  font-size: 11.5px; padding: 3px 10px; border-radius: 20px;
-  background: #f1f5f9; color: var(--sub); border: 1px solid var(--border);
-  display: flex; align-items: center; gap: 5px;
-}
-.meta-chip .chip-label { font-weight: 600; color: var(--navy); margin-right: 2px; }
-
-.rule-footer { display: flex; align-items: center; justify-content: space-between; }
-.rule-status { display: flex; align-items: center; gap: 7px; font-size: 12.5px; }
-.status-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--green); flex-shrink: 0;
-  box-shadow: 0 0 0 3px rgba(22,163,74,.15);
-  animation: pulse 2s infinite;
-}
-.status-dot.warning { background: var(--red); box-shadow: 0 0 0 3px rgba(220,38,38,.15); }
-@keyframes pulse {
-  0%,100% { box-shadow: 0 0 0 3px rgba(22,163,74,.15); }
-  50%      { box-shadow: 0 0 0 6px rgba(22,163,74,.05); }
-}
-
-.rule-btn {
-  padding: 7px 18px; border-radius: 8px;
-  background: var(--pri); color: #fff;
-  font-size: 12.5px; font-weight: 600; border: none;
-  cursor: pointer; transition: background .15s; font-family: inherit;
-  text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
-}
-.rule-btn:hover { background: var(--pri-dark); }
-.rule-card.warning-active .rule-btn { background: var(--red); }
-.rule-card.warning-active .rule-btn:hover { background: #b91c1c; }
-
-.warning-banner {
-  display: none; align-items: center; gap: 10px;
-  background: var(--red-light); border-top: 1px solid var(--red-border);
-  padding: 10px 20px; font-size: 12.5px; color: #7f1d1d;
-}
-.warning-banner.show { display: flex; }
-
-.placeholder-inner {
-  padding: 24px; text-align: center; color: var(--sub);
-  font-size: 13px; width: 100%;
-}
-.placeholder-inner .ph-icon { font-size: 28px; margin-bottom: 8px; }
-.placeholder-inner p { font-size: 12px; margin-top: 4px; }
-
-footer {
-  text-align: center; font-size: 12px; color: var(--sub);
-  padding: 20px; border-top: 1px solid var(--border);
-}
+  /* ── Mobile ── */
+  .menu-btn { display:none; background:none; border:none; cursor:pointer; font-size:24px; line-height:1; color:var(--text); padding:2px 6px; flex-shrink:0; }
+  .backdrop { display:none; position:fixed; inset:0; z-index:199; background:rgba(0,0,0,.45); }
+  .backdrop.show { display:block; }
+  @media (max-width:768px) {
+    .menu-btn { display:inline-flex; align-items:center; }
+    .sidebar { position:fixed; top:0; left:0; bottom:0; z-index:200; width:280px; transform:translateX(-100%); transition:transform .25s cubic-bezier(.4,0,.2,1); }
+    .sidebar.open { transform:translateX(0); box-shadow:8px 0 40px rgba(0,0,0,.4); }
+    .content-topbar { padding:12px 16px; }
+    main { padding:20px 16px 40px; }
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="hdr-brand">
-    <img src="../logo.png" alt="" onerror="this.style.display='none'">
-    <span>大豐環保科技</span>
-  </div>
-  <h1>📤 文件自動派送系統</h1>
-  <a class="hdr-btn" href="../">← 返回首頁</a>
-</header>
+<div class="backdrop" id="backdrop" onclick="closeSidebar()"></div>
+<div class="layout">
 
-<main>
-
-  <div class="page-hero">
-    <div class="hero-icon">📤</div>
-    <div class="hero-text">
-      <h2>文件自動派送系統</h2>
-      <p>
-        依據預設條件自動觸發，將對應文件草稿派送至相關窗口。<br>
-        所有派送均會在 Outlook 開啟草稿供人工確認，不會自動送出。
-      </p>
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="../上地球logo.png" alt="大豐環保科技">
+      <div class="brand-sub">職安衛管理系統</div>
     </div>
-  </div>
+    <nav class="nav">
+      <a class="nav-item" href="../">
+        <span class="nav-icon">🏠</span>首頁
+      </a>
+      <div class="nav-section">安全衛生</div>
+      <a class="nav-item" href="../risk/"><span class="nav-icon">⚠️</span>危害鑑別及風險評估</a>
+      <a class="nav-item" href="../accident/"><span class="nav-icon">📈</span>職業災害分析系統</a>
+      <a class="nav-item" href="../news/"><span class="nav-icon">📰</span>職災情報與安衛動態</a>
+      <div class="nav-section">機械設備及化學品</div>
+      <a class="nav-item" href="../equipment/"><span class="nav-icon">⚙️</span>機械設備管理</a>
+      <a class="nav-item" href="../chemical/"><span class="nav-icon">⚗️</span>危害性化學品管理</a>
+      <a class="nav-item" href="https://check-system.gm.zerozero.tw/dashboard" target="_blank"><span class="nav-icon">📋</span>自動點檢系統</a>
+      <div class="nav-section">人員管理</div>
+      <a class="nav-item" href="../contract/"><span class="nav-icon">🏗️</span>承攬商管理系統</a>
+      <a class="nav-item" href="../nurse/"><span class="nav-icon">🏥</span>職護臨場服務</a>
+      <a class="nav-item" href="https://hr-corptraining.zerozero.tw/certificates" target="_blank"><span class="nav-icon">🪪</span>證照管理</a>
+      <a class="nav-item" href="../training/"><span class="nav-icon">🎓</span>教育訓練教材庫</a>
+      <div class="nav-section">制度文件</div>
+      <a class="nav-item" href="../law/"><span class="nav-icon">📋</span>法規鑑別查詢系統</a>
+      <a class="nav-item" href="../monitoring/"><span class="nav-icon">🔬</span>作業環境監測</a>
+      <a class="nav-item" href="../committee/"><span class="nav-icon">📊</span>安全衛生委員會</a>
+      <a class="nav-item" href="../plans/"><span class="nav-icon">🗂️</span>職業安全衛生計畫書</a>
+      <div class="nav-section">四大防護計畫</div>
+      <a class="nav-item" href="../ergonomic/"><span class="nav-icon">🧍</span>人因性危害預防</a>
+      <a class="nav-item" href="../overload/"><span class="nav-icon">😰</span>異常工作負荷預防</a>
+      <a class="nav-item" href="../harassment/"><span class="nav-icon">🛡️</span>不法侵害防治系統</a>
+      <a class="nav-item" href="../maternity/"><span class="nav-icon">🤰</span>母性健康保護</a>
+      <a class="nav-item" href="../fourplans/admin/"><span class="nav-icon">🩺</span>四大計畫管理後台</a>
+      <div class="nav-section">消防</div>
+      <a class="nav-item" href="../fire/"><span class="nav-icon">🧯</span>消防管理</a>
+      <div class="nav-section">個人工具</div>
+      <a class="nav-item active" href="../dispatch/"><span class="nav-icon">📤</span>文件自動派送</a>
+      <a class="nav-item" href="../tasks/"><span class="nav-icon">✅</span>職安工作中樞</a>
+      <div class="nav-section">小工具</div>
+      <a class="nav-item" href="../law/?chat=1"><span class="nav-icon">⚖️</span>法規問答機器人</a>
+      <a class="nav-item" href="../risk/?chat=1"><span class="nav-icon">🔍</span>風險評估機器人</a>
+      <a class="nav-item" href="../chemical/?chat=1"><span class="nav-icon">🧪</span>化學品緊急應變機器人</a>
+      <a class="nav-item" href="../harassment/?chat=1"><span class="nav-icon">🤝</span>霸凌行為諮詢</a>
+      <div class="hw-widget">
+        <div class="hw-hd">🌡️ 即時熱危害</div>
+        <div id="hw-body"><div class="hw-loading">定位中…</div></div>
+        <a class="hw-link" href="../heat/">查看詳情 →</a>
+      </div>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="dark-btn" id="dark-btn" onclick="toggleDark()">🌙 切換深色模式</button>
+    </div>
+  </aside>
 
-  <div class="section-label">派送規則</div>
+  <div class="content">
+    <div class="content-topbar">
+      <button class="menu-btn" onclick="openSidebar()">☰</button>
+      <h2>📤 文件自動派送系統</h2>
+      <span class="topbar-sub">— 依條件自動觸發，產生 Outlook 草稿供確認後送出</span>
+    </div>
 
-  <div class="rule-list">
+    <main>
+      <div class="section-label">派送規則</div>
+      <div class="rule-list">
 
-    <!-- 颱風陸上警報派送 -->
-    <a class="rule-card" id="typhoon-card" href="./typhoon/">
-      <div class="rule-body">
-        <div class="rule-icon-col" id="typhoon-icon">🌀</div>
-        <div class="rule-main">
-          <div class="rule-title">颱風陸上警報派送</div>
-          <div class="rule-trigger">台中市或彰化縣發布陸上颱風警報時觸發</div>
-          <div class="rule-meta">
-            <span class="meta-chip"><span class="chip-label">附件</span>災前及災後檢核表.doc</span>
-            <span class="meta-chip"><span class="chip-label">收件</span>神岡站・再生處理 窗口</span>
-            <span class="meta-chip"><span class="chip-label">副本</span>神岡站主任・再生處理經理</span>
-            <span class="meta-chip"><span class="chip-label">排程</span>每 30 分鐘自動偵測</span>
-          </div>
-          <div class="rule-footer">
-            <div class="rule-status">
-              <span class="status-dot" id="typhoon-dot"></span>
-              <span id="typhoon-status-text">查詢警報狀態中...</span>
+        <a class="rule-card" id="typhoon-card" href="../typhoon/">
+          <div class="rule-body">
+            <div class="rule-icon-col" id="typhoon-icon">🌀</div>
+            <div class="rule-main">
+              <div class="rule-title">颱風陸上警報派送</div>
+              <div class="rule-trigger">台中市或彰化縣發布陸上颱風警報時觸發</div>
+              <div class="rule-meta">
+                <span class="meta-chip"><span class="chip-label">附件</span>災前及災後檢核表.doc</span>
+                <span class="meta-chip"><span class="chip-label">收件</span>神岡站・再生處理 窗口</span>
+                <span class="meta-chip"><span class="chip-label">副本</span>神岡站主任・再生處理經理</span>
+                <span class="meta-chip"><span class="chip-label">排程</span>每 30 分鐘自動偵測</span>
+              </div>
+              <div class="rule-footer">
+                <div class="rule-status">
+                  <span class="status-dot" id="typhoon-dot"></span>
+                  <span id="typhoon-status-text">查詢警報狀態中...</span>
+                </div>
+                <span class="rule-btn" onclick="event.preventDefault();location.href='../typhoon/'">查看詳情 ›</span>
+              </div>
             </div>
-            <span class="rule-btn" onclick="event.preventDefault();location.href='./typhoon/'">查看詳情 ›</span>
+          </div>
+          <div class="warning-banner" id="typhoon-banner">
+            🚨 <strong id="typhoon-banner-text">陸上颱風警報生效中</strong> — 請確認工作排程器是否正在執行
+          </div>
+        </a>
+
+        <div class="rule-card placeholder">
+          <div class="rule-body">
+            <div class="rule-icon-col">＋</div>
+            <div class="placeholder-inner">
+              <div style="font-weight:600;font-size:14px;margin-bottom:6px">預留擴充</div>
+              <div style="font-size:12px">未來可在此新增其他自動派送規則，例如：節日宣導文件、法規更新通知等</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="warning-banner" id="typhoon-banner">
-        🚨 <strong id="typhoon-banner-text">陸上颱風警報生效中</strong> — 請確認工作排程器是否正在執行
-      </div>
-    </a>
 
-    <!-- 預留擴充 -->
-    <div class="rule-card placeholder">
-      <div class="placeholder-inner">
-        <div class="ph-icon">＋</div>
-        <div style="font-weight:600">預留擴充</div>
-        <p>未來可在此新增其他自動派送規則，例如：節日宣導文件、法規更新通知等</p>
       </div>
-    </div>
+    </main>
 
+    <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
   </div>
 
-</main>
-
-<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+</div>
 
 <script>
-const CWA_KEY = 'CWA-6A18801C-3D96-4113-93F6-8198BD0712F2';
-const API_URL = 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/W-C0034-001'
-              + '?Authorization=' + CWA_KEY + '&format=JSON';
+/* ── Heat widget ── */
+(function(){
+  const KEY='CWA-6A18801C-3D96-4113-93F6-8198BD0712F2';
+  const API='https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0001-001?Authorization='+KEY+'&format=JSON';
+  const WL=[{label:'低',min:-Infinity,max:25,bg:'#dcfce7',cl:'#15803d'},{label:'中',min:25,max:28,bg:'#fef9c3',cl:'#854d0e'},{label:'高',min:28,max:30,bg:'#ffedd5',cl:'#9a3412'},{label:'極高',min:30,max:Infinity,bg:'#fee2e2',cl:'#991b1b'}];
+  const HL=[{label:'安全',min:-Infinity,max:26.7,bg:'#dcfce7',cl:'#15803d'},{label:'注意',min:26.7,max:32.2,bg:'#f7fee7',cl:'#3f6212'},{label:'格外注意',min:32.2,max:40.6,bg:'#fef9c3',cl:'#854d0e'},{label:'危險',min:40.6,max:54.4,bg:'#ffedd5',cl:'#9a3412'},{label:'極度危險',min:54.4,max:Infinity,bg:'#fee2e2',cl:'#991b1b'}];
+  function wbgt(T,RH){const Tw=T*Math.atan(0.151977*Math.sqrt(RH+8.313659))+Math.atan(T+RH)-Math.atan(RH-1.676331)+0.00391838*Math.pow(RH,1.5)*Math.atan(0.023101*RH)-4.686035;return+(0.7*Tw+0.3*T).toFixed(1);}
+  function hi(T,RH){const Tf=T*9/5+32;let H=Tf<80?0.5*(Tf+61+(Tf-68)*1.2+RH*0.094):-42.379+2.04901523*Tf+10.14333127*RH-0.22475541*Tf*RH-0.00683783*Tf*Tf-0.05481717*RH*RH+0.00122874*Tf*Tf*RH+0.00085282*Tf*RH*RH-0.00000199*Tf*Tf*RH*RH;return+((H-32)*5/9).toFixed(1);}
+  function lv(arr,v){return arr.find(l=>v>=l.min&&v<l.max)||arr[arr.length-1];}
+  function haversine(a,b,c,d){const R=6371,r=Math.PI/180;const x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return R*2*Math.asin(Math.sqrt(x));}
+  function setBody(html){const el=document.getElementById('hw-body');if(el)el.innerHTML=html;}
+  function badge(l){return'<span class="hw-badge" style="background:'+l.bg+';color:'+l.cl+'">'+l.label+'</span>';}
+  if(!navigator.geolocation){setBody('<div class="hw-err">不支援定位</div>');return;}
+  navigator.geolocation.getCurrentPosition(async function(pos){
+    try{
+      const r=await fetch(API),j=await r.json();
+      let best=null,md=Infinity;
+      for(const s of j.records?.Station??[]){
+        const c=s.GeoInfo?.Coordinates?.find(x=>x.CoordinateName==='WGS84');if(!c)continue;
+        const T=+s.WeatherElement?.AirTemperature,RH=+s.WeatherElement?.RelativeHumidity;
+        if(!isFinite(T)||!isFinite(RH)||T<-50||RH<0)continue;
+        const d=haversine(pos.coords.latitude,pos.coords.longitude,+c.StationLatitude,+c.StationLongitude);
+        if(d<md){md=d;best={T,RH};}
+      }
+      if(!best){setBody('<div class="hw-err">無氣象站資料</div>');return;}
+      const w=wbgt(best.T,best.RH),h=hi(best.T,best.RH);
+      const wl=lv(WL,w),hl=lv(HL,h);
+      const worst=[wl,hl].find(l=>['極高','危險','高','格外注意','中','注意'].includes(l.label))||wl;
+      setBody('<div class="hw-vals"><span class="hw-temp">'+best.T.toFixed(1)+'°</span><span class="hw-rh">'+Math.round(best.RH)+'%</span>'+badge(worst)+'</div><div class="hw-sub">WBGT '+w+'°C ('+wl.label+') · HI '+h+'°C ('+hl.label+')</div>');
+    }catch(e){setBody('<div class="hw-err">資料載入失敗</div>');}
+  },function(){setBody('<div class="hw-err">位置存取被拒</div>');},{timeout:10000,maximumAge:300000});
+})();
 
-async function checkWarning() {
-  try {
-    const r = await fetch(API_URL);
-    const j = await r.json();
-    const entries = j.records?.info || [];
-    const landAreas = new Set();
-    let typhoonName = '';
-
-    for (const entry of (Array.isArray(entries) ? entries : [entries])) {
-      if (entry.urgency === 'Past') continue;
-      if (!(entry.headline || '').includes('陸上')) continue;
-      typhoonName = entry.cwa_typhoon_name || entry.typhoon_name || typhoonName;
-      (entry.areaDesc || '').replace(/[、,]/g, ' ').split(/\s+/).forEach(t => t && landAreas.add(t));
+/* ── 颱風警報狀態 ── */
+(async function(){
+  const KEY='CWA-6A18801C-3D96-4113-93F6-8198BD0712F2';
+  const API='https://opendata.cwa.gov.tw/api/v1/rest/datastore/W-C0034-001?Authorization='+KEY+'&format=JSON';
+  try{
+    const r=await fetch(API),j=await r.json();
+    const entries=j.records?.info||[];
+    const landAreas=new Set();let typhoonName='';
+    for(const e of(Array.isArray(entries)?entries:[entries])){
+      if(e.urgency==='Past')continue;
+      if(!(e.headline||'').includes('陸上'))continue;
+      typhoonName=e.cwa_typhoon_name||e.typhoon_name||typhoonName;
+      (e.areaDesc||'').replace(/[、,]/g,' ').split(/\s+/).forEach(t=>t&&landAreas.add(t));
     }
-
-    const targets = ['台中市', '彰化縣'];
-    const matched = targets.filter(a => landAreas.has(a));
-    const hasWarning = matched.length > 0;
-
-    const card   = document.getElementById('typhoon-card');
-    const dot    = document.getElementById('typhoon-dot');
-    const text   = document.getElementById('typhoon-status-text');
-    const banner = document.getElementById('typhoon-banner');
-    const bannerText = document.getElementById('typhoon-banner-text');
-    const icon   = document.getElementById('typhoon-icon');
-
-    if (hasWarning) {
+    const matched=['台中市','彰化縣'].filter(a=>landAreas.has(a));
+    const hasWarning=matched.length>0;
+    const dot=document.getElementById('typhoon-dot');
+    const txt=document.getElementById('typhoon-status-text');
+    const banner=document.getElementById('typhoon-banner');
+    const bannerTxt=document.getElementById('typhoon-banner-text');
+    const icon=document.getElementById('typhoon-icon');
+    const card=document.getElementById('typhoon-card');
+    if(hasWarning){
       card.classList.add('warning-active');
       dot.classList.add('warning');
-      text.textContent = `⚠️ ${typhoonName || '颱風'} 陸上警報生效中（${matched.join('、')}）`;
+      txt.textContent='⚠️ '+(typhoonName||'颱風')+' 陸上警報生效中（'+matched.join('、')+'）';
       banner.classList.add('show');
-      bannerText.textContent = `${typhoonName || '颱風'} 陸上警報生效中（${matched.join('、')}）— 請確認工作排程器是否正在執行`;
-      icon.textContent = '🚨';
-    } else {
-      text.textContent = '目前無陸上颱風警報';
+      bannerTxt.textContent=(typhoonName||'颱風')+' 陸上警報生效中（'+matched.join('、')+'）';
+      icon.textContent='🚨';
+    }else{
+      txt.textContent='目前無陸上颱風警報';
     }
-  } catch (e) {
-    document.getElementById('typhoon-status-text').textContent = 'API 連線失敗';
-  }
-}
+  }catch(e){document.getElementById('typhoon-status-text').textContent='API 連線失敗';}
+})();
 
-checkWarning();
+/* ── Dark mode ── */
+function toggleDark(){const d=document.body.classList.toggle('dark');localStorage.setItem('portal-dark',d?'1':'0');document.getElementById('dark-btn').textContent=d?'☀️ 切換淺色模式':'🌙 切換深色模式';}
+if(localStorage.getItem('portal-dark')==='1'){document.body.classList.add('dark');document.getElementById('dark-btn').textContent='☀️ 切換淺色模式';}
+
+/* ── Sidebar ── */
+function openSidebar(){document.querySelector('.sidebar').classList.add('open');document.getElementById('backdrop').classList.add('show');}
+function closeSidebar(){document.querySelector('.sidebar').classList.remove('open');document.getElementById('backdrop').classList.remove('show');}
+document.querySelectorAll('.nav-item').forEach(a=>{a.addEventListener('click',()=>{if(window.innerWidth<=768)closeSidebar();});});
 </script>
 </body>
 </html>
