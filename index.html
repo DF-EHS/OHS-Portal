@@ -249,6 +249,12 @@
   .btn-violet:hover { background: #4c1d95; }
   .ci-violet  { background: #f5f3ff; }
   .tg-violet  { background: #ede9fe; color: #5b21b6; }
+  .ci-slate   { background: #e5e7eb; }
+  .btn-slate  { background: #374151; color: #fff; }
+  .btn-slate:hover  { background: #1f2937; }
+  .tg-slate   { background: #e5e7eb; color: #374151; }
+  body.dark .ci-slate  { background: #1e293b; }
+  body.dark .tg-slate  { background: #1e293b; color: #9ca3af; }
 
   /* ── placeholder card ── */
   .placeholder-card {
@@ -955,20 +961,20 @@
 
         <div class="sys-card" onclick="location.href='./dispatch/'">
           <div class="card-header">
-            <div class="card-icon ci-blue">📤</div>
+            <div class="card-icon ci-slate">📤</div>
             <div>
               <div class="card-title">文件自動派送系統</div>
               <div class="card-desc">依據預設條件自動觸發，將對應文件草稿派送至相關窗口。目前已建立：颱風陸上警報 → 災前及災後檢核表。</div>
             </div>
           </div>
           <div class="card-tags">
-            <span class="tag tg-blue">颱風警報</span>
+            <span class="tag tg-slate">颱風警報</span>
             <span class="tag tg-navy">自動派送</span>
             <span class="tag tg-orange">郵件草稿</span>
           </div>
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
-            <button class="open-btn btn-blue" onclick="event.stopPropagation();location.href='./dispatch/'">開啟系統 ›</button>
+            <button class="open-btn btn-slate" onclick="event.stopPropagation();location.href='./dispatch/'">開啟系統 ›</button>
           </div>
         </div>
 
