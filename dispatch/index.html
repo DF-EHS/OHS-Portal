@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件自動派送系統 | 大豐環保科技</title>
+<style>
+:root {
+  --pri:        #0284c7;
+  --pri-dark:   #0369a1;
+  --pri-darker: #0c4a6e;
+  --pri-light:  #f0f9ff;
+  --pri-border: #bae6fd;
+  --green:  #16a34a; --green-light: #f0fdf4; --green-border: #bbf7d0;
+  --red:    #dc2626; --red-light:   #fef2f2; --red-border:   #fecaca;
+  --navy:   #1e3a5f;
+  --bg: #f8fafc; --card: #fff; --border: #e2e8f0;
+  --text: #1e293b; --sub: #64748b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+header {
+  background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%);
+  color: #fff; padding: 12px 20px;
+  display: flex; align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.4);
+}
+header h1 { font-size: 17px; font-weight: 700; flex: 1; }
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer; transition: background .15s;
+  font-family: inherit; flex-shrink: 0; text-decoration: none; display: inline-flex; align-items: center;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.2); }
+.hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 12px; color: #bae6fd; font-weight: 600; white-space: nowrap; }
+
+main { flex: 1; max-width: 1020px; margin: 0 auto; width: 100%; padding: 32px 24px 60px; }
+
+.page-hero {
+  background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%);
+  color: #fff; border-radius: 16px; padding: 28px 32px; margin-bottom: 32px;
+  box-shadow: 0 4px 20px rgba(2,132,199,.25);
+  display: flex; align-items: center; gap: 20px;
+}
+.hero-icon { font-size: 52px; flex-shrink: 0; }
+.hero-text h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.hero-text p  { font-size: 13px; color: #bae6fd; line-height: 1.6; }
+
+.section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  color: var(--sub); text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px; margin: 0 0 16px;
+}
+.section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+/* ── Dispatch Rule Cards ── */
+.rule-list { display: flex; flex-direction: column; gap: 16px; }
+
+.rule-card {
+  background: var(--card); border: 1.5px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  transition: box-shadow .2s, border-color .2s;
+  cursor: pointer;
+  text-decoration: none; color: inherit; display: block;
+}
+.rule-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); border-color: var(--pri-border); }
+.rule-card.warning-active { border-color: var(--red-border); box-shadow: 0 2px 16px rgba(220,38,38,.12); }
+.rule-card.placeholder {
+  border-style: dashed; border-color: #cbd5e1;
+  background: #f8fafc; cursor: default; opacity: .7;
+}
+.rule-card.placeholder:hover { box-shadow: none; border-color: #cbd5e1; }
+
+.rule-body { display: flex; align-items: stretch; }
+
+.rule-icon-col {
+  width: 72px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  background: var(--pri-light); border-right: 1px solid var(--pri-border);
+}
+.rule-card.warning-active .rule-icon-col { background: var(--red-light); border-color: var(--red-border); }
+.rule-card.placeholder .rule-icon-col { background: #f1f5f9; border-color: var(--border); }
+
+.rule-main { flex: 1; padding: 18px 20px; }
+.rule-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.rule-trigger {
+  font-size: 12px; color: var(--sub); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.rule-trigger::before { content: "⚡"; font-size: 11px; }
+
+.rule-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.meta-chip {
+  font-size: 11.5px; padding: 3px 10px; border-radius: 20px;
+  background: #f1f5f9; color: var(--sub); border: 1px solid var(--border);
+  display: flex; align-items: center; gap: 5px;
+}
+.meta-chip .chip-label { font-weight: 600; color: var(--navy); margin-right: 2px; }
+
+.rule-footer { display: flex; align-items: center; justify-content: space-between; }
+.rule-status { display: flex; align-items: center; gap: 7px; font-size: 12.5px; }
+.status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green); flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(22,163,74,.15);
+  animation: pulse 2s infinite;
+}
+.status-dot.warning { background: var(--red); box-shadow: 0 0 0 3px rgba(220,38,38,.15); }
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 3px rgba(22,163,74,.15); }
+  50%      { box-shadow: 0 0 0 6px rgba(22,163,74,.05); }
+}
+
+.rule-btn {
+  padding: 7px 18px; border-radius: 8px;
+  background: var(--pri); color: #fff;
+  font-size: 12.5px; font-weight: 600; border: none;
+  cursor: pointer; transition: background .15s; font-family: inherit;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
+}
+.rule-btn:hover { background: var(--pri-dark); }
+.rule-card.warning-active .rule-btn { background: var(--red); }
+.rule-card.warning-active .rule-btn:hover { background: #b91c1c; }
+
+.warning-banner {
+  display: none; align-items: center; gap: 10px;
+  background: var(--red-light); border-top: 1px solid var(--red-border);
+  padding: 10px 20px; font-size: 12.5px; color: #7f1d1d;
+}
+.warning-banner.show { display: flex; }
+
+.placeholder-inner {
+  padding: 24px; text-align: center; color: var(--sub);
+  font-size: 13px; width: 100%;
+}
+.placeholder-inner .ph-icon { font-size: 28px; margin-bottom: 8px; }
+.placeholder-inner p { font-size: 12px; margin-top: 4px; }
+
+footer {
+  text-align: center; font-size: 12px; color: var(--sub);
+  padding: 20px; border-top: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-brand">
+    <img src="../logo.png" alt="" onerror="this.style.display='none'">
+    <span>大豐環保科技</span>
+  </div>
+  <h1>📤 文件自動派送系統</h1>
+  <a class="hdr-btn" href="../">← 返回首頁</a>
+</header>
+
+<main>
+
+  <div class="page-hero">
+    <div class="hero-icon">📤</div>
+    <div class="hero-text">
+      <h2>文件自動派送系統</h2>
+      <p>
+        依據預設條件自動觸發，將對應文件草稿派送至相關窗口。<br>
+        所有派送均會在 Outlook 開啟草稿供人工確認，不會自動送出。
+      </p>
+    </div>
+  </div>
+
+  <div class="section-label">派送規則</div>
+
+  <div class="rule-list">
+
+    <!-- 颱風陸上警報派送 -->
+    <a class="rule-card" id="typhoon-card" href="./typhoon/">
+      <div class="rule-body">
+        <div class="rule-icon-col" id="typhoon-icon">🌀</div>
+        <div class="rule-main">
+          <div class="rule-title">颱風陸上警報派送</div>
+          <div class="rule-trigger">台中市或彰化縣發布陸上颱風警報時觸發</div>
+          <div class="rule-meta">
+            <span class="meta-chip"><span class="chip-label">附件</span>災前及災後檢核表.doc</span>
+            <span class="meta-chip"><span class="chip-label">收件</span>神岡站・再生處理 窗口</span>
+            <span class="meta-chip"><span class="chip-label">副本</span>神岡站主任・再生處理經理</span>
+            <span class="meta-chip"><span class="chip-label">排程</span>每 30 分鐘自動偵測</span>
+          </div>
+          <div class="rule-footer">
+            <div class="rule-status">
+              <span class="status-dot" id="typhoon-dot"></span>
+              <span id="typhoon-status-text">查詢警報狀態中...</span>
+            </div>
+            <span class="rule-btn" onclick="event.preventDefault();location.href='./typhoon/'">查看詳情 ›</span>
+          </div>
+        </div>
+      </div>
+      <div class="warning-banner" id="typhoon-banner">
+        🚨 <strong id="typhoon-banner-text">陸上颱風警報生效中</strong> — 請確認工作排程器是否正在執行
+      </div>
+    </a>
+
+    <!-- 預留擴充 -->
+    <div class="rule-card placeholder">
+      <div class="placeholder-inner">
+        <div class="ph-icon">＋</div>
+        <div style="font-weight:600">預留擴充</div>
+        <p>未來可在此新增其他自動派送規則，例如：節日宣導文件、法規更新通知等</p>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+
+<script>
+const CWA_KEY = 'CWA-6A18801C-3D96-4113-93F6-8198BD0712F2';
+const API_URL = 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/W-C0034-001'
+              + '?Authorization=' + CWA_KEY + '&format=JSON';
+
+async function checkWarning() {
+  try {
+    const r = await fetch(API_URL);
+    const j = await r.json();
+    const entries = j.records?.info || [];
+    const landAreas = new Set();
+    let typhoonName = '';
+
+    for (const entry of (Array.isArray(entries) ? entries : [entries])) {
+      if (entry.urgency === 'Past') continue;
+      if (!(entry.headline || '').includes('陸上')) continue;
+      typhoonName = entry.cwa_typhoon_name || entry.typhoon_name || typhoonName;
+      (entry.areaDesc || '').replace(/[、,]/g, ' ').split(/\s+/).forEach(t => t && landAreas.add(t));
+    }
+
+    const targets = ['台中市', '彰化縣'];
+    const matched = targets.filter(a => landAreas.has(a));
+    const hasWarning = matched.length > 0;
+
+    const card   = document.getElementById('typhoon-card');
+    const dot    = document.getElementById('typhoon-dot');
+    const text   = document.getElementById('typhoon-status-text');
+    const banner = document.getElementById('typhoon-banner');
+    const bannerText = document.getElementById('typhoon-banner-text');
+    const icon   = document.getElementById('typhoon-icon');
+
+    if (hasWarning) {
+      card.classList.add('warning-active');
+      dot.classList.add('warning');
+      text.textContent = `⚠️ ${typhoonName || '颱風'} 陸上警報生效中（${matched.join('、')}）`;
+      banner.classList.add('show');
+      bannerText.textContent = `${typhoonName || '颱風'} 陸上警報生效中（${matched.join('、')}）— 請確認工作排程器是否正在執行`;
+      icon.textContent = '🚨';
+    } else {
+      text.textContent = '目前無陸上颱風警報';
+    }
+  } catch (e) {
+    document.getElementById('typhoon-status-text').textContent = 'API 連線失敗';
+  }
+}
+
+checkWarning();
+</script>
+</body>
+</html>

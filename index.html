@@ -456,6 +456,9 @@
       </a>
 
       <div class="nav-section">個人工具</div>
+      <a class="nav-item" href="./dispatch/">
+        <span class="nav-icon">📤</span>文件自動派送
+      </a>
       <a class="nav-item" href="./tasks/">
         <span class="nav-icon">✅</span>職安工作中樞
       </a>
@@ -949,6 +952,25 @@
 
       <div class="section-label">個人工具</div>
       <div class="card-grid">
+
+        <div class="sys-card" onclick="location.href='./dispatch/'">
+          <div class="card-header">
+            <div class="card-icon ci-blue">📤</div>
+            <div>
+              <div class="card-title">文件自動派送系統</div>
+              <div class="card-desc">依據預設條件自動觸發，將對應文件草稿派送至相關窗口。目前已建立：颱風陸上警報 → 災前及災後檢核表。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-blue">颱風警報</span>
+            <span class="tag tg-navy">自動派送</span>
+            <span class="tag tg-orange">郵件草稿</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn btn-blue" onclick="event.stopPropagation();location.href='./dispatch/'">開啟系統 ›</button>
+          </div>
+        </div>
 
         <div class="sys-card" onclick="location.href='./tasks/'">
           <div class="card-header">
