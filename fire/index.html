@@ -261,11 +261,11 @@ body.dark .drill-badge.future  { background: #263349; color: #475569; border-col
 .drill-tab-add:hover:not(.active) { border-color: var(--navy) !important; color: var(--navy) !important; }
 .insp-ai-btn {
   padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;
-  border: 1.5px solid #0369a1; color: #0369a1; background: #e0f2fe;
+  border: 1.5px solid var(--fire-border); color: var(--fire-dark); background: var(--fire-light);
   font-family: inherit; transition: all .15s;
 }
-.insp-ai-btn:hover { background: #bae6fd; }
-body.dark .insp-ai-btn { background: #0c2a3e; color: #7dd3fc; border-color: #0369a1; }
+.insp-ai-btn:hover { background: var(--fire-border); }
+body.dark .insp-ai-btn { background: #3b0a0a; color: #fca5a5; border-color: #7f1d1d; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── Fire AI Upload Modal ── */
@@ -281,44 +281,44 @@ body.dark .insp-ai-btn { background: #0c2a3e; color: #7dd3fc; border-color: #036
 .fire-modal-hd {
   display: flex; align-items: center; justify-content: space-between;
   padding: 18px 22px; border-bottom: 1px solid var(--border);
-  background: #e8eef6; border-radius: 18px 18px 0 0;
+  background: var(--fire-light); border-radius: 18px 18px 0 0;
 }
-.fire-modal-hd-title { font-size: 15px; font-weight: 800; color: var(--navy); }
+.fire-modal-hd-title { font-size: 15px; font-weight: 800; color: var(--fire-dark); }
 .fire-modal-hd-sub   { font-size: 12px; color: var(--sub); margin-top: 2px; }
 .fire-modal-close {
   background: none; border: none; font-size: 20px; cursor: pointer;
   color: var(--sub); padding: 4px 8px; border-radius: 6px;
 }
-.fire-modal-close:hover { background: var(--border); }
+.fire-modal-close:hover { background: var(--fire-border); }
 .fire-modal-body { padding: 20px 22px; }
 .fire-upload-zone {
-  border: 2.5px dashed #90aece; border-radius: 12px;
-  padding: 32px 20px; text-align: center; background: #e8eef6;
+  border: 2.5px dashed var(--fire-border); border-radius: 12px;
+  padding: 32px 20px; text-align: center; background: var(--fire-light);
   cursor: pointer; transition: border-color .2s, background .2s; margin-bottom: 14px;
 }
-.fire-upload-zone:hover, .fire-upload-zone.dragover { border-color: var(--navy); background: #d4e0ef; }
+.fire-upload-zone:hover, .fire-upload-zone.dragover { border-color: var(--fire); background: #fee2e2; }
 .fire-upload-zone input[type=file] { display: none; }
 .fire-file-info {
   display: flex; align-items: center; gap: 10px; padding: 10px 14px;
-  background: #e8eef6; border-radius: 8px; border: 1px solid #90aece; margin-bottom: 12px;
+  background: var(--fire-light); border-radius: 8px; border: 1px solid var(--fire-border); margin-bottom: 12px;
 }
 .btn-fire {
-  background: var(--navy); color: #fff; border: none; padding: 10px 24px;
+  background: var(--fire); color: #fff; border: none; padding: 10px 24px;
   border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;
   font-family: inherit; transition: background .15s; flex: 1;
 }
-.btn-fire:hover { background: #0f2540; }
+.btn-fire:hover { background: var(--fire-dark); }
 .btn-fire:disabled { opacity: .5; cursor: default; }
 .btn-fire-sec {
-  background: #e8eef6; color: var(--navy); border: 1.5px solid #90aece;
+  background: var(--fire-light); color: var(--fire-dark); border: 1.5px solid var(--fire-border);
   padding: 9px 20px; border-radius: 8px; font-size: 13px; font-weight: 600;
   cursor: pointer; font-family: inherit; transition: background .15s;
 }
-.btn-fire-sec:hover { background: #d4e0ef; }
-body.dark .fire-modal-hd  { background: #1a2a3e; }
-body.dark .fire-upload-zone { background: #1a2a3e; border-color: #2d4a6e; }
-body.dark .fire-file-info  { background: #1a2a3e; border-color: #2d4a6e; }
-body.dark .btn-fire-sec    { background: #1a2a3e; border-color: #2d4a6e; color: #93c5fd; }
+.btn-fire-sec:hover { background: var(--fire-border); }
+body.dark .fire-modal-hd   { background: #3b0a0a; }
+body.dark .fire-upload-zone { background: #3b0a0a; border-color: #7f1d1d; }
+body.dark .fire-file-info   { background: #3b0a0a; border-color: #7f1d1d; }
+body.dark .btn-fire-sec     { background: #3b0a0a; border-color: #7f1d1d; color: #fca5a5; }
 
 @media (max-width: 600px) {
   .drill-grid { grid-template-columns: 1fr; }
@@ -1395,14 +1395,14 @@ if (localStorage.getItem('portal-dark') === '1') {
            onclick="document.getElementById('dm-file').click()">
         <input type="file" id="dm-file" accept="application/pdf,image/*" onchange="handleDrillFile(this.files[0])">
         <div style="font-size:36px;margin-bottom:10px">📄</div>
-        <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px">點擊或拖曳演練紀錄至此</div>
+        <div style="font-size:14px;font-weight:700;color:var(--fire-dark);margin-bottom:4px">點擊或拖曳演練紀錄至此</div>
         <div style="font-size:12px;color:var(--sub)">支援 PDF、JPG、PNG ｜ 單次一份</div>
       </div>
 
       <div id="dm-file-info" style="display:none;margin-bottom:12px">
         <div class="fire-file-info">
           <span style="font-size:18px">📄</span>
-          <span id="dm-file-name" style="flex:1;font-size:13px;font-weight:600;color:var(--navy)"></span>
+          <span id="dm-file-name" style="flex:1;font-size:13px;font-weight:600;color:var(--fire-dark)"></span>
           <button type="button" class="btn-fire-sec" onclick="clearDrillFile()" style="padding:4px 10px;font-size:11px">✕</button>
         </div>
       </div>
@@ -1413,7 +1413,7 @@ if (localStorage.getItem('portal-dark') === '1') {
       </div>
 
       <div id="dm-spinner" style="display:none;text-align:center;padding:16px">
-        <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite"></div>
+        <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--fire);border-radius:50%;animation:spin 1s linear infinite"></div>
         <div style="margin-top:8px;font-size:13px;color:var(--sub)">AI 判讀中…</div>
       </div>
 
@@ -1446,14 +1446,14 @@ if (localStorage.getItem('portal-dark') === '1') {
            onclick="document.getElementById('im-file').click()">
         <input type="file" id="im-file" accept="application/pdf,image/*" onchange="handleInspFile(this.files[0])">
         <div style="font-size:36px;margin-bottom:10px">📄</div>
-        <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px">點擊或拖曳申報文件至此</div>
+        <div style="font-size:14px;font-weight:700;color:var(--fire-dark);margin-bottom:4px">點擊或拖曳申報文件至此</div>
         <div style="font-size:12px;color:var(--sub)">支援 PDF、JPG、PNG ｜ 單次一份</div>
       </div>
 
       <div id="im-file-info" style="display:none;margin-bottom:12px">
         <div class="fire-file-info">
           <span style="font-size:18px">📄</span>
-          <span id="im-file-name" style="flex:1;font-size:13px;font-weight:600;color:var(--navy)"></span>
+          <span id="im-file-name" style="flex:1;font-size:13px;font-weight:600;color:var(--fire-dark)"></span>
           <button type="button" class="btn-fire-sec" onclick="clearInspFile()" style="padding:4px 10px;font-size:11px">✕</button>
         </div>
       </div>
@@ -1464,7 +1464,7 @@ if (localStorage.getItem('portal-dark') === '1') {
       </div>
 
       <div id="im-spinner" style="display:none;text-align:center;padding:16px">
-        <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite"></div>
+        <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--fire);border-radius:50%;animation:spin 1s linear infinite"></div>
         <div style="margin-top:8px;font-size:13px;color:var(--sub)">AI 判讀中…</div>
       </div>
 
