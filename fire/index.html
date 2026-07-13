@@ -631,10 +631,12 @@ function renderDrills(roc) {
         <div class="drill-half">
           <span class="half-label">上半年</span>
           ${badgeHtml(row[st.key].h1)}
+          <button class="insp-ai-btn" onclick="openDrillModal(${roc},'${st.key}','h1')">🤖 AI記錄</button>
         </div>
         <div class="drill-half">
           <span class="half-label">下半年</span>
           ${badgeHtml(row[st.key].h2)}
+          <button class="insp-ai-btn" onclick="openDrillModal(${roc},'${st.key}','h2')">🤖 AI記錄</button>
         </div>
       </div>
     </div>`).join('');
@@ -944,9 +946,148 @@ loadInspsFromLocal();
 buildInspMatrix();
 
 // ─────────────────────────────────────────────
-//  年度消防設備檢修申報 — AI 日期上傳 Modal
+//  消防演練 — AI 日期上傳 Modal
 // ─────────────────────────────────────────────
 const FIRE_AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+
+let _drillModalRoc     = null;
+let _drillModalStation = null;
+let _drillModalHalf    = null;
+let _drillAiResult     = null;
+
+function openDrillModal(roc, station, half) {
+  _drillModalRoc     = roc;
+  _drillModalStation = station;
+  _drillModalHalf    = half;
+  _drillAiResult     = null;
+  const st       = STATIONS.find(s => s.key === station);
+  const halfLabel = half === 'h1' ? '上半年' : '下半年';
+  document.getElementById('dm-title').textContent = `📤 民${roc}年・${st ? st.label : station}・${halfLabel}演練`;
+  document.getElementById('dm-file').value  = '';
+  document.getElementById('dm-result').innerHTML = '';
+  document.getElementById('dm-confirm-btn').style.display = 'none';
+  document.getElementById('dm-spinner').style.display = 'none';
+  document.getElementById('drill-modal').style.display = 'flex';
+}
+
+function closeDrillModal() {
+  document.getElementById('drill-modal').style.display = 'none';
+}
+
+async function extractPdfTextDrill(file) {
+  if (typeof pdfjsLib === 'undefined') throw new Error('PDF.js 函式庫未載入，請重新整理頁面');
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const buf  = await file.arrayBuffer();
+  const pdf  = await pdfjsLib.getDocument({ data: buf }).promise;
+  const pages = Math.min(pdf.numPages, 8);
+  const parts = [];
+  for (let i = 1; i <= pages; i++) {
+    const page    = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    parts.push(content.items.map(it => it.str).join(' '));
+  }
+  return parts.join('\n\n').trim();
+}
+
+async function runDrillAI() {
+  const spinner    = document.getElementById('dm-spinner');
+  const result     = document.getElementById('dm-result');
+  const confirmBtn = document.getElementById('dm-confirm-btn');
+  const fileEl     = document.getElementById('dm-file');
+  const file       = fileEl && fileEl.files[0];
+
+  if (!file) { alert('請先選擇演練紀錄文件（PDF 或圖片）'); return; }
+
+  result.innerHTML = '';
+  confirmBtn.style.display = 'none';
+  spinner.style.display = 'block';
+  _drillAiResult = null;
+
+  try {
+    let docText = '';
+    if (file.type === 'application/pdf') {
+      docText = await extractPdfTextDrill(file);
+    }
+    if (!docText) {
+      result.innerHTML = `<div style="color:#dc2626;margin-top:8px">❌ 無法擷取文字（可能為掃描版 PDF），請手動更新演練日期。</div>`;
+      spinner.style.display = 'none';
+      return;
+    }
+
+    const st        = STATIONS.find(s => s.key === _drillModalStation);
+    const halfLabel = _drillModalHalf === 'h1' ? '上半年' : '下半年';
+    const prompt = `這是大豐環保科技${st ? st.label : _drillModalStation}民國${_drillModalRoc}年${halfLabel}的消防演練紀錄文件內容。
+請判斷：
+1. 演練是否已完成？（是/否）
+2. 演練日期（若有）：格式 YYYY-MM-DD
+3. 簡短摘要（1-2句話）
+
+請以 JSON 格式回覆，欄位：done (boolean), date (string, 無則空字串), summary (string)
+
+文件內容：
+${docText.slice(0, 3000)}`;
+
+    const resp = await fetch(FIRE_AI_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt })
+    });
+    const raw = await resp.text();
+    let data = {};
+    try { data = JSON.parse(raw); } catch(e) {
+      throw new Error('API 回傳非 JSON：' + raw.slice(0, 120));
+    }
+    const aiText = data?.data || data?.choices?.[0]?.message?.content || data?.content || data?.text || '';
+
+    let parsed = null;
+    const jsonMatch = aiText.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      try { parsed = JSON.parse(jsonMatch[0]); } catch(e) {}
+    }
+
+    if (parsed) {
+      _drillAiResult = parsed;
+      result.innerHTML = `
+        <div style="background:#e0f2fe;border:1px solid #bae6fd;border-radius:8px;padding:12px;margin-top:8px">
+          <div style="font-weight:700;color:#0c4a6e;margin-bottom:6px">🤖 AI 判讀結果</div>
+          <div>演練完成：<strong>${parsed.done ? '✅ 是' : '❌ 否'}</strong></div>
+          ${parsed.date ? `<div>演練日期：<strong>${parsed.date}</strong></div>` : ''}
+          <div style="margin-top:6px;color:#475569;font-size:13px">${parsed.summary || ''}</div>
+        </div>`;
+      confirmBtn.style.display = 'block';
+    } else {
+      result.innerHTML = `<div style="color:#475569;font-size:13px;margin-top:8px">AI 回覆：${aiText.slice(0, 300)}</div>`;
+    }
+  } catch(e) {
+    result.innerHTML = `<div style="color:#dc2626;margin-top:8px">❌ 錯誤：${e.message}</div>`;
+  } finally {
+    spinner.style.display = 'none';
+  }
+}
+
+function confirmDrillUpdate() {
+  if (!_drillAiResult || _drillModalRoc === null) return;
+  const row = DRILLS.find(r => r.roc === _drillModalRoc);
+  if (!row) return;
+
+  if (_drillAiResult.done) {
+    const cleanDate = _drillAiResult.date ? String(_drillAiResult.date).slice(0, 10) : '';
+    row[_drillModalStation][_drillModalHalf] = cleanDate
+      ? { s:'done', d: cleanDate }
+      : { s:'pending' };
+  } else {
+    row[_drillModalStation][_drillModalHalf] = { s:'missing' };
+  }
+
+  saveDrillsLocal();
+  renderDrills(activeRoc);
+  closeDrillModal();
+}
+
+// ─────────────────────────────────────────────
+//  年度消防設備檢修申報 — AI 日期上傳 Modal
+// ─────────────────────────────────────────────
 
 let _inspModalRoc  = null;
 let _inspModalSite = null;
@@ -1131,6 +1272,39 @@ if (localStorage.getItem('portal-dark') === '1') {
   document.getElementById('dark-toggle').textContent = '☀️';
 }
 </script>
+<!-- 消防演練 AI 上傳 Modal -->
+<div id="drill-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.5);align-items:center;justify-content:center">
+  <div style="background:var(--card);border-radius:16px;padding:28px;width:min(520px,92vw);max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.25)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <span id="dm-title" style="font-weight:700;font-size:17px;color:var(--navy)"></span>
+      <button onclick="closeDrillModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--sub)">✕</button>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <label style="display:block;font-size:13px;font-weight:600;color:var(--sub);margin-bottom:6px">上傳演練紀錄文件（PDF）</label>
+      <input id="dm-file" type="file" accept=".pdf,image/*"
+        style="width:100%;padding:8px;border:1.5px dashed #bae6fd;border-radius:8px;background:#e0f2fe;font-size:13px;cursor:pointer">
+    </div>
+
+    <button onclick="runDrillAI()"
+      style="width:100%;padding:10px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
+      🤖 AI 判讀演練日期
+    </button>
+
+    <div id="dm-spinner" style="display:none;text-align:center;padding:16px">
+      <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite"></div>
+      <div style="margin-top:8px;font-size:13px;color:var(--sub)">AI 判讀中…</div>
+    </div>
+
+    <div id="dm-result"></div>
+
+    <button id="dm-confirm-btn" onclick="confirmDrillUpdate()"
+      style="display:none;width:100%;margin-top:12px;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
+      ✅ 確認並更新演練狀態
+    </button>
+  </div>
+</div>
+
 <!-- 消防設備檢修申報 AI 上傳 Modal -->
 <div id="insp-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.5);align-items:center;justify-content:center">
   <div style="background:var(--card);border-radius:16px;padding:28px;width:min(520px,92vw);max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.25)">
