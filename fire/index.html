@@ -268,6 +268,58 @@ body.dark .drill-badge.future  { background: #263349; color: #475569; border-col
 body.dark .insp-ai-btn { background: #0c2a3e; color: #7dd3fc; border-color: #0369a1; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* ── Fire AI Upload Modal ── */
+.fire-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.55);
+  z-index: 9000; display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.fire-modal-box {
+  background: var(--card); border-radius: 18px;
+  max-width: 560px; width: 100%; max-height: 92vh; overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(0,0,0,.35);
+}
+.fire-modal-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px; border-bottom: 1px solid var(--border);
+  background: #e8eef6; border-radius: 18px 18px 0 0;
+}
+.fire-modal-hd-title { font-size: 15px; font-weight: 800; color: var(--navy); }
+.fire-modal-hd-sub   { font-size: 12px; color: var(--sub); margin-top: 2px; }
+.fire-modal-close {
+  background: none; border: none; font-size: 20px; cursor: pointer;
+  color: var(--sub); padding: 4px 8px; border-radius: 6px;
+}
+.fire-modal-close:hover { background: var(--border); }
+.fire-modal-body { padding: 20px 22px; }
+.fire-upload-zone {
+  border: 2.5px dashed #90aece; border-radius: 12px;
+  padding: 32px 20px; text-align: center; background: #e8eef6;
+  cursor: pointer; transition: border-color .2s, background .2s; margin-bottom: 14px;
+}
+.fire-upload-zone:hover, .fire-upload-zone.dragover { border-color: var(--navy); background: #d4e0ef; }
+.fire-upload-zone input[type=file] { display: none; }
+.fire-file-info {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  background: #e8eef6; border-radius: 8px; border: 1px solid #90aece; margin-bottom: 12px;
+}
+.btn-fire {
+  background: var(--navy); color: #fff; border: none; padding: 10px 24px;
+  border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;
+  font-family: inherit; transition: background .15s; flex: 1;
+}
+.btn-fire:hover { background: #0f2540; }
+.btn-fire:disabled { opacity: .5; cursor: default; }
+.btn-fire-sec {
+  background: #e8eef6; color: var(--navy); border: 1.5px solid #90aece;
+  padding: 9px 20px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.btn-fire-sec:hover { background: #d4e0ef; }
+body.dark .fire-modal-hd  { background: #1a2a3e; }
+body.dark .fire-upload-zone { background: #1a2a3e; border-color: #2d4a6e; }
+body.dark .fire-file-info  { background: #1a2a3e; border-color: #2d4a6e; }
+body.dark .btn-fire-sec    { background: #1a2a3e; border-color: #2d4a6e; color: #93c5fd; }
+
 @media (max-width: 600px) {
   .drill-grid { grid-template-columns: 1fr; }
 }
@@ -954,16 +1006,17 @@ let _drillModalRoc     = null;
 let _drillModalStation = null;
 let _drillModalHalf    = null;
 let _drillAiResult     = null;
+let _drillFile         = null;
 
 function openDrillModal(roc, station, half) {
   _drillModalRoc     = roc;
   _drillModalStation = station;
   _drillModalHalf    = half;
   _drillAiResult     = null;
-  const st       = STATIONS.find(s => s.key === station);
+  const st        = STATIONS.find(s => s.key === station);
   const halfLabel = half === 'h1' ? '上半年' : '下半年';
-  document.getElementById('dm-title').textContent = `📤 民${roc}年・${st ? st.label : station}・${halfLabel}演練`;
-  document.getElementById('dm-file').value  = '';
+  document.getElementById('dm-title').textContent = `民${roc}年・${st ? st.label : station}・${halfLabel}`;
+  clearDrillFile();
   document.getElementById('dm-result').innerHTML = '';
   document.getElementById('dm-confirm-btn').style.display = 'none';
   document.getElementById('dm-spinner').style.display = 'none';
@@ -972,6 +1025,32 @@ function openDrillModal(roc, station, half) {
 
 function closeDrillModal() {
   document.getElementById('drill-modal').style.display = 'none';
+}
+
+function handleDrillFile(f) {
+  if (!f) return;
+  _drillFile = f;
+  document.getElementById('dm-file-name').textContent = f.name;
+  document.getElementById('dm-file-info').style.display = '';
+  document.getElementById('dm-upload-zone').style.display = 'none';
+  document.getElementById('dm-run-btn').disabled = false;
+  document.getElementById('dm-result').innerHTML = '';
+  document.getElementById('dm-confirm-btn').style.display = 'none';
+}
+
+function handleDrillDrop(e) {
+  e.preventDefault();
+  document.getElementById('dm-upload-zone').classList.remove('dragover');
+  const f = e.dataTransfer.files[0];
+  if (f) handleDrillFile(f);
+}
+
+function clearDrillFile() {
+  _drillFile = null;
+  document.getElementById('dm-file').value = '';
+  document.getElementById('dm-file-info').style.display = 'none';
+  document.getElementById('dm-upload-zone').style.display = '';
+  document.getElementById('dm-run-btn').disabled = true;
 }
 
 async function extractPdfTextDrill(file) {
@@ -994,8 +1073,7 @@ async function runDrillAI() {
   const spinner    = document.getElementById('dm-spinner');
   const result     = document.getElementById('dm-result');
   const confirmBtn = document.getElementById('dm-confirm-btn');
-  const fileEl     = document.getElementById('dm-file');
-  const file       = fileEl && fileEl.files[0];
+  const file = _drillFile;
 
   if (!file) { alert('請先選擇演練紀錄文件（PDF 或圖片）'); return; }
 
@@ -1092,14 +1170,15 @@ function confirmDrillUpdate() {
 let _inspModalRoc  = null;
 let _inspModalSite = null;
 let _inspAiResult  = null;
+let _inspFile      = null;
 
 function openInspModal(roc, site) {
   _inspModalRoc  = roc;
   _inspModalSite = site;
   _inspAiResult  = null;
   const st = INSP_STATIONS.find(s => s.key === site);
-  document.getElementById('im-title').textContent = `📤 民${roc}年・${st ? st.label : site}`;
-  document.getElementById('im-file').value  = '';
+  document.getElementById('im-title').textContent = `民${roc}年・${st ? st.label : site}`;
+  clearInspFile();
   document.getElementById('im-result').innerHTML = '';
   document.getElementById('im-confirm-btn').style.display = 'none';
   document.getElementById('im-spinner').style.display = 'none';
@@ -1108,6 +1187,32 @@ function openInspModal(roc, site) {
 
 function closeInspModal() {
   document.getElementById('insp-modal').style.display = 'none';
+}
+
+function handleInspFile(f) {
+  if (!f) return;
+  _inspFile = f;
+  document.getElementById('im-file-name').textContent = f.name;
+  document.getElementById('im-file-info').style.display = '';
+  document.getElementById('im-upload-zone').style.display = 'none';
+  document.getElementById('im-run-btn').disabled = false;
+  document.getElementById('im-result').innerHTML = '';
+  document.getElementById('im-confirm-btn').style.display = 'none';
+}
+
+function handleInspDrop(e) {
+  e.preventDefault();
+  document.getElementById('im-upload-zone').classList.remove('dragover');
+  const f = e.dataTransfer.files[0];
+  if (f) handleInspFile(f);
+}
+
+function clearInspFile() {
+  _inspFile = null;
+  document.getElementById('im-file').value = '';
+  document.getElementById('im-file-info').style.display = 'none';
+  document.getElementById('im-upload-zone').style.display = '';
+  document.getElementById('im-run-btn').disabled = true;
 }
 
 async function extractPdfTextFire(file) {
@@ -1130,8 +1235,7 @@ async function runInspAI() {
   const spinner    = document.getElementById('im-spinner');
   const result     = document.getElementById('im-result');
   const confirmBtn = document.getElementById('im-confirm-btn');
-  const fileEl     = document.getElementById('im-file');
-  const file       = fileEl && fileEl.files[0];
+  const file = _inspFile;
 
   if (!file) { alert('請先選擇申報文件（PDF 或圖片）'); return; }
 
@@ -1273,68 +1377,104 @@ if (localStorage.getItem('portal-dark') === '1') {
 }
 </script>
 <!-- 消防演練 AI 上傳 Modal -->
-<div id="drill-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.5);align-items:center;justify-content:center">
-  <div style="background:var(--card);border-radius:16px;padding:28px;width:min(520px,92vw);max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.25)">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-      <span id="dm-title" style="font-weight:700;font-size:17px;color:var(--navy)"></span>
-      <button onclick="closeDrillModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--sub)">✕</button>
+<div id="drill-modal" class="fire-modal-overlay" style="display:none" onclick="if(event.target===this)closeDrillModal()">
+  <div class="fire-modal-box">
+    <div class="fire-modal-hd">
+      <div>
+        <div class="fire-modal-hd-title">🔥 消防演練紀錄上傳</div>
+        <div class="fire-modal-hd-sub" id="dm-title"></div>
+      </div>
+      <button type="button" class="fire-modal-close" onclick="closeDrillModal()">✕</button>
     </div>
+    <div class="fire-modal-body">
 
-    <div style="margin-bottom:16px">
-      <label style="display:block;font-size:13px;font-weight:600;color:var(--sub);margin-bottom:6px">上傳演練紀錄文件（PDF）</label>
-      <input id="dm-file" type="file" accept=".pdf,image/*"
-        style="width:100%;padding:8px;border:1.5px dashed #bae6fd;border-radius:8px;background:#e0f2fe;font-size:13px;cursor:pointer">
+      <div class="fire-upload-zone" id="dm-upload-zone"
+           ondragover="event.preventDefault();this.classList.add('dragover')"
+           ondragleave="this.classList.remove('dragover')"
+           ondrop="handleDrillDrop(event)"
+           onclick="document.getElementById('dm-file').click()">
+        <input type="file" id="dm-file" accept="application/pdf,image/*" onchange="handleDrillFile(this.files[0])">
+        <div style="font-size:36px;margin-bottom:10px">📄</div>
+        <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px">點擊或拖曳演練紀錄至此</div>
+        <div style="font-size:12px;color:var(--sub)">支援 PDF、JPG、PNG ｜ 單次一份</div>
+      </div>
+
+      <div id="dm-file-info" style="display:none;margin-bottom:12px">
+        <div class="fire-file-info">
+          <span style="font-size:18px">📄</span>
+          <span id="dm-file-name" style="flex:1;font-size:13px;font-weight:600;color:var(--navy)"></span>
+          <button type="button" class="btn-fire-sec" onclick="clearDrillFile()" style="padding:4px 10px;font-size:11px">✕</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-bottom:4px">
+        <button type="button" class="btn-fire" id="dm-run-btn" onclick="runDrillAI()" disabled>📎 上傳報告</button>
+        <button type="button" class="btn-fire-sec" onclick="closeDrillModal()">取消</button>
+      </div>
+
+      <div id="dm-spinner" style="display:none;text-align:center;padding:16px">
+        <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite"></div>
+        <div style="margin-top:8px;font-size:13px;color:var(--sub)">AI 判讀中…</div>
+      </div>
+
+      <div id="dm-result"></div>
+
+      <button id="dm-confirm-btn" type="button" onclick="confirmDrillUpdate()"
+        style="display:none;width:100%;margin-top:12px;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
+        ✅ 確認並更新演練狀態
+      </button>
     </div>
-
-    <button onclick="runDrillAI()"
-      style="width:100%;padding:10px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
-      📎 上傳報告
-    </button>
-
-    <div id="dm-spinner" style="display:none;text-align:center;padding:16px">
-      <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite"></div>
-      <div style="margin-top:8px;font-size:13px;color:var(--sub)">AI 判讀中…</div>
-    </div>
-
-    <div id="dm-result"></div>
-
-    <button id="dm-confirm-btn" onclick="confirmDrillUpdate()"
-      style="display:none;width:100%;margin-top:12px;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
-      ✅ 確認並更新演練狀態
-    </button>
   </div>
 </div>
 
 <!-- 消防設備檢修申報 AI 上傳 Modal -->
-<div id="insp-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.5);align-items:center;justify-content:center">
-  <div style="background:var(--card);border-radius:16px;padding:28px;width:min(520px,92vw);max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.25)">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-      <span id="im-title" style="font-weight:700;font-size:17px;color:var(--navy)"></span>
-      <button onclick="closeInspModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--sub)">✕</button>
+<div id="insp-modal" class="fire-modal-overlay" style="display:none" onclick="if(event.target===this)closeInspModal()">
+  <div class="fire-modal-box">
+    <div class="fire-modal-hd">
+      <div>
+        <div class="fire-modal-hd-title">🏢 消防設備檢修申報上傳</div>
+        <div class="fire-modal-hd-sub" id="im-title"></div>
+      </div>
+      <button type="button" class="fire-modal-close" onclick="closeInspModal()">✕</button>
     </div>
+    <div class="fire-modal-body">
 
-    <div style="margin-bottom:16px">
-      <label style="display:block;font-size:13px;font-weight:600;color:var(--sub);margin-bottom:6px">上傳申報文件（PDF）</label>
-      <input id="im-file" type="file" accept=".pdf,image/*"
-        style="width:100%;padding:8px;border:1.5px dashed #bae6fd;border-radius:8px;background:#e0f2fe;font-size:13px;cursor:pointer">
+      <div class="fire-upload-zone" id="im-upload-zone"
+           ondragover="event.preventDefault();this.classList.add('dragover')"
+           ondragleave="this.classList.remove('dragover')"
+           ondrop="handleInspDrop(event)"
+           onclick="document.getElementById('im-file').click()">
+        <input type="file" id="im-file" accept="application/pdf,image/*" onchange="handleInspFile(this.files[0])">
+        <div style="font-size:36px;margin-bottom:10px">📄</div>
+        <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px">點擊或拖曳申報文件至此</div>
+        <div style="font-size:12px;color:var(--sub)">支援 PDF、JPG、PNG ｜ 單次一份</div>
+      </div>
+
+      <div id="im-file-info" style="display:none;margin-bottom:12px">
+        <div class="fire-file-info">
+          <span style="font-size:18px">📄</span>
+          <span id="im-file-name" style="flex:1;font-size:13px;font-weight:600;color:var(--navy)"></span>
+          <button type="button" class="btn-fire-sec" onclick="clearInspFile()" style="padding:4px 10px;font-size:11px">✕</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-bottom:4px">
+        <button type="button" class="btn-fire" id="im-run-btn" onclick="runInspAI()" disabled>📎 上傳報告</button>
+        <button type="button" class="btn-fire-sec" onclick="closeInspModal()">取消</button>
+      </div>
+
+      <div id="im-spinner" style="display:none;text-align:center;padding:16px">
+        <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite"></div>
+        <div style="margin-top:8px;font-size:13px;color:var(--sub)">AI 判讀中…</div>
+      </div>
+
+      <div id="im-result"></div>
+
+      <button id="im-confirm-btn" type="button" onclick="confirmInspUpdate()"
+        style="display:none;width:100%;margin-top:12px;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
+        ✅ 確認並更新申報狀態
+      </button>
     </div>
-
-    <button onclick="runInspAI()"
-      style="width:100%;padding:10px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
-      📎 上傳報告
-    </button>
-
-    <div id="im-spinner" style="display:none;text-align:center;padding:16px">
-      <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite"></div>
-      <div style="margin-top:8px;font-size:13px;color:var(--sub)">AI 判讀中…</div>
-    </div>
-
-    <div id="im-result"></div>
-
-    <button id="im-confirm-btn" onclick="confirmInspUpdate()"
-      style="display:none;width:100%;margin-top:12px;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
-      ✅ 確認並更新申報狀態
-    </button>
   </div>
 </div>
 

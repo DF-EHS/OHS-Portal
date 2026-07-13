@@ -547,6 +547,58 @@ body.dark .decl-manual-btn { background: #263349; border-color: #334155; }
 @keyframes spin { to { transform: rotate(360deg); } }
 body.dark .dm-box { background: #1e293b; }
 body.dark .dm-select { background: #1e293b; color: #f1f5f9; }
+
+/* ── Chem AI Upload Modal ── */
+.chem-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.55);
+  z-index: 9000; display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.chem-modal-box {
+  background: var(--card); border-radius: 18px;
+  max-width: 560px; width: 100%; max-height: 92vh; overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(0,0,0,.35);
+}
+.chem-modal-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px; border-bottom: 1px solid var(--border);
+  background: var(--chem-light); border-radius: 18px 18px 0 0;
+}
+.chem-modal-hd-title { font-size: 15px; font-weight: 800; color: var(--chem-darker); }
+.chem-modal-hd-sub   { font-size: 12px; color: var(--sub); margin-top: 2px; }
+.chem-modal-close {
+  background: none; border: none; font-size: 20px; cursor: pointer;
+  color: var(--sub); padding: 4px 8px; border-radius: 6px;
+}
+.chem-modal-close:hover { background: var(--chem-border); }
+.chem-modal-body { padding: 20px 22px; }
+.chem-upload-zone {
+  border: 2.5px dashed var(--chem-border); border-radius: 12px;
+  padding: 32px 20px; text-align: center; background: var(--chem-light);
+  cursor: pointer; transition: border-color .2s, background .2s; margin-bottom: 14px;
+}
+.chem-upload-zone:hover, .chem-upload-zone.dragover { border-color: var(--chem); background: #fef3c7; }
+.chem-upload-zone input[type=file] { display: none; }
+.chem-file-info {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  background: var(--chem-light); border-radius: 8px; border: 1px solid var(--chem-border); margin-bottom: 12px;
+}
+.btn-chem {
+  background: var(--chem-dark); color: #fff; border: none; padding: 10px 24px;
+  border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;
+  font-family: inherit; transition: background .15s; flex: 1;
+}
+.btn-chem:hover { background: var(--chem-darker); }
+.btn-chem:disabled { opacity: .5; cursor: default; }
+.btn-chem-sec {
+  background: var(--chem-light); color: var(--chem-dark); border: 1.5px solid var(--chem-border);
+  padding: 9px 20px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.btn-chem-sec:hover { background: var(--chem-border); }
+body.dark .chem-modal-hd    { background: #422006; }
+body.dark .chem-upload-zone { background: #422006; border-color: #78350f; }
+body.dark .chem-file-info   { background: #422006; border-color: #78350f; }
+body.dark .btn-chem-sec     { background: #422006; border-color: #78350f; color: #fcd34d; }
 body.dark .dm-upload-zone { border-color: #78350f; }
 body.dark .dm-upload-zone:hover { background: #451a03; border-color: var(--chem); }
 body.dark .dm-file-info { background: #451a03; border-color: #78350f; }
@@ -1481,25 +1533,52 @@ function manualUpdateDecl(roc, period) {
 // ─────────────────────────────────────────────────────────────
 //  申報 AI 上傳 Modal
 // ─────────────────────────────────────────────────────────────
-let _declModalRoc = null;
+let _declModalRoc  = null;
 let _declModalPeriod = null;
 let _declAiResult  = null;
+let _declFile      = null;
 
 function openDeclModal(roc, period) {
   _declModalRoc    = roc;
   _declModalPeriod = period;
   _declAiResult    = null;
   const label = period === 'jan' ? '上半年（1月）' : '下半年（7月）';
-  document.getElementById('dm-title').textContent = `📤 民${roc}年・${label}`;
-  document.getElementById('dm-file').value  = '';
+  document.getElementById('dm-title').textContent = `民${roc}年・${label}`;
+  clearDeclFile();
   document.getElementById('dm-result').innerHTML = '';
   document.getElementById('dm-confirm-btn').style.display = 'none';
   document.getElementById('dm-spinner').style.display = 'none';
-  document.getElementById('decl-modal').style.display   = 'flex';
+  document.getElementById('decl-modal').style.display = 'flex';
 }
 
 function closeDeclModal() {
   document.getElementById('decl-modal').style.display = 'none';
+}
+
+function handleDeclFile(f) {
+  if (!f) return;
+  _declFile = f;
+  document.getElementById('dm-file-name').textContent = f.name;
+  document.getElementById('dm-file-info').style.display = '';
+  document.getElementById('dm-upload-zone').style.display = 'none';
+  document.getElementById('dm-run-btn').disabled = false;
+  document.getElementById('dm-result').innerHTML = '';
+  document.getElementById('dm-confirm-btn').style.display = 'none';
+}
+
+function handleDeclDrop(e) {
+  e.preventDefault();
+  document.getElementById('dm-upload-zone').classList.remove('dragover');
+  const f = e.dataTransfer.files[0];
+  if (f) handleDeclFile(f);
+}
+
+function clearDeclFile() {
+  _declFile = null;
+  document.getElementById('dm-file').value = '';
+  document.getElementById('dm-file-info').style.display = 'none';
+  document.getElementById('dm-upload-zone').style.display = '';
+  document.getElementById('dm-run-btn').disabled = true;
 }
 
 async function extractPdfText(file) {
@@ -1522,8 +1601,7 @@ async function runDeclAI() {
   const spinner = document.getElementById('dm-spinner');
   const result  = document.getElementById('dm-result');
   const confirm = document.getElementById('dm-confirm-btn');
-  const fileEl  = document.getElementById('dm-file');
-  const file    = fileEl && fileEl.files[0];
+  const file = _declFile;
 
   if (!file) { alert('請先選擇申報文件（PDF 或圖片）'); return; }
 
@@ -1638,37 +1716,55 @@ if (new URLSearchParams(location.search).get('chat') === '1') {
 </script>
 
 <!-- 申報文件 AI 上傳 Modal -->
-<div id="decl-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.5);align-items:center;justify-content:center">
-  <div class="dm-box" style="background:var(--card);border-radius:16px;padding:28px;width:min(520px,92vw);max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.25)">
-    <div class="dm-head" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-      <span id="dm-title" style="font-weight:700;font-size:17px;color:var(--chem-dark)"></span>
-      <button onclick="closeDeclModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--sub)">✕</button>
+<div id="decl-modal" class="chem-modal-overlay" style="display:none" onclick="if(event.target===this)closeDeclModal()">
+  <div class="chem-modal-box">
+    <div class="chem-modal-hd">
+      <div>
+        <div class="chem-modal-hd-title">⚗️ 危險物品申報文件上傳</div>
+        <div class="chem-modal-hd-sub" id="dm-title"></div>
+      </div>
+      <button type="button" class="chem-modal-close" onclick="closeDeclModal()">✕</button>
     </div>
+    <div class="chem-modal-body">
 
-    <div style="margin-bottom:16px">
-      <label style="display:block;font-size:13px;font-weight:600;color:var(--sub);margin-bottom:6px">上傳申報文件（PDF 或圖片）</label>
-      <input id="dm-file" type="file" accept=".pdf,image/*"
-        style="width:100%;padding:8px;border:1.5px dashed var(--chem-border);border-radius:8px;background:var(--chem-light);font-size:13px;cursor:pointer">
+      <div class="chem-upload-zone" id="dm-upload-zone"
+           ondragover="event.preventDefault();this.classList.add('dragover')"
+           ondragleave="this.classList.remove('dragover')"
+           ondrop="handleDeclDrop(event)"
+           onclick="document.getElementById('dm-file').click()">
+        <input type="file" id="dm-file" accept="application/pdf,image/*" onchange="handleDeclFile(this.files[0])">
+        <div style="font-size:36px;margin-bottom:10px">📄</div>
+        <div style="font-size:14px;font-weight:700;color:var(--chem-darker);margin-bottom:4px">點擊或拖曳申報文件至此</div>
+        <div style="font-size:12px;color:var(--sub)">支援 PDF、JPG、PNG ｜ 單次一份</div>
+      </div>
+
+      <div id="dm-file-info" style="display:none;margin-bottom:12px">
+        <div class="chem-file-info">
+          <span style="font-size:18px">📄</span>
+          <span id="dm-file-name" style="flex:1;font-size:13px;font-weight:600;color:var(--chem-darker)"></span>
+          <button type="button" class="btn-chem-sec" onclick="clearDeclFile()" style="padding:4px 10px;font-size:11px">✕</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-bottom:4px">
+        <button type="button" class="btn-chem" id="dm-run-btn" onclick="runDeclAI()" disabled>📎 上傳報告</button>
+        <button type="button" class="btn-chem-sec" onclick="closeDeclModal()">取消</button>
+      </div>
+
+      <div id="dm-spinner" style="display:none;text-align:center;padding:16px">
+        <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--chem-border);border-top-color:var(--chem-dark);border-radius:50%;animation:spin .8s linear infinite"></div>
+        <div style="margin-top:8px;font-size:13px;color:var(--sub)">AI 判讀中…</div>
+      </div>
+
+      <div id="dm-result"></div>
+
+      <button id="dm-confirm-btn" type="button" onclick="confirmDeclUpdate()"
+        style="display:none;width:100%;margin-top:12px;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
+        ✅ 確認並更新申報狀態
+      </button>
+
+      <div id="dm-sp-banner" style="display:none;margin-top:12px;padding:10px 14px;background:#fef9c3;border:1px solid #fde047;border-radius:8px;font-size:13px;color:#854d0e"></div>
     </div>
-
-    <button onclick="runDeclAI()"
-      style="width:100%;padding:10px;background:var(--chem-dark);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:12px">
-      ✨ AI 判讀申報結果
-    </button>
-
-    <div id="dm-spinner" style="display:none;text-align:center;padding:16px">
-      <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--chem-border);border-top-color:var(--chem-dark);border-radius:50%;animation:spin .8s linear infinite"></div>
-      <div style="margin-top:8px;font-size:13px;color:var(--sub)">AI 判讀中…</div>
-    </div>
-
-    <div id="dm-result"></div>
-
-    <button id="dm-confirm-btn" onclick="confirmDeclUpdate()"
-      style="display:none;width:100%;margin-top:12px;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer">
-      ✅ 確認並更新申報狀態
-    </button>
-
-    <div id="dm-sp-banner" style="display:none;margin-top:12px;padding:10px 14px;background:#fef9c3;border:1px solid #fde047;border-radius:8px;font-size:13px;color:#854d0e"></div>
   </div>
 </div>
 
