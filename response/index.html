@@ -343,6 +343,11 @@
       </div>
 
       <div class="form-group">
+        <label class="form-label">建議人員 <span class="req">*</span></label>
+        <input type="text" class="form-control" id="f-proposer" placeholder="填寫反應此事項的人員姓名…">
+      </div>
+
+      <div class="form-group">
         <label class="form-label">協助處理人員或單位</label>
         <input type="text" class="form-control" id="f-handler" placeholder="例：職安室、設備課、林主任…">
       </div>
@@ -421,7 +426,8 @@ function renderList() {
       <div class="rc-issue">${esc(r.issue)}</div>
       <div class="rc-meta">
         <span>📅 ${date}</span>
-        ${r.handler ? `<span>👤 ${esc(r.handler)}</span>` : ''}
+        ${r.proposer ? `<span>🙋 ${esc(r.proposer)}</span>` : ''}
+        ${r.handler  ? `<span>🔧 ${esc(r.handler)}</span>`  : ''}
       </div>
     </div>
     <span class="rc-badge ${isDone ? 'badge-done' : 'badge-open'}">${isDone ? '✓ 已解決' : '⏳ 處理中'}</span>
@@ -433,7 +439,7 @@ function renderList() {
   <div class="rc-cm-body">${mdToHtml(r.countermeasure)}</div>
   ` : ''}
   <div class="rc-footer">
-    <div class="rc-handler">${r.handler ? `🙋 協助處理：${esc(r.handler)}` : '<span style="opacity:.5">未指定協助人員</span>'}</div>
+    <div class="rc-handler">${r.handler ? `🔧 協助處理：${esc(r.handler)}` : '<span style="opacity:.5">未指定協助人員</span>'}</div>
     <div class="rc-actions">
       ${isDone
         ? `<button class="rc-act-btn btn-reopen"  onclick="setStatus('${esc(r.id)}','open')">重新開啟</button>`
@@ -490,7 +496,7 @@ function toggleCM(btn) {
 }
 
 function openModal() {
-  ['f-dept','f-issue','f-cm','f-handler'].forEach(id => {
+  ['f-dept','f-issue','f-cm','f-proposer','f-handler'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
@@ -569,14 +575,16 @@ async function generateCM() {
 }
 
 async function submitForm() {
-  const dept    = document.getElementById('f-dept').value;
-  const issue   = document.getElementById('f-issue').value.trim();
-  const cm      = document.getElementById('f-cm').value.trim();
-  const handler = document.getElementById('f-handler').value.trim();
+  const dept     = document.getElementById('f-dept').value;
+  const issue    = document.getElementById('f-issue').value.trim();
+  const cm       = document.getElementById('f-cm').value.trim();
+  const proposer = document.getElementById('f-proposer').value.trim();
+  const handler  = document.getElementById('f-handler').value.trim();
 
-  if (!dept)  { alert('請選擇部門'); return; }
-  if (!issue) { alert('請填寫反應事項'); return; }
-  if (!cm)    { alert('請填寫對策（可使用 AI 建議自動生成）'); return; }
+  if (!dept)     { alert('請選擇部門'); return; }
+  if (!issue)    { alert('請填寫反應事項'); return; }
+  if (!cm)       { alert('請填寫對策（可使用 AI 建議自動生成）'); return; }
+  if (!proposer) { alert('請填寫建議人員'); return; }
 
   const btn = document.getElementById('submit-btn');
   btn.disabled    = true;
@@ -586,7 +594,7 @@ async function submitForm() {
     const r = await fetch(GAS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ action: 'add', department: dept, issue, countermeasure: cm, handler }),
+      body: JSON.stringify({ action: 'add', department: dept, issue, countermeasure: cm, proposer, handler }),
     });
     const d = await r.json();
     if (!d.success) throw new Error(d.error || '儲存失敗');

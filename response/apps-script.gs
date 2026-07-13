@@ -38,7 +38,7 @@ function getSheet() {
   let sh = ss.getSheetByName(SHEET_NAME);
   if (!sh) {
     sh = ss.insertSheet(SHEET_NAME);
-    sh.appendRow(['id', 'submittedAt', 'department', 'issue', 'countermeasure', 'handler', 'status']);
+    sh.appendRow(['id', 'submittedAt', 'department', 'issue', 'countermeasure', 'proposer', 'handler', 'status']);
     sh.setFrozenRows(1);
     sh.getRange(1, 1, 1, 7).setFontWeight('bold');
   }
@@ -63,10 +63,11 @@ function add(body) {
   const now = new Date().toISOString();
   sh.appendRow([
     id, now,
-    body.department || '',
-    body.issue || '',
-    body.countermeasure || '',
-    body.handler || '',
+    body.department    || '',
+    body.issue         || '',
+    body.countermeasure|| '',
+    body.proposer      || '',
+    body.handler       || '',
     'open'
   ]);
   return { id };
@@ -77,7 +78,7 @@ function updateStatus(body) {
   const data = sh.getDataRange().getValues();
   for (let i = 1; i < data.length; i++) {
     if (String(data[i][0]) === String(body.id)) {
-      sh.getRange(i + 1, 7).setValue(body.status);
+      sh.getRange(i + 1, 8).setValue(body.status);
       return { updated: true };
     }
   }
