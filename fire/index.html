@@ -631,12 +631,12 @@ function renderDrills(roc) {
         <div class="drill-half">
           <span class="half-label">上半年</span>
           ${badgeHtml(row[st.key].h1)}
-          <button class="insp-ai-btn" onclick="openDrillModal(${roc},'${st.key}','h1')">🤖 AI記錄</button>
+          <button class="insp-ai-btn" onclick="openDrillModal(${roc},'${st.key}','h1')">📎 上傳報告</button>
         </div>
         <div class="drill-half">
           <span class="half-label">下半年</span>
           ${badgeHtml(row[st.key].h2)}
-          <button class="insp-ai-btn" onclick="openDrillModal(${roc},'${st.key}','h2')">🤖 AI記錄</button>
+          <button class="insp-ai-btn" onclick="openDrillModal(${roc},'${st.key}','h2')">📎 上傳報告</button>
         </div>
       </div>
     </div>`).join('');
@@ -895,7 +895,7 @@ function renderInspection(roc) {
           ${inspBadgeHtml(row[st.key])}
         </div>
         ${row[st.key].s !== 'not-built' ? `<div style="text-align:right">
-          <button class="insp-ai-btn" onclick="openInspModal(${roc},'${st.key}')">🤖 AI更新申報日期</button>
+          <button class="insp-ai-btn" onclick="openInspModal(${roc},'${st.key}')">📎 上傳報告</button>
         </div>` : ''}
       </div>
     </div>`).join('');
@@ -1288,7 +1288,7 @@ if (localStorage.getItem('portal-dark') === '1') {
 
     <button onclick="runDrillAI()"
       style="width:100%;padding:10px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
-      🤖 AI 判讀演練日期
+      📎 上傳報告
     </button>
 
     <div id="dm-spinner" style="display:none;text-align:center;padding:16px">
@@ -1321,7 +1321,7 @@ if (localStorage.getItem('portal-dark') === '1') {
 
     <button onclick="runInspAI()"
       style="width:100%;padding:10px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
-      🤖 AI 判讀申報日期
+      📎 上傳報告
     </button>
 
     <div id="im-spinner" style="display:none;text-align:center;padding:16px">
