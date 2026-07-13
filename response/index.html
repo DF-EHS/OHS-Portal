@@ -122,10 +122,13 @@
   .rc-cm-body {
     display: none; padding: 14px 18px;
     background: #f8fafc; border-top: 1px solid var(--border);
-    font-size: 13px; line-height: 1.75; color: var(--text);
-    white-space: pre-wrap;
+    font-size: 13px; line-height: 1.8; color: var(--text);
   }
   .rc-cm-body.show { display: block; }
+  .rc-cm-body p  { margin-bottom: 6px; }
+  .rc-cm-body ul, .rc-cm-body ol { padding-left: 20px; margin-bottom: 6px; }
+  .rc-cm-body li { margin-bottom: 3px; }
+  .rc-cm-body strong { font-weight: 700; }
 
   .rc-footer {
     padding: 10px 18px; border-top: 1px solid var(--border);
@@ -180,16 +183,40 @@
   .form-control:focus { border-color: var(--accent); }
   textarea.form-control { resize: vertical; min-height: 80px; }
 
-  .ai-row { display: flex; gap: 8px; align-items: flex-start; }
-  .ai-row textarea { flex: 1; }
+  .cm-label-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  }
+  .cm-btn-group { display: flex; gap: 6px; flex-shrink: 0; }
   .ai-gen-btn {
-    padding: 9px 14px; border-radius: 8px;
-    background: var(--accent); color: #fff; font-size: 12.5px; font-weight: 700;
+    padding: 6px 12px; border-radius: 7px;
+    background: var(--accent); color: #fff; font-size: 12px; font-weight: 700;
     border: none; cursor: pointer; transition: background .15s; font-family: inherit;
-    white-space: nowrap; flex-shrink: 0; margin-top: 0;
+    white-space: nowrap; display: inline-flex; align-items: center; gap: 4px;
   }
   .ai-gen-btn:hover { background: var(--accent-dark); }
   .ai-gen-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+  .cm-edit-btn {
+    padding: 6px 12px; border-radius: 7px;
+    background: var(--card); color: var(--sub); font-size: 12px; font-weight: 600;
+    border: 1.5px solid var(--border); cursor: pointer; font-family: inherit;
+    white-space: nowrap; display: none; transition: background .15s;
+  }
+  .cm-edit-btn:hover { background: var(--bg); color: var(--text); }
+
+  /* AI 結果預覽區 */
+  .cm-preview {
+    display: none;
+    border: 1.5px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; background: var(--bg);
+    font-size: 13px; line-height: 1.8; color: var(--text);
+    min-height: 120px;
+  }
+  .cm-preview p  { margin-bottom: 6px; }
+  .cm-preview ul, .cm-preview ol { padding-left: 20px; margin-bottom: 6px; }
+  .cm-preview li { margin-bottom: 3px; }
+  .cm-preview strong { font-weight: 700; color: var(--accent-dark); }
+  .cm-preview.active { display: block; }
+
   .form-hint { font-size: 11.5px; color: var(--sub); }
 
   .modal-footer {
@@ -303,12 +330,16 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">對策 <span class="req">*</span></label>
-        <div class="ai-row">
-          <textarea class="form-control" id="f-cm" rows="5" placeholder="輸入對策，或先填寫反應事項後點擊「AI 建議」自動生成…"></textarea>
-          <button class="ai-gen-btn" id="ai-btn" onclick="generateCM()">🤖 AI 建議</button>
+        <div class="cm-label-row">
+          <label class="form-label">對策 <span class="req">*</span></label>
+          <div class="cm-btn-group">
+            <button type="button" class="cm-edit-btn" id="cm-edit-btn" onclick="toggleCMEdit()">✏️ 編輯</button>
+            <button type="button" class="ai-gen-btn"  id="ai-btn"      onclick="generateCM()">🤖 AI 建議</button>
+          </div>
         </div>
-        <div class="form-hint">先填寫反應事項，再點擊「AI 建議」由 AI 協助生成對策，生成後可自行修改</div>
+        <div class="cm-preview" id="cm-preview"></div>
+        <textarea class="form-control" id="f-cm" rows="5" placeholder="輸入對策，或先填寫反應事項後點擊「AI 建議」自動生成…"></textarea>
+        <div class="form-hint" id="cm-hint">先填寫反應事項，再點擊「AI 建議」由 AI 協助生成對策，生成後可自行修改</div>
       </div>
 
       <div class="form-group">
@@ -399,7 +430,7 @@ function renderList() {
   <button class="rc-cm-toggle" onclick="toggleCM(this)">
     <span>🤖 AI 對策建議</span><span class="cm-arrow">▾</span>
   </button>
-  <div class="rc-cm-body">${esc(r.countermeasure)}</div>
+  <div class="rc-cm-body">${mdToHtml(r.countermeasure)}</div>
   ` : ''}
   <div class="rc-footer">
     <div class="rc-handler">${r.handler ? `🙋 協助處理：${esc(r.handler)}` : '<span style="opacity:.5">未指定協助人員</span>'}</div>
@@ -419,6 +450,38 @@ function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+/* Markdown → HTML（支援 **粗體**、* / - / 1. 條列）*/
+function mdToHtml(raw) {
+  if (!raw) return '';
+  function escTxt(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function inline(s) {
+    return escTxt(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  }
+  const lines  = raw.split('\n');
+  const out    = [];
+  let inList   = false;
+  let listTag  = '';
+  for (const raw of lines) {
+    const t = raw.trim();
+    const ulM = t.match(/^[*\-•]\s+([\s\S]+)/);
+    const olM = !ulM && t.match(/^\d+[.．]\s*([\s\S]+)/);
+    if (ulM || olM) {
+      const tag  = ulM ? 'ul' : 'ol';
+      const txt  = ulM ? ulM[1] : olM[1];
+      if (!inList)          { out.push(`<${tag}>`); inList = true; listTag = tag; }
+      else if (listTag !== tag) { out.push(`</${listTag}><${tag}>`); listTag = tag; }
+      out.push(`<li>${inline(txt)}</li>`);
+    } else {
+      if (inList) { out.push(`</${listTag}>`); inList = false; listTag = ''; }
+      if (t !== '') out.push(`<p>${inline(t)}</p>`);
+    }
+  }
+  if (inList) out.push(`</${listTag}>`);
+  return out.join('');
+}
+
 function toggleCM(btn) {
   const body  = btn.nextElementSibling;
   const arrow = btn.querySelector('.cm-arrow');
@@ -431,10 +494,41 @@ function openModal() {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
+  showCMTextarea();
   document.getElementById('modal-overlay').classList.add('show');
 }
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('show');
+}
+
+/* 切換對策預覽 ↔ 編輯 */
+function showCMPreview(html) {
+  document.getElementById('cm-preview').innerHTML = html;
+  document.getElementById('cm-preview').classList.add('active');
+  document.getElementById('f-cm').style.display    = 'none';
+  document.getElementById('cm-edit-btn').style.display = 'inline-flex';
+  document.getElementById('cm-hint').textContent   = '已由 AI 生成對策，點擊「✏️ 編輯」可手動修改';
+}
+function showCMTextarea() {
+  document.getElementById('cm-preview').classList.remove('active');
+  document.getElementById('f-cm').style.display    = '';
+  document.getElementById('cm-edit-btn').style.display = 'none';
+  document.getElementById('cm-hint').textContent   = '先填寫反應事項，再點擊「AI 建議」由 AI 協助生成對策，生成後可自行修改';
+}
+let _cmInEditMode = false;
+function toggleCMEdit() {
+  const btn = document.getElementById('cm-edit-btn');
+  if (!_cmInEditMode) {
+    _cmInEditMode = true;
+    document.getElementById('cm-preview').classList.remove('active');
+    document.getElementById('f-cm').style.display = '';
+    btn.textContent = '👁 預覽';
+  } else {
+    _cmInEditMode = false;
+    const html = mdToHtml(document.getElementById('f-cm').value);
+    showCMPreview(html);
+    btn.textContent = '✏️ 編輯';
+  }
 }
 
 async function generateCM() {
@@ -462,7 +556,10 @@ async function generateCM() {
     const data = await resp.json();
     const text = data?.data || data?.choices?.[0]?.message?.content || data?.text || '';
     if (!text) throw new Error('AI 回應為空，請稍後再試');
-    document.getElementById('f-cm').value = text.trim();
+    const trimmed = text.trim();
+    document.getElementById('f-cm').value = trimmed;
+    _cmInEditMode = false;
+    showCMPreview(mdToHtml(trimmed));
   } catch(e) {
     alert('AI 生成失敗：' + e.message);
   } finally {
