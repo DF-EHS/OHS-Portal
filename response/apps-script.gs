@@ -23,6 +23,7 @@ function handle(e) {
     let result = {};
     if      (act === 'getAll')       result = getAll();
     else if (act === 'add')          result = add(body);
+    else if (act === 'update')       result = update(body);
     else if (act === 'updateStatus') result = updateStatus(body);
     else if (act === 'delete')       result = deleteRec(body);
     else throw new Error('Unknown action: ' + act);
@@ -71,6 +72,25 @@ function add(body) {
     'open'
   ]);
   return { id };
+}
+
+function update(body) {
+  const sh   = getSheet();
+  const data = sh.getDataRange().getValues();
+  const hdr  = data[0];
+  const idx  = {};
+  hdr.forEach((h, i) => idx[h] = i);
+  for (let i = 1; i < data.length; i++) {
+    if (String(data[i][0]) === String(body.id)) {
+      sh.getRange(i+1, idx.department    +1).setValue(body.department    || '');
+      sh.getRange(i+1, idx.issue         +1).setValue(body.issue         || '');
+      sh.getRange(i+1, idx.countermeasure+1).setValue(body.countermeasure|| '');
+      sh.getRange(i+1, idx.proposer      +1).setValue(body.proposer      || '');
+      sh.getRange(i+1, idx.handler       +1).setValue(body.handler       || '');
+      return { updated: true };
+    }
+  }
+  throw new Error('找不到記錄：' + body.id);
 }
 
 function updateStatus(body) {

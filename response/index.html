@@ -147,6 +147,8 @@
   .btn-reopen:hover  { background: #fde68a; }
   .btn-del     { background: #fee2e2; color: #991b1b; }
   .btn-del:hover     { background: #fecaca; }
+  .btn-edit    { background: #dbeafe; color: #1e40af; }
+  .btn-edit:hover    { background: #bfdbfe; }
 
   .empty-state { text-align: center; padding: 60px 20px; color: var(--sub); }
   .empty-state .es-icon { font-size: 48px; margin-bottom: 12px; opacity: .4; }
@@ -308,7 +310,7 @@
 <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-header">
-      <h3>📣 新增反應事項</h3>
+      <h3 id="modal-title">📣 新增反應事項</h3>
       <button class="modal-close" onclick="closeModal()">×</button>
     </div>
     <div class="modal-body">
@@ -441,6 +443,7 @@ function renderList() {
   <div class="rc-footer">
     <div class="rc-handler">${r.handler ? `🔧 協助處理：${esc(r.handler)}` : '<span style="opacity:.5">未指定協助人員</span>'}</div>
     <div class="rc-actions">
+      <button class="rc-act-btn btn-edit"    onclick="openEditModal('${esc(r.id)}')">編輯</button>
       ${isDone
         ? `<button class="rc-act-btn btn-reopen"  onclick="setStatus('${esc(r.id)}','open')">重新開啟</button>`
         : `<button class="rc-act-btn btn-resolve" onclick="setStatus('${esc(r.id)}','done')">標記已解決</button>`
@@ -495,14 +498,40 @@ function toggleCM(btn) {
   arrow.textContent = show ? '▴' : '▾';
 }
 
+let _editingId = null;
+
 function openModal() {
+  _editingId = null;
   ['f-dept','f-issue','f-cm','f-proposer','f-handler'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
   showCMTextarea();
+  document.getElementById('modal-title').textContent  = '📣 新增反應事項';
+  document.getElementById('submit-btn').textContent   = '送出';
   document.getElementById('modal-overlay').classList.add('show');
 }
+
+function openEditModal(id) {
+  const r = allRecords.find(x => x.id === id);
+  if (!r) return;
+  _editingId = id;
+  document.getElementById('f-dept').value     = r.department    || '';
+  document.getElementById('f-issue').value    = r.issue         || '';
+  document.getElementById('f-cm').value       = r.countermeasure|| '';
+  document.getElementById('f-proposer').value = r.proposer      || '';
+  document.getElementById('f-handler').value  = r.handler       || '';
+  _cmInEditMode = false;
+  if (r.countermeasure && r.countermeasure.trim()) {
+    showCMPreview(mdToHtml(r.countermeasure));
+  } else {
+    showCMTextarea();
+  }
+  document.getElementById('modal-title').textContent = '✏️ 編輯反應事項';
+  document.getElementById('submit-btn').textContent  = '儲存變更';
+  document.getElementById('modal-overlay').classList.add('show');
+}
+
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('show');
 }
@@ -588,13 +617,17 @@ async function submitForm() {
 
   const btn = document.getElementById('submit-btn');
   btn.disabled    = true;
-  btn.textContent = '送出中…';
+  btn.textContent = '處理中…';
+
+  const payload = _editingId
+    ? { action: 'update', id: _editingId, department: dept, issue, countermeasure: cm, proposer, handler }
+    : { action: 'add',                    department: dept, issue, countermeasure: cm, proposer, handler };
 
   try {
     const r = await fetch(GAS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ action: 'add', department: dept, issue, countermeasure: cm, proposer, handler }),
+      body: JSON.stringify(payload),
     });
     const d = await r.json();
     if (!d.success) throw new Error(d.error || '儲存失敗');
@@ -604,7 +637,7 @@ async function submitForm() {
     alert('送出失敗：' + e.message);
   } finally {
     btn.disabled    = false;
-    btn.textContent = '送出';
+    btn.textContent = _editingId ? '儲存變更' : '送出';
   }
 }
 
