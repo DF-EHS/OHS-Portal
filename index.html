@@ -181,6 +181,7 @@
   .ci-blue   { background: #dbeafe; }
   .ci-orange { background: #ffedd5; }
   .ci-teal   { background: #ccfbf1; }
+  .ci-cyan   { background: #cffafe; }
   .ci-red    { background: #fee2e2; }
   .ci-rose   { background: #fce7f3; }
 
@@ -295,6 +296,7 @@
   body.dark .ci-orange { background: #431407; }
   body.dark .ci-red    { background: #450a0a; }
   body.dark .ci-teal   { background: #042f2e; }
+  body.dark .ci-cyan   { background: #083344; }
   body.dark .tg-navy   { background: #1e2d42; color: #93c5fd; }
   body.dark .tg-purple { background: #2d1b55; color: #c4b5fd; }
   body.dark .tg-green  { background: #052e16; color: #86efac; }
@@ -570,6 +572,25 @@
           <div class="card-footer">
             <div class="card-status"><span class="status-dot"></span>已上線</div>
             <button class="open-btn btn-sky" onclick="event.stopPropagation();location.href='./news/'">開啟系統 ›</button>
+          </div>
+        </div>
+
+        <div class="sys-card" onclick="location.href='./response/'">
+          <div class="card-header">
+            <div class="card-icon ci-cyan">📣</div>
+            <div>
+              <div class="card-title">各站點反應事項</div>
+              <div class="card-desc">各單位主管或職安人員反應安全衛生問題，AI 協助生成對策建議，並追蹤協助處理人員跟進進度。</div>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tg-blue">問題回報</span>
+            <span class="tag tg-navy">AI 對策</span>
+            <span class="tag tg-green">進度追蹤</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-status"><span class="status-dot"></span>已上線</div>
+            <button class="open-btn" style="background:#0891b2" onclick="event.stopPropagation();location.href='./response/'">開啟系統 ›</button>
           </div>
         </div>
 

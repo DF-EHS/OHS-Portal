@@ -164,6 +164,9 @@
       <a class="nav-item" href="${BASE}news/" data-match="/news/">
         <span class="nav-icon">📰</span>職災情報與安衛動態
       </a>
+      <a class="nav-item" href="${BASE}response/" data-match="/response/">
+        <span class="nav-icon">📣</span>各站點反應事項
+      </a>
 
       <div class="nav-section">機械設備及化學品</div>
       <a class="nav-item" href="${BASE}equipment/" data-match="/equipment/">

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>各站點反應事項 | 大豐環保科技</title>
+<style>
+  :root {
+    --accent:       #0891b2;
+    --accent-dark:  #0e7490;
+    --accent-light: #cffafe;
+    --bg:     #f1f5f9;
+    --card:   #ffffff;
+    --border: #e2e8f0;
+    --text:   #1e293b;
+    --sub:    #64748b;
+    --green:  #16a34a;
+    --red:    #dc2626;
+    --orange: #d97706;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif; color: var(--text); background: var(--bg); min-height: 100vh; }
+
+  /* ── Topbar ── */
+  header {
+    background: var(--accent); padding: 0 20px; height: 54px;
+    display: flex; align-items: center; gap: 10px;
+    position: sticky; top: 0; z-index: 200;
+    box-shadow: 0 2px 8px rgba(0,0,0,.18);
+  }
+  .hdr-btn {
+    padding: 5px 12px; border-radius: 6px;
+    border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1);
+    color: #fff; font-size: 12px; cursor: pointer; transition: background .15s;
+    font-family: inherit; flex-shrink: 0; text-decoration: none;
+    display: inline-flex; align-items: center;
+  }
+  .hdr-btn:hover { background: rgba(255,255,255,.2); }
+  header h1 { font-size: 17px; font-weight: 700; color: #fff; flex: 1; }
+  .hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+  .hdr-brand img  { height: 24px; object-fit: contain; }
+  .hdr-brand span { font-size: 12px; color: rgba(255,255,255,.85); font-weight: 600; white-space: nowrap; }
+
+  /* ── Main ── */
+  main { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #0e7490 0%, #0891b2 55%, #06b6d4 100%);
+    border-radius: 16px; padding: 24px 28px; margin-bottom: 28px;
+    display: flex; align-items: center; gap: 18px;
+    box-shadow: 0 4px 20px rgba(8,145,178,.2);
+  }
+  .hero-icon { font-size: 48px; flex-shrink: 0; }
+  .hero-text h2 { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .hero-text p  { font-size: 13px; color: rgba(255,255,255,.85); line-height: 1.6; }
+
+  /* ── Stats ── */
+  .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 24px; }
+  .stat-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+  .stat-num  { font-size: 28px; font-weight: 800; color: var(--accent); }
+  .stat-label{ font-size: 12px; color: var(--sub); margin-top: 2px; }
+  .stat-card.s-open .stat-num { color: var(--orange); }
+  .stat-card.s-done .stat-num { color: var(--green); }
+
+  /* ── Toolbar ── */
+  .toolbar { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; align-items: center; }
+  .toolbar select, .toolbar input {
+    padding: 7px 12px; border: 1.5px solid var(--border); border-radius: 8px;
+    font-family: inherit; font-size: 13px; background: var(--card); color: var(--text);
+    outline: none; transition: border-color .15s;
+  }
+  .toolbar select:focus, .toolbar input:focus { border-color: var(--accent); }
+  .toolbar input { flex: 1; min-width: 160px; }
+  .add-btn {
+    margin-left: auto; padding: 8px 20px; border-radius: 8px;
+    background: var(--accent); color: #fff; font-size: 13px; font-weight: 700;
+    border: none; cursor: pointer; transition: background .15s; font-family: inherit;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .add-btn:hover { background: var(--accent-dark); }
+
+  /* ── Response Cards ── */
+  .response-list { display: flex; flex-direction: column; gap: 14px; }
+  .response-card {
+    background: var(--card); border: 1.5px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04); transition: box-shadow .2s;
+  }
+  .response-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.09); }
+  .response-card.st-open { border-left: 4px solid var(--orange); }
+  .response-card.st-done { border-left: 4px solid var(--green); }
+
+  .rc-top { padding: 16px 18px 12px; display: flex; align-items: flex-start; gap: 12px; }
+  .rc-dept {
+    flex-shrink: 0; padding: 3px 10px; border-radius: 20px;
+    font-size: 11.5px; font-weight: 700; margin-top: 2px;
+  }
+  .dept-hq  { background: #dbeafe; color: #1e40af; }
+  .dept-fac { background: #fef3c7; color: #92400e; }
+  .dept-sta { background: #d1fae5; color: #065f46; }
+  .dept-rem { background: #ede9fe; color: #5b21b6; }
+
+  .rc-content { flex: 1; }
+  .rc-issue { font-size: 15px; font-weight: 700; margin-bottom: 5px; line-height: 1.45; }
+  .rc-meta  { font-size: 12px; color: var(--sub); display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .rc-badge { flex-shrink: 0; padding: 3px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 700; margin-top: 2px; }
+  .badge-open { background: #fef3c7; color: #92400e; }
+  .badge-done { background: #d1fae5; color: #065f46; }
+
+  .rc-cm-toggle {
+    width: 100%; padding: 8px 18px; text-align: left;
+    background: #f8fafc; border: none; border-top: 1px solid var(--border);
+    font-size: 12.5px; color: var(--sub); cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: inherit; transition: background .15s;
+  }
+  .rc-cm-toggle:hover { background: #f1f5f9; color: var(--text); }
+
+  .rc-cm-body {
+    display: none; padding: 14px 18px;
+    background: #f8fafc; border-top: 1px solid var(--border);
+    font-size: 13px; line-height: 1.75; color: var(--text);
+    white-space: pre-wrap;
+  }
+  .rc-cm-body.show { display: block; }
+
+  .rc-footer {
+    padding: 10px 18px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    background: #fafbfc;
+  }
+  .rc-handler { font-size: 12px; color: var(--sub); }
+  .rc-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  .rc-act-btn {
+    padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+    border: none; cursor: pointer; font-family: inherit; transition: background .15s;
+  }
+  .btn-resolve { background: #d1fae5; color: #065f46; }
+  .btn-resolve:hover { background: #a7f3d0; }
+  .btn-reopen  { background: #fef3c7; color: #92400e; }
+  .btn-reopen:hover  { background: #fde68a; }
+  .btn-del     { background: #fee2e2; color: #991b1b; }
+  .btn-del:hover     { background: #fecaca; }
+
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--sub); }
+  .empty-state .es-icon { font-size: 48px; margin-bottom: 12px; opacity: .4; }
+  .empty-state p { font-size: 14px; }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,.45); align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--card); border-radius: 16px; width: 100%; max-width: 620px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.22); max-height: 90vh; overflow-y: auto;
+  }
+  .modal-header {
+    padding: 18px 22px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; background: var(--card); z-index: 1;
+  }
+  .modal-header h3 { font-size: 16px; font-weight: 700; }
+  .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--sub); padding: 0 6px; border-radius: 4px; line-height: 1; }
+  .modal-close:hover { background: var(--border); }
+
+  .modal-body { padding: 22px; display: flex; flex-direction: column; gap: 18px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label { font-size: 13px; font-weight: 700; }
+  .form-label .req { color: var(--red); margin-left: 2px; }
+  .form-control {
+    padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px;
+    font-family: inherit; font-size: 13px; color: var(--text);
+    outline: none; transition: border-color .15s; width: 100%; background: var(--card);
+  }
+  .form-control:focus { border-color: var(--accent); }
+  textarea.form-control { resize: vertical; min-height: 80px; }
+
+  .ai-row { display: flex; gap: 8px; align-items: flex-start; }
+  .ai-row textarea { flex: 1; }
+  .ai-gen-btn {
+    padding: 9px 14px; border-radius: 8px;
+    background: var(--accent); color: #fff; font-size: 12.5px; font-weight: 700;
+    border: none; cursor: pointer; transition: background .15s; font-family: inherit;
+    white-space: nowrap; flex-shrink: 0; margin-top: 0;
+  }
+  .ai-gen-btn:hover { background: var(--accent-dark); }
+  .ai-gen-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+  .form-hint { font-size: 11.5px; color: var(--sub); }
+
+  .modal-footer {
+    padding: 14px 22px; border-top: 1px solid var(--border);
+    display: flex; gap: 10px; justify-content: flex-end;
+    position: sticky; bottom: 0; background: var(--card);
+  }
+  .btn-cancel {
+    padding: 8px 20px; border-radius: 8px; border: 1.5px solid var(--border);
+    background: var(--card); font-family: inherit; font-size: 13px; cursor: pointer; color: var(--text);
+  }
+  .btn-submit {
+    padding: 8px 24px; border-radius: 8px; background: var(--accent);
+    color: #fff; font-size: 13px; font-weight: 700; border: none; cursor: pointer; font-family: inherit;
+  }
+  .btn-submit:hover { background: var(--accent-dark); }
+  .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
+
+  /* ── Dark mode ── */
+  body.dark {
+    --bg: #0f172a; --card: #1e293b; --border: #334155; --text: #f1f5f9; --sub: #94a3b8;
+    --accent-light: #164e63;
+  }
+  body.dark header { background: #0e7490; }
+  body.dark .rc-cm-toggle, body.dark .rc-cm-body, body.dark .rc-footer { background: #1e293b; }
+  body.dark .stat-card { background: #1e293b; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 16px; gap: 12px; }
+    .hero-icon { font-size: 36px; }
+    .hero-text h2 { font-size: 17px; }
+    .stats-row { gap: 8px; }
+    .stat-num { font-size: 22px; }
+    .rc-top { flex-wrap: wrap; }
+    .rc-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="hdr-btn" href="../">← 系統入口</a>
+  <h1>📣 各站點反應事項</h1>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="hero-icon">📣</div>
+    <div class="hero-text">
+      <h2>各站點安全衛生反應事項</h2>
+      <p>各單位主管或職安人員反應安全衛生問題，由 AI 協助生成對策建議，並指定協助處理人員或單位跟進。</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" id="stat-total">—</div><div class="stat-label">總計</div></div>
+    <div class="stat-card s-open"><div class="stat-num" id="stat-open">—</div><div class="stat-label">處理中</div></div>
+    <div class="stat-card s-done"><div class="stat-num" id="stat-done">—</div><div class="stat-label">已解決</div></div>
+  </div>
+
+  <div class="toolbar">
+    <select id="filter-dept" onchange="renderList()">
+      <option value="">所有部門</option>
+      <option>總部</option><option>全興再生廠</option><option>五股分選廠</option>
+      <option>北一</option><option>北二</option><option>中一</option>
+      <option>南一</option><option>南二</option><option>神岡站</option>
+      <option>和美站</option><option>員林站</option><option>斗六站</option>
+      <option>金馬站</option><option>草屯站</option><option>拆除課</option>
+    </select>
+    <select id="filter-status" onchange="renderList()">
+      <option value="">所有狀態</option>
+      <option value="open">處理中</option>
+      <option value="done">已解決</option>
+    </select>
+    <input type="text" id="filter-search" placeholder="搜尋反應事項…" oninput="renderList()">
+    <button class="add-btn" onclick="openModal()">＋ 新增反應事項</button>
+  </div>
+
+  <div class="response-list" id="response-list">
+    <div class="empty-state"><div class="es-icon">⏳</div><p>載入中…</p></div>
+  </div>
+</main>
+
+<!-- Add Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>📣 新增反應事項</h3>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">部門 <span class="req">*</span></label>
+        <select class="form-control" id="f-dept">
+          <option value="">請選擇部門</option>
+          <option>總部</option><option>全興再生廠</option><option>五股分選廠</option>
+          <option>北一</option><option>北二</option><option>中一</option>
+          <option>南一</option><option>南二</option><option>神岡站</option>
+          <option>和美站</option><option>員林站</option><option>斗六站</option>
+          <option>金馬站</option><option>草屯站</option><option>拆除課</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">反應事項 <span class="req">*</span></label>
+        <textarea class="form-control" id="f-issue" rows="4" placeholder="請詳細描述反應的安全衛生問題…"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">對策 <span class="req">*</span></label>
+        <div class="ai-row">
+          <textarea class="form-control" id="f-cm" rows="5" placeholder="輸入對策，或先填寫反應事項後點擊「AI 建議」自動生成…"></textarea>
+          <button class="ai-gen-btn" id="ai-btn" onclick="generateCM()">🤖 AI 建議</button>
+        </div>
+        <div class="form-hint">先填寫反應事項，再點擊「AI 建議」由 AI 協助生成對策，生成後可自行修改</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">協助處理人員或單位</label>
+        <input type="text" class="form-control" id="f-handler" placeholder="例：職安室、設備課、林主任…">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">取消</button>
+      <button class="btn-submit" id="submit-btn" onclick="submitForm()">送出</button>
+    </div>
+  </div>
+</div>
+
+<script src="../shared/sidebar.js"></script>
+<script>
+const GAS_URL   = 'YOUR_GAS_URL_HERE';
+const AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+
+let allRecords = [];
+
+function deptClass(dept) {
+  if (dept === '總部') return 'dept-hq';
+  if (['全興再生廠','五股分選廠'].includes(dept)) return 'dept-fac';
+  if (dept === '拆除課') return 'dept-rem';
+  return 'dept-sta';
+}
+
+async function loadData() {
+  try {
+    const r = await fetch(GAS_URL + '?action=getAll');
+    const d = await r.json();
+    allRecords = (d.records || []).sort((a,b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+    updateStats();
+    renderList();
+  } catch(e) {
+    document.getElementById('response-list').innerHTML =
+      '<div class="empty-state"><div class="es-icon">⚠️</div><p>資料載入失敗，請確認 GAS 網址是否已設定</p></div>';
+    document.getElementById('stat-total').textContent = document.getElementById('stat-open').textContent = document.getElementById('stat-done').textContent = '—';
+  }
+}
+
+function updateStats() {
+  const open = allRecords.filter(r => r.status !== 'done').length;
+  const done = allRecords.filter(r => r.status === 'done').length;
+  document.getElementById('stat-total').textContent = allRecords.length;
+  document.getElementById('stat-open').textContent  = open;
+  document.getElementById('stat-done').textContent  = done;
+}
+
+function renderList() {
+  const dept   = document.getElementById('filter-dept').value;
+  const status = document.getElementById('filter-status').value;
+  const search = document.getElementById('filter-search').value.toLowerCase();
+
+  const filtered = allRecords.filter(r => {
+    if (dept   && r.department !== dept) return false;
+    if (status === 'open' && r.status === 'done') return false;
+    if (status === 'done' && r.status !== 'done') return false;
+    if (search && !(r.issue||'').toLowerCase().includes(search) && !(r.countermeasure||'').toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  const list = document.getElementById('response-list');
+  if (!filtered.length) {
+    list.innerHTML = '<div class="empty-state"><div class="es-icon">📭</div><p>目前沒有符合條件的反應事項</p></div>';
+    return;
+  }
+
+  list.innerHTML = filtered.map(r => {
+    const isDone = r.status === 'done';
+    const date   = (r.submittedAt || '').slice(0, 10);
+    const hasCM  = r.countermeasure && r.countermeasure.trim();
+    return `
+<div class="response-card st-${isDone ? 'done' : 'open'}">
+  <div class="rc-top">
+    <span class="rc-dept ${deptClass(r.department)}">${esc(r.department)}</span>
+    <div class="rc-content">
+      <div class="rc-issue">${esc(r.issue)}</div>
+      <div class="rc-meta">
+        <span>📅 ${date}</span>
+        ${r.handler ? `<span>👤 ${esc(r.handler)}</span>` : ''}
+      </div>
+    </div>
+    <span class="rc-badge ${isDone ? 'badge-done' : 'badge-open'}">${isDone ? '✓ 已解決' : '⏳ 處理中'}</span>
+  </div>
+  ${hasCM ? `
+  <button class="rc-cm-toggle" onclick="toggleCM(this)">
+    <span>🤖 AI 對策建議</span><span class="cm-arrow">▾</span>
+  </button>
+  <div class="rc-cm-body">${esc(r.countermeasure)}</div>
+  ` : ''}
+  <div class="rc-footer">
+    <div class="rc-handler">${r.handler ? `🙋 協助處理：${esc(r.handler)}` : '<span style="opacity:.5">未指定協助人員</span>'}</div>
+    <div class="rc-actions">
+      ${isDone
+        ? `<button class="rc-act-btn btn-reopen"  onclick="setStatus('${esc(r.id)}','open')">重新開啟</button>`
+        : `<button class="rc-act-btn btn-resolve" onclick="setStatus('${esc(r.id)}','done')">標記已解決</button>`
+      }
+      <button class="rc-act-btn btn-del" onclick="deleteRecord('${esc(r.id)}')">刪除</button>
+    </div>
+  </div>
+</div>`;
+  }).join('');
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function toggleCM(btn) {
+  const body  = btn.nextElementSibling;
+  const arrow = btn.querySelector('.cm-arrow');
+  const show  = body.classList.toggle('show');
+  arrow.textContent = show ? '▴' : '▾';
+}
+
+function openModal() {
+  ['f-dept','f-issue','f-cm','f-handler'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('show');
+}
+
+async function generateCM() {
+  const dept  = document.getElementById('f-dept').value;
+  const issue = document.getElementById('f-issue').value.trim();
+  if (!issue) { alert('請先填寫反應事項'); return; }
+
+  const btn = document.getElementById('ai-btn');
+  btn.disabled    = true;
+  btn.textContent = '生成中…';
+  document.getElementById('f-cm').value = '';
+
+  const prompt =
+    `你是職業安全衛生管理師助理。以下是某站點反應的安全衛生問題，請根據勞工安全衛生法規及職場安全管理實務，撰寫具體可行的對策建議。\n\n` +
+    `【部門】${dept || '（未指定）'}\n【反應事項】${issue}\n\n` +
+    `請以繁體中文、條列式撰寫，約 150 字以內，直接輸出對策內容，不需重述問題。`;
+
+  try {
+    const resp = await fetch(AI_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt }),
+    });
+    if (!resp.ok) throw new Error('AI API 錯誤 ' + resp.status);
+    const data = await resp.json();
+    const text = data?.data || data?.choices?.[0]?.message?.content || data?.text || '';
+    if (!text) throw new Error('AI 回應為空，請稍後再試');
+    document.getElementById('f-cm').value = text.trim();
+  } catch(e) {
+    alert('AI 生成失敗：' + e.message);
+  } finally {
+    btn.disabled    = false;
+    btn.textContent = '🤖 AI 建議';
+  }
+}
+
+async function submitForm() {
+  const dept    = document.getElementById('f-dept').value;
+  const issue   = document.getElementById('f-issue').value.trim();
+  const cm      = document.getElementById('f-cm').value.trim();
+  const handler = document.getElementById('f-handler').value.trim();
+
+  if (!dept)  { alert('請選擇部門'); return; }
+  if (!issue) { alert('請填寫反應事項'); return; }
+  if (!cm)    { alert('請填寫對策（可使用 AI 建議自動生成）'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled    = true;
+  btn.textContent = '送出中…';
+
+  try {
+    const r = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'add', department: dept, issue, countermeasure: cm, handler }),
+    });
+    const d = await r.json();
+    if (!d.success) throw new Error(d.error || '儲存失敗');
+    closeModal();
+    await loadData();
+  } catch(e) {
+    alert('送出失敗：' + e.message);
+  } finally {
+    btn.disabled    = false;
+    btn.textContent = '送出';
+  }
+}
+
+async function setStatus(id, status) {
+  try {
+    await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'updateStatus', id, status }),
+    });
+    await loadData();
+  } catch(e) { alert('更新失敗：' + e.message); }
+}
+
+async function deleteRecord(id) {
+  if (!confirm('確定刪除此反應事項？此操作無法復原。')) return;
+  try {
+    await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'delete', id }),
+    });
+    await loadData();
+  } catch(e) { alert('刪除失敗：' + e.message); }
+}
+
+loadData();
+</script>
+</body>
+</html>
