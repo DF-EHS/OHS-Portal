@@ -257,6 +257,17 @@ body.dark .drill-badge.missing { background: #422006; color: #fcd34d; }
 body.dark .drill-badge.pending { background: #1e3a5f; color: #93c5fd; }
 body.dark .drill-badge.future  { background: #263349; color: #475569; border-color: #334155; }
 
+.drill-tab-add { border-style: dashed; }
+.drill-tab-add:hover:not(.active) { border-color: var(--navy) !important; color: var(--navy) !important; }
+.insp-ai-btn {
+  padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;
+  border: 1.5px solid #0369a1; color: #0369a1; background: #e0f2fe;
+  font-family: inherit; transition: all .15s;
+}
+.insp-ai-btn:hover { background: #bae6fd; }
+body.dark .insp-ai-btn { background: #0c2a3e; color: #7dd3fc; border-color: #0369a1; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
 @media (max-width: 600px) {
   .drill-grid { grid-template-columns: 1fr; }
 }
@@ -633,8 +644,40 @@ function buildMatrix() {
   document.getElementById('drill-tabs').innerHTML = DRILLS.map(r =>
     `<button type="button" class="drill-tab${r.roc === activeRoc ? ' active' : ''}"
      data-roc="${r.roc}" onclick="renderDrills(${r.roc})">民${r.roc}年</button>`
-  ).join('');
+  ).join('') + `<button type="button" class="drill-tab drill-tab-add" onclick="promptAddDrillYear()">＋ 新增年度</button>`;
   renderDrills(activeRoc);
+}
+
+const DRILLS_LS_KEY = 'fire_drills_v1';
+
+function saveDrillsLocal() {
+  localStorage.setItem(DRILLS_LS_KEY, JSON.stringify(DRILLS));
+}
+
+function loadDrillsFromLocal() {
+  try {
+    const raw = localStorage.getItem(DRILLS_LS_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (!Array.isArray(saved) || !saved.length) return;
+    DRILLS.length = 0;
+    saved.forEach(r => DRILLS.push(r));
+    activeRoc = DRILLS[0].roc;
+  } catch(e) { console.warn('loadDrillsFromLocal:', e); }
+}
+
+function promptAddDrillYear() {
+  const maxRoc = DRILLS.length ? Math.max(...DRILLS.map(d => d.roc)) : 114;
+  const next = maxRoc + 1;
+  if (!confirm(`新增民國 ${next} 年度（消防演練）？`)) return;
+  DRILLS.unshift({
+    roc: next,
+    taichung: { h1: { s:'future' }, h2: { s:'future' } },
+    quanxing:  { h1: { s:'future' }, h2: { s:'future' } }
+  });
+  saveDrillsLocal();
+  activeRoc = next;
+  buildMatrix();
 }
 
 // ─────────────────────────────────────────────
@@ -782,6 +825,7 @@ function buildManagers() {
   }).join('');
 }
 
+loadDrillsFromLocal();
 buildMatrix();
 buildManagers();
 
@@ -848,6 +892,9 @@ function renderInspection(roc) {
           <span class="half-label">年度申報日期</span>
           ${inspBadgeHtml(row[st.key])}
         </div>
+        ${row[st.key].s !== 'not-built' ? `<div style="text-align:right">
+          <button class="insp-ai-btn" onclick="openInspModal(${roc},'${st.key}')">🤖 AI更新申報日期</button>
+        </div>` : ''}
       </div>
     </div>`).join('');
 }
@@ -856,11 +903,181 @@ function buildInspMatrix() {
   document.getElementById('insp-tabs').innerHTML = INSPECTIONS.map(r =>
     `<button type="button" class="drill-tab insp-tab${r.roc === activeInspRoc ? ' active' : ''}"
      data-roc="${r.roc}" onclick="renderInspection(${r.roc})">民${r.roc}年</button>`
-  ).join('');
+  ).join('') + `<button type="button" class="drill-tab drill-tab-add" onclick="promptAddInspYear()">＋ 新增年度</button>`;
   renderInspection(activeInspRoc);
 }
 
+const INSPS_LS_KEY = 'fire_inspections_v1';
+
+function saveInspsLocal() {
+  localStorage.setItem(INSPS_LS_KEY, JSON.stringify(INSPECTIONS));
+}
+
+function loadInspsFromLocal() {
+  try {
+    const raw = localStorage.getItem(INSPS_LS_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (!Array.isArray(saved) || !saved.length) return;
+    INSPECTIONS.length = 0;
+    saved.forEach(r => INSPECTIONS.push(r));
+    activeInspRoc = INSPECTIONS[0].roc;
+  } catch(e) { console.warn('loadInspsFromLocal:', e); }
+}
+
+function promptAddInspYear() {
+  const maxRoc = INSPECTIONS.length ? Math.max(...INSPECTIONS.map(d => d.roc)) : 114;
+  const next = maxRoc + 1;
+  if (!confirm(`新增民國 ${next} 年度（消防設備檢修申報）？`)) return;
+  INSPECTIONS.unshift({
+    roc: next,
+    taichung: { s:'future' },
+    quanxing: { s:'future' },
+    wugu:     { s:'future' }
+  });
+  saveInspsLocal();
+  activeInspRoc = next;
+  buildInspMatrix();
+}
+
+loadInspsFromLocal();
 buildInspMatrix();
+
+// ─────────────────────────────────────────────
+//  年度消防設備檢修申報 — AI 日期上傳 Modal
+// ─────────────────────────────────────────────
+const FIRE_AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+
+let _inspModalRoc  = null;
+let _inspModalSite = null;
+let _inspAiResult  = null;
+
+function openInspModal(roc, site) {
+  _inspModalRoc  = roc;
+  _inspModalSite = site;
+  _inspAiResult  = null;
+  const st = INSP_STATIONS.find(s => s.key === site);
+  document.getElementById('im-title').textContent = `📤 民${roc}年・${st ? st.label : site}`;
+  document.getElementById('im-file').value  = '';
+  document.getElementById('im-result').innerHTML = '';
+  document.getElementById('im-confirm-btn').style.display = 'none';
+  document.getElementById('im-spinner').style.display = 'none';
+  document.getElementById('insp-modal').style.display = 'flex';
+}
+
+function closeInspModal() {
+  document.getElementById('insp-modal').style.display = 'none';
+}
+
+async function extractPdfTextFire(file) {
+  if (typeof pdfjsLib === 'undefined') throw new Error('PDF.js 函式庫未載入，請重新整理頁面');
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const buf  = await file.arrayBuffer();
+  const pdf  = await pdfjsLib.getDocument({ data: buf }).promise;
+  const pages = Math.min(pdf.numPages, 8);
+  const parts = [];
+  for (let i = 1; i <= pages; i++) {
+    const page    = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    parts.push(content.items.map(it => it.str).join(' '));
+  }
+  return parts.join('\n\n').trim();
+}
+
+async function runInspAI() {
+  const spinner    = document.getElementById('im-spinner');
+  const result     = document.getElementById('im-result');
+  const confirmBtn = document.getElementById('im-confirm-btn');
+  const fileEl     = document.getElementById('im-file');
+  const file       = fileEl && fileEl.files[0];
+
+  if (!file) { alert('請先選擇申報文件（PDF 或圖片）'); return; }
+
+  result.innerHTML = '';
+  confirmBtn.style.display = 'none';
+  spinner.style.display = 'block';
+  _inspAiResult = null;
+
+  try {
+    let docText = '';
+    if (file.type === 'application/pdf') {
+      docText = await extractPdfTextFire(file);
+    }
+    if (!docText) {
+      result.innerHTML = `<div style="color:#dc2626;margin-top:8px">❌ 無法擷取文字（可能為掃描版 PDF），請手動更新申報日期。</div>`;
+      spinner.style.display = 'none';
+      return;
+    }
+
+    const st = INSP_STATIONS.find(s => s.key === _inspModalSite);
+    const prompt = `這是大豐環保科技${st ? st.label : _inspModalSite}民國${_inspModalRoc}年的消防設備年度檢修申報文件內容。
+請判斷：
+1. 申報是否完成？（是/否）
+2. 申報日期（若有）：格式 YYYY-MM-DD
+3. 申報結果摘要（1-2句話）
+
+請以 JSON 格式回覆，欄位：done (boolean), date (string, 無則空字串), summary (string)
+
+文件內容：
+${docText.slice(0, 3000)}`;
+
+    const resp = await fetch(FIRE_AI_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt })
+    });
+    const raw = await resp.text();
+    let data = {};
+    try { data = JSON.parse(raw); } catch(e) {
+      throw new Error('API 回傳非 JSON：' + raw.slice(0, 120));
+    }
+    const aiText = data?.data || data?.choices?.[0]?.message?.content || data?.content || data?.text || '';
+
+    let parsed = null;
+    const jsonMatch = aiText.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      try { parsed = JSON.parse(jsonMatch[0]); } catch(e) {}
+    }
+
+    if (parsed) {
+      _inspAiResult = parsed;
+      result.innerHTML = `
+        <div style="background:#e0f2fe;border:1px solid #bae6fd;border-radius:8px;padding:12px;margin-top:8px">
+          <div style="font-weight:700;color:#0c4a6e;margin-bottom:6px">🤖 AI 判讀結果</div>
+          <div>申報完成：<strong>${parsed.done ? '✅ 是' : '❌ 否'}</strong></div>
+          ${parsed.date ? `<div>申報日期：<strong>${parsed.date}</strong></div>` : ''}
+          <div style="margin-top:6px;color:#475569;font-size:13px">${parsed.summary || ''}</div>
+        </div>`;
+      confirmBtn.style.display = 'block';
+    } else {
+      result.innerHTML = `<div style="color:#475569;font-size:13px;margin-top:8px">AI 回覆：${aiText.slice(0, 300)}</div>`;
+    }
+  } catch(e) {
+    result.innerHTML = `<div style="color:#dc2626;margin-top:8px">❌ 錯誤：${e.message}</div>`;
+  } finally {
+    spinner.style.display = 'none';
+  }
+}
+
+function confirmInspUpdate() {
+  if (!_inspAiResult || _inspModalRoc === null) return;
+  const row = INSPECTIONS.find(r => r.roc === _inspModalRoc);
+  if (!row) return;
+
+  if (_inspAiResult.done) {
+    const cleanDate = _inspAiResult.date ? String(_inspAiResult.date).slice(0, 10) : '';
+    row[_inspModalSite] = cleanDate
+      ? { s:'done', d: cleanDate }
+      : { s:'done-nodate' };
+  } else {
+    row[_inspModalSite] = { s:'pending' };
+  }
+
+  saveInspsLocal();
+  buildInspMatrix();
+  closeInspModal();
+}
 
 // ── 防火管理人到期警示橫幅 ──
 function checkExpiryAlert() {
@@ -913,6 +1130,46 @@ if (localStorage.getItem('portal-dark') === '1') {
   document.body.classList.add('dark');
   document.getElementById('dark-toggle').textContent = '☀️';
 }
+</script>
+<!-- 消防設備檢修申報 AI 上傳 Modal -->
+<div id="insp-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.5);align-items:center;justify-content:center">
+  <div style="background:var(--card);border-radius:16px;padding:28px;width:min(520px,92vw);max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.25)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <span id="im-title" style="font-weight:700;font-size:17px;color:var(--navy)"></span>
+      <button onclick="closeInspModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--sub)">✕</button>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <label style="display:block;font-size:13px;font-weight:600;color:var(--sub);margin-bottom:6px">上傳申報文件（PDF）</label>
+      <input id="im-file" type="file" accept=".pdf,image/*"
+        style="width:100%;padding:8px;border:1.5px dashed #bae6fd;border-radius:8px;background:#e0f2fe;font-size:13px;cursor:pointer">
+    </div>
+
+    <button onclick="runInspAI()"
+      style="width:100%;padding:10px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
+      🤖 AI 判讀申報日期
+    </button>
+
+    <div id="im-spinner" style="display:none;text-align:center;padding:16px">
+      <div style="display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite"></div>
+      <div style="margin-top:8px;font-size:13px;color:var(--sub)">AI 判讀中…</div>
+    </div>
+
+    <div id="im-result"></div>
+
+    <button id="im-confirm-btn" onclick="confirmInspUpdate()"
+      style="display:none;width:100%;margin-top:12px;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
+      ✅ 確認並更新申報狀態
+    </button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
 </script>
 <script>window.OHS_SIDEBAR_BASE = '../';</script>
 <script src="../shared/sidebar.js"></script>
