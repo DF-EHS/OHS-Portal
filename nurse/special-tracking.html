@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>特殊健檢追蹤（噪音）| 大豐環保科技</title>
+<style>
+:root {
+  --accent:      #0d9488;
+  --accent-dk:   #0f766e;
+  --accent-soft: #ccfbf1;
+  --navy: #1e3a5f; --bg: #f1f5f9; --card: #fff;
+  --border: #e2e8f0; --text: #1e293b; --sub: #64748b;
+  --green: #16a34a; --red: #dc2626; --orange: #d97706;
+}
+body.dark {
+  --bg: #0f172a; --card: #1e293b; --border: #334155;
+  --text: #e2e8f0; --sub: #94a3b8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif;
+  background: var(--bg); color: var(--text); font-size: 14px;
+  display: flex; flex-direction: column; min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+  background: linear-gradient(135deg, #021a18 0%, #134e4a 50%, #0d9488 100%); color: #fff;
+  padding: 14px 24px; display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0; position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 16px rgba(0,0,0,.35);
+}
+header h1 { font-size: 17px; font-weight: 700; flex: 1; }
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer; font-family: inherit;
+  transition: background .15s;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.25); }
+.hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 12px; color: rgba(255,255,255,.75); font-weight: 600; white-space: nowrap; }
+
+/* ── Filter bar ── */
+.filter-bar {
+  background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 10px 20px; display: flex; gap: 8px; flex-wrap: wrap;
+  align-items: center; flex-shrink: 0;
+}
+.filter-bar input, .filter-bar select {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 6px 10px; font-size: 13px; outline: none;
+  background: var(--bg); font-family: inherit; color: var(--text);
+}
+.filter-bar input:focus, .filter-bar select:focus { border-color: var(--accent); }
+#search { min-width: 220px; }
+.filter-sep { width: 1px; height: 20px; background: var(--border); }
+.add-btn {
+  margin-left: auto; padding: 7px 18px; border-radius: 8px;
+  background: var(--accent); color: #fff; font-size: 13px; font-weight: 600;
+  border: none; cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.add-btn:hover { background: var(--accent-dk); }
+
+/* ── Due toggle ── */
+.toggle-wrap {
+  display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--sub);
+  cursor: pointer; user-select: none;
+}
+.toggle-wrap input[type=checkbox] { accent-color: var(--accent); width: 15px; height: 15px; cursor: pointer; }
+
+/* ── Stats bar ── */
+.stats-bar {
+  padding: 14px 20px; display: flex; gap: 12px;
+  flex-wrap: wrap; flex-shrink: 0;
+}
+.stat-chip {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 24px;
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 100px; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.stat-num { font-size: 30px; font-weight: 800; line-height: 1; }
+.stat-lbl { font-size: 11px; color: var(--sub); margin-top: 6px; white-space: nowrap; }
+
+/* ── Table area ── */
+.table-wrap { flex: 1; overflow-x: auto; padding: 0 20px 40px; }
+
+.table-container {
+  border-radius: 12px; overflow: clip;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06); margin-top: 16px;
+}
+table {
+  width: 100%; border-collapse: collapse;
+  background: var(--card);
+}
+thead { background: #f8fafc; position: sticky; top: 0; z-index: 2; }
+body.dark thead { background: #1e293b; }
+th {
+  padding: 10px 14px; font-size: 11px; font-weight: 700;
+  color: var(--sub); text-align: left; letter-spacing: .5px;
+  text-transform: uppercase; white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 9px 14px; font-size: 13px;
+  border-bottom: 1px solid var(--border); vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tbody tr { transition: background .1s; }
+tbody tr:hover { background: #f8fafc; }
+body.dark tbody tr:hover { background: #263148; }
+
+/* ── Badges ── */
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 20px;
+  font-size: 11px; font-weight: 700; white-space: nowrap;
+}
+.bd-green  { background: #dcfce7; color: #15803d; }
+.bd-red    { background: #fee2e2; color: #b91c1c; }
+.bd-orange { background: #ffedd5; color: #c2410c; }
+.bd-yellow { background: #fef9c3; color: #854d0e; }
+.bd-gray   { background: #f1f5f9; color: #64748b; }
+.bd-teal   { background: var(--accent-soft); color: var(--accent-dk); }
+.bd-blue   { background: #dbeafe; color: #1d4ed8; }
+
+/* ── Countdown chip ── */
+.due-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 20px;
+  font-size: 11px; font-weight: 700;
+}
+.due-past    { background: #fee2e2; color: #b91c1c; }
+.due-warn    { background: #ffedd5; color: #c2410c; }
+.due-ok      { background: #dcfce7; color: #15803d; }
+
+/* ── Row actions ── */
+.act-btn {
+  padding: 3px 9px; border-radius: 5px; border: none; cursor: pointer;
+  font-size: 12px; font-family: inherit; transition: background .12s;
+}
+.act-edit { background: var(--accent-soft); color: var(--accent-dk); }
+.act-edit:hover { background: #99f6e4; }
+.act-del  { background: #fee2e2; color: #b91c1c; margin-left: 4px; }
+.act-del:hover  { background: #fecaca; }
+
+/* ── State screens ── */
+.state-box {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 20px; text-align: center;
+  color: var(--sub); gap: 12px;
+}
+.state-icon { font-size: 40px; opacity: .4; }
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Modal ── */
+.modal-mask {
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  z-index: 500; display: none; align-items: flex-start;
+  justify-content: center; padding: 40px 16px; overflow-y: auto;
+}
+.modal-mask.show { display: flex; }
+.modal {
+  background: var(--card); border-radius: 16px;
+  width: 100%; max-width: 640px;
+  display: flex; flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden;
+}
+.modal-hdr {
+  background: var(--accent); color: #fff;
+  padding: 16px 22px; display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.modal-hdr h2 { font-size: 16px; font-weight: 700; flex: 1; }
+.modal-close {
+  background: rgba(255,255,255,.15); border: none;
+  color: #fff; width: 28px; height: 28px; border-radius: 50%;
+  cursor: pointer; font-size: 14px; display: inline-flex;
+  align-items: center; justify-content: center; font-family: inherit;
+}
+.modal-close:hover { background: rgba(255,255,255,.3); }
+.modal-body {
+  padding: 22px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  overflow-y: auto; max-height: 70vh;
+}
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field.full { grid-column: 1 / -1; }
+.field label {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: .5px; text-transform: uppercase;
+}
+.field input, .field select, .field textarea {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 7px 10px; font-size: 13px; outline: none;
+  font-family: inherit; background: var(--bg); color: var(--text);
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--accent); background: var(--card);
+}
+.field textarea { resize: vertical; min-height: 70px; }
+.modal-foot {
+  padding: 14px 22px; border-top: 1px solid var(--border);
+  display: flex; gap: 10px; justify-content: flex-end; flex-shrink: 0;
+}
+.btn-cancel {
+  padding: 8px 20px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg); color: var(--text);
+  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+}
+.btn-save {
+  padding: 8px 20px; border-radius: 8px;
+  background: var(--accent); color: #fff; border: none;
+  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: background .15s;
+}
+.btn-save:hover  { background: var(--accent-dk); }
+.btn-save:disabled { opacity: .6; cursor: not-allowed; }
+
+/* ── Toast ── */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: #1e293b; color: #fff; padding: 10px 22px;
+  border-radius: 10px; font-size: 13px; font-weight: 600;
+  z-index: 999; opacity: 0; transition: opacity .25s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+footer {
+  text-align: center; padding: 12px; font-size: 12px; color: var(--sub);
+  border-top: 1px solid var(--border); background: var(--card);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="hdr-btn" onclick="location.href='./'">← 職護主頁</button>
+  <h1>🔊 特殊健檢追蹤（噪音）</h1>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
+
+<div class="filter-bar">
+  <input type="search" id="search" placeholder="🔍  搜尋姓名、員工編號…">
+  <div class="filter-sep"></div>
+  <select id="f-dept">
+    <option value="">全部廠區</option>
+    <option value="全興廠">全興廠</option>
+    <option value="台中總部">台中總部</option>
+    <option value="五股">五股</option>
+  </select>
+  <select id="f-result">
+    <option value="">全部結果</option>
+    <option value="第一級">第一級</option>
+    <option value="第二級">第二級</option>
+    <option value="第三級">第三級</option>
+    <option value="第四級">第四級</option>
+    <option value="待健檢">待健檢</option>
+  </select>
+  <select id="f-track">
+    <option value="">全部追蹤狀態</option>
+    <option value="正常追蹤">正常追蹤</option>
+    <option value="需複查">需複查</option>
+    <option value="已轉介">已轉介</option>
+    <option value="待安排">待安排</option>
+  </select>
+  <label class="toggle-wrap">
+    <input type="checkbox" id="f-due"> 即將到期（60天內）
+  </label>
+  <button class="add-btn" onclick="openModal()">＋ 新增記錄</button>
+</div>
+
+<div class="stats-bar" id="stats-bar"></div>
+
+<div class="table-wrap">
+  <div id="table-area">
+    <div class="state-box"><div class="spinner"></div><div>資料載入中…</div></div>
+  </div>
+</div>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+
+<!-- Modal -->
+<div class="modal-mask" id="modal-mask" onclick="maskClick(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h2 id="modal-title">新增記錄</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeModal()">取消</button>
+      <button class="btn-save" id="save-btn" onclick="saveRecord()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Config ──
+// Replace with your deployed GAS Web App URL
+const GAS_URL = 'YOUR_SPECIAL_TRACKING_GAS_URL_HERE';
+const CACHE_KEY = 'nurse-special-tracking';
+
+let allData  = [];
+let editId   = null;
+
+// ── Dark mode ──
+if (localStorage.getItem('portal-dark') === '1') document.body.classList.add('dark');
+
+// ── Demo data fallback ──
+const DEMO_DATA = [
+  {
+    id: 'd1', createdAt: '2025-01-10',
+    name: '王大明', empId: 'F001', dept: '全興廠', jobTitle: '機台操作員',
+    noiseDb: 92, freq: '每年',
+    lastExam: '2025-03-15', nextDue: '2026-03-15',
+    result: '第二級', trackStatus: '正常追蹤',
+    notes: '耳塞配戴需加強複訓'
+  },
+  {
+    id: 'd2', createdAt: '2025-01-10',
+    name: '林志豪', empId: 'F002', dept: '全興廠', jobTitle: '破碎機操作員',
+    noiseDb: 97, freq: '每年',
+    lastExam: '2024-11-20', nextDue: '2025-11-20',
+    result: '第三級', trackStatus: '需複查',
+    notes: '已安排職醫面談，11月複查'
+  },
+  {
+    id: 'd3', createdAt: '2025-02-05',
+    name: '陳美惠', empId: 'F003', dept: '全興廠', jobTitle: '品管人員',
+    noiseDb: 86, freq: '每2年',
+    lastExam: '2024-06-10', nextDue: '2026-06-10',
+    result: '第一級', trackStatus: '正常追蹤',
+    notes: ''
+  },
+  {
+    id: 'd4', createdAt: '2025-03-01',
+    name: '黃俊賢', empId: 'F004', dept: '全興廠', jobTitle: '資源回收分類員',
+    noiseDb: 104, freq: '每年',
+    lastExam: '2025-04-22', nextDue: '2026-04-22',
+    result: '第四級', trackStatus: '已轉介',
+    notes: '已轉介至耳鼻喉科，等候報告'
+  },
+  {
+    id: 'd5', createdAt: '2025-04-15',
+    name: '張雅婷', empId: 'F005', dept: '全興廠', jobTitle: '廠務助理',
+    noiseDb: 87, freq: '每年',
+    lastExam: '', nextDue: '2025-09-30',
+    result: '待健檢', trackStatus: '待安排',
+    notes: '新進員工，尚未完成基準健檢'
+  }
+];
+
+// ── localStorage helpers ──
+function loadCache() {
+  try { return JSON.parse(localStorage.getItem(CACHE_KEY) || '[]'); } catch { return []; }
+}
+function saveCache(data) {
+  try { localStorage.setItem(CACHE_KEY, JSON.stringify(data)); } catch {}
+}
+
+// ── Bootstrap ──
+async function init() {
+  if (GAS_URL === 'YOUR_SPECIAL_TRACKING_GAS_URL_HERE') {
+    // Use demo data + localStorage persistence
+    const cached = loadCache();
+    allData = cached.length ? cached : [...DEMO_DATA];
+    if (!cached.length) saveCache(allData);
+  } else {
+    try {
+      const res = await fetch(`${GAS_URL}?action=getAll`);
+      const json = await res.json();
+      allData = json.success ? json.records : loadCache();
+      saveCache(allData);
+    } catch {
+      allData = loadCache().length ? loadCache() : [...DEMO_DATA];
+    }
+  }
+  renderStats();
+  renderTable();
+  bindFilters();
+}
+
+// ── Filter helpers ──
+function getFiltered() {
+  const q    = document.getElementById('search').value.trim().toLowerCase();
+  const dept = document.getElementById('f-dept').value;
+  const res  = document.getElementById('f-result').value;
+  const trk  = document.getElementById('f-track').value;
+  const due  = document.getElementById('f-due').checked;
+  const now  = new Date();
+  const win  = new Date(now); win.setDate(win.getDate() + 60);
+
+  return allData.filter(r => {
+    if (q && !r.name.toLowerCase().includes(q) && !r.empId.toLowerCase().includes(q)) return false;
+    if (dept && r.dept !== dept) return false;
+    if (res  && r.result !== res) return false;
+    if (trk  && r.trackStatus !== trk) return false;
+    if (due) {
+      if (!r.nextDue) return false;
+      const d = new Date(r.nextDue);
+      if (d > win) return false;
+    }
+    return true;
+  });
+}
+
+function bindFilters() {
+  ['search','f-dept','f-result','f-track','f-due'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => { renderStats(); renderTable(); });
+    document.getElementById(id).addEventListener('change', () => { renderStats(); renderTable(); });
+  });
+}
+
+// ── Stats ──
+function renderStats() {
+  const f = getFiltered();
+  const now = new Date();
+  const win = new Date(now); win.setDate(win.getDate() + 60);
+
+  const overdue  = f.filter(r => r.nextDue && new Date(r.nextDue) < now).length;
+  const upcoming = f.filter(r => r.nextDue && new Date(r.nextDue) >= now && new Date(r.nextDue) <= win).length;
+  const lvl34    = f.filter(r => r.result === '第三級' || r.result === '第四級').length;
+
+  const chips = [
+    { num: f.length,   lbl: '追蹤人數', color: 'var(--accent)' },
+    { num: overdue,    lbl: '已逾期',   color: 'var(--red)' },
+    { num: upcoming,   lbl: '60天內到期', color: 'var(--orange)' },
+    { num: lvl34,      lbl: '三/四級',  color: '#dc2626' },
+  ];
+
+  document.getElementById('stats-bar').innerHTML = chips.map(c =>
+    `<div class="stat-chip">
+      <div class="stat-num" style="color:${c.color}">${c.num}</div>
+      <div class="stat-lbl">${c.lbl}</div>
+    </div>`
+  ).join('');
+}
+
+// ── Render table ──
+function resultBadge(r) {
+  const map = {
+    '第一級': 'bd-green',
+    '第二級': 'bd-yellow',
+    '第三級': 'bd-red',
+    '第四級': 'bd-red',
+    '待健檢': 'bd-gray',
+  };
+  return `<span class="badge ${map[r] || 'bd-gray'}">${r || '—'}</span>`;
+}
+
+function trackBadge(t) {
+  const map = {
+    '正常追蹤': 'bd-green',
+    '需複查':   'bd-orange',
+    '已轉介':   'bd-red',
+    '待安排':   'bd-gray',
+  };
+  return `<span class="badge ${map[t] || 'bd-gray'}">${t || '—'}</span>`;
+}
+
+function dueChip(dateStr) {
+  if (!dateStr) return '<span class="due-chip bd-gray">未設定</span>';
+  const d   = new Date(dateStr);
+  const now = new Date();
+  const win = new Date(now); win.setDate(win.getDate() + 60);
+  const diff = Math.ceil((d - now) / 86400000);
+  if (d < now) {
+    return `<div class="due-chip due-past">⚠ 逾期 ${Math.abs(diff)} 天</div>`;
+  } else if (d <= win) {
+    return `<div class="due-chip due-warn">⏰ 剩 ${diff} 天</div>`;
+  } else {
+    return `<div class="due-chip due-ok">✓ 剩 ${diff} 天</div>`;
+  }
+}
+
+function renderTable() {
+  const rows = getFiltered();
+  const area = document.getElementById('table-area');
+
+  if (!rows.length) {
+    area.innerHTML = `<div class="state-box"><div class="state-icon">🔍</div><div>沒有符合條件的記錄</div></div>`;
+    return;
+  }
+
+  area.innerHTML = `
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>姓名</th><th>員工編號</th><th>廠區</th><th>職稱</th>
+          <th>噪音(dB)</th><th>頻率</th><th>上次健檢</th><th>下次到期</th>
+          <th>結果</th><th>追蹤狀態</th><th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows.map(r => `
+          <tr>
+            <td><strong>${r.name}</strong></td>
+            <td style="color:var(--sub)">${r.empId}</td>
+            <td>${r.dept}</td>
+            <td>${r.jobTitle}</td>
+            <td style="font-weight:700;color:${r.noiseDb >= 100 ? 'var(--red)' : r.noiseDb >= 90 ? 'var(--orange)' : 'var(--text)'}">
+              ${r.noiseDb} dB
+            </td>
+            <td>${r.freq}</td>
+            <td style="color:var(--sub)">${r.lastExam || '—'}</td>
+            <td>${dueChip(r.nextDue)}<div style="font-size:11px;color:var(--sub);margin-top:2px">${r.nextDue || ''}</div></td>
+            <td>${resultBadge(r.result)}</td>
+            <td>${trackBadge(r.trackStatus)}</td>
+            <td style="white-space:nowrap">
+              <button class="act-btn act-edit" onclick="openModal('${r.id}')">✏️ 編輯</button>
+              <button class="act-btn act-del"  onclick="deleteRecord('${r.id}')">🗑️</button>
+            </td>
+          </tr>`
+        ).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// ── Modal ──
+function openModal(id) {
+  editId = id || null;
+  const rec = id ? allData.find(r => r.id === id) : null;
+  document.getElementById('modal-title').textContent = rec ? '編輯記錄' : '新增特殊健檢記錄';
+
+  document.getElementById('modal-body').innerHTML = `
+    <div class="field"><label>姓名 *</label>
+      <input id="f-name" value="${rec?.name || ''}" placeholder="員工姓名"></div>
+    <div class="field"><label>員工編號 *</label>
+      <input id="f-empId" value="${rec?.empId || ''}" placeholder="F001"></div>
+    <div class="field"><label>廠區 *</label>
+      <select id="f-dept2">
+        ${['全興廠','台中總部','五股'].map(d => `<option ${rec?.dept===d?'selected':''}>${d}</option>`).join('')}
+      </select></div>
+    <div class="field"><label>職稱</label>
+      <input id="f-job" value="${rec?.jobTitle || ''}" placeholder="職稱"></div>
+    <div class="field"><label>噪音暴露值 (dB)</label>
+      <input id="f-db" type="number" min="85" max="115" value="${rec?.noiseDb || 90}" placeholder="85-115"></div>
+    <div class="field"><label>健檢頻率</label>
+      <select id="f-freq">
+        ${['每年','每2年','每3年'].map(f => `<option ${rec?.freq===f?'selected':''}>${f}</option>`).join('')}
+      </select></div>
+    <div class="field"><label>上次健檢日期</label>
+      <input id="f-last" type="date" value="${rec?.lastExam || ''}"></div>
+    <div class="field"><label>下次到期日</label>
+      <input id="f-next" type="date" value="${rec?.nextDue || ''}"></div>
+    <div class="field"><label>健檢結果</label>
+      <select id="f-result2">
+        ${['第一級','第二級','第三級','第四級','待健檢'].map(v => `<option ${rec?.result===v?'selected':''}>${v}</option>`).join('')}
+      </select></div>
+    <div class="field"><label>追蹤狀態</label>
+      <select id="f-track2">
+        ${['正常追蹤','需複查','已轉介','待安排'].map(v => `<option ${rec?.trackStatus===v?'selected':''}>${v}</option>`).join('')}
+      </select></div>
+    <div class="field full"><label>備註</label>
+      <textarea id="f-notes" placeholder="備註說明…">${rec?.notes || ''}</textarea></div>
+  `;
+
+  document.getElementById('modal-mask').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modal-mask').classList.remove('show');
+  editId = null;
+}
+
+function maskClick(e) {
+  if (e.target === document.getElementById('modal-mask')) closeModal();
+}
+
+async function saveRecord() {
+  const btn = document.getElementById('save-btn');
+  const name  = document.getElementById('f-name').value.trim();
+  const empId = document.getElementById('f-empId').value.trim();
+  if (!name || !empId) { showToast('請填寫姓名與員工編號', true); return; }
+
+  const rec = {
+    id:          editId || ('r' + Date.now()),
+    createdAt:   editId ? (allData.find(r=>r.id===editId)?.createdAt || today()) : today(),
+    name,
+    empId,
+    dept:        document.getElementById('f-dept2').value,
+    jobTitle:    document.getElementById('f-job').value.trim(),
+    noiseDb:     Number(document.getElementById('f-db').value) || 90,
+    freq:        document.getElementById('f-freq').value,
+    lastExam:    document.getElementById('f-last').value,
+    nextDue:     document.getElementById('f-next').value,
+    result:      document.getElementById('f-result2').value,
+    trackStatus: document.getElementById('f-track2').value,
+    notes:       document.getElementById('f-notes').value.trim(),
+  };
+
+  btn.disabled = true;
+
+  if (GAS_URL !== 'YOUR_SPECIAL_TRACKING_GAS_URL_HERE') {
+    try {
+      const action = editId ? 'update' : 'add';
+      await fetch(GAS_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ action, record: rec })
+      });
+    } catch {}
+  }
+
+  if (editId) {
+    const idx = allData.findIndex(r => r.id === editId);
+    if (idx >= 0) allData[idx] = rec;
+  } else {
+    allData.unshift(rec);
+  }
+  saveCache(allData);
+  btn.disabled = false;
+  closeModal();
+  renderStats();
+  renderTable();
+  showToast(editId ? '已更新記錄' : '已新增記錄');
+}
+
+async function deleteRecord(id) {
+  if (!confirm('確定要刪除這筆記錄嗎？')) return;
+
+  if (GAS_URL !== 'YOUR_SPECIAL_TRACKING_GAS_URL_HERE') {
+    try {
+      await fetch(GAS_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ action: 'delete', id })
+      });
+    } catch {}
+  }
+
+  allData = allData.filter(r => r.id !== id);
+  saveCache(allData);
+  renderStats();
+  renderTable();
+  showToast('已刪除記錄');
+}
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+// ── Toast ──
+let _tTimer;
+function showToast(msg, err = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = err ? '#dc2626' : '#1e293b';
+  t.classList.add('show');
+  clearTimeout(_tTimer);
+  _tTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+init();
+</script>
+
+<script>window.OHS_SIDEBAR_BASE='../'; </script>
+<script src="../shared/sidebar.js"></script>
+</body>
+</html>

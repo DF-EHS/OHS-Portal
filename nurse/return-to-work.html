@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>復工評估表 | 大豐環保科技</title>
+<style>
+:root {
+  --accent:      #0d9488;
+  --accent-dk:   #0f766e;
+  --accent-soft: #ccfbf1;
+  --navy: #1e3a5f; --bg: #f1f5f9; --card: #fff;
+  --border: #e2e8f0; --text: #1e293b; --sub: #64748b;
+  --green: #16a34a; --red: #dc2626; --orange: #d97706;
+}
+body.dark {
+  --bg: #0f172a; --card: #1e293b; --border: #334155;
+  --text: #e2e8f0; --sub: #94a3b8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif;
+  background: var(--bg); color: var(--text); font-size: 14px;
+  display: flex; flex-direction: column; min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+  background: linear-gradient(135deg, #021a18 0%, #134e4a 50%, #0d9488 100%); color: #fff;
+  padding: 14px 24px; display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0; position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 16px rgba(0,0,0,.35);
+}
+header h1 { font-size: 17px; font-weight: 700; flex: 1; }
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer; font-family: inherit;
+  transition: background .15s;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.25); }
+.hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 12px; color: rgba(255,255,255,.75); font-weight: 600; white-space: nowrap; }
+
+/* ── Toolbar ── */
+.toolbar {
+  background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 10px 20px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.toolbar input, .toolbar select {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 6px 10px; font-size: 13px; outline: none;
+  background: var(--bg); font-family: inherit; color: var(--text);
+}
+.toolbar input:focus, .toolbar select:focus { border-color: var(--accent); }
+#search { min-width: 200px; }
+.filter-sep { width: 1px; height: 20px; background: var(--border); }
+.add-btn {
+  margin-left: auto; padding: 7px 18px; border-radius: 8px;
+  background: var(--accent); color: #fff; font-size: 13px; font-weight: 600;
+  border: none; cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.add-btn:hover { background: var(--accent-dk); }
+
+/* ── Stats bar ── */
+.stats-bar {
+  padding: 14px 20px; display: flex; gap: 12px; flex-wrap: wrap;
+}
+.stat-chip {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 22px;
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 95px; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.stat-num { font-size: 28px; font-weight: 800; line-height: 1; }
+.stat-lbl { font-size: 11px; color: var(--sub); margin-top: 5px; white-space: nowrap; }
+
+/* ── Cards grid ── */
+.cards-wrap {
+  flex: 1; padding: 0 20px 40px; overflow-y: auto;
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px; margin-top: 16px;
+}
+
+.eval-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  transition: box-shadow .15s, transform .15s;
+  display: flex; flex-direction: column;
+}
+.eval-card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,.10);
+  transform: translateY(-2px);
+}
+.card-top {
+  background: linear-gradient(135deg, #f0fdfa 0%, #e6fdf9 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 16px;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
+}
+body.dark .card-top { background: linear-gradient(135deg, #0f2d2a 0%, #123330 100%); }
+.card-name { font-size: 16px; font-weight: 700; }
+.card-meta { font-size: 12px; color: var(--sub); margin-top: 2px; }
+.card-body { padding: 12px 16px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+.card-row {
+  display: flex; justify-content: space-between;
+  font-size: 12px; gap: 8px;
+}
+.card-lbl { color: var(--sub); flex-shrink: 0; }
+.card-val { font-weight: 600; text-align: right; }
+.card-foot {
+  padding: 10px 16px; border-top: 1px solid var(--border);
+  display: flex; gap: 8px; justify-content: flex-end;
+}
+.act-btn {
+  padding: 4px 11px; border-radius: 5px; border: none; cursor: pointer;
+  font-size: 12px; font-family: inherit; transition: background .12s;
+}
+.act-edit { background: var(--accent-soft); color: var(--accent-dk); }
+.act-edit:hover { background: #99f6e4; }
+.act-del  { background: #fee2e2; color: #b91c1c; }
+.act-del:hover  { background: #fecaca; }
+
+/* ── Badges ── */
+.badge {
+  display: inline-block; padding: 2px 9px; border-radius: 20px;
+  font-size: 11px; font-weight: 700; white-space: nowrap;
+}
+.bd-green  { background: #dcfce7; color: #15803d; }
+.bd-red    { background: #fee2e2; color: #b91c1c; }
+.bd-orange { background: #ffedd5; color: #c2410c; }
+.bd-yellow { background: #fef9c3; color: #854d0e; }
+.bd-blue   { background: #dbeafe; color: #1d4ed8; }
+.bd-gray   { background: #f1f5f9; color: #64748b; }
+.bd-teal   { background: var(--accent-soft); color: var(--accent-dk); }
+
+/* ── State screens ── */
+.state-box {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 20px; text-align: center;
+  color: var(--sub); gap: 12px;
+}
+.state-icon { font-size: 40px; opacity: .4; }
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Modal ── */
+.modal-mask {
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  z-index: 500; display: none; align-items: flex-start;
+  justify-content: center; padding: 40px 16px; overflow-y: auto;
+}
+.modal-mask.show { display: flex; }
+.modal {
+  background: var(--card); border-radius: 16px;
+  width: 100%; max-width: 680px;
+  display: flex; flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden;
+}
+.modal-hdr {
+  background: var(--accent); color: #fff;
+  padding: 16px 22px; display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.modal-hdr h2 { font-size: 16px; font-weight: 700; flex: 1; }
+.modal-close {
+  background: rgba(255,255,255,.15); border: none;
+  color: #fff; width: 28px; height: 28px; border-radius: 50%;
+  cursor: pointer; font-size: 14px; display: inline-flex;
+  align-items: center; justify-content: center; font-family: inherit;
+}
+.modal-close:hover { background: rgba(255,255,255,.3); }
+.modal-body {
+  padding: 22px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  overflow-y: auto; max-height: 72vh;
+}
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field.full { grid-column: 1 / -1; }
+.field label {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: .5px; text-transform: uppercase;
+}
+.field input, .field select, .field textarea {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 7px 10px; font-size: 13px; outline: none;
+  font-family: inherit; background: var(--bg); color: var(--text);
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--accent); background: var(--card);
+}
+.field textarea { resize: vertical; min-height: 80px; }
+.field input[readonly] { color: var(--sub); cursor: default; }
+
+/* ── Divider within modal ── */
+.form-divider {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  margin: 4px 0;
+}
+.form-divider::before, .form-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+/* ── AI area ── */
+.ai-area {
+  grid-column: 1 / -1;
+  background: #f0fdfa; border: 1px solid #99f6e4;
+  border-radius: 10px; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+body.dark .ai-area { background: #0c2320; border-color: #0d9488; }
+.ai-area-title {
+  font-size: 12px; font-weight: 700; color: var(--accent-dk);
+  display: flex; align-items: center; gap: 6px;
+}
+.ai-row-btns { display: flex; gap: 8px; align-items: center; }
+.ai-gen-btn {
+  padding: 6px 14px; border-radius: 6px; border: none;
+  background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 600; cursor: pointer;
+  font-family: inherit; transition: background .15s; white-space: nowrap;
+}
+.ai-gen-btn:hover    { background: var(--accent-dk); }
+.ai-gen-btn:disabled { opacity: .6; cursor: not-allowed; }
+.ai-status { font-size: 12px; }
+.ai-status.loading { color: var(--accent); }
+.ai-status.error   { color: var(--red); }
+
+.modal-foot {
+  padding: 14px 22px; border-top: 1px solid var(--border);
+  display: flex; gap: 10px; justify-content: flex-end; flex-shrink: 0;
+}
+.btn-cancel {
+  padding: 8px 20px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg); color: var(--text);
+  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+}
+.btn-save {
+  padding: 8px 20px; border-radius: 8px;
+  background: var(--accent); color: #fff; border: none;
+  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: background .15s;
+}
+.btn-save:hover  { background: var(--accent-dk); }
+.btn-save:disabled { opacity: .6; cursor: not-allowed; }
+
+/* ── Toast ── */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: #1e293b; color: #fff; padding: 10px 22px;
+  border-radius: 10px; font-size: 13px; font-weight: 600;
+  z-index: 999; opacity: 0; transition: opacity .25s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+footer {
+  text-align: center; padding: 12px; font-size: 12px; color: var(--sub);
+  border-top: 1px solid var(--border); background: var(--card);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="hdr-btn" onclick="location.href='./'">← 職護主頁</button>
+  <h1>🏃 復工評估表</h1>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input type="search" id="search" placeholder="🔍  搜尋姓名、員工編號、診斷…">
+  <div class="filter-sep"></div>
+  <select id="f-dept">
+    <option value="">全部廠區</option>
+    <option value="全興廠">全興廠</option>
+    <option value="台中總部">台中總部</option>
+    <option value="五股">五股</option>
+  </select>
+  <select id="f-leave">
+    <option value="">全部假別</option>
+    <option value="普通病假">普通病假</option>
+    <option value="傷病假">傷病假</option>
+    <option value="職業傷害假">職業傷害假</option>
+    <option value="生理假">生理假</option>
+    <option value="其他">其他</option>
+  </select>
+  <select id="f-status">
+    <option value="">全部狀態</option>
+    <option value="評估中">評估中</option>
+    <option value="已復工">已復工</option>
+    <option value="追蹤中">追蹤中</option>
+  </select>
+  <button class="add-btn" onclick="openModal()">＋ 新增評估</button>
+</div>
+
+<div class="stats-bar" id="stats-bar"></div>
+
+<div class="cards-wrap">
+  <div id="cards-area">
+    <div class="state-box"><div class="spinner"></div><div>資料載入中…</div></div>
+  </div>
+</div>
+
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+
+<!-- Modal -->
+<div class="modal-mask" id="modal-mask" onclick="maskClick(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h2 id="modal-title">新增復工評估</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeModal()">取消</button>
+      <button class="btn-save" id="save-btn" onclick="saveRecord()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Config ──
+// Replace with your deployed GAS Web App URL
+const GAS_URL    = 'YOUR_RETURN_TO_WORK_GAS_URL_HERE';
+const AI_URL     = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+const CACHE_KEY  = 'nurse-return-to-work';
+
+let allData = [];
+let editId  = null;
+
+// ── Dark mode ──
+if (localStorage.getItem('portal-dark') === '1') document.body.classList.add('dark');
+
+// ── Demo data ──
+const DEMO_DATA = [
+  {
+    id: 'r1', createdAt: '2025-06-01',
+    name: '許志遠', empId: 'F012', dept: '全興廠', jobTitle: '機台操作員',
+    leaveType: '職業傷害假',
+    leaveStart: '2025-05-01', leaveEnd: '2025-05-31', leaveDays: 31,
+    diagnosis: '右手腕扭傷（工作中搬運受傷）',
+    returnDate: '2025-06-01',
+    hasRestriction: '有',
+    restrictionNote: '避免提重物超過3公斤，禁止使用震動工具',
+    recommendation: '• 建議安排輕量工作3週，避免使用右手腕施力\n• 每週追蹤復原狀況，建議持續物理治療\n• 注意事項：若疼痛加劇應立即回診，告知主管調整工作內容',
+    followUpPlan: '每週一職護電話追蹤，第3週安排職醫面談評估',
+    evaluator: '陳護理師', evalDate: '2025-05-30',
+    status: '追蹤中'
+  },
+  {
+    id: 'r2', createdAt: '2025-07-10',
+    name: '劉淑芬', empId: 'T031', dept: '台中總部', jobTitle: '行政助理',
+    leaveType: '普通病假',
+    leaveStart: '2025-07-01', leaveEnd: '2025-07-09', leaveDays: 9,
+    diagnosis: '急性腸胃炎',
+    returnDate: '2025-07-10',
+    hasRestriction: '無',
+    restrictionNote: '',
+    recommendation: '• 飲食宜清淡，避免辛辣刺激食物\n• 注意補充水分，返工後觀察體力狀況\n• 注意事項：若持續腹瀉或發燒請立即就醫',
+    followUpPlan: '返工一週內由職護電話關懷確認',
+    evaluator: '陳護理師', evalDate: '2025-07-09',
+    status: '已復工'
+  },
+  {
+    id: 'r3', createdAt: '2025-08-05',
+    name: '吳建國', empId: 'F018', dept: '全興廠', jobTitle: '廢棄物分類員',
+    leaveType: '傷病假',
+    leaveStart: '2025-07-20', leaveEnd: '2025-08-03', leaveDays: 15,
+    diagnosis: '腰椎椎間盤突出（L4-L5）',
+    returnDate: '2025-08-04',
+    hasRestriction: '有',
+    restrictionNote: '禁止彎腰搬重物，避免長時間站立，每45分鐘需休息10分鐘',
+    recommendation: '',
+    followUpPlan: '',
+    evaluator: '', evalDate: '',
+    status: '評估中'
+  }
+];
+
+// ── localStorage helpers ──
+function loadCache() {
+  try { return JSON.parse(localStorage.getItem(CACHE_KEY) || '[]'); } catch { return []; }
+}
+function saveCache(data) {
+  try { localStorage.setItem(CACHE_KEY, JSON.stringify(data)); } catch {}
+}
+
+// ── Bootstrap ──
+async function init() {
+  if (GAS_URL === 'YOUR_RETURN_TO_WORK_GAS_URL_HERE') {
+    const cached = loadCache();
+    allData = cached.length ? cached : [...DEMO_DATA];
+    if (!cached.length) saveCache(allData);
+  } else {
+    try {
+      const res = await fetch(`${GAS_URL}?action=getAll`);
+      const json = await res.json();
+      allData = json.success ? json.records : loadCache();
+      saveCache(allData);
+    } catch {
+      allData = loadCache().length ? loadCache() : [...DEMO_DATA];
+    }
+  }
+  renderStats();
+  renderCards();
+  bindFilters();
+}
+
+// ── Filters ──
+function getFiltered() {
+  const q     = document.getElementById('search').value.trim().toLowerCase();
+  const dept  = document.getElementById('f-dept').value;
+  const leave = document.getElementById('f-leave').value;
+  const stat  = document.getElementById('f-status').value;
+
+  return allData.filter(r => {
+    if (q && !r.name.toLowerCase().includes(q) &&
+             !r.empId.toLowerCase().includes(q) &&
+             !(r.diagnosis||'').toLowerCase().includes(q)) return false;
+    if (dept  && r.dept !== dept)       return false;
+    if (leave && r.leaveType !== leave) return false;
+    if (stat  && r.status !== stat)     return false;
+    return true;
+  });
+}
+
+function bindFilters() {
+  ['search','f-dept','f-leave','f-status'].forEach(id => {
+    document.getElementById(id).addEventListener('input',  () => { renderStats(); renderCards(); });
+    document.getElementById(id).addEventListener('change', () => { renderStats(); renderCards(); });
+  });
+}
+
+// ── Stats ──
+function renderStats() {
+  const f = getFiltered();
+  const assessing = f.filter(r => r.status === '評估中').length;
+  const returned  = f.filter(r => r.status === '已復工').length;
+  const tracking  = f.filter(r => r.status === '追蹤中').length;
+
+  const chips = [
+    { num: f.length,    lbl: '評估總數', color: 'var(--accent)' },
+    { num: assessing,   lbl: '評估中',   color: 'var(--orange)' },
+    { num: returned,    lbl: '已復工',   color: 'var(--green)' },
+    { num: tracking,    lbl: '追蹤中',   color: '#1d4ed8' },
+  ];
+
+  document.getElementById('stats-bar').innerHTML = chips.map(c =>
+    `<div class="stat-chip">
+      <div class="stat-num" style="color:${c.color}">${c.num}</div>
+      <div class="stat-lbl">${c.lbl}</div>
+    </div>`
+  ).join('');
+}
+
+// ── Badge helpers ──
+function statusBadge(s) {
+  const map = { '評估中': 'bd-orange', '已復工': 'bd-green', '追蹤中': 'bd-blue' };
+  return `<span class="badge ${map[s] || 'bd-gray'}">${s || '—'}</span>`;
+}
+function leaveBadge(t) {
+  const map = {
+    '普通病假': 'bd-gray', '傷病假': 'bd-yellow',
+    '職業傷害假': 'bd-red', '生理假': 'bd-teal', '其他': 'bd-gray'
+  };
+  return `<span class="badge ${map[t] || 'bd-gray'}">${t}</span>`;
+}
+function restrBadge(h) {
+  return h === '有'
+    ? `<span class="badge bd-orange">有工作限制</span>`
+    : `<span class="badge bd-green">無限制</span>`;
+}
+
+// ── Render cards ──
+function renderCards() {
+  const rows = getFiltered();
+  const area = document.getElementById('cards-area');
+
+  if (!rows.length) {
+    area.innerHTML = `<div class="state-box"><div class="state-icon">📋</div><div>沒有符合條件的評估記錄</div></div>`;
+    return;
+  }
+
+  area.innerHTML = `<div class="cards-grid">` + rows.map(r => `
+    <div class="eval-card">
+      <div class="card-top">
+        <div>
+          <div class="card-name">${r.name}</div>
+          <div class="card-meta">${r.empId} &nbsp;|&nbsp; ${r.dept} &nbsp;|&nbsp; ${r.jobTitle}</div>
+        </div>
+        <div>${statusBadge(r.status)}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-row">
+          <span class="card-lbl">假別</span>
+          <span class="card-val">${leaveBadge(r.leaveType)}</span>
+        </div>
+        <div class="card-row">
+          <span class="card-lbl">請假期間</span>
+          <span class="card-val">${r.leaveStart} ~ ${r.leaveEnd}</span>
+        </div>
+        <div class="card-row">
+          <span class="card-lbl">請假天數</span>
+          <span class="card-val" style="font-size:14px;font-weight:800;color:var(--accent)">${r.leaveDays} 天</span>
+        </div>
+        <div class="card-row">
+          <span class="card-lbl">傷病診斷</span>
+          <span class="card-val" style="max-width:180px;text-align:right;word-break:break-all">${r.diagnosis || '—'}</span>
+        </div>
+        <div class="card-row">
+          <span class="card-lbl">復工日</span>
+          <span class="card-val">${r.returnDate || '—'}</span>
+        </div>
+        <div class="card-row">
+          <span class="card-lbl">工作限制</span>
+          <span class="card-val">${restrBadge(r.hasRestriction)}</span>
+        </div>
+        ${r.hasRestriction === '有' && r.restrictionNote ? `
+        <div class="card-row" style="align-items:flex-start">
+          <span class="card-lbl" style="flex-shrink:0">限制說明</span>
+          <span class="card-val" style="max-width:200px;text-align:right;word-break:break-all;font-size:11px;color:var(--sub)">${r.restrictionNote}</span>
+        </div>` : ''}
+        ${r.evaluator ? `
+        <div class="card-row">
+          <span class="card-lbl">評估人</span>
+          <span class="card-val">${r.evaluator}${r.evalDate ? ' &nbsp;/&nbsp; ' + r.evalDate : ''}</span>
+        </div>` : ''}
+      </div>
+      <div class="card-foot">
+        <button class="act-btn act-edit" onclick="openModal('${r.id}')">✏️ 編輯</button>
+        <button class="act-btn act-del"  onclick="deleteRecord('${r.id}')">🗑️ 刪除</button>
+      </div>
+    </div>`
+  ).join('') + `</div>`;
+}
+
+// ── Modal ──
+function openModal(id) {
+  editId = id || null;
+  const rec = id ? allData.find(r => r.id === id) : null;
+  document.getElementById('modal-title').textContent = rec ? '編輯復工評估' : '新增復工評估';
+
+  document.getElementById('modal-body').innerHTML = `
+    <div class="form-divider">基本資料</div>
+    <div class="field"><label>姓名 *</label>
+      <input id="f-name" value="${rec?.name || ''}" placeholder="員工姓名"></div>
+    <div class="field"><label>員工編號 *</label>
+      <input id="f-empId" value="${rec?.empId || ''}" placeholder="F001"></div>
+    <div class="field"><label>廠區</label>
+      <select id="f-dept2">
+        ${['全興廠','台中總部','五股'].map(d=>`<option ${rec?.dept===d?'selected':''}>${d}</option>`).join('')}
+      </select></div>
+    <div class="field"><label>職稱</label>
+      <input id="f-job" value="${rec?.jobTitle || ''}" placeholder="職稱"></div>
+
+    <div class="form-divider">請假資訊</div>
+    <div class="field"><label>假別</label>
+      <select id="f-leave2">
+        ${['普通病假','傷病假','職業傷害假','生理假','其他'].map(v=>`<option ${rec?.leaveType===v?'selected':''}>${v}</option>`).join('')}
+      </select></div>
+    <div class="field"><label>請假天數</label>
+      <input id="f-days" type="number" min="1" value="${rec?.leaveDays || ''}" readonly placeholder="自動計算" style="color:var(--sub)"></div>
+    <div class="field"><label>請假起日</label>
+      <input id="f-start" type="date" value="${rec?.leaveStart || ''}" oninput="calcDays()"></div>
+    <div class="field"><label>請假迄日</label>
+      <input id="f-end" type="date" value="${rec?.leaveEnd || ''}" oninput="calcDays()"></div>
+    <div class="field full"><label>傷病診斷</label>
+      <input id="f-diag" value="${(rec?.diagnosis || '').replace(/"/g,'&quot;')}" placeholder="診斷病名或傷害描述"></div>
+
+    <div class="form-divider">復工評估</div>
+    <div class="field"><label>復工日期</label>
+      <input id="f-return" type="date" value="${rec?.returnDate || ''}"></div>
+    <div class="field"><label>工作限制</label>
+      <select id="f-restr" onchange="toggleRestrNote()">
+        <option ${rec?.hasRestriction==='無'||!rec?'selected':''} value="無">無</option>
+        <option ${rec?.hasRestriction==='有'?'selected':''} value="有">有</option>
+      </select></div>
+    <div class="field full" id="restr-note-field" style="${rec?.hasRestriction!=='有'?'display:none':''}">
+      <label>限制說明</label>
+      <input id="f-restr-note" value="${(rec?.restrictionNote||'').replace(/"/g,'&quot;')}" placeholder="具體工作限制內容"></div>
+
+    <div class="ai-area">
+      <div class="ai-area-title">🤖 AI 復工建議生成</div>
+      <div class="ai-row-btns">
+        <button class="ai-gen-btn" id="ai-btn" onclick="generateAI()">🤖 AI生成建議</button>
+        <span class="ai-status" id="ai-status"></span>
+      </div>
+    </div>
+
+    <div class="field full"><label>復工評估建議</label>
+      <textarea id="f-rec" placeholder="請填入評估建議，或點擊上方 AI生成建議 按鈕自動產生…" rows="5">${rec?.recommendation || ''}</textarea></div>
+    <div class="field full"><label>追蹤計畫</label>
+      <textarea id="f-plan" placeholder="後續追蹤頻率與方式…" rows="3">${rec?.followUpPlan || ''}</textarea></div>
+
+    <div class="form-divider">評估人員</div>
+    <div class="field"><label>評估人員</label>
+      <input id="f-evaluator" value="${rec?.evaluator || ''}" placeholder="姓名或職稱"></div>
+    <div class="field"><label>評估日期</label>
+      <input id="f-evaldate" type="date" value="${rec?.evalDate || ''}"></div>
+    <div class="field"><label>案件狀態</label>
+      <select id="f-stat2">
+        ${['評估中','已復工','追蹤中'].map(v=>`<option ${rec?.status===v?'selected':''}>${v}</option>`).join('')}
+      </select></div>
+  `;
+
+  document.getElementById('modal-mask').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modal-mask').classList.remove('show');
+  editId = null;
+}
+function maskClick(e) {
+  if (e.target === document.getElementById('modal-mask')) closeModal();
+}
+
+function toggleRestrNote() {
+  const show = document.getElementById('f-restr').value === '有';
+  document.getElementById('restr-note-field').style.display = show ? '' : 'none';
+}
+
+function calcDays() {
+  const s = document.getElementById('f-start').value;
+  const e = document.getElementById('f-end').value;
+  if (s && e) {
+    const diff = Math.ceil((new Date(e) - new Date(s)) / 86400000) + 1;
+    document.getElementById('f-days').value = diff > 0 ? diff : '';
+  }
+}
+
+// ── AI generation ──
+async function generateAI() {
+  const leaveType = document.getElementById('f-leave2').value;
+  const diagnosis = document.getElementById('f-diag').value.trim();
+  const leaveDays = document.getElementById('f-days').value || '?';
+  const hasRestr  = document.getElementById('f-restr').value;
+  const restrNote = document.getElementById('f-restr-note')?.value.trim() || '';
+
+  if (!diagnosis) { showToast('請先填寫傷病診斷', true); return; }
+
+  const prompt = `請根據以下員工傷病資訊，提供復工評估建議（包含：工作調整建議、追蹤頻率、注意事項）：\n假別：${leaveType}\n傷病診斷：${diagnosis}\n請假天數：${leaveDays}天\n工作限制：${hasRestr === '有' ? restrNote || '有限制（詳情未填）' : '無'}\n請以條列式繁體中文回覆，每項建議前加「• 」`;
+
+  const btn = document.getElementById('ai-btn');
+  const statusEl = document.getElementById('ai-status');
+  btn.disabled = true;
+  statusEl.textContent = '生成中…';
+  statusEl.className = 'ai-status loading';
+
+  try {
+    const res = await fetch(AI_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ text: prompt })
+    });
+    const json = await res.json();
+    const text = json?.data?.data || json?.data || '';
+    if (text) {
+      document.getElementById('f-rec').value = text;
+      statusEl.textContent = '✓ 已生成';
+      statusEl.className = 'ai-status';
+      statusEl.style.color = 'var(--green)';
+    } else {
+      throw new Error('empty');
+    }
+  } catch {
+    statusEl.textContent = '生成失敗，請手動填寫';
+    statusEl.className = 'ai-status error';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ── Save ──
+async function saveRecord() {
+  const btn  = document.getElementById('save-btn');
+  const name  = document.getElementById('f-name').value.trim();
+  const empId = document.getElementById('f-empId').value.trim();
+  if (!name || !empId) { showToast('請填寫姓名與員工編號', true); return; }
+
+  const leaveStart = document.getElementById('f-start').value;
+  const leaveEnd   = document.getElementById('f-end').value;
+  let   leaveDays  = parseInt(document.getElementById('f-days').value) || 0;
+  if (!leaveDays && leaveStart && leaveEnd) {
+    leaveDays = Math.ceil((new Date(leaveEnd) - new Date(leaveStart)) / 86400000) + 1;
+  }
+
+  const rec = {
+    id:            editId || ('ev' + Date.now()),
+    createdAt:     editId ? (allData.find(r=>r.id===editId)?.createdAt || today()) : today(),
+    name, empId,
+    dept:          document.getElementById('f-dept2').value,
+    jobTitle:      document.getElementById('f-job').value.trim(),
+    leaveType:     document.getElementById('f-leave2').value,
+    leaveStart, leaveEnd, leaveDays,
+    diagnosis:     document.getElementById('f-diag').value.trim(),
+    returnDate:    document.getElementById('f-return').value,
+    hasRestriction: document.getElementById('f-restr').value,
+    restrictionNote: document.getElementById('f-restr-note')?.value.trim() || '',
+    recommendation:  document.getElementById('f-rec').value.trim(),
+    followUpPlan:    document.getElementById('f-plan').value.trim(),
+    evaluator:       document.getElementById('f-evaluator').value.trim(),
+    evalDate:        document.getElementById('f-evaldate').value,
+    status:          document.getElementById('f-stat2').value,
+  };
+
+  btn.disabled = true;
+
+  if (GAS_URL !== 'YOUR_RETURN_TO_WORK_GAS_URL_HERE') {
+    try {
+      const action = editId ? 'update' : 'add';
+      await fetch(GAS_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ action, record: rec })
+      });
+    } catch {}
+  }
+
+  if (editId) {
+    const idx = allData.findIndex(r => r.id === editId);
+    if (idx >= 0) allData[idx] = rec;
+  } else {
+    allData.unshift(rec);
+  }
+  saveCache(allData);
+  btn.disabled = false;
+  closeModal();
+  renderStats();
+  renderCards();
+  showToast(editId ? '已更新評估' : '已新增評估');
+}
+
+// ── Delete ──
+async function deleteRecord(id) {
+  if (!confirm('確定要刪除這筆評估記錄嗎？')) return;
+
+  if (GAS_URL !== 'YOUR_RETURN_TO_WORK_GAS_URL_HERE') {
+    try {
+      await fetch(GAS_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ action: 'delete', id })
+      });
+    } catch {}
+  }
+
+  allData = allData.filter(r => r.id !== id);
+  saveCache(allData);
+  renderStats();
+  renderCards();
+  showToast('已刪除評估記錄');
+}
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+// ── Toast ──
+let _tTimer;
+function showToast(msg, err = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = err ? '#dc2626' : '#1e293b';
+  t.classList.add('show');
+  clearTimeout(_tTimer);
+  _tTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+init();
+</script>
+
+<script>window.OHS_SIDEBAR_BASE='../'; </script>
+<script src="../shared/sidebar.js"></script>
+</body>
+</html>

@@ -296,6 +296,95 @@ tbody tr.active { background: var(--accent-soft); }
 .ai-result-box .ai-val { font-weight: 600; }
 .field.ai-filled input, .field.ai-filled select { border-color: var(--accent); background: #f0fdfa; }
 
+/* ── Module nav ── */
+.mod-nav {
+  background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 0 20px; display: flex; gap: 0; flex-shrink: 0;
+}
+.mod-tab {
+  padding: 12px 20px; border: none; background: none;
+  font-size: 13px; font-weight: 600; color: var(--sub);
+  cursor: pointer; border-bottom: 3px solid transparent;
+  font-family: inherit; transition: all .15s;
+}
+.mod-tab:hover { color: var(--text); }
+.mod-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── Service log module ── */
+.svc-outer { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+.svc-ctrl {
+  background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 10px 20px; display: flex; align-items: center; gap: 14px;
+  flex-wrap: wrap; flex-shrink: 0;
+}
+.svc-ctrl label { font-size: 12px; font-weight: 700; color: var(--sub); }
+.svc-ctrl select { border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 13px; font-family: inherit; background: var(--bg); outline: none; }
+.svc-ctrl select:focus { border-color: var(--accent); }
+.month-tabs-wrap {
+  background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 10px 20px; display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0;
+}
+.month-tab {
+  padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg); font-size: 12px; font-weight: 600; color: var(--sub);
+  cursor: pointer; transition: all .15s; font-family: inherit;
+}
+.month-tab:hover { border-color: var(--accent); color: var(--accent); }
+.month-tab.has-data { border-color: var(--accent); color: var(--accent); }
+.month-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.svc-wrap { flex: 1; overflow-y: auto; padding: 16px 20px 40px; display: flex; flex-direction: column; gap: 12px; }
+.svc-month-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--card); border-radius: 12px; padding: 14px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.svc-month-title { font-size: 15px; font-weight: 700; }
+.svc-add-btn {
+  padding: 7px 16px; border-radius: 8px; background: var(--accent); color: #fff;
+  border: none; font-size: 13px; font-weight: 600; cursor: pointer;
+  font-family: inherit; transition: background .15s;
+}
+.svc-add-btn:hover { background: var(--accent-dk); }
+.svc-card {
+  background: var(--card); border-radius: 12px; padding: 16px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06); border-left: 4px solid var(--accent);
+}
+.svc-card-hd { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.svc-card-meta { font-size: 12px; color: var(--sub); margin-top: 3px; }
+.svc-card-title { font-size: 14px; font-weight: 700; }
+.svc-card-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.svc-edit-btn { padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); color: var(--sub); background: none; font-size: 12px; cursor: pointer; font-family: inherit; transition: all .15s; }
+.svc-edit-btn:hover { border-color: var(--accent); color: var(--accent); }
+.svc-del-btn { padding: 4px 8px; border-radius: 6px; border: 1px solid #fecaca; color: var(--red); background: none; font-size: 12px; cursor: pointer; font-family: inherit; }
+.svc-tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+.svc-tag { padding: 2px 8px; border-radius: 12px; background: var(--accent-soft); color: var(--accent-dk); font-size: 11px; font-weight: 600; }
+.svc-info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; margin-top: 10px; }
+.svc-info-cell { font-size: 12px; color: var(--sub); }
+.svc-info-cell span { font-weight: 600; color: var(--text); }
+.svc-summary-row { margin-top: 10px; font-size: 13px; border-top: 1px solid var(--border); padding-top: 10px; }
+.svc-summary-lbl { font-size: 11px; font-weight: 700; color: var(--sub); letter-spacing: .5px; text-transform: uppercase; margin-bottom: 3px; }
+.svc-empty { text-align: center; padding: 48px 20px; color: var(--sub); background: var(--card); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.svc-empty-icon { font-size: 36px; margin-bottom: 8px; opacity: .35; }
+
+/* svc modal */
+.svc-modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 500; display: none; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
+.svc-modal-mask.show { display: flex; }
+.svc-modal { background: var(--card); border-radius: 16px; width: 100%; max-width: 660px; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden; }
+.svc-modal-hd { background: var(--accent); color: #fff; padding: 16px 22px; display: flex; align-items: center; gap: 10px; }
+.svc-modal-hd h2 { font-size: 16px; font-weight: 700; flex: 1; }
+.svc-modal-body { padding: 20px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.svc-modal-foot { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; flex-shrink: 0; }
+.svc-chk-group { display: flex; flex-wrap: wrap; gap: 6px; }
+.svc-chk-label { display: flex; align-items: center; gap: 5px; font-size: 12px; cursor: pointer; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); transition: all .15s; }
+.svc-chk-label:hover { border-color: var(--accent); }
+.svc-chk-label input { accent-color: var(--accent); }
+.svc-field { display: flex; flex-direction: column; gap: 5px; }
+.svc-field.full { grid-column: 1 / -1; }
+.svc-field label { font-size: 11px; font-weight: 700; color: var(--sub); letter-spacing: .5px; text-transform: uppercase; }
+.svc-field input, .svc-field select, .svc-field textarea { border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; font-size: 13px; outline: none; font-family: inherit; background: var(--bg); }
+.svc-field input:focus, .svc-field select:focus, .svc-field textarea:focus { border-color: var(--accent); background: #fff; }
+.svc-field textarea { resize: vertical; min-height: 68px; }
+
 /* ── Login overlay ── */
 .login-overlay {
   position: fixed; inset: 0; z-index: 100;
@@ -352,6 +441,12 @@ footer {
   </div>
 </header>
 
+<div class="mod-nav">
+  <button class="mod-tab active" id="tab-m1" onclick="showModule(1)">👥 人員健康管理</button>
+  <button class="mod-tab" id="tab-m2" onclick="showModule(2)">📋 臨場服務紀錄</button>
+</div>
+
+<div id="m1" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
 <div class="filter-bar">
   <input type="search" id="search" placeholder="🔍  搜尋姓名、員工編號、部門…">
   <div class="filter-sep"></div>
@@ -396,6 +491,26 @@ footer {
     </div>
   </div>
 </div>
+</div><!-- /m1 -->
+
+<!-- Module 2: 臨場服務紀錄 -->
+<div id="m2" style="display:none;flex:1;overflow:hidden;flex-direction:column;" class="svc-outer">
+  <div class="svc-ctrl">
+    <label>年度</label>
+    <select id="svc-year" onchange="svcYearChange()">
+      <option value="115">115 年度（2026）</option>
+      <option value="114">114 年度（2025）</option>
+      <option value="116">116 年度（2027）</option>
+    </select>
+    <label>地點</label>
+    <select id="svc-loc" onchange="svcLocChange()">
+      <option value="台中總部">台中總部</option>
+      <option value="全興廠">全興廠</option>
+    </select>
+  </div>
+  <div class="month-tabs-wrap" id="month-tabs-wrap"></div>
+  <div class="svc-wrap" id="svc-wrap"></div>
+</div><!-- /m2 -->
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統 &nbsp;·&nbsp; 職護臨場服務</footer>
 
@@ -423,6 +538,72 @@ footer {
     <div class="modal-foot">
       <button class="btn-cancel" onclick="closeModal()">取消</button>
       <button class="btn-save" id="save-btn" onclick="saveRecord()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 臨場服務紀錄 Modal -->
+<div class="svc-modal-mask" id="svc-modal-mask" onclick="svcMaskClick(event)">
+  <div class="svc-modal">
+    <div class="svc-modal-hd">
+      <h2 id="svc-modal-title">新增臨場服務紀錄</h2>
+      <button class="dp-close" onclick="closeSvcModal()">✕</button>
+    </div>
+    <div class="svc-modal-body" id="svc-modal-body">
+      <div class="svc-field">
+        <label>服務日期 *</label>
+        <input type="date" id="sf-date" max="2099-12-31">
+      </div>
+      <div class="svc-field">
+        <label>地點</label>
+        <select id="sf-loc">
+          <option value="台中總部">台中總部</option>
+          <option value="全興廠">全興廠</option>
+        </select>
+      </div>
+      <div class="svc-field">
+        <label>進場時間</label>
+        <input type="time" id="sf-timein">
+      </div>
+      <div class="svc-field">
+        <label>離場時間</label>
+        <input type="time" id="sf-timeout">
+      </div>
+      <div class="svc-field">
+        <label>諮詢人數</label>
+        <input type="number" id="sf-consult" min="0" placeholder="0">
+      </div>
+      <div class="svc-field">
+        <label>紀錄人</label>
+        <input type="text" id="sf-recorder" placeholder="職護姓名">
+      </div>
+      <div class="svc-field full">
+        <label>服務項目</label>
+        <div class="svc-chk-group" id="sf-services">
+          <label class="svc-chk-label"><input type="checkbox" value="個人健康諮詢"> 個人健康諮詢</label>
+          <label class="svc-chk-label"><input type="checkbox" value="異常工作負荷評估"> 異常工作負荷評估</label>
+          <label class="svc-chk-label"><input type="checkbox" value="人因危害評估"> 人因危害評估</label>
+          <label class="svc-chk-label"><input type="checkbox" value="健康促進活動"> 健康促進活動</label>
+          <label class="svc-chk-label"><input type="checkbox" value="職業病預防衛教"> 職業病預防衛教</label>
+          <label class="svc-chk-label"><input type="checkbox" value="急救技能訓練"> 急救技能訓練</label>
+          <label class="svc-chk-label"><input type="checkbox" value="環境巡視"> 環境巡視</label>
+          <label class="svc-chk-label"><input type="checkbox" value="特殊健檢追蹤"> 特殊健檢追蹤</label>
+          <label class="svc-chk-label"><input type="checkbox" value="復工評估"> 復工評估</label>
+          <label class="svc-chk-label"><input type="checkbox" value="其他"> 其他</label>
+        </div>
+      </div>
+      <div class="svc-field full">
+        <label>本次服務摘要</label>
+        <textarea id="sf-summary" placeholder="服務內容、觀察重點…"></textarea>
+      </div>
+      <div class="svc-field full">
+        <label>待追蹤事項</label>
+        <textarea id="sf-followup" placeholder="需後續追蹤的事項…" style="min-height:52px"></textarea>
+      </div>
+    </div>
+    <div class="svc-modal-foot">
+      <button class="btn-cancel" onclick="closeSvcModal()">取消</button>
+      <button class="btn-save" id="svc-save-btn" onclick="saveSvcRecord()">儲存</button>
     </div>
   </div>
 </div>
@@ -975,6 +1156,210 @@ function doLogout() {
 }
 
 // ── Init ── 每次頁面載入都需重新登入，不使用 sessionStorage
+
+// ═══════════════════════════════════════════════════════
+// Module nav
+// ═══════════════════════════════════════════════════════
+let _activeModule = 1;
+
+function showModule(n) {
+  _activeModule = n;
+  document.getElementById('m1').style.display = n === 1 ? 'flex' : 'none';
+  const m2 = document.getElementById('m2');
+  m2.style.display = n === 2 ? 'flex' : 'none';
+  document.getElementById('tab-m1').classList.toggle('active', n === 1);
+  document.getElementById('tab-m2').classList.toggle('active', n === 2);
+  if (n === 2) renderSvcModule();
+}
+
+// ═══════════════════════════════════════════════════════
+// 臨場服務紀錄
+// ═══════════════════════════════════════════════════════
+const SVC_KEY = 'nurse_service_logs_v1';
+let svcLogs = [];
+let svcYear = 115;
+let svcLoc  = '台中總部';
+let svcMonth = 1;
+let _editSvcId = null;
+
+const SVC_ITEMS = ['個人健康諮詢','異常工作負荷評估','人因危害評估','健康促進活動','職業病預防衛教','急救技能訓練','環境巡視','特殊健檢追蹤','復工評估','其他'];
+
+function loadSvcLogs() {
+  try { svcLogs = JSON.parse(localStorage.getItem(SVC_KEY) || '[]'); } catch { svcLogs = []; }
+}
+function saveSvcLogs() {
+  try { localStorage.setItem(SVC_KEY, JSON.stringify(svcLogs)); } catch {}
+}
+
+loadSvcLogs();
+
+function svcYearChange() {
+  svcYear = parseInt(document.getElementById('svc-year').value, 10);
+  renderSvcModule();
+}
+function svcLocChange() {
+  svcLoc = document.getElementById('svc-loc').value;
+  renderSvcModule();
+}
+function selectMonth(m) {
+  svcMonth = m;
+  renderMonthTabs();
+  renderSvcCards();
+}
+
+function filteredSvcLogs() {
+  return svcLogs.filter(r => r.year === svcYear && r.location === svcLoc);
+}
+
+function renderSvcModule() {
+  document.getElementById('svc-year').value = svcYear;
+  document.getElementById('svc-loc').value  = svcLoc;
+  renderMonthTabs();
+  renderSvcCards();
+}
+
+function renderMonthTabs() {
+  const byMonth = new Set(filteredSvcLogs().map(r => r.month));
+  const tabs = Array.from({length: 12}, (_, i) => i + 1).map(m => {
+    const has = byMonth.has(m);
+    const active = m === svcMonth;
+    return `<button class="month-tab${has?' has-data':''}${active?' active':''}" onclick="selectMonth(${m})">${m} 月</button>`;
+  }).join('');
+  document.getElementById('month-tabs-wrap').innerHTML = tabs;
+}
+
+function renderSvcCards() {
+  const wrap = document.getElementById('svc-wrap');
+  const logs = filteredSvcLogs().filter(r => r.month === svcMonth)
+    .sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+  const rocLabel = `${svcYear} 年 ${svcMonth} 月 · ${svcLoc}`;
+
+  let cards = '';
+  if (!logs.length) {
+    cards = `<div class="svc-empty"><div class="svc-empty-icon">📋</div><div>${rocLabel} 尚無紀錄</div><div style="font-size:12px;margin-top:4px;opacity:.7">點擊「＋ 新增紀錄」加入本月服務記錄</div></div>`;
+  } else {
+    cards = logs.map(r => {
+      const tags = (r.services || []).map(s => `<span class="svc-tag">${s}</span>`).join('');
+      const dateAD = r.date ? `${r.date}` : '—';
+      const time   = (r.timeIn || r.timeOut) ? `${r.timeIn || '?'}～${r.timeOut || '?'}` : '';
+      const sumHtml = r.summary ? `<div class="svc-summary-row"><div class="svc-summary-lbl">服務摘要</div><div>${escHtml(r.summary)}</div></div>` : '';
+      const fuHtml  = r.followUp ? `<div class="svc-summary-row" style="border-top:none;padding-top:4px"><div class="svc-summary-lbl">待追蹤</div><div style="color:var(--orange)">${escHtml(r.followUp)}</div></div>` : '';
+      return `
+      <div class="svc-card">
+        <div class="svc-card-hd">
+          <div>
+            <div class="svc-card-title">📅 ${dateAD}${time ? '　🕐 '+time : ''}</div>
+            <div class="svc-card-meta">諮詢人數 ${r.consultCount ?? '—'} 人　·　紀錄人：${r.recorder || '—'}</div>
+          </div>
+          <div class="svc-card-actions">
+            <button class="svc-edit-btn" onclick="openSvcModal('${r.id}')">✏️ 編輯</button>
+            <button class="svc-del-btn" onclick="deleteSvcRecord('${r.id}')">🗑️</button>
+          </div>
+        </div>
+        ${tags ? `<div class="svc-tag-row">${tags}</div>` : ''}
+        ${sumHtml}${fuHtml}
+      </div>`;
+    }).join('');
+  }
+
+  wrap.innerHTML = `
+    <div class="svc-month-hd">
+      <div class="svc-month-title">📋 ${rocLabel} 臨場服務紀錄</div>
+      <button class="svc-add-btn" onclick="openSvcModal()">＋ 新增紀錄</button>
+    </div>
+    ${cards}`;
+}
+
+function openSvcModal(editId) {
+  _editSvcId = editId || null;
+  const r = editId ? svcLogs.find(x => x.id === editId) : null;
+
+  document.getElementById('svc-modal-title').textContent = r ? '編輯臨場服務紀錄' : '新增臨場服務紀錄';
+
+  // fill fields
+  const yy = r ? r.year : svcYear;
+  const mm = r ? r.month : svcMonth;
+  const rocDateStr = r ? (r.date || '') : '';
+  document.getElementById('sf-date').value     = rocDateStr;
+  document.getElementById('sf-loc').value      = r ? (r.location || svcLoc) : svcLoc;
+  document.getElementById('sf-timein').value   = r ? (r.timeIn || '') : '';
+  document.getElementById('sf-timeout').value  = r ? (r.timeOut || '') : '';
+  document.getElementById('sf-consult').value  = r ? (r.consultCount ?? '') : '';
+  document.getElementById('sf-recorder').value = r ? (r.recorder || '') : '';
+  document.getElementById('sf-summary').value  = r ? (r.summary || '') : '';
+  document.getElementById('sf-followup').value = r ? (r.followUp || '') : '';
+
+  // checkboxes
+  document.querySelectorAll('#sf-services input[type=checkbox]').forEach(cb => {
+    cb.checked = r ? (r.services || []).includes(cb.value) : false;
+  });
+
+  document.getElementById('svc-modal-mask').classList.add('show');
+}
+
+function closeSvcModal() {
+  document.getElementById('svc-modal-mask').classList.remove('show');
+}
+function svcMaskClick(e) { if (e.target === e.currentTarget) closeSvcModal(); }
+
+function saveSvcRecord() {
+  const dateVal = document.getElementById('sf-date').value;
+  if (!dateVal) { showToast('請選擇服務日期'); return; }
+
+  const locVal  = document.getElementById('sf-loc').value;
+  // derive year/month from date (民國 = AD - 1911)
+  const d = new Date(dateVal);
+  const yearAD  = d.getFullYear();
+  const yearROC = yearAD - 1911;
+  const monthNum = d.getMonth() + 1;
+
+  const services = Array.from(document.querySelectorAll('#sf-services input[type=checkbox]:checked')).map(c => c.value);
+
+  const rec = {
+    id:           _editSvcId || (Date.now().toString(36) + Math.random().toString(36).slice(2,6)),
+    year:         yearROC,
+    month:        monthNum,
+    date:         dateVal,
+    location:     locVal,
+    timeIn:       document.getElementById('sf-timein').value,
+    timeOut:      document.getElementById('sf-timeout').value,
+    consultCount: parseInt(document.getElementById('sf-consult').value, 10) || 0,
+    recorder:     document.getElementById('sf-recorder').value.trim(),
+    services,
+    summary:      document.getElementById('sf-summary').value.trim(),
+    followUp:     document.getElementById('sf-followup').value.trim(),
+  };
+
+  if (_editSvcId) {
+    const idx = svcLogs.findIndex(x => x.id === _editSvcId);
+    if (idx >= 0) svcLogs[idx] = rec;
+  } else {
+    svcLogs.push(rec);
+  }
+
+  saveSvcLogs();
+  closeSvcModal();
+
+  // switch view to the month of saved record
+  svcYear  = yearROC;
+  svcLoc   = locVal;
+  svcMonth = monthNum;
+  document.getElementById('svc-year').value = svcYear;
+  document.getElementById('svc-loc').value  = svcLoc;
+  renderSvcModule();
+  showToast(_editSvcId ? '✅ 已更新' : '✅ 已新增');
+}
+
+function deleteSvcRecord(id) {
+  const r = svcLogs.find(x => x.id === id);
+  if (!r) return;
+  if (!confirm(`確定刪除 ${r.date} 的紀錄？`)) return;
+  svcLogs = svcLogs.filter(x => x.id !== id);
+  saveSvcLogs();
+  renderSvcModule();
+  showToast('已刪除');
+}
 </script>
 <script src="../shared/sidebar.js"></script>
 </body>
