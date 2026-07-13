@@ -385,6 +385,45 @@ tbody tr.active { background: var(--accent-soft); }
 .svc-field input:focus, .svc-field select:focus, .svc-field textarea:focus { border-color: var(--accent); background: #fff; }
 .svc-field textarea { resize: vertical; min-height: 68px; }
 
+/* ── Sub-module dashboard ── */
+.dash-outer { flex: 1; overflow-y: auto; padding: 24px 20px 40px; display: flex; flex-direction: column; gap: 20px; }
+.dash-hero {
+  background: linear-gradient(135deg, #021a18 0%, #134e4a 55%, #0d9488 100%);
+  border-radius: 16px; padding: 28px 28px 24px; color: #fff; display: flex; align-items: flex-start; gap: 20px;
+}
+.dash-hero-icon { font-size: 44px; flex-shrink: 0; line-height: 1; }
+.dash-hero-body { flex: 1; }
+.dash-hero-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+.dash-hero-desc  { font-size: 13px; color: rgba(255,255,255,.8); line-height: 1.6; max-width: 520px; }
+.dash-hero-btn {
+  margin-top: 18px; display: inline-block; padding: 10px 22px;
+  background: #fff; color: var(--accent-dk); border-radius: 10px;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  border: none; font-family: inherit; transition: opacity .15s;
+  text-decoration: none;
+}
+.dash-hero-btn:hover { opacity: .88; }
+
+.dash-stats { display: flex; gap: 12px; flex-wrap: wrap; }
+.dash-stat {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px 22px;
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 100px; box-shadow: 0 2px 8px rgba(0,0,0,.06); flex: 1;
+}
+.dash-stat-num { font-size: 32px; font-weight: 800; line-height: 1; }
+.dash-stat-lbl { font-size: 12px; color: var(--sub); margin-top: 6px; white-space: nowrap; }
+
+.dash-section { background: var(--card); border-radius: 12px; padding: 16px 18px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.dash-section-title { font-size: 12px; font-weight: 700; color: var(--sub); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+.dash-open-link { font-size: 12px; color: var(--accent); text-decoration: none; font-weight: 600; }
+.dash-open-link:hover { text-decoration: underline; }
+.dash-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.dash-row:last-child { border-bottom: none; }
+.dash-row-name { font-weight: 600; }
+.dash-row-meta { font-size: 12px; color: var(--sub); margin-top: 1px; }
+.dash-empty { text-align: center; padding: 20px; color: var(--sub); font-size: 13px; }
+
 /* ── Login overlay ── */
 .login-overlay {
   position: fixed; inset: 0; z-index: 100;
@@ -444,6 +483,8 @@ footer {
 <div class="mod-nav">
   <button class="mod-tab active" id="tab-m1" onclick="showModule(1)">👥 人員健康管理</button>
   <button class="mod-tab" id="tab-m2" onclick="showModule(2)">📋 臨場服務紀錄</button>
+  <button class="mod-tab" id="tab-m3" onclick="showModule(3)">🔊 特殊健檢追蹤</button>
+  <button class="mod-tab" id="tab-m4" onclick="showModule(4)">🔄 復工評估</button>
 </div>
 
 <div id="m1" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
@@ -511,6 +552,20 @@ footer {
   <div class="month-tabs-wrap" id="month-tabs-wrap"></div>
   <div class="svc-wrap" id="svc-wrap"></div>
 </div><!-- /m2 -->
+
+<!-- Module 3: 特殊健檢追蹤 dashboard -->
+<div id="m3" style="display:none;flex:1;overflow:hidden;flex-direction:column;">
+  <div class="dash-outer" id="m3-content">
+    <div class="state-box"><div class="spinner"></div><div>載入中…</div></div>
+  </div>
+</div><!-- /m3 -->
+
+<!-- Module 4: 復工評估 dashboard -->
+<div id="m4" style="display:none;flex:1;overflow:hidden;flex-direction:column;">
+  <div class="dash-outer" id="m4-content">
+    <div class="state-box"><div class="spinner"></div><div>載入中…</div></div>
+  </div>
+</div><!-- /m4 -->
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統 &nbsp;·&nbsp; 職護臨場服務</footer>
 
@@ -1164,12 +1219,13 @@ let _activeModule = 1;
 
 function showModule(n) {
   _activeModule = n;
-  document.getElementById('m1').style.display = n === 1 ? 'flex' : 'none';
-  const m2 = document.getElementById('m2');
-  m2.style.display = n === 2 ? 'flex' : 'none';
-  document.getElementById('tab-m1').classList.toggle('active', n === 1);
-  document.getElementById('tab-m2').classList.toggle('active', n === 2);
+  [1,2,3,4].forEach(i => {
+    document.getElementById('m'+i).style.display = n === i ? 'flex' : 'none';
+    document.getElementById('tab-m'+i).classList.toggle('active', n === i);
+  });
   if (n === 2) renderSvcModule();
+  if (n === 3) renderSpecialDash();
+  if (n === 4) renderReturnDash();
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1359,6 +1415,130 @@ function deleteSvcRecord(id) {
   saveSvcLogs();
   renderSvcModule();
   showToast('已刪除');
+}
+
+// ═══════════════════════════════════════════════════════
+// Module 3: 特殊健檢追蹤 Dashboard
+// ═══════════════════════════════════════════════════════
+function renderSpecialDash() {
+  let data = [];
+  try { data = JSON.parse(localStorage.getItem('nurse-special-tracking') || '[]'); } catch {}
+
+  const now    = new Date();
+  const win60  = new Date(now.getTime() + 60 * 86400000);
+  const total  = data.length;
+  const overdue  = data.filter(r => r.nextDue && new Date(r.nextDue) < now).length;
+  const upcoming = data.filter(r => r.nextDue && new Date(r.nextDue) >= now && new Date(r.nextDue) <= win60).length;
+  const lvl34    = data.filter(r => r.result === '第三級' || r.result === '第四級').length;
+
+  const urgentRows = data
+    .filter(r => r.nextDue && new Date(r.nextDue) <= win60)
+    .sort((a, b) => (a.nextDue || '').localeCompare(b.nextDue || ''))
+    .slice(0, 5);
+
+  const statsHtml = `
+    <div class="dash-stats">
+      ${dashStat(total,    '追蹤人數',    'var(--accent)')}
+      ${dashStat(overdue,  '已逾期',      'var(--red)')}
+      ${dashStat(upcoming, '60天內到期',  'var(--orange)')}
+      ${dashStat(lvl34,    '第三/四級',   '#7c3aed')}
+    </div>`;
+
+  const urgentHtml = urgentRows.length ? urgentRows.map(r => {
+    const dueDate = r.nextDue || '—';
+    const isOver  = r.nextDue && new Date(r.nextDue) < now;
+    const dueCls  = isOver ? 'color:var(--red);font-weight:700' : 'color:var(--orange);font-weight:700';
+    const resBadge = { '第一級':'bd-green','第二級':'bd-yellow','第三級':'bd-orange','第四級':'bd-red','待健檢':'bd-gray' }[r.result] || 'bd-gray';
+    return `
+      <div class="dash-row">
+        <div>
+          <div class="dash-row-name">${r.name || '—'} <span class="badge ${resBadge}">${r.result || '—'}</span></div>
+          <div class="dash-row-meta">${r.dept || '—'} · ${r.jobTitle || '—'}</div>
+        </div>
+        <div style="${dueCls}">${isOver ? '⚠️ ' : ''}${dueDate}</div>
+      </div>`;
+  }).join('') : `<div class="dash-empty">目前無即將到期或逾期案例 ✅</div>`;
+
+  document.getElementById('m3-content').innerHTML = `
+    <div class="dash-hero">
+      <div class="dash-hero-icon">🔊</div>
+      <div class="dash-hero-body">
+        <div class="dash-hero-title">特殊健檢追蹤</div>
+        <div class="dash-hero-desc">管理接受噪音特殊作業健康檢查的員工，追蹤各等級健檢結果與下次應檢日期，並對第三、四級異常者進行後續追蹤管理。</div>
+        <a href="special-tracking.html" class="dash-hero-btn">開啟完整功能頁面 →</a>
+      </div>
+    </div>
+    ${statsHtml}
+    <div class="dash-section">
+      <div class="dash-section-title">
+        <span>⚠️ 近期待追蹤（逾期 + 60天內到期）</span>
+        <a href="special-tracking.html" class="dash-open-link">查看全部 →</a>
+      </div>
+      ${urgentHtml}
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// Module 4: 復工評估 Dashboard
+// ═══════════════════════════════════════════════════════
+function renderReturnDash() {
+  let data = [];
+  try { data = JSON.parse(localStorage.getItem('nurse-return-to-work') || '[]'); } catch {}
+
+  const total     = data.length;
+  const assessing = data.filter(r => r.status === '評估中').length;
+  const returned  = data.filter(r => r.status === '已復工').length;
+  const tracking  = data.filter(r => r.status === '追蹤中').length;
+
+  const recentRows = data
+    .filter(r => r.status === '評估中' || r.status === '追蹤中')
+    .sort((a, b) => (b.returnDate || b.evalDate || '').localeCompare(a.returnDate || a.evalDate || ''))
+    .slice(0, 5);
+
+  const statsHtml = `
+    <div class="dash-stats">
+      ${dashStat(total,     '總案例',  'var(--accent)')}
+      ${dashStat(assessing, '評估中',  'var(--orange)')}
+      ${dashStat(tracking,  '追蹤中',  '#1d4ed8')}
+      ${dashStat(returned,  '已復工',  'var(--green)')}
+    </div>`;
+
+  const activeRows = recentRows.length ? recentRows.map(r => {
+    const stMap = { '評估中': 'bd-orange', '追蹤中': 'bd-teal', '已復工': 'bd-green' };
+    const stCls = stMap[r.status] || 'bd-gray';
+    const dateStr = r.returnDate || r.evalDate || '—';
+    const hasRestr = r.hasRestriction ? '⚠️ 有限制' : '無限制';
+    return `
+      <div class="dash-row">
+        <div>
+          <div class="dash-row-name">${r.name || '—'} <span class="badge ${stCls}">${r.status || '—'}</span></div>
+          <div class="dash-row-meta">${r.dept || '—'} · 復工日：${dateStr} · ${hasRestr}</div>
+        </div>
+        <div style="font-size:12px;color:var(--sub)">${r.leaveType || '—'}</div>
+      </div>`;
+  }).join('') : `<div class="dash-empty">目前無進行中的復工評估案例 ✅</div>`;
+
+  document.getElementById('m4-content').innerHTML = `
+    <div class="dash-hero">
+      <div class="dash-hero-icon">🔄</div>
+      <div class="dash-hero-body">
+        <div class="dash-hero-title">復工評估</div>
+        <div class="dash-hero-desc">管理因職業傷病或一般疾病請假員工的復工評估流程，記錄職護建議、工作限制與後續追蹤計畫，確保員工安全回歸工作崗位。</div>
+        <a href="return-to-work.html" class="dash-hero-btn">開啟完整功能頁面 →</a>
+      </div>
+    </div>
+    ${statsHtml}
+    <div class="dash-section">
+      <div class="dash-section-title">
+        <span>📋 進行中案例（評估中 + 追蹤中）</span>
+        <a href="return-to-work.html" class="dash-open-link">查看全部 →</a>
+      </div>
+      ${activeRows}
+    </div>`;
+}
+
+function dashStat(num, lbl, col) {
+  return `<div class="dash-stat"><div class="dash-stat-num" style="color:${col}">${num}</div><div class="dash-stat-lbl">${lbl}</div></div>`;
 }
 </script>
 <script src="../shared/sidebar.js"></script>
