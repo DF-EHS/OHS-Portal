@@ -285,6 +285,19 @@
   body.dark .rc-cm-toggle, body.dark .rc-cm-body, body.dark .rc-footer { background: #1e293b; }
   body.dark .stat-card { background: #1e293b; }
 
+  /* ── 回到頂端 ── */
+  #scroll-top {
+    position: fixed; bottom: 24px; right: 24px;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--accent); color: #fff; border: none;
+    font-size: 20px; cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    display: none; align-items: center; justify-content: center;
+    transition: background .15s, opacity .2s; z-index: 999;
+  }
+  #scroll-top.visible { display: flex; }
+  #scroll-top:hover { background: var(--accent-dark); }
+
   @media (max-width: 600px) {
     .hero { padding: 16px; gap: 12px; }
     .hero-icon { font-size: 36px; }
@@ -404,8 +417,13 @@
   </div>
 </div>
 
+<button id="scroll-top" type="button" title="回到頂端" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
 <script src="../shared/sidebar.js"></script>
 <script>
+window.addEventListener('scroll', () => {
+  document.getElementById('scroll-top').classList.toggle('visible', window.scrollY > 300);
+});
 const GAS_URL   = 'https://script.google.com/macros/s/AKfycbws7cl-ZU8dQCFX4dW9OPe68dMLBRr1ig_fHty1tS9goWhyWN1SMpEH56a4gK5t99n4UA/exec';
 const AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
 
