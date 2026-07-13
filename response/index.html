@@ -151,6 +151,44 @@
   .btn-edit    { background: #dbeafe; color: #1e40af; }
   .btn-edit:hover    { background: #bfdbfe; }
 
+  /* ── View toggle ── */
+  .view-toggle { display: flex; gap: 4px; background: var(--border); border-radius: 8px; padding: 3px; flex-shrink: 0; }
+  .vt-btn {
+    padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+    border: none; cursor: pointer; font-family: inherit; transition: background .15s, color .15s;
+    background: transparent; color: var(--sub);
+  }
+  .vt-btn.active { background: var(--card); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+
+  /* ── Table view ── */
+  .response-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+  .response-table thead tr { background: #f1f5f9; }
+  .response-table th { padding: 10px 14px; font-size: 12px; font-weight: 700; color: var(--sub); text-align: left; border-bottom: 1.5px solid var(--border); white-space: nowrap; }
+  .response-table td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .response-table tbody tr:last-child td { border-bottom: none; }
+  .response-table tbody tr { cursor: pointer; transition: background .15s; }
+  .response-table tbody tr:hover { background: #f8fafc; }
+  .td-issue { max-width: 280px; }
+  .td-issue-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 280px; font-weight: 600; }
+  .td-actions { white-space: nowrap; }
+  .td-actions .rc-act-btn { padding: 4px 10px; font-size: 11.5px; }
+
+  /* Expandable detail row */
+  .tr-detail td { padding: 0; background: #f8fafc; }
+  .tr-detail-inner { padding: 14px 18px; font-size: 13px; line-height: 1.8; display: none; border-top: 1px solid var(--border); }
+  .tr-detail-inner.show { display: block; }
+  .tr-detail-inner p  { margin-bottom: 6px; }
+  .tr-detail-inner ul, .tr-detail-inner ol { padding-left: 20px; margin-bottom: 6px; }
+  .tr-detail-inner li { margin-bottom: 3px; }
+  .tr-detail-inner strong { font-weight: 700; }
+
+  body.dark .response-table { background: #1e293b; }
+  body.dark .response-table thead tr { background: #263349; }
+  body.dark .response-table tbody tr:hover { background: #263349; }
+  body.dark .tr-detail td { background: #1e293b; }
+  body.dark .view-toggle { background: #334155; }
+  body.dark .vt-btn.active { background: #1e293b; }
+
   .empty-state { text-align: center; padding: 60px 20px; color: var(--sub); }
   .empty-state .es-icon { font-size: 48px; margin-bottom: 12px; opacity: .4; }
   .empty-state p { font-size: 14px; }
@@ -299,6 +337,10 @@
       <option value="done">已解決</option>
     </select>
     <input type="text" id="filter-search" placeholder="搜尋反應事項…" oninput="renderList()">
+    <div class="view-toggle">
+      <button type="button" class="vt-btn active" id="vt-card"  onclick="setView('card')">🗂 卡片</button>
+      <button type="button" class="vt-btn"        id="vt-table" onclick="setView('table')">☰ 表格</button>
+    </div>
     <button class="add-btn" onclick="openModal()">＋ 新增反應事項</button>
   </div>
 
@@ -368,6 +410,15 @@ const GAS_URL   = 'https://script.google.com/macros/s/AKfycbws7cl-ZU8dQCFX4dW9OP
 const AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
 
 let allRecords = [];
+let viewMode   = localStorage.getItem('resp-view') || 'card';
+
+function setView(mode) {
+  viewMode = mode;
+  localStorage.setItem('resp-view', mode);
+  document.getElementById('vt-card').classList.toggle('active',  mode === 'card');
+  document.getElementById('vt-table').classList.toggle('active', mode === 'table');
+  renderList();
+}
 
 function deptClass(dept) {
   if (dept === '總部') return 'dept-hq';
@@ -418,6 +469,8 @@ function renderList() {
     return;
   }
 
+  if (viewMode === 'table') { renderTable(filtered, list); return; }
+
   list.innerHTML = filtered.map(r => {
     const isDone = r.status === 'done';
     const date   = (r.submittedAt || '').slice(0, 10);
@@ -455,6 +508,51 @@ function renderList() {
   </div>
 </div>`;
   }).join('');
+}
+
+function renderTable(filtered, list) {
+  const rows = filtered.map(r => {
+    const isDone = r.status === 'done';
+    const date   = (r.submittedAt || '').slice(0, 10);
+    const hasCM  = r.countermeasure && r.countermeasure.trim();
+    return `
+<tr onclick="toggleTableDetail('detail-${esc(r.id)}')">
+  <td><span class="rc-dept ${deptClass(r.department)}">${esc(r.department)}</span></td>
+  <td class="td-issue"><div class="td-issue-text" title="${esc(r.issue)}">${esc(r.issue)}</div></td>
+  <td>${esc(r.proposer || '—')}</td>
+  <td>${esc(r.handler  || '—')}</td>
+  <td style="white-space:nowrap">${date}</td>
+  <td><span class="rc-badge ${isDone ? 'badge-done' : 'badge-open'}">${isDone ? '✓ 已解決' : '⏳ 處理中'}</span></td>
+  <td class="td-actions" onclick="event.stopPropagation()">
+    <button class="rc-act-btn btn-edit"    onclick="openEditModal('${esc(r.id)}')">編輯</button>
+    ${isDone
+      ? `<button class="rc-act-btn btn-reopen"  onclick="setStatus('${esc(r.id)}','open')">重新開啟</button>`
+      : `<button class="rc-act-btn btn-resolve" onclick="setStatus('${esc(r.id)}','done')">已解決</button>`
+    }
+    <button class="rc-act-btn btn-del" onclick="deleteRecord('${esc(r.id)}')">刪除</button>
+  </td>
+</tr>
+<tr class="tr-detail">
+  <td colspan="7">
+    <div class="tr-detail-inner" id="detail-${esc(r.id)}">
+      ${hasCM ? `<strong style="font-size:12px;color:var(--sub)">🤖 AI 對策建議</strong>${mdToHtml(r.countermeasure)}` : '<span style="color:var(--sub);font-size:13px">（此筆無對策內容）</span>'}
+    </div>
+  </td>
+</tr>`;
+  }).join('');
+
+  list.innerHTML = `
+<table class="response-table">
+  <thead><tr>
+    <th>部門</th><th>反應事項</th><th>建議人</th><th>協助處理</th><th>日期</th><th>狀態</th><th>操作</th>
+  </tr></thead>
+  <tbody>${rows}</tbody>
+</table>`;
+}
+
+function toggleTableDetail(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('show');
 }
 
 function esc(s) {
@@ -666,6 +764,8 @@ async function deleteRecord(id) {
   } catch(e) { alert('刪除失敗：' + e.message); }
 }
 
+document.getElementById('vt-card').classList.toggle('active',  viewMode === 'card');
+document.getElementById('vt-table').classList.toggle('active', viewMode === 'table');
 loadData();
 </script>
 </body>
