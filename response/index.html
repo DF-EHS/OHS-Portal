@@ -100,6 +100,7 @@
   .dept-hq  { background: #dbeafe; color: #1e40af; }
   .dept-fac { background: #fef3c7; color: #92400e; }
   .dept-sta { background: #d1fae5; color: #065f46; }
+  .dept-hub { background: #e0f2fe; color: #075985; }
   .dept-rem { background: #ede9fe; color: #5b21b6; }
 
   .rc-content { flex: 1; }
@@ -371,6 +372,7 @@ let allRecords = [];
 function deptClass(dept) {
   if (dept === '總部') return 'dept-hq';
   if (['全興再生廠','五股分選廠'].includes(dept)) return 'dept-fac';
+  if (['北一','北二','中一','南一','南二'].includes(dept)) return 'dept-hub';
   if (dept === '拆除課') return 'dept-rem';
   return 'dept-sta';
 }
