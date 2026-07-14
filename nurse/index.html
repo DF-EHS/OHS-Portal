@@ -589,10 +589,11 @@ footer {
   <div class="svc-ctrl">
     <label>年度</label>
     <select id="svc-year" onchange="svcYearChange()">
-      <option value="115">115 年度（2026）</option>
       <option value="114">114 年度（2025）</option>
+      <option value="115" selected>115 年度（2026）</option>
       <option value="116">116 年度（2027）</option>
     </select>
+    <button class="month-tab" style="border-style:dashed" onclick="promptAddSvcYear()">＋ 新增年度</button>
     <label>地點</label>
     <select id="svc-loc" onchange="svcLocChange()">
       <option value="台中總部">台中總部</option>
@@ -1326,6 +1327,24 @@ loadSvcLogs();
 function svcYearChange() {
   svcYear = parseInt(document.getElementById('svc-year').value, 10);
   renderSvcModule();
+}
+function promptAddSvcYear() {
+  const input = prompt('請輸入要新增的民國年度（例如：117）');
+  if (!input) return;
+  const roc = parseInt(input.trim(), 10);
+  if (!roc || roc < 100 || roc > 200) { alert('請輸入有效的民國年度（100～200）'); return; }
+  const sel = document.getElementById('svc-year');
+  if (Array.from(sel.options).some(o => parseInt(o.value) === roc)) {
+    sel.value = roc; svcYear = roc; renderSvcModule(); return;
+  }
+  const ad  = roc + 1911;
+  const opt = document.createElement('option');
+  opt.value = roc; opt.textContent = `${roc} 年度（${ad}）`;
+  // insert in numeric order
+  const after = Array.from(sel.options).find(o => parseInt(o.value) > roc);
+  after ? sel.insertBefore(opt, after) : sel.appendChild(opt);
+  sel.value = roc; svcYear = roc; renderSvcModule();
+  showToast(`✅ 已新增 ${roc} 年度`);
 }
 function svcLocChange() {
   svcLoc = document.getElementById('svc-loc').value;
