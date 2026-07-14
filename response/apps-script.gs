@@ -39,9 +39,9 @@ function getSheet() {
   let sh = ss.getSheetByName(SHEET_NAME);
   if (!sh) {
     sh = ss.insertSheet(SHEET_NAME);
-    sh.appendRow(['id', 'submittedAt', 'department', 'issue', 'countermeasure', 'proposer', 'handler', 'status']);
+    sh.appendRow(['id', 'submittedAt', 'department', 'category', 'issue', 'countermeasure', 'proposer', 'handler', 'status']);
     sh.setFrozenRows(1);
-    sh.getRange(1, 1, 1, 7).setFontWeight('bold');
+    sh.getRange(1, 1, 1, 9).setFontWeight('bold');
   }
   return sh;
 }
@@ -65,6 +65,7 @@ function add(body) {
   sh.appendRow([
     id, now,
     body.department    || '',
+    body.category      || '',
     body.issue         || '',
     body.countermeasure|| '',
     body.proposer      || '',
@@ -83,6 +84,7 @@ function update(body) {
   for (let i = 1; i < data.length; i++) {
     if (String(data[i][0]) === String(body.id)) {
       sh.getRange(i+1, idx.department    +1).setValue(body.department    || '');
+      sh.getRange(i+1, idx.category      +1).setValue(body.category      || '');
       sh.getRange(i+1, idx.issue         +1).setValue(body.issue         || '');
       sh.getRange(i+1, idx.countermeasure+1).setValue(body.countermeasure|| '');
       sh.getRange(i+1, idx.proposer      +1).setValue(body.proposer      || '');
@@ -96,9 +98,12 @@ function update(body) {
 function updateStatus(body) {
   const sh   = getSheet();
   const data = sh.getDataRange().getValues();
+  const hdr  = data[0];
+  const idx  = {};
+  hdr.forEach((h, i) => idx[h] = i);
   for (let i = 1; i < data.length; i++) {
     if (String(data[i][0]) === String(body.id)) {
-      sh.getRange(i + 1, 8).setValue(body.status);
+      sh.getRange(i + 1, idx.status + 1).setValue(body.status);
       return { updated: true };
     }
   }
