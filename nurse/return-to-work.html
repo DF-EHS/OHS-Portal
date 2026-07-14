@@ -273,6 +273,73 @@ footer {
   text-align: center; padding: 12px; font-size: 12px; color: var(--sub);
   border-top: 1px solid var(--border); background: var(--card);
 }
+
+/* ── Checklist modal ── */
+#cl-mask { z-index: 600; }
+.cl-modal { max-width: 760px; }
+.cl-tabs { display: flex; border-bottom: 2px solid var(--border); background: var(--bg); flex-shrink: 0; }
+.cl-tab {
+  padding: 11px 24px; font-size: 13px; font-weight: 700;
+  cursor: pointer; border: none; background: none; font-family: inherit;
+  color: var(--sub); border-bottom: 3px solid transparent; margin-bottom: -2px;
+  transition: color .15s;
+}
+.cl-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.cl-body { padding: 18px 22px; overflow-y: auto; max-height: 62vh; }
+.cl-section { margin-bottom: 18px; }
+.cl-sec-title {
+  font-size: 12px; font-weight: 800; color: #0f766e;
+  background: var(--accent-soft); padding: 5px 12px; border-radius: 6px;
+  margin-bottom: 10px; letter-spacing: .5px;
+}
+body.dark .cl-sec-title { background: #0c2320; }
+.cl-sub-label {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  border-left: 3px solid var(--accent); padding-left: 8px;
+  margin: 8px 0 5px;
+}
+.cl-item {
+  padding: 7px 10px; border-radius: 7px;
+  border: 1px solid transparent; margin-bottom: 5px;
+}
+.cl-item:hover { background: var(--bg); }
+.cl-item.checked { background: #f0fdf4; border-color: #bbf7d0; }
+body.dark .cl-item.checked { background: #052e16; border-color: #166534; }
+.cl-row1 { display: flex; align-items: flex-start; gap: 8px; }
+.cl-cb { width: 15px; height: 15px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
+.cl-text { font-size: 13px; line-height: 1.5; flex: 1; }
+.cl-text.done { text-decoration: line-through; color: var(--sub); }
+.cl-extras { padding-left: 23px; margin-top: 5px; display: flex; flex-direction: column; gap: 5px; }
+.cl-date-row { display: flex; align-items: center; gap: 8px; }
+.cl-date-lbl { font-size: 11px; color: var(--sub); white-space: nowrap; }
+.cl-date-inp {
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 3px 8px; font-size: 12px; font-family: inherit;
+  background: var(--card); color: var(--text); outline: none;
+}
+.cl-date-inp:focus { border-color: var(--accent); }
+.cl-yn-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.cl-yn-lbl { font-size: 12px; color: var(--sub); }
+.cl-yn-opts { display: flex; gap: 10px; }
+.cl-yn-opts label { font-size: 12px; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+.cl-yn-opts input[type=radio] { accent-color: var(--accent); }
+.cl-sub-item { padding: 4px 0; font-size: 12px; }
+.cl-sub-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cl-note { font-size: 11px; color: var(--sub); margin-left: 4px; }
+.cl-info-box {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px 16px; display: grid; grid-template-columns: max-content 1fr;
+  gap: 5px 16px; font-size: 13px; margin-bottom: 10px;
+}
+.cl-info-lbl { color: var(--sub); }
+.cl-info-val { font-weight: 600; }
+.cl-progress {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px; background: var(--bg); border-radius: 8px; margin-bottom: 14px;
+}
+.cl-prog-bar { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.cl-prog-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width .3s; }
+.cl-prog-text { font-size: 12px; font-weight: 700; color: var(--accent); white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -333,6 +400,25 @@ footer {
     <div class="modal-foot">
       <button class="btn-cancel" onclick="closeModal()">取消</button>
       <button class="btn-save" id="save-btn" onclick="saveRecord()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- Checklist Modal -->
+<div class="modal-mask" id="cl-mask" onclick="clMaskClick(event)">
+  <div class="modal cl-modal">
+    <div class="modal-hdr">
+      <h2 id="cl-title">復工管理檢核表</h2>
+      <button class="hdr-btn" onclick="printChecklist()" style="margin-right:6px">🖨️ 列印</button>
+      <button class="modal-close" onclick="closeChecklist()">✕</button>
+    </div>
+    <div class="cl-tabs">
+      <button class="cl-tab active" id="cl-tab-w" onclick="switchClTab('w')">👷 勞工版</button>
+      <button class="cl-tab" id="cl-tab-e" onclick="switchClTab('e')">🏢 雇主版</button>
+    </div>
+    <div class="cl-body" id="cl-body"></div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeChecklist()">關閉</button>
     </div>
   </div>
 </div>
@@ -548,6 +634,7 @@ function renderCards() {
         </div>` : ''}
       </div>
       <div class="card-foot">
+        <button class="act-btn" style="background:#f0fdfa;color:#0f766e" onclick="openChecklist('${r.id}')">📋 檢核表</button>
         <button class="act-btn act-edit" onclick="openModal('${r.id}')">✏️ 編輯</button>
         <button class="act-btn act-del"  onclick="deleteRecord('${r.id}')">🗑️ 刪除</button>
       </div>
@@ -785,6 +872,324 @@ function showToast(msg, err = false) {
   t.classList.add('show');
   clearTimeout(_tTimer);
   _tTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ──────────────────────────────────────────────────
+// 復工管理檢核表（勞工版 / 雇主版）
+// ──────────────────────────────────────────────────
+const CL_DEF = {
+  w: [
+    { title: '一、基本資料', type: 'info' },
+    {
+      title: '二、職災通報',
+      items: [
+        { id:'w21', text:'發生職災時，主動告知單位主管。', date:'日期' },
+        { id:'w22', text:'雇主確認為職業災害，或經醫師診斷為職業病。', date:'日期' },
+        { id:'w23', text:'因職業傷病，而有醫療處遇的需求（急診或洽醫院治療）。' },
+        { id:'w24', text:'本人或雇主已透過「職業傷病通報系統」進行職災通報。', date:'日期' },
+        { id:'w25', text:'本人已瞭解職災勞工相關權益（公傷病假、職災補償、職災保險給付等）。', date:'日期' },
+        { id:'w26', text:'已向勞保局申請職災保險給付。', date:'日期' },
+        { id:'w27', text:'持續配合或定期參與醫療機構之醫療及復健。' },
+        { id:'w28', text:'主動與單位指派專人聯繫，持續說明職業傷病復原狀況及可能需要的協助。' },
+      ]
+    },
+    {
+      title: '三、復工計畫',
+      items: [
+        { id:'w31', text:'與公司討論預期的復工日期。', date:'預計復工日期' },
+        { id:'w32', text:'向職業安全衛生署認可職能復健專業機構提出復工計畫申請？', yn:['是','否'], ynDate:'申請日期', ynTrigger:'是' },
+        { id:'w33', text:'願意與職業醫學科醫師討論復工期程，以及和職能復健機構個案管理師、雇主共同解決復工計畫執行時所出現的問題，並積極配合規劃。' },
+        { id:'w34', text:'同意參與復工計畫會議，並在復工計畫中簽名，持續紀錄。', date:'日期' },
+        { id:'w35', text:'向認可職災職能復健專責機構之職業專科醫師或個案管理師，提供職務所需要的能力要求，或告知後續可能的實際工作內容。' },
+        { id:'w36', text:'於服務階段，持續與雇主指派之專人或認可職災職能復健專責機構專業人員聯繫。' },
+      ]
+    },
+    {
+      title: '四、結束復工計畫', type: 'ending',
+      items: [
+        { id:'w4a', text:'重返原職場，原職務、原工時。', date:'日期' },
+        { id:'w4b', text:'重返原職場，工時或職務經調整。', date:'日期' },
+        { id:'w4c', text:'有復工困難，需要其他專業服務之協助。', date:'轉介日期' },
+      ]
+    }
+  ],
+  e: [
+    { title: '一、基本資料', type: 'info' },
+    {
+      title: '二、職災通報',
+      subsections: [
+        {
+          label: '職業傷害',
+          items: [
+            { id:'e2a1', text:'得知單位員工發生（疑似）職業傷害。', date:'日期' },
+            { id:'e2a2', text:'單位確認為職業傷害。', date:'日期' },
+            { id:'e2a3', text:'職災通報。', date:'日期', note:'※職業傷病通報系統' },
+          ]
+        },
+        {
+          label: '職業病',
+          items: [
+            { id:'e2b1', text:'得知單位員工發生（疑似）職業病。', date:'日期' },
+            { id:'e2b2', text:'職業醫學專科門診就醫。', date:'日期',
+              subs:[
+                { id:'e2b2a', text:'經醫師診斷後，是否通報職業病？' },
+                { id:'e2b2b', text:'是否提供作業相關資訊給勞保局？' },
+                { id:'e2b2c', text:'勞保局是否認定為職業病？' },
+              ]
+            },
+          ]
+        },
+        {
+          label: '',
+          items: [
+            { id:'e2c1', text:'協助勞工就醫（急診或醫院治療），持續追蹤其傷病治療與復原情形。' },
+            { id:'e2c2', text:'持續與職災勞工聯繫，告知相關勞動權益，並協助申請勞保局職災給付。' },
+            { id:'e2c3', text:'安排勞工健康服務護理人員或職業安全衛生人員主動陪同職災勞工，至職業醫學科就診並定期回診追蹤，以掌握職災勞工治療進展情形。' },
+          ]
+        }
+      ]
+    },
+    {
+      title: '三、復工計畫',
+      items: [
+        { id:'e31', text:'安排職災勞工與事業單位內部勞工健康服務醫護人員面談，並安排復工期程。', date:'預計復工日期' },
+        { id:'e32', text:'向勞動部認可職能復健專業機構申請復工計畫？', yn:['是','否'], ynDate:'申請日期', ynTrigger:'是' },
+        { id:'e33', text:'安排勞工健康服務醫護人員，以及職能復健機構個案管理師，配合職業安全衛生、人力資源管理和相關部門人員，與職災勞工討論合適的工作項目（視需要進行工作現場訪視）。' },
+        { id:'e34', text:'與勞工討論復工計畫。', date:'日期' },
+        { id:'e35', text:'傷病前或預計調整職務的工作要求，是否符合勞工的功能性能力？', yn:['是','否'] },
+        { id:'e36', text:'將復工職務能力要求相關資訊，提供給職能復健機構個案管理師及職業專科醫師。' },
+        { id:'e37', text:'同意參與復工計畫會議，在復工計畫中簽名，並保持記錄。', date:'日期' },
+      ]
+    },
+    {
+      title: '四、監測和評估',
+      items: [
+        { id:'e41', text:'與職能復健機構個案管理師保持聯繫，瞭解復工計畫執行狀況，並記錄聯繫內容。' },
+        { id:'e42', text:'配合復工計畫，善盡職務調整及安置義務（含漸進式復工、職務再設計等）。' },
+        { id:'e43', text:'勞工健康服務醫護人員定期至職場關懷勞工，解決復工計畫執行時所出現的問題。' },
+        { id:'e44', text:'每周/每月（定期）與職災勞工聯繫，並記錄每次聯繫內容，以及後續協處事項。' },
+      ]
+    },
+    {
+      title: '五、結束復工計畫及後續管理', type: 'ending',
+      items: [
+        { id:'e5a', text:'職災勞工重返原工作，原職務、原工時。', date:'日期' },
+        { id:'e5b', text:'職災勞工重返原工作，工時或職務永久性調整。', date:'日期' },
+        { id:'e5c', text:'職災勞工工作能力無法符合事業單位需求，經評估及協商後，需要其他專業服務人員提供協助，或進行資源連結。' },
+      ]
+    }
+  ]
+};
+
+let clRecId = null, clTab = 'w', clSt = {};
+
+function openChecklist(id) {
+  const rec = allData.find(r => r.id === id);
+  if (!rec) return;
+  clRecId = id;
+  clTab = 'w';
+  try { clSt = JSON.parse(localStorage.getItem('nurse-rtw-cl-' + id) || '{}'); } catch { clSt = {}; }
+  document.getElementById('cl-title').textContent = `復工管理檢核表 — ${rec.name}`;
+  document.getElementById('cl-mask').classList.add('show');
+  switchClTab('w');
+}
+function closeChecklist() {
+  document.getElementById('cl-mask').classList.remove('show');
+  clRecId = null;
+}
+function clMaskClick(e) {
+  if (e.target.id === 'cl-mask') closeChecklist();
+}
+function switchClTab(t) {
+  clTab = t;
+  document.getElementById('cl-tab-w').classList.toggle('active', t === 'w');
+  document.getElementById('cl-tab-e').classList.toggle('active', t === 'e');
+  renderChecklist();
+}
+function saveCl() {
+  if (clRecId) localStorage.setItem('nurse-rtw-cl-' + clRecId, JSON.stringify(clSt));
+}
+function clGet(id, field) { return (clSt[id] || {})[field]; }
+function clSet(id, field, val) {
+  clSt[id] = clSt[id] || {};
+  clSt[id][field] = val;
+  saveCl();
+}
+
+function collectClItems(def) {
+  const ids = [];
+  def.forEach(sec => {
+    if (sec.type === 'info') return;
+    const push = it => { ids.push(it.id); if (it.subs) it.subs.forEach(s => ids.push(s.id)); };
+    if (sec.subsections) sec.subsections.forEach(sub => sub.items.forEach(push));
+    else (sec.items || []).forEach(push);
+  });
+  return ids;
+}
+
+function renderClItem(it, num) {
+  const ck  = clGet(it.id, 'checked') || false;
+  const dt  = clGet(it.id, 'date')    || '';
+  const yn  = clGet(it.id, 'yn')      || '';
+  const ynd = clGet(it.id, 'ynDate')  || '';
+  const showYnDate = it.ynDate && yn === (it.ynTrigger || '是');
+
+  let html = `<div class="cl-item${ck ? ' checked' : ''}" id="cli-${it.id}">
+    <div class="cl-row1">
+      <input type="checkbox" class="cl-cb" ${ck ? 'checked' : ''}
+        onchange="clSetItem('${it.id}','checked',this.checked)">
+      <span class="cl-text${ck ? ' done' : ''}">${num}. ${it.text}${it.note ? `<span class="cl-note">${it.note}</span>` : ''}</span>
+    </div>
+    <div class="cl-extras">`;
+
+  if (it.date) {
+    html += `<div class="cl-date-row">
+      <span class="cl-date-lbl">${it.date}：</span>
+      <input type="date" class="cl-date-inp" value="${dt}"
+        onchange="clSet('${it.id}','date',this.value)">
+    </div>`;
+  }
+
+  if (it.yn) {
+    html += `<div class="cl-yn-row"><span class="cl-yn-lbl">選擇：</span><div class="cl-yn-opts">`;
+    it.yn.forEach(o => {
+      html += `<label><input type="radio" name="yn-${it.id}" value="${o}" ${yn===o?'checked':''}
+        onchange="clSetYN('${it.id}','${o}','${it.ynTrigger||''}','${it.ynDate||''}')">${o}</label>`;
+    });
+    html += `</div></div>`;
+    if (it.ynDate) {
+      html += `<div class="cl-date-row" id="yd-${it.id}" style="${showYnDate?'':'display:none'}">
+        <span class="cl-date-lbl">${it.ynDate}：</span>
+        <input type="date" class="cl-date-inp" value="${ynd}"
+          onchange="clSet('${it.id}','ynDate',this.value)">
+      </div>`;
+    }
+  }
+
+  if (it.subs) {
+    it.subs.forEach(sub => {
+      const sv = clGet(sub.id, 'yn') || '';
+      html += `<div class="cl-sub-item">
+        <div class="cl-sub-row">
+          <span class="cl-yn-lbl">${sub.text}</span>
+          <div class="cl-yn-opts">
+            <label><input type="radio" name="yn-${sub.id}" value="是" ${sv==='是'?'checked':''}
+              onchange="clSet('${sub.id}','yn','是')">是</label>
+            <label><input type="radio" name="yn-${sub.id}" value="否" ${sv==='否'?'checked':''}
+              onchange="clSet('${sub.id}','yn','否')">否</label>
+          </div>
+        </div>
+      </div>`;
+    });
+  }
+
+  html += `</div></div>`;
+  return html;
+}
+
+function renderChecklist() {
+  const rec = allData.find(r => r.id === clRecId);
+  const def = CL_DEF[clTab];
+  let html = '';
+
+  if (rec) {
+    html += `<div class="cl-info-box">
+      <span class="cl-info-lbl">勞工姓名</span><span class="cl-info-val">${rec.name}（${rec.empId}）</span>
+      <span class="cl-info-lbl">廠區／職稱</span><span class="cl-info-val">${rec.dept} ${rec.jobTitle}</span>
+      <span class="cl-info-lbl">職災診斷</span><span class="cl-info-val">${rec.diagnosis || '—'}</span>
+      <span class="cl-info-lbl">復工日期</span><span class="cl-info-val">${rec.returnDate || '—'}</span>
+    </div>`;
+  }
+
+  const allItems = collectClItems(def);
+  const checked  = allItems.filter(id => clGet(id, 'checked')).length;
+  const pct = allItems.length ? Math.round(checked / allItems.length * 100) : 0;
+  html += `<div class="cl-progress" id="cl-progress">
+    <div class="cl-prog-bar"><div class="cl-prog-fill" style="width:${pct}%"></div></div>
+    <span class="cl-prog-text">${checked}/${allItems.length} 項已確認 (${pct}%)</span>
+  </div>`;
+
+  def.forEach(sec => {
+    if (sec.type === 'info') return;
+    html += `<div class="cl-section"><div class="cl-sec-title">${sec.title}</div>`;
+    if (sec.subsections) {
+      sec.subsections.forEach(sub => {
+        if (sub.label) html += `<div class="cl-sub-label">${sub.label}</div>`;
+        sub.items.forEach((it, i) => { html += renderClItem(it, i + 1); });
+      });
+    } else {
+      (sec.items || []).forEach((it, i) => { html += renderClItem(it, i + 1); });
+    }
+    html += `</div>`;
+  });
+
+  document.getElementById('cl-body').innerHTML = html;
+}
+
+function clSetItem(id, field, val) {
+  clSet(id, field, val);
+  const el = document.getElementById('cli-' + id);
+  if (el) {
+    el.classList.toggle('checked', val);
+    const txt = el.querySelector('.cl-text');
+    if (txt) txt.classList.toggle('done', val);
+  }
+  const def = CL_DEF[clTab];
+  const allItems = collectClItems(def);
+  const checked  = allItems.filter(i => clGet(i, 'checked')).length;
+  const pct = allItems.length ? Math.round(checked / allItems.length * 100) : 0;
+  const fill = document.querySelector('#cl-progress .cl-prog-fill');
+  const text = document.querySelector('#cl-progress .cl-prog-text');
+  if (fill) fill.style.width = pct + '%';
+  if (text) text.textContent = `${checked}/${allItems.length} 項已確認 (${pct}%)`;
+}
+
+function clSetYN(id, val, trigger, ynDateLabel) {
+  clSet(id, 'yn', val);
+  if (ynDateLabel) {
+    const ydEl = document.getElementById('yd-' + id);
+    if (ydEl) ydEl.style.display = (val === trigger) ? '' : 'none';
+  }
+}
+
+function printChecklist() {
+  const content = document.getElementById('cl-body').innerHTML;
+  const tabName = clTab === 'w' ? '勞工版' : '雇主版';
+  const rec = allData.find(r => r.id === clRecId);
+  const win = window.open('', '_blank', 'width=800,height=700');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+    <title>復工管理檢核表（${tabName}）</title>
+    <style>
+      body { font-family:"Microsoft JhengHei",sans-serif; font-size:13px; padding:24px; }
+      h2 { text-align:center; margin-bottom:16px; font-size:16px; }
+      .cl-info-box { display:grid; grid-template-columns:max-content 1fr; gap:5px 16px; border:1px solid #e2e8f0; border-radius:6px; padding:10px 14px; margin-bottom:12px; }
+      .cl-info-lbl { color:#64748b; } .cl-info-val { font-weight:600; }
+      .cl-progress { display:none; }
+      .cl-section { margin-bottom:14px; }
+      .cl-sec-title { background:#f0fdfa; padding:4px 10px; border-radius:4px; font-weight:800; font-size:12px; margin-bottom:8px; }
+      .cl-sub-label { font-size:11px; font-weight:700; color:#64748b; border-left:3px solid #0d9488; padding-left:8px; margin:6px 0 4px; }
+      .cl-item { padding:5px 8px; margin-bottom:4px; }
+      .cl-item.checked { background:#f0fdf4; }
+      .cl-row1 { display:flex; align-items:flex-start; gap:6px; }
+      .cl-cb { flex-shrink:0; } .cl-text { flex:1; line-height:1.5; }
+      .cl-text.done { text-decoration:line-through; color:#64748b; }
+      .cl-extras { padding-left:20px; margin-top:4px; display:flex; flex-direction:column; gap:4px; }
+      .cl-date-row { display:flex; align-items:center; gap:6px; font-size:12px; }
+      .cl-date-lbl { color:#64748b; }
+      .cl-yn-row { display:flex; align-items:center; gap:8px; font-size:12px; flex-wrap:wrap; }
+      .cl-yn-lbl { color:#64748b; } .cl-yn-opts { display:flex; gap:8px; }
+      .cl-yn-opts label { display:flex; align-items:center; gap:3px; }
+      .cl-sub-item { padding:3px 0 3px 0; font-size:12px; }
+      .cl-sub-row { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+      .cl-note { color:#64748b; font-size:11px; margin-left:4px; }
+    </style>
+  </head><body>
+    <h2>財團法人職業災害預防及重建中心<br>復工管理檢核表（${tabName}）</h2>
+    ${content}
+    <p style="text-align:right;color:#64748b;font-size:11px;margin-top:16px">列印日期：${today()}</p>
+  </body></html>`);
+  win.document.close();
+  setTimeout(() => win.print(), 300);
 }
 
 init();
