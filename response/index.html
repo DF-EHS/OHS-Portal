@@ -104,6 +104,17 @@
   .dept-hub { background: #e0f2fe; color: #075985; }
   .dept-rem { background: #ede9fe; color: #5b21b6; }
 
+  /* ── Category badges ── */
+  .cat-badge {
+    flex-shrink: 0; padding: 3px 9px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; white-space: nowrap; display: inline-block;
+  }
+  .cat-field    { background: #ffedd5; color: #c2410c; }   /* 現場作業 */
+  .cat-doc      { background: #dbeafe; color: #1e40af; }   /* 文件或制度 */
+  .cat-training { background: #dcfce7; color: #15803d; }   /* 在職教育訓練 */
+  .cat-equip    { background: #ede9fe; color: #6d28d9; }   /* 安全衛生設備 */
+  .cat-other    { background: #f1f5f9; color: #475569; }   /* 其他 */
+
   .rc-content { flex: 1; }
   .rc-issue { font-size: 15px; font-weight: 700; margin-bottom: 5px; line-height: 1.45; }
   .rc-meta  { font-size: 12px; color: var(--sub); display: flex; gap: 14px; flex-wrap: wrap; }
@@ -345,6 +356,14 @@
       <option>和美站</option><option>員林站</option><option>斗六站</option>
       <option>金馬站</option><option>草屯站</option><option>拆除課</option>
     </select>
+    <select id="filter-category" onchange="renderList()">
+      <option value="">所有分類</option>
+      <option>現場作業</option>
+      <option>文件或制度</option>
+      <option>在職教育訓練</option>
+      <option>安全衛生設備</option>
+      <option>其他</option>
+    </select>
     <select id="filter-status" onchange="renderList()">
       <option value="">所有狀態</option>
       <option value="open">處理中</option>
@@ -380,6 +399,18 @@
           <option>南一</option><option>南二</option><option>神岡站</option>
           <option>和美站</option><option>員林站</option><option>斗六站</option>
           <option>金馬站</option><option>草屯站</option><option>拆除課</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">分類 <span class="req">*</span></label>
+        <select class="form-control" id="f-category">
+          <option value="">請選擇分類</option>
+          <option>現場作業</option>
+          <option>文件或制度</option>
+          <option>在職教育訓練</option>
+          <option>安全衛生設備</option>
+          <option>其他</option>
         </select>
       </div>
 
@@ -447,6 +478,13 @@ function deptClass(dept) {
   return 'dept-sta';
 }
 
+function catClass(cat) {
+  return { '現場作業':'cat-field', '文件或制度':'cat-doc', '在職教育訓練':'cat-training', '安全衛生設備':'cat-equip' }[cat] || 'cat-other';
+}
+function catIcon(cat) {
+  return { '現場作業':'🦺', '文件或制度':'📄', '在職教育訓練':'🎓', '安全衛生設備':'🔧', '其他':'📌' }[cat] || '📌';
+}
+
 async function loadData() {
   try {
     const r = await fetch(GAS_URL + '?action=getAll');
@@ -474,8 +512,11 @@ function renderList() {
   const status = document.getElementById('filter-status').value;
   const search = document.getElementById('filter-search').value.toLowerCase();
 
+  const category = document.getElementById('filter-category').value;
+
   const filtered = allRecords.filter(r => {
-    if (dept   && r.department !== dept) return false;
+    if (dept     && r.department !== dept)     return false;
+    if (category && r.category   !== category) return false;
     if (status === 'open' && r.status === 'done') return false;
     if (status === 'done' && r.status !== 'done') return false;
     if (search && !(r.issue||'').toLowerCase().includes(search) && !(r.countermeasure||'').toLowerCase().includes(search)) return false;
@@ -501,6 +542,7 @@ function renderList() {
     <div class="rc-content">
       <div class="rc-issue">${esc(r.issue)}</div>
       <div class="rc-meta">
+        ${r.category ? `<span><span class="cat-badge ${catClass(r.category)}">${catIcon(r.category)} ${esc(r.category)}</span></span>` : ''}
         <span>📅 ${date}</span>
         ${r.proposer ? `<span>🙋 ${esc(r.proposer)}</span>` : ''}
         ${r.handler  ? `<span>🔧 ${esc(r.handler)}</span>`  : ''}
@@ -537,6 +579,7 @@ function renderTable(filtered, list) {
     return `
 <tr onclick="toggleTableDetail('detail-${esc(r.id)}')">
   <td><span class="rc-dept ${deptClass(r.department)}">${esc(r.department)}</span></td>
+  <td>${r.category ? `<span class="cat-badge ${catClass(r.category)}">${catIcon(r.category)} ${esc(r.category)}</span>` : '<span style="color:var(--sub)">—</span>'}</td>
   <td class="td-issue"><div class="td-issue-text" title="${esc(r.issue)}">${esc(r.issue)}</div></td>
   <td>${esc(r.proposer || '—')}</td>
   <td>${esc(r.handler  || '—')}</td>
@@ -552,7 +595,7 @@ function renderTable(filtered, list) {
   </td>
 </tr>
 <tr class="tr-detail">
-  <td colspan="7">
+  <td colspan="8">
     <div class="tr-detail-inner" id="detail-${esc(r.id)}">
       ${hasCM ? `<strong style="font-size:12px;color:var(--sub)">🤖 AI 對策建議</strong>${mdToHtml(r.countermeasure)}` : '<span style="color:var(--sub);font-size:13px">（此筆無對策內容）</span>'}
     </div>
@@ -563,7 +606,7 @@ function renderTable(filtered, list) {
   list.innerHTML = `
 <table class="response-table">
   <thead><tr>
-    <th>部門</th><th>反應事項</th><th>建議人</th><th>協助處理</th><th>日期</th><th>狀態</th><th>操作</th>
+    <th>部門</th><th>分類</th><th>反應事項</th><th>建議人</th><th>協助處理</th><th>日期</th><th>狀態</th><th>操作</th>
   </tr></thead>
   <tbody>${rows}</tbody>
 </table>`;
@@ -621,7 +664,7 @@ let _editingId = null;
 
 function openModal() {
   _editingId = null;
-  ['f-dept','f-issue','f-cm','f-proposer','f-handler'].forEach(id => {
+  ['f-dept','f-category','f-issue','f-cm','f-proposer','f-handler'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
@@ -636,6 +679,7 @@ function openEditModal(id) {
   if (!r) return;
   _editingId = id;
   document.getElementById('f-dept').value     = r.department    || '';
+  document.getElementById('f-category').value = r.category      || '';
   document.getElementById('f-issue').value    = r.issue         || '';
   document.getElementById('f-cm').value       = r.countermeasure|| '';
   document.getElementById('f-proposer').value = r.proposer      || '';
@@ -686,8 +730,9 @@ function toggleCMEdit() {
 }
 
 async function generateCM() {
-  const dept  = document.getElementById('f-dept').value;
-  const issue = document.getElementById('f-issue').value.trim();
+  const dept     = document.getElementById('f-dept').value;
+  const category = document.getElementById('f-category').value;
+  const issue    = document.getElementById('f-issue').value.trim();
   if (!issue) { alert('請先填寫反應事項'); return; }
 
   const btn = document.getElementById('ai-btn');
@@ -697,7 +742,7 @@ async function generateCM() {
 
   const prompt =
     `你是職業安全衛生管理師助理。以下是某站點反應的安全衛生問題，請根據勞工安全衛生法規及職場安全管理實務，撰寫具體可行的對策建議。\n\n` +
-    `【部門】${dept || '（未指定）'}\n【反應事項】${issue}\n\n` +
+    `【部門】${dept || '（未指定）'}\n【分類】${category || '（未指定）'}\n【反應事項】${issue}\n\n` +
     `輸出規則：繁體中文；每條對策格式固定為「* **小標題：** 說明內容」，小標題為 2–6 字的動詞短語（如「修訂規範」、「加強巡查」），說明內容接在冒號後；約 4–5 條；全部統一此格式，不可使用數字編號，不需重述問題、不需標題列。`;
 
   try {
@@ -724,12 +769,14 @@ async function generateCM() {
 
 async function submitForm() {
   const dept     = document.getElementById('f-dept').value;
+  const category = document.getElementById('f-category').value;
   const issue    = document.getElementById('f-issue').value.trim();
   const cm       = document.getElementById('f-cm').value.trim();
   const proposer = document.getElementById('f-proposer').value.trim();
   const handler  = document.getElementById('f-handler').value.trim();
 
   if (!dept)     { alert('請選擇部門'); return; }
+  if (!category) { alert('請選擇分類'); return; }
   if (!issue)    { alert('請填寫反應事項'); return; }
   if (!cm)       { alert('請填寫對策（可使用 AI 建議自動生成）'); return; }
   if (!proposer) { alert('請填寫建議人員'); return; }
@@ -739,8 +786,8 @@ async function submitForm() {
   btn.textContent = '處理中…';
 
   const payload = _editingId
-    ? { action: 'update', id: _editingId, department: dept, issue, countermeasure: cm, proposer, handler }
-    : { action: 'add',                    department: dept, issue, countermeasure: cm, proposer, handler };
+    ? { action: 'update', id: _editingId, department: dept, category, issue, countermeasure: cm, proposer, handler }
+    : { action: 'add',                    department: dept, category, issue, countermeasure: cm, proposer, handler };
 
   try {
     const r = await fetch(GAS_URL, {
