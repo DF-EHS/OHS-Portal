@@ -385,6 +385,56 @@ tbody tr.active { background: var(--accent-soft); }
 .svc-field input:focus, .svc-field select:focus, .svc-field textarea:focus { border-color: var(--accent); background: #fff; }
 .svc-field textarea { resize: vertical; min-height: 68px; }
 
+/* ── Svc AI upload zone ── */
+.svc-ai-section {
+  grid-column: 1 / -1; background: #f0fdfa; border: 1px solid #99f6e4;
+  border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px;
+}
+.svc-ai-sec-title { font-size: 12px; font-weight: 700; color: var(--accent-dk); display: flex; align-items: center; gap: 6px; }
+.svc-upload-zone {
+  border: 2.5px dashed var(--accent); border-radius: 8px;
+  padding: 20px 16px; text-align: center; cursor: pointer;
+  background: #fff; transition: background .15s, border-color .15s; user-select: none;
+}
+.svc-upload-zone:hover, .svc-upload-zone.dragover { background: var(--accent-soft); border-color: var(--accent-dk); }
+.svc-upload-zone-icon { font-size: 28px; margin-bottom: 5px; }
+.svc-upload-zone-text { font-size: 13px; font-weight: 600; color: var(--accent-dk); }
+.svc-upload-zone-hint { font-size: 11px; color: var(--sub); margin-top: 3px; }
+.svc-file-row {
+  display: flex; align-items: center; gap: 8px;
+  background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px;
+}
+.svc-file-row-name { flex: 1; font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.svc-file-clear { background: none; border: none; color: var(--sub); cursor: pointer; font-size: 18px; padding: 0 2px; line-height: 1; }
+.svc-file-clear:hover { color: var(--red); }
+.svc-ai-run-btn {
+  width: 100%; padding: 9px; border-radius: 8px; border: none;
+  background: var(--accent); color: #fff; font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.svc-ai-run-btn:hover:not(:disabled) { background: var(--accent-dk); }
+.svc-ai-run-btn:disabled { opacity: .5; cursor: not-allowed; }
+.svc-ai-result-card {
+  background: #e0f9f5; border: 1px solid #5eead4; border-radius: 10px;
+  padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;
+}
+.svc-ai-result-title { font-size: 12px; font-weight: 800; color: var(--accent-dk); }
+.svc-ai-result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; }
+.svc-ai-result-row { font-size: 12px; display: flex; gap: 6px; }
+.svc-ai-result-lbl { color: var(--sub); flex-shrink: 0; }
+.svc-ai-result-val { font-weight: 600; }
+.svc-ai-confirm-btn {
+  width: 100%; padding: 9px; border-radius: 8px; border: none;
+  background: #15803d; color: #fff; font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.svc-ai-confirm-btn:hover { background: #166534; }
+.svc-ai-spin {
+  width: 16px; height: 16px; border: 2px solid var(--accent);
+  border-top-color: transparent; border-radius: 50%;
+  animation: spin .8s linear infinite; flex-shrink: 0;
+}
+
 /* ── Sub-module dashboard ── */
 .dash-outer { flex: 1; overflow-y: auto; padding: 24px 20px 40px; display: flex; flex-direction: column; gap: 20px; }
 .dash-hero {
@@ -605,6 +655,30 @@ footer {
       <button class="dp-close" onclick="closeSvcModal()">✕</button>
     </div>
     <div class="svc-modal-body" id="svc-modal-body">
+      <!-- AI 上傳區 -->
+      <div class="svc-ai-section">
+        <div class="svc-ai-sec-title">🤖 AI 判讀服務紀錄（選填）</div>
+        <div class="svc-upload-zone" id="svc-upload-zone"
+             ondragover="event.preventDefault();this.classList.add('dragover')"
+             ondragleave="this.classList.remove('dragover')"
+             ondrop="handleSvcDrop(event)"
+             onclick="document.getElementById('svc-file-input').click()">
+          <div class="svc-upload-zone-icon">📄</div>
+          <div class="svc-upload-zone-text">點擊或拖曳職護臨場服務紀錄表（PDF）</div>
+          <div class="svc-upload-zone-hint">AI 將自動讀取日期、時間、服務項目、諮詢人數等欄位</div>
+        </div>
+        <input type="file" id="svc-file-input" accept="application/pdf,image/jpeg,image/png"
+               style="display:none" onchange="handleSvcFile(this.files[0]);this.value=''">
+        <div class="svc-file-row" id="svc-file-row" style="display:none">
+          <span>📄</span>
+          <span class="svc-file-row-name" id="svc-file-name"></span>
+          <button class="svc-file-clear" onclick="clearSvcFile()">✕</button>
+        </div>
+        <button class="svc-ai-run-btn" id="svc-ai-run-btn" onclick="runSvcAI()" disabled>
+          📎 上傳報告
+        </button>
+        <div id="svc-ai-result-area"></div>
+      </div>
       <div class="svc-field">
         <label>服務日期 *</label>
         <input type="date" id="sf-date" max="2099-12-31">
@@ -1333,6 +1407,17 @@ function openSvcModal(editId) {
 
   document.getElementById('svc-modal-title').textContent = r ? '編輯臨場服務紀錄' : '新增臨場服務紀錄';
 
+  // reset upload zone
+  _svcUploadFile = null; _svcAIData = null;
+  const fRow = document.getElementById('svc-file-row');
+  const zone = document.getElementById('svc-upload-zone');
+  const btn  = document.getElementById('svc-ai-run-btn');
+  const area = document.getElementById('svc-ai-result-area');
+  if (fRow) fRow.style.display = 'none';
+  if (zone) zone.style.display = '';
+  if (btn)  btn.disabled = true;
+  if (area) area.innerHTML = '';
+
   // fill fields
   const yy = r ? r.year : svcYear;
   const mm = r ? r.month : svcMonth;
@@ -1540,7 +1625,173 @@ function renderReturnDash() {
 function dashStat(num, lbl, col) {
   return `<div class="dash-stat"><div class="dash-stat-num" style="color:${col}">${num}</div><div class="dash-stat-lbl">${lbl}</div></div>`;
 }
+
+// ═══════════════════════════════════════════════════════
+// 臨場服務紀錄 AI 上傳判讀
+// ═══════════════════════════════════════════════════════
+const SVC_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+let _svcUploadFile = null;
+let _svcAIData = null;
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+async function svcPdfToImages(file) {
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+  const pages = Math.min(pdf.numPages, 10);
+  const imgs = [];
+  for (let p = 1; p <= pages; p++) {
+    const page = await pdf.getPage(p);
+    const vp   = page.getViewport({ scale: 1.5 });
+    const canvas = document.createElement('canvas');
+    canvas.width = vp.width; canvas.height = vp.height;
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+    imgs.push(canvas.toDataURL('image/jpeg', 0.85));
+  }
+  return imgs;
+}
+
+async function svcImgToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload  = e => resolve(e.target.result);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+function handleSvcFile(f) {
+  if (!f) return;
+  _svcUploadFile = f;
+  _svcAIData = null;
+  document.getElementById('svc-file-name').textContent = f.name;
+  document.getElementById('svc-file-row').style.display = '';
+  document.getElementById('svc-upload-zone').style.display = 'none';
+  document.getElementById('svc-ai-run-btn').disabled = false;
+  document.getElementById('svc-ai-result-area').innerHTML = '';
+}
+function handleSvcDrop(e) {
+  e.preventDefault();
+  document.getElementById('svc-upload-zone').classList.remove('dragover');
+  handleSvcFile(e.dataTransfer.files[0]);
+}
+function clearSvcFile() {
+  _svcUploadFile = null;
+  _svcAIData = null;
+  document.getElementById('svc-file-input').value = '';
+  document.getElementById('svc-file-row').style.display = 'none';
+  document.getElementById('svc-upload-zone').style.display = '';
+  document.getElementById('svc-ai-run-btn').disabled = true;
+  document.getElementById('svc-ai-result-area').innerHTML = '';
+}
+
+async function runSvcAI() {
+  if (!_svcUploadFile) return;
+  const btn    = document.getElementById('svc-ai-run-btn');
+  const result = document.getElementById('svc-ai-result-area');
+  btn.disabled = true; btn.textContent = '判讀中…';
+  const spin = `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;color:var(--sub)"><div class="svc-ai-spin"></div><span style="font-size:13px" id="svc-ai-status">PDF 轉圖中，請稍候…</span></div>`;
+  result.innerHTML = spin;
+
+  try {
+    const isPdf = _svcUploadFile.type === 'application/pdf';
+    let images;
+    if (isPdf) {
+      images = await svcPdfToImages(_svcUploadFile);
+      const st = document.getElementById('svc-ai-status');
+      if (st) st.textContent = `AI 正在分析 ${images.length} 頁紀錄表，請稍候…`;
+    } else {
+      const b64 = await svcImgToBase64(_svcUploadFile);
+      images = [b64];
+      const st = document.getElementById('svc-ai-status');
+      if (st) st.textContent = 'AI 正在分析紀錄表，請稍候…';
+    }
+
+    const prompt = `你是職護助理，請仔細分析這份職護臨場服務執行紀錄表，以繁體中文回答，並嚴格按照以下 JSON 格式輸出（不要輸出 JSON 以外的任何文字）：
+{
+  "date": "服務日期（格式 YYYY-MM-DD，如 2026-07-14）",
+  "location": "服務地點，只能是「台中總部」或「全興廠」",
+  "timeIn": "進場時間（格式 HH:MM，如 09:00）",
+  "timeOut": "離場時間（格式 HH:MM，如 17:00）",
+  "consultCount": 諮詢人數（整數，無法判斷則填 0）,
+  "recorder": "紀錄人姓名",
+  "services": ["服務項目1", "服務項目2"],
+  "summary": "本次服務摘要（100字以內，條列重點）",
+  "followUp": "待追蹤事項（若無則填空字串）"
+}
+services 請從以下選項中選填（可複選）：個人健康諮詢、異常工作負荷評估、人因危害評估、健康促進活動、職業病預防衛教、急救技能訓練、環境巡視、特殊健檢追蹤、復工評估、其他`;
+
+    const res = await fetch(SVC_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt, images })
+    });
+    const rawText = await res.text();
+    let d = {};
+    try { d = JSON.parse(rawText); } catch {}
+    const raw = (d.reply || d.response || d.message || d.text || d.content || d.result || d.data || '').trim();
+    let parsed = null;
+    try { const m = raw.match(/\{[\s\S]*\}/); parsed = m ? JSON.parse(m[0]) : null; } catch {}
+
+    if (parsed) {
+      _svcAIData = parsed;
+      renderSvcAIResult(parsed);
+    } else {
+      result.innerHTML = `<div style="color:var(--red);font-size:12px;padding:8px 0">⚠️ 無法解析 AI 回應，請手動填寫欄位。<br><small style="color:var(--sub)">${rawText.slice(0,200)}</small></div>`;
+    }
+  } catch(e) {
+    result.innerHTML = `<div style="color:var(--red);font-size:12px;padding:8px 0">❌ AI 判讀失敗：${e.message}</div>`;
+  }
+  btn.disabled = false; btn.textContent = '📎 上傳報告';
+}
+
+const SVC_ITEMS_ALL = ['個人健康諮詢','異常工作負荷評估','人因危害評估','健康促進活動','職業病預防衛教','急救技能訓練','環境巡視','特殊健檢追蹤','復工評估','其他'];
+
+function renderSvcAIResult(d) {
+  const svcTags = (d.services || []).map(s => `<span style="padding:2px 7px;border-radius:10px;background:var(--accent-soft);color:var(--accent-dk);font-size:11px;font-weight:600">${s}</span>`).join(' ');
+  document.getElementById('svc-ai-result-area').innerHTML = `
+    <div class="svc-ai-result-card">
+      <div class="svc-ai-result-title">✨ AI 判讀結果</div>
+      <div class="svc-ai-result-grid">
+        <div class="svc-ai-result-row"><span class="svc-ai-result-lbl">日期</span><span class="svc-ai-result-val">${d.date||'—'}</span></div>
+        <div class="svc-ai-result-row"><span class="svc-ai-result-lbl">地點</span><span class="svc-ai-result-val">${d.location||'—'}</span></div>
+        <div class="svc-ai-result-row"><span class="svc-ai-result-lbl">進場</span><span class="svc-ai-result-val">${d.timeIn||'—'}</span></div>
+        <div class="svc-ai-result-row"><span class="svc-ai-result-lbl">離場</span><span class="svc-ai-result-val">${d.timeOut||'—'}</span></div>
+        <div class="svc-ai-result-row"><span class="svc-ai-result-lbl">諮詢人數</span><span class="svc-ai-result-val">${d.consultCount ?? '—'} 人</span></div>
+        <div class="svc-ai-result-row"><span class="svc-ai-result-lbl">紀錄人</span><span class="svc-ai-result-val">${d.recorder||'—'}</span></div>
+      </div>
+      ${svcTags ? `<div style="display:flex;flex-wrap:wrap;gap:4px">${svcTags}</div>` : ''}
+      ${d.summary ? `<div style="font-size:12px;color:var(--text)">${d.summary}</div>` : ''}
+      ${d.followUp ? `<div style="font-size:12px;color:var(--orange)">⏳ 待追蹤：${d.followUp}</div>` : ''}
+      <button class="svc-ai-confirm-btn" onclick="applySvcAI()">✅ 確認並填入欄位</button>
+    </div>`;
+}
+
+function applySvcAI() {
+  if (!_svcAIData) return;
+  const d = _svcAIData;
+  if (d.date)         document.getElementById('sf-date').value     = d.date;
+  if (d.location && ['台中總部','全興廠'].includes(d.location))
+                      document.getElementById('sf-loc').value      = d.location;
+  if (d.timeIn)       document.getElementById('sf-timein').value   = d.timeIn;
+  if (d.timeOut)      document.getElementById('sf-timeout').value  = d.timeOut;
+  if (d.consultCount != null) document.getElementById('sf-consult').value = d.consultCount;
+  if (d.recorder)     document.getElementById('sf-recorder').value = d.recorder;
+  if (d.summary)      document.getElementById('sf-summary').value  = d.summary;
+  if (d.followUp)     document.getElementById('sf-followup').value = d.followUp;
+
+  // 勾選對應服務項目
+  document.querySelectorAll('#sf-services input[type=checkbox]').forEach(cb => {
+    if ((d.services || []).includes(cb.value)) cb.checked = true;
+  });
+
+  // 收起 AI 區，顯示成功提示
+  document.getElementById('svc-ai-result-area').innerHTML =
+    `<div style="font-size:12px;color:var(--green);font-weight:600">✅ 已填入欄位，請確認後儲存</div>`;
+}
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="../shared/sidebar.js"></script>
 </body>
 </html>
