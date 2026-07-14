@@ -42,6 +42,16 @@ function getSheet() {
     sh.appendRow(['id', 'submittedAt', 'department', 'category', 'issue', 'countermeasure', 'proposer', 'handler', 'status']);
     sh.setFrozenRows(1);
     sh.getRange(1, 1, 1, 9).setFontWeight('bold');
+  } else {
+    // 自動遷移：若舊 Sheet 缺少 category 欄，在 department 之後插入
+    const lastCol = sh.getLastColumn();
+    const hdr = sh.getRange(1, 1, 1, lastCol).getValues()[0];
+    if (!hdr.includes('category')) {
+      const deptCol = hdr.indexOf('department') + 1; // 1-based
+      sh.insertColumnAfter(deptCol);
+      sh.getRange(1, deptCol + 1).setValue('category');
+      sh.getRange(1, 1, 1, sh.getLastColumn()).setFontWeight('bold');
+    }
   }
   return sh;
 }
