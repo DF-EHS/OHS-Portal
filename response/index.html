@@ -581,8 +581,8 @@ function renderTable(filtered, list) {
   <td><span class="rc-dept ${deptClass(r.department)}">${esc(r.department)}</span></td>
   <td>${r.category ? `<span class="cat-badge ${catClass(r.category)}">${catIcon(r.category)} ${esc(r.category)}</span>` : '<span style="color:var(--sub)">—</span>'}</td>
   <td class="td-issue"><div class="td-issue-text" title="${esc(r.issue)}">${esc(r.issue)}</div></td>
-  <td>${esc(r.proposer || '—')}</td>
-  <td>${esc(r.handler  || '—')}</td>
+  <td style="white-space:nowrap">${esc(r.proposer || '—')}</td>
+  <td style="white-space:nowrap">${esc(r.handler  || '—')}</td>
   <td style="white-space:nowrap">${date}</td>
   <td><span class="rc-badge ${isDone ? 'badge-done' : 'badge-open'}">${isDone ? '✓ 已解決' : '⏳ 處理中'}</span></td>
   <td class="td-actions" onclick="event.stopPropagation()">
