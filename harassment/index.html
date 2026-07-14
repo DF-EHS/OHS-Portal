@@ -524,6 +524,38 @@ footer {
   border-top: 1px solid var(--border);
   background: var(--card); flex-shrink: 0;
 }
+
+/* ── Checklist / Env-Check ── */
+.cl-section { background: var(--card); border-radius: 12px; padding: 20px 24px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.cl-sec-hd { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
+.cl-sec-title { font-size: 14px; font-weight: 700; }
+.cl-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.cl-item:last-child { border-bottom: none; }
+.cl-item-text { flex: 1; font-size: 13px; line-height: 1.6; }
+.cl-yn { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; }
+.cl-yn button { padding: 5px 12px; border-radius: 6px; border: 1.5px solid var(--border); font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; background: transparent; transition: all .15s; white-space: nowrap; }
+.cl-yn .yn-y.active  { border-color: var(--green); background: #f0fdf4; color: var(--green); }
+.cl-yn .yn-n.active  { border-color: var(--red); background: #fef2f2; color: var(--red); }
+.cl-yn .yn-na.active { border-color: var(--sub); background: #f1f5f9; color: var(--sub); }
+.cl-save-bar { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.cl-print-btn { padding: 10px 20px; border-radius: 8px; border: 1.5px solid var(--accent-bd); background: var(--accent-bg); color: var(--accent); font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.cl-hist-item { background: var(--card); border-radius: 10px; padding: 14px 18px; margin-bottom: 8px; border: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+
+/* ── Announce generator ── */
+.ann-preview { background: #fff; border: 1.5px solid var(--border); border-radius: 10px; padding: 24px 28px; margin-top: 16px; font-family: "Microsoft JhengHei", sans-serif; }
+.ann-preview h3 { text-align: center; font-size: 18px; margin-bottom: 14px; color: #1e1035; }
+.ann-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+.ann-table td, .ann-table th { border: 1px solid #aaa; padding: 8px 12px; }
+.ann-table th { background: #e9e0ff; font-weight: 700; width: 30%; }
+body.dark .ann-preview { background: #1e293b; color: #f1f5f9; }
+body.dark .ann-table th { background: #2e1065; }
+
+/* ── Effectiveness ── */
+.eff-q { margin-bottom: 16px; }
+.eff-q-text { font-size: 13px; font-weight: 600; margin-bottom: 8px; line-height: 1.5; }
+.eff-q-score { display: flex; gap: 6px; flex-wrap: wrap; }
+.eff-score-btn { padding: 6px 14px; border-radius: 6px; border: 1.5px solid var(--border); font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; background: transparent; transition: all .15s; }
+.eff-score-btn.sel { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
 </style>
 </head>
 <body>
@@ -566,6 +598,27 @@ footer {
         <div class="ac-title">年度風險評估</div>
         <div class="ac-desc">定期評估職場不法侵害風險因子，支援職安人員、現場主管及員工三種評估表，自動計算風險等級並追蹤趨勢。</div>
         <button class="ac-btn outline">進入評估系統 →</button>
+      </div>
+
+      <div class="action-card" onclick="showView('env-check')">
+        <div class="ac-icon">🏭</div>
+        <div class="ac-title">環境安全檢點</div>
+        <div class="ac-desc">依預防指引附錄三逐項評估作業場所的不法侵害預防控制措施，完整記錄並可列印存查。</div>
+        <button class="ac-btn outline">開始檢點 →</button>
+      </div>
+
+      <div class="action-card" onclick="showView('announce')">
+        <div class="ac-icon">📣</div>
+        <div class="ac-title">申訴管道公告</div>
+        <div class="ac-desc">填寫公司申訴聯絡人資訊，系統依附錄五格式自動生成可列印的公告，張貼於各工作場所。</div>
+        <button class="ac-btn outline">產生公告 →</button>
+      </div>
+
+      <div class="action-card" onclick="requireAdmin('effectiveness')">
+        <div class="ac-icon">📈</div>
+        <div class="ac-title">年度成效查核</div>
+        <div class="ac-desc">（管理者專用）依附錄十九大構面逐項查核防治計畫年度執行成效，留存考核記錄。</div>
+        <button class="ac-btn outline">進入查核 →</button>
       </div>
     </div>
   </div>
@@ -868,6 +921,13 @@ footer {
         <div class="ac-desc">員工針對個人工作環境安全感、人際關係、管理行為感受及權益認知的自主評估，共 16 題。</div>
         <button class="ac-btn">開始評估 →</button>
       </div>
+      <div class="action-card" onclick="initAssessment('external')">
+        <div class="ac-icon">🚪</div>
+        <div class="ac-title">外部不法侵害評估</div>
+        <div class="ac-desc">評估來自外部人員（客戶、廠商、民眾）的侵害風險，含獨立作業、夜班、現金處理等高風險情境，共 18 題。</div>
+        <button class="ac-btn">開始評估 →</button>
+      </div>
+
       <div class="action-card" onclick="requireAdmin('assess-history')">
         <div class="ac-icon">📈</div>
         <div class="ac-title">歷次評估紀錄</div>
@@ -917,6 +977,113 @@ footer {
     <div id="assess-history-body"><div style="text-align:center;padding:30px;color:var(--sub)">載入中…</div></div>
   </div>
 
+  <!-- ══════════ ANNOUNCE (申訴管道公告產生器) ══════════ -->
+  <div class="view" id="view-announce">
+    <div class="form-nav">
+      <button class="back-btn" onclick="showView('home')">← 返回首頁</button>
+      <h2>📣 申訴管道公告產生器</h2>
+    </div>
+    <div class="notice info">
+      <span class="notice-icon">ℹ️</span>
+      <div>依「執行職務遭受不法侵害預防指引」附錄五格式，填寫以下資訊後點擊「生成公告」，即可列印並張貼於各工作場所。</div>
+    </div>
+    <div class="form-card">
+      <div class="sec-label">公司資訊</div>
+      <div class="field">
+        <label>公司名稱 <span class="req">*</span></label>
+        <input type="text" id="ann-company" value="大豐環保科技股份有限公司" placeholder="公司全名">
+      </div>
+      <div class="field-row">
+        <div class="field"><label>張貼地點</label><input type="text" id="ann-location" placeholder="例：全興廠 / 總公司辦公室"></div>
+        <div class="field"><label>公告日期</label><input type="date" id="ann-date"></div>
+      </div>
+    </div>
+    <div class="form-card">
+      <div class="sec-label">內部申訴窗口</div>
+      <div class="field-row">
+        <div class="field"><label>窗口姓名</label><input type="text" id="ann-int-name" placeholder="姓名"></div>
+        <div class="field"><label>職稱</label><input type="text" id="ann-int-title" placeholder="職稱"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>聯絡電話</label><input type="text" id="ann-int-phone" placeholder="分機或手機"></div>
+        <div class="field"><label>E-mail</label><input type="text" id="ann-int-email" placeholder="email@company.com"></div>
+      </div>
+    </div>
+    <div class="form-card">
+      <div class="sec-label">外部申訴管道（固定，無需修改）</div>
+      <div class="notice ok" style="margin-bottom:0">
+        <span class="notice-icon">✅</span>
+        <div>勞動部申訴專線：<strong>1955</strong>（24小時）｜ 地方主管機關：各縣市勞工局（處）</div>
+      </div>
+    </div>
+    <button class="submit-btn" onclick="genAnnounce()">📄 生成公告預覽</button>
+    <div id="ann-preview-wrap" style="display:none; margin-top:24px">
+      <div class="ann-preview" id="ann-preview-content"></div>
+      <div class="cl-save-bar" style="margin-top:14px">
+        <button class="submit-btn" style="max-width:200px" onclick="printAnnounce()">🖨️ 列印公告</button>
+        <button class="cl-print-btn" onclick="document.getElementById('ann-preview-wrap').style.display='none'">關閉預覽</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ ENV-CHECK (作業場所環境安全檢點) ══════════ -->
+  <div class="view" id="view-env-check">
+    <div class="form-nav">
+      <button class="back-btn" onclick="showView('home')">← 返回首頁</button>
+      <h2>🏭 作業場所環境安全檢點</h2>
+    </div>
+    <div class="notice info">
+      <span class="notice-icon">📋</span>
+      <div>依「執行職務遭受不法侵害預防指引」附錄三，逐項評估作業場所控制措施落實情形。每項請選擇「符合」、「不符合」或「不適用」。</div>
+    </div>
+    <div class="form-card">
+      <div class="sec-label">基本資料</div>
+      <div class="field-row">
+        <div class="field"><label>檢點地點</label><input type="text" id="ec-location" placeholder="例：全興廠 廠區"></div>
+        <div class="field"><label>檢點日期</label><input type="date" id="ec-date"></div>
+      </div>
+      <div class="field"><label>檢點人員</label><input type="text" id="ec-inspector" placeholder="姓名 / 職稱"></div>
+    </div>
+    <div id="ec-body"></div>
+    <div class="cl-save-bar">
+      <button class="submit-btn" style="max-width:160px" onclick="saveEnvCheck()">💾 儲存記錄</button>
+      <button class="cl-print-btn" onclick="printEnvCheck()">🖨️ 列印</button>
+    </div>
+    <div id="ec-hist-wrap" style="margin-top:28px; display:none">
+      <div class="sec-label">歷次檢點記錄</div>
+      <div id="ec-hist-body"></div>
+    </div>
+  </div>
+
+  <!-- ══════════ EFFECTIVENESS (年度成效查核) ══════════ -->
+  <div class="view" id="view-effectiveness">
+    <div class="form-nav">
+      <button class="back-btn" onclick="showView('home')">← 返回首頁</button>
+      <h2>📈 年度成效查核表</h2>
+    </div>
+    <div class="notice warn">
+      <span class="notice-icon">🔒</span>
+      <div>本查核表依附錄十九大構面逐項評分，記錄儲存於本地端。評分：<strong>未達標 → 部分達標 → 符合 → 優良</strong>。</div>
+    </div>
+    <div class="form-card">
+      <div class="sec-label">基本資料</div>
+      <div class="field-row">
+        <div class="field"><label>查核年度</label><input type="text" id="eff-year" placeholder="例：2026"></div>
+        <div class="field"><label>查核日期</label><input type="date" id="eff-date"></div>
+      </div>
+      <div class="field"><label>查核人員</label><input type="text" id="eff-inspector" placeholder="姓名 / 職稱"></div>
+    </div>
+    <div id="eff-body"></div>
+    <div class="cl-save-bar">
+      <button class="submit-btn" style="max-width:160px" onclick="saveEffectiveness()">💾 儲存查核</button>
+      <button class="cl-print-btn" onclick="printEffectiveness()">🖨️ 列印</button>
+    </div>
+    <div id="eff-hist-wrap" style="margin-top:28px; display:none">
+      <div class="sec-label">歷次查核記錄</div>
+      <div id="eff-hist-body"></div>
+    </div>
+  </div>
+
 </main>
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統 &nbsp;·&nbsp; 通報內容保密處理</footer>
@@ -937,6 +1104,12 @@ function showView(id) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + id).classList.add('active');
   window.scrollTo(0, 0);
+  if (id === 'env-check')    initEnvCheck();
+  if (id === 'effectiveness') initEffectiveness();
+  if (id === 'announce') {
+    const d = document.getElementById('ann-date');
+    if (!d.value) d.value = new Date().toISOString().slice(0, 10);
+  }
 }
 
 /* ── Section 1 ── */
@@ -1556,6 +1729,59 @@ const ASSESS_FORMS = {
         qs: [
           '整體而言，我對目前的工作環境感到安全、有保障',
           '如我或他人遭受職場不法侵害，我願意（或會鼓勵）使用通報管道'
+        ]
+      }
+    ]
+  },
+
+  external: {
+    id: 'external', title: '外部不法侵害風險評估', badge: '外部侵害版', icon: '🚪',
+    desc: '評估來自外部人員（顧客、廠商、民眾）造成侵害的情境風險',
+    extraFields: [
+      { id: 'ext-area', label: '受評作業場域', placeholder: '請填寫受評作業場域或部門名稱', required: true }
+    ],
+    sections: [
+      { title: '獨立及高風險作業情境', icon: '🌙',
+        desc: '評估是否存在容易遭受外部侵害的特殊作業環境',
+        qs: [
+          '本場域是否有員工單獨作業（孤立工作）的情形',
+          '是否有夜間或深夜單獨工作的人員',
+          '是否有需在偏遠或隱蔽地點獨自執行的作業任務',
+          '外出服務或拜訪客戶的人員已有安全聯繫及回報機制'
+        ]
+      },
+      { title: '現金及財物管理風險', icon: '💰',
+        desc: '評估因財物管理所帶來的外部侵害風險',
+        qs: [
+          '本場域是否有人員需經手大量現金或貴重財物',
+          '現金或貴重物品的保管已有適當防護措施（保險箱、雙人作業等）',
+          '人員知悉遭遇搶劫或恐嚇時應優先保命、不抵抗的原則'
+        ]
+      },
+      { title: '面對外部人員的安全評估', icon: '👤',
+        desc: '評估員工在接觸外部人員時的安全保障',
+        qs: [
+          '工作人員是否需直接面對不特定外部人員（客戶、民眾、廠商等）',
+          '業務場域是否曾發生外部人員言語暴力或肢體衝突事件',
+          '外部人員進出場域已有管制措施（訪客登記、識別證、門禁等）',
+          '對情緒激動或具衝突跡象的外部人員，人員已接受應對技能訓練'
+        ]
+      },
+      { title: '環境防護設施', icon: '📷',
+        desc: '評估物理環境的安全防護設施完善程度',
+        qs: [
+          '工作場所設有監視攝影設備（CCTV），且運作正常',
+          '場域出入口設有緊急通報設備（緊急鈴、對講機、一鍵警報等）',
+          '緊急逃生路線清楚標示，人員熟悉撤離路線',
+          '已訂有外部人員侵害的緊急處置標準程序（SOP）'
+        ]
+      },
+      { title: '廢棄物業務特殊情境', icon: '🚛',
+        desc: '針對廢棄物回收處理業務外部侵害的特殊風險評估',
+        qs: [
+          '車輛外出收運時已有定期聯繫或位置追蹤機制',
+          '廠區邊界圍欄完整，夜間照明充足，防止不法侵入',
+          '社區居民投訴或環保衝突已有標準處理程序及書面記錄'
         ]
       }
     ]
@@ -2195,6 +2421,348 @@ async function sendBully() {
 }
 if (new URLSearchParams(location.search).get('chat') === '1') {
   setTimeout(toggleBully, 300);
+}
+
+// ════════════════════════════════════════════════════════════════
+// B：申訴管道公告產生器
+// ════════════════════════════════════════════════════════════════
+function genAnnounce() {
+  const company  = document.getElementById('ann-company').value.trim()   || '大豐環保科技股份有限公司';
+  const location = document.getElementById('ann-location').value.trim()  || '（請填寫張貼地點）';
+  const date     = document.getElementById('ann-date').value             || new Date().toISOString().slice(0, 10);
+  const intName  = document.getElementById('ann-int-name').value.trim()  || '（請填寫）';
+  const intTitle = document.getElementById('ann-int-title').value.trim() || '（請填寫）';
+  const intPhone = document.getElementById('ann-int-phone').value.trim() || '（請填寫）';
+  const intEmail = document.getElementById('ann-int-email').value.trim() || '（請填寫）';
+  const d = date.replace(/-/g, '/');
+
+  const html = `
+<h3>執行職務遭受不法侵害申訴管道公告</h3>
+<p style="text-align:center;font-size:12px;color:#666;margin-bottom:16px">張貼地點：${location} ｜ 公告日期：${d}</p>
+<p style="font-size:13px;line-height:1.9;margin-bottom:16px">
+  ${company}依據「職業安全衛生法」第 6 條第 2 項及「執行職務遭受不法侵害預防指引」，設置以下申訴管道，保障所有工作者免於遭受不法侵害。所有通報均依保密原則處理。
+</p>
+<table class="ann-table">
+  <tr><th colspan="2" style="text-align:center;font-size:15px">🏢 內部申訴管道</th></tr>
+  <tr><th>申訴窗口</th><td>${intName}（${intTitle}）</td></tr>
+  <tr><th>聯絡電話</th><td>${intPhone}</td></tr>
+  <tr><th>電子信箱</th><td>${intEmail}</td></tr>
+</table>
+<table class="ann-table" style="margin-top:12px">
+  <tr><th colspan="2" style="text-align:center;font-size:15px">🏛️ 外部申訴管道</th></tr>
+  <tr><th>勞動部保護專線</th><td><strong>1955</strong>（24 小時全年無休）</td></tr>
+  <tr><th>地方主管機關</th><td>各縣市政府勞工局（處）</td></tr>
+  <tr><th>勞動部官網</th><td>https://www.mol.gov.tw</td></tr>
+</table>
+<p style="font-size:11px;color:#888;text-align:right;margin-top:16px">${company} 職業安全衛生管理 ｜ ${d}</p>`;
+
+  document.getElementById('ann-preview-content').innerHTML = html;
+  document.getElementById('ann-preview-wrap').style.display = 'block';
+  document.getElementById('ann-preview-wrap').scrollIntoView({ behavior: 'smooth' });
+}
+
+function printAnnounce() {
+  const content = document.getElementById('ann-preview-content').innerHTML;
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>申訴管道公告</title>
+<style>body{font-family:"Microsoft JhengHei",sans-serif;padding:40px;max-width:700px;margin:0 auto}
+h3{font-size:20px;text-align:center;color:#1e1035;margin-bottom:8px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+td,th{border:1px solid #aaa;padding:8px 12px}th{background:#e9e0ff;width:30%;font-weight:700}
+@media print{button{display:none}}</style></head><body>${content}</body></html>`);
+  w.document.close();
+  w.print();
+}
+
+// ════════════════════════════════════════════════════════════════
+// C：作業場所環境安全檢點
+// ════════════════════════════════════════════════════════════════
+const EC_DEF = [
+  { title: '獨立作業與夜班管理', icon: '🌙', items: [
+    '孤立工作者已有定期聯繫或回報機制',
+    '夜班或深夜作業已配置最低人數或採結伴制',
+    '人員在危急情況下能迅速呼叫協助（緊急鈴/對講機/手機）',
+    '孤立作業人員知悉緊急應變程序',
+  ]},
+  { title: '外部人員進出管制', icon: '🚪', items: [
+    '場域出入口設有訪客管制措施（登記、識別證等）',
+    '外部人員進出紀錄保存完整',
+    '對情緒激動或具衝突風險的外部人員，有明確的應對 SOP',
+    '業務場域設有足夠監視設備（CCTV）且運作正常',
+  ]},
+  { title: '物理環境安全', icon: '🏭', items: [
+    '工作場所照明充足，無死角或昏暗角落',
+    '個人隱私空間（更衣室、休息室）有適當門禁保護',
+    '場域邊界圍欄完整，夜間照明足夠',
+    '緊急逃生路線清楚標示且暢通無阻',
+  ]},
+  { title: '緊急處置與申訴管道', icon: '🚨', items: [
+    '已制定外部人員不法侵害緊急處置標準程序（SOP）',
+    '所有人員已接受應變訓練，知悉緊急處置流程',
+    '申訴管道公告已張貼於醒目位置',
+    '公司緊急聯絡電話清單已備齊並讓人員知悉',
+  ]},
+  { title: '現金及財物安全', icon: '💰', items: [
+    '現金或貴重物品保管已有適當措施（保險箱、雙人作業等）',
+    '遭遇搶劫或恐嚇時，人員知悉不抵抗、優先保命原則',
+    '財務相關作業採雙人核對或分權管理',
+  ]},
+];
+
+let ecAnswers = {};
+
+function initEnvCheck() {
+  const d = document.getElementById('ec-date');
+  if (!d.value) d.value = new Date().toISOString().slice(0, 10);
+  ecAnswers = {};
+
+  const html = EC_DEF.map((sec, si) => `
+<div class="cl-section">
+  <div class="cl-sec-hd">
+    <span style="font-size:22px">${sec.icon}</span>
+    <span class="cl-sec-title">${sec.title}</span>
+  </div>
+  ${sec.items.map((item, ii) => `
+  <div class="cl-item">
+    <div class="cl-item-text">${ii + 1}. ${item}</div>
+    <div class="cl-yn">
+      <button class="yn-y"  id="ec-y-${si}-${ii}"  onclick="ecSet(${si},${ii},'y')">符合</button>
+      <button class="yn-n"  id="ec-n-${si}-${ii}"  onclick="ecSet(${si},${ii},'n')">不符合</button>
+      <button class="yn-na" id="ec-na-${si}-${ii}" onclick="ecSet(${si},${ii},'na')">不適用</button>
+    </div>
+  </div>`).join('')}
+</div>`).join('');
+
+  document.getElementById('ec-body').innerHTML = html;
+  loadEcHist();
+}
+
+function ecSet(si, ii, val) {
+  ecAnswers[`${si}-${ii}`] = val;
+  ['y', 'n', 'na'].forEach(v => {
+    const el = document.getElementById(`ec-${v}-${si}-${ii}`);
+    if (el) el.classList.toggle('active', v === val);
+  });
+}
+
+function saveEnvCheck() {
+  const location  = document.getElementById('ec-location').value.trim() || '未填寫';
+  const date      = document.getElementById('ec-date').value || new Date().toISOString().slice(0, 10);
+  const inspector = document.getElementById('ec-inspector').value.trim() || '未填寫';
+  const total     = EC_DEF.reduce((a, s) => a + s.items.length, 0);
+
+  if (Object.keys(ecAnswers).length < total) {
+    if (!confirm(`尚有 ${total - Object.keys(ecAnswers).length} 題未作答，確定儲存？`)) return;
+  }
+  const records = JSON.parse(localStorage.getItem('harassment-ec-hist') || '[]');
+  records.unshift({ id: 'EC-' + Date.now().toString(36).toUpperCase(), date, location, inspector, answers: { ...ecAnswers }, savedAt: new Date().toISOString() });
+  localStorage.setItem('harassment-ec-hist', JSON.stringify(records.slice(0, 50)));
+  alert('✅ 環境檢點記錄已儲存！');
+  loadEcHist();
+}
+
+function loadEcHist() {
+  const records = JSON.parse(localStorage.getItem('harassment-ec-hist') || '[]');
+  const wrap = document.getElementById('ec-hist-wrap');
+  const body = document.getElementById('ec-hist-body');
+  if (!records.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  const total = EC_DEF.reduce((a, s) => a + s.items.length, 0);
+  body.innerHTML = records.map(r => {
+    const yCount = Object.values(r.answers).filter(v => v === 'y').length;
+    const nCount = Object.values(r.answers).filter(v => v === 'n').length;
+    return `<div class="cl-hist-item">
+      <span style="font-size:20px">🏭</span>
+      <div style="flex:1">
+        <strong>${r.date}</strong> ${r.location}
+        <div style="font-size:11px;color:var(--sub)">${r.inspector} ｜ 符合 ${yCount}/${total}，不符合 ${nCount} 項</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function printEnvCheck() {
+  const location  = document.getElementById('ec-location').value.trim() || '未填寫';
+  const date      = document.getElementById('ec-date').value || '';
+  const inspector = document.getElementById('ec-inspector').value.trim() || '';
+
+  const rows = EC_DEF.map((sec, si) =>
+    `<tr><td colspan="2" style="background:#e9e0ff;font-weight:700">${sec.icon} ${sec.title}</td></tr>` +
+    sec.items.map((item, ii) => {
+      const ans = ecAnswers[`${si}-${ii}`];
+      const label = ans === 'y' ? '✅ 符合' : ans === 'n' ? '❌ 不符合' : ans === 'na' ? '— 不適用' : '□ 未評估';
+      return `<tr><td>${ii + 1}. ${item}</td><td style="text-align:center;width:90px">${label}</td></tr>`;
+    }).join('')
+  ).join('');
+
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>環境安全檢點表</title>
+<style>body{font-family:"Microsoft JhengHei",sans-serif;padding:32px;font-size:12px}
+h3{text-align:center;font-size:16px;margin-bottom:8px}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+td{border:1px solid #888;padding:6px 10px}
+@media print{button{display:none}}</style></head>
+<body>
+<h3>作業場所不法侵害預防 — 環境安全檢點表</h3>
+<p style="text-align:center;font-size:11px;color:#666">地點：${location} ｜ 日期：${date} ｜ 檢點人：${inspector}</p>
+<table>${rows}</table></body></html>`);
+  w.document.close();
+  w.print();
+}
+
+// ════════════════════════════════════════════════════════════════
+// D：年度成效查核表
+// ════════════════════════════════════════════════════════════════
+const EFF_DEF = [
+  { title: '一、政策承諾', icon: '📋', items: [
+    '雇主已訂定書面的不法侵害預防政策，並公告周知',
+    '政策內容涵蓋外部侵害（顧客、廠商、第三方）預防',
+    '政策已納入職業安全衛生管理系統或年度計畫書',
+  ]},
+  { title: '二、組織分工', icon: '🏗️', items: [
+    '已明確指定負責不法侵害預防事務的人員或單位',
+    '各層級責任（雇主、主管、員工）已清楚界定',
+    '職安委員會已納入本議題進行討論',
+  ]},
+  { title: '三、危害辨識與風險評估', icon: '🔍', items: [
+    '已完成不法侵害危害辨識（含內部及外部侵害）',
+    '已依風險評估結果排定優先改善項目',
+    '危害辨識結果已定期更新（至少每年一次）',
+  ]},
+  { title: '四、預防及控制措施', icon: '🛡️', items: [
+    '已依風險評估結果採取工程或行政控制措施',
+    '高風險場域（夜班、獨立作業等）已有特別安全配套',
+    '申訴管道公告已張貼於各工作場所醒目位置',
+    '外部人員進出管制措施已落實',
+  ]},
+  { title: '五、教育訓練與宣導', icon: '📚', items: [
+    '本年度已完成員工不法侵害預防教育訓練',
+    '主管已接受不法侵害辨識及應變的專項訓練',
+    '新進人員職前訓練已納入不法侵害預防內容',
+  ]},
+  { title: '六、申訴及調查處理', icon: '📝', items: [
+    '申訴管道運作正常，員工知悉如何使用',
+    '本年度所有申訴案件均已在規定時效內完成調查',
+    '調查過程保密，當事人隱私獲得充分保護',
+    '調查結果已採取適當的糾正或懲處措施',
+  ]},
+  { title: '七、緊急處置與事後支持', icon: '🚨', items: [
+    '已制定外部侵害緊急處置標準程序（SOP）',
+    '發生事件後的支持機制已建立（心理諮商轉介、職護協助）',
+    '事件統計與趨勢分析已定期提報管理階層',
+  ]},
+  { title: '八、績效監督與考核', icon: '📊', items: [
+    '不法侵害相關指標（通報件數、處理率等）已納入定期監測',
+    '監測結果已反饋至管理層並驅動改善',
+    '本年度改善行動項目完成率超過 80%',
+  ]},
+  { title: '九、管理審查', icon: '🔄', items: [
+    '管理階層已完成年度不法侵害防治成效審查',
+    '審查結論已形成書面記錄並保存',
+    '下年度改善計畫已依審查結論訂定',
+  ]},
+];
+
+const EFF_LEVELS = ['未達標', '部分達標', '符合', '優良'];
+let effAnswers = {};
+
+function initEffectiveness() {
+  const d = document.getElementById('eff-date');
+  if (!d.value) d.value = new Date().toISOString().slice(0, 10);
+  const yr = document.getElementById('eff-year');
+  if (!yr.value) yr.value = new Date().getFullYear().toString();
+  effAnswers = {};
+
+  const html = EFF_DEF.map((sec, si) => `
+<div class="cl-section">
+  <div class="cl-sec-hd">
+    <span style="font-size:22px">${sec.icon}</span>
+    <span class="cl-sec-title">${sec.title}</span>
+  </div>
+  ${sec.items.map((item, ii) => `
+  <div class="eff-q">
+    <div class="eff-q-text">${ii + 1}. ${item}</div>
+    <div class="eff-q-score">
+      ${EFF_LEVELS.map((lbl, lv) => `<button class="eff-score-btn" id="eff-btn-${si}-${ii}-${lv}" onclick="effSet(${si},${ii},${lv})">${lbl}</button>`).join('')}
+    </div>
+  </div>`).join('')}
+</div>`).join('');
+
+  document.getElementById('eff-body').innerHTML = html;
+  loadEffHist();
+}
+
+function effSet(si, ii, lv) {
+  effAnswers[`${si}-${ii}`] = lv;
+  for (let v = 0; v < 4; v++) {
+    const el = document.getElementById(`eff-btn-${si}-${ii}-${v}`);
+    if (el) el.classList.toggle('sel', v === lv);
+  }
+}
+
+function saveEffectiveness() {
+  const year      = document.getElementById('eff-year').value.trim()      || new Date().getFullYear();
+  const date      = document.getElementById('eff-date').value             || new Date().toISOString().slice(0, 10);
+  const inspector = document.getElementById('eff-inspector').value.trim() || '未填寫';
+  const total     = EFF_DEF.reduce((a, s) => a + s.items.length, 0);
+
+  if (Object.keys(effAnswers).length < total) {
+    if (!confirm(`尚有 ${total - Object.keys(effAnswers).length} 項未評分，確定儲存？`)) return;
+  }
+  const records = JSON.parse(localStorage.getItem('harassment-eff-hist') || '[]');
+  records.unshift({ id: 'EFF-' + Date.now().toString(36).toUpperCase(), year, date, inspector, answers: { ...effAnswers }, savedAt: new Date().toISOString() });
+  localStorage.setItem('harassment-eff-hist', JSON.stringify(records.slice(0, 20)));
+  alert('✅ 年度成效查核已儲存！');
+  loadEffHist();
+}
+
+function loadEffHist() {
+  const records = JSON.parse(localStorage.getItem('harassment-eff-hist') || '[]');
+  const wrap = document.getElementById('eff-hist-wrap');
+  const body = document.getElementById('eff-hist-body');
+  if (!records.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  const maxScore = EFF_DEF.reduce((a, s) => a + s.items.length, 0) * 3;
+  body.innerHTML = records.map(r => {
+    const scored = Object.values(r.answers).reduce((a, v) => a + v, 0);
+    const pct = Math.round(scored / maxScore * 100);
+    return `<div class="cl-hist-item">
+      <span style="font-size:20px">📈</span>
+      <div style="flex:1">
+        <strong>${r.year} 年度</strong> 查核日期：${r.date}
+        <div style="font-size:11px;color:var(--sub)">${r.inspector} ｜ 總分 ${scored}/${maxScore}（${pct}%）</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function printEffectiveness() {
+  const year      = document.getElementById('eff-year').value.trim()      || '';
+  const date      = document.getElementById('eff-date').value             || '';
+  const inspector = document.getElementById('eff-inspector').value.trim() || '';
+
+  const rows = EFF_DEF.map((sec, si) =>
+    `<tr><td colspan="2" style="background:#e9e0ff;font-weight:700">${sec.icon} ${sec.title}</td></tr>` +
+    sec.items.map((item, ii) => {
+      const lv = effAnswers[`${si}-${ii}`];
+      const label = lv !== undefined ? EFF_LEVELS[lv] : '□ 未評分';
+      return `<tr><td>${ii + 1}. ${item}</td><td style="text-align:center;width:90px">${label}</td></tr>`;
+    }).join('')
+  ).join('');
+
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>年度成效查核表</title>
+<style>body{font-family:"Microsoft JhengHei",sans-serif;padding:32px;font-size:12px}
+h3{text-align:center;font-size:16px;margin-bottom:8px}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+td{border:1px solid #888;padding:6px 10px}
+@media print{button{display:none}}</style></head>
+<body>
+<h3>不法侵害防治計畫 — 年度成效查核表</h3>
+<p style="text-align:center;font-size:11px;color:#666">${year} 年度 ｜ 查核日期：${date} ｜ 查核人：${inspector}</p>
+<table>${rows}</table></body></html>`);
+  w.document.close();
+  w.print();
 }
 </script>
 <script src="../shared/sidebar.js"></script>
