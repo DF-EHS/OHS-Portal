@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>110年職業安全衛生管理計畫 ｜ 總公司・全興廠 ｜ 大豐環保科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f1f5f9; --border:#cbd5e1;
+  --primary:#475569; --dark:#1e293b; --darker:#0f172a;
+  --sub:#334155; --accent:#64748b;
+  --card:#ffffff;
+  --text:#1e293b;
+  --muted:#94a3b8;
+  --sidebar-w:260px;
+  --transition:0.3s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  background:var(--bg);color:var(--text);
+  display:flex;min-height:100vh;
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar{
+  width:var(--sidebar-w);min-height:100vh;
+  background:linear-gradient(180deg,#1e293b,#0f172a);
+  position:fixed;top:0;left:0;
+  display:flex;flex-direction:column;z-index:100;overflow:hidden;
+}
+.sidebar-brand{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand-icon{
+  width:42px;height:42px;
+  background:linear-gradient(135deg,#94a3b8,#475569);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:20px;margin-bottom:10px;box-shadow:0 4px 12px rgba(71,85,105,.4);
+}
+.brand-name{font-size:13px;font-weight:700;color:#fff;line-height:1.4}
+.brand-sub{font-size:10px;color:rgba(255,255,255,.45);margin-top:2px}
+.brand-year{
+  display:inline-block;
+  background:linear-gradient(90deg,#94a3b8,#64748b);
+  color:#fff;font-size:11px;font-weight:700;
+  padding:2px 8px;border-radius:999px;margin-top:6px;
+}
+.sidebar-progress{padding:12px 20px 8px;border-bottom:1px solid rgba(255,255,255,.06)}
+.progress-label{font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.progress-bar-wrap{background:rgba(255,255,255,.08);border-radius:999px;height:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#94a3b8,#64748b);border-radius:999px;width:0;transition:width 0.3s}
+.nav-list{flex:1;padding:12px;overflow-y:auto}
+.nav-group{margin-bottom:4px}
+.nav-group-label{font-size:9px;font-weight:700;color:rgba(255,255,255,.28);letter-spacing:1.5px;text-transform:uppercase;padding:6px 8px 4px}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;border-radius:8px;cursor:pointer;
+  color:rgba(255,255,255,.6);font-size:12.5px;
+  transition:var(--transition);border-left:3px solid transparent;
+  margin-bottom:2px;text-decoration:none;
+}
+.nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav-item.active{background:rgba(255,255,255,.1);color:#fff;border-left-color:#94a3b8}
+.nav-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0;margin-left:auto;transition:var(--transition)}
+.nav-item.active .nav-dot{background:#94a3b8;box-shadow:0 0 0 3px rgba(148,163,184,.25)}
+.sidebar-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.06);font-size:10px;color:rgba(255,255,255,.25)}
+
+/* ─── MAIN ─── */
+.main{margin-left:var(--sidebar-w);flex:1;min-height:100vh}
+.section{padding:60px 48px}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:36px}
+.section-badge{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.section-title{font-size:24px;font-weight:900;line-height:1.2}
+.section-subtitle{font-size:13px;color:var(--accent);margin-top:2px}
+
+/* ─── HERO ─── */
+#hero{
+  min-height:100vh;
+  background:linear-gradient(135deg,#0f172a,#1e293b,#0f172a);
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:flex-start;
+  padding:60px 60px;position:relative;overflow:hidden;
+}
+#hero::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+#hero::after{
+  content:'';position:absolute;top:-120px;right:-120px;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(100,116,139,.12) 0%,transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+.hero-octa{
+  position:absolute;top:36px;right:52px;
+  width:88px;height:88px;
+  background:linear-gradient(135deg,#94a3b8,#1e293b);
+  clip-path:polygon(30% 0%,70% 0%,100% 30%,100% 70%,70% 100%,30% 100%,0% 70%,0% 30%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:0 8px 32px rgba(71,85,105,.45);
+  filter:drop-shadow(0 0 12px rgba(100,116,139,.35));
+}
+.hero-octa .yr-num{font-size:24px;font-weight:900;color:#fff;line-height:1;position:relative}
+.hero-octa .yr-unit{font-size:10px;color:rgba(255,255,255,.8);position:relative}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  color:#94a3b8;font-size:12px;font-weight:700;
+  padding:5px 14px;border-radius:999px;margin-bottom:24px;
+  backdrop-filter:blur(10px);letter-spacing:1px;
+}
+.hero-company{font-size:16px;font-weight:500;color:rgba(255,255,255,.55);letter-spacing:4px;margin-bottom:12px}
+.hero-title{font-size:clamp(28px,4vw,52px);font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px}
+.hero-title span{background:linear-gradient(90deg,#94a3b8,#e2e8f0);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:18px;font-weight:500;color:rgba(255,255,255,.7);margin-bottom:36px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:48px}
+.hero-meta-item{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:14px 20px;backdrop-filter:blur(10px);
+}
+.hero-meta-label{font-size:11px;color:rgba(255,255,255,.4);margin-bottom:4px}
+.hero-meta-val{font-size:15px;font-weight:700;color:#fff}
+.hero-sign{
+  display:flex;gap:16px;flex-wrap:wrap;
+}
+.hero-sign-item{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;padding:10px 18px;
+  font-size:13px;color:rgba(255,255,255,.8);
+}
+.hero-sign-item strong{color:#fff}
+.hero-scroll-hint{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  color:rgba(255,255,255,.3);font-size:11px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  animation:bounce 2s infinite;
+}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
+
+/* ─── POLICY ─── */
+#policy{background:var(--bg)}
+.policy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.policy-card{
+  background:var(--card);border-radius:16px;padding:24px;
+  border:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;
+  transition:var(--transition);box-shadow:0 1px 4px rgba(0,0,0,.04);
+}
+.policy-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1);border-color:transparent}
+.policy-num{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff;flex-shrink:0}
+.policy-text{font-size:14px;line-height:1.7;color:var(--text)}
+
+/* ─── GOAL ─── */
+#goal{background:linear-gradient(135deg,#f1f5f9,#e2e8f0)}
+.goal-center{text-align:center}
+.goal-circle{
+  width:180px;height:180px;border-radius:50%;
+  background:linear-gradient(135deg,#475569,#334155);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  margin:0 auto 32px;
+  box-shadow:0 0 0 20px rgba(71,85,105,.1),0 0 0 40px rgba(71,85,105,.05);
+  position:relative;
+}
+.goal-circle::before{
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+  border:2px dashed rgba(71,85,105,.3);animation:spin 20s linear infinite;
+}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.goal-num{font-size:56px;font-weight:900;color:#fff;line-height:1}
+.goal-unit{font-size:14px;color:rgba(255,255,255,.8);margin-top:2px}
+.goal-title{font-size:26px;font-weight:900;margin-bottom:12px;color:var(--dark)}
+.goal-desc{font-size:15px;color:var(--sub);max-width:580px;margin:0 auto 36px;line-height:1.8}
+.goal-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.goal-pill{
+  background:#fff;border:1px solid var(--border);border-radius:999px;
+  padding:8px 18px;font-size:13px;font-weight:500;color:var(--text);
+  display:flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+/* ─── PLAN ACCORDION ─── */
+#plan{background:var(--bg)}
+.plan-intro{
+  background:var(--card);border-radius:16px;padding:20px 24px;margin-bottom:24px;
+  border:1px solid var(--border);display:flex;align-items:center;gap:12px;
+  font-size:13.5px;color:var(--accent);
+}
+.acc-item{
+  background:var(--card);border-radius:16px;border:1px solid var(--border);
+  margin-bottom:10px;overflow:hidden;transition:box-shadow 0.2s;
+}
+.acc-item.open{box-shadow:0 4px 20px rgba(0,0,0,.08);border-color:transparent}
+.acc-header{
+  display:flex;align-items:center;gap:14px;
+  padding:18px 22px;cursor:pointer;user-select:none;transition:background 0.15s;
+}
+.acc-header:hover{background:var(--bg)}
+.acc-num{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:#fff;flex-shrink:0;
+  background:linear-gradient(135deg,#64748b,#334155);
+}
+.acc-icon-wrap{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.acc-title-wrap{flex:1;min-width:0}
+.acc-title{font-size:15px;font-weight:700;color:var(--text)}
+.acc-dept{font-size:11px;color:var(--muted);margin-top:2px}
+.acc-chevron{
+  width:24px;height:24px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg);color:var(--muted);font-size:12px;
+  transition:transform 0.3s;flex-shrink:0;
+}
+.acc-item.open .acc-chevron{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 22px 22px}
+.acc-item.open .acc-body{display:block}
+
+/* 110年特殊：三欄卡片 */
+.plan-card-grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;
+  margin-top:4px;
+}
+@media(max-width:900px){.plan-card-grid{grid-template-columns:1fr}}
+.plan-card{
+  background:var(--bg);border-radius:12px;border:1px solid var(--border);
+  padding:16px;
+}
+.plan-card-label{
+  font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:8px;
+  display:flex;align-items:center;gap:6px;
+}
+.plan-card-label::before{content:'';display:block;width:3px;height:14px;border-radius:2px;background:var(--primary)}
+.plan-card-body{font-size:13px;line-height:1.8;color:var(--text)}
+.plan-card-body li{margin-left:1em;list-style:disc;margin-bottom:2px}
+.plan-card-unit{font-size:13px;font-weight:600;color:var(--dark)}
+
+/* ─── INSPECTION ─── */
+#inspection{background:#f8fafc}
+.insp-section-title{
+  font-size:16px;font-weight:700;color:var(--dark);
+  margin:24px 0 12px;display:flex;align-items:center;gap:8px;
+}
+.insp-section-title::before{content:'';display:block;width:4px;height:20px;border-radius:2px;background:var(--primary)}
+.insp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.insp-card{
+  background:var(--card);border-radius:14px;border:1px solid var(--border);
+  padding:16px;transition:var(--transition);
+}
+.insp-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.08);border-color:transparent}
+.insp-card-icon{font-size:24px;margin-bottom:8px}
+.insp-card-name{font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:8px}
+.insp-card-freqs{display:flex;flex-wrap:wrap;gap:4px}
+.insp-freq-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px}
+.insp-note{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* ─── UTILS ─── */
+.bg-slate{background:linear-gradient(135deg,#94a3b8,#334155)}
+.bg-gray{background:linear-gradient(135deg,#6b7280,#374151)}
+.tag-slate{background:#f1f5f9;color:#475569}
+.tag-blue{background:#eff6ff;color:#1d4ed8}
+.tag-green{background:#f0fdf4;color:#15803d}
+.tag-orange{background:#fffbeb;color:#b45309}
+.tag-teal{background:#f0fdfa;color:#0f766e}
+.tag-red{background:#fef2f2;color:#b91c1c}
+.tag-purple{background:#f5f3ff;color:#6d28d9}
+
+.divider{height:1px;background:var(--border);margin:20px 0}
+.info-box{
+  background:#f1f5f9;border:1px solid #cbd5e1;border-radius:12px;
+  padding:14px 18px;font-size:13px;color:var(--dark);line-height:1.7;
+  margin-bottom:16px;display:flex;gap:10px;align-items:flex-start;
+}
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:3px}
+
+@media print{
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .acc-body{display:block!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">🛡️</div>
+    <div class="brand-name">大豐環保科技股份有限公司</div>
+    <div class="brand-sub">職業安全衛生管理系統</div>
+    <div class="brand-year">110年度 ｜ 總公司・全興廠</div>
+  </div>
+  <div class="sidebar-progress">
+    <div class="progress-label">閱讀進度</div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+  </div>
+  <div class="nav-list">
+    <div class="nav-group">
+      <div class="nav-group-label">文件封面</div>
+      <a class="nav-item active" href="#hero" onclick="setActive(this)">
+        <div class="nav-icon bg-slate" style="border-radius:6px">🏠</div>
+        文件首頁<span class="nav-dot"></span>
+      </a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">管理計畫</div>
+      <a class="nav-item" href="#policy" onclick="setActive(this)">
+        <div class="nav-icon bg-slate" style="border-radius:6px">📜</div>
+        安全衛生政策<span class="nav-dot"></span>
+      </a>
+      <a class="nav-item" href="#goal" onclick="setActive(this)">
+        <div class="nav-icon bg-gray" style="border-radius:6px">🎯</div>
+        計畫目標<span class="nav-dot"></span>
+      </a>
+      <a class="nav-item" href="#plan" onclick="setActive(this)">
+        <div class="nav-icon bg-slate" style="border-radius:6px">📋</div>
+        16項計畫項目<span class="nav-dot"></span>
+      </a>
+      <a class="nav-item" href="#inspection" onclick="setActive(this)">
+        <div class="nav-icon bg-gray" style="border-radius:6px">🔧</div>
+        自動檢查計畫<span class="nav-dot"></span>
+      </a>
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    110年度 ｜ 109年XX月XX日職安委員會審查通過<br>
+    經辦：楊曜彰
+  </div>
+</nav>
+
+<!-- ══════════ MAIN ══════════ -->
+<main class="main">
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-octa">
+    <div class="yr-num">110</div>
+    <div class="yr-unit">年度</div>
+  </div>
+  <div class="hero-tag">📄 &nbsp; 職業安全衛生 · 管理計畫書</div>
+  <div class="hero-company">大豐環保科技股份有限公司</div>
+  <div class="hero-title"><span>110年度</span>職業安全衛生<br>管理計畫表</div>
+  <div class="hero-sub">總公司 ／ 全興廠</div>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">計畫年度</div>
+      <div class="hero-meta-val">中華民國 110 年</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">審查通過日期</div>
+      <div class="hero-meta-val">109年XX月XX日</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">適用範圍</div>
+      <div class="hero-meta-val">總公司 ／ 全興廠</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">參考辦法</div>
+      <div class="hero-meta-val">D2-EM-008（項次一）</div>
+    </div>
+  </div>
+  <div class="hero-sign">
+    <div class="hero-sign-item">核准：<strong>林盟洲</strong></div>
+    <div class="hero-sign-item">審核：<strong>賴柏州</strong></div>
+    <div class="hero-sign-item">經辦：<strong>楊曜彰</strong></div>
+  </div>
+  <div class="hero-scroll-hint"><span>向下捲動</span><span>▼</span></div>
+</section>
+
+<!-- ── POLICY ── -->
+<section id="policy" class="section">
+  <div class="section-header">
+    <div class="section-badge bg-slate">📜</div>
+    <div>
+      <div class="section-title">安全衛生政策</div>
+      <div class="section-subtitle">Safety &amp; Health Policy — 5項核心承諾</div>
+    </div>
+  </div>
+  <div class="policy-grid">
+    <div class="policy-card">
+      <div class="policy-num bg-slate">1</div>
+      <div class="policy-text">符合政府環保、勞安衛法規或相關團體的要求，<strong>持續改善環境及職業安全衛生</strong>。</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-num bg-gray">2</div>
+      <div class="policy-text">加強污染的控制、改善，並注重<strong>污染預防及防治工作</strong>，以杜絕公害做好資源回收。</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-num bg-slate">3</div>
+      <div class="policy-text">落實工安管理及檢查，改善員工／承攬商／居民／相關團體作業環境，<strong>避免意外事故及職業災害發生</strong>，創造安全的環境、衛生的所在。</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-num bg-gray">4</div>
+      <div class="policy-text">加強與員工／承攬商／居民／相關團體的溝通，<strong>實施教育訓練</strong>，提昇環保／安衛意識並提供相關環保及勞安衛訊息。</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-num bg-slate">5</div>
+      <div class="policy-text"><strong>提昇回收、處理技術及效能</strong>，促進資源回收再利用。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GOAL ── -->
+<section id="goal" class="section" style="background:linear-gradient(135deg,#f1f5f9,#e2e8f0)">
+  <div class="section-header">
+    <div class="section-badge bg-gray">🎯</div>
+    <div>
+      <div class="section-title">計畫目標</div>
+      <div class="section-subtitle">Plan Objectives — 安全目標設定</div>
+    </div>
+  </div>
+  <div class="goal-center">
+    <div class="goal-circle">
+      <div class="goal-num">零</div>
+      <div class="goal-unit">重大職業災害</div>
+    </div>
+    <div class="goal-title">保障全體員工安全與健康</div>
+    <div class="goal-desc">
+      為防止職業災害，保障全體安全與健康，特制定職業安全衛生管理計畫。
+      本計畫在於確保各廠站等場所之安全運作，達到<strong>零重大職業災害</strong>之目標。
+      本計畫之最終目的在於提供全體員工安全的工作職場，本計畫之各項要求事項得列為該年度之<strong>績效考核</strong>。
+    </div>
+    <div class="goal-pills">
+      <div class="goal-pill">🏭 廠區安全運作</div>
+      <div class="goal-pill">👷 員工健康保障</div>
+      <div class="goal-pill">🤝 承攬商管理</div>
+      <div class="goal-pill">📊 績效考核機制</div>
+      <div class="goal-pill">♻️ 資源回收</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PLAN ── -->
+<section id="plan" class="section">
+  <div class="section-header">
+    <div class="section-badge bg-slate">📋</div>
+    <div>
+      <div class="section-title">16項管理計畫項目</div>
+      <div class="section-subtitle">Management Plan Items — 點選可展開查看實施細目、方法與單位</div>
+    </div>
+  </div>
+
+  <!-- 一 -->
+  <div class="acc-item" id="acc1">
+    <div class="acc-header" onclick="toggleAcc('acc1')">
+      <div class="acc-num">一</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">🔍</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">工作環境或作業危害之辨識評估及控制</div>
+        <div class="acc-dept">法務環安課 ／ 總公司 ／ 全興廠</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">工作環境或作業危害之辨識評估及控制</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>工作環境或作業危害之辨識</li>
+              <li>工作環境或作業危害之評估</li>
+              <li>工作環境或作業危害之控制</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>依據D2-EM-008危害鑑別風險評估管理辦法</li>
+              <li>各單位定期檢討其危害風險評估及控制方法</li>
+              <li>依風險評估等級，每年選出管理方案，實施不可接受風險之目標改善(P.D.C.A)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>法務環安課 ／ 總公司 ／ 全興廠
+      </div>
+    </div>
+  </div>
+
+  <!-- 二 -->
+  <div class="acc-item" id="acc2">
+    <div class="acc-header" onclick="toggleAcc('acc2')">
+      <div class="acc-num">二</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">⚙️</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">機械設備或器具之管理</div>
+        <div class="acc-dept">法務環安課 ／ 總公司 ／ 全興廠</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">機械設備或器具之管理</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>特殊作業清單建立</li>
+              <li>危險性設備清單建立</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>特殊作業機械設備之清單建立</li>
+              <li>機械設備之自動檢查（作業點檢及定期檢查）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>法務環安課 ／ 總公司 ／ 全興廠
+      </div>
+    </div>
+  </div>
+
+  <!-- 三 -->
+  <div class="acc-item" id="acc3">
+    <div class="acc-header" onclick="toggleAcc('acc3')">
+      <div class="acc-num">三</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">⚗️</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">危害性化學品之分類、標示、通識及管理</div>
+        <div class="acc-dept">工安 ／ 各課 ／ 全興廠</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">危害性化學品之分類、標示、通識及管理</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>危害物質清單建立</li>
+              <li>SDS更新</li>
+              <li>標示</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>廠內危害物質清單建立</li>
+              <li>SDS資料更新及分發配佈現場</li>
+              <li>標示牌依GHS要求全廠更新</li>
+              <li>增設危害物及化學品儲存場所點檢表</li>
+              <li>6S及環境清理</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>工安 ／ 各課 ／ 全興廠 ／ 各課
+      </div>
+    </div>
+  </div>
+
+  <!-- 四 -->
+  <div class="acc-item" id="acc4">
+    <div class="acc-header" onclick="toggleAcc('acc4')">
+      <div class="acc-num">四</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">📡</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">有害作業環境之採樣策略規劃與監測</div>
+        <div class="acc-dept">工安 ／ 全興廠 ／ 總公司</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">有害作業環境之採樣策略規劃與監測</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>環境監測時程表制訂</li>
+              <li>作業環境測定計畫</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>作業環境測定前先作成計畫</li>
+              <li>每半年實施一次（噪音、照度、CO₂）</li>
+              <li>環測報告之對策（依測定結果而定）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>工安 ／ 全興廠 ／ 總公司
+      </div>
+    </div>
+  </div>
+
+  <!-- 五 -->
+  <div class="acc-item" id="acc5">
+    <div class="acc-header" onclick="toggleAcc('acc5')">
+      <div class="acc-num">五</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">🏗️</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">危險性工作場所之製程或施工安全評估</div>
+        <div class="acc-dept">總公司 ／ 全興廠</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">危險性工作場所之製程或施工安全評估</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>廠內工程發包</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">各項工程於招標前進行施工安全評估。</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>總公司 ／ 全興廠
+      </div>
+    </div>
+  </div>
+
+  <!-- 六 -->
+  <div class="acc-item" id="acc6">
+    <div class="acc-header" onclick="toggleAcc('acc6')">
+      <div class="acc-num">六</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">🤝</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">採購、承攬及變更管理</div>
+        <div class="acc-dept">總公司 ／ 全興廠</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">採購、承攬及變更管理</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>承攬安全衛生管理</li>
+              <li>變更安全衛生管理</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>制訂D2-EM-006承攬商環安衛管理辦法（每次承攬施工時皆填寫施工安全記錄表，並召開協議組織會議）</li>
+              <li>依據D2-HR-003變更作業管理辦法辦理</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>總公司 ／ 全興廠
+      </div>
+    </div>
+  </div>
+
+  <!-- 七 -->
+  <div class="acc-item" id="acc7">
+    <div class="acc-header" onclick="toggleAcc('acc7')">
+      <div class="acc-num">七</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">📖</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">安全衛生作業標準</div>
+        <div class="acc-dept">工安 ／ 總公司 ／ 全興廠</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">安全衛生作業標準</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>職安衛工作守則</li>
+              <li>各課製造作業環安注意事項（SOP）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>修訂工作守則，並函送職安署備查</li>
+              <li>各課環安注意事項之落實</li>
+              <li>OPL/SOP安全規範制訂</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>工安 ／ 總公司 ／ 全興廠
+      </div>
+    </div>
+  </div>
+
+  <!-- 八 -->
+  <div class="acc-item" id="acc8">
+    <div class="acc-header" onclick="toggleAcc('acc8')">
+      <div class="acc-num">八</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">🔎</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">定期檢查、重點檢查、作業檢點及現場巡視</div>
+        <div class="acc-dept">總公司 ／ 全興廠 ／ 工安</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">定期檢查、重點檢查、作業檢點及現場巡視</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>定期檢查（1次/年）或委託代檢機構辦理</li>
+              <li>定期檢查（1次/月）內部實施</li>
+              <li>重點檢查</li>
+              <li>作業檢點（1次/日）</li>
+              <li>現場巡視（走動式管理）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>1.1消防設施　1.2堆高機(燃油/電動)　1.3固定式起重機　1.4高空作業車　1.5發電機</li>
+              <li>2.1堆高機(燃油/電動)　2.2一般車輛　2.3固定式起重機　2.4發電機　2.5高壓氣體鋼瓶　2.6第二種壓力容器　2.7高空作業車</li>
+              <li>3.1局部排氣裝置</li>
+              <li>4.1堆高機　4.2固定式起重機　4.3各式清除車輛　4.4磨刀機　4.5粉碎機　4.6輸送帶　4.7壓縮機　4.8切割機　4.9高空作業車</li>
+              <li>5.1由現場主管及職安人員不定時巡視</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>總公司 ／ 全興廠 ／ 工安
+      </div>
+    </div>
+  </div>
+
+  <!-- 九 -->
+  <div class="acc-item" id="acc9">
+    <div class="acc-header" onclick="toggleAcc('acc9')">
+      <div class="acc-num">九</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">🎓</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">安全衛生教育訓練</div>
+        <div class="acc-dept">各課 ／ 工安 ／ 人資/工安</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">安全衛生教育訓練</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>職業安全衛生法</li>
+              <li>危害風險評估相關資料</li>
+              <li>安衛政策及目標管理方案</li>
+              <li>各課之環安SOP（含安全衛生工作守則）</li>
+              <li>職安衛管理系統相關人員介紹</li>
+              <li>環安緊急應變計畫及演練</li>
+              <li>聽力保護計畫</li>
+              <li>危害通識</li>
+              <li>外訓</li>
+              <li>在職証照人員複訓</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>1.1工安建立教材，由各單位實施</li>
+              <li>2.1各課危害風險評估資料(表A～表D)</li>
+              <li>3.1環安衛政策及各課之管理方案</li>
+              <li>4.1依各課之工安SOP及適用安全衛生工作守則</li>
+              <li>5.1由工安建立教材予各課實施</li>
+              <li>6.1各課計畫內容作宣導</li>
+              <li>7.1工安建立教材予各課實施</li>
+              <li>8.1工安建立教材予各課實施</li>
+              <li>9.1依法規需求設置派訓</li>
+              <li>10.1依人員多寡，採取包班或外訓</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>各課 ／ 工安 ／ 人資/工安
+      </div>
+    </div>
+  </div>
+
+  <!-- 十 -->
+  <div class="acc-item" id="acc10">
+    <div class="acc-header" onclick="toggleAcc('acc10')">
+      <div class="acc-num">十</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">🦺</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">個人防護具之管理</div>
+        <div class="acc-dept">單位主管 ／ 各課</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">個人防護具之管理</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>耳塞/耳罩</li>
+              <li>安全護目鏡</li>
+              <li>安全鞋/帽</li>
+              <li>活性碳口罩</li>
+              <li>手套</li>
+              <li>安全帶</li>
+              <li>其它</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>由單位主管統一請購及建立領用登記簿</li>
+              <li>建立領用紀錄表及點檢確保其效用</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>單位主管 ／ 各課
+      </div>
+    </div>
+  </div>
+
+  <!-- 十一 -->
+  <div class="acc-item" id="acc11">
+    <div class="acc-header" onclick="toggleAcc('acc11')">
+      <div class="acc-num" style="font-size:11px">十一</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">🏥</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">健康檢查、健康管理及健康促進</div>
+        <div class="acc-dept">工安 ／ 人資部 ／ 工安/職護</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">健康檢查、健康管理及健康促進</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>健康檢查：(1)新進人員 (2)一般 (3)特殊</li>
+              <li>健康管理/促進</li>
+              <li>四大計畫：(1)母性健康保護 (2)異常工作負荷 (3)人因性危害 (4)職場不法侵害</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>健康檢查管理規定</li>
+              <li>新進人員實施體格檢查</li>
+              <li>在職人員定期實施一般健康檢查</li>
+              <li>特殊作業人員實施特殊健檢（噪音）每年一次</li>
+              <li>健康檢查結果，實施分級管理、追蹤及統計分析</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>工安 ／ 人資部 ／ 工安/職護
+      </div>
+    </div>
+  </div>
+
+  <!-- 十二 -->
+  <div class="acc-item" id="acc12">
+    <div class="acc-header" onclick="toggleAcc('acc12')">
+      <div class="acc-num" style="font-size:11px">十二</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">📢</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">安全衛生資訊之蒐集、分享與運用</div>
+        <div class="acc-dept">工安 ／ 工安/各課</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">安全衛生資訊之蒐集、分享與運用</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>安衛資訊蒐集</li>
+              <li>安衛資訊分享</li>
+              <li>安衛資訊運用</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>建立環安衛資訊溝通管理規定</li>
+              <li>蒐集相關職災案例（含職業疾病），mail各相關單位</li>
+              <li>蒐集健康資訊供各單參考</li>
+              <li>運用相關安全衛生資訊實施改善</li>
+              <li>勞檢缺失及工作守則公佈現場</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>工安 ／ 工安/各課
+      </div>
+    </div>
+  </div>
+
+  <!-- 十三 -->
+  <div class="acc-item" id="acc13">
+    <div class="acc-header" onclick="toggleAcc('acc13')">
+      <div class="acc-num" style="font-size:11px">十三</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">🚨</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">緊急應變措施</div>
+        <div class="acc-dept">工安 ／ 各課 ／ 工安/總公司/全興廠</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">緊急應變措施</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>消防設備管理</li>
+              <li>緊急應變演練</li>
+              <li>緊急應變防護器材</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>1.1制訂D2-EM-020消防安全管理辦法</li>
+              <li>1.2各單位消防設施，每月點檢一次，隨時保持正常狀態</li>
+              <li>2.1制訂各課緊急應變演練時程及實施（消防工安、急救）</li>
+              <li>2.2依消防法每半年實施一次消防演練，擴大參與人數及邀請消防隊派員指導</li>
+              <li>3.1各單位急救箱點檢</li>
+              <li>3.2各單位消防設備點檢&amp;檢修申報</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>工安 ／ 各課 ／ 工安/總公司/全興廠
+      </div>
+    </div>
+  </div>
+
+  <!-- 十四 -->
+  <div class="acc-item" id="acc14">
+    <div class="acc-header" onclick="toggleAcc('acc14')">
+      <div class="acc-num" style="font-size:11px">十四</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">📊</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">職業災害、虛驚事故影響身心健康事件之調查處理與統計分析</div>
+        <div class="acc-dept">環安 ／ 工安 ／ 各課</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">職業災害、虛驚事故影響身心健康事件之調查處理與統計分析</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>工作事件管理（含交通事故）</li>
+              <li>虛驚及輕傷及影響身心健康事件之管理</li>
+              <li>職災月報申報</li>
+              <li>年終分析/檢討改善</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>建立事件通報處理調查管理辦法D2-EM-019</li>
+              <li>工傷假判定</li>
+              <li>每月10日前職災月報上網申報</li>
+              <li>每季安委會檢討</li>
+              <li>事件調查處理由工安、勞工代表、現場主管參與</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>環安 ／ 工安 ／ 各課
+      </div>
+    </div>
+  </div>
+
+  <!-- 十五 -->
+  <div class="acc-item" id="acc15">
+    <div class="acc-header" onclick="toggleAcc('acc15')">
+      <div class="acc-num" style="font-size:11px">十五</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">📈</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">安全衛生管理紀錄與績效評估措施</div>
+        <div class="acc-dept">工安 ／ 各課</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">安全衛生管理紀錄與績效評估措施</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>安衛管理記錄</li>
+              <li>績效評估</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>建立D2-EM-018監督與量測管理辦法</li>
+              <li>相關實施表單記錄，依規定保存（自動檢查報告、計畫、安委會報告會議記錄…）</li>
+              <li>建立績效指標一覽表，定期檢討</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>工安 ／ 各課
+      </div>
+    </div>
+  </div>
+
+  <!-- 十六 -->
+  <div class="acc-item" id="acc16">
+    <div class="acc-header" onclick="toggleAcc('acc16')">
+      <div class="acc-num" style="font-size:11px">十六</div>
+      <div class="acc-icon-wrap" style="background:#f1f5f9">📌</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">其他安全衛生管理措施</div>
+        <div class="acc-dept">工安/各課</div>
+      </div>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="plan-card-grid">
+        <div class="plan-card">
+          <div class="plan-card-label">計劃項目</div>
+          <div class="plan-card-body">其他安全衛生管理措施</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施細目</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>承攬管理計畫</li>
+              <li>緊急應變計畫</li>
+              <li>危害性作業防止計畫</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-label">實施方法</div>
+          <div class="plan-card-body">
+            <ul>
+              <li>建立承攬商作業安全管理規定：(1)承攬商安衛管理危害告知/切結書 (2)施工安全記錄 (3)協調記錄 (4)教育訓練 (5)不定期巡視</li>
+              <li>建立廠區緊急應變計畫管理辦法：(1)全廠一年二次演練（配合消防法）(2)各課每年一次應變演練</li>
+              <li>危害性作業防止：(1)動火及危害性作業之許可與管制 (2)相關防護設施之整備</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--accent)">
+        <strong>實施單位及人員：</strong>工安/各課
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ── INSPECTION ── -->
+<section id="inspection" class="section">
+  <div class="section-header">
+    <div class="section-badge bg-gray">🔧</div>
+    <div>
+      <div class="section-title">自動檢查計畫表</div>
+      <div class="section-subtitle">Auto-Inspection Plan — 年度 2021</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <span>ℹ️</span>
+    <div>本計畫表依《職業安全衛生管理辦法》及D2-EM-004規定訂定。各單位按頻率執行自動檢查，結果記錄保存以備勞動檢查機構查核。</div>
+  </div>
+
+  <div class="insp-section-title">機械、車輛之定期檢查、作業檢點、重點檢查</div>
+  <div class="insp-grid">
+    <div class="insp-card">
+      <div class="insp-card-icon">🚗</div>
+      <div class="insp-card-name">一般車輛檢查（公務車）</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-orange">每季</span>
+        <span class="insp-freq-tag tag-slate">總公司</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🏗️</div>
+      <div class="insp-card-name">堆高機檢查</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-blue">每年</span>
+        <span class="insp-freq-tag tag-green">每月</span>
+        <span class="insp-freq-tag tag-teal">每日</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🏋️</div>
+      <div class="insp-card-name">固定式起重機檢查</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-blue">每年</span>
+        <span class="insp-freq-tag tag-green">每月</span>
+        <span class="insp-freq-tag tag-teal">每日</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🚜</div>
+      <div class="insp-card-name">高空作業車</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-blue">每年</span>
+        <span class="insp-freq-tag tag-green">每月</span>
+        <span class="insp-freq-tag tag-teal">每日</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🚛</div>
+      <div class="insp-card-name">清運車輛</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-orange">每季</span>
+        <span class="insp-freq-tag tag-teal">每日</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🚛</div>
+      <div class="insp-card-name">抓斗清運車輛</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-orange">每季</span>
+        <span class="insp-freq-tag tag-teal">每日</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🦾</div>
+      <div class="insp-card-name">機械手臂安全裝置</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-teal">每日</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+      <div class="insp-note">停用無作業</div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🔪</div>
+      <div class="insp-card-name">磨刀機</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-teal">每日</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">⚙️</div>
+      <div class="insp-card-name">粉碎機</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-teal">每日</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">📦</div>
+      <div class="insp-card-name">解包機</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-teal">每日</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">➡️</div>
+      <div class="insp-card-name">輸送帶</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-teal">每日</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="insp-section-title">設備之定期檢查、作業檢點、重點檢查</div>
+  <div class="insp-grid">
+    <div class="insp-card">
+      <div class="insp-card-icon">🫙</div>
+      <div class="insp-card-name">小型壓力容器</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-blue">每年</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">⚡</div>
+      <div class="insp-card-name">高壓電氣設備</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-blue">每年</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🔌</div>
+      <div class="insp-card-name">低壓電器設備</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-blue">每年</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">💨</div>
+      <div class="insp-card-name">局部排氣設備</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-green">每月</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🧯</div>
+      <div class="insp-card-name">消防設備點檢表</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-green">每月</span>
+        <span class="insp-freq-tag tag-slate">總公司/全興廠</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="insp-section-title">作業檢點</div>
+  <div class="insp-grid">
+    <div class="insp-card">
+      <div class="insp-card-icon">🦺</div>
+      <div class="insp-card-name">個人防護具檢查</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-green">每月</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🔌</div>
+      <div class="insp-card-name">電氣機械器具檢查</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-teal">每日</span>
+        <span class="insp-freq-tag tag-slate">全興廠</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="insp-section-title">其他</div>
+  <div class="insp-grid">
+    <div class="insp-card">
+      <div class="insp-card-icon">🩺</div>
+      <div class="insp-card-name">急救箱檢查</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-green">每月</span>
+        <span class="insp-freq-tag tag-slate">總公司/全興廠</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--sub);padding:8px 0">
+    <span>核准：<strong style="color:var(--dark)">林盟洲</strong></span>
+    <span>審核：<strong style="color:var(--dark)">賴柏州</strong></span>
+    <span>經辦：<strong style="color:var(--dark)">楊曜彰</strong></span>
+  </div>
+</section>
+
+</main>
+
+<script>
+const sections=['hero','policy','goal','plan','inspection'];
+
+function setActive(el){
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function toggleAcc(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+// Progress bar
+window.addEventListener('scroll',()=>{
+  const doc=document.documentElement;
+  const pct=(doc.scrollTop/(doc.scrollHeight-doc.clientHeight))*100;
+  document.getElementById('progressFill').style.width=Math.min(pct,100)+'%';
+});
+
+// Intersection observer for nav highlight
+const navLinks=document.querySelectorAll('.nav-item[href^="#"]');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id=e.target.id;
+      navLinks.forEach(a=>{
+        a.classList.toggle('active',a.getAttribute('href')==='#'+id);
+      });
+    }
+  });
+},{threshold:0.3});
+sections.forEach(s=>{const el=document.getElementById(s);if(el)obs.observe(el);});
+</script>
+</body>
+</html>

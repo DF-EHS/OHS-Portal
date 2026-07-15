@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>109年職業安全衛生管理計畫（外站） ｜ 大豐環保科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f7fee7; --border:#d9f99d;
+  --primary:#65a30d; --dark:#1a2e05; --darker:#0f1a03;
+  --sub:#4d7c0f; --accent:#84cc16;
+  --card:#ffffff;
+  --text:#1a2e05;
+  --muted:#4d7c0f;
+  --sidebar-w:260px;
+  --transition:0.3s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  background:var(--bg);color:var(--text);
+  display:flex;min-height:100vh;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:var(--sidebar-w);min-height:100vh;
+  background:linear-gradient(180deg,#1a2e05,#0f1a03);
+  position:fixed;top:0;left:0;
+  display:flex;flex-direction:column;z-index:100;overflow:hidden;
+}
+.sidebar-brand{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,.08);}
+.brand-icon{
+  width:42px;height:42px;
+  background:linear-gradient(135deg,#84cc16,#65a30d);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;margin-bottom:10px;
+  box-shadow:0 4px 12px rgba(101,163,13,.4);
+}
+.brand-name{font-size:13px;font-weight:700;color:#fff;line-height:1.4;}
+.brand-sub{font-size:10px;color:rgba(255,255,255,.45);margin-top:2px;}
+.brand-year{
+  display:inline-block;
+  background:linear-gradient(90deg,#84cc16,#65a30d);
+  color:#fff;font-size:11px;font-weight:700;
+  padding:2px 8px;border-radius:999px;margin-top:6px;
+}
+.sidebar-progress{padding:12px 20px 8px;border-bottom:1px solid rgba(255,255,255,.06);}
+.progress-label{font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.progress-bar-wrap{background:rgba(255,255,255,.08);border-radius:999px;height:4px;overflow:hidden;}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#a3e635,#65a30d);border-radius:999px;width:0;transition:width 0.3s;}
+.nav-list{flex:1;padding:12px 12px;overflow-y:auto;}
+.nav-group{margin-bottom:4px;}
+.nav-group-label{
+  font-size:9px;font-weight:700;color:rgba(255,255,255,.28);
+  letter-spacing:1.5px;text-transform:uppercase;padding:6px 8px 4px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;border-radius:8px;cursor:pointer;
+  color:rgba(255,255,255,.6);font-size:12.5px;
+  transition:var(--transition);
+  border-left:3px solid transparent;margin-bottom:2px;text-decoration:none;
+}
+.nav-item:hover{background:rgba(255,255,255,.07);color:#fff;}
+.nav-item.active{background:rgba(255,255,255,.1);color:#fff;border-left-color:#84cc16;}
+.nav-item .nav-icon{
+  width:26px;height:26px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;flex-shrink:0;
+}
+.nav-item .nav-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,255,255,.2);flex-shrink:0;margin-left:auto;
+  transition:var(--transition);
+}
+.nav-item.active .nav-dot{background:#84cc16;box-shadow:0 0 0 3px rgba(132,204,22,.25);}
+.sidebar-footer{
+  padding:14px 20px;border-top:1px solid rgba(255,255,255,.06);
+  font-size:10px;color:rgba(255,255,255,.25);
+}
+
+/* MAIN */
+.main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;}
+.section{padding:60px 48px;}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:36px;}
+.section-badge{
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
+}
+.section-title{font-size:24px;font-weight:900;line-height:1.2;}
+.section-subtitle{font-size:13px;color:var(--sub);margin-top:2px;}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  background:linear-gradient(135deg,#0f1a03,#1a2e05,#0f1a03);
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:flex-start;
+  padding:60px 60px;position:relative;overflow:hidden;
+}
+#hero::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.018'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+#hero::after{
+  content:'';position:absolute;top:-120px;right:-120px;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(132,204,22,.15) 0%,transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+.hero-notch{
+  position:absolute;top:36px;right:52px;
+  width:88px;height:88px;
+  background:linear-gradient(135deg,#84cc16,#1a2e05);
+  clip-path:polygon(0% 0%,100% 0%,100% 70%,70% 100%,0% 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:0 8px 32px rgba(101,163,13,.45);
+  filter:drop-shadow(0 0 12px rgba(132,204,22,.3));
+}
+.hero-notch .yr-num{font-size:24px;font-weight:900;color:#fff;line-height:1;position:relative;}
+.hero-notch .yr-unit{font-size:10px;color:rgba(255,255,255,.8);position:relative;}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  color:#a3e635;font-size:12px;font-weight:700;
+  padding:5px 14px;border-radius:999px;margin-bottom:24px;
+  backdrop-filter:blur(10px);letter-spacing:1px;
+}
+.hero-company{font-size:16px;font-weight:500;color:rgba(255,255,255,.55);letter-spacing:4px;margin-bottom:12px;}
+.hero-title{
+  font-size:clamp(28px,4vw,52px);font-weight:900;color:#fff;
+  line-height:1.2;margin-bottom:8px;
+}
+.hero-title span{
+  background:linear-gradient(90deg,#a3e635,#d9f99d);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{font-size:18px;font-weight:500;color:rgba(255,255,255,.7);margin-bottom:36px;}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:48px;}
+.hero-meta-item{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:14px 20px;backdrop-filter:blur(10px);
+}
+.hero-meta-label{font-size:11px;color:rgba(255,255,255,.4);margin-bottom:4px;}
+.hero-meta-val{font-size:15px;font-weight:700;color:#fff;}
+.hero-scroll-hint{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  color:rgba(255,255,255,.3);font-size:11px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  animation:bounce 2s infinite;
+}
+@keyframes bounce{
+  0%,100%{transform:translateX(-50%) translateY(0);}
+  50%{transform:translateX(-50%) translateY(-6px);}
+}
+
+/* POLICY */
+#policy{background:var(--bg);}
+.policy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+.policy-card{
+  background:var(--card);border-radius:16px;padding:24px;
+  border:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;
+  transition:var(--transition);box-shadow:0 1px 4px rgba(0,0,0,.04);
+}
+.policy-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1);border-color:transparent;}
+.policy-num{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:900;color:#fff;flex-shrink:0;
+}
+.policy-text{font-size:14px;line-height:1.7;color:var(--text);}
+
+/* GOAL */
+#goal{background:linear-gradient(135deg,#f7fee7,#ecfccb);}
+.goal-center{text-align:center;}
+.goal-circle{
+  width:180px;height:180px;border-radius:50%;
+  background:linear-gradient(135deg,#84cc16,#65a30d);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  margin:0 auto 32px;
+  box-shadow:0 0 0 20px rgba(132,204,22,.1),0 0 0 40px rgba(132,204,22,.05);
+  position:relative;
+}
+.goal-circle::before{
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+  border:2px dashed rgba(132,204,22,.3);
+  animation:spin 20s linear infinite;
+}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.goal-num{font-size:56px;font-weight:900;color:#fff;line-height:1;}
+.goal-unit{font-size:14px;color:rgba(255,255,255,.8);margin-top:2px;}
+.goal-title{font-size:26px;font-weight:900;margin-bottom:12px;color:var(--darker);}
+.goal-desc{font-size:15px;color:var(--sub);max-width:580px;margin:0 auto 36px;line-height:1.8;}
+.goal-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.goal-pill{
+  background:#fff;border:1px solid var(--border);border-radius:999px;
+  padding:8px 18px;font-size:13px;font-weight:500;color:var(--text);
+  display:flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+/* PLAN */
+#plan{background:var(--bg);}
+.plan-intro{
+  background:var(--card);border-radius:16px;padding:20px 24px;margin-bottom:24px;
+  border:1px solid var(--border);display:flex;align-items:center;gap:12px;
+  font-size:13.5px;color:var(--sub);
+}
+.acc-item{
+  background:var(--card);border-radius:16px;border:1px solid var(--border);
+  margin-bottom:10px;overflow:hidden;transition:box-shadow 0.2s;
+}
+.acc-item.open{box-shadow:0 4px 20px rgba(0,0,0,.08);border-color:transparent;}
+.acc-header{
+  display:flex;align-items:center;gap:14px;padding:18px 22px;
+  cursor:pointer;user-select:none;transition:background 0.15s;
+}
+.acc-header:hover{background:var(--bg);}
+.acc-num{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:#fff;flex-shrink:0;
+}
+.acc-icon-wrap{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+}
+.acc-title-wrap{flex:1;min-width:0;}
+.acc-title{font-size:15px;font-weight:700;color:var(--text);}
+.acc-dept{font-size:11px;color:var(--muted);margin-top:2px;}
+.acc-freq{
+  font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;
+  white-space:nowrap;flex-shrink:0;
+}
+.acc-chevron{
+  width:24px;height:24px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg);color:var(--muted);font-size:12px;
+  transition:transform 0.3s;flex-shrink:0;
+}
+.acc-item.open .acc-chevron{transform:rotate(180deg);}
+.acc-body{display:none;padding:0 22px 20px;}
+.acc-item.open .acc-body{display:block;}
+.acc-subitems{display:flex;flex-direction:column;gap:8px;}
+.acc-subitem{
+  background:var(--bg);border-radius:10px;padding:12px 16px;
+  display:flex;align-items:center;gap:12px;
+}
+.subitem-name{flex:1;font-size:13px;color:var(--text);}
+.subitem-freq-badge{
+  font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;
+  white-space:nowrap;flex-shrink:0;
+}
+.months-row{display:flex;gap:3px;flex-shrink:0;}
+.m-dot{
+  width:18px;height:18px;border-radius:50%;
+  background:#e2e8f0;display:flex;align-items:center;justify-content:center;
+  font-size:7px;color:#94a3b8;font-weight:600;
+}
+.m-dot.on{color:#fff;}
+.acc-na{padding:20px;text-align:center;color:var(--muted);font-size:13px;}
+
+/* INSPECTION */
+#inspection{background:#f0fee7;}
+.insp-section-title{
+  font-size:16px;font-weight:700;color:var(--darker);
+  margin:24px 0 12px;display:flex;align-items:center;gap:8px;
+}
+.insp-section-title::before{content:'';display:block;width:4px;height:20px;border-radius:2px;background:var(--primary);}
+.insp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+.insp-card{
+  background:var(--card);border-radius:14px;border:1px solid var(--border);
+  padding:16px;transition:var(--transition);
+}
+.insp-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.08);border-color:transparent;}
+.insp-card-icon{font-size:24px;margin-bottom:8px;}
+.insp-card-name{font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:8px;}
+.insp-card-freqs{display:flex;flex-wrap:wrap;gap:4px;}
+.insp-freq-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px;}
+.insp-sign-row{
+  display:flex;gap:16px;margin-top:28px;flex-wrap:wrap;
+  border-top:1px solid var(--border);padding-top:20px;
+}
+.insp-sign-box{
+  flex:1;min-width:120px;background:var(--bg);border-radius:10px;
+  padding:14px;text-align:center;
+}
+.insp-sign-label{font-size:11px;color:var(--sub);margin-bottom:20px;}
+.insp-sign-line{border-bottom:1px solid var(--border);}
+.insp-sign-name{font-size:12px;color:var(--text);margin-top:8px;}
+
+/* UTILS */
+.tag-olive  {background:#f7fee7;color:#4d7c0f;}
+.tag-green  {background:#f0fdf4;color:#15803d;}
+.tag-lime   {background:#f7fee7;color:#65a30d;}
+.tag-teal   {background:#f0fdfa;color:#0f766e;}
+.tag-orange {background:#fff7ed;color:#c2410c;}
+.tag-amber  {background:#fffbeb;color:#b45309;}
+.tag-red    {background:#fef2f2;color:#b91c1c;}
+.tag-gray   {background:#f8fafc;color:#64748b;}
+.tag-purple {background:#f5f3ff;color:#6d28d9;}
+.tag-blue   {background:#eff6ff;color:#1d4ed8;}
+
+.bg-olive   {background:linear-gradient(135deg,#84cc16,#4d7c0f);}
+.bg-lime    {background:linear-gradient(135deg,#a3e635,#65a30d);}
+.bg-dark-olive{background:linear-gradient(135deg,#65a30d,#1a2e05);}
+.bg-teal    {background:linear-gradient(135deg,#2dd4bf,#0f766e);}
+.bg-green   {background:linear-gradient(135deg,#22c55e,#15803d);}
+.bg-orange  {background:linear-gradient(135deg,#fb923c,#c2410c);}
+.bg-red     {background:linear-gradient(135deg,#f87171,#b91c1c);}
+.bg-rose    {background:linear-gradient(135deg,#fb7185,#be123c);}
+.bg-amber   {background:linear-gradient(135deg,#fbbf24,#d97706);}
+.bg-slate   {background:linear-gradient(135deg,#94a3b8,#334155);}
+.bg-blue    {background:linear-gradient(135deg,#60a5fa,#2563eb);}
+.bg-purple  {background:linear-gradient(135deg,#a78bfa,#6d28d9);}
+.bg-emerald {background:linear-gradient(135deg,#34d399,#065f46);}
+
+.divider{height:1px;background:var(--border);margin:24px 0;}
+.info-box{
+  background:#f0fee7;border:1px solid #d9f99d;border-radius:12px;
+  padding:14px 18px;font-size:13px;color:#4d7c0f;line-height:1.7;
+  margin-bottom:16px;display:flex;gap:10px;align-items:flex-start;
+}
+
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:3px;}
+
+@media print{
+  .sidebar{display:none;}
+  .main{margin-left:0;}
+  .acc-body{display:block !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">🛡️</div>
+    <div class="brand-name">大豐環保科技股份有限公司</div>
+    <div class="brand-sub">職業安全衛生管理系統</div>
+    <div class="brand-year">109年度（外站）</div>
+  </div>
+  <div class="sidebar-progress">
+    <div class="progress-label">閱讀進度</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+  </div>
+  <div class="nav-list">
+    <div class="nav-group">
+      <div class="nav-group-label">文件封面</div>
+      <a class="nav-item active" href="#hero" onclick="setActive(this)">
+        <div class="nav-icon bg-dark-olive" style="border-radius:6px">🏠</div>
+        文件首頁<span class="nav-dot"></span>
+      </a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">管理計畫</div>
+      <a class="nav-item" href="#policy" onclick="setActive(this)">
+        <div class="nav-icon bg-olive" style="border-radius:6px">📜</div>
+        安全衛生政策<span class="nav-dot"></span>
+      </a>
+      <a class="nav-item" href="#goal" onclick="setActive(this)">
+        <div class="nav-icon bg-green" style="border-radius:6px">🎯</div>
+        計畫目標<span class="nav-dot"></span>
+      </a>
+      <a class="nav-item" href="#plan" onclick="setActive(this)">
+        <div class="nav-icon bg-dark-olive" style="border-radius:6px">📋</div>
+        計畫項目<span class="nav-dot"></span>
+      </a>
+      <a class="nav-item" href="#inspection" onclick="setActive(this)">
+        <div class="nav-icon bg-teal" style="border-radius:6px">🔧</div>
+        自動檢查計畫<span class="nav-dot"></span>
+      </a>
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    109年度（外站） ｜ 109年01月09日審查通過<br>
+    經辦：蔡名凱
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-notch"><div class="yr-num">109</div><div class="yr-unit">年度</div></div>
+  <div class="hero-tag">📄 &nbsp; 職業安全衛生 · 管理計畫書</div>
+  <div class="hero-company">大豐環保科技股份有限公司</div>
+  <div class="hero-title"><span>109年度</span>職業安全衛生<br>管理計畫書（外站）</div>
+  <div class="hero-sub">自動檢查計畫</div>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">計畫年度</div>
+      <div class="hero-meta-val">中華民國 109 年</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">審查通過日期</div>
+      <div class="hero-meta-val">109 年 01 月 09 日</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">核准</div>
+      <div class="hero-meta-val">林盟洲</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">審核</div>
+      <div class="hero-meta-val">王靜美</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">經辦</div>
+      <div class="hero-meta-val">蔡名凱</div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint"><span>向下捲動</span><span>▼</span></div>
+</section>
+
+<!-- POLICY -->
+<section id="policy" class="section">
+  <div class="section-header">
+    <div class="section-badge bg-olive">📜</div>
+    <div>
+      <div class="section-title">安全衛生政策</div>
+      <div class="section-subtitle">Safety &amp; Health Policy — 5項核心承諾</div>
+    </div>
+  </div>
+  <div class="policy-grid">
+    <div class="policy-card">
+      <div class="policy-num bg-olive">1</div>
+      <div class="policy-text">符合政府環保、勞安衛法規或相關團體的要求，<strong>持續改善環境及職業安全衛生</strong>。</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-num bg-teal">2</div>
+      <div class="policy-text">加強污染的控制、改善，並注重<strong>污染預防及防治工作</strong>，以杜絕公害做好資源回收。</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-num bg-green">3</div>
+      <div class="policy-text">落實工安管理及檢查，改善員工／承攬商／居民／相關團體作業環境，<strong>避免意外事故及職業災害發生</strong>，創造安全的環境、衛生的所在。</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-num bg-orange">4</div>
+      <div class="policy-text">加強與員工／承攬商／居民／相關團體的溝通，<strong>實施教育訓練</strong>，提昇環保／安衛意識並提供相關環保及勞安衛訊息。</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-num bg-purple">5</div>
+      <div class="policy-text"><strong>提昇回收、處理技術及效能</strong>，促進資源回收再利用。</div>
+    </div>
+  </div>
+</section>
+
+<!-- GOAL -->
+<section id="goal" class="section">
+  <div class="section-header">
+    <div class="section-badge bg-green">🎯</div>
+    <div>
+      <div class="section-title">計畫目標</div>
+      <div class="section-subtitle">Plan Objectives — 安全目標設定</div>
+    </div>
+  </div>
+  <div class="goal-center">
+    <div class="goal-circle">
+      <div class="goal-num">零</div>
+      <div class="goal-unit">重大職業災害</div>
+    </div>
+    <div class="goal-title">保障全體員工安全與健康</div>
+    <div class="goal-desc">
+      為防止職業災害，保障全體安全與健康，特制定職業安全衛生管理計畫。
+      本計畫在於確保各廠站等場所之安全運作，達到<strong>零重大職業災害</strong>之目標。
+      本計畫之各項要求事項得列為該年度之<strong>績效考核</strong>。
+    </div>
+    <div class="goal-pills">
+      <div class="goal-pill">🏭 廠區安全運作</div>
+      <div class="goal-pill">👷 員工健康保障</div>
+      <div class="goal-pill">🤝 承攬商管理</div>
+      <div class="goal-pill">📊 績效考核機制</div>
+      <div class="goal-pill">♻️ 資源回收</div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAN -->
+<section id="plan" class="section">
+  <div class="section-header">
+    <div class="section-badge bg-dark-olive">📋</div>
+    <div>
+      <div class="section-title">計畫項目</div>
+      <div class="section-subtitle">Management Plan Items — 點選可展開查看實施細目</div>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <div class="acc-item" id="acc1">
+    <div class="acc-header" onclick="toggleAcc('acc1')">
+      <div class="acc-num bg-olive">1</div>
+      <div class="acc-icon-wrap" style="background:#f7fee7">🔍</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">工作環境或作業危害之辨識、評估及控制</div>
+        <div class="acc-dept">主辦：法務環安課 ｜ 依 EM-PR-003 危害鑑別風險評估管理辦法辦理</div>
+      </div>
+      <span class="acc-freq tag-orange">不定期</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">工作環境或作業危害鑑別、辨識</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m1a"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">工作環境或作業危害之風險評估</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m1b"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">依危害鑑別、風險評估結果決定控制措施</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m1c"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="acc-item" id="acc2">
+    <div class="acc-header" onclick="toggleAcc('acc2')">
+      <div class="acc-num bg-teal">2</div>
+      <div class="acc-icon-wrap" style="background:#f0fdfa">⚙️</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">機械、設備或器具之管理</div>
+        <div class="acc-dept">主辦：各單位 ｜ 依 EM-PR-007 自動檢查管理辦法辦理</div>
+      </div>
+      <span class="acc-freq tag-teal">每月</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">一般手工具管理（氣動、電動）</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m2a"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">一般機械、設備</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m2b"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">研磨機／研磨輪之管理</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m2c"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">研磨機／研磨輪之維護</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m2d"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">固定式起重機之管理</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m2e"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">固定式起重機之維護</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m2f"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">移動式起重機之管理</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m2g"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">移動式起重機之維護</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m2h"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">挖掘機之管理</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m2i"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">挖掘機之維護</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m2j"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">動力堆高機之管理</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m2k"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">動力堆高機之維護</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m2l"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">清運車輛之管理</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m2m"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">清運車輛之維護</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m2n"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">第一種壓力容器之管理</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m2o"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">第一種壓力容器之檢查</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m2p"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="acc-item" id="acc3">
+    <div class="acc-header" onclick="toggleAcc('acc3')">
+      <div class="acc-num bg-orange">3</div>
+      <div class="acc-icon-wrap" style="background:#fff7ed">⚗️</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">危險物與有害物之標示及通識</div>
+        <div class="acc-dept">主辦：法務環安課</div>
+      </div>
+      <span class="acc-freq tag-orange">不定期／每年</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">化學品危害標示製作與發放</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m3a"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">新化學品（測試用）導入評估與審查</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m3b"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">定期更新安全資料表</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m3c"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">廠內化學品使用調查</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m3d"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">化學品分級管理</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m3e"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="acc-item" id="acc4">
+    <div class="acc-header" onclick="toggleAcc('acc4')">
+      <div class="acc-num bg-green">4</div>
+      <div class="acc-icon-wrap" style="background:#f0fdf4">🧪</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">有害作業環境之採樣策略規劃及測定</div>
+        <div class="acc-dept">主辦：法務環安課</div>
+      </div>
+      <span class="acc-freq tag-teal">半年</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">擬訂採樣策略</div>
+          <span class="subitem-freq-badge tag-teal">半年</span>
+          <div class="months-row" id="m4a"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">作業環境監測委外監測</div>
+          <span class="subitem-freq-badge tag-teal">半年</span>
+          <div class="months-row" id="m4b"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">監測結果進行通告</div>
+          <span class="subitem-freq-badge tag-teal">半年</span>
+          <div class="months-row" id="m4c"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">異常區域進行追蹤與改善</div>
+          <span class="subitem-freq-badge tag-teal">半年</span>
+          <div class="months-row" id="m4d"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="acc-item" id="acc5">
+    <div class="acc-header" onclick="toggleAcc('acc5')">
+      <div class="acc-num bg-slate">5</div>
+      <div class="acc-icon-wrap" style="background:#f8fafc">🏗️</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">危險性工作場所之製程或施工安全評估事項</div>
+        <div class="acc-dept">目前廠區非危險性工作場所</div>
+      </div>
+      <span class="acc-freq tag-gray">NA</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-na">目前廠區非危險性工作場所，本項目不適用。</div>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="acc-item" id="acc6">
+    <div class="acc-header" onclick="toggleAcc('acc6')">
+      <div class="acc-num bg-purple">6</div>
+      <div class="acc-icon-wrap" style="background:#f5f3ff">🤝</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">採購管理、承攬管理及變更管理事項</div>
+        <div class="acc-dept">主辦：法務環安課</div>
+      </div>
+      <span class="acc-freq tag-orange">不定期</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">採購管理與變更管理（審查新購置或變更之機械、器具、設備、原物料、個人防護具、工程發包及總務性質物品等，能符合「職業安全衛生法」相關法規標準與規範）</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m6a"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">承攬管理：承攬商資格審查</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m6b"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">承攬管理：施工廠商危害告知教育訓練</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m6c"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">承攬管理：施工作業管制</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m6d"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">承攬管理：現場施工作業巡檢</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m6e"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">承攬管理：定期召開協議組織會議</div>
+          <span class="subitem-freq-badge tag-teal">每半年</span>
+          <div class="months-row" id="m6f"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="acc-item" id="acc7">
+    <div class="acc-header" onclick="toggleAcc('acc7')">
+      <div class="acc-num bg-orange">7</div>
+      <div class="acc-icon-wrap" style="background:#fff7ed">📐</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">安全衛生作業標準之訂定</div>
+        <div class="acc-dept">主辦：法務環安課</div>
+      </div>
+      <span class="acc-freq tag-orange">不定期／每月</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">廠內之安全衛生相關管理辦法或指導書定期更版，以符合執行現況與法規要求</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m7a"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">審查廠內各單位發行之管理辦法或指導書，針對安全事項是否符合法規要求</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m7b"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">每月廠區工安巡檢</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m7c"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">每月承攬商施工巡檢</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m7d"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">異常區域進行追蹤與改善</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m7e"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">現場單位實施自動檢查</div>
+          <span class="subitem-freq-badge tag-green">每日</span>
+          <div class="months-row" id="m7f"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="acc-item" id="acc9">
+    <div class="acc-header" onclick="toggleAcc('acc9')">
+      <div class="acc-num bg-blue">9</div>
+      <div class="acc-icon-wrap" style="background:#eff6ff">📚</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">安全衛生教育訓練</div>
+        <div class="acc-dept">主辦：人資部 法務環安課</div>
+      </div>
+      <span class="acc-freq tag-teal">每月</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">新進勞工安全衛生教育訓練（新進人員至公司報到當日辦理）</div>
+          <span class="subitem-freq-badge tag-teal">每月</span>
+          <div class="months-row" id="m9a"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">異動勞工安全衛生教育訓練（依公司人事發佈令辦理）</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m9b"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">勞工安全衛生在職教育訓練（法定回訓）</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m9c"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">危險性機械設備暨危險作業教育訓練（固定式起重機、移動式起重機、堆高機、挖掘機、鏟裝機、乙炔作業）</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m9d"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">急救人員訓練</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m9e"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="acc-item" id="acc10">
+    <div class="acc-header" onclick="toggleAcc('acc10')">
+      <div class="acc-num bg-amber">10</div>
+      <div class="acc-icon-wrap" style="background:#fffbeb">🦺</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">個人防護具之管理</div>
+        <div class="acc-dept">主辦：法務環安課</div>
+      </div>
+      <span class="acc-freq tag-amber">每年</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">安全衛生防護具一般原則、配戴時機、防護具選擇、清潔與保管、使用期限之管理</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m10a"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="acc-item" id="acc11">
+    <div class="acc-header" onclick="toggleAcc('acc11')">
+      <div class="acc-num bg-green">11</div>
+      <div class="acc-icon-wrap" style="background:#f0fdf4">🏥</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">健康檢查、健康管理及健康促進事項</div>
+        <div class="acc-dept">主辦：法務環安課</div>
+      </div>
+      <span class="acc-freq tag-orange">不定期／每年</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">新進勞工體格檢查</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m11a"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">在職勞工定期健康檢查</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m11b"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">員工健康管理</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m11c"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">職場健康促進</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m11d"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="acc-item" id="acc12">
+    <div class="acc-header" onclick="toggleAcc('acc12')">
+      <div class="acc-num bg-teal">12</div>
+      <div class="acc-icon-wrap" style="background:#f0fdfa">📡</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">安全衛生資訊之蒐集、分享及運用</div>
+        <div class="acc-dept">主辦：法務環安課 ｜ 職業安全衛生委員會執行</div>
+      </div>
+      <span class="acc-freq tag-teal">每季</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">安全衛生資訊之蒐集</div>
+          <span class="subitem-freq-badge tag-teal">每季</span>
+          <div class="months-row" id="m12a"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">安全衛生資訊之分享</div>
+          <span class="subitem-freq-badge tag-teal">每季</span>
+          <div class="months-row" id="m12b"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">安全衛生資訊之運用</div>
+          <span class="subitem-freq-badge tag-teal">每季</span>
+          <div class="months-row" id="m12c"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13 -->
+  <div class="acc-item" id="acc13">
+    <div class="acc-header" onclick="toggleAcc('acc13')">
+      <div class="acc-num bg-red">13</div>
+      <div class="acc-icon-wrap" style="background:#fef2f2">🚨</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">緊急應變措施</div>
+        <div class="acc-dept">主辦：法務環安課</div>
+      </div>
+      <span class="acc-freq tag-red">每半年</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">自衛消防編組演練暨消防安全教育訓練</div>
+          <span class="subitem-freq-badge tag-red">每半年</span>
+          <div class="months-row" id="m13a"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 14 -->
+  <div class="acc-item" id="acc14">
+    <div class="acc-header" onclick="toggleAcc('acc14')">
+      <div class="acc-num bg-rose">14</div>
+      <div class="acc-icon-wrap" style="background:#fff1f2">📊</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">職業災害、虛驚事故、影響身心健康事件之調查處理與統計分析</div>
+        <div class="acc-dept">主辦：法務環安課</div>
+      </div>
+      <span class="acc-freq tag-orange">不定期</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">職業災害等事故調查處理與統計分析</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m14a"></div>
+        </div>
+        <div class="acc-subitem">
+          <div class="subitem-name">虛驚事故案件提報、調查</div>
+          <span class="subitem-freq-badge tag-orange">不定期</span>
+          <div class="months-row" id="m14b"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 15 -->
+  <div class="acc-item" id="acc15">
+    <div class="acc-header" onclick="toggleAcc('acc15')">
+      <div class="acc-num bg-dark-olive">15</div>
+      <div class="acc-icon-wrap" style="background:#f7fee7">📝</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">安全衛生管理記錄及績效評估措施</div>
+        <div class="acc-dept">主辦：法務環安課</div>
+      </div>
+      <span class="acc-freq tag-teal">每季</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">職業安全衛生委員會之招開</div>
+          <span class="subitem-freq-badge tag-teal">每季</span>
+          <div class="months-row" id="m15a"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 16 -->
+  <div class="acc-item" id="acc16">
+    <div class="acc-header" onclick="toggleAcc('acc16')">
+      <div class="acc-num bg-olive">16</div>
+      <div class="acc-icon-wrap" style="background:#f7fee7">🏆</div>
+      <div class="acc-title-wrap">
+        <div class="acc-title">其他安全衛生管理措施</div>
+        <div class="acc-dept">主辦：法務環安課</div>
+      </div>
+      <span class="acc-freq tag-amber">每年</span>
+      <div class="acc-chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-subitems">
+        <div class="acc-subitem">
+          <div class="subitem-name">推動 ISO 45001 管理系統</div>
+          <span class="subitem-freq-badge tag-amber">每年</span>
+          <div class="months-row" id="m16a"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- INSPECTION -->
+<section id="inspection" class="section">
+  <div class="section-header">
+    <div class="section-badge bg-teal">🔧</div>
+    <div>
+      <div class="section-title">自動檢查計畫表</div>
+      <div class="section-subtitle">年度：2020年 ｜ 頁次：1／1</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <span>ℹ️</span>
+    <div>本計畫表依《職業安全衛生管理辦法》及EM-PR-007規定訂定。各單位按頻率執行自動檢查，結果記錄保存以備勞動檢查機構查核。</div>
+  </div>
+
+  <div class="insp-section-title">機械、車輛之定期檢查、作業檢點、重點檢查</div>
+  <div class="insp-grid">
+    <div class="insp-card">
+      <div class="insp-card-icon">🚗</div>
+      <div class="insp-card-name">一般車輛（公務車）</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-teal">每季</span>
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">總公司</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🚜</div>
+      <div class="insp-card-name">堆高機</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-amber">每年</span>
+        <span class="insp-freq-tag tag-teal">每月</span>
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">全興廠／站區各單位</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🏗️</div>
+      <div class="insp-card-name">固定式起重機</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-teal">每月</span>
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🚛</div>
+      <div class="insp-card-name">清運車輛</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-teal">每季</span>
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">全興廠／站區各單位</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🚚</div>
+      <div class="insp-card-name">抓斗清運車輛</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-teal">每季</span>
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">全興廠／站區各單位</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🚜</div>
+      <div class="insp-card-name">鏟裝機</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">站區各單位</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🦾</div>
+      <div class="insp-card-name">機械手臂安全裝置</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🏗️</div>
+      <div class="insp-card-name">怪手設備</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">站區各單位</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">📦</div>
+      <div class="insp-card-name">打包機</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">站區各單位</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🔪</div>
+      <div class="insp-card-name">磨刀機</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">⚙️</div>
+      <div class="insp-card-name">粉碎機</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">📦</div>
+      <div class="insp-card-name">解包機</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">全興廠</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🔄</div>
+      <div class="insp-card-name">輸送帶</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">全興廠</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="insp-section-title">設備之定期檢查、作業檢點、重點檢查</div>
+  <div class="insp-grid">
+    <div class="insp-card">
+      <div class="insp-card-icon">🔵</div>
+      <div class="insp-card-name">小型壓力容器</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-amber">每年</span>
+        <span class="insp-freq-tag tag-gray">全興廠／站區各單位</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">⚡</div>
+      <div class="insp-card-name">高壓電氣設備</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-amber">每年</span>
+        <span class="insp-freq-tag tag-gray">全興廠／站區各單位</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🔌</div>
+      <div class="insp-card-name">低壓電器設備</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-amber">每年</span>
+        <span class="insp-freq-tag tag-gray">全興廠／站區各單位</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="insp-section-title">作業檢點</div>
+  <div class="insp-grid">
+    <div class="insp-card">
+      <div class="insp-card-icon">🦺</div>
+      <div class="insp-card-name">個人防護具檢查</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-green">作業時</span>
+        <span class="insp-freq-tag tag-gray">全興廠／站區各單位</span>
+      </div>
+    </div>
+    <div class="insp-card">
+      <div class="insp-card-icon">🔌</div>
+      <div class="insp-card-name">電氣機械器具檢查</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-orange">作業前</span>
+        <span class="insp-freq-tag tag-gray">全興廠／站區各單位</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="insp-section-title">其他</div>
+  <div class="insp-grid">
+    <div class="insp-card">
+      <div class="insp-card-icon">🧰</div>
+      <div class="insp-card-name">急救箱檢查</div>
+      <div class="insp-card-freqs">
+        <span class="insp-freq-tag tag-teal">每季</span>
+        <span class="insp-freq-tag tag-gray">全興廠／站區各單位</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="insp-sign-row">
+    <div class="insp-sign-box">
+      <div class="insp-sign-label">核准</div>
+      <div class="insp-sign-line"></div>
+      <div class="insp-sign-name">林盟洲</div>
+    </div>
+    <div class="insp-sign-box">
+      <div class="insp-sign-label">審核</div>
+      <div class="insp-sign-line"></div>
+      <div class="insp-sign-name">王靜美</div>
+    </div>
+    <div class="insp-sign-box">
+      <div class="insp-sign-label">經辦</div>
+      <div class="insp-sign-line"></div>
+      <div class="insp-sign-name">蔡名凱</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const sections = ['hero','policy','goal','plan','inspection'];
+
+function toggleAcc(id){
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+function setActive(link){
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+  link.classList.add('active');
+}
+
+window.addEventListener('scroll',()=>{
+  const total = document.body.scrollHeight - window.innerHeight;
+  const pct = total > 0 ? (window.scrollY / total)*100 : 0;
+  document.getElementById('progressFill').style.width = pct+'%';
+  let current = 'hero';
+  sections.forEach(sid=>{
+    const el = document.getElementById(sid);
+    if(el && el.getBoundingClientRect().top < window.innerHeight*0.4) current=sid;
+  });
+  document.querySelectorAll('.nav-item').forEach(it=>{
+    const href = it.getAttribute('href');
+    if(href === '#'+current) it.classList.add('active');
+    else it.classList.remove('active');
+  });
+});
+
+function makeDots(id, months){
+  const el = document.getElementById(id);
+  if(!el) return;
+  const labels=['1','2','3','4','5','6','7','8','9','10','11','12'];
+  for(let i=0;i<12;i++){
+    const d = document.createElement('div');
+    d.className = 'm-dot' + (months[i]?(' on'):'');
+    if(months[i]) d.style.background = '#65a30d';
+    d.textContent = labels[i];
+    el.appendChild(d);
+  }
+}
+
+const ALL12     = [1,1,1,1,1,1,1,1,1,1,1,1];
+const QUARTERLY = [1,0,0,1,0,0,1,0,0,1,0,0];
+const BIANNUAL  = [1,0,0,0,0,1,0,0,0,0,0,0];
+const ANNUAL1   = [1,0,0,0,0,0,0,0,0,0,0,0];
+const ISO3      = [1,0,0,0,1,0,0,0,1,0,0,0];
+
+makeDots('m1a',ALL12);makeDots('m1b',ALL12);makeDots('m1c',ALL12);
+makeDots('m2a',ALL12);makeDots('m2b',ALL12);makeDots('m2c',ALL12);
+makeDots('m2d',ANNUAL1);makeDots('m2e',ALL12);makeDots('m2f',ANNUAL1);
+makeDots('m2g',ALL12);makeDots('m2h',ANNUAL1);makeDots('m2i',ALL12);
+makeDots('m2j',ANNUAL1);makeDots('m2k',ALL12);makeDots('m2l',ANNUAL1);
+makeDots('m2m',ALL12);makeDots('m2n',ANNUAL1);makeDots('m2o',ALL12);
+makeDots('m2p',ANNUAL1);
+makeDots('m3a',ALL12);makeDots('m3b',ALL12);
+makeDots('m3c',ANNUAL1);makeDots('m3d',ANNUAL1);makeDots('m3e',ANNUAL1);
+makeDots('m4a',BIANNUAL);makeDots('m4b',BIANNUAL);
+makeDots('m4c',BIANNUAL);makeDots('m4d',BIANNUAL);
+makeDots('m6a',ALL12);makeDots('m6b',ALL12);
+makeDots('m6c',ANNUAL1);makeDots('m6d',ALL12);makeDots('m6e',ALL12);
+makeDots('m6f',BIANNUAL);
+makeDots('m7a',ALL12);makeDots('m7b',ALL12);
+makeDots('m7c',ALL12);makeDots('m7d',ALL12);makeDots('m7e',ALL12);makeDots('m7f',ALL12);
+makeDots('m9a',ALL12);makeDots('m9b',ALL12);
+makeDots('m9c',ALL12);makeDots('m9d',ALL12);makeDots('m9e',ALL12);
+makeDots('m10a',ANNUAL1);
+makeDots('m11a',ALL12);makeDots('m11b',ANNUAL1);makeDots('m11c',ANNUAL1);
+makeDots('m11d',[1,0,1,0,1,0,1,0,1,0,1,0]);
+makeDots('m12a',QUARTERLY);makeDots('m12b',QUARTERLY);makeDots('m12c',QUARTERLY);
+makeDots('m13a',BIANNUAL);
+makeDots('m14a',ALL12);makeDots('m14b',ALL12);
+makeDots('m15a',QUARTERLY);
+makeDots('m16a',ISO3);
+</script>
+</body>
+</html>
