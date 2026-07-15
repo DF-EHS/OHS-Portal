@@ -1,60 +1,149 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>職業安全衛生計畫書 — 大豐環保科技</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>職業安全衛生計畫書 — 大豐環保科技</title>
 <style>
-:root{--navy:#1e3a5f;--bg:#f1f5f9;--card:#fff;--border:#e2e8f0;--text:#1e293b;--sub:#64748b;--blue:#2563eb}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+:root {
+  --plan:       #4f46e5;
+  --plan-dark:  #3730a3;
+  --plan-light: #eef2ff;
+  --plan-bd:    #c7d2fe;
+  --navy: #1e3a5f;
+  --bg: #f1f5f9; --card: #fff; --border: #e2e8f0; --text: #1e293b; --sub: #64748b;
+  --blue: #2563eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; display: flex; flex-direction: column;
+}
 
-header{background:linear-gradient(135deg,#1a1040 0%,#312e81 50%,#4f46e5 100%);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35)}
-header h1{font-size:17px;font-weight:700;flex:1}
-.hdr-btn{padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:none;transition:background .15s}
-.hdr-btn:hover{background:rgba(255,255,255,.2)}
-.hdr-brand{display:flex;align-items:center;gap:7px;flex-shrink:0}
-.hdr-brand img{height:24px;object-fit:contain}
-.hdr-brand span{font-size:12px;color:#94a3b8;font-weight:600;white-space:nowrap}
+/* ── Header ── */
+header {
+  background: linear-gradient(135deg,#1a1040 0%,#312e81 50%,#4f46e5 100%);
+  color: #fff; padding: 12px 20px;
+  display: flex; align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.35);
+}
+header h1 { font-size: 17px; font-weight: 700; flex: 1; }
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer; font-family: inherit;
+  text-decoration: none; transition: background .15s;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.2); }
+.hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 12px; color: #a5b4fc; font-weight: 600; white-space: nowrap; }
 
-main{flex:1;max-width:900px;width:100%;margin:0 auto;padding:36px 24px 60px}
+/* ── Main ── */
+main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24px 60px; }
 
-.page-hero{margin-bottom:36px}
-.page-hero h2{font-size:22px;font-weight:800;color:var(--navy);margin-bottom:6px}
-.page-hero p{font-size:13px;color:var(--sub)}
+/* ── Page Hero ── */
+.page-hero {
+  background: linear-gradient(135deg,#1a1040 0%,#312e81 50%,#4f46e5 100%);
+  color: #fff; border-radius: 16px; padding: 28px 32px; margin-bottom: 28px;
+  box-shadow: 0 4px 20px rgba(79,70,229,.25);
+  display: flex; align-items: center; gap: 20px;
+}
+.hero-icon { font-size: 52px; flex-shrink: 0; }
+.hero-text h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.hero-text p  { font-size: 13px; color: #c7d2fe; line-height: 1.6; }
 
-/* ── 分類區塊 ── */
-.cat-section{margin-bottom:44px}
-.cat-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--border)}
-.cat-bar{width:4px;height:20px;border-radius:2px}
-.cat-bar.annual{background:#2563eb}
-.cat-bar.special{background:#dc2626}
-.cat-title{font-size:13px;font-weight:700;color:var(--sub);letter-spacing:2px;text-transform:uppercase;flex:1}
-.cat-count{font-size:11px;background:var(--border);color:var(--sub);padding:2px 8px;border-radius:10px}
+/* ── Module Nav (tab pills) ── */
+.module-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+.module-nav button {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 20px; border-radius: 24px;
+  font-size: 13px; font-weight: 600;
+  border: 1.5px solid var(--border);
+  background: var(--card); color: var(--text);
+  cursor: pointer; font-family: inherit; transition: all .15s;
+}
+.module-nav button.active { background: var(--plan); color: #fff; border-color: var(--plan); }
+.module-nav button:hover:not(.active) { border-color: var(--plan); color: var(--plan); }
+.nav-badge {
+  font-size: 10px; padding: 1px 7px; border-radius: 10px; font-weight: 700;
+  background: rgba(255,255,255,.22); color: inherit;
+}
+.module-nav button:not(.active) .nav-badge { background: #f1f5f9; color: var(--sub); }
 
-/* ── 計畫書卡片 ── */
-.plan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.plan-card{background:var(--card);border-radius:12px;padding:20px 22px;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.05);text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .15s,border-color .15s}
-.plan-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.11);border-color:#cbd5e1}
-.plan-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;width:fit-content}
-.plan-tag.annual{background:#dbeafe;color:#1d4ed8}
-.plan-tag.special{background:#fee2e2;color:#b91c1c}
-.plan-tag.draft{background:#fef3c7;color:#92400e}
-.plan-title{font-size:15px;font-weight:700;color:var(--navy);line-height:1.45}
-.plan-meta{display:flex;align-items:center;gap:10px;margin-top:auto}
-.plan-date{font-size:12px;color:var(--sub)}
-.plan-open{font-size:12px;color:var(--blue);font-weight:700;margin-left:auto;padding:5px 14px;border-radius:20px;border:1.5px solid var(--blue);background:transparent;white-space:nowrap;transition:background .15s,color .15s}
-.plan-card:hover .plan-open{background:var(--blue);color:#fff;text-decoration:none}
+/* ── Section block ── */
+.section-block { display: block; }
+.section-block.hidden { display: none; }
 
-/* ── 空白提示 ── */
-.empty{background:var(--card);border:2px dashed var(--border);border-radius:12px;padding:32px;text-align:center;color:var(--sub);font-size:13px}
+/* ── Section label ── */
+.section-label {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: 3px; text-transform: uppercase;
+  margin: 0 0 20px; display: flex; align-items: center; gap: 10px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);border-top:1px solid var(--border);background:var(--card)}
+/* ── Year filter tabs ── */
+.yr-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+.yr-btn {
+  padding: 6px 16px; border-radius: 8px; font-size: 13px; font-weight: 700;
+  background: #fff; border: 2px solid var(--border); cursor: pointer; color: var(--sub);
+  font-family: inherit; transition: all .15s;
+}
+.yr-btn.active { background: var(--plan); color: #fff; border-color: var(--plan); }
+.yr-btn:hover:not(.active) { border-color: var(--plan); color: var(--plan); }
 
-@media(max-width:600px){
-  main{padding:20px 16px 40px}
-  .plan-grid{grid-template-columns:1fr}
+/* ── Plan grid & cards ── */
+.plan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 14px; }
+.plan-card {
+  background: var(--card); border-radius: 12px; padding: 20px 22px;
+  border: 1px solid var(--border); box-shadow: 0 1px 4px rgba(0,0,0,.05);
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: box-shadow .15s, border-color .15s;
+}
+.plan-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,.11); border-color: #cbd5e1; }
+.plan-card.yr-hidden { display: none; }
+
+.plan-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 700; padding: 2px 9px;
+  border-radius: 20px; width: fit-content;
+}
+.plan-tag.annual  { background: #dbeafe; color: #1d4ed8; }
+.plan-tag.special { background: #fee2e2; color: #b91c1c; }
+
+.plan-title { font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.45; }
+.plan-meta  { display: flex; align-items: center; gap: 10px; margin-top: auto; }
+.plan-date  { font-size: 12px; color: var(--sub); }
+.plan-open  {
+  font-size: 12px; color: var(--blue); font-weight: 700; margin-left: auto;
+  padding: 5px 14px; border-radius: 20px;
+  border: 1.5px solid var(--blue); background: transparent;
+  white-space: nowrap; transition: background .15s, color .15s;
+}
+.plan-card:hover .plan-open { background: var(--blue); color: #fff; }
+
+/* ── Empty state ── */
+.empty {
+  background: var(--card); border: 2px dashed var(--border);
+  border-radius: 12px; padding: 32px; text-align: center;
+  color: var(--sub); font-size: 13px; display: none;
+}
+.empty.show { display: block; }
+
+footer {
+  text-align: center; padding: 18px 24px; font-size: 12px; color: var(--sub);
+  border-top: 1px solid var(--border); background: var(--card);
+}
+
+@media (max-width: 600px) {
+  main { padding: 20px 16px 40px; }
+  .plan-grid { grid-template-columns: 1fr; }
+  .page-hero { flex-direction: column; text-align: center; padding: 24px 20px; }
 }
 </style>
 </head>
@@ -70,118 +159,152 @@ footer{text-align:center;padding:18px 24px;font-size:12px;color:var(--sub);borde
 </header>
 
 <main>
+
   <div class="page-hero">
-    <h2>職業安全衛生計畫書</h2>
-    <p>年度計畫書與各項專項計畫，點擊卡片即可開啟閱覽。</p>
+    <div class="hero-icon">📋</div>
+    <div class="hero-text">
+      <h2>職業安全衛生計畫書</h2>
+      <p>年度管理計畫與各項專項計畫，點擊卡片即可開啟閱覽。<br>
+         目前收錄：年度計畫 11 份（108–115 年）・專項計畫 2 份</p>
+    </div>
   </div>
 
-  <!-- ── 年度計畫書 ── -->
-  <section class="cat-section">
-    <div class="cat-header">
-      <div class="cat-bar annual"></div>
-      <span class="cat-title">年度計畫書</span>
-      <span class="cat-count" id="annual-count">0</span>
+  <!-- ── Tab Nav ── -->
+  <nav class="module-nav">
+    <button id="tab-annual"  class="active" onclick="switchTab('annual')">
+      📅 年度計畫書 <span class="nav-badge" id="badge-annual">11</span>
+    </button>
+    <button id="tab-special" onclick="switchTab('special')">
+      📌 專項計畫書 <span class="nav-badge" id="badge-special">2</span>
+    </button>
+  </nav>
+
+  <!-- ════════════ 年度計畫書 ════════════ -->
+  <section class="section-block" id="sec-annual">
+
+    <div class="section-label">年度計畫書</div>
+
+    <!-- 年份篩選 -->
+    <div class="yr-tabs" id="yr-tabs">
+      <button class="yr-btn active" data-yr="all" onclick="filterYr('all')">全部</button>
+      <button class="yr-btn" data-yr="115" onclick="filterYr('115')">115 年</button>
+      <button class="yr-btn" data-yr="114" onclick="filterYr('114')">114 年</button>
+      <button class="yr-btn" data-yr="113" onclick="filterYr('113')">113 年</button>
+      <button class="yr-btn" data-yr="112" onclick="filterYr('112')">112 年</button>
+      <button class="yr-btn" data-yr="111" onclick="filterYr('111')">111 年</button>
+      <button class="yr-btn" data-yr="110" onclick="filterYr('110')">110 年</button>
+      <button class="yr-btn" data-yr="109" onclick="filterYr('109')">109 年</button>
+      <button class="yr-btn" data-yr="108" onclick="filterYr('108')">108 年</button>
     </div>
+
     <div class="plan-grid" id="annual-grid">
-      <a class="plan-card" href="annual/ohs-plan-115.html" target="_blank">
+      <a class="plan-card" href="annual/ohs-plan-115.html" target="_blank" data-yr="115">
         <span class="plan-tag annual">年度計畫</span>
         <div class="plan-title">115 年度職業安全衛生管理計畫簡報</div>
         <div class="plan-meta"><span class="plan-date">民國 115 年</span><span class="plan-open">開啟 →</span></div>
       </a>
-      <a class="plan-card" href="annual/ohs-plan-114.html" target="_blank">
+      <a class="plan-card" href="annual/ohs-plan-114.html" target="_blank" data-yr="114">
         <span class="plan-tag annual">年度計畫</span>
         <div class="plan-title">114 年度職業安全衛生管理計畫簡報</div>
         <div class="plan-meta"><span class="plan-date">民國 114 年</span><span class="plan-open">開啟 →</span></div>
       </a>
-      <a class="plan-card" href="annual/ohs-plan-113.html" target="_blank">
+      <a class="plan-card" href="annual/ohs-plan-113.html" target="_blank" data-yr="113">
         <span class="plan-tag annual">年度計畫</span>
         <div class="plan-title">113 年度職業安全衛生管理計畫簡報</div>
         <div class="plan-meta"><span class="plan-date">民國 113 年</span><span class="plan-open">開啟 →</span></div>
       </a>
-      <a class="plan-card" href="annual/ohs-plan-112.html" target="_blank">
+      <a class="plan-card" href="annual/ohs-plan-112.html" target="_blank" data-yr="112">
         <span class="plan-tag annual">年度計畫</span>
         <div class="plan-title">112 年度職業安全衛生管理計畫簡報</div>
         <div class="plan-meta"><span class="plan-date">民國 112 年</span><span class="plan-open">開啟 →</span></div>
       </a>
-      <a class="plan-card" href="annual/ohs-plan-111.html" target="_blank">
+      <a class="plan-card" href="annual/ohs-plan-111.html" target="_blank" data-yr="111">
         <span class="plan-tag annual">年度計畫</span>
         <div class="plan-title">111 年度職業安全衛生管理計畫簡報</div>
         <div class="plan-meta"><span class="plan-date">民國 111 年</span><span class="plan-open">開啟 →</span></div>
       </a>
-      <a class="plan-card" href="annual/ohs-plan-110-main.html" target="_blank">
+      <a class="plan-card" href="annual/ohs-plan-110-main.html" target="_blank" data-yr="110">
         <span class="plan-tag annual">年度計畫</span>
         <div class="plan-title">110 年度職業安全衛生管理計畫簡報（總公司・全興廠）</div>
         <div class="plan-meta"><span class="plan-date">民國 110 年</span><span class="plan-open">開啟 →</span></div>
       </a>
-      <a class="plan-card" href="annual/ohs-plan-110-ops.html" target="_blank">
+      <a class="plan-card" href="annual/ohs-plan-110-ops.html" target="_blank" data-yr="110">
         <span class="plan-tag annual">年度計畫</span>
         <div class="plan-title">110 年度職業安全衛生管理計畫簡報（業務部・營運部）</div>
         <div class="plan-meta"><span class="plan-date">民國 110 年</span><span class="plan-open">開啟 →</span></div>
       </a>
-      <a class="plan-card" href="annual/ohs-plan-109.html" target="_blank">
+      <a class="plan-card" href="annual/ohs-plan-109.html" target="_blank" data-yr="109">
         <span class="plan-tag annual">年度計畫</span>
         <div class="plan-title">109 年度職業安全衛生管理計畫簡報</div>
         <div class="plan-meta"><span class="plan-date">民國 109 年</span><span class="plan-open">開啟 →</span></div>
       </a>
-      <a class="plan-card" href="annual/ohs-plan-109-v2.html" target="_blank">
+      <a class="plan-card" href="annual/ohs-plan-109-v2.html" target="_blank" data-yr="109">
         <span class="plan-tag annual">年度計畫</span>
         <div class="plan-title">109 年度職業安全衛生管理計畫簡報（第 2 版）</div>
         <div class="plan-meta"><span class="plan-date">民國 109 年</span><span class="plan-open">開啟 →</span></div>
       </a>
-      <a class="plan-card" href="annual/ohs-plan-109-external.html" target="_blank">
+      <a class="plan-card" href="annual/ohs-plan-109-external.html" target="_blank" data-yr="109">
         <span class="plan-tag annual">年度計畫</span>
         <div class="plan-title">109 年度職業安全衛生管理計畫簡報（外站）</div>
         <div class="plan-meta"><span class="plan-date">民國 109 年</span><span class="plan-open">開啟 →</span></div>
       </a>
-      <a class="plan-card" href="annual/ohs-plan-108.html" target="_blank">
+      <a class="plan-card" href="annual/ohs-plan-108.html" target="_blank" data-yr="108">
         <span class="plan-tag annual">年度計畫</span>
         <div class="plan-title">108 年度職業安全衛生管理計畫簡報</div>
         <div class="plan-meta"><span class="plan-date">民國 108 年</span><span class="plan-open">開啟 →</span></div>
       </a>
     </div>
-    <div class="empty" id="annual-empty">目前尚無年度計畫書</div>
+    <div class="empty" id="annual-empty">此年度目前無計畫書</div>
+
   </section>
 
-  <!-- ── 專項計畫書 ── -->
-  <section class="cat-section">
-    <div class="cat-header">
-      <div class="cat-bar special"></div>
-      <span class="cat-title">專項計畫書</span>
-      <span class="cat-count" id="special-count">0</span>
-    </div>
+  <!-- ════════════ 專項計畫書 ════════════ -->
+  <section class="section-block hidden" id="sec-special">
+
+    <div class="section-label">專項計畫書</div>
+
     <div class="plan-grid" id="special-grid">
       <a class="plan-card" href="special/heat-hazard-prevention-plan.html">
         <span class="plan-tag special">專項計畫</span>
         <div class="plan-title">高氣溫戶外作業熱危害預防計畫書</div>
-        <div class="plan-meta">
-          <span class="plan-date">2026-06</span>
-          <span class="plan-open">開啟 →</span>
-        </div>
+        <div class="plan-meta"><span class="plan-date">2026-06</span><span class="plan-open">開啟 →</span></div>
       </a>
       <a class="plan-card" href="special/workplace-bullying-prevention-plan.html">
         <span class="plan-tag special">專項計畫</span>
         <div class="plan-title">職場霸凌防治計畫書</div>
-        <div class="plan-meta">
-          <span class="plan-date">2026-06</span>
-          <span class="plan-open">開啟 →</span>
-        </div>
+        <div class="plan-meta"><span class="plan-date">2026-06</span><span class="plan-open">開啟 →</span></div>
       </a>
     </div>
+
   </section>
+
 </main>
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理</footer>
 
 <script>
-// 自動計算各分類數量
-['annual','special'].forEach(id => {
-  const grid  = document.getElementById(id + '-grid');
-  const count = document.getElementById(id + '-count');
-  const empty = document.getElementById(id + '-empty');
-  const n = grid ? grid.querySelectorAll('.plan-card').length : 0;
-  if (count) count.textContent = n;
-  if (empty) empty.style.display = n ? 'none' : '';
-});
+function switchTab(tab) {
+  ['annual', 'special'].forEach(t => {
+    document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+    document.getElementById('sec-' + t).classList.toggle('hidden', t !== tab);
+  });
+}
+
+function filterYr(yr) {
+  document.querySelectorAll('.yr-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.yr === yr));
+
+  const cards = document.querySelectorAll('#annual-grid .plan-card');
+  let visible = 0;
+  cards.forEach(c => {
+    const show = yr === 'all' || c.dataset.yr === yr;
+    c.classList.toggle('yr-hidden', !show);
+    if (show) visible++;
+  });
+
+  const empty = document.getElementById('annual-empty');
+  empty.classList.toggle('show', visible === 0);
+}
 </script>
 
 <script src="../shared/sidebar.js"></script>
