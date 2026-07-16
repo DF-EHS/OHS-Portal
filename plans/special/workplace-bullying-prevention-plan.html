@@ -339,7 +339,55 @@
   .back-to-top.visible { opacity: 1; visibility: visible; }
   .back-to-top:hover { background: var(--dark); transform: translateY(-2px); }
 
-  @media print { .top-nav, .quicknav, .back-to-top { display: none; } }
+  /* ── SIDEBAR (left slide-in TOC) ── */
+  .sidebar-trigger { position: fixed; top: 0; left: 0; width: 18px; height: 100vh; z-index: 2000; cursor: pointer; }
+  .sidebar-trigger::after {
+    content: ''; position: absolute; top: 50%; left: 4px; transform: translateY(-50%);
+    width: 6px; height: 60px; background: rgba(27,58,92,.3); border-radius: 3px; transition: all .3s;
+  }
+  .sidebar-trigger:hover::after { background: rgba(27,58,92,.7); width: 8px; height: 80px; }
+  .sidebar {
+    position: fixed; top: 0; left: -320px; width: 300px; height: 100vh;
+    background: #fff; box-shadow: 4px 0 20px rgba(0,0,0,.15);
+    z-index: 1999; transition: left .35s cubic-bezier(.4,0,.2,1); overflow-y: auto;
+  }
+  @media (min-width: 1025px) { .sidebar-trigger:hover ~ .sidebar, .sidebar:hover { left: 0; } }
+  .sidebar-header {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    color: #fff; padding: 20px 18px 14px; font-size: 1em; font-weight: 700;
+    position: sticky; top: 0; z-index: 1;
+  }
+  .sidebar-header small { display: block; font-weight: 400; font-size: .78em; opacity: .8; margin-top: 2px; }
+  .toc-group { padding: 6px 0; border-bottom: 1px solid #f5f5f5; }
+  .toc-chapter {
+    display: block; padding: 9px 18px; font-size: .88em; font-weight: 600;
+    color: var(--navy); text-decoration: none; transition: background .15s;
+    border-left: 3px solid transparent;
+  }
+  .toc-chapter:hover { background: var(--sky); border-left-color: var(--navy); }
+  .toc-sub {
+    display: block; padding: 5px 18px 5px 32px; font-size: .82em;
+    color: #666; text-decoration: none; transition: background .15s;
+  }
+  .toc-sub:hover { background: #E8F1F8; color: var(--navy); }
+  .sidebar-footer { padding: 12px 18px; font-size: .75em; color: #999; text-align: center; border-top: 1px solid #f0f0f0; }
+  .mobile-menu-btn {
+    display: none; position: fixed; top: 12px; left: 12px;
+    width: 42px; height: 42px; background: var(--navy); color: #fff;
+    border: none; border-radius: 50%; font-size: 1.2em; cursor: pointer;
+    z-index: 2001; box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    align-items: center; justify-content: center;
+  }
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 1998; opacity: 0; transition: opacity .3s; }
+  .sidebar-overlay.active { opacity: 1; }
+  @media (max-width: 1024px) {
+    .sidebar-trigger { display: none; }
+    .mobile-menu-btn { display: flex; }
+    .sidebar { width: 80vw; max-width: 300px; left: -85vw; }
+    .sidebar.open { left: 0; }
+  }
+
+  @media print { .top-nav, .quicknav, .back-to-top, .sidebar-trigger, .sidebar, .mobile-menu-btn, .sidebar-overlay { display: none !important; } }
 
   /* ── Print ── */
   @media print {
@@ -356,6 +404,26 @@
 </style>
 </head>
 <body>
+
+<!-- ══ SIDEBAR (left slide-in TOC) ══ -->
+<div class="sidebar-trigger"></div>
+<aside class="sidebar">
+  <div class="sidebar-header">📋 職場霸凌防治計畫書<small>大豐環保科技股份有限公司</small></div>
+  <div class="toc-group">
+    <a class="toc-chapter" href="#s1">① 新法核心改變</a>
+    <a class="toc-chapter" href="#s2">② 規模門檻與義務</a>
+    <a class="toc-chapter" href="#s3">③ 五大組織架構</a>
+    <a class="toc-chapter" href="#s4">④ 申訴流程責任鏈</a>
+    <a class="toc-chapter" href="#s5">⑤ 培訓規劃</a>
+    <a class="toc-chapter" href="#s6">⑥ 立即行動清單</a>
+    <a class="toc-chapter" href="#s7">⑦ 霸凌紅線</a>
+    <a class="toc-chapter" href="#s8">⑧ 合規自我檢核</a>
+  </div>
+  <div class="sidebar-footer">第一版 ｜ 中華民國 115 年 7 月 1 日</div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">☰</button>
+
 <div class="page">
 
 <!-- ══ TOP NAV ══ -->
@@ -814,6 +882,26 @@
 <script>
 window.addEventListener('scroll',function(){
   document.getElementById('backToTop').classList.toggle('visible',window.scrollY>400);
+});
+
+/* ── Sidebar (mobile) ── */
+function toggleSidebar(){
+  const s = document.querySelector('.sidebar');
+  const o = document.getElementById('sidebarOverlay');
+  const open = s.classList.toggle('open');
+  o.style.display = 'block';
+  setTimeout(() => o.style.opacity = open ? '1' : '0', 10);
+  if (!open) setTimeout(() => o.style.display = 'none', 300);
+  o.classList.toggle('active', open);
+}
+document.getElementById('sidebarOverlay').addEventListener('click', toggleSidebar);
+
+/* ── Smooth scroll ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+  });
 });
 </script>
 </body>
