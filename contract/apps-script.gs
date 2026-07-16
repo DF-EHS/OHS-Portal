@@ -109,6 +109,12 @@ function _rowToRecord(row) {
   };
 }
 
+// 將電話等數字字串以文字格式寫入試算表（前綴 ' 讓 Sheets 保留開頭 0）
+function _asText(s) {
+  var str = String(s || '');
+  return str ? "'" + str : '';
+}
+
 // 將紀錄物件轉為 15 欄列陣列（供 appendRow / setValues 使用）
 function _recordToRow(data) {
   var b = data.basic || {};
@@ -120,7 +126,7 @@ function _recordToRow(data) {
     String(b.contract || ''),
     String(b.workname || ''),
     String(b.supervisor || ''),
-    String(b.phone || ''),
+    _asText(b.phone),                            // col7 電話 → 強制文字，保留開頭 0
     String(b.dateStart || ''),
     String(b.dateEnd || ''),
     String(b.area || ''),
@@ -311,13 +317,13 @@ function doPost(e) {
       if (!v.code) {
         // 無代碼 → 新增，自動產生流水號
         var code = _nextVendorCode(sheet);
-        sheet.appendRow([code, v.name, v.contact || '', v.phone || '', v.note || '', new Date().toISOString()]);
+        sheet.appendRow([code, v.name, v.contact || '', _asText(v.phone), v.note || '', new Date().toISOString()]);
         return _resp({ ok: true, code: code });
       } else {
         // 有代碼 → 找到對應列更新
         var rowNum = _findRow(sheet, v.code);
         if (rowNum < 0) return _resp({ ok: false, error: 'vendor not found: ' + v.code });
-        sheet.getRange(rowNum, 2, 1, 4).setValues([[v.name, v.contact || '', v.phone || '', v.note || '']]);
+        sheet.getRange(rowNum, 2, 1, 4).setValues([[v.name, v.contact || '', _asText(v.phone), v.note || '']]);
         return _resp({ ok: true });
       }
     }
