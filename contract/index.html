@@ -1530,6 +1530,7 @@ function setStep(n){
 // ════════════════════════════════════════════════
 function startWizard(){
   resetForm();
+  _applyVendorPrefill(); // QR Code 帶入的廠商資料在 resetForm 後重新套用
   for(let i=1;i<=5;i++) document.getElementById('step-'+i).style.display = i===1?'':'none';
   showView('wizard');
   setStep(1);
@@ -5041,19 +5042,23 @@ function initFromUrl() {
   return true;
 }
 
+let _qrVendor = null; // 儲存 QR Code 帶入的廠商資料，供 startWizard 重新套用
+
 function _prefillVendor(vendor) {
-  const tryFill = () => {
-    const fc = document.getElementById('f-company');
-    if (!fc) { setTimeout(tryFill, 150); return; }
-    if (vendor.name)    { fc.value = vendor.name;    fc.style.background = '#eff6ff'; }
-    const fs = document.getElementById('f-supervisor');
-    if (fs && vendor.contact) { fs.value = vendor.contact; fs.style.background = '#eff6ff'; }
-    const fp = document.getElementById('f-phone');
-    if (fp && vendor.phone)   { fp.value = vendor.phone;   fp.style.background = '#eff6ff'; }
-    // 更新橫幅顯示廠商名稱
-    if (vendor.name) document.getElementById('fill-vendor-name').textContent = '｜ 廠商：' + vendor.name;
-  };
-  tryFill();
+  _qrVendor = vendor;
+  _applyVendorPrefill();
+}
+
+function _applyVendorPrefill() {
+  if (!_qrVendor) return;
+  const v = _qrVendor;
+  const fc = document.getElementById('f-company');
+  if (fc && v.name)    { fc.value = v.name;    fc.style.background = '#eff6ff'; }
+  const fs = document.getElementById('f-supervisor');
+  if (fs && v.contact) { fs.value = v.contact; fs.style.background = '#eff6ff'; }
+  const fp = document.getElementById('f-phone');
+  if (fp && v.phone)   { fp.value = v.phone;   fp.style.background = '#eff6ff'; }
+  if (v.name) document.getElementById('fill-vendor-name').textContent = '｜ 廠商：' + v.name;
 }
 
 // ── 廠商名冊 ──
@@ -5083,10 +5088,10 @@ function renderVendors(list) {
       <td>${_esc(v.contact||'—')}</td>
       <td>${_esc(v.phone||'—')}</td>
       <td style="color:var(--sub);font-size:12px">${_esc(v.note||'')}</td>
-      <td>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <button class="btn btn-sm btn-primary" onclick="_showQRByIdx(${i})">📱 QR Code</button>
-          <button class="btn btn-sm" onclick="_editVendorByIdx(${i})">✏️ 編輯</button>
+      <td style="white-space:nowrap">
+        <div style="display:flex;gap:6px;flex-wrap:nowrap">
+          <button class="btn btn-sm btn-primary" onclick="_showQRByIdx(${i})" style="white-space:nowrap">📱 QR Code</button>
+          <button class="btn btn-sm" onclick="_editVendorByIdx(${i})" style="white-space:nowrap">✏️ 編輯</button>
           <button class="btn btn-sm btn-danger" onclick="_deleteVendor('${_esc(v.code)}','${_esc(v.name)}')">🗑️</button>
         </div>
       </td>

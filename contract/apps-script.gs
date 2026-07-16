@@ -188,6 +188,7 @@ function doGet(e) {
             company:    (rec.basic && rec.basic.company)    || '',
             workname:   (rec.basic && rec.basic.workname)   || '',
             supervisor: (rec.basic && rec.basic.supervisor) || '',
+            phone:      (rec.basic && rec.basic.phone)      || '',
             dateStart:  (rec.basic && rec.basic.dateStart)  || '',
             dateEnd:    (rec.basic && rec.basic.dateEnd)    || '',
             timePeriod: (rec.basic && rec.basic.timePeriod) || [],
