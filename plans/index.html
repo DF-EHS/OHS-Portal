@@ -86,16 +86,6 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24p
 }
 .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-/* ── Year filter tabs ── */
-.yr-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
-.yr-btn {
-  padding: 6px 16px; border-radius: 8px; font-size: 13px; font-weight: 700;
-  background: #fff; border: 2px solid var(--border); cursor: pointer; color: var(--sub);
-  font-family: inherit; transition: all .15s;
-}
-.yr-btn.active { background: var(--plan); color: #fff; border-color: var(--plan); }
-.yr-btn:hover:not(.active) { border-color: var(--plan); color: var(--plan); }
-
 /* ── Plan grid & cards ── */
 .plan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 14px; }
 .plan-card {
@@ -106,7 +96,6 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 24p
   transition: box-shadow .15s, border-color .15s;
 }
 .plan-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,.11); border-color: #cbd5e1; }
-.plan-card.yr-hidden { display: none; }
 
 .plan-tag {
   display: inline-flex; align-items: center; gap: 5px;
@@ -165,14 +154,14 @@ footer {
     <div class="hero-text">
       <h2>職業安全衛生計畫書</h2>
       <p>年度管理計畫與各項專項計畫，點擊卡片即可開啟閱覽。<br>
-         目前收錄：年度計畫 1 份・專項計畫 2 份</p>
+         目前收錄：年度計畫 4 份（112–115 年）・專項計畫 2 份</p>
     </div>
   </div>
 
   <!-- ── Tab Nav ── -->
   <nav class="module-nav">
     <button id="tab-annual"  class="active" onclick="switchTab('annual')">
-      📅 年度計畫書 <span class="nav-badge" id="badge-annual">1</span>
+      📅 年度計畫書 <span class="nav-badge" id="badge-annual">4</span>
     </button>
     <button id="tab-special" onclick="switchTab('special')">
       📌 專項計畫書 <span class="nav-badge" id="badge-special">2</span>
@@ -184,27 +173,28 @@ footer {
 
     <div class="section-label">年度計畫書</div>
 
-    <!-- 年份篩選 -->
-    <div class="yr-tabs" id="yr-tabs">
-      <button class="yr-btn active" data-yr="all" onclick="filterYr('all')">全部</button>
-      <button class="yr-btn" data-yr="115" onclick="filterYr('115')">115 年</button>
-      <button class="yr-btn" data-yr="114" onclick="filterYr('114')">114 年</button>
-      <button class="yr-btn" data-yr="113" onclick="filterYr('113')">113 年</button>
-      <button class="yr-btn" data-yr="112" onclick="filterYr('112')">112 年</button>
-      <button class="yr-btn" data-yr="111" onclick="filterYr('111')">111 年</button>
-      <button class="yr-btn" data-yr="110" onclick="filterYr('110')">110 年</button>
-      <button class="yr-btn" data-yr="109" onclick="filterYr('109')">109 年</button>
-      <button class="yr-btn" data-yr="108" onclick="filterYr('108')">108 年</button>
-    </div>
-
     <div class="plan-grid" id="annual-grid">
-      <a class="plan-card" href="annual/ohs-plan-115.html" data-yr="115">
+      <a class="plan-card" href="annual/ohs-plan-115.html">
         <span class="plan-tag annual">年度計畫</span>
         <div class="plan-title">115 年度職業安全衛生管理計畫書</div>
         <div class="plan-meta"><span class="plan-date">民國 115 年</span><span class="plan-open">開啟 →</span></div>
       </a>
+      <a class="plan-card" href="annual/ohs-plan-114.html">
+        <span class="plan-tag annual">年度計畫</span>
+        <div class="plan-title">114 年度職業安全衛生管理計畫書</div>
+        <div class="plan-meta"><span class="plan-date">民國 114 年</span><span class="plan-open">開啟 →</span></div>
+      </a>
+      <a class="plan-card" href="annual/ohs-plan-113.html">
+        <span class="plan-tag annual">年度計畫</span>
+        <div class="plan-title">113 年度職業安全衛生管理計畫書</div>
+        <div class="plan-meta"><span class="plan-date">民國 113 年</span><span class="plan-open">開啟 →</span></div>
+      </a>
+      <a class="plan-card" href="annual/ohs-plan-112.html">
+        <span class="plan-tag annual">年度計畫</span>
+        <div class="plan-title">112 年度職業安全衛生管理計畫書</div>
+        <div class="plan-meta"><span class="plan-date">民國 112 年</span><span class="plan-open">開啟 →</span></div>
+      </a>
     </div>
-    <div class="empty" id="annual-empty">此年度目前無計畫書</div>
 
   </section>
 
@@ -238,22 +228,6 @@ function switchTab(tab) {
     document.getElementById('tab-' + t).classList.toggle('active', t === tab);
     document.getElementById('sec-' + t).classList.toggle('hidden', t !== tab);
   });
-}
-
-function filterYr(yr) {
-  document.querySelectorAll('.yr-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.yr === yr));
-
-  const cards = document.querySelectorAll('#annual-grid .plan-card');
-  let visible = 0;
-  cards.forEach(c => {
-    const show = yr === 'all' || c.dataset.yr === yr;
-    c.classList.toggle('yr-hidden', !show);
-    if (show) visible++;
-  });
-
-  const empty = document.getElementById('annual-empty');
-  empty.classList.toggle('show', visible === 0);
 }
 </script>
 

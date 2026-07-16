@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>114年度職業安全衛生管理計畫書｜大豐環保科技</title>
+<style>
+/* ── 霧藍主題 ── */
+:root{
+  --primary:#3e668c;--primary-light:#557ba4;--primary-dark:#2d4b6b;
+  --accent:#7ea8ce;--teal:#00897b;--purple:#6d28d9;--blue:#1d4ed8;
+  --bg:#f0f5fa;--card-bg:#ffffff;--text:#333;--text-light:#666;
+  --border:#c8d8e5;--border2:#e0e0e0;
+  --shadow:0 2px 8px rgba(0,0,0,.09);
+  --shadow-hover:0 4px 16px rgba(0,0,0,.14);--radius:12px;
+  --sidebar-width:300px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+
+/* ── TOP NAV ── */
+.top-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.back-link,.portal-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:white;color:var(--primary);border-radius:8px;text-decoration:none;font-size:.9em;font-weight:600;box-shadow:var(--shadow);transition:all .2s}
+.back-link:hover,.portal-link:hover{background:var(--primary);color:white}
+.portal-link{border:2px solid var(--primary)}
+
+/* ── COVER ── */
+.cover-card{background:linear-gradient(135deg,#7ea8ce 0%,#557ba4 35%,#3e668c 65%,#1a3552 100%);color:white;border-radius:var(--radius);padding:52px 40px;text-align:center;margin-bottom:30px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.cover-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 70%);animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.1);opacity:1}}
+.cover-card h1{font-size:2em;margin-bottom:10px;position:relative;text-shadow:0 2px 4px rgba(0,0,0,.2);white-space:nowrap}
+.cover-card .subtitle{font-size:.95em;opacity:.9;position:relative}
+.hero-co{font-size:12.5px;color:rgba(255,255,255,.75);letter-spacing:1px;margin-bottom:16px;position:relative}
+.cover-meta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
+.cover-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);padding:6px 16px;border-radius:20px;font-size:.84em;color:rgba(255,255,255,.95);backdrop-filter:blur(4px)}
+.cover-sign{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 24px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:16px 20px;max-width:480px;margin:20px auto 0}
+.sign-field label{font-size:10.5px;color:rgba(255,255,255,.6);display:block;margin-bottom:4px}
+.sign-line{border-bottom:1px solid rgba(255,255,255,.45);display:flex;align-items:flex-end;justify-content:center;width:100%;height:24px;padding-bottom:2px;font-size:13px;color:white;font-weight:500;letter-spacing:.5px}
+
+/* ── QUICK NAV ── */
+.quick-nav{background:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 20px 16px;margin-bottom:28px;border-top:3px solid var(--primary)}
+.quick-nav-title{font-size:.72em;color:var(--text-light);margin-bottom:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase}
+.quick-nav-items{display:flex;flex-wrap:wrap;gap:6px}
+.qnb{display:inline-flex;align-items:center;height:30px;padding:0 13px;border-radius:20px;background:#f0f5fa;color:var(--primary);text-decoration:none;font-size:.78em;font-weight:600;transition:all .2s;border:1.5px solid #c8d8e5;white-space:nowrap}
+.qnb:hover{background:var(--primary);color:white;border-color:var(--primary);transform:translateY(-1px);box-shadow:0 3px 8px rgba(62,102,140,.25)}
+
+/* ── CHAPTER ── */
+.chapter{margin-top:44px;margin-bottom:20px;scroll-margin-top:20px}
+.chapter-title{font-size:1.55em;color:var(--primary);border-left:5px solid var(--primary);padding-left:16px;margin-bottom:6px;font-weight:700}
+.chapter-subtitle{color:var(--text-light);font-size:.95em;padding-left:21px}
+
+/* ── CARDS ── */
+.card{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+.card-header{color:white;padding:14px 24px;font-size:1em;font-weight:600}
+.ch-amber{background:linear-gradient(135deg,#3e668c,#557ba4)}
+.ch-gold{background:linear-gradient(135deg,#557ba4,#7ea8ce)}
+.ch-dark{background:#1a3552}
+.ch-teal{background:#00897b}
+.ch-red{background:#c62828}
+.ch-gray{background:#546e7a}
+.ch-purple{background:#6d28d9}
+.ch-rose{background:#be123c}
+.card-body{padding:22px 24px}
+
+/* ── CALLOUT ── */
+.callout{border-radius:8px;padding:14px 18px;margin:14px 0;font-size:.92em}
+.callout.warn{background:#f0f5fa;border-left:4px solid var(--primary)}
+.callout.info{background:#e3f2fd;border-left:4px solid #2196f3}
+.callout.success{background:#e8f5e9;border-left:4px solid #43a047}
+.callout.note{background:#dae7f2;border-left:4px solid var(--accent)}
+
+/* ── TABLES ── */
+.tbl-wrap{overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:.9em}
+th{background:var(--primary);color:white;padding:10px 12px;text-align:left;font-weight:600}
+td{padding:8px 12px;border-bottom:1px solid var(--border2);vertical-align:middle}
+tr:nth-child(even) td{background:#f0f5fa}
+tr:hover td{background:#dae7f2}
+
+/* ── MONTH COLUMNS ── */
+.m-th{width:22px;min-width:22px;text-align:center;padding:10px 3px!important;font-size:.78em}
+.m-td{text-align:center;padding:6px 3px!important}
+.m-dot{color:var(--primary);font-weight:700;font-size:1em}
+.m-dash{color:#ddd;font-size:.9em}
+
+/* ── BADGES ── */
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.8em;font-weight:600;white-space:nowrap}
+.bd-amber{background:#dae7f2;color:#2d4b6b}
+.bd-gold{background:#e1ecf7;color:#1e3a5f}
+.bd-red{background:#ffcdd2;color:#c62828}
+.bd-blue{background:#bbdefb;color:#1565c0}
+.bd-green{background:#c8e6c9;color:#2e7d32}
+.bd-gray{background:#f1f5f9;color:#475569}
+.bd-purple{background:#ede9fe;color:#6d28d9}
+.bd-teal{background:#e0f2f1;color:#00695c}
+
+/* ── POLICY GRID ── */
+.policy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:14px 0}
+.policy-card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;transition:all .2s;box-shadow:var(--shadow)}
+.policy-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);border-color:rgba(62,102,140,.4)}
+.policy-num{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:white;margin-bottom:10px}
+.policy-text{font-size:.9em;line-height:1.75;color:var(--text)}
+
+/* ── GOAL ── */
+.goal-center{text-align:center;padding:16px 0 24px}
+.goal-ring-wrap{position:relative;width:170px;height:170px;margin:0 auto 24px}
+.goal-ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(#7ea8ce 0deg,#557ba4 120deg,#3e668c 240deg,#7ea8ce 360deg);animation:spinRing 6s linear infinite;mask:radial-gradient(circle,transparent 70%,black 71%);-webkit-mask:radial-gradient(circle,transparent 70%,black 71%)}
+@keyframes spinRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.goal-inner{position:absolute;inset:14px;background:linear-gradient(135deg,#3e668c,#2d4b6b);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 8px rgba(62,102,140,.12),0 0 0 20px rgba(62,102,140,.06)}
+.goal-num{font-size:44px;font-weight:900;color:#fff;line-height:1}
+.goal-unit{font-size:12px;color:rgba(255,255,255,.8);margin-top:2px}
+.goal-title{font-size:20px;font-weight:700;color:var(--primary-dark);margin-bottom:10px}
+.goal-desc{font-size:.92em;color:var(--text-light);max-width:520px;margin:0 auto 20px;line-height:1.85}
+.goal-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.goal-pill{background:white;border:1px solid var(--border);border-radius:999px;padding:7px 16px;font-size:.85em;font-weight:500;color:var(--primary-dark);display:flex;align-items:center;gap:6px;box-shadow:var(--shadow)}
+
+/* ── INSPECTION TABLE ── */
+.insp-tbl{width:100%;border-collapse:collapse;font-size:.82em;white-space:nowrap}
+.insp-tbl th{background:var(--primary);color:white;padding:7px 6px;text-align:center;font-weight:600;white-space:normal;vertical-align:middle}
+.insp-tbl td{padding:6px 8px;border:1px solid #e5e7eb;vertical-align:middle;white-space:normal}
+.insp-tbl .mc{width:20px;min-width:20px;text-align:center;padding:4px 2px!important;font-size:.78em}
+.insp-tbl .dot{color:var(--primary);font-weight:700}
+.insp-tbl .gr-row td{background:linear-gradient(135deg,#3e668c,#557ba4);color:white;font-weight:700;border-color:transparent}
+.insp-tbl .sub-item{font-weight:700;color:var(--primary-dark)}
+.insp-tbl tr:nth-child(even) td{background:#f0f5fa}
+.insp-tbl tr:nth-child(even) .dot{color:var(--primary)}
+.insp-tbl .gr-row:nth-child(even) td{background:linear-gradient(135deg,#3e668c,#557ba4)}
+
+/* ── CHARTER ACCORDION ── */
+.charter-acc{background:white;border-radius:var(--radius);border:1px solid var(--border2);margin-bottom:10px;overflow:hidden}
+.charter-acc.open{box-shadow:0 4px 20px rgba(62,102,140,.09);border-color:rgba(62,102,140,.28)}
+.charter-header{display:flex;align-items:center;gap:14px;padding:15px 22px;cursor:pointer;user-select:none;transition:background .15s}
+.charter-header:hover{background:#f0f5fa}
+.charter-num{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#3e668c,#557ba4);color:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
+.charter-icon{font-size:18px;flex-shrink:0}
+.charter-title-wrap{flex:1}
+.charter-title{font-size:15px;font-weight:700;color:var(--text)}
+.charter-subtitle{font-size:11px;color:var(--text-light);margin-top:2px}
+.charter-chevron{width:24px;height:24px;border-radius:6px;background:#dae7f2;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:12px;transition:transform .3s}
+.charter-acc.open .charter-chevron{transform:rotate(180deg)}
+.charter-body{display:none;padding:4px 22px 22px}
+.charter-acc.open .charter-body{display:block}
+.charter-prose{font-size:.91em;line-height:1.85;color:var(--text);background:#f0f5fa;border-radius:8px;padding:14px 16px}
+.charter-list{list-style:none;display:flex;flex-direction:column;gap:7px}
+.charter-list li{background:#f0f5fa;border-radius:8px;padding:10px 14px;font-size:.9em;line-height:1.7;color:var(--text);display:flex;gap:10px}
+.charter-list li::before{content:attr(data-num);width:22px;height:22px;border-radius:50%;background:var(--primary);color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ref-tags{display:flex;flex-wrap:wrap;gap:6px}
+.ref-tag{background:#f0f5fa;border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:.82em;color:var(--text)}
+.role-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:4px}
+.role-card{border-radius:var(--radius);padding:14px;border-left:4px solid var(--primary);background:#f0f5fa}
+.role-card-title{font-size:.88em;font-weight:700;margin-bottom:6px;color:var(--primary-dark)}
+.role-card-items{font-size:.82em;color:var(--text-light);line-height:1.9}
+
+/* ── MISC ── */
+.info-box{background:#f0f5fa;border:1px solid #c8d8e5;border-radius:10px;padding:12px 16px;font-size:.88em;color:var(--primary-dark);line-height:1.7;margin-bottom:16px}
+.divider{border:none;height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:24px 0}
+.footer{text-align:center;color:var(--text-light);font-size:.85em;padding:28px 0;margin-top:36px;border-top:1px solid var(--border2)}
+
+/* ── BACK TO TOP ── */
+.back-to-top{position:fixed;bottom:30px;right:30px;width:44px;height:44px;background:var(--primary);color:white;border:none;border-radius:50%;font-size:1.3em;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:all .3s;z-index:999}
+.back-to-top.visible{opacity:1;visibility:visible}
+.back-to-top:hover{background:var(--primary-dark);transform:translateY(-2px)}
+
+/* ── SIDEBAR ── */
+.sidebar-trigger{position:fixed;top:0;left:0;width:18px;height:100vh;z-index:2000;cursor:pointer}
+.sidebar-trigger::after{content:'';position:absolute;top:50%;left:4px;transform:translateY(-50%);width:6px;height:60px;background:rgba(62,102,140,.3);border-radius:3px;transition:all .3s}
+.sidebar-trigger:hover::after{background:rgba(62,102,140,.7);width:8px;height:80px}
+.sidebar{position:fixed;top:0;left:-320px;width:var(--sidebar-width);height:100vh;background:white;box-shadow:4px 0 20px rgba(0,0,0,.15);z-index:1999;transition:left .35s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+@media(min-width:1025px){.sidebar-trigger:hover~.sidebar,.sidebar:hover{left:0}}
+.sidebar-header{background:linear-gradient(135deg,#3e668c,#557ba4);color:white;padding:20px 18px 14px;font-size:1em;font-weight:700;position:sticky;top:0;z-index:1}
+.sidebar-header small{display:block;font-weight:400;font-size:.78em;opacity:.8;margin-top:2px}
+.toc-group{padding:6px 0;border-bottom:1px solid #f5f5f5}
+.toc-chapter{display:block;padding:9px 18px;font-size:.88em;font-weight:600;color:var(--primary);text-decoration:none;transition:background .15s;border-left:3px solid transparent}
+.toc-chapter:hover{background:#f0f5fa;border-left-color:var(--primary)}
+.toc-sub{display:block;padding:5px 18px 5px 32px;font-size:.82em;color:var(--text-light);text-decoration:none;transition:background .15s}
+.toc-sub:hover{background:#dae7f2;color:var(--primary)}
+.sidebar-footer{padding:12px 18px;font-size:.75em;color:#999;text-align:center;border-top:1px solid #f0f0f0}
+.mobile-menu-btn{display:none;position:fixed;top:12px;left:12px;width:42px;height:42px;background:var(--primary);color:white;border:none;border-radius:50%;font-size:1.2em;cursor:pointer;z-index:2001;box-shadow:0 2px 10px rgba(0,0,0,.25);transition:all .3s;align-items:center;justify-content:center}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1998;opacity:0;transition:opacity .3s}
+.sidebar-overlay.active{opacity:1}
+@media(max-width:1024px){.sidebar-trigger{display:none}.mobile-menu-btn{display:flex}.sidebar{width:80vw;max-width:300px;left:-85vw}.sidebar.open{left:0}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .policy-grid{grid-template-columns:1fr}
+  .cover-card{padding:36px 20px}.cover-card h1{font-size:1.3em;white-space:normal}
+  .cover-sign{grid-template-columns:1fr 1fr}
+  .chapter-title{font-size:1.2em}.card-body{padding:14px 12px}
+  table{font-size:.78em}.container{padding:12px 10px}
+  .insp-grid{grid-template-columns:1fr 1fr}
+}
+@media print{
+  .sidebar-trigger,.sidebar,.mobile-menu-btn,.sidebar-overlay,.back-to-top,.top-nav{display:none!important}
+  .card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}
+  .charter-body{display:block!important}
+  .m-th,.m-td{width:16px!important;min-width:16px!important;padding:4px 1px!important;font-size:.7em!important}
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar-trigger"></div>
+
+<aside class="sidebar">
+  <div class="sidebar-header">📋 114年度職安衛管理計畫書<small>大豐環保科技股份有限公司</small></div>
+  <div class="toc-group">
+    <a class="toc-chapter" href="#cover">文件封面</a>
+  </div>
+  <div class="toc-group">
+    <a class="toc-chapter" href="#s1">一、安全衛生政策</a>
+    <a class="toc-chapter" href="#s2">二、計畫目標</a>
+    <a class="toc-chapter" href="#s-perf">三、績效考核</a>
+    <a class="toc-chapter" href="#s3">四、計畫項目</a>
+    <a class="toc-sub" href="#s3t1">1. 危害辨識評估控制</a>
+    <a class="toc-sub" href="#s3t2">2. 機械設備器具管理</a>
+    <a class="toc-sub" href="#s3t3">3. 危險物有害物標示</a>
+    <a class="toc-sub" href="#s3t4">4. 有害環境採樣測定</a>
+    <a class="toc-sub" href="#s3t6">6. 採購承攬變更管理</a>
+    <a class="toc-sub" href="#s3t7">7. 安全衛生作業標準</a>
+    <a class="toc-sub" href="#s3t9">9. 安全衛生教育訓練</a>
+    <a class="toc-sub" href="#s3t10">10. 個人防護具管理</a>
+    <a class="toc-sub" href="#s3t11">11. 健康管理促進</a>
+    <a class="toc-sub" href="#s3t12">12. 安衛資訊蒐集運用</a>
+    <a class="toc-sub" href="#s3t13">13. 緊急應變措施</a>
+    <a class="toc-sub" href="#s3t14">14. 職業災害事故調查</a>
+    <a class="toc-sub" href="#s3t15">15. 管理記錄績效評估</a>
+    <a class="toc-sub" href="#s3t16">16. 其他安衛管理措施</a>
+  </div>
+  <div class="toc-group">
+    <a class="toc-chapter" href="#s4">大豐環保科技-自動檢查計畫表</a>
+    <a class="toc-sub" href="#s4-mech">機械・車輛定期檢查</a>
+    <a class="toc-sub" href="#s4-equip">設備定期檢查</a>
+    <a class="toc-sub" href="#s4-ops">作業檢點及其他</a>
+  </div>
+  <div class="toc-group">
+    <a class="toc-chapter" href="#s5">職業安全衛生管理規章</a>
+    <a class="toc-sub" href="#ch1">1.0 目的</a>
+    <a class="toc-sub" href="#ch2">2.0 適用範圍</a>
+    <a class="toc-sub" href="#ch3">3.0 參考資料</a>
+    <a class="toc-sub" href="#ch4">4.0 名詞定義</a>
+    <a class="toc-sub" href="#ch5">5.0 責任</a>
+    <a class="toc-sub" href="#ch6">6.0 程序概述</a>
+    <a class="toc-sub" href="#ch7">7.0 程序</a>
+    <a class="toc-sub" href="#ch8">8.0 安全與環保</a>
+    <a class="toc-sub" href="#ch9">9.0 附件</a>
+  </div>
+  <div class="sidebar-footer">114年度 ｜ 職安委員會審查通過</div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">☰</button>
+
+<div class="container">
+
+  <div class="top-nav">
+    <a class="back-link" href="../">← 計畫書</a>
+    <a class="portal-link" href="../../">🏠 系統入口</a>
+  </div>
+
+  <!-- ══ 封面 ══ -->
+  <div class="cover-card" id="cover">
+    <div class="hero-co">大豐環保科技股份有限公司　DA FON ENVIRONMENTAL TECHNOLOGY</div>
+    <h1>114年度職業安全衛生管理計畫書</h1>
+    <div class="subtitle">依職業安全衛生法及職業安全衛生管理辦法訂定</div>
+    <div class="cover-meta">
+      <span class="cover-badge">中華民國 114 年</span>
+      <span class="cover-badge">職安委員會審查通過</span>
+      <span class="cover-badge">主辦：法務環安課</span>
+    </div>
+    <div class="cover-sign">
+      <div class="sign-field"><label>核　　准</label><span class="sign-line"></span></div>
+      <div class="sign-field"><label>審　　核</label><span class="sign-line"></span></div>
+      <div class="sign-field"><label>承　　辦</label><span class="sign-line"></span></div>
+    </div>
+  </div>
+
+  <!-- ══ 快速導覽 ══ -->
+  <div class="quick-nav">
+    <div class="quick-nav-title">快速跳轉 — 各章節</div>
+    <div class="quick-nav-items">
+      <a class="qnb" href="#s1">一 政策</a>
+      <a class="qnb" href="#s2">二 目標</a>
+      <a class="qnb" href="#s-perf">三 績效考核</a>
+      <a class="qnb" href="#s3">四 計畫項目</a>
+      <a class="qnb" href="#s3t1">1 危害辨識</a>
+      <a class="qnb" href="#s3t2">2 機械設備</a>
+      <a class="qnb" href="#s3t3">3 危險有害物</a>
+      <a class="qnb" href="#s3t4">4 環境監測</a>
+      <a class="qnb" href="#s3t6">6 採購承攬</a>
+      <a class="qnb" href="#s3t7">7 作業標準</a>
+      <a class="qnb" href="#s3t9">9 教育訓練</a>
+      <a class="qnb" href="#s3t10">10 防護具</a>
+      <a class="qnb" href="#s3t11">11 健康管理</a>
+      <a class="qnb" href="#s3t12">12 安衛資訊</a>
+      <a class="qnb" href="#s3t13">13 緊急應變</a>
+      <a class="qnb" href="#s3t14">14 事故調查</a>
+      <a class="qnb" href="#s3t15">15 績效評估</a>
+      <a class="qnb" href="#s3t16">16 其他措施</a>
+      <a class="qnb" href="#s4">自動檢查計畫表</a>
+      <a class="qnb" href="#s5">管理規章</a>
+    </div>
+  </div>
+
+  <!-- ══ 一、安全衛生政策 ══ -->
+  <div class="chapter" id="s1">
+    <div class="chapter-title">一、安全衛生政策</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <p style="line-height:2.2;text-align:justify;text-indent:2em;">符合政府環保、勞安衛法規或相關團體的要求，持續改善環境及職業安全衛生。加強污染的控制、改善，並注重污染預防及防治工作，以杜絕公害做好資源回收。落實工安管理及檢查，改善員工／承攬商／居民／相關團體作業環境，避免意外事故及職業災害發生，創造安全的環境、衛生的所在。加強與員工／承攬商／居民／相關團體的溝通，實施教育訓練，提昇環保／安衛意識並提供相關環保及勞安衛訊息。提昇回收、處理技術及效能，促進資源回收再利用。</p>
+    </div>
+  </div>
+
+  <!-- ══ 二、計畫目標 ══ -->
+  <div class="chapter" id="s2">
+    <div class="chapter-title">二、計畫目標</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="goal-center">
+        <div class="goal-ring-wrap">
+          <div class="goal-ring"></div>
+          <div class="goal-inner">
+            <div class="goal-num">零</div>
+            <div class="goal-unit">重大職業災害</div>
+          </div>
+        </div>
+        <div class="goal-desc">為防止職業災害，保障全體安全與健康，特制定職業安全衛生管理計畫。本計畫在於確保各廠站等場所之安全運作，達到零重大職業災害之目標。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 三、績效考核 ══ -->
+  <div class="chapter" id="s-perf">
+    <div class="chapter-title">三、績效考核</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <p style="line-height:2.2;text-align:justify;text-indent:2em;">本計畫之最終目的在於提供全體員工安全的工作職場，本計畫之各項要求事項得列為該年度之績效考核。</p>
+    </div>
+  </div>
+
+  <!-- ══ 四、計畫項目 ══ -->
+  <div class="chapter" id="s3">
+    <div class="chapter-title">四、計畫項目</div>
+  </div>
+  <div class="tbl-wrap">
+  <table class="insp-tbl plan-tbl" style="min-width:900px">
+    <thead>
+      <tr>
+        <th rowspan="2" style="width:32px">項次</th>
+        <th rowspan="2" style="width:105px">計畫項目</th>
+        <th rowspan="2">實施細目</th>
+        <th rowspan="2" style="width:55px">頻率</th>
+        <th rowspan="2" style="width:100px">實施單位/<br>承辦人員</th>
+        <th colspan="12">預定／實施日期</th>
+        <th rowspan="2" style="width:90px">備　　　註</th>
+      </tr>
+      <tr>
+        <th class="mc">1</th><th class="mc">2</th><th class="mc">3</th><th class="mc">4</th>
+        <th class="mc">5</th><th class="mc">6</th><th class="mc">7</th><th class="mc">8</th>
+        <th class="mc">9</th><th class="mc">10</th><th class="mc">11</th><th class="mc">12</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- ── 項次 1 ── -->
+      <tr id="s3t1" data-months="4">
+        <td rowspan="3" style="text-align:center;font-weight:700">1</td>
+        <td rowspan="3">工作環境或作業危害之辨識、評估及控制</td>
+        <td>工作環境或作業危害鑑別、辨識</td><td>每年</td><td>法務環安課<br>各部門主管</td>
+        <td rowspan="3" style="font-size:.82em;vertical-align:middle">依D2-EM-008《危害鑑別風險機會評估管理辦法》辦理</td></tr>
+      <tr data-months="4"><td>工作環境或作業危害之風險評估</td><td>依結果</td><td>法務環安課</td><td data-anchor></td></tr>
+      <tr data-months="4"><td>依危害鑑別、風險評估結果決定控制措施</td><td>依結果</td><td>法務環安課</td><td data-anchor></td></tr>
+
+      <!-- ── 項次 2 ── -->
+      <tr id="s3t2" data-months="all">
+        <td rowspan="20" style="text-align:center;font-weight:700">2</td>
+        <td rowspan="20">機械、設備或器具之管理</td>
+        <td>一般手工具管理（氣動、電動）</td><td>每月</td><td>各單位</td>
+        <td rowspan="19" style="font-size:.82em;vertical-align:middle">依D2-EM-004《自動檢查管理辦法》辦理</td></tr>
+      <tr data-months="all"><td>一般機械、設備</td><td>每月</td><td>各單位</td><td data-anchor></td></tr>
+      <tr data-months="all"><td>研磨機／研磨輪之管理（營運部）</td><td>每月</td><td>各單位</td><td data-anchor></td></tr>
+      <tr data-months="11"><td>研磨機／研磨輪之維護</td><td>每年</td><td>—</td><td data-anchor></td></tr>
+      <tr data-months="all"><td>固定式起重機之管理（再生部・營運部）</td><td>每月</td><td>各單位</td><td data-anchor></td></tr>
+      <tr data-months="10"><td>固定式起重機之維護</td><td>每年</td><td>—</td><td data-anchor></td></tr>
+      <tr data-months="all"><td>移動式起重機之管理（營運部・業務部）</td><td>每月</td><td>各單位</td><td data-anchor></td></tr>
+      <tr data-months="11"><td>移動式起重機之維護</td><td>每年</td><td>—</td><td data-anchor></td></tr>
+      <tr data-months="all"><td>挖掘機之管理（營運部・業務部）</td><td>每月</td><td>各單位</td><td data-anchor></td></tr>
+      <tr data-months="11"><td>挖掘機之維護</td><td>每年</td><td>—</td><td data-anchor></td></tr>
+      <tr data-months="all"><td>動力堆高機之管理（各部門）</td><td>每月</td><td>各單位</td><td data-anchor></td></tr>
+      <tr data-months="10"><td>動力堆高機之維護</td><td>每年</td><td>—</td><td data-anchor></td></tr>
+      <tr data-months="all"><td>清運車輛之管理（營運部・業務部）</td><td>每月</td><td>各單位</td><td data-anchor></td></tr>
+      <tr data-months="11"><td>清運車輛之維護</td><td>每年</td><td>—</td><td data-anchor></td></tr>
+      <tr data-months="all"><td>第二種壓力容器之管理（再生部）</td><td>每月</td><td>各單位</td><td data-anchor></td></tr>
+      <tr data-months="4"><td>第二種壓力容器之檢查</td><td>每年</td><td>再生部</td><td data-anchor></td></tr>
+      <tr data-months="all"><td>鍋爐之管理</td><td>每月</td><td>各單位</td><td data-anchor></td></tr>
+      <tr data-months="10"><td>鍋爐之維護</td><td>每年</td><td>再生部</td><td data-anchor></td></tr>
+      <tr data-months="all"><td>高空作業車之管理</td><td>每月</td><td>各單位</td><td data-anchor></td></tr>
+      <tr data-months="10"><td>高空作業車之維護</td><td>每年</td><td>—</td><td data-anchor></td></tr>
+
+      <!-- ── 項次 3 ── -->
+      <tr id="s3t3" data-months="all">
+        <td rowspan="5" style="text-align:center;font-weight:700">3</td>
+        <td rowspan="5">危險物與有害物之標示及通識</td>
+        <td>化學品危害標示製作與發放</td><td>不定期</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="all"><td>新化學品（測試用）導入評估與審查</td><td>不定期</td><td>法務環安課<br>各部門主管</td><td></td></tr>
+      <tr data-months="10"><td>定期更新安全資料表（SDS）</td><td>每年</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="5"><td>廠內化學品使用調查</td><td>每年</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="6"><td>化學品分級管理</td><td>每年</td><td>法務環安課</td><td></td></tr>
+
+      <!-- ── 項次 4 ── -->
+      <tr id="s3t4" data-months="3,9">
+        <td rowspan="4" style="text-align:center;font-weight:700">4</td>
+        <td rowspan="4">有害作業環境之採樣策略規劃及測定</td>
+        <td>擬訂採樣策略</td><td>半年</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="5,11"><td>作業環境監測（委外監測機構）</td><td>半年</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="6,12"><td>監測結果進行通告</td><td>半年</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="6,12"><td>異常區域進行追蹤與改善</td><td>半年</td><td>法務環安課</td><td></td></tr>
+
+      <!-- ── 項次 5 ── -->
+      <tr id="s3t5" data-months="na">
+        <td style="text-align:center;font-weight:700">5</td>
+        <td>危險性工作場所之製程或施工安全評估</td>
+        <td>目前廠區非危險性工作場所，本項目不適用</td><td>N/A</td><td>—</td><td></td></tr>
+
+      <!-- ── 項次 6 ── -->
+      <tr id="s3t6" data-months="all">
+        <td rowspan="6" style="text-align:center;font-weight:700">6</td>
+        <td rowspan="6">採購管理、承攬管理及變更管理</td>
+        <td>新設備採購與製程變更</td><td>不定期</td><td>法務環安課<br>各部門主管</td><td style="font-size:.82em">審查新購置或變更之機械、器具、設備、原物料、個人防護具、工程發包及總務性質物品等，能符合「職業安全衛生法」相關法規標準與規範</td></tr>
+      <tr data-months="all"><td>承攬管理：承攬商資格審查</td><td>不定期</td><td>法務環安課<br>各部門主管</td><td></td></tr>
+      <tr data-months="12"><td>承攬管理：施工廠商危害告知教育訓練</td><td>每年</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="all"><td>承攬管理：施工作業管制</td><td>不定期</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="all"><td>承攬管理：現場施工作業巡檢</td><td>不定期</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="12"><td>承攬管理：定期召開協議組織會議</td><td>每年</td><td>法務環安課</td><td></td></tr>
+
+      <!-- ── 項次 7 ── -->
+      <tr id="s3t7" data-months="all">
+        <td rowspan="6" style="text-align:center;font-weight:700">7</td>
+        <td rowspan="6">安全衛生作業標準之訂定</td>
+        <td>廠內之安全衛生相關管理辦法或指導書定期更版，以符合執行現況與法規要求</td><td>不定期</td><td>法務環安課<br>各部門主管</td><td></td></tr>
+      <tr data-months="all"><td>審查廠內各單位發行之管理辦法或指導書，針對安全事項是否符合法規要求</td><td>不定期</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="all"><td>每月廠區工安巡檢</td><td>每月</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="all"><td>每月承攬商施工巡檢</td><td>每月</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="all"><td>異常區域進行追蹤與改善</td><td>每月</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="all"><td>現場單位實施自動檢查（再生部・營運部・業務部）</td><td>每日</td><td>再生部<br>營運部<br>業務部</td><td></td></tr>
+
+      <!-- ── 項次 9 ── -->
+      <tr id="s3t9" data-months="all">
+        <td rowspan="6" style="text-align:center;font-weight:700">9</td>
+        <td rowspan="6">安全衛生教育訓練</td>
+        <td>新進勞工安全衛生教育訓練</td><td>不定期</td><td>人資部<br>法務環安課</td>
+        <td>新進人員至公司報到當日辦理</td></tr>
+      <tr data-months="all"><td>異動勞工安全衛生教育訓練</td><td>不定期</td><td>人資部<br>法務環安課</td><td>依公司人事發佈令辦理</td></tr>
+      <tr data-months="all"><td>職業安全衛生在職教育訓練（法定回訓）</td><td>不定期</td><td>人資部<br>法務環安課</td><td></td></tr>
+      <tr data-months="all"><td>危險性機械設備暨危險作業教育訓練</td><td>不定期</td><td>人資部<br>法務環安課</td><td>固定式起重機・移動式起重機・堆高機・挖掘機・鏟裝機</td></tr>
+      <tr data-months="12"><td>承攬商教育訓練</td><td>每年</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="3,9"><td>道路安全教育訓練</td><td>半年</td><td>法務環安課</td><td></td></tr>
+
+      <!-- ── 項次 10 ── -->
+      <tr id="s3t10" data-months="all">
+        <td style="text-align:center;font-weight:700">10</td>
+        <td>個人防護具之管理</td>
+        <td>安全衛生防護具一般原則、配戴時機、防護具選擇、清潔與保管、使用期限之管理</td><td>每月</td><td>法務環安課<br>各部門主管</td><td></td></tr>
+
+      <!-- ── 項次 11 ── -->
+      <tr id="s3t11" data-months="all">
+        <td rowspan="4" style="text-align:center;font-weight:700">11</td>
+        <td rowspan="4">健康檢查、健康管理及健康促進</td>
+        <td>新進勞工體格檢查</td><td>不定期</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="5"><td>在職勞工、高階主管定期健康檢查（高階主管每兩年一次）</td><td>每兩年</td><td>法務環安課</td><td>依法規要求另訂頻率者，依法規要求辦理</td></tr>
+      <tr data-months="all"><td>員工健康管理</td><td>每月</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="all"><td>職場健康促進</td><td>每月</td><td>法務環安課</td><td>約聘廠護入廠衛教、諮詢</td></tr>
+
+      <!-- ── 項次 12 ── -->
+      <tr id="s3t12" data-months="1,4,7,10">
+        <td rowspan="4" style="text-align:center;font-weight:700">12</td>
+        <td rowspan="4">安全衛生資訊之蒐集、分享及運用</td>
+        <td>安全衛生資訊之蒐集</td><td>每季</td><td>法務環安課</td>
+        <td rowspan="4" style="font-size:.82em;vertical-align:middle">職業安全衛生委員會執行</td></tr>
+      <tr data-months="1,4,7,10"><td>安全衛生資訊之分享（職業安全衛生委員會執行）</td><td>每季</td><td>法務環安課</td><td data-anchor></td></tr>
+      <tr data-months="1,4,7,10"><td>安全衛生資訊之運用</td><td>每季</td><td>法務環安課</td><td data-anchor></td></tr>
+      <tr data-months="3,6,9,12"><td>法規鑑別</td><td>每季</td><td>法務環安課</td><td data-anchor></td></tr>
+
+      <!-- ── 項次 13 ── -->
+      <tr id="s3t13" data-months="4,10">
+        <td style="text-align:center;font-weight:700">13</td>
+        <td>緊急應變措施</td>
+        <td>自衛消防編組演練暨消防安全教育訓練</td><td>每半年</td><td>法務環安課</td><td></td></tr>
+
+      <!-- ── 項次 14 ── -->
+      <tr id="s3t14" data-months="all">
+        <td rowspan="2" style="text-align:center;font-weight:700">14</td>
+        <td rowspan="2">職業災害、虛驚事故、影響身心健康事件之調查處理與統計分析</td>
+        <td>職業災害等事故調查處理與統計分析</td><td>不定期</td><td>法務環安課</td><td></td></tr>
+      <tr data-months="all"><td>虛驚事故案件提報、調查</td><td>不定期</td><td>法務環安課</td><td></td></tr>
+
+      <!-- ── 項次 15 ── -->
+      <tr id="s3t15" data-months="3,6,9,12">
+        <td style="text-align:center;font-weight:700">15</td>
+        <td>安全衛生管理記錄（檢查或相關紀錄一覽表）及績效評估措施</td>
+        <td>職業安全衛生委員會之召開</td><td>每季</td><td>法務環安課<br>勞工代表</td><td></td></tr>
+
+      <!-- ── 項次 16 ── -->
+      <tr id="s3t16" data-months="all">
+        <td style="text-align:center;font-weight:700">16</td>
+        <td>其他安全衛生管理措施</td>
+        <td>推動ISO 45001職業安全衛生管理系統</td><td>每月</td><td>法務環安課<br>各部門主管</td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- ══ 大豐環保科技-自動檢查計畫表 ══ -->
+  <div class="chapter" id="s4">
+    <div class="chapter-title">大豐環保科技股份有限公司－自動檢查計畫表</div>
+  </div>
+
+  <div class="tbl-wrap" id="s4-mech">
+  <table class="insp-tbl">
+    <thead>
+      <tr>
+        <th rowspan="2" style="width:100px">計畫項目</th>
+        <th rowspan="2" style="width:100px">計畫目標</th>
+        <th rowspan="2" style="width:50px">實施要領</th>
+        <th rowspan="2" style="width:90px">實施單位</th>
+        <th colspan="12">預定工作進度（月份）</th>
+        <th rowspan="2" style="width:55px">預估經費</th><th rowspan="2" style="width:55px">會檢單位</th><th rowspan="2" style="width:80px">備註</th>
+      </tr>
+      <tr>
+        <th class="mc">1</th><th class="mc">2</th><th class="mc">3</th><th class="mc">4</th>
+        <th class="mc">5</th><th class="mc">6</th><th class="mc">7</th><th class="mc">8</th>
+        <th class="mc">9</th><th class="mc">10</th><th class="mc">11</th><th class="mc">12</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="gr-row"><td colspan="19">機械、車輛之定期檢查、作業檢點、重點檢查</td></tr>
+
+      <tr><td rowspan="2" class="sub-item">一般車輛檢查</td><td rowspan="2">公務車</td><td>每季</td><td rowspan="2">總公司</td>
+        <td>—</td><td>—</td><td class="mc"><span class="dot">◎</span></td><td>—</td>
+        <td>—</td><td class="mc"><span class="dot">◎</span></td><td>—</td><td>—</td>
+        <td class="mc"><span class="dot">◎</span></td><td>—</td><td>—</td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+      <tr><td>作業前</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td rowspan="3" class="sub-item">堆高機檢查</td><td rowspan="3">動力堆高機</td><td>每年</td><td rowspan="3">再生部<br>營運部<br>業務部</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="mc"><span class="dot">◎</span></td><td>—</td><td></td><td></td><td></td></tr>
+      <tr><td>每月</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+      <tr><td>作業前</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td rowspan="2" class="sub-item">固定式起重機<br>檢查</td><td rowspan="2">固定式起重機</td><td>每月</td><td rowspan="2">再生部</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+      <tr><td>作業前</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td rowspan="2" class="sub-item">清運車輛</td><td rowspan="2">清運車輛</td><td>每季</td><td rowspan="2">再生部<br>營運部<br>業務部</td>
+        <td>—</td><td>—</td><td class="mc"><span class="dot">◎</span></td><td>—</td>
+        <td>—</td><td class="mc"><span class="dot">◎</span></td><td>—</td><td>—</td>
+        <td class="mc"><span class="dot">◎</span></td><td>—</td><td>—</td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+      <tr><td>作業前</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td rowspan="2" class="sub-item">抓斗清運車輛</td><td rowspan="2">抓斗清運車輛</td><td>每季</td><td rowspan="2">再生部<br>營運部<br>業務部</td>
+        <td>—</td><td>—</td><td class="mc"><span class="dot">◎</span></td><td>—</td>
+        <td>—</td><td class="mc"><span class="dot">◎</span></td><td>—</td><td>—</td>
+        <td class="mc"><span class="dot">◎</span></td><td>—</td><td>—</td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+      <tr><td>作業前</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td class="sub-item">鏟裝機</td><td>鏟裝機</td><td>作業前</td><td>營運部</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td class="sub-item">機械手臂<br>安全裝置</td><td>機械手臂安全裝置</td><td>作業前</td><td>再生部<br>業務部</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td class="sub-item">怪手設備</td><td>怪手設備（挖掘機）</td><td>作業前</td><td>營運部</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td class="sub-item">打包機</td><td>打包機</td><td>作業前</td><td>營運部</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td class="sub-item">磨刀機</td><td>磨刀機</td><td>作業前</td><td>再生部</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td class="sub-item">粉碎機</td><td>粉碎機</td><td>作業前</td><td>再生部</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td class="sub-item">解包機</td><td>解包機</td><td>作業前</td><td>再生部</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td class="sub-item">輸送帶</td><td>輸送帶</td><td>作業前</td><td>再生部</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr class="gr-row" id="s4-equip"><td colspan="19">設備之定期檢查、作業檢點、重點檢查</td></tr>
+
+      <tr><td class="sub-item">小型壓力容器</td><td>小型壓力容器</td><td>每年</td><td>再生部<br>營運部</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="mc"><span class="dot">◎</span></td><td>—</td><td></td><td></td><td></td></tr>
+
+      <tr><td class="sub-item">高壓電氣設備</td><td>高壓電氣設備</td><td>每年</td><td>再生部<br>營運部</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="mc"><span class="dot">◎</span></td><td>—</td><td></td><td></td><td></td></tr>
+
+      <tr><td class="sub-item">低壓電器設備</td><td>低壓電器設備</td><td>每年</td><td>再生部<br>營運部</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="mc"><span class="dot">◎</span></td><td>—</td><td></td><td></td><td></td></tr>
+
+      <tr class="gr-row" id="s4-ops"><td colspan="19">作業檢點</td></tr>
+
+      <tr><td class="sub-item">個人防護具<br>檢查</td><td>個人防護具</td><td>作業時</td><td>再生部<br>營運部<br>業務部</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr><td class="sub-item">電氣機械<br>器具檢查</td><td>電氣機械器具</td><td>作業前</td><td>再生部<br>營運部</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+
+      <tr class="gr-row"><td colspan="19">其他</td></tr>
+
+      <tr><td class="sub-item">急救箱檢查</td><td>急救箱</td><td>每月</td><td>再生部<br>營運部<br>業務部</td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td>
+        <td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td class="mc"><span class="dot">◎</span></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="info-box" style="margin-top:14px;font-size:.85em">
+    核准：<span style="display:inline-block;min-width:100px;border-bottom:1px solid #3e668c;margin:0 6px"></span>
+    審核：<span style="display:inline-block;min-width:100px;border-bottom:1px solid #3e668c;margin:0 6px"></span>
+    經辦：<span style="display:inline-block;min-width:80px;border-bottom:1px solid #3e668c;margin:0 6px"></span>
+  </div>
+
+  <!-- ══ 職安衛管理規章 ══ -->
+  <div class="chapter" id="s5">
+    <div class="chapter-title">職業安全衛生管理規章</div>
+  </div>
+
+  <div class="charter-acc open" id="ch1">
+    <div class="charter-header" onclick="toggleCh('ch1')"><div class="charter-num">1.0</div><div class="charter-icon">🎯</div><div class="charter-title-wrap"><div class="charter-title">目的</div></div><div class="charter-chevron">▼</div></div>
+    <div class="charter-body"><div class="charter-prose">為防止職業災害，保障本公司及進入本公司之工作者安全與健康，特制定本管理規章；於本管理規章中未規定者，適用其他有關法律之規定。</div></div>
+  </div>
+
+  <div class="charter-acc" id="ch2">
+    <div class="charter-header" onclick="toggleCh('ch2')"><div class="charter-num">2.0</div><div class="charter-icon">🏢</div><div class="charter-title-wrap"><div class="charter-title">適用範圍</div></div><div class="charter-chevron">▼</div></div>
+    <div class="charter-body"><div class="charter-prose">本公司所有工作者（含承攬本公司作業之包商、再承攬之包商，或其他進入本公司工作場所工作者之安全衛生相關事項）。</div></div>
+  </div>
+
+  <div class="charter-acc" id="ch3">
+    <div class="charter-header" onclick="toggleCh('ch3')"><div class="charter-num">3.0</div><div class="charter-icon">📚</div><div class="charter-title-wrap"><div class="charter-title">參考資料</div></div><div class="charter-chevron">▼</div></div>
+    <div class="charter-body">
+      <ul class="charter-list">
+        <li data-num="3.1">職業安全衛生法</li>
+        <li data-num="3.2">職業安全衛生法施行細則</li>
+        <li data-num="3.3">職業安全衛生管理辦法</li>
+        <li data-num="3.4">職業安全衛生設施規則</li>
+        <li data-num="3.5">職業安全衛生教育訓練規則</li>
+        <li data-num="3.6">勞工健康保護規則</li>
+        <li data-num="3.7">勞工作業環境監測實施辦法</li>
+        <li data-num="3.8">勞動檢查法</li>
+        <li data-num="3.9">勞動檢查法施行細則</li>
+        <li data-num="3.10">機械器具安全標準</li>
+        <li data-num="3.11">妊娠與分娩後女性及未滿十八歲勞工禁止從事危險性或有害性工作認定標準</li>
+        <li data-num="3.12">危害性化學品標示及通識規則</li>
+        <li data-num="3.13">職業安全衛生標示設置準則</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="charter-acc" id="ch4">
+    <div class="charter-header" onclick="toggleCh('ch4')"><div class="charter-num">4.0</div><div class="charter-icon">📘</div><div class="charter-title-wrap"><div class="charter-title">名詞定義</div></div><div class="charter-chevron">▼</div></div>
+    <div class="charter-body">
+      <ul class="charter-list">
+        <li data-num="4.1"><strong>工作者：</strong>指勞工、自營作業者及其他受工作場所負責人指揮或監督從事勞動之人員。</li>
+        <li data-num="4.2"><strong>勞工：</strong>受僱從事工作獲致工資者。</li>
+        <li data-num="4.3"><strong>雇主：</strong>事業主或事業之經營負責人。</li>
+        <li data-num="4.4"><strong>職業災害：</strong>因勞動場所之建築物、機械、設備、原料、材料、化學品、氣體、蒸氣、粉塵等或作業活動及其他職業上原因引起之工作者疾病、傷害、失能或死亡。</li>
+        <li data-num="4.5"><strong>主管機關：</strong>本規章所稱主管機關，在中央為勞動部；在地方為各縣市政府。</li>
+        <li data-num="4.6"><strong>共同作業：</strong>本公司與承攬人、再承攬人所僱用之勞工於同一時間、同一工作場所從事工作。</li>
+        <li data-num="4.7"><strong>工作場所負責人：</strong>於該工作場所中代表雇主從事管理、指揮或監督勞工從事工作之人。</li>
+        <li data-num="4.8"><strong>職業安全衛生管理業務：</strong>係指依「職業安全衛生法及其相關法規」規定為防止職業災害，保障工作者安全與健康必須執行之事項。</li>
+        <li data-num="4.9"><strong>事業單位：</strong>職業安全衛生法適用範圍內僱用勞工從事工作之機構。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="charter-acc" id="ch5">
+    <div class="charter-header" onclick="toggleCh('ch5')"><div class="charter-num">5.0</div><div class="charter-icon">👥</div><div class="charter-title-wrap"><div class="charter-title">責任</div></div><div class="charter-chevron">▼</div></div>
+    <div class="charter-body">
+      <p style="font-weight:700;color:var(--primary-dark);margin-bottom:8px">5.1　公司全體工作者</p>
+      <ul class="charter-list" style="margin-bottom:16px">
+        <li data-num="5.1.1">遵行職業安全衛生相關法令以及本公司職業安全衛生相關規定。</li>
+        <li data-num="5.1.2">對本公司所安排之定期健康檢查有接受之義務。</li>
+        <li data-num="5.1.3">對安全衛生教育訓練有接受之義務。</li>
+        <li data-num="5.1.4">對公司訂定之安全衛生工作守則有遵守之義務。</li>
+        <li data-num="5.1.5">對安全衛生事故通報（包含虛驚事故）。</li>
+        <li data-num="5.1.6">工作者如發現有下列情形，應依公司程序提列建議或申訴：（5.1.6.1）公司有違反職業安全衛生法或有關安全衛生之規定；（5.1.6.2）自覺有罹患職業病的情形；（5.1.6.3）身體或精神遭受侵害。</li>
+      </ul>
+      <p style="font-weight:700;color:var(--primary-dark);margin-bottom:8px">5.2　職業安全衛生組（包含職業安全衛生業務主管、職業安全衛生管理師、職業安全衛生管理員、醫護人員）</p>
+      <div class="charter-prose" style="margin-bottom:12px">擬訂、規劃、督導及推動安全衛生管理事項，並指導有關部門實施，執行下列職業安全衛生事項：</div>
+      <ul class="charter-list" style="margin-bottom:16px">
+        <li data-num="5.2.1">工作環境或作業危害之辨識、評估及控制。</li>
+        <li data-num="5.2.2">機械、設備或器具之管理。</li>
+        <li data-num="5.2.3">危害性化學品之分類、標示、通識及管理。</li>
+        <li data-num="5.2.4">有害作業環境之採樣策略規劃與監測。</li>
+        <li data-num="5.2.5">危險性工作場所之製程或施工安全評估。</li>
+        <li data-num="5.2.6">採購管理、承攬管理及變更管理。</li>
+        <li data-num="5.2.7">安全衛生作業標準。</li>
+        <li data-num="5.2.8">定期檢查、重點檢查、作業檢點及現場巡視。</li>
+        <li data-num="5.2.9">安全衛生教育訓練。</li>
+        <li data-num="5.2.10">個人防護具之管理。</li>
+        <li data-num="5.2.11">健康檢查、管理及促進。</li>
+        <li data-num="5.2.12">安全衛生資訊之蒐集、分享與運用。</li>
+        <li data-num="5.2.13">緊急應變措施。</li>
+        <li data-num="5.2.14">職業災害、虛驚事故、影響身心健康事件之調查處理與統計分析。</li>
+        <li data-num="5.2.15">安全衛生管理記錄與績效評估措施。</li>
+        <li data-num="5.2.16">其他安全衛生管理措施。</li>
+      </ul>
+      <p style="font-weight:700;color:var(--primary-dark);margin-bottom:8px">5.3　職業安全衛生委員會</p>
+      <div class="charter-prose" style="margin-bottom:12px">對雇主擬訂之安全衛生政策提出建議，並審議、協調及建議安全衛生相關事項，執行細項包含：</div>
+      <ul class="charter-list" style="margin-bottom:16px">
+        <li data-num="5.3.1">對雇主擬訂之職業安全衛生政策提出建議。</li>
+        <li data-num="5.3.2">協調、建議職業安全衛生管理計畫。</li>
+        <li data-num="5.3.3">審議安全、衛生教育訓練實施計畫。</li>
+        <li data-num="5.3.4">審議作業環境監測計畫、監測結果及採取措施。</li>
+        <li data-num="5.3.5">審議健康管理、職業病預防及健康促進事項。</li>
+        <li data-num="5.3.6">審議各項安全衛生提案。</li>
+        <li data-num="5.3.7">審議事業單位自動檢查及安全衛生稽核事項。</li>
+        <li data-num="5.3.8">審議機械、設備或原料、材料危害之預防措施。</li>
+        <li data-num="5.3.9">審議職業災害調查報告。</li>
+        <li data-num="5.3.10">考核現場安全衛生管理績效。</li>
+        <li data-num="5.3.11">審議承攬業務安全衛生管理事項。</li>
+        <li data-num="5.3.12">其他有關職業安全衛生管理事項。</li>
+      </ul>
+      <p style="font-weight:700;color:var(--primary-dark);margin-bottom:8px">5.4　工作場所負責人及各級主管之職責</p>
+      <div class="charter-prose" style="margin-bottom:12px">依職權指揮、監督所屬執行安全衛生管理事項，並協調及指導有關人員實施。實施細項如下：</div>
+      <ul class="charter-list" style="margin-bottom:16px">
+        <li data-num="5.4.1">職業災害防止計畫事項</li>
+        <li data-num="5.4.2">安全衛生管理執行事項</li>
+        <li data-num="5.4.3">定期檢查、重點檢查、檢點及其他有關檢查督導事項</li>
+        <li data-num="5.4.4">定期或不定期實施巡查</li>
+        <li data-num="5.4.5">提供改善工作方法</li>
+        <li data-num="5.4.6">擬訂安全作業標準</li>
+        <li data-num="5.4.7">教導及督導所屬依安全作業標準方法實施</li>
+        <li data-num="5.4.8">其他雇主交辦有關安全衛生管理事項</li>
+      </ul>
+      <p style="font-weight:700;color:var(--primary-dark);margin-bottom:8px">5.5　各部門之安全衛生業務指定人員</p>
+      <ul class="charter-list">
+        <li data-num="5.5.1">公司交辦之安全衛生事項</li>
+        <li data-num="5.5.2">定期檢查、重點檢查、檢點及其他有關檢查事項</li>
+        <li data-num="5.5.3">執行稽查之缺失改善</li>
+        <li data-num="5.5.4">急救箱保管清點</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="charter-acc" id="ch6">
+    <div class="charter-header" onclick="toggleCh('ch6')"><div class="charter-num">6.0</div><div class="charter-icon">🗺️</div><div class="charter-title-wrap"><div class="charter-title">程序概述</div></div><div class="charter-chevron">▼</div></div>
+    <div class="charter-body">
+      <ul class="charter-list">
+        <li data-num="6.1">職業安全衛生委員會</li>
+        <li data-num="6.2">職業安全衛生組織及人員</li>
+        <li data-num="6.3">安全衛生設施</li>
+        <li data-num="6.4">安全衛生管理</li>
+        <li data-num="6.5">安全衛生標示</li>
+        <li data-num="6.6">安全衛生監督、檢查及處罰</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="charter-acc" id="ch7">
+    <div class="charter-header" onclick="toggleCh('ch7')"><div class="charter-num">7.0</div><div class="charter-icon">⚙️</div><div class="charter-title-wrap"><div class="charter-title">程序</div></div><div class="charter-chevron">▼</div></div>
+    <div class="charter-body">
+      <p style="font-weight:700;color:var(--primary-dark);margin-bottom:8px">7.1　職業安全衛生委員會</p>
+      <ul class="charter-list" style="margin-bottom:16px">
+        <li data-num="7.1.1">依職業安全衛生管理辦法規定設置職業安全衛生委員會；委員會置委員七人以上，並指定下列人員組成：（1）總經理；（2）職業安全衛生人員；（3）事業內各部門主管、監督、指揮人員；（4）與職業安全衛生有關之工程技術人員；（5）從事勞工健康服務之醫護人員；（6）勞工代表。</li>
+        <li data-num="7.1.2">委員任期為二年，並以雇主為主任委員，綜理會務。委員會由主任委員指定一人為秘書，輔助其綜理會務。</li>
+        <li data-num="7.1.3">勞工代表應佔委員人數之三分之一以上。</li>
+        <li data-num="7.1.4">委員會應每三個月至少開會一次，做成紀錄，保存三年。</li>
+        <li data-num="7.1.5">委員會議由主任委員擔任主席，必要時得召開臨時會議。</li>
+      </ul>
+
+      <p style="font-weight:700;color:var(--primary-dark);margin-bottom:8px">7.2　職業安全衛生組織及人員</p>
+      <ul class="charter-list" style="margin-bottom:12px">
+        <li data-num="7.2.1">依職業安全衛生管理辦法規定設置直接隸屬雇主之一級管理單位，並置職業安全衛生業務主管及職業安全衛生管理人員，組織圖如下（針對職安衛組織，詳細組織圖）：</li>
+      </ul>
+      <div style="overflow-x:auto;margin:12px 0 20px">
+        <div style="min-width:560px;font-size:.82em;text-align:center">
+          <div style="display:inline-block;background:linear-gradient(135deg,#3e668c,#557ba4);color:white;padding:8px 24px;border-radius:8px;font-weight:700;margin-bottom:8px">雇主（董事長／總經理）</div>
+          <div style="display:flex;justify-content:center;gap:4px;margin-bottom:4px">
+            <div style="width:2px;background:#3e668c;height:20px;margin:0 auto"></div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:24px;margin-bottom:4px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+              <div style="background:#2d4b6b;color:white;padding:7px 14px;border-radius:8px;font-weight:700;white-space:nowrap">職業安全衛生委員會</div>
+              <div style="font-size:.75em;color:#666;margin-top:3px">（每季召開）</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+              <div style="background:#3e668c;color:white;padding:7px 14px;border-radius:8px;font-weight:700;white-space:nowrap">一級管理單位<br><span style="font-size:.88em;font-weight:400">法務環安課</span></div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:4px;margin:4px 0">
+            <div style="width:2px;background:#3e668c;height:16px;margin:0 auto"></div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:16px">
+            <div style="background:#dae7f2;border:1px solid #c8d8e5;color:#2d4b6b;padding:6px 12px;border-radius:8px;font-weight:600;white-space:nowrap">甲種職業安全衛生<br>業務主管</div>
+            <div style="background:#dae7f2;border:1px solid #c8d8e5;color:#2d4b6b;padding:6px 12px;border-radius:8px;font-weight:600;white-space:nowrap">職業安全衛生<br>管理師</div>
+            <div style="background:#dae7f2;border:1px solid #c8d8e5;color:#2d4b6b;padding:6px 12px;border-radius:8px;font-weight:600;white-space:nowrap">職業安全衛生<br>管理員</div>
+            <div style="background:#dae7f2;border:1px solid #c8d8e5;color:#2d4b6b;padding:6px 12px;border-radius:8px;font-weight:600;white-space:nowrap">醫護人員</div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:4px;margin:8px 0 4px">
+            <div style="width:2px;background:#557ba4;height:16px;margin:0 auto"></div>
+          </div>
+          <div style="background:#f0f5fa;border:1px solid #c8d8e5;color:#1e3a5f;padding:7px 14px;border-radius:8px;display:inline-block;font-size:.88em">各部門安全衛生業務指定人員</div>
+        </div>
+      </div>
+
+      <p style="font-weight:700;color:var(--primary-dark);margin-bottom:8px">7.3　安全衛生設施</p>
+      <ul class="charter-list" style="margin-bottom:16px">
+        <li data-num="7.3.1">對於下列事項應有符合標準之必要安全衛生設備：（1）防止機械、設備或器具等引起之危害；（2）防止爆炸性或發火性等物質引起之危害；（3）防止電、熱及其他之能引起之危害；（4）防止採石、採掘、裝卸、搬運、堆積或採伐等作業中引起之危害；（5）防止有墜落、物體飛落或崩塌等之虞之作業場所引起之危害；（6）防止高壓氣體引起之危害；（7）防止原料、材料、氣體、蒸氣、粉塵、溶劑、化學品、含毒性物質或缺氧空氣等引起之危害；（8）防止輻射、高溫、低溫、超音波、噪音、振動或異常氣壓等引起之危害；（9）防止監視儀表或精密作業等引起之危害；（10）防止廢氣、廢液或殘渣等廢棄物引起之危害；（11）防止水患或火災等引起之危害；（12）防止動物、植物或微生物等引起之危害；（13）防止通道、地板或階梯等引起之危害；（14）防止未採取充足通風、採光、照明、保溫或防濕等引起之危害。</li>
+        <li data-num="7.3.2">對於下列事項，應妥為規劃及採取必要之安全衛生措施：（1）重複性作業等促發肌肉骨骼疾病之預防；（2）輪班、夜間工作、長時間工作等異常工作負荷促發疾病之預防；（3）執行職務因他人行為遭受身體或精神不法侵害之預防；（4）避難、急救、休息或其他為保護勞工身心健康之事項。</li>
+        <li data-num="7.3.3">對於7.3.1及7.3.2之安全衛生設備及措施，應依職業安全衛生法規及中央主管機關指定公告之國家標準、國際標準或團體標準之全部或部分內容規定辦理。</li>
+        <li data-num="7.3.4">對中央主管機關指定之機械、設備或器具（動力衝剪機械、手推刨床、木材加工用圓盤鋸、動力堆高機、研磨機、研磨輪、防爆電器設備、動力衝剪機械之光電式安全裝置、手推刨床之刃部接觸預防裝置、木材加工用圓盤鋸之反撥預防裝置及鋸齒接觸預防裝置、其他中央主管機關指定公告者），其構造、性能及防護非符合安全標準不得供應或設置，且須於產品明顯處張貼安全標示。</li>
+        <li data-num="7.3.5">輸入對於中央主管機關公告之列入型式驗證之機械、設備或器具，非經中央主管機關認可之驗證機構型式驗證合格及張貼合格標章，不得輸入。</li>
+        <li data-num="7.3.6">對於具有危害性之化學品，應予標示、製備清單及揭示安全資料表，並採取必要的措施，並依其健康危害、散佈狀況及使用量等情況，評估風險等級，並採取分級管理措施。</li>
+        <li data-num="7.3.7">有容許暴露標準之作業場所，應訂定作業環境監測計畫，並委託中央主管機關認可之作業環境監測機構實施監測，監測計畫及結果需公開揭示，並確保勞工之危害暴露低於標準值。</li>
+        <li data-num="7.3.8">對於中央主管機關指定之管制性化學品，不得供工作者處置、使用；優先管理化學品，應將相關運作資料報請中央主管機關備查；若使用之危害性化學品達中央主管機關規定量以上，應實施製程安全評估。</li>
+        <li data-num="7.3.9">對於經中央主管機關指定具有危險性之機械或設備（固定式起重機、移動式起重機、人字臂起重桿、營建用升降機、營建用提升機、吊籠、鍋爐、壓力容器、高壓氣體特定設備、高壓氣體容器、其他經中央主管機關指定公告具有危險性之機械或設備），非經勞動檢查機構或中央主管機關指定之代行檢查機構檢查合格，不得使用；其使用超過規定期間者，非經再檢查合格，不得繼續使用。</li>
+        <li data-num="7.3.10">勞工工作場所之建築物，應由依法登記開業之建築師依建築法規及本法有關安全衛生之規定設計。</li>
+        <li data-num="7.3.11">工作場所有立即發生危險之虞時，工作場所負責人應即令停止作業，並使勞工退避至安全場所。勞工執行職務發現有立即發生危險之虞時，得在不危及其他工作者安全情形下，自行停止作業及退避至安全場所，並立即向直屬主管報告。</li>
+        <li data-num="7.3.12">在高溫場所工作之勞工，不得使其每日工作時間超過六小時。</li>
+        <li data-num="7.3.13">從事精密作業之勞工依精密作業勞工視機能保護設施標準辦理，提供適當之照明，連續工作兩小時後，安排十五分鐘休息時間。</li>
+        <li data-num="7.3.14">高架作業、重體力勞動或其他對於勞工具有特殊危害之作業，亦應規定減少勞工工作時間，並在工作時間中予以適當之休息。</li>
+        <li data-num="7.3.15">僱用勞工時，需施行體格檢查；對在職勞工應施行定期健康檢查。體格檢查發現應僱勞工不適於從事某種工作，不得僱用其從事該項工作。</li>
+        <li data-num="7.3.16">健康檢查發現勞工有異常情形者，應提供其健康指導。</li>
+        <li data-num="7.3.17">僱用或特約醫護人員，辦理健康管理、職業病預防及健康促進等勞工健康保護事項。</li>
+      </ul>
+
+      <p style="font-weight:700;color:var(--primary-dark);margin-bottom:8px">7.4　安全衛生管理</p>
+      <ul class="charter-list" style="margin-bottom:16px">
+        <li data-num="7.4.1">設置一級管理單位，成員包含甲種職業安全衛生業務主管和職業安全衛生管理員各一名。</li>
+        <li data-num="7.4.2">訂定職業安全衛生管理計畫及職業安全衛生管理規章，實施安全衛生管理及自動檢查。</li>
+        <li data-num="7.4.3">對於日時量平均音壓超過八十五分貝，訂定聽力保護計畫。</li>
+        <li data-num="7.4.4">對於重複性作業，為避免勞工因姿勢不良，過度施力及作業頻率過高等原因，促發肌肉骨骼疾病，訂定人因性危害預防計畫。</li>
+        <li data-num="7.4.5">使勞工從事輪班、夜間工作、長時間工作等作業，為避免勞工因異常工作負荷促發疾病，訂定異常工作負荷促發疾病預防計畫。</li>
+        <li data-num="7.4.6">為預防勞工於執行職務，因他人行為致遭受身體或精神上不法侵害，訂定執行職務遭受不法侵害預防計畫。</li>
+        <li data-num="7.4.7">訂定職業安全衛生工作守則，報請主管機關備查，內容需含：（1）事業之安全衛生管理及各級之權責；（2）機械、設備或器具之維護及檢查；（3）工作安全及衛生標準；（4）教育及訓練；（5）健康指導及管理措施；（6）急救及搶救；（7）防護設備之準備、維持及使用；（8）事故通報及報告；（9）其他有關安全衛生事項。</li>
+        <li data-num="7.4.8">為防止意外狀況發生，訂定緊急狀況預防、準備及應變之計畫，並定期實施演練。</li>
+        <li data-num="7.4.9">為預防及避免災害發生，訂定風險評估計畫，針對7.3.1及7.3.2進行危害辨識、分析及評量風險。</li>
+        <li data-num="7.4.10">為防止勞工未確實知悉危害性化學品之危害資訊，應依實際狀況訂定危害通識計畫，並適時檢討更新。</li>
+        <li data-num="7.4.11">廠內人數達200人以上者，建置職業安全衛生管理系統，內容包括政策、組織、規劃與實施、評估、改善措施。</li>
+        <li data-num="7.4.12">經中央主管機關指定具有危險性機械或設備之操作人員，操作者應經中央主管機關認可之訓練或經技能檢定合格。</li>
+        <li data-num="7.4.13">事業之全部或一部份交付承攬時，應於事前告知該承攬人有關之工作環境、危害因素或勞工安全衛生法有關安全衛生規定應採取之措施。</li>
+        <li data-num="7.4.14">公司與承攬人、再承攬人分別僱用勞工共同作業時，為防止職業災害，應由公司召集，採取下列必要措施：（1）設置協議組織，並指定工作場所負責人，擔任指揮、監督及協調之工作；（2）工作之聯繫與調整；（3）工作場所之巡視；（4）相關承攬事業間之安全衛生教育之指導與協助；（5）其他為防止職業災害之必要事項。</li>
+        <li data-num="7.4.15">公司不得聘僱童工。</li>
+        <li data-num="7.4.16">不得使妊娠中之女性從事致病或致死之微生物感染風險之工作。</li>
+        <li data-num="7.4.17">對員工應施以從事工作及預防災變所必要之安全衛生教育、訓練，員工有接受之義務。</li>
+        <li data-num="7.4.18">公司具有負責宣導職業安全衛生法及有關安全衛生規定，使勞工周知。</li>
+      </ul>
+
+      <p style="font-weight:700;color:var(--primary-dark);margin-bottom:8px">7.5　安全衛生標示</p>
+      <ul class="charter-list" style="margin-bottom:16px">
+        <li data-num="7.5.1">依其用途種類及告知，區分為防止危害及一般說明或提示：（1）禁止標示：嚴格管制有發生危險之虞之行為，包括禁止煙火、禁止攀越、禁止通行等；（2）警告標示：警告既存之危險或有害狀況，包括高壓電、墜落、高熱、輻射等危險；（3）注意標示：提醒避免相對於人員行為而發生之危害，包括當心地面、注意頭頂等；（4）用途或處所之標示，包括反應塔、鍋爐房、安全門、伐木區、急救箱、急救站、救護車、診所、消防栓、機房等；（5）操作或儀控之標示，包括有一定順序之機具操作方法、儀表控制盤之說明、安全管控方法等；（6）說明性質之標示，包括工作場所各種行動方向、管制信號意義等。</li>
+        <li data-num="7.5.2">標示之形狀種類如下：（1）圓形：用於禁止；（2）尖端向上之正三角形：用於警告；（3）尖端向下之正三角形：用於注意；（4）正方形或長方形：用於一般說明或提示。</li>
+        <li data-num="7.5.3">標示依設置之永久性或暫時性，採固定式或移動式，設置原則如下：（1）大小及位置力求明顯易見，安裝穩妥；（2）材質堅固耐久，並適當處理所有尖角銳邊，以免危險。</li>
+        <li data-num="7.5.4">標示力求簡明，以文字及圖案併用。文字中文為主。標示文字書寫方式如下：（1）直式：由上而下，由右而左；（2）橫式：由左而右，有箭號指示方向者，依箭號方向。</li>
+        <li data-num="7.5.5">標示之顏色，依國家標準CNS 9328安全用顏色通則之規定。</li>
+      </ul>
+
+      <p style="font-weight:700;color:var(--primary-dark);margin-bottom:8px">7.6　安全衛生監督、檢查及處罰</p>
+      <ul class="charter-list">
+        <li data-num="7.6.1">得接受主管機關及檢查機構對工作場所實施檢查。不合規定者，應於期限內改善；檢查結果，應於違規場所顯明易見處公告七日以上；如遭部份或全部停工，停工期間應照給工資。</li>
+        <li data-num="7.6.2">如發生職業災害，應立即採取必要急救、搶救措施，並會同勞工代表實施調查、分析及作成紀錄。</li>
+        <li data-num="7.6.3">發生下列職業災害之一時，應於八小時內報告勞動部職業安全衛生署網站通報：（1）發生死亡災害者；（2）發生災害之罹災人數在三人以上；（3）發生災害之罹災人數在一人以上，且需住院治療；（4）其他經中央主管機關指定公告之災害。</li>
+        <li data-num="7.6.4">安全衛生管理人員應依規定填載職業災害內容及統計，按月報請勞動檢查機構備查，並公布於工作場所。</li>
+        <li data-num="7.6.5">工作者若發現有下列情形，得向公司提出申訴：（1）公司違反職業安全衛生法或有關安全衛生之規定；（2）疑似罹患職業病；（3）身體或精神遭受侵害。</li>
+        <li data-num="7.6.6">執行職業安全衛生管理時，可依狀況需要訂定違反安全衛生規定之相關處罰辦法。處罰辦法可於標準書、安全衛生工作守則、承攬商管理規定、安全衛生告知文件或公告之方式頒布實施。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="charter-acc" id="ch8">
+    <div class="charter-header" onclick="toggleCh('ch8')"><div class="charter-num">8.0</div><div class="charter-icon">🌿</div><div class="charter-title-wrap"><div class="charter-title">安全與環保</div></div><div class="charter-chevron">▼</div></div>
+    <div class="charter-body"><div class="charter-prose">本管理規章依職業安全衛生法及其相關法規規定制定，部分項目實施細則制定時，應再參酌環境保護相關法令、生物安全相關法令、消防安全相關法令、建築法等相關法令，如職業安全衛生相關法規因異動或修正，應以法規規範為主，以確保人員與環境之安全衛生。</div></div>
+  </div>
+
+  <div class="charter-acc" id="ch9">
+    <div class="charter-header" onclick="toggleCh('ch9')"><div class="charter-num">9.0</div><div class="charter-icon">📎</div><div class="charter-title-wrap"><div class="charter-title">附件</div></div><div class="charter-chevron">▼</div></div>
+    <div class="charter-body"><div class="charter-prose" style="color:var(--text-light)">無</div></div>
+  </div>
+
+  <div class="footer">
+    大豐環保科技股份有限公司<br>
+    114年度職業安全衛生管理計畫書　｜　中華民國114年<br>
+    依職業安全衛生法及職業安全衛生管理辦法訂定　｜　114年12月17日職安委員會審查通過
+  </div>
+
+</div><!-- /.container -->
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ── 計畫項目月份欄自動生成（data-months="all|na|6,12…"） ── */
+(function(){
+  document.querySelectorAll('tr[data-months]').forEach(row => {
+    const ms = row.dataset.months;
+    const active = ms === 'all' ? [1,2,3,4,5,6,7,8,9,10,11,12] :
+                   ms === 'na'  ? [] :
+                   ms.split(',').map(Number);
+    const note = row.querySelector('[data-anchor]') || row.lastElementChild;
+    [1,2,3,4,5,6,7,8,9,10,11,12].forEach(m => {
+      const td = document.createElement('td');
+      td.className = 'mc';
+      if (active.includes(m)) {
+        td.innerHTML = '<span class="dot">◎</span>';
+      } else {
+        td.style.color = ms === 'na' ? '#e5e7eb' : '#ddd';
+        td.textContent = '—';
+      }
+      row.insertBefore(td, note);
+    });
+    if (note.hasAttribute && note.hasAttribute('data-anchor')) note.remove();
+  });
+})();
+
+/* ── Charter accordion ── */
+function toggleCh(id){
+  document.getElementById(id).classList.toggle('open');
+}
+
+/* ── Sidebar (mobile) ── */
+function toggleSidebar(){
+  const s = document.querySelector('.sidebar');
+  const o = document.getElementById('sidebarOverlay');
+  const open = s.classList.toggle('open');
+  o.style.display = 'block';
+  setTimeout(() => o.style.opacity = open ? '1' : '0', 10);
+  if (!open) setTimeout(() => o.style.display = 'none', 300);
+  o.classList.toggle('active', open);
+}
+document.getElementById('sidebarOverlay').addEventListener('click', toggleSidebar);
+
+/* ── Back to top ── */
+window.addEventListener('scroll', function(){
+  document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+});
+
+/* ── Smooth scroll ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+  });
+});
+</script>
+</body>
+</html>
