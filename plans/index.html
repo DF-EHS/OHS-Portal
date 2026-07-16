@@ -165,14 +165,14 @@ footer {
     <div class="hero-text">
       <h2>職業安全衛生計畫書</h2>
       <p>年度管理計畫與各項專項計畫，點擊卡片即可開啟閱覽。<br>
-         目前收錄：年度計畫 11 份（108–115 年）・專項計畫 2 份</p>
+         目前收錄：專項計畫 2 份</p>
     </div>
   </div>
 
   <!-- ── Tab Nav ── -->
   <nav class="module-nav">
     <button id="tab-annual"  class="active" onclick="switchTab('annual')">
-      📅 年度計畫書 <span class="nav-badge" id="badge-annual">11</span>
+      📅 年度計畫書 <span class="nav-badge" id="badge-annual">0</span>
     </button>
     <button id="tab-special" onclick="switchTab('special')">
       📌 專項計畫書 <span class="nav-badge" id="badge-special">2</span>
@@ -197,64 +197,8 @@ footer {
       <button class="yr-btn" data-yr="108" onclick="filterYr('108')">108 年</button>
     </div>
 
-    <div class="plan-grid" id="annual-grid">
-      <a class="plan-card" href="annual/ohs-plan-115.html" target="_blank" data-yr="115">
-        <span class="plan-tag annual">年度計畫</span>
-        <div class="plan-title">115 年度職業安全衛生管理計畫簡報</div>
-        <div class="plan-meta"><span class="plan-date">民國 115 年</span><span class="plan-open">開啟 →</span></div>
-      </a>
-      <a class="plan-card" href="annual/ohs-plan-114.html" target="_blank" data-yr="114">
-        <span class="plan-tag annual">年度計畫</span>
-        <div class="plan-title">114 年度職業安全衛生管理計畫簡報</div>
-        <div class="plan-meta"><span class="plan-date">民國 114 年</span><span class="plan-open">開啟 →</span></div>
-      </a>
-      <a class="plan-card" href="annual/ohs-plan-113.html" target="_blank" data-yr="113">
-        <span class="plan-tag annual">年度計畫</span>
-        <div class="plan-title">113 年度職業安全衛生管理計畫簡報</div>
-        <div class="plan-meta"><span class="plan-date">民國 113 年</span><span class="plan-open">開啟 →</span></div>
-      </a>
-      <a class="plan-card" href="annual/ohs-plan-112.html" target="_blank" data-yr="112">
-        <span class="plan-tag annual">年度計畫</span>
-        <div class="plan-title">112 年度職業安全衛生管理計畫簡報</div>
-        <div class="plan-meta"><span class="plan-date">民國 112 年</span><span class="plan-open">開啟 →</span></div>
-      </a>
-      <a class="plan-card" href="annual/ohs-plan-111.html" target="_blank" data-yr="111">
-        <span class="plan-tag annual">年度計畫</span>
-        <div class="plan-title">111 年度職業安全衛生管理計畫簡報</div>
-        <div class="plan-meta"><span class="plan-date">民國 111 年</span><span class="plan-open">開啟 →</span></div>
-      </a>
-      <a class="plan-card" href="annual/ohs-plan-110-main.html" target="_blank" data-yr="110">
-        <span class="plan-tag annual">年度計畫</span>
-        <div class="plan-title">110 年度職業安全衛生管理計畫簡報（總公司・全興廠）</div>
-        <div class="plan-meta"><span class="plan-date">民國 110 年</span><span class="plan-open">開啟 →</span></div>
-      </a>
-      <a class="plan-card" href="annual/ohs-plan-110-ops.html" target="_blank" data-yr="110">
-        <span class="plan-tag annual">年度計畫</span>
-        <div class="plan-title">110 年度職業安全衛生管理計畫簡報（業務部・營運部）</div>
-        <div class="plan-meta"><span class="plan-date">民國 110 年</span><span class="plan-open">開啟 →</span></div>
-      </a>
-      <a class="plan-card" href="annual/ohs-plan-109.html" target="_blank" data-yr="109">
-        <span class="plan-tag annual">年度計畫</span>
-        <div class="plan-title">109 年度職業安全衛生管理計畫簡報</div>
-        <div class="plan-meta"><span class="plan-date">民國 109 年</span><span class="plan-open">開啟 →</span></div>
-      </a>
-      <a class="plan-card" href="annual/ohs-plan-109-v2.html" target="_blank" data-yr="109">
-        <span class="plan-tag annual">年度計畫</span>
-        <div class="plan-title">109 年度職業安全衛生管理計畫簡報（第 2 版）</div>
-        <div class="plan-meta"><span class="plan-date">民國 109 年</span><span class="plan-open">開啟 →</span></div>
-      </a>
-      <a class="plan-card" href="annual/ohs-plan-109-external.html" target="_blank" data-yr="109">
-        <span class="plan-tag annual">年度計畫</span>
-        <div class="plan-title">109 年度職業安全衛生管理計畫簡報（外站）</div>
-        <div class="plan-meta"><span class="plan-date">民國 109 年</span><span class="plan-open">開啟 →</span></div>
-      </a>
-      <a class="plan-card" href="annual/ohs-plan-108.html" target="_blank" data-yr="108">
-        <span class="plan-tag annual">年度計畫</span>
-        <div class="plan-title">108 年度職業安全衛生管理計畫簡報</div>
-        <div class="plan-meta"><span class="plan-date">民國 108 年</span><span class="plan-open">開啟 →</span></div>
-      </a>
-    </div>
-    <div class="empty" id="annual-empty">此年度目前無計畫書</div>
+    <div class="plan-grid" id="annual-grid"></div>
+    <div class="empty show" id="annual-empty">目前尚無年度計畫書</div>
 
   </section>
 
