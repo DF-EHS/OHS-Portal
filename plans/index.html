@@ -165,14 +165,14 @@ footer {
     <div class="hero-text">
       <h2>職業安全衛生計畫書</h2>
       <p>年度管理計畫與各項專項計畫，點擊卡片即可開啟閱覽。<br>
-         目前收錄：專項計畫 2 份</p>
+         目前收錄：年度計畫 1 份・專項計畫 2 份</p>
     </div>
   </div>
 
   <!-- ── Tab Nav ── -->
   <nav class="module-nav">
     <button id="tab-annual"  class="active" onclick="switchTab('annual')">
-      📅 年度計畫書 <span class="nav-badge" id="badge-annual">0</span>
+      📅 年度計畫書 <span class="nav-badge" id="badge-annual">1</span>
     </button>
     <button id="tab-special" onclick="switchTab('special')">
       📌 專項計畫書 <span class="nav-badge" id="badge-special">2</span>
@@ -197,8 +197,14 @@ footer {
       <button class="yr-btn" data-yr="108" onclick="filterYr('108')">108 年</button>
     </div>
 
-    <div class="plan-grid" id="annual-grid"></div>
-    <div class="empty show" id="annual-empty">目前尚無年度計畫書</div>
+    <div class="plan-grid" id="annual-grid">
+      <a class="plan-card" href="annual/ohs-plan-115.html" target="_blank" data-yr="115">
+        <span class="plan-tag annual">年度計畫</span>
+        <div class="plan-title">115 年度職業安全衛生管理計畫書</div>
+        <div class="plan-meta"><span class="plan-date">民國 115 年</span><span class="plan-open">開啟 →</span></div>
+      </a>
+    </div>
+    <div class="empty" id="annual-empty">此年度目前無計畫書</div>
 
   </section>
 
