@@ -3380,7 +3380,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
   buildPPE();
   initSig();
   initSigFSEvents();
-  showView('login');
+  if (!initFromUrl()) showView('login');
 });
 
 window.addEventListener('resize', ()=>{
@@ -5003,10 +5003,10 @@ const FILL_BASE = location.origin + location.pathname;
 let _vendorList = [];
 const _esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-// ── URL 參數偵測（掃碼入口）──
+// ── URL 參數偵測（掃碼入口）── 回傳 true 表示已 bypass 登入
 function initFromUrl() {
   const params = new URLSearchParams(location.search);
-  if (params.get('mode') !== 'fill') return;
+  if (params.get('mode') !== 'fill') return false;
 
   // 隱藏 OHS sidebar
   const sb = document.getElementById('ohs-sidebar') || document.querySelector('.ohs-sidebar');
@@ -5025,7 +5025,7 @@ function initFromUrl() {
   document.getElementById('home-guest-layout').style.display = '';
   document.getElementById('home-admin-layout').style.display = 'none';
 
-  // 顯示選擇申請類型的首頁（讓使用者選 進場申請 / 動火 / 特殊危害）
+  // 直接進入填報首頁（跳過登入）
   showView('home');
 
   // 若有廠商代碼，從 GAS 載入並預填
@@ -5037,6 +5037,8 @@ function initFromUrl() {
       if (vendor) _prefillVendor(vendor);
     }).catch(() => {});
   }
+
+  return true;
 }
 
 function _prefillVendor(vendor) {
@@ -5310,8 +5312,7 @@ async function doImportVendors() {
   await loadVendors();
 }
 
-// ── 頁面載入時偵測 URL 參數 ──
-initFromUrl();
+// initFromUrl() 由 DOMContentLoaded 統一呼叫，此處不重複執行
 </script>
 
 <!-- ── Full-screen Signature Overlay ── -->
