@@ -493,8 +493,14 @@ footer {
   <!-- 宣導事項 + 簽名 -->
   <div class="form-card">
     <div class="field">
-      <label>安全宣導事項（特殊作業危害告知）</label>
-      <textarea id="tbm-briefing" placeholder="填寫本日特殊作業危害告知內容，如：此區域有高溫設備，請注意防燙傷…"></textarea>
+      <label style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
+        安全宣導事項（特殊作業危害告知）
+        <button type="button" id="ai-brief-btn" class="btn-outline btn-sm" onclick="genAIBriefing()" style="font-size:11px;padding:4px 11px;display:inline-flex;align-items:center;gap:5px">
+          ✨ AI 依勾選項目建議
+        </button>
+      </label>
+      <div id="ai-brief-status" style="display:none;font-size:11px;color:var(--sub);margin-bottom:5px">⏳ AI 生成中，請稍候…</div>
+      <textarea id="tbm-briefing" placeholder="填寫本日特殊作業危害告知內容，如：此區域有高溫設備，請注意防燙傷…&#10;&#10;（可點右上方「AI 依勾選項目建議」自動產生）"></textarea>
     </div>
     <div class="field">
       <label>備註</label>
@@ -951,8 +957,8 @@ function startForm(type) {
     buildCheckGrid('tbm-hazards', TBM_HAZARDS);
     buildCheckGrid('tbm-chemicals', TBM_CHEMICALS);
     buildCheckGrid('tbm-ppes', TBM_PPES);
-    initSig('tbm-sig-canvas');
     showView('form-tbm');
+    requestAnimationFrame(() => initSig('tbm-sig-canvas'));
   } else {
     const today = new Date().toISOString().slice(0,10);
     const now   = new Date().toTimeString().slice(0,5);
@@ -962,8 +968,8 @@ function startForm(type) {
     document.getElementById('kyt-hazard-list').innerHTML = '';
     document.getElementById('kyt-measure-list').innerHTML = '';
     addKytHazard(); addKytMeasure();
-    initSig('kyt-sig-canvas');
     showView('form-kyt');
+    requestAnimationFrame(() => initSig('kyt-sig-canvas'));
   }
 }
 
@@ -993,6 +999,53 @@ function getKytTexts(prefix, max) {
     if (el && el.value.trim()) arr.push(el.value.trim());
   }
   return arr;
+}
+
+// ─── AI 安全宣導事項建議 ──────────────────────────
+async function genAIBriefing() {
+  const categories = getChecked('tbm-categories');
+  const hazards    = getChecked('tbm-hazards');
+  const chemicals  = getChecked('tbm-chemicals');
+  const ppes       = getChecked('tbm-ppes');
+
+  if (!categories.length && !hazards.length) {
+    toast('請先勾選至少一項作業類別或潛在危害', 'bad'); return;
+  }
+
+  const btn    = document.getElementById('ai-brief-btn');
+  const status = document.getElementById('ai-brief-status');
+  btn.disabled = true;
+  status.style.display = 'block';
+
+  const prompt = `你是職業安全衛生管理助理。根據以下今日工具箱會議的作業資訊，撰寫一段「安全宣導事項（特殊作業危害告知）」的文字。
+要求：
+- 繁體中文，約 150～250 字
+- 條列重點說明，語氣正式但簡潔
+- 直接輸出宣導內容，不要有「以下是」等前言
+- 針對勾選項目的危害重點提醒，提及對應防護具的使用
+
+今日作業類別：${categories.length ? categories.join('、') : '（未勾選）'}
+潛在危害性：${hazards.length ? hazards.join('、') : '（未勾選）'}
+可能接觸化學物質：${chemicals.length ? chemicals.join('、') : '（無）'}
+所需防護具：${ppes.length ? ppes.join('、') : '（未勾選）'}`;
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt }),
+    });
+    const data = await res.json();
+    const text = data?.data || data?.choices?.[0]?.message?.content || data?.text || '';
+    if (!text) throw new Error('AI 未回傳內容');
+    document.getElementById('tbm-briefing').value = text.trim();
+    toast('✅ AI 建議已填入', 'ok');
+  } catch(e) {
+    toast('AI 建議失敗：' + e.message, 'bad');
+  } finally {
+    btn.disabled = false;
+    status.style.display = 'none';
+  }
 }
 
 // ─── Submit TBM ─────────────────────────────────
