@@ -165,7 +165,7 @@
         <span class="nav-icon">📰</span>職災情報與安衛動態
       </a>
       <a class="nav-item" href="${BASE}toolbox/" data-match="/toolbox/">
-        <span class="nav-icon">🧰</span>工具箱會議 TBM/KYT
+        <span class="nav-icon">🧰</span>工具箱會議
       </a>
       <a class="nav-item" href="${BASE}response/" data-match="/response/">
         <span class="nav-icon">📣</span>各站點反應事項

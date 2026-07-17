@@ -4,7 +4,7 @@
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>工具箱會議 TBM/KYT | 大豐環保科技</title>
+  <title>工具箱會議 TBM/TBM-KY | 大豐環保科技</title>
 <style>
 :root {
   --primary: #059669;
@@ -379,7 +379,7 @@ footer {
 <!-- ── Header ── -->
 <header>
   <a class="hdr-btn" href="../" title="系統入口">← 系統入口</a>
-  <h1>🧰 工具箱會議 TBM/KYT</h1>
+  <h1>🧰 工具箱會議</h1>
   <div class="hdr-brand">
     <img src="../dafon-logo.png" alt="大豐環保科技">
     <span>大豐環保科技</span>
@@ -395,7 +395,7 @@ footer {
     <div class="hero-text">
       <h2>工具箱會議系統</h2>
       <p>現場主管建立會議 → 產生 QR Code → 同仁掃碼即時簽到<br>
-         支援 TBM 一般版（勾選表單）及 KYT 預知危險版（腦力激盪）</p>
+         支援 TBM 一般版（勾選表單）及 TBM-KY 預知危險版（腦力激盪）</p>
     </div>
   </div>
 
@@ -424,7 +424,7 @@ footer {
   </div>
   <div class="notice info">
     <span class="notice-icon">💡</span>
-    <div>依照當日作業性質選擇會議類型。TBM 適合一般例行作業，KYT 適合施工前或高風險作業的危害預知。</div>
+    <div>依照當日作業性質選擇會議類型。TBM 適合一般例行作業，TBM-KY 適合施工前或高風險作業的危害預知。</div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px">
     <div onclick="startForm('tbm')" style="background:var(--card);border-radius:16px;padding:28px 18px;text-align:center;border:2px solid var(--border);cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#2563eb'" onmouseout="this.style.borderColor='var(--border)'">
@@ -435,7 +435,7 @@ footer {
     </div>
     <div onclick="startForm('kyt')" style="background:var(--card);border-radius:16px;padding:28px 18px;text-align:center;border:2px solid var(--border);cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
       <div style="font-size:44px;margin-bottom:10px">🟡</div>
-      <div style="font-size:16px;font-weight:800;margin-bottom:6px">KYT 預知危險</div>
+      <div style="font-size:16px;font-weight:800;margin-bottom:6px">TBM-KY 預知危險</div>
       <div style="font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:16px">腦力激盪方式辨識潛在危害並擬定對策，適合施工前或高風險特殊作業</div>
       <button class="btn-primary" style="width:100%;justify-content:center">開始建立 →</button>
     </div>
@@ -522,7 +522,7 @@ footer {
 <div class="view" id="v-form-kyt">
   <div class="form-nav">
     <button class="back-btn" onclick="showView('choose-type')">← 返回</button>
-    <h2>🟡 建立 KYT 預知危險會議</h2>
+    <h2>🟡 建立 TBM-KY 預知危險會議</h2>
   </div>
 
   <!-- 基本資料 -->
@@ -927,7 +927,7 @@ function renderHomeMeetings(meetings) {
 function meetingItemHtml(m) {
   const isOpen = !m.closedAt;
   const icon = m.type === 'kyt' ? '🟡' : '🧰';
-  const typeBadge = m.type === 'kyt' ? '<span class="badge badge-kyt">KYT</span>' : '<span class="badge badge-tbm">TBM</span>';
+  const typeBadge = m.type === 'kyt' ? '<span class="badge badge-kyt">TBM-KY</span>' : '<span class="badge badge-tbm">TBM</span>';
   const statusBadge = isOpen ? '<span class="badge badge-open">進行中</span>' : '<span class="badge badge-closed">已結束</span>';
   const onClick = isOpen ? `loadLive('${m.id}')` : `loadRecord('${m.id}')`;
   return `<div class="meeting-item" onclick="${onClick}">
@@ -1244,7 +1244,7 @@ async function loadMeetingForSignIn(meetingId) {
     const res = await gasGet({ action: 'getMeeting', id: meetingId });
     if (!res.success) { document.getElementById('si-meta').textContent = '找不到此會議，請確認連結正確'; return; }
     const m = res.record;
-    const typeName = m.type === 'kyt' ? 'KYT 預知危險' : 'TBM 工具箱會議';
+    const typeName = m.type === 'kyt' ? 'TBM-KY 預知危險' : 'TBM 工具箱會議';
     document.getElementById('si-title').textContent = typeName + ' 簽到';
     document.getElementById('si-meta').textContent  = `${m.date} ${m.time || ''} ｜ ${m.location || ''} ｜ 主持：${m.hostName || ''}`;
     document.getElementById('fmb-meeting-info').textContent = `${typeName} ｜ ${m.location || meetingId}`;
@@ -1330,7 +1330,7 @@ function renderRecordDetail(m, attendees) {
   let html = `
     <div class="form-card">
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
-        <div class="record-section"><div class="record-label">會議類型</div><div class="record-value">${m.type === 'kyt' ? '🟡 KYT 預知危險' : '🧰 TBM 工具箱會議'}</div></div>
+        <div class="record-section"><div class="record-label">會議類型</div><div class="record-value">${m.type === 'kyt' ? '🟡 TBM-KY 預知危險' : '🧰 TBM 工具箱會議'}</div></div>
         <div class="record-section"><div class="record-label">日期</div><div class="record-value">${m.date} ${m.time||''}</div></div>
         <div class="record-section"><div class="record-label">狀態</div><div class="record-value">${m.closedAt ? '已結束' : '進行中'}</div></div>
         <div class="record-section"><div class="record-label">地點</div><div class="record-value">${esc(m.location||'')}</div></div>
@@ -1380,7 +1380,7 @@ function checkTagRow(label, items) {
 // ─── Print HTML ─────────────────────────────────
 function buildPrintHtml(m, attendees) {
   const ex = (() => { try { return JSON.parse(m.extraData || '{}'); } catch{ return {}; } })();
-  const typeName = m.type === 'kyt' ? 'KYT 預知危險' : 'TBM 工具箱會議';
+  const typeName = m.type === 'kyt' ? 'TBM-KY 預知危險' : 'TBM 工具箱會議';
   let body = `<p style="text-align:center;font-size:11px;color:#666;margin-bottom:14px">會議 ID：${m.id} ｜ 日期：${m.date} ${m.time||''} ｜ 地點：${esc(m.location||'')} ｜ 主持人：${esc(m.hostName||'')}</p>`;
 
   if (m.type === 'tbm') {
