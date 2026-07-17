@@ -783,9 +783,10 @@ async function gasGet(params) {
   return res.json();
 }
 async function gasPost(body) {
+  // text/plain 避免 CORS preflight（GAS 仍可由 e.postData.contents 解析 JSON）
   const res = await fetch(GAS_URL, {
     method: 'POST',
-    headers: {'Content-Type':'application/json'},
+    headers: {'Content-Type': 'text/plain'},
     body: JSON.stringify(body),
   });
   return res.json();
