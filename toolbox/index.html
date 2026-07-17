@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>工具箱會議 TBM/KYT | 大豐環保科技</title>
+<style>
+:root {
+  --primary: #059669;
+  --primary-dark: #047857;
+  --primary-light: #ecfdf5;
+  --primary-bd: #6ee7b7;
+  --amber: #d97706;
+  --amber-bg: #fffbeb;
+  --red: #dc2626;
+  --navy: #1e3a5f;
+  --bg: #f0fdf4;
+  --card: #fff;
+  --border: #e2e8f0;
+  --text: #1e293b;
+  --sub: #64748b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+
+/* ── Fill mode banner ── */
+#fill-mode-banner {
+  display: none;
+  background: var(--primary); color: #fff;
+  padding: 8px 16px; font-size: 13px; font-weight: 600;
+  align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 300;
+}
+#fill-mode-banner .fmb-title { flex: 1; }
+
+/* ── Header ── */
+header {
+  background: linear-gradient(135deg,#065f46 0%,#047857 50%,#059669 100%);
+  color: #fff; padding: 12px 20px;
+  display: flex; align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.3);
+}
+header h1 { font-size: 17px; font-weight: 700; flex: 1; }
+.hdr-btn {
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1);
+  color: #fff; font-size: 12px; cursor: pointer;
+  font-family: inherit; text-decoration: none; transition: background .15s; display: inline-block;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.2); }
+.hdr-brand { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.hdr-brand img  { height: 24px; object-fit: contain; }
+.hdr-brand span { font-size: 12px; color: #a7f3d0; font-weight: 600; white-space: nowrap; }
+
+/* ── Main ── */
+main { flex: 1; max-width: 900px; margin: 0 auto; width: 100%; padding: 28px 20px 60px; }
+
+/* ── View switching ── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── Page hero ── */
+.page-hero {
+  background: linear-gradient(135deg,#065f46,#059669);
+  color: #fff; border-radius: 16px; padding: 24px 28px;
+  margin-bottom: 24px; display: flex; align-items: center; gap: 16px;
+  box-shadow: 0 4px 20px rgba(5,150,105,.25);
+}
+.hero-icon { font-size: 48px; flex-shrink: 0; }
+.hero-text h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+.hero-text p  { font-size: 12px; color: #a7f3d0; line-height: 1.6; }
+
+/* ── Stat strip ── */
+.stat-strip {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--card); border-radius: 12px; padding: 14px;
+  text-align: center; border: 1px solid var(--border);
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+.stat-val { font-size: 26px; font-weight: 800; color: var(--primary); }
+.stat-lbl { font-size: 11px; color: var(--sub); margin-top: 2px; }
+
+/* ── Sec label ── */
+.sec-label {
+  font-size: 11px; font-weight: 700; color: var(--sub);
+  letter-spacing: 3px; text-transform: uppercase;
+  margin: 0 0 14px; display: flex; align-items: center; gap: 10px;
+}
+.sec-label::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ── Meeting list item ── */
+.meeting-item {
+  background: var(--card); border-radius: 12px; padding: 14px 16px;
+  margin-bottom: 8px; border: 1px solid var(--border);
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  display: flex; align-items: center; gap: 12px;
+  cursor: pointer; transition: box-shadow .15s, border-color .15s;
+}
+.meeting-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,.09); border-color: var(--primary-bd); }
+.meeting-icon { font-size: 26px; flex-shrink: 0; }
+.meeting-info { flex: 1; min-width: 0; }
+.meeting-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.meeting-meta { font-size: 11px; color: var(--sub); }
+.meeting-badges { display: flex; gap: 5px; flex-wrap: wrap; flex-shrink: 0; }
+.badge {
+  font-size: 10px; font-weight: 700; padding: 2px 8px;
+  border-radius: 20px; white-space: nowrap;
+}
+.badge-open   { background: #dcfce7; color: #15803d; }
+.badge-closed { background: #f1f5f9; color: var(--sub); }
+.badge-tbm    { background: #dbeafe; color: #1d4ed8; }
+.badge-kyt    { background: #fef3c7; color: #92400e; }
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--primary); color: #fff;
+  border: none; border-radius: 10px;
+  padding: 11px 20px; font-size: 14px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-primary:disabled { background: #9ca3af; cursor: not-allowed; }
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: transparent; color: var(--primary);
+  border: 1.5px solid var(--primary-bd); border-radius: 10px;
+  padding: 9px 18px; font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: all .15s;
+}
+.btn-outline:hover { background: var(--primary-light); }
+.btn-sm { padding: 6px 12px; font-size: 12px; border-radius: 7px; }
+.btn-danger { background: #dc2626; color: #fff; }
+.btn-danger:hover { background: #b91c1c; }
+
+/* ── Form nav ── */
+.form-nav {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+}
+.back-btn {
+  padding: 7px 14px; border-radius: 8px;
+  background: var(--card); border: 1px solid var(--border);
+  font-size: 13px; color: var(--sub); cursor: pointer;
+  font-family: inherit; transition: background .15s;
+}
+.back-btn:hover { background: var(--border); }
+.form-nav h2 { font-size: 18px; font-weight: 700; }
+
+/* ── Form card ── */
+.form-card {
+  background: var(--card); border-radius: 14px;
+  padding: 20px 22px; margin-bottom: 14px;
+  box-shadow: 0 1px 8px rgba(0,0,0,.06);
+}
+.field { margin-bottom: 16px; }
+.field:last-child { margin-bottom: 0; }
+.field label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+.req { color: var(--red); }
+.field input, .field textarea, .field select {
+  width: 100%; padding: 10px 12px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: 14px; font-family: inherit; color: var(--text);
+  background: #fff; outline: none; transition: border-color .15s;
+}
+.field input:focus, .field textarea:focus, .field select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(5,150,105,.08);
+}
+.field textarea { min-height: 80px; resize: vertical; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* ── Check grid ── */
+.check-sec-title {
+  font-size: 12px; font-weight: 700; color: var(--primary);
+  margin: 0 0 10px; padding-bottom: 6px; border-bottom: 1.5px solid var(--primary-bd);
+}
+.check-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(130px,1fr));
+  gap: 7px; margin-bottom: 16px;
+}
+.check-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 8px 10px; border-radius: 8px;
+  border: 1.5px solid var(--border);
+  cursor: pointer; font-size: 12px; user-select: none;
+  transition: all .12s; line-height: 1.3;
+}
+.check-item input { display: none; }
+.check-item.checked {
+  border-color: var(--primary); background: var(--primary-light);
+  color: var(--primary); font-weight: 600;
+}
+
+/* ── Signature ── */
+.sig-wrap {
+  border: 2px dashed #cbd5e1; border-radius: 10px;
+  background: #fafafa; position: relative; overflow: hidden;
+  touch-action: none; cursor: crosshair;
+}
+.sig-wrap canvas { display: block; width: 100%; }
+.sig-hint {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center;
+  font-size: 13px; color: #ccc; pointer-events: none; user-select: none;
+}
+.sig-wrap.has-sig .sig-hint { display: none; }
+.sig-actions { display: flex; gap: 8px; margin-top: 8px; }
+
+/* ── KYT dynamic ── */
+.kyt-card {
+  background: #f8fafc; border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 8px;
+}
+.kyt-card-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px; font-size: 12px; font-weight: 700; color: var(--primary);
+}
+
+/* ── QR display ── */
+.qr-wrap {
+  text-align: center; padding: 24px 20px 20px;
+  background: var(--card); border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07); margin-bottom: 16px;
+}
+.qr-wrap img { border-radius: 10px; max-width: 220px; width: 100%; }
+.qr-url { font-size: 10px; color: var(--sub); word-break: break-all; margin-top: 8px; }
+.qr-hint { font-size: 12px; color: var(--sub); margin-top: 6px; }
+
+/* ── Live attendee ── */
+.attendee-counter {
+  background: var(--primary-light); border: 1.5px solid var(--primary-bd);
+  border-radius: 12px; padding: 14px 18px;
+  display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+}
+.att-count-num { font-size: 36px; font-weight: 800; color: var(--primary); }
+.att-count-lbl { font-size: 13px; color: var(--primary-dark); }
+.att-count-sub { font-size: 11px; color: var(--sub); }
+.att-list { background: var(--card); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+.att-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 13px;
+}
+.att-item:last-child { border-bottom: none; }
+.att-icon { color: var(--primary); font-size: 15px; flex-shrink: 0; }
+.att-name { font-weight: 600; }
+.att-dept { font-size: 11px; color: var(--sub); }
+.att-time { font-size: 11px; color: var(--sub); margin-left: auto; white-space: nowrap; }
+.att-empty { padding: 20px; text-align: center; color: var(--sub); font-size: 13px; }
+
+/* ── Sign-in hero ── */
+.signin-hero {
+  background: var(--primary); color: #fff;
+  border-radius: 14px; padding: 18px 20px; margin-bottom: 18px; text-align: center;
+}
+.signin-hero h2 { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+.signin-hero .si-meta { font-size: 12px; opacity: .85; }
+
+/* ── Success ── */
+.success-card {
+  background: var(--card); border-radius: 20px; padding: 40px 28px;
+  text-align: center; margin: 20px 0; box-shadow: 0 4px 20px rgba(0,0,0,.07);
+}
+.success-icon { font-size: 60px; margin-bottom: 14px; }
+.success-card h2 { font-size: 22px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+.success-card p  { font-size: 14px; color: var(--sub); line-height: 1.8; }
+
+/* ── Notice ── */
+.notice {
+  border-radius: 10px; padding: 12px 16px; font-size: 13px;
+  line-height: 1.7; display: flex; gap: 10px; margin-bottom: 14px;
+}
+.notice-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+.notice.info { background: var(--primary-light); color: #065f46; border: 1px solid var(--primary-bd); }
+.notice.warn { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+
+/* ── Submit ── */
+.submit-btn {
+  width: 100%; padding: 14px; border-radius: 10px;
+  background: var(--primary); color: #fff;
+  border: none; font-size: 15px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: background .15s; margin-top: 8px;
+}
+.submit-btn:hover:not(:disabled) { background: var(--primary-dark); }
+.submit-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+
+/* ── Toast ── */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: #1e293b; color: #fff; padding: 10px 20px;
+  border-radius: 10px; font-size: 13px; opacity: 0;
+  transition: opacity .3s; z-index: 9999; white-space: nowrap; pointer-events: none;
+}
+.toast.show { opacity: 1; }
+.toast.ok  { background: var(--primary); }
+.toast.bad { background: var(--red); }
+
+/* ── Loading ── */
+#loading {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.45); z-index: 9000;
+  align-items: center; justify-content: center; flex-direction: column;
+  color: #fff; gap: 14px;
+}
+#loading.show { display: flex; }
+.spinner {
+  width: 36px; height: 36px; border: 3px solid rgba(255,255,255,.3);
+  border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+#loading-msg { font-size: 14px; }
+
+/* ── Photo upload ── */
+.photo-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.photo-thumb {
+  width: 72px; height: 72px; object-fit: cover;
+  border-radius: 8px; border: 1px solid var(--border);
+}
+.photo-add-btn {
+  width: 72px; height: 72px; border: 2px dashed var(--border);
+  border-radius: 8px; background: #fafafa;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 22px; color: var(--sub);
+  transition: all .15s;
+}
+.photo-add-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ── Print record ── */
+.record-section { margin-bottom: 20px; }
+.record-label { font-size: 11px; font-weight: 700; color: var(--sub); margin-bottom: 6px; letter-spacing: 1px; text-transform: uppercase; }
+.record-value { font-size: 14px; }
+.record-sig { max-height: 80px; border: 1px solid var(--border); border-radius: 8px; }
+.check-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--primary-light); color: var(--primary);
+  border: 1px solid var(--primary-bd); border-radius: 6px;
+  font-size: 12px; font-weight: 600; padding: 3px 9px;
+  margin: 2px;
+}
+
+footer {
+  text-align: center; padding: 18px; font-size: 12px; color: var(--sub);
+  border-top: 1px solid var(--border); background: var(--card);
+}
+
+@media (max-width: 600px) {
+  main { padding: 16px 12px 50px; }
+  .field-row { grid-template-columns: 1fr; }
+  .check-grid { grid-template-columns: repeat(auto-fill,minmax(110px,1fr)); }
+  .stat-strip { gap: 6px; }
+  .stat-val { font-size: 22px; }
+  .page-hero { padding: 18px 16px; gap: 12px; }
+  .hero-icon { font-size: 36px; }
+}
+@media print {
+  header, footer, .form-nav .back-btn, #fill-mode-banner, .btn-primary, .btn-outline, .submit-btn { display: none !important; }
+  .view { display: block !important; }
+  .form-card { box-shadow: none; border: 1px solid #ddd; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Fill mode banner (QR scan entry) ── -->
+<div id="fill-mode-banner">
+  <span>📱 掃碼簽到模式</span>
+  <span class="fmb-title" id="fmb-meeting-info"></span>
+</div>
+
+<!-- ── Header ── -->
+<header>
+  <a class="hdr-btn" href="../" title="系統入口">← 系統入口</a>
+  <h1>🧰 工具箱會議 TBM/KYT</h1>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
+
+<main>
+
+<!-- ════════════ HOME ════════════ -->
+<div class="view active" id="v-home">
+  <div class="page-hero">
+    <div class="hero-icon">🧰</div>
+    <div class="hero-text">
+      <h2>工具箱會議系統</h2>
+      <p>現場主管建立會議 → 產生 QR Code → 同仁掃碼即時簽到<br>
+         支援 TBM 一般版（勾選表單）及 KYT 預知危險版（腦力激盪）</p>
+    </div>
+  </div>
+
+  <div class="stat-strip" id="stat-strip">
+    <div class="stat-card"><div class="stat-val" id="stat-today">—</div><div class="stat-lbl">今日場次</div></div>
+    <div class="stat-card"><div class="stat-val" id="stat-week">—</div><div class="stat-lbl">本週場次</div></div>
+    <div class="stat-card"><div class="stat-val" id="stat-month">—</div><div class="stat-lbl">本月場次</div></div>
+  </div>
+
+  <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap">
+    <button class="btn-primary" onclick="showView('choose-type')">＋ 建立新會議</button>
+    <button class="btn-outline" onclick="loadHistory()">📂 歷史紀錄</button>
+  </div>
+
+  <div class="sec-label">今日會議</div>
+  <div id="home-meetings">
+    <div style="text-align:center;padding:24px;color:var(--sub);font-size:13px">載入中…</div>
+  </div>
+</div>
+
+<!-- ════════════ CHOOSE TYPE ════════════ -->
+<div class="view" id="v-choose-type">
+  <div class="form-nav">
+    <button class="back-btn" onclick="showView('home')">← 返回</button>
+    <h2>選擇會議類型</h2>
+  </div>
+  <div class="notice info">
+    <span class="notice-icon">💡</span>
+    <div>依照當日作業性質選擇會議類型。TBM 適合一般例行作業，KYT 適合施工前或高風險作業的危害預知。</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px">
+    <div onclick="startForm('tbm')" style="background:var(--card);border-radius:16px;padding:28px 18px;text-align:center;border:2px solid var(--border);cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#2563eb'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:44px;margin-bottom:10px">🧰</div>
+      <div style="font-size:16px;font-weight:800;margin-bottom:6px">TBM 工具箱會議</div>
+      <div style="font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:16px">勾選作業類別、潛在危害、化學物質、所需防護具，適合固定作業的安全宣導</div>
+      <button class="btn-primary" style="width:100%;background:#2563eb;justify-content:center">開始建立 →</button>
+    </div>
+    <div onclick="startForm('kyt')" style="background:var(--card);border-radius:16px;padding:28px 18px;text-align:center;border:2px solid var(--border);cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:44px;margin-bottom:10px">🟡</div>
+      <div style="font-size:16px;font-weight:800;margin-bottom:6px">KYT 預知危險</div>
+      <div style="font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:16px">腦力激盪方式辨識潛在危害並擬定對策，適合施工前或高風險特殊作業</div>
+      <button class="btn-primary" style="width:100%;justify-content:center">開始建立 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ FORM TBM ════════════ -->
+<div class="view" id="v-form-tbm">
+  <div class="form-nav">
+    <button class="back-btn" onclick="showView('choose-type')">← 返回</button>
+    <h2>🧰 建立 TBM 工具箱會議</h2>
+  </div>
+
+  <!-- 基本資料 -->
+  <div class="form-card">
+    <div class="sec-label">基本資料</div>
+    <div class="field-row">
+      <div class="field"><label>會議日期 <span class="req">*</span></label><input type="date" id="tbm-date"></div>
+      <div class="field"><label>會議時間 <span class="req">*</span></label><input type="time" id="tbm-time"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>會議地點 <span class="req">*</span></label><input type="text" id="tbm-location" placeholder="例：全興廠 A 棟入口"></div>
+      <div class="field"><label>施工區域</label><input type="text" id="tbm-area" placeholder="例：鍋爐室、廠區 B4"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>主持人姓名 <span class="req">*</span></label><input type="text" id="tbm-host-name" placeholder="姓名"></div>
+      <div class="field"><label>主持人職稱 <span class="req">*</span></label>
+        <select id="tbm-host-role">
+          <option>職安人員</option><option>工地主任</option>
+          <option>現場主管</option><option>領班</option><option>其他</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>預計作業人數</label><input type="number" id="tbm-workers-count" placeholder="例：12" min="1"></div>
+  </div>
+
+  <!-- 作業類別 -->
+  <div class="form-card">
+    <div class="check-sec-title">🔧 本日作業工作類別</div>
+    <div class="check-grid" id="tbm-categories"></div>
+
+    <div class="check-sec-title">⚠️ 本日作業潛在危害性</div>
+    <div class="check-grid" id="tbm-hazards"></div>
+  </div>
+
+  <!-- 化學物質 & 防護具 -->
+  <div class="form-card">
+    <div class="check-sec-title">🧪 可能接觸化學物質</div>
+    <div class="check-grid" id="tbm-chemicals"></div>
+
+    <div class="check-sec-title">🦺 所需個人防護具</div>
+    <div class="check-grid" id="tbm-ppes"></div>
+  </div>
+
+  <!-- 宣導事項 + 簽名 -->
+  <div class="form-card">
+    <div class="field">
+      <label>安全宣導事項（特殊作業危害告知）</label>
+      <textarea id="tbm-briefing" placeholder="填寫本日特殊作業危害告知內容，如：此區域有高溫設備，請注意防燙傷…"></textarea>
+    </div>
+    <div class="field">
+      <label>備註</label>
+      <textarea id="tbm-notes" placeholder="其他備註…" style="min-height:60px"></textarea>
+    </div>
+    <div class="field">
+      <label>主持人簽名 <span class="req">*</span></label>
+      <div class="sig-wrap" id="tbm-sig-wrap" style="height:140px">
+        <canvas id="tbm-sig-canvas"></canvas>
+        <div class="sig-hint">請在此處簽名</div>
+      </div>
+      <div class="sig-actions">
+        <button class="btn-outline btn-sm" onclick="clearSig('tbm-sig-canvas','tbm-sig-wrap')">清除</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="tbm-err" class="notice warn" style="display:none">
+    <span class="notice-icon">⚠️</span><span id="tbm-err-msg"></span>
+  </div>
+  <button class="submit-btn" id="tbm-submit-btn" onclick="submitTBM()">建立會議並產生 QR Code →</button>
+</div>
+
+<!-- ════════════ FORM KYT ════════════ -->
+<div class="view" id="v-form-kyt">
+  <div class="form-nav">
+    <button class="back-btn" onclick="showView('choose-type')">← 返回</button>
+    <h2>🟡 建立 KYT 預知危險會議</h2>
+  </div>
+
+  <!-- 基本資料 -->
+  <div class="form-card">
+    <div class="sec-label">基本資料</div>
+    <div class="field-row">
+      <div class="field"><label>工作日期 <span class="req">*</span></label><input type="date" id="kyt-date"></div>
+      <div class="field"><label>工作時間</label><input type="time" id="kyt-time"></div>
+    </div>
+    <div class="field"><label>工程名稱</label><input type="text" id="kyt-project" placeholder="例：2026 年廠區管路更新工程"></div>
+    <div class="field-row">
+      <div class="field"><label>工作項目 <span class="req">*</span></label><input type="text" id="kyt-workitem" placeholder="例：高架管路焊接"></div>
+      <div class="field"><label>工作地點 <span class="req">*</span></label><input type="text" id="kyt-location" placeholder="例：全興廠 B 棟屋頂"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>主持人姓名 <span class="req">*</span></label><input type="text" id="kyt-host-name" placeholder="姓名"></div>
+      <div class="field"><label>主持人職稱</label>
+        <select id="kyt-host-role">
+          <option>職安人員</option><option>工地主任</option>
+          <option>現場主管</option><option>領班</option><option>其他</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>預計作業人數</label><input type="number" id="kyt-workers-count" placeholder="例：8" min="1"></div>
+  </div>
+
+  <!-- 會議形式 & 前置檢查 -->
+  <div class="form-card">
+    <div class="check-sec-title">📋 會議形式（可複選）</div>
+    <div class="check-grid" style="grid-template-columns:1fr 1fr">
+      <label class="check-item" id="kyt-form-depart"><input type="checkbox"> □ 出發前集會</label>
+      <label class="check-item" id="kyt-form-onsite"><input type="checkbox"> □ 現場工作前危害告知</label>
+    </div>
+
+    <div class="check-sec-title" style="margin-top:4px">✅ 出發前確認事項（六項）</div>
+    <div class="check-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+      <label class="check-item"><input type="checkbox" name="kyt-pre"> ①集合、道早問好</label>
+      <label class="check-item"><input type="checkbox" name="kyt-pre"> ②觀察身心及健康狀況</label>
+      <label class="check-item"><input type="checkbox" name="kyt-pre"> ③檢查服裝、裝備</label>
+      <label class="check-item"><input type="checkbox" name="kyt-pre"> ④概述工作環境、內容</label>
+      <label class="check-item"><input type="checkbox" name="kyt-pre"> ⑤工作分配</label>
+      <label class="check-item"><input type="checkbox" name="kyt-pre"> ⑥其他</label>
+    </div>
+  </div>
+
+  <!-- 預知危險 -->
+  <div class="form-card">
+    <div class="check-sec-title">🧠 一、預知危險（有什麼潛在危險？）</div>
+    <div class="notice info" style="margin-bottom:12px">
+      <span class="notice-icon">💡</span>
+      <div>鼓勵全員發言，共同確認可能發生的危害。每條危險對應一個防止對策。</div>
+    </div>
+    <div id="kyt-hazard-list"></div>
+    <button class="btn-outline btn-sm" onclick="addKytHazard()" style="margin-top:4px">＋ 新增危險項目</button>
+  </div>
+
+  <!-- 防止對策 -->
+  <div class="form-card">
+    <div class="check-sec-title">🛡️ 二、防止對策</div>
+    <div id="kyt-measure-list"></div>
+    <button class="btn-outline btn-sm" onclick="addKytMeasure()" style="margin-top:4px">＋ 新增對策</button>
+  </div>
+
+  <!-- 工作分配 + 簽名 -->
+  <div class="form-card">
+    <div class="field">
+      <label>三、工作分配</label>
+      <textarea id="kyt-assignment" placeholder="填寫本日各工作項目的人員分配…" style="min-height:80px"></textarea>
+    </div>
+    <div class="field">
+      <label>備註</label>
+      <textarea id="kyt-notes" placeholder="其他備註…" style="min-height:60px"></textarea>
+    </div>
+    <div class="field">
+      <label>主持人簽名 <span class="req">*</span></label>
+      <div class="sig-wrap" id="kyt-sig-wrap" style="height:140px">
+        <canvas id="kyt-sig-canvas"></canvas>
+        <div class="sig-hint">請在此處簽名</div>
+      </div>
+      <div class="sig-actions">
+        <button class="btn-outline btn-sm" onclick="clearSig('kyt-sig-canvas','kyt-sig-wrap')">清除</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="kyt-err" class="notice warn" style="display:none">
+    <span class="notice-icon">⚠️</span><span id="kyt-err-msg"></span>
+  </div>
+  <button class="submit-btn" id="kyt-submit-btn" onclick="submitKYT()">建立會議並產生 QR Code →</button>
+</div>
+
+<!-- ════════════ MEETING LIVE ════════════ -->
+<div class="view" id="v-meeting-live">
+  <div class="form-nav">
+    <button class="back-btn" onclick="showView('home')">← 首頁</button>
+    <h2 id="live-title">會議進行中</h2>
+  </div>
+
+  <!-- QR -->
+  <div class="qr-wrap">
+    <div style="font-size:13px;font-weight:700;margin-bottom:14px;color:var(--primary)">請同仁掃描以下 QR Code 進行簽到</div>
+    <img id="live-qr-img" src="" alt="QR Code">
+    <div class="qr-url" id="live-qr-url"></div>
+    <div class="qr-hint">📱 手機掃描 → 輸入姓名 → 簽名 → 完成</div>
+  </div>
+
+  <!-- Live counter -->
+  <div class="attendee-counter">
+    <div>
+      <div class="att-count-num" id="live-count">0</div>
+      <div class="att-count-lbl">人已簽到</div>
+    </div>
+    <div style="flex:1">
+      <div class="att-count-sub" id="live-expected"></div>
+      <div class="att-count-sub">每 15 秒自動更新</div>
+    </div>
+    <button class="btn-outline btn-sm" onclick="refreshAttendees()">🔄 立即更新</button>
+  </div>
+
+  <div class="sec-label">已簽到名單</div>
+  <div class="att-list" id="live-att-list">
+    <div class="att-empty">尚無人簽到</div>
+  </div>
+
+  <!-- Actions -->
+  <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+    <button class="btn-outline" onclick="document.getElementById('photo-input').click()">📸 上傳現場照片</button>
+    <button class="btn-outline" onclick="copyLink()">🔗 複製簽到連結</button>
+    <button class="btn-outline btn-sm" id="print-record-btn" onclick="loadAndPrintRecord()">🖨️ 列印紀錄</button>
+  </div>
+  <div class="photo-grid" id="live-photos"></div>
+  <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="uploadPhoto(this)">
+
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+    <button class="btn-primary" style="background:var(--red);" onclick="closeMeeting()">✓ 結束會議</button>
+    <div style="font-size:11px;color:var(--sub);margin-top:8px">結束後可至歷史紀錄查詢</div>
+  </div>
+</div>
+
+<!-- ════════════ SIGN IN (QR scan) ════════════ -->
+<div class="view" id="v-sign-in">
+  <div class="signin-hero">
+    <h2 id="si-title">工具箱會議簽到</h2>
+    <div class="si-meta" id="si-meta"></div>
+  </div>
+
+  <div class="notice info">
+    <span class="notice-icon">📝</span>
+    <div>請填入您的姓名及部門，並在下方畫布簽名後按送出完成簽到。</div>
+  </div>
+
+  <div class="form-card">
+    <div class="field-row">
+      <div class="field"><label>姓名 <span class="req">*</span></label><input type="text" id="si-name" placeholder="您的姓名" autocomplete="name"></div>
+      <div class="field"><label>部門</label><input type="text" id="si-dept" placeholder="例：運維部"></div>
+    </div>
+    <div class="field"><label>工號（選填）</label><input type="text" id="si-empid" placeholder="員工編號"></div>
+    <div class="field">
+      <label>簽名 <span class="req">*</span></label>
+      <div class="sig-wrap" id="si-sig-wrap" style="height:160px">
+        <canvas id="si-sig-canvas"></canvas>
+        <div class="sig-hint">請在此處簽名</div>
+      </div>
+      <div class="sig-actions">
+        <button class="btn-outline btn-sm" onclick="clearSig('si-sig-canvas','si-sig-wrap')">清除</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="si-err" class="notice warn" style="display:none">
+    <span class="notice-icon">⚠️</span><span id="si-err-msg"></span>
+  </div>
+  <button class="submit-btn" id="si-submit-btn" onclick="submitSignIn()">✓ 完成簽到</button>
+</div>
+
+<!-- ════════════ SIGN SUCCESS ════════════ -->
+<div class="view" id="v-sign-success">
+  <div class="success-card">
+    <div class="success-icon">✅</div>
+    <h2>簽到完成！</h2>
+    <p>您的簽名已送出，感謝配合。<br>請準備工具並等候會議開始。</p>
+    <div style="margin-top:20px;font-size:13px;color:var(--sub)" id="success-meeting-info"></div>
+  </div>
+</div>
+
+<!-- ════════════ HISTORY ════════════ -->
+<div class="view" id="v-history">
+  <div class="form-nav">
+    <button class="back-btn" onclick="showView('home')">← 首頁</button>
+    <h2>📂 歷史會議紀錄</h2>
+  </div>
+  <div id="history-list">
+    <div style="text-align:center;padding:24px;color:var(--sub);font-size:13px">載入中…</div>
+  </div>
+</div>
+
+<!-- ════════════ RECORD DETAIL ════════════ -->
+<div class="view" id="v-record-detail">
+  <div class="form-nav">
+    <button class="back-btn" id="record-back-btn" onclick="showView('history')">← 返回</button>
+    <h2>📋 會議紀錄</h2>
+    <button class="btn-outline btn-sm" onclick="window.print()">🖨️ 列印</button>
+  </div>
+  <div id="record-body"></div>
+</div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+<div id="loading"><div class="spinner"></div><div id="loading-msg">處理中…</div></div>
+<footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
+
+<script>
+// ─── 設定 ───────────────────────────────────────
+const GAS_URL    = 'PASTE_GAS_URL_HERE'; // ← 部署 GAS 後填入
+const WORKER_URL = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+const SITE_BASE  = location.origin + location.pathname; // e.g. .../toolbox/
+
+// ─── TBM 資料常數 ─────────────────────────────
+const TBM_CATEGORIES = [
+  '一般作業','高架作業','動火作業','局限/缺氧作業','開挖作業',
+  '起重吊掛作業','掛牌上鎖（LOTO）','拆搭架作業','噪音作業','粉塵作業',
+  '有毒/爆炸性作業','高溫作業','有機溶劑作業','化學品作業',
+  '機械檢修','電氣檢修','消防廣播/火警系統隔離','其他',
+];
+const TBM_HAZARDS = [
+  '墜落','跌倒','火災','中毒','缺氧','衝撞','感電','物體飛落',
+  '切割夾捲','高低溫接觸','有害物接觸','特殊氣體設備管路',
+  '爆炸','物體破裂','倒塌崩塌','水災','其他',
+];
+const TBM_CHEMICALS = [
+  '柴油','消石灰','氨水','水泥','螯合劑','鹽酸','活性碳','氫氧化鈉','其他',
+];
+const TBM_PPES = [
+  '安全帽','安全鞋','防塵口罩','反光背心','防墜繩','背負式安全帶','安全網',
+  '施工架','合梯','滅火器','防火毯','檢電器','安全護目鏡','絕緣手套',
+  '絕緣鞋','電焊手套','耳塞','通風設備','救命器','氣體偵測器',
+  '急救設備','施工標示','照明設備','圍欄','SDS/化學品標示','其他',
+];
+
+// ─── 狀態 ──────────────────────────────────────
+let currentMeetingId = null;
+let pollTimer = null;
+let kytHazardCount = 0;
+let kytMeasureCount = 0;
+let _sigState = {}; // key: canvasId → {drawing, lastX, lastY}
+
+// ─── API helpers ────────────────────────────────
+async function gasGet(params) {
+  const qs = Object.entries(params).map(([k,v]) => k+'='+encodeURIComponent(v)).join('&');
+  const res = await fetch(GAS_URL + '?' + qs);
+  return res.json();
+}
+async function gasPost(body) {
+  const res = await fetch(GAS_URL, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(body),
+  });
+  return res.json();
+}
+
+// ─── View ──────────────────────────────────────
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('v-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ─── URL 偵測（QR 掃碼入口）───────────────────
+function initFromUrl() {
+  const params = new URLSearchParams(location.search);
+  const meetingId = params.get('meeting');
+  if (!meetingId) return false;
+
+  document.getElementById('fill-mode-banner').style.display = 'flex';
+  document.getElementById('fmb-meeting-info').textContent = meetingId;
+
+  showView('sign-in');
+  loadMeetingForSignIn(meetingId);
+  return true;
+}
+
+// ─── Toast / Loading ───────────────────────────
+function toast(msg, type='') {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = 'toast show ' + type;
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+function showLoading(msg='處理中…') {
+  document.getElementById('loading-msg').textContent = msg;
+  document.getElementById('loading').classList.add('show');
+}
+function hideLoading() {
+  document.getElementById('loading').classList.remove('show');
+}
+
+// ─── 建置 checkbox 格子 ──────────────────────────
+function buildCheckGrid(containerId, items) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = items.map((it, i) => `
+    <label class="check-item" id="${containerId}-${i}">
+      <input type="checkbox" value="${it}" onchange="toggleCheck(this,'${containerId}-${i}')">
+      ${it}
+    </label>`).join('');
+}
+function toggleCheck(cb, labelId) {
+  document.getElementById(labelId).classList.toggle('checked', cb.checked);
+}
+function getChecked(containerId) {
+  return [...document.querySelectorAll(`#${containerId} input:checked`)].map(cb => cb.value);
+}
+
+// ─── Signature ─────────────────────────────────
+function initSig(canvasId, wrapId) {
+  const canvas = document.getElementById(canvasId);
+  const wrap   = canvas.closest('.sig-wrap') || document.getElementById(wrapId);
+  const dpr    = window.devicePixelRatio || 1;
+
+  function resize() {
+    canvas.width  = wrap.offsetWidth  * dpr;
+    canvas.height = wrap.offsetHeight * dpr;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    ctx.strokeStyle = '#1e293b';
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+  }
+  resize();
+  _sigState[canvasId] = { drawing: false };
+
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return { x: (src.clientX - r.left) / (r.width / (canvas.width / dpr)), y: (src.clientY - r.top) / (r.height / (canvas.height / dpr)) };
+  }
+  function start(e) { e.preventDefault(); const p = getPos(e); _sigState[canvasId] = { drawing: true, lx: p.x, ly: p.y }; wrap.classList.add('has-sig'); }
+  function move(e)  { e.preventDefault(); if (!_sigState[canvasId].drawing) return; const p = getPos(e); const ctx = canvas.getContext('2d'); ctx.beginPath(); ctx.moveTo(_sigState[canvasId].lx, _sigState[canvasId].ly); ctx.lineTo(p.x, p.y); ctx.stroke(); _sigState[canvasId].lx = p.x; _sigState[canvasId].ly = p.y; }
+  function stop()   { _sigState[canvasId].drawing = false; }
+
+  canvas.addEventListener('mousedown', start);
+  canvas.addEventListener('mousemove', move);
+  canvas.addEventListener('mouseup',   stop);
+  canvas.addEventListener('mouseleave',stop);
+  canvas.addEventListener('touchstart',start, {passive:false});
+  canvas.addEventListener('touchmove', move,  {passive:false});
+  canvas.addEventListener('touchend',  stop);
+}
+
+function clearSig(canvasId, wrapId) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const wrap = document.getElementById(wrapId);
+  if (wrap) wrap.classList.remove('has-sig');
+  else canvas.closest('.sig-wrap').classList.remove('has-sig');
+  _sigState[canvasId] = { drawing: false };
+}
+
+function getSigData(canvasId) {
+  const canvas = document.getElementById(canvasId);
+  const wrap = canvas.closest('.sig-wrap');
+  if (!wrap.classList.contains('has-sig')) return null;
+  return canvas.toDataURL('image/png');
+}
+
+// ─── 首頁載入 ──────────────────────────────────
+async function loadHome() {
+  try {
+    const res = await gasGet({ action: 'listMeetings' });
+    const meetings = (res && res.records) ? res.records : [];
+    renderHomeStats(meetings);
+    renderHomeMeetings(meetings);
+  } catch(e) {
+    document.getElementById('home-meetings').innerHTML =
+      `<div class="notice warn"><span class="notice-icon">⚠️</span>載入失敗，請確認 GAS URL 已設定：${e.message}</div>`;
+  }
+}
+
+function renderHomeStats(meetings) {
+  const now = new Date();
+  const today = now.toISOString().slice(0,10);
+  const weekAgo = new Date(now - 7*864e5).toISOString().slice(0,10);
+  const monthStart = today.slice(0,7) + '-01';
+  document.getElementById('stat-today').textContent  = meetings.filter(m => m.date === today).length;
+  document.getElementById('stat-week').textContent   = meetings.filter(m => m.date >= weekAgo).length;
+  document.getElementById('stat-month').textContent  = meetings.filter(m => m.date >= monthStart).length;
+}
+
+function renderHomeMeetings(meetings) {
+  const today = new Date().toISOString().slice(0,10);
+  const todayMeetings = meetings.filter(m => m.date === today).reverse();
+  const el = document.getElementById('home-meetings');
+  if (!todayMeetings.length) {
+    el.innerHTML = '<div style="text-align:center;padding:24px;color:var(--sub);font-size:13px">今日尚無會議記錄</div>';
+    return;
+  }
+  el.innerHTML = todayMeetings.map(m => meetingItemHtml(m)).join('');
+}
+
+function meetingItemHtml(m) {
+  const isOpen = !m.closedAt;
+  const icon = m.type === 'kyt' ? '🟡' : '🧰';
+  const typeBadge = m.type === 'kyt' ? '<span class="badge badge-kyt">KYT</span>' : '<span class="badge badge-tbm">TBM</span>';
+  const statusBadge = isOpen ? '<span class="badge badge-open">進行中</span>' : '<span class="badge badge-closed">已結束</span>';
+  const onClick = isOpen ? `loadLive('${m.id}')` : `loadRecord('${m.id}')`;
+  return `<div class="meeting-item" onclick="${onClick}">
+    <div class="meeting-icon">${icon}</div>
+    <div class="meeting-info">
+      <div class="meeting-title">${esc(m.location || '—')}　${esc(m.hostName || '')}</div>
+      <div class="meeting-meta">${m.date} ${m.time || ''}　${m.type === 'kyt' ? esc(m.kytWorkitem || '') : ''}　簽到：${m.attendeeCount || 0} 人</div>
+    </div>
+    <div class="meeting-badges">${typeBadge}${statusBadge}</div>
+  </div>`;
+}
+
+// ─── 開始建立表單 ───────────────────────────────
+function startForm(type) {
+  if (type === 'tbm') {
+    const today = new Date().toISOString().slice(0,10);
+    const now   = new Date().toTimeString().slice(0,5);
+    document.getElementById('tbm-date').value = today;
+    document.getElementById('tbm-time').value = now;
+    buildCheckGrid('tbm-categories', TBM_CATEGORIES);
+    buildCheckGrid('tbm-hazards', TBM_HAZARDS);
+    buildCheckGrid('tbm-chemicals', TBM_CHEMICALS);
+    buildCheckGrid('tbm-ppes', TBM_PPES);
+    initSig('tbm-sig-canvas');
+    showView('form-tbm');
+  } else {
+    const today = new Date().toISOString().slice(0,10);
+    const now   = new Date().toTimeString().slice(0,5);
+    document.getElementById('kyt-date').value = today;
+    document.getElementById('kyt-time').value = now;
+    kytHazardCount = 0; kytMeasureCount = 0;
+    document.getElementById('kyt-hazard-list').innerHTML = '';
+    document.getElementById('kyt-measure-list').innerHTML = '';
+    addKytHazard(); addKytMeasure();
+    initSig('kyt-sig-canvas');
+    showView('form-kyt');
+  }
+}
+
+// KYT dynamic cards
+function addKytHazard() {
+  kytHazardCount++;
+  const n = kytHazardCount;
+  const div = document.createElement('div');
+  div.className = 'kyt-card'; div.id = `kyt-h-${n}`;
+  div.innerHTML = `<div class="kyt-card-hd"><span>危險項目 ${n}</span>${n > 1 ? `<button class="kyt-del-btn" onclick="document.getElementById('kyt-h-${n}').remove()">移除</button>` : ''}</div>
+    <textarea id="kyt-hazard-${n}" placeholder="描述潛在危險，例：高處作業可能因平台不穩造成墜落" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:inherit;resize:vertical;min-height:60px"></textarea>`;
+  document.getElementById('kyt-hazard-list').appendChild(div);
+}
+function addKytMeasure() {
+  kytMeasureCount++;
+  const n = kytMeasureCount;
+  const div = document.createElement('div');
+  div.className = 'kyt-card'; div.id = `kyt-m-${n}`;
+  div.innerHTML = `<div class="kyt-card-hd"><span>對策 ${n}</span>${n > 1 ? `<button class="kyt-del-btn" onclick="document.getElementById('kyt-m-${n}').remove()">移除</button>` : ''}</div>
+    <textarea id="kyt-measure-${n}" placeholder="對應的防止對策，例：確認作業平台鎖固、掛防墜繩" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:inherit;resize:vertical;min-height:60px"></textarea>`;
+  document.getElementById('kyt-measure-list').appendChild(div);
+}
+function getKytTexts(prefix, max) {
+  const arr = [];
+  for (let i = 1; i <= max + 5; i++) {
+    const el = document.getElementById(prefix + i);
+    if (el && el.value.trim()) arr.push(el.value.trim());
+  }
+  return arr;
+}
+
+// ─── Submit TBM ─────────────────────────────────
+async function submitTBM() {
+  const date     = document.getElementById('tbm-date').value;
+  const time     = document.getElementById('tbm-time').value;
+  const location = document.getElementById('tbm-location').value.trim();
+  const hostName = document.getElementById('tbm-host-name').value.trim();
+  const sig = getSigData('tbm-sig-canvas');
+
+  const errEl = document.getElementById('tbm-err');
+  const errMsg = document.getElementById('tbm-err-msg');
+  errEl.style.display = 'none';
+
+  if (!date || !location || !hostName) {
+    errMsg.textContent = '請填寫日期、地點與主持人姓名'; errEl.style.display = 'flex'; return;
+  }
+  if (!sig) {
+    errMsg.textContent = '請完成主持人簽名'; errEl.style.display = 'flex'; return;
+  }
+
+  const btn = document.getElementById('tbm-submit-btn');
+  btn.disabled = true; showLoading('建立會議中…');
+
+  const payload = {
+    action: 'createMeeting',
+    type: 'tbm',
+    date, time, location,
+    area:         document.getElementById('tbm-area').value.trim(),
+    workersCount: document.getElementById('tbm-workers-count').value,
+    hostName,
+    hostRole:     document.getElementById('tbm-host-role').value,
+    hostSignature: sig,
+    extraData: JSON.stringify({
+      categories:   getChecked('tbm-categories'),
+      hazards:      getChecked('tbm-hazards'),
+      chemicals:    getChecked('tbm-chemicals'),
+      ppes:         getChecked('tbm-ppes'),
+      briefing:     document.getElementById('tbm-briefing').value.trim(),
+    }),
+    notes: document.getElementById('tbm-notes').value.trim(),
+  };
+
+  try {
+    const res = await gasPost(payload);
+    hideLoading(); btn.disabled = false;
+    if (!res.success) throw new Error(res.error || '未知錯誤');
+    openLiveView(res.id, { date, time, location, hostName, workersCount: payload.workersCount });
+  } catch(e) {
+    hideLoading(); btn.disabled = false;
+    errMsg.textContent = '送出失敗：' + e.message; errEl.style.display = 'flex';
+  }
+}
+
+// ─── Submit KYT ─────────────────────────────────
+async function submitKYT() {
+  const date     = document.getElementById('kyt-date').value;
+  const time     = document.getElementById('kyt-time').value;
+  const location = document.getElementById('kyt-location').value.trim();
+  const hostName = document.getElementById('kyt-host-name').value.trim();
+  const sig = getSigData('kyt-sig-canvas');
+
+  const errEl  = document.getElementById('kyt-err');
+  const errMsg = document.getElementById('kyt-err-msg');
+  errEl.style.display = 'none';
+
+  if (!date || !location || !hostName) {
+    errMsg.textContent = '請填寫日期、地點與主持人姓名'; errEl.style.display = 'flex'; return;
+  }
+  if (!sig) {
+    errMsg.textContent = '請完成主持人簽名'; errEl.style.display = 'flex'; return;
+  }
+
+  const forms = [];
+  if (document.querySelector('#kyt-form-depart input')?.checked) forms.push('出發前集會');
+  if (document.querySelector('#kyt-form-onsite input')?.checked)  forms.push('現場工作前危害告知');
+
+  const preChecks = [...document.querySelectorAll('input[name="kyt-pre"]:checked')]
+    .map(cb => cb.closest('.check-item').textContent.trim());
+
+  const hazards  = getKytTexts('kyt-hazard-',  kytHazardCount);
+  const measures = getKytTexts('kyt-measure-', kytMeasureCount);
+
+  const btn = document.getElementById('kyt-submit-btn');
+  btn.disabled = true; showLoading('建立會議中…');
+
+  const payload = {
+    action: 'createMeeting',
+    type: 'kyt',
+    date, time, location,
+    area:         document.getElementById('kyt-location').value.trim(),
+    workersCount: document.getElementById('kyt-workers-count').value,
+    hostName,
+    hostRole:     document.getElementById('kyt-host-role').value,
+    hostSignature: sig,
+    extraData: JSON.stringify({
+      project:    document.getElementById('kyt-project').value.trim(),
+      workitem:   document.getElementById('kyt-workitem').value.trim(),
+      forms, preChecks, hazards, measures,
+      assignment: document.getElementById('kyt-assignment').value.trim(),
+    }),
+    notes: document.getElementById('kyt-notes').value.trim(),
+  };
+
+  try {
+    const res = await gasPost(payload);
+    hideLoading(); btn.disabled = false;
+    if (!res.success) throw new Error(res.error || '未知錯誤');
+    openLiveView(res.id, { date, time, location, hostName, workersCount: payload.workersCount });
+  } catch(e) {
+    hideLoading(); btn.disabled = false;
+    errMsg.textContent = '送出失敗：' + e.message; errEl.style.display = 'flex';
+  }
+}
+
+// ─── Live view ──────────────────────────────────
+function openLiveView(id, info) {
+  currentMeetingId = id;
+  const url = SITE_BASE + '?meeting=' + id;
+  document.getElementById('live-title').textContent  = (info.location || '會議') + ' 進行中';
+  document.getElementById('live-qr-img').src         = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}&color=059669&bgcolor=ffffff&margin=8`;
+  document.getElementById('live-qr-url').textContent = url;
+  document.getElementById('live-expected').textContent = info.workersCount ? `預計 ${info.workersCount} 人` : '';
+  document.getElementById('live-photos').innerHTML   = '';
+  showView('meeting-live');
+  refreshAttendees();
+  startPolling(id);
+}
+
+async function loadLive(id) {
+  currentMeetingId = id;
+  try {
+    showLoading('載入會議…');
+    const res = await gasGet({ action: 'getMeeting', id });
+    hideLoading();
+    if (!res.success) { toast('載入失敗', 'bad'); return; }
+    const m = res.record;
+    openLiveView(id, { location: m.location, hostName: m.hostName, workersCount: m.workersCount });
+  } catch(e) { hideLoading(); toast('載入失敗：'+e.message, 'bad'); }
+}
+
+function startPolling(id) {
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(() => {
+    if (currentMeetingId === id) refreshAttendees();
+    else clearInterval(pollTimer);
+  }, 15000);
+}
+
+async function refreshAttendees() {
+  if (!currentMeetingId) return;
+  try {
+    const res = await gasGet({ action: 'getAttendees', id: currentMeetingId });
+    if (!res.success) return;
+    const list = res.attendees || [];
+    document.getElementById('live-count').textContent = list.length;
+    const el = document.getElementById('live-att-list');
+    if (!list.length) { el.innerHTML = '<div class="att-empty">尚無人簽到</div>'; return; }
+    el.innerHTML = list.slice().reverse().map(a => `
+      <div class="att-item">
+        <span class="att-icon">✅</span>
+        <div><div class="att-name">${esc(a.name)}</div><div class="att-dept">${esc(a.department||'')}</div></div>
+        <div class="att-time">${fmtTime(a.signedAt)}</div>
+      </div>`).join('');
+  } catch(e) { /* silent */ }
+}
+
+async function closeMeeting() {
+  if (!currentMeetingId) return;
+  if (!confirm('確定要結束此會議？結束後同仁將無法再掃碼簽到。')) return;
+  if (pollTimer) clearInterval(pollTimer);
+  showLoading('結束會議中…');
+  try {
+    await gasPost({ action: 'closeMeeting', id: currentMeetingId });
+    hideLoading();
+    toast('✅ 會議已結束', 'ok');
+    showView('home');
+    loadHome();
+  } catch(e) { hideLoading(); toast('操作失敗', 'bad'); }
+}
+
+function copyLink() {
+  const url = SITE_BASE + '?meeting=' + currentMeetingId;
+  navigator.clipboard.writeText(url).then(() => toast('✅ 連結已複製', 'ok'));
+}
+
+// ─── Photo upload (SharePoint via Worker) ────────
+async function uploadPhoto(input) {
+  const file = input.files[0]; if (!file) return;
+  showLoading('上傳照片中…');
+  try {
+    const base64 = await fileToBase64(file);
+    const res = await fetch(WORKER_URL + '/toolbox-photo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        meetingId: currentMeetingId,
+        fileName: `meeting-${currentMeetingId}-${Date.now()}.jpg`,
+        fileContent: base64.split(',')[1],
+      }),
+    });
+    hideLoading();
+    const data = await res.json();
+    if (data.ok) {
+      toast('✅ 照片已上傳', 'ok');
+      const img = document.createElement('img');
+      img.className = 'photo-thumb'; img.src = base64; img.title = file.name;
+      document.getElementById('live-photos').appendChild(img);
+    } else {
+      toast('照片上傳失敗：' + (data.error || '請先設定 Power Automate Flow'), 'bad');
+    }
+  } catch(e) {
+    hideLoading();
+    toast('照片上傳失敗：Worker 路由尚未部署', 'bad');
+  }
+  input.value = '';
+}
+
+function fileToBase64(file) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.readAsDataURL(file);
+  });
+}
+
+async function loadAndPrintRecord() {
+  if (!currentMeetingId) return;
+  showLoading('載入紀錄…');
+  try {
+    const res = await gasGet({ action: 'getMeeting', id: currentMeetingId });
+    const attRes = await gasGet({ action: 'getAttendeesWithSig', id: currentMeetingId });
+    hideLoading();
+    if (!res.success) { toast('載入失敗', 'bad'); return; }
+    const win = window.open('', '_blank');
+    win.document.write(buildPrintHtml(res.record, attRes.attendees || []));
+    win.document.close();
+    win.print();
+  } catch(e) { hideLoading(); toast('載入失敗：'+e.message, 'bad'); }
+}
+
+// ─── Sign-in (QR scan) ──────────────────────────
+async function loadMeetingForSignIn(meetingId) {
+  currentMeetingId = meetingId;
+  document.getElementById('si-title').textContent = '工具箱會議簽到';
+  document.getElementById('si-meta').textContent  = '載入中…';
+  initSig('si-sig-canvas');
+  try {
+    const res = await gasGet({ action: 'getMeeting', id: meetingId });
+    if (!res.success) { document.getElementById('si-meta').textContent = '找不到此會議，請確認連結正確'; return; }
+    const m = res.record;
+    const typeName = m.type === 'kyt' ? 'KYT 預知危險' : 'TBM 工具箱會議';
+    document.getElementById('si-title').textContent = typeName + ' 簽到';
+    document.getElementById('si-meta').textContent  = `${m.date} ${m.time || ''} ｜ ${m.location || ''} ｜ 主持：${m.hostName || ''}`;
+    document.getElementById('fmb-meeting-info').textContent = `${typeName} ｜ ${m.location || meetingId}`;
+  } catch(e) {
+    document.getElementById('si-meta').textContent = '載入失敗，請確認網路連線';
+  }
+}
+
+async function submitSignIn() {
+  const name = document.getElementById('si-name').value.trim();
+  const sig  = getSigData('si-sig-canvas');
+  const errEl  = document.getElementById('si-err');
+  const errMsg = document.getElementById('si-err-msg');
+  errEl.style.display = 'none';
+
+  if (!name) { errMsg.textContent = '請填寫姓名'; errEl.style.display = 'flex'; return; }
+  if (!sig)  { errMsg.textContent = '請完成簽名'; errEl.style.display = 'flex'; return; }
+
+  const btn = document.getElementById('si-submit-btn');
+  btn.disabled = true; showLoading('送出簽名中…');
+
+  try {
+    const res = await gasPost({
+      action: 'signIn',
+      meetingId: currentMeetingId,
+      name,
+      department: document.getElementById('si-dept').value.trim(),
+      employeeId: document.getElementById('si-empid').value.trim(),
+      signature:  sig,
+      signedAt:   new Date().toISOString(),
+    });
+    hideLoading(); btn.disabled = false;
+    if (!res.success) throw new Error(res.error || '未知錯誤');
+    document.getElementById('success-meeting-info').textContent =
+      `會議 ID：${currentMeetingId}`;
+    showView('sign-success');
+  } catch(e) {
+    hideLoading(); btn.disabled = false;
+    errMsg.textContent = '送出失敗：' + e.message; errEl.style.display = 'flex';
+  }
+}
+
+// ─── History ────────────────────────────────────
+async function loadHistory() {
+  showView('history');
+  document.getElementById('history-list').innerHTML =
+    '<div style="text-align:center;padding:24px;color:var(--sub);font-size:13px">載入中…</div>';
+  try {
+    const res = await gasGet({ action: 'listMeetings', days: 90 });
+    const meetings = (res && res.records) ? res.records.slice().reverse() : [];
+    if (!meetings.length) {
+      document.getElementById('history-list').innerHTML =
+        '<div style="text-align:center;padding:24px;color:var(--sub);font-size:13px">尚無會議紀錄</div>';
+      return;
+    }
+    document.getElementById('history-list').innerHTML = meetings.map(m => meetingItemHtml(m)).join('');
+  } catch(e) {
+    document.getElementById('history-list').innerHTML =
+      `<div class="notice warn"><span class="notice-icon">⚠️</span>載入失敗：${e.message}</div>`;
+  }
+}
+
+// ─── Record detail ──────────────────────────────
+async function loadRecord(id) {
+  showView('record-detail');
+  document.getElementById('record-body').innerHTML =
+    '<div style="text-align:center;padding:30px;color:var(--sub)">載入中…</div>';
+  try {
+    const [mRes, aRes] = await Promise.all([
+      gasGet({ action: 'getMeeting', id }),
+      gasGet({ action: 'getAttendeesWithSig', id }),
+    ]);
+    if (!mRes.success) throw new Error(mRes.error || '載入失敗');
+    renderRecordDetail(mRes.record, aRes.attendees || []);
+  } catch(e) {
+    document.getElementById('record-body').innerHTML =
+      `<div class="notice warn"><span class="notice-icon">⚠️</span>${e.message}</div>`;
+  }
+}
+
+function renderRecordDetail(m, attendees) {
+  const ex = (() => { try { return JSON.parse(m.extraData || '{}'); } catch{ return {}; } })();
+  let html = `
+    <div class="form-card">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+        <div class="record-section"><div class="record-label">會議類型</div><div class="record-value">${m.type === 'kyt' ? '🟡 KYT 預知危險' : '🧰 TBM 工具箱會議'}</div></div>
+        <div class="record-section"><div class="record-label">日期</div><div class="record-value">${m.date} ${m.time||''}</div></div>
+        <div class="record-section"><div class="record-label">狀態</div><div class="record-value">${m.closedAt ? '已結束' : '進行中'}</div></div>
+        <div class="record-section"><div class="record-label">地點</div><div class="record-value">${esc(m.location||'')}</div></div>
+        <div class="record-section"><div class="record-label">主持人</div><div class="record-value">${esc(m.hostName||'')} ${esc(m.hostRole||'')}</div></div>
+        <div class="record-section"><div class="record-label">簽到人數</div><div class="record-value">${attendees.length} 人</div></div>
+      </div>`;
+
+  if (m.type === 'tbm') {
+    if (ex.categories?.length) html += checkTagRow('作業類別', ex.categories);
+    if (ex.hazards?.length)    html += checkTagRow('潛在危害', ex.hazards);
+    if (ex.chemicals?.length)  html += checkTagRow('接觸化學物質', ex.chemicals);
+    if (ex.ppes?.length)       html += checkTagRow('防護具', ex.ppes);
+    if (ex.briefing)           html += `<div class="record-section" style="margin-top:12px"><div class="record-label">安全宣導事項</div><div class="record-value" style="white-space:pre-wrap">${esc(ex.briefing)}</div></div>`;
+  } else {
+    if (ex.workitem) html += `<div class="record-section" style="margin-top:12px"><div class="record-label">工作項目</div><div class="record-value">${esc(ex.workitem)}</div></div>`;
+    if (ex.forms?.length)       html += checkTagRow('會議形式', ex.forms);
+    if (ex.preChecks?.length)   html += checkTagRow('前置確認', ex.preChecks);
+    if (ex.hazards?.length)     html += `<div class="record-section" style="margin-top:12px"><div class="record-label">預知危險</div>${ex.hazards.map((h,i) => `<div class="record-value" style="margin-bottom:4px">${i+1}. ${esc(h)}</div>`).join('')}</div>`;
+    if (ex.measures?.length)    html += `<div class="record-section"><div class="record-label">防止對策</div>${ex.measures.map((h,i) => `<div class="record-value" style="margin-bottom:4px">${i+1}. ${esc(h)}</div>`).join('')}</div>`;
+    if (ex.assignment)          html += `<div class="record-section"><div class="record-label">工作分配</div><div class="record-value" style="white-space:pre-wrap">${esc(ex.assignment)}</div></div>`;
+  }
+
+  if (m.hostSignature) html += `<div class="record-section" style="margin-top:12px"><div class="record-label">主持人簽名</div><img class="record-sig" src="${m.hostSignature}"></div>`;
+  html += '</div>';
+
+  // Attendees
+  html += `<div class="form-card" style="margin-top:8px">
+    <div class="sec-label">簽到名單（${attendees.length} 人）</div>
+    <div class="att-list">
+      ${attendees.length ? attendees.map(a => `
+        <div class="att-item">
+          <span class="att-icon">✅</span>
+          <div><div class="att-name">${esc(a.name)}</div><div class="att-dept">${esc(a.department||'')}</div></div>
+          <div class="att-time">${fmtTime(a.signedAt)}</div>
+          ${a.signature ? `<img src="${a.signature}" style="height:36px;border:1px solid var(--border);border-radius:6px;margin-left:8px">` : ''}
+        </div>`).join('') : '<div class="att-empty">無簽到紀錄</div>'}
+    </div>
+  </div>`;
+
+  document.getElementById('record-body').innerHTML = html;
+}
+
+function checkTagRow(label, items) {
+  return `<div class="record-section" style="margin-top:12px"><div class="record-label">${label}</div><div>${items.map(it => `<span class="check-tag">✓ ${esc(it)}</span>`).join('')}</div></div>`;
+}
+
+// ─── Print HTML ─────────────────────────────────
+function buildPrintHtml(m, attendees) {
+  const ex = (() => { try { return JSON.parse(m.extraData || '{}'); } catch{ return {}; } })();
+  const typeName = m.type === 'kyt' ? 'KYT 預知危險' : 'TBM 工具箱會議';
+  let body = `<p style="text-align:center;font-size:11px;color:#666;margin-bottom:14px">會議 ID：${m.id} ｜ 日期：${m.date} ${m.time||''} ｜ 地點：${esc(m.location||'')} ｜ 主持人：${esc(m.hostName||'')}</p>`;
+
+  if (m.type === 'tbm') {
+    if (ex.categories?.length) body += checkPrintRow('作業類別', ex.categories);
+    if (ex.hazards?.length)    body += checkPrintRow('潛在危害', ex.hazards);
+    if (ex.chemicals?.length)  body += checkPrintRow('接觸化學物質', ex.chemicals);
+    if (ex.ppes?.length)       body += checkPrintRow('所需防護具', ex.ppes);
+    if (ex.briefing)           body += `<div style="margin:10px 0"><strong>安全宣導：</strong><div style="white-space:pre-wrap;margin-top:4px;font-size:12px">${esc(ex.briefing)}</div></div>`;
+  } else {
+    if (ex.workitem) body += `<p><strong>工作項目：</strong>${esc(ex.workitem)}</p>`;
+    if (ex.forms?.length)     body += checkPrintRow('會議形式', ex.forms);
+    if (ex.preChecks?.length) body += checkPrintRow('前置確認', ex.preChecks);
+    if (ex.hazards?.length)   body += `<div style="margin:10px 0"><strong>預知危險：</strong>${ex.hazards.map((h,i)=>`<div style="margin:3px 0">${i+1}. ${esc(h)}</div>`).join('')}</div>`;
+    if (ex.measures?.length)  body += `<div style="margin:10px 0"><strong>防止對策：</strong>${ex.measures.map((h,i)=>`<div style="margin:3px 0">${i+1}. ${esc(h)}</div>`).join('')}</div>`;
+    if (ex.assignment)        body += `<div style="margin:10px 0"><strong>工作分配：</strong><div style="white-space:pre-wrap;margin-top:4px;font-size:12px">${esc(ex.assignment)}</div></div>`;
+  }
+
+  const sigSection = m.hostSignature ? `<div style="margin:16px 0"><strong>主持人簽名：</strong><br><img src="${m.hostSignature}" style="max-height:70px;border:1px solid #ddd;border-radius:6px;margin-top:6px"></div>` : '';
+
+  const sigGrid = attendees.map(a => `
+    <div style="display:inline-block;border:1px solid #ddd;border-radius:8px;padding:8px 12px;margin:4px;text-align:center;min-width:120px;font-size:12px">
+      <div style="font-weight:700">${esc(a.name)}</div>
+      <div style="color:#666;font-size:10px">${esc(a.department||'')}</div>
+      ${a.signature ? `<img src="${a.signature}" style="max-height:50px;margin-top:6px;display:block">` : '<div style="height:50px;border-bottom:1px solid #ccc;margin-top:6px"></div>'}
+    </div>`).join('');
+
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${typeName} 紀錄</title>
+<style>body{font-family:"Microsoft JhengHei",sans-serif;padding:28px 36px;font-size:13px;color:#1e293b}
+h2{font-size:18px;text-align:center;margin-bottom:4px}
+.chip{display:inline-block;padding:2px 8px;background:#ecfdf5;border:1px solid #6ee7b7;border-radius:5px;font-size:11px;margin:2px}
+@media print{button{display:none}}</style></head><body>
+<h2>大豐環保科技 ${typeName} 紀錄</h2>
+${body}${sigSection}
+<div style="margin-top:16px"><strong>工作人員簽到（${attendees.length}人）：</strong><div style="margin-top:8px">${sigGrid || '<span style="color:#888">無簽到紀錄</span>'}</div></div>
+</body></html>`;
+}
+
+function checkPrintRow(label, items) {
+  return `<div style="margin:8px 0"><strong>${label}：</strong>${items.map(it => `<span class="chip">${esc(it)}</span>`).join('')}</div>`;
+}
+
+// ─── Utilities ──────────────────────────────────
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function fmtTime(iso) {
+  if (!iso) return '';
+  try { return new Date(iso).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}); } catch{ return iso.slice(11,16); }
+}
+
+// ─── Init ───────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.check-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const cb = el.querySelector('input');
+      cb.checked = !cb.checked;
+      el.classList.toggle('checked', cb.checked);
+    });
+  });
+
+  if (!initFromUrl()) {
+    loadHome();
+  }
+});
+</script>
+<script src="../shared/sidebar.js"></script>
+</body>
+</html>

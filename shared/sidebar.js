@@ -192,6 +192,9 @@
       <a class="nav-item" href="${BASE}training/" data-match="/training/">
         <span class="nav-icon">🎓</span>教育訓練教材庫
       </a>
+      <a class="nav-item" href="${BASE}toolbox/" data-match="/toolbox/">
+        <span class="nav-icon">🧰</span>工具箱會議 TBM/KYT
+      </a>
 
       <div class="nav-section">制度文件</div>
       <a class="nav-item" href="${BASE}law/" data-match="/law/">
