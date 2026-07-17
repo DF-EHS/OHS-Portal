@@ -427,16 +427,16 @@ footer {
     <div>依照當日作業性質選擇會議類型。TBM 適合一般例行作業，TBM-KY 適合施工前或高風險作業的危害預知。</div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px">
-    <div onclick="startForm('tbm')" style="background:var(--card);border-radius:16px;padding:28px 18px;text-align:center;border:2px solid var(--border);cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#2563eb'" onmouseout="this.style.borderColor='var(--border)'">
+    <div onclick="startForm('tbm')" style="background:var(--card);border-radius:16px;padding:28px 18px;text-align:center;border:2px solid var(--border);cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center" onmouseover="this.style.borderColor='#2563eb'" onmouseout="this.style.borderColor='var(--border)'">
       <div style="font-size:44px;margin-bottom:10px">🧰</div>
       <div style="font-size:16px;font-weight:800;margin-bottom:6px">TBM 工具箱會議</div>
-      <div style="font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:16px">勾選作業類別、潛在危害、化學物質、所需防護具，適合固定作業的安全宣導</div>
+      <div style="font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:16px;flex:1">勾選作業類別、潛在危害、化學物質、所需防護具，適合固定作業的安全宣導</div>
       <button class="btn-primary" style="width:100%;background:#2563eb;justify-content:center">開始建立 →</button>
     </div>
-    <div onclick="startForm('kyt')" style="background:var(--card);border-radius:16px;padding:28px 18px;text-align:center;border:2px solid var(--border);cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+    <div onclick="startForm('kyt')" style="background:var(--card);border-radius:16px;padding:28px 18px;text-align:center;border:2px solid var(--border);cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
       <div style="font-size:44px;margin-bottom:10px">🟡</div>
       <div style="font-size:16px;font-weight:800;margin-bottom:6px">TBM-KY 預知危險</div>
-      <div style="font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:16px">腦力激盪方式辨識潛在危害並擬定對策，適合施工前或高風險特殊作業</div>
+      <div style="font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:16px;flex:1">腦力激盪方式辨識潛在危害並擬定對策，適合施工前或高風險特殊作業</div>
       <button class="btn-primary" style="width:100%;justify-content:center">開始建立 →</button>
     </div>
   </div>
