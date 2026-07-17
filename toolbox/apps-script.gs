@@ -16,6 +16,15 @@
 
 const SS = () => SpreadsheetApp.getActiveSpreadsheet();
 
+// ── 值格式化（防止 Sheets 把 date/time 字串轉成 Date 物件後讀回異常）──
+function _fmtVal(colName, val) {
+  if (!(val instanceof Date)) return val === null || val === undefined ? '' : val;
+  var tz = Session.getScriptTimeZone();
+  if (colName === 'date')     return Utilities.formatDate(val, tz, 'yyyy-MM-dd');
+  if (colName === 'time')     return Utilities.formatDate(val, tz, 'HH:mm');
+  return val.toISOString();
+}
+
 // ── 取得（或自動建立）分頁 ─────────────────────────────────────────
 
 function _sheet(name, headers) {
@@ -104,6 +113,10 @@ function _createMeeting(body) {
     0,    // attendeeCount
   ]);
 
+  // 強制 date(col3) 和 time(col4) 為文字格式，防止 Sheets 自動轉 Date
+  var lastRow = sh.getLastRow();
+  sh.getRange(lastRow, 3, 1, 2).setNumberFormat('@');
+
   return { success: true, id };
 }
 
@@ -134,7 +147,7 @@ function _getMeeting(id) {
   if (!row) throw new Error('找不到會議：' + id);
 
   const record = {};
-  hdr.forEach((h, i) => { record[h] = row[i] instanceof Date ? row[i].toISOString() : row[i]; });
+  hdr.forEach((h, i) => { record[h] = _fmtVal(h, row[i]); });
   return { success: true, record };
 }
 
@@ -157,7 +170,7 @@ function _listMeetings(days) {
       hdr.forEach((h, i) => {
         // 僅回傳摘要欄位（不含 hostSignature / extraData 以節省流量）
         if (h !== 'hostSignature' && h !== 'extraData') {
-          o[h] = r[i] instanceof Date ? r[i].toISOString() : r[i];
+          o[h] = _fmtVal(h, r[i]);
         }
       });
       return o;
@@ -211,7 +224,7 @@ function _getAttendees(meetingId, includeSig) {
       const o = {};
       hdr.forEach((h, i) => {
         if (h === 'signature' && !includeSig) return; // 輪詢時不回傳簽名圖
-        o[h] = r[i] instanceof Date ? r[i].toISOString() : r[i];
+        o[h] = _fmtVal(h, r[i]);
       });
       return o;
     });
