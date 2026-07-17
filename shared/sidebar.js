@@ -164,6 +164,9 @@
       <a class="nav-item" href="${BASE}news/" data-match="/news/">
         <span class="nav-icon">📰</span>職災情報與安衛動態
       </a>
+      <a class="nav-item" href="${BASE}toolbox/" data-match="/toolbox/">
+        <span class="nav-icon">🧰</span>工具箱會議 TBM/KYT
+      </a>
       <a class="nav-item" href="${BASE}response/" data-match="/response/">
         <span class="nav-icon">📣</span>各站點反應事項
       </a>
@@ -191,9 +194,6 @@
       </a>
       <a class="nav-item" href="${BASE}training/" data-match="/training/">
         <span class="nav-icon">🎓</span>教育訓練教材庫
-      </a>
-      <a class="nav-item" href="${BASE}toolbox/" data-match="/toolbox/">
-        <span class="nav-icon">🧰</span>工具箱會議 TBM/KYT
       </a>
 
       <div class="nav-section">制度文件</div>
