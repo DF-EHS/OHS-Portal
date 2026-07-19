@@ -1,6 +1,39 @@
 {
   "items": [
     {
+      "key": "eca8c423f5d602ee",
+      "title": "桃園法院旁工地傳工安意外！工人3樓鷹架摔落 骨折送醫急救",
+      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1oSW12OFN3V1VqejNyLTZkN2lFa192cHlXVzk1amFJYzhoVEFiZlNPUUR4SjllMEJCSHV6X0h1LVhDbC1tSnd2aXZ5RzNES1MtY3JBZXVzaTBraUNZclHSAWhBVV95cUxNRjdSU3F5Z0cyWl9RZ3JWU3h5aUJjeWkyNWFGZmViTkNGTW40SVpSMWpIa2toUW9vYVh4T2M3cXFUb0F4akcxeEJhdDRsTkItT3llWFFHdHJ2QXpnRlE0MDlkZDVhOXdSNA?oc=5",
+      "pubDate": "Sat, 18 Jul 2026 10:39:00 GMT",
+      "pubTs": 1784371140.0,
+      "desc": "桃園法院旁工地傳工安意外！工人3樓鷹架摔落 骨折送醫急救&nbsp;&nbsp;ETtoday新聞雲",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "895e598e1d6a0304",
+      "title": "桃園嚴重工安意外！工人3樓鷹架墜落 頭部撕裂、骨折送醫",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1HVndlYWZaZGlHUkFHbTc0UmlWSmVfd3ZHQWN5ak1RVEJ5RldkRWY2dkdFNTlzNTFvQVhJRVhqejU1cXdHZjUyZS1yRFVVVmQ0UHhmOW1R?oc=5",
+      "pubDate": "Sat, 18 Jul 2026 09:51:00 GMT",
+      "pubTs": 1784368260.0,
+      "desc": "桃園嚴重工安意外！工人3樓鷹架墜落 頭部撕裂、骨折送醫&nbsp;&nbsp;東森新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "693dc98d3ef184e6",
+      "title": "快訊／桃園工安意外！45歲工人「墜落3樓鷹架」骨折、頭創傷 急送醫",
+      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE40RGdtUXp0bTVicEphWFJPMWp4ZEZqOUo2aVVMUjdYbG9BMktaNkdrbnlDSW4wTndrZU1CdnJqRUNObDJiOGYyWdIBTEFVX3lxTE5PZTd6SHRjTGpBSXFZUFBPQVRycHI3Zm4zZzdUVVlzX0UtR1JfcC1pUE5Bc2VSUTFTSjRVczkweGlpV1p1aTY1ejZONms?oc=5",
+      "pubDate": "Sat, 18 Jul 2026 09:39:00 GMT",
+      "pubTs": 1784367540.0,
+      "desc": "快訊／桃園工安意外！45歲工人「墜落3樓鷹架」骨折、頭創傷 急送醫&nbsp;&nbsp;三立新聞網SETN.com",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "d8e0011c68ba19d8",
       "title": "以「AI科技實務運用」觀摩為核心，引領石化及高風險產業進入AI防災新紀元",
       "link": "https://www.osha.gov.tw/48110/48417/48419/210227/",
@@ -37,8 +70,8 @@
       "key": "e7c8285b1a5b1cbe",
       "title": "雲林縣府攜手勞動部職安署辦職業安全衛生宣導會 強化源頭管理打造零職災職場",
       "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5IWmx3MldZWVRlbnI4dmlBSU4zZ29OazRWVEl6eDc1V0M1NDRfUTZ0TmVOcnJ5UnNQTzR6cjh6QTVpcmJpaGRKeXktNDJmZDgzMmc?oc=5",
-      "pubDate": "Fri, 17 Jul 2026 04:46:00 GMT",
-      "pubTs": 1784263560.0,
+      "pubDate": "Thu, 16 Jul 2026 16:00:00 GMT",
+      "pubTs": 1784217600.0,
       "desc": "雲林縣府攜手勞動部職安署辦職業安全衛生宣導會 強化源頭管理打造零職災職場&nbsp;&nbsp;蕃新聞",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
@@ -969,39 +1002,6 @@
       "badge": "purple"
     },
     {
-      "key": "71f0332ed65f7260",
-      "title": "三峽捷運三鶯線傳工安意外 施工水管墜落砸毀機車",
-      "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE0xRkx4czBuR1pCX1l4eFhrOEw5U2ltcm1IR0xENi1xbXBjeUNFanlDTEhPdGE4TTVONEhhVXVWRWRQZWs4UWJzblp3cGF6TFdzX1NZRFQtXy1NNjBTWlZqdWFEbExValVOLWpPcldJSnVuWENsUGszT2pXd9IBVkFVX3lxTE5KRkRkT0JYckJRV3pJdS01c0tLcHBaMWR5a1BjMlNQTlo2ak5WNVk4NWliRGRFLU83SE1mcnhmY2JOYWc1OVMxZWdIX0ttZ0RnU3dVY2lB?oc=5",
-      "pubDate": "Sat, 04 Jul 2026 08:41:07 GMT",
-      "pubTs": 1783154467.0,
-      "desc": "三峽捷運三鶯線傳工安意外 施工水管墜落砸毀機車&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "422c03d318426dc2",
-      "title": "「舊轉新」勞工該怎辦1》想結清舊制退休金遭刁難？ 勞部：法規早有明定！",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5OVGVUX1dfeERBZkpwYlNFSW90aFdqWHNlTWNnS0pxNW9NNlJ6Wk8tSnJuRS1aR2d3TFR6b1BrZm5xb1MxWThHZHYzVlFlSFdOcjlfTEZoVWdob0lUclc00gFkQVVfeXFMTTVGTklfd2NieVFFYU51SVFvUWI3MndmM29rVllWMWhBY2VuM3dSRHdheS1jQjFzeGRHLXpfR1BjY2NQS3g0Q3FTbUlPdk9UN19pMXFZOGZWNHlvSHhaM3c2amJXRQ?oc=5",
-      "pubDate": "Sat, 04 Jul 2026 07:00:00 GMT",
-      "pubTs": 1783148400.0,
-      "desc": "「舊轉新」勞工該怎辦1》想結清舊制退休金遭刁難？ 勞部：法規早有明定！&nbsp;&nbsp;自由財經",
-      "source_id": "gnews_law",
-      "source_name": "法規更新",
-      "badge": "teal"
-    },
-    {
-      "key": "c5097ac1a5aaa199",
-      "title": "「舊轉新」勞工該怎辦1》想結清舊制退休金遭刁難？ 勞部：法規早有明定！",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5OVGVUX1dfeERBZkpwYlNFSW90aFdqWHNlTWNnS0pxNW9NNlJ6Wk8tSnJuRS1aR2d3TFR6b1BrZm5xb1MxWThHZHYzVlFlSFdOcjlfTEZoVWdob0lUclc0?oc=5",
-      "pubDate": "Sat, 04 Jul 2026 04:00:00 GMT",
-      "pubTs": 1783137600.0,
-      "desc": "「舊轉新」勞工該怎辦1》想結清舊制退休金遭刁難？ 勞部：法規早有明定！&nbsp;&nbsp;自由財經",
-      "source_id": "gnews_law",
-      "source_name": "法規更新",
-      "badge": "teal"
-    },
-    {
       "key": "66f8cfa51575ac5a",
       "title": "安全衛生設施及熱危害防護具補助申請踴躍，年度經費將用罄暫緩受理，將優先補助小微型企業及自營作業者，並持續爭取經費續辦",
       "link": "https://www.osha.gov.tw/48110/48417/48423/208741/",
@@ -1266,5 +1266,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-07-18T03:47:13.487018+00:00"
+  "lastUpdated": "2026-07-19T04:16:47.283547+00:00"
 }
