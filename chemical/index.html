@@ -1136,9 +1136,23 @@ function fmtDeclDate(d) {
   return String(d).slice(0, 10); // 只取 YYYY-MM-DD，去掉時間部分
 }
 
-function declDocBtn(entry) {
-  if (!entry || !entry.url) return '';
-  return `<a href="${entry.url}" target="_blank" rel="noopener" style="display:inline-block;margin-top:5px;padding:3px 9px;background:#dcfce7;color:#15803d;border:1px solid #86efac;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none">📄 查看文件</a>`;
+function declUrlRow(roc, period, entry) {
+  const url = entry && entry.url ? entry.url : '';
+  const editBtn = `<button onclick="setDeclUrl(${roc},'${period}')" style="margin-left:4px;padding:2px 6px;border:1px solid #86efac;border-radius:4px;background:transparent;cursor:pointer;font-size:10px;color:#15803d;font-family:inherit">✏️</button>`;
+  if (url) return `<div style="margin-top:5px;display:flex;align-items:center;flex-wrap:wrap;gap:4px"><a href="${url}" target="_blank" rel="noopener" style="padding:3px 9px;background:#dcfce7;color:#15803d;border:1px solid #86efac;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none">📄 查看文件</a>${editBtn}</div>`;
+  return `<div style="margin-top:5px"><button onclick="setDeclUrl(${roc},'${period}')" style="padding:3px 9px;border:1px solid var(--chem-border);border-radius:5px;background:transparent;cursor:pointer;font-size:11px;color:var(--sub);font-family:inherit">📎 設定連結</button></div>`;
+}
+
+function setDeclUrl(roc, period) {
+  const row = DECLARATIONS.find(r => r.roc === roc);
+  if (!row) return;
+  const cur = (row[period] || {}).url || '';
+  const val = prompt('SharePoint 文件連結（留空則清除）：', cur);
+  if (val === null) return;
+  if (!row[period]) row[period] = { s:'future' };
+  row[period].url = val.trim();
+  saveDeclsLocal();
+  renderDeclGrid(activeRoc);
 }
 
 function declBadgeHtml(item) {
@@ -1168,7 +1182,7 @@ function renderDeclGrid(roc) {
       <div class="decl-card-body">
         <span class="half-label">公共危險物品申報</span>
         ${declBadgeHtml(row.jan)}
-        ${declDocBtn(row.jan)}
+        ${declUrlRow(roc, 'jan', row.jan)}
         <button class="decl-manual-btn" onclick="manualUpdateDecl(${roc},'jan')">手動標記</button>
       </div>
     </div>
@@ -1184,7 +1198,7 @@ function renderDeclGrid(roc) {
       <div class="decl-card-body">
         <span class="half-label">公共危險物品申報</span>
         ${declBadgeHtml(row.jul)}
-        ${declDocBtn(row.jul)}
+        ${declUrlRow(roc, 'jul', row.jul)}
         <button class="decl-manual-btn" onclick="manualUpdateDecl(${roc},'jul')">手動標記</button>
       </div>
     </div>`;
@@ -1589,10 +1603,6 @@ function openDeclModal(roc, period) {
   document.getElementById('dm-confirm-btn').style.display = 'none';
   document.getElementById('dm-spinner').style.display = 'none';
   document.getElementById('dm-sp-banner').style.display = 'none';
-  // pre-fill existing URL
-  const row = DECLARATIONS.find(r => r.roc === roc);
-  const existing = row ? row[period] : null;
-  document.getElementById('dm-sp-url').value = (existing && existing.url) ? existing.url : '';
   document.getElementById('decl-modal').style.display = 'flex';
 }
 
@@ -1721,18 +1731,18 @@ function confirmDeclUpdate() {
   if (!_declAiResult || _declModalRoc === null) return;
   const row = DECLARATIONS.find(r => r.roc === _declModalRoc);
   if (!row) return;
-  const urlVal = (document.getElementById('dm-sp-url').value || '').trim();
+  const existingUrl = (row[_declModalPeriod] || {}).url || '';
 
   if (_declAiResult.done) {
     const cleanDate = _declAiResult.date ? String(_declAiResult.date).slice(0, 10) : '';
     row[_declModalPeriod] = cleanDate
-      ? { s:'done', d: cleanDate, url: urlVal }
-      : { s:'done-nodate', url: urlVal };
+      ? { s:'done', d: cleanDate, url: existingUrl }
+      : { s:'done-nodate', url: existingUrl };
     saveDeclToGAS(_declModalRoc, _declModalPeriod,
-      cleanDate ? 'done' : 'done-nodate', cleanDate, urlVal);
+      cleanDate ? 'done' : 'done-nodate', cleanDate, existingUrl);
   } else {
-    row[_declModalPeriod] = { s:'pending', url: urlVal };
-    saveDeclToGAS(_declModalRoc, _declModalPeriod, 'pending', '', urlVal);
+    row[_declModalPeriod] = { s:'pending', url: existingUrl };
+    saveDeclToGAS(_declModalRoc, _declModalPeriod, 'pending', '', existingUrl);
   }
 
   saveDeclsLocal();
@@ -1798,12 +1808,6 @@ if (new URLSearchParams(location.search).get('chat') === '1') {
       </div>
 
       <div id="dm-result"></div>
-
-      <div style="margin-top:14px">
-        <label style="font-size:12px;color:var(--sub);display:block;margin-bottom:4px;font-weight:600">📎 SharePoint 文件連結（選填）</label>
-        <input type="url" id="dm-sp-url" placeholder="https://dfrecyclecom.sharepoint.com/..."
-          style="width:100%;padding:8px 10px;border:1px solid var(--chem-border);border-radius:6px;font-size:13px;font-family:inherit;outline:none">
-      </div>
 
       <button id="dm-confirm-btn" type="button" onclick="confirmDeclUpdate()"
         style="display:none;width:100%;margin-top:12px;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
