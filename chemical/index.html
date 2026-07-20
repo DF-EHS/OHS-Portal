@@ -1054,6 +1054,17 @@ function setPriorityUrl(roc) {
   if (val === null) return;
   r.url = val.trim();
   savePriorityLocal();
+  declGasPost({ action:'savePriority', roc, url: val.trim() });
+  buildPriorityTable();
+}
+
+async function loadPriorityFromGAS() {
+  const res = await declGasPost({ action:'loadPriority' });
+  if (!res || !res.ok || !res.rows || !res.rows.length) return;
+  res.rows.forEach(row => {
+    const r = PRIORITY_DECL.find(d => d.roc === Number(row.roc));
+    if (r) r.url = row.url || '';
+  });
   buildPriorityTable();
 }
 
@@ -1763,6 +1774,7 @@ renderChemTable();
 buildDeclMatrix();
 buildPriorityTable();
 loadDeclsFromGAS();
+loadPriorityFromGAS();
 if (new URLSearchParams(location.search).get('chat') === '1') {
   setTimeout(toggleChemChat, 300);
 }

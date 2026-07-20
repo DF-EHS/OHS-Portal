@@ -681,6 +681,8 @@ function setDrillUrl(roc, station, half) {
   if (!row[station][half]) row[station][half] = { s:'future' };
   row[station][half].url = val.trim();
   saveDrillsLocal();
+  const e = row[station][half];
+  fireGasPost({ action:'saveDrill', roc, station, half, status: e.s, date: e.d||'', url: e.url||'' });
   renderDrills(activeRoc);
 }
 
@@ -693,6 +695,8 @@ function setInspUrl(roc, site) {
   if (!row[site]) row[site] = { s:'future' };
   row[site].url = val.trim();
   saveInspsLocal();
+  const e = row[site];
+  fireGasPost({ action:'saveInsp', roc, site, status: e.s, date: e.d||'', url: e.url||'' });
   buildInspMatrix();
 }
 
@@ -923,6 +927,7 @@ function buildManagers() {
 loadDrillsFromLocal();
 buildMatrix();
 buildManagers();
+loadDrillsFromGAS();
 
 // ─────────────────────────────────────────────
 //  年度消防設備檢修申報
@@ -1038,11 +1043,45 @@ function promptAddInspYear() {
 
 loadInspsFromLocal();
 buildInspMatrix();
+loadInspsFromGAS();
 
 // ─────────────────────────────────────────────
 //  消防演練 — AI 日期上傳 Modal
 // ─────────────────────────────────────────────
 const FIRE_AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+const FIRE_GAS_URL   = 'https://script.google.com/macros/s/AKfycbx1uW0tYa7NjXQL1i4S1aNXFHxl_q7oLWhOxqfIfNTy4KlL8VggvyhLaQWgfJwrybDU3g/exec';
+
+async function fireGasPost(payload) {
+  if (!FIRE_GAS_URL || FIRE_GAS_URL === 'YOUR_FIRE_GAS_URL') return null;
+  try {
+    const r = await fetch(FIRE_GAS_URL, { method:'POST', redirect:'follow', body: JSON.stringify(payload) });
+    return await r.json();
+  } catch(e) { return null; }
+}
+
+async function loadDrillsFromGAS() {
+  const res = await fireGasPost({ action:'loadDrills' });
+  if (!res || !res.ok || !res.rows || !res.rows.length) return;
+  res.rows.forEach(row => {
+    const entry = DRILLS.find(d => d.roc === Number(row.roc));
+    if (!entry) return;
+    const st = row.station, half = row.half;
+    if (!entry[st]) return;
+    entry[st][half] = { s: row.status, d: row.date || undefined, url: row.url || undefined };
+  });
+  renderDrills(activeRoc);
+}
+
+async function loadInspsFromGAS() {
+  const res = await fireGasPost({ action:'loadInsps' });
+  if (!res || !res.ok || !res.rows || !res.rows.length) return;
+  res.rows.forEach(row => {
+    const entry = INSPECTIONS.find(d => d.roc === Number(row.roc));
+    if (!entry) return;
+    entry[row.site] = { s: row.status, d: row.date || undefined, url: row.url || undefined };
+  });
+  buildInspMatrix();
+}
 
 let _drillModalRoc     = null;
 let _drillModalStation = null;
@@ -1202,6 +1241,8 @@ function confirmDrillUpdate() {
   }
 
   saveDrillsLocal();
+  const de = row[_drillModalStation][_drillModalHalf];
+  fireGasPost({ action:'saveDrill', roc: _drillModalRoc, station: _drillModalStation, half: _drillModalHalf, status: de.s, date: de.d||'', url: de.url||'' });
   renderDrills(activeRoc);
   closeDrillModal();
 }
@@ -1364,6 +1405,8 @@ function confirmInspUpdate() {
   }
 
   saveInspsLocal();
+  const ie = row[_inspModalSite];
+  fireGasPost({ action:'saveInsp', roc: _inspModalRoc, site: _inspModalSite, status: ie.s, date: ie.d||'', url: ie.url||'' });
   buildInspMatrix();
   closeInspModal();
 }

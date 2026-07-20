@@ -3,8 +3,10 @@
 //  Sheet ID: 1YGYnBRusJAwE3gNQ7ot39Bk79apRf6KQTKogQsT23x8
 // ═══════════════════════════════════════════════════════
 
-const SS_ID    = '1YGYnBRusJAwE3gNQ7ot39Bk79apRf6KQTKogQsT23x8';
-const TAB_NAME = '面談資料';
+const SS_ID      = '1YGYnBRusJAwE3gNQ7ot39Bk79apRf6KQTKogQsT23x8';
+const TAB_NAME   = '面談資料';
+const REPORT_TAB = '月報連結';
+const REPORT_HDR = ['year','month','location','url','updatedAt'];
 
 const C = {
   面談日期:    0,  姓名:        1,  員工編號:    2,
@@ -69,10 +71,12 @@ function doGet(e) {
 function doPost(e) {
   try {
     const b = JSON.parse(e.postData.contents);
-    if (b.action === 'add')      return ok(addRow(b.data));
-    if (b.action === 'update')   return ok(updateRow(b.data));
-    if (b.action === 'delete')   return ok(deleteRow(Number(b.row)));
-    if (b.action === 'ai-parse') return ok(aiParse(b));
+    if (b.action === 'add')          return ok(addRow(b.data));
+    if (b.action === 'update')       return ok(updateRow(b.data));
+    if (b.action === 'delete')       return ok(deleteRow(Number(b.row)));
+    if (b.action === 'ai-parse')     return ok(aiParse(b));
+    if (b.action === 'saveReport')   return ok(saveReport(b));
+    if (b.action === 'loadReports')  return ok(loadReports());
     return fail('unknown action');
   } catch(err) { return fail(err.message); }
 }
@@ -180,6 +184,56 @@ function deleteRow(rowNum) {
   if (!rowNum || rowNum < 2) throw new Error('無效的列號');
   sh().deleteRow(rowNum);
   return { message: '已刪除' };
+}
+
+// ── 月報連結（upsert by year + month + location）────────
+
+function getReportSheet() {
+  const ss = SpreadsheetApp.openById(SS_ID);
+  let sheet = ss.getSheetByName(REPORT_TAB);
+  if (!sheet) {
+    sheet = ss.insertSheet(REPORT_TAB);
+    sheet.appendRow(REPORT_HDR);
+  }
+  return sheet;
+}
+
+function loadReports() {
+  const vals = getReportSheet().getDataRange().getValues();
+  if (vals.length < 2) return { rows: [] };
+  const hdr = vals[0];
+  const rows = vals.slice(1).map(r => {
+    const o = {};
+    hdr.forEach((h, i) => o[h] = String(r[i] == null ? '' : r[i]));
+    return o;
+  });
+  return { rows };
+}
+
+function saveReport(p) {
+  const sheet = getReportSheet();
+  const vals  = sheet.getDataRange().getValues();
+  const hdr   = vals[0];
+  const yearCol = hdr.indexOf('year');
+  const monCol  = hdr.indexOf('month');
+  const locCol  = hdr.indexOf('location');
+  const now = new Date().toISOString().slice(0, 10);
+
+  for (let i = 1; i < vals.length; i++) {
+    if (String(vals[i][yearCol]) === String(p.year) &&
+        String(vals[i][monCol])  === String(p.month) &&
+        String(vals[i][locCol])  === String(p.location)) {
+      hdr.forEach((h, j) => {
+        if (h === 'updatedAt') sheet.getRange(i+1, j+1).setValue(now);
+        else if (p[h] !== undefined) sheet.getRange(i+1, j+1).setValue(p[h]);
+      });
+      return { message: '已更新' };
+    }
+  }
+
+  const row = REPORT_HDR.map(h => h === 'updatedAt' ? now : (p[h] !== undefined ? p[h] : ''));
+  sheet.appendRow(row);
+  return { message: '已新增' };
 }
 
 // ── IT OpenRouter Dispatch API 設定 ───────────────────

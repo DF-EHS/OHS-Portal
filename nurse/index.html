@@ -1334,6 +1334,28 @@ function getSvcReportUrl(year, month, location) {
   const r = svcReports.find(x => x.year === year && x.month === month && x.location === location);
   return r ? (r.url || '') : '';
 }
+
+async function nurseGasPost(payload) {
+  try {
+    const r = await fetch(API, { method:'POST', redirect:'follow', body: JSON.stringify(payload) });
+    return await r.json();
+  } catch(e) { return null; }
+}
+
+async function loadReportsFromGAS() {
+  const res = await nurseGasPost({ action:'loadReports' });
+  if (!res || !res.ok || !res.rows || !res.rows.length) return;
+  res.rows.forEach(row => {
+    const year = Number(row.year), month = Number(row.month), location = row.location, url = row.url || '';
+    if (!url) return;
+    const idx = svcReports.findIndex(x => x.year === year && x.month === month && x.location === location);
+    const entry = { year, month, location, url };
+    if (idx >= 0) svcReports[idx] = entry;
+    else svcReports.push(entry);
+  });
+  renderSvcCards();
+}
+
 function setMonthReportUrl() {
   const cur = getSvcReportUrl(svcYear, svcMonth, svcLoc);
   const val = prompt(`${svcYear}年${svcMonth}月・${svcLoc}\nSharePoint 報告連結（留空則清除）：`, cur);
@@ -1343,11 +1365,13 @@ function setMonthReportUrl() {
   if (idx >= 0) svcReports[idx] = entry;
   else svcReports.push(entry);
   saveSvcReports();
+  nurseGasPost({ action:'saveReport', year: svcYear, month: svcMonth, location: svcLoc, url: val.trim() });
   renderSvcCards();
 }
 
 loadSvcLogs();
 loadSvcReports();
+loadReportsFromGAS();
 
 function svcYearChange() {
   svcYear = parseInt(document.getElementById('svc-year').value, 10);
