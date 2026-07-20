@@ -1152,6 +1152,8 @@ function setDeclUrl(roc, period) {
   if (!row[period]) row[period] = { s:'future' };
   row[period].url = val.trim();
   saveDeclsLocal();
+  const entry = row[period];
+  saveDeclToGAS(roc, period, entry.s, entry.d || '', val.trim());
   renderDeclGrid(activeRoc);
 }
 

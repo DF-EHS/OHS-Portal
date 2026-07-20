@@ -545,6 +545,8 @@ function setReportUrl(year, siteId, half) {
   if (val === null) return;
   RECORDS[year][siteId][half].reportUrl = val.trim();
   saveAllRecords();
+  const r = RECORDS[year][siteId][half];
+  saveStatusToGAS(year, siteId, half, r.status, val.trim());
   renderYearReport(curYear);
 }
 
