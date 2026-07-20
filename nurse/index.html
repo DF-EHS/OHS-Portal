@@ -1307,7 +1307,9 @@ function showModule(n) {
 // 臨場服務紀錄
 // ═══════════════════════════════════════════════════════
 const SVC_KEY = 'nurse_service_logs_v1';
+const SVC_REPORT_KEY = 'nurse_svc_reports_v1';
 let svcLogs = [];
+let svcReports = [];
 let svcYear = 115;
 let svcLoc  = '台中總部';
 let svcMonth = 1;
@@ -1322,7 +1324,30 @@ function saveSvcLogs() {
   try { localStorage.setItem(SVC_KEY, JSON.stringify(svcLogs)); } catch {}
 }
 
+function loadSvcReports() {
+  try { svcReports = JSON.parse(localStorage.getItem(SVC_REPORT_KEY) || '[]'); } catch { svcReports = []; }
+}
+function saveSvcReports() {
+  try { localStorage.setItem(SVC_REPORT_KEY, JSON.stringify(svcReports)); } catch {}
+}
+function getSvcReportUrl(year, month, location) {
+  const r = svcReports.find(x => x.year === year && x.month === month && x.location === location);
+  return r ? (r.url || '') : '';
+}
+function setMonthReportUrl() {
+  const cur = getSvcReportUrl(svcYear, svcMonth, svcLoc);
+  const val = prompt(`${svcYear}年${svcMonth}月・${svcLoc}\nSharePoint 報告連結（留空則清除）：`, cur);
+  if (val === null) return;
+  const idx = svcReports.findIndex(x => x.year === svcYear && x.month === svcMonth && x.location === svcLoc);
+  const entry = { year: svcYear, month: svcMonth, location: svcLoc, url: val.trim() };
+  if (idx >= 0) svcReports[idx] = entry;
+  else svcReports.push(entry);
+  saveSvcReports();
+  renderSvcCards();
+}
+
 loadSvcLogs();
+loadSvcReports();
 
 function svcYearChange() {
   svcYear = parseInt(document.getElementById('svc-year').value, 10);
@@ -1412,10 +1437,19 @@ function renderSvcCards() {
     }).join('');
   }
 
+  const monthUrl = getSvcReportUrl(svcYear, svcMonth, svcLoc);
+  const reportBtn = monthUrl
+    ? `<a href="${monthUrl}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;padding:5px 11px;background:#dcfce7;color:#15803d;border:1px solid #86efac;border-radius:7px;font-size:12px;font-weight:600;text-decoration:none">📄 查看月報</a>
+       <button onclick="setMonthReportUrl()" title="更新連結" style="padding:5px 8px;border:1px solid var(--border);border-radius:6px;background:transparent;cursor:pointer;font-size:12px;font-family:inherit">✏️</button>`
+    : `<button onclick="setMonthReportUrl()" style="padding:5px 11px;border:1px solid var(--border);border-radius:7px;background:transparent;cursor:pointer;font-size:12px;font-family:inherit;color:var(--sub)">📎 設定月報連結</button>`;
+
   wrap.innerHTML = `
     <div class="svc-month-hd">
       <div class="svc-month-title">📋 ${rocLabel} 臨場服務紀錄</div>
-      <button class="svc-add-btn" onclick="openSvcModal()">＋ 新增紀錄</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        ${reportBtn}
+        <button class="svc-add-btn" onclick="openSvcModal()">＋ 新增紀錄</button>
+      </div>
     </div>
     ${cards}`;
 }

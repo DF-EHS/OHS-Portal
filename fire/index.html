@@ -665,6 +665,11 @@ function badgeHtml(item) {
   return `<span class="drill-badge future">— 未到期</span>`;
 }
 
+function drillDocBtn(entry) {
+  if (!entry || !entry.url) return '';
+  return `<a href="${entry.url}" target="_blank" rel="noopener" style="display:inline-block;margin-top:5px;padding:3px 9px;background:#dcfce7;color:#15803d;border:1px solid #86efac;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none">📄 查看報告</a>`;
+}
+
 function renderDrills(roc) {
   activeRoc = roc;
   document.querySelectorAll('.drill-tab').forEach(t =>
@@ -683,11 +688,13 @@ function renderDrills(roc) {
         <div class="drill-half">
           <span class="half-label">上半年</span>
           ${badgeHtml(row[st.key].h1)}
+          ${drillDocBtn(row[st.key].h1)}
           <button class="insp-ai-btn" onclick="openDrillModal(${roc},'${st.key}','h1')">📎 上傳報告</button>
         </div>
         <div class="drill-half">
           <span class="half-label">下半年</span>
           ${badgeHtml(row[st.key].h2)}
+          ${drillDocBtn(row[st.key].h2)}
           <button class="insp-ai-btn" onclick="openDrillModal(${roc},'${st.key}','h2')">📎 上傳報告</button>
         </div>
       </div>
@@ -945,6 +952,7 @@ function renderInspection(roc) {
         <div class="drill-half">
           <span class="half-label">年度申報日期</span>
           ${inspBadgeHtml(row[st.key])}
+          ${drillDocBtn(row[st.key])}
         </div>
         ${row[st.key].s !== 'not-built' ? `<div style="text-align:right">
           <button class="insp-ai-btn" onclick="openInspModal(${roc},'${st.key}')">📎 上傳報告</button>
@@ -1020,6 +1028,10 @@ function openDrillModal(roc, station, half) {
   document.getElementById('dm-result').innerHTML = '';
   document.getElementById('dm-confirm-btn').style.display = 'none';
   document.getElementById('dm-spinner').style.display = 'none';
+  // pre-fill existing URL
+  const row = DRILLS.find(r => r.roc === roc);
+  const existing = row ? row[station][half] : null;
+  document.getElementById('dm-sp-url').value = (existing && existing.url) ? existing.url : '';
   document.getElementById('drill-modal').style.display = 'flex';
 }
 
@@ -1148,14 +1160,15 @@ function confirmDrillUpdate() {
   if (!_drillAiResult || _drillModalRoc === null) return;
   const row = DRILLS.find(r => r.roc === _drillModalRoc);
   if (!row) return;
+  const urlVal = (document.getElementById('dm-sp-url').value || '').trim();
 
   if (_drillAiResult.done) {
     const cleanDate = _drillAiResult.date ? String(_drillAiResult.date).slice(0, 10) : '';
     row[_drillModalStation][_drillModalHalf] = cleanDate
-      ? { s:'done', d: cleanDate }
-      : { s:'pending' };
+      ? { s:'done', d: cleanDate, url: urlVal }
+      : { s:'pending', url: urlVal };
   } else {
-    row[_drillModalStation][_drillModalHalf] = { s:'missing' };
+    row[_drillModalStation][_drillModalHalf] = { s:'missing', url: urlVal };
   }
 
   saveDrillsLocal();
@@ -1182,6 +1195,10 @@ function openInspModal(roc, site) {
   document.getElementById('im-result').innerHTML = '';
   document.getElementById('im-confirm-btn').style.display = 'none';
   document.getElementById('im-spinner').style.display = 'none';
+  // pre-fill existing URL
+  const row = INSPECTIONS.find(r => r.roc === roc);
+  const existing = row ? row[site] : null;
+  document.getElementById('im-sp-url').value = (existing && existing.url) ? existing.url : '';
   document.getElementById('insp-modal').style.display = 'flex';
 }
 
@@ -1309,14 +1326,15 @@ function confirmInspUpdate() {
   if (!_inspAiResult || _inspModalRoc === null) return;
   const row = INSPECTIONS.find(r => r.roc === _inspModalRoc);
   if (!row) return;
+  const urlVal = (document.getElementById('im-sp-url').value || '').trim();
 
   if (_inspAiResult.done) {
     const cleanDate = _inspAiResult.date ? String(_inspAiResult.date).slice(0, 10) : '';
     row[_inspModalSite] = cleanDate
-      ? { s:'done', d: cleanDate }
-      : { s:'done-nodate' };
+      ? { s:'done', d: cleanDate, url: urlVal }
+      : { s:'done-nodate', url: urlVal };
   } else {
-    row[_inspModalSite] = { s:'pending' };
+    row[_inspModalSite] = { s:'pending', url: urlVal };
   }
 
   saveInspsLocal();
@@ -1419,6 +1437,12 @@ if (localStorage.getItem('portal-dark') === '1') {
 
       <div id="dm-result"></div>
 
+      <div style="margin-top:14px">
+        <label style="font-size:12px;color:var(--sub);display:block;margin-bottom:4px;font-weight:600">📎 SharePoint 文件連結（選填）</label>
+        <input type="url" id="dm-sp-url" placeholder="https://dfrecyclecom.sharepoint.com/..."
+          style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none">
+      </div>
+
       <button id="dm-confirm-btn" type="button" onclick="confirmDrillUpdate()"
         style="display:none;width:100%;margin-top:12px;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
         ✅ 確認並更新演練狀態
@@ -1469,6 +1493,12 @@ if (localStorage.getItem('portal-dark') === '1') {
       </div>
 
       <div id="im-result"></div>
+
+      <div style="margin-top:14px">
+        <label style="font-size:12px;color:var(--sub);display:block;margin-bottom:4px;font-weight:600">📎 SharePoint 文件連結（選填）</label>
+        <input type="url" id="im-sp-url" placeholder="https://dfrecyclecom.sharepoint.com/..."
+          style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none">
+      </div>
 
       <button id="im-confirm-btn" type="button" onclick="confirmInspUpdate()"
         style="display:none;width:100%;margin-top:12px;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
