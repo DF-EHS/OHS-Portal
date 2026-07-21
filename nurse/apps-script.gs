@@ -3,7 +3,7 @@
 //  Sheet ID: 1YGYnBRusJAwE3gNQ7ot39Bk79apRf6KQTKogQsT23x8
 // ═══════════════════════════════════════════════════════
 
-const SS_ID      = '1YGYnBRusJAwE3gNQ7ot39Bk79apRf6KQTKogQsT23x8';
+const SS_ID      = '1MXHr_VXu6sJyL_obVIGF3wioTV550s4TQIMBg7oU_vo';
 const TAB_NAME   = '面談資料';
 const REPORT_TAB = '月報連結';
 const REPORT_HDR = ['year','month','location','url','updatedAt'];
