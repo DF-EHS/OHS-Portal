@@ -562,6 +562,7 @@ function showModule(n) {
 // ── Training Records ───────────────────────────────────
 const TR_AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
 const TR_LS_KEY    = 'training_records_v1';
+const TR_GAS_URL   = 'YOUR_TRAINING_GAS_URL'; // 部署後替換
 
 const TR_LOCATIONS = [
   { key: 'taichung', label: '台中總部', icon: '🏢' },
@@ -570,6 +571,18 @@ const TR_LOCATIONS = [
 
 let TR_DATA = [{ roc: 115, taichung: [], quanxing: [] }];
 let trActiveRoc = 115;
+
+async function trGasPost(payload) {
+  if (!TR_GAS_URL || TR_GAS_URL.startsWith('YOUR_')) return null;
+  try {
+    const res = await fetch(TR_GAS_URL, {
+      method: 'POST', redirect: 'follow',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    return await res.json();
+  } catch(e) { return null; }
+}
 
 function saveTRLocal() {
   localStorage.setItem(TR_LS_KEY, JSON.stringify(TR_DATA));
@@ -656,12 +669,14 @@ function addTRSession(locKey) {
   if (!name || !name.trim()) return;
   const year = TR_DATA.find(r => r.roc === trActiveRoc);
   if (!year) return;
-  year[locKey].push({
+  const sess = {
     id: 'tr-' + trActiveRoc + '-' + locKey + '-' + Date.now().toString(36),
     name: name.trim(), s: 'future', d: '', url: ''
-  });
+  };
+  year[locKey].push(sess);
   saveTRLocal();
   renderTRGrid();
+  trGasPost({ action:'saveSession', id: sess.id, roc: trActiveRoc, location: locKey, name: sess.name, status: sess.s, date: '', url: '' });
 }
 
 function deleteTRSession(locKey, id) {
@@ -671,6 +686,7 @@ function deleteTRSession(locKey, id) {
   year[locKey] = year[locKey].filter(s => s.id !== id);
   saveTRLocal();
   renderTRGrid();
+  trGasPost({ action:'deleteSession', id });
 }
 
 function setTRUrl(locKey, id) {
@@ -683,6 +699,7 @@ function setTRUrl(locKey, id) {
   s.url = val.trim();
   saveTRLocal();
   renderTRGrid();
+  trGasPost({ action:'saveSession', id: s.id, roc: trActiveRoc, location: locKey, name: s.name, status: s.s, date: s.d||'', url: s.url });
 }
 
 // ── AI Modal ───────────────────────────────────────────
@@ -808,12 +825,36 @@ function confirmTRUpdate() {
   saveTRLocal();
   renderTRGrid();
   closeTRModal();
+  trGasPost({ action:'saveSession', id: s.id, roc: trActiveRoc, location: _trLoc, name: s.name, status: s.s, date: s.d||'', url: s.url||'' });
+}
+
+async function loadTRSessionsFromGAS() {
+  const res = await trGasPost({ action: 'loadSessions' });
+  if (!res || !res.ok || !Array.isArray(res.rows)) return;
+  // Collect all roc values (keep years user added locally that GAS may not have yet)
+  const rocSet = new Set([...TR_DATA.map(r => r.roc), ...res.rows.map(row => Number(row.roc))]);
+  const rocs = [...rocSet].sort((a, b) => b - a);
+  TR_DATA = rocs.map(roc => {
+    const yr = { roc };
+    TR_LOCATIONS.forEach(loc => { yr[loc.key] = []; });
+    res.rows.filter(row => Number(row.roc) === roc).forEach(row => {
+      if (yr[row.location] !== undefined) {
+        yr[row.location].push({ id: row.id, name: row.name, s: row.status, d: row.date, url: row.url });
+      }
+    });
+    return yr;
+  });
+  trActiveRoc = TR_DATA[0]?.roc || trActiveRoc;
+  saveTRLocal();
+  buildYearBar();
+  renderTRGrid();
 }
 
 // init
 loadTRLocal();
 buildYearBar();
 renderTRGrid();
+loadTRSessionsFromGAS();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="../shared/sidebar.js"></script>
