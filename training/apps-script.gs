@@ -2,7 +2,7 @@
 // 教育訓練紀錄  Apps Script API
 // ════════════════════════════════════════════════════
 
-const SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID';
+const SPREADSHEET_ID = '1dcY-vebi2qZIDbGRbgBRJg3oT4fxnHzeuiWWB9tXujU';
 const SHEET_NAME     = '訓練紀錄';
 const HEADERS        = ['id','roc','location','name','status','date','url','updatedAt'];
 
