@@ -233,6 +233,9 @@
       </a>
 
       <div class="nav-section">個人工具</div>
+      <a class="nav-item" href="${BASE}dispatch/" data-match="/dispatch/">
+        <span class="nav-icon">📤</span>文件自動派送
+      </a>
       <a class="nav-item" href="${BASE}tasks/" data-match="/tasks/">
         <span class="nav-icon">✅</span>職安工作中樞
       </a>
