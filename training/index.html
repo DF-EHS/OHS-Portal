@@ -155,6 +155,159 @@ body.dark .cc-tag.blue   { background: #1e3054; color: #93c5fd; }
 body.dark .cc-tag.navy   { background: #1e2d42; color: #93c5fd; }
 body.dark .ph-card  { background: #1e293b; border-color: #334155; }
 
+/* ── Module nav ── */
+.mod-nav {
+  background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 0 24px; display: flex; position: sticky; top: 52px; z-index: 100;
+}
+.mod-tab {
+  padding: 12px 22px; border: none; background: none;
+  font-size: 13px; font-weight: 600; color: var(--sub);
+  cursor: pointer; border-bottom: 3px solid transparent;
+  font-family: inherit; transition: all .15s; white-space: nowrap;
+}
+.mod-tab:hover { color: var(--text); }
+.mod-tab.active { color: #d97706; border-bottom-color: #d97706; }
+
+/* ── Training records module ── */
+.rec-outer { max-width: 980px; margin: 0 auto; width: 100%; padding: 28px 24px 60px; }
+
+.year-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 22px; align-items: center; }
+.yr-btn {
+  padding: 6px 16px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg); font-size: 13px; font-weight: 600; color: var(--sub);
+  cursor: pointer; transition: all .15s; font-family: inherit;
+}
+.yr-btn:hover { border-color: #d97706; color: #d97706; }
+.yr-btn.active { background: #d97706; color: #fff; border-color: #d97706; }
+
+.loc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.loc-card { background: var(--card); border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.07); overflow: hidden; }
+.loc-card-head {
+  background: linear-gradient(135deg, #3f1a00 0%, #92400e 60%, #d97706 100%);
+  color: #fff; padding: 14px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.loc-card-title { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.loc-add-btn {
+  padding: 4px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,.4);
+  background: rgba(255,255,255,.12); color: #fff; font-size: 12px;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.loc-add-btn:hover { background: rgba(255,255,255,.25); }
+
+.loc-card-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; min-height: 100px; }
+.loc-empty { text-align: center; padding: 28px 16px; color: var(--sub); font-size: 13px; }
+.loc-empty-icon { font-size: 28px; opacity: .3; margin-bottom: 6px; }
+
+.tr-row { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; background: var(--bg); }
+.tr-row-top { display: flex; align-items: flex-start; gap: 10px; }
+.tr-row-name { font-size: 13px; font-weight: 600; flex: 1; line-height: 1.4; }
+.tr-badge { padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+.tr-done    { background: #dcfce7; color: #15803d; }
+.tr-pending { background: #fef9c3; color: #854d0e; }
+.tr-future  { background: #f1f5f9; color: #64748b; }
+.tr-date { font-size: 11px; color: var(--sub); margin-top: 3px; }
+
+.tr-row-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.tr-url-btn {
+  padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border);
+  background: transparent; font-size: 11px; color: var(--sub);
+  cursor: pointer; font-family: inherit; transition: all .15s; text-decoration: none;
+  display: inline-flex; align-items: center;
+}
+.tr-url-done { background: #dcfce7; color: #15803d; border-color: #86efac; font-weight: 600; }
+.tr-url-btn:hover { border-color: #d97706; color: #d97706; }
+.tr-ai-btn {
+  padding: 4px 10px; border-radius: 6px; border: 1px solid #fed7aa;
+  background: #fff7ed; color: #c2410c; font-size: 11px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: all .15s;
+}
+.tr-ai-btn:hover { background: #ffedd5; }
+.tr-del-btn {
+  padding: 4px 8px; border-radius: 6px; border: 1px solid #fecaca;
+  background: transparent; color: #dc2626; font-size: 11px;
+  cursor: pointer; font-family: inherit; margin-left: auto;
+}
+
+/* ── AI Modal ── */
+.tr-modal-mask {
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  z-index: 500; display: none; align-items: flex-start;
+  justify-content: center; padding: 40px 16px; overflow-y: auto;
+}
+.tr-modal-mask.show { display: flex; }
+.tr-modal {
+  background: var(--card); border-radius: 16px; width: 100%; max-width: 500px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden;
+}
+.tr-modal-hd {
+  background: linear-gradient(135deg, #3f1a00, #92400e);
+  color: #fff; padding: 16px 22px; display: flex; align-items: center; gap: 10px;
+}
+.tr-modal-hd h2 { font-size: 15px; font-weight: 700; flex: 1; }
+.tr-close-btn { background: none; border: none; color: rgba(255,255,255,.8); font-size: 20px; cursor: pointer; line-height: 1; }
+.tr-modal-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+.tr-modal-foot { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+
+.tr-drop-zone {
+  border: 2px dashed #d97706; border-radius: 8px; padding: 24px 16px; text-align: center;
+  cursor: pointer; background: #fffbeb; transition: background .15s; user-select: none;
+}
+.tr-drop-zone:hover { background: #fef3c7; }
+.tr-drop-icon { font-size: 28px; margin-bottom: 6px; }
+.tr-drop-text { font-size: 13px; font-weight: 600; color: #92400e; }
+.tr-drop-hint { font-size: 11px; color: var(--sub); margin-top: 3px; }
+
+.tr-file-row {
+  display: flex; align-items: center; gap: 8px;
+  background: #fffbeb; border: 1px solid #fed7aa; border-radius: 8px; padding: 8px 12px;
+}
+.tr-file-name { flex: 1; font-size: 12px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tr-file-clear { background: none; border: none; color: var(--sub); cursor: pointer; font-size: 18px; padding: 0; line-height: 1; }
+.tr-file-clear:hover { color: #dc2626; }
+
+.tr-ai-run-btn {
+  width: 100%; padding: 10px; border-radius: 8px; border: none;
+  background: #d97706; color: #fff; font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.tr-ai-run-btn:hover:not(:disabled) { background: #b45309; }
+.tr-ai-run-btn:disabled { opacity: .5; cursor: not-allowed; }
+.tr-ai-status { font-size: 12px; text-align: center; min-height: 18px; }
+.tr-ai-status.loading { color: #d97706; }
+.tr-ai-status.success { color: var(--green); }
+.tr-ai-status.error   { color: #dc2626; }
+
+.tr-result-box {
+  background: #fffbeb; border: 1px solid #fed7aa; border-radius: 8px;
+  padding: 12px 14px; display: flex; flex-direction: column; gap: 6px;
+}
+.tr-result-row { display: flex; gap: 8px; font-size: 13px; }
+.tr-result-lbl { color: var(--sub); flex-shrink: 0; font-size: 12px; }
+.tr-result-val { font-weight: 700; color: #92400e; }
+
+.tr-confirm-btn {
+  width: 100%; padding: 10px; border-radius: 8px; border: none;
+  background: #15803d; color: #fff; font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.tr-confirm-btn:hover { background: #166534; }
+
+.tr-spin {
+  width: 14px; height: 14px; border: 2px solid #d97706;
+  border-top-color: transparent; border-radius: 50%;
+  animation: spin .8s linear infinite;
+  display: inline-block; vertical-align: middle; margin-right: 5px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 640px) {
+  .loc-grid { grid-template-columns: 1fr; }
+  .mod-nav { overflow-x: auto; }
+}
+
 /* ── dark toggle ── */
 #dark-toggle {
   position: fixed; bottom: 24px; right: 24px; z-index: 999;
@@ -182,6 +335,14 @@ body.dark .ph-card  { background: #1e293b; border-color: #334155; }
   </div>
 </header>
 
+<!-- Module nav -->
+<div class="mod-nav">
+  <button class="mod-tab active" id="tab-m1" onclick="showModule(1)">🎓 教材庫</button>
+  <button class="mod-tab" id="tab-m2" onclick="showModule(2)">📋 訓練紀錄</button>
+</div>
+
+<!-- Module 1: 教材庫 -->
+<div id="m1">
 <main>
   <div class="section-label">可用教材</div>
 
@@ -333,6 +494,49 @@ body.dark .ph-card  { background: #1e293b; border-color: #334155; }
 
   </div>
 </main>
+</div><!-- /m1 -->
+
+<!-- Module 2: 訓練紀錄 -->
+<div id="m2" style="display:none">
+  <div class="rec-outer">
+    <div class="year-bar" id="tr-year-bar"></div>
+    <div class="loc-grid" id="tr-loc-grid"></div>
+  </div>
+</div><!-- /m2 -->
+
+<!-- AI 判讀 Modal -->
+<div class="tr-modal-mask" id="tr-modal-mask" onclick="if(event.target===this)closeTRModal()">
+  <div class="tr-modal">
+    <div class="tr-modal-hd">
+      <h2 id="tr-modal-title">上傳簽到表讓AI判讀</h2>
+      <button class="tr-close-btn" onclick="closeTRModal()">✕</button>
+    </div>
+    <div class="tr-modal-body">
+      <input type="file" id="tr-file-input" accept=".pdf,image/*" style="display:none" onchange="onTRFileChange(event)">
+      <div class="tr-drop-zone" id="tr-drop-zone"
+           onclick="document.getElementById('tr-file-input').click()"
+           ondragover="event.preventDefault();this.style.background='#fef3c7'"
+           ondragleave="this.style.background=''"
+           ondrop="event.preventDefault();this.style.background='';onTRDrop(event)">
+        <div class="tr-drop-icon">📄</div>
+        <div class="tr-drop-text">點擊或拖曳上傳簽到表</div>
+        <div class="tr-drop-hint">支援 PDF 及圖片（JPG、PNG）</div>
+      </div>
+      <div class="tr-file-row" id="tr-file-row" style="display:none">
+        <span class="tr-file-name" id="tr-file-name"></span>
+        <button class="tr-file-clear" onclick="clearTRFile()">✕</button>
+      </div>
+      <button class="tr-ai-run-btn" id="tr-ai-run-btn" disabled onclick="runTRAi()">🤖 AI 判讀日期與人數</button>
+      <div class="tr-ai-status" id="tr-ai-status"></div>
+      <div class="tr-result-box" id="tr-result-box" style="display:none">
+        <div class="tr-result-row"><span class="tr-result-lbl">訓練日期：</span><span class="tr-result-val" id="tr-result-date"></span></div>
+        <div class="tr-result-row"><span class="tr-result-lbl">參加人數：</span><span class="tr-result-val" id="tr-result-count"></span></div>
+        <div class="tr-result-row"><span class="tr-result-lbl">摘要：</span><span class="tr-result-val" id="tr-result-summary" style="font-size:12px;color:#64748b;font-weight:400"></span></div>
+      </div>
+      <button class="tr-confirm-btn" id="tr-confirm-btn" style="display:none" onclick="confirmTRUpdate()">✅ 確認並儲存日期</button>
+    </div>
+  </div>
+</div>
 
 <footer>大豐環保科技股份有限公司 &nbsp;·&nbsp; 職業安全衛生管理系統</footer>
 
@@ -346,7 +550,272 @@ if (localStorage.getItem('portal-dark') === '1') {
   document.body.classList.add('dark');
   document.getElementById('dark-toggle').textContent = '☀️';
 }
+
+// ── Module toggle ──────────────────────────────────────
+function showModule(n) {
+  [1, 2].forEach(i => {
+    document.getElementById('m' + i).style.display = i === n ? '' : 'none';
+    document.getElementById('tab-m' + i).classList.toggle('active', i === n);
+  });
+}
+
+// ── Training Records ───────────────────────────────────
+const TR_AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+const TR_LS_KEY    = 'training_records_v1';
+
+const TR_LOCATIONS = [
+  { key: 'taichung', label: '台中總部', icon: '🏢' },
+  { key: 'quanxing', label: '全興廠',  icon: '🏭' },
+];
+
+let TR_DATA = [{ roc: 115, taichung: [], quanxing: [] }];
+let trActiveRoc = 115;
+
+function saveTRLocal() {
+  localStorage.setItem(TR_LS_KEY, JSON.stringify(TR_DATA));
+}
+function loadTRLocal() {
+  try {
+    const raw = localStorage.getItem(TR_LS_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (!Array.isArray(saved) || !saved.length) return;
+    TR_DATA = saved;
+    trActiveRoc = TR_DATA[0].roc;
+  } catch(e) {}
+}
+
+function buildYearBar() {
+  document.getElementById('tr-year-bar').innerHTML =
+    TR_DATA.map(r =>
+      `<button class="yr-btn${r.roc === trActiveRoc ? ' active' : ''}" onclick="setTRYear(${r.roc})">民${r.roc}年</button>`
+    ).join('') +
+    `<button class="yr-btn" style="border-style:dashed" onclick="addTRYear()">＋ 新增年度</button>`;
+}
+
+function setTRYear(roc) {
+  trActiveRoc = roc;
+  buildYearBar();
+  renderTRGrid();
+}
+
+function addTRYear() {
+  const maxRoc = Math.max(...TR_DATA.map(r => r.roc));
+  const next = maxRoc + 1;
+  if (!confirm(`新增民國 ${next} 年度訓練紀錄？`)) return;
+  TR_DATA.unshift({ roc: next, taichung: [], quanxing: [] });
+  saveTRLocal();
+  trActiveRoc = next;
+  buildYearBar();
+  renderTRGrid();
+}
+
+function renderTRGrid() {
+  const year = TR_DATA.find(r => r.roc === trActiveRoc);
+  if (!year) return;
+  document.getElementById('tr-loc-grid').innerHTML = TR_LOCATIONS.map(loc => {
+    const sessions = year[loc.key] || [];
+    const rows = sessions.length
+      ? sessions.map(s => renderTRRow(s, loc.key)).join('')
+      : `<div class="loc-empty"><div class="loc-empty-icon">📋</div>尚無訓練紀錄，點右上角「＋ 新增」加入</div>`;
+    return `
+      <div class="loc-card">
+        <div class="loc-card-head">
+          <div class="loc-card-title">${loc.icon} ${loc.label}</div>
+          <button class="loc-add-btn" onclick="addTRSession('${loc.key}')">＋ 新增</button>
+        </div>
+        <div class="loc-card-body">${rows}</div>
+      </div>`;
+  }).join('');
+}
+
+function renderTRRow(s, locKey) {
+  const cls = s.s === 'done' ? 'tr-done' : s.s === 'pending' ? 'tr-pending' : 'tr-future';
+  const lbl = s.s === 'done' ? '✅ 已完成' : s.s === 'pending' ? '⏳ 進行中' : '📅 待辦';
+  const dateHtml = s.d ? `<div class="tr-date">📅 ${s.d}</div>` : '';
+  const urlBtn = s.url
+    ? `<a href="${s.url}" target="_blank" rel="noopener" class="tr-url-btn tr-url-done">📄 查看簽到表</a>
+       <button class="tr-url-btn" onclick="setTRUrl('${locKey}','${s.id}')" title="更新連結" style="padding:4px 6px">✏️</button>`
+    : `<button class="tr-url-btn" onclick="setTRUrl('${locKey}','${s.id}')">📎 設定連結</button>`;
+  return `
+    <div class="tr-row">
+      <div class="tr-row-top">
+        <div style="flex:1"><div class="tr-row-name">${s.name}</div>${dateHtml}</div>
+        <span class="tr-badge ${cls}">${lbl}</span>
+      </div>
+      <div class="tr-row-actions">
+        ${urlBtn}
+        <button class="tr-ai-btn" onclick="openTRModal('${locKey}','${s.id}')">📎 上傳讓AI判讀</button>
+        <button class="tr-del-btn" onclick="deleteTRSession('${locKey}','${s.id}')">🗑️</button>
+      </div>
+    </div>`;
+}
+
+function addTRSession(locKey) {
+  const name = prompt('請輸入訓練名稱：');
+  if (!name || !name.trim()) return;
+  const year = TR_DATA.find(r => r.roc === trActiveRoc);
+  if (!year) return;
+  year[locKey].push({
+    id: 'tr-' + trActiveRoc + '-' + locKey + '-' + Date.now().toString(36),
+    name: name.trim(), s: 'future', d: '', url: ''
+  });
+  saveTRLocal();
+  renderTRGrid();
+}
+
+function deleteTRSession(locKey, id) {
+  if (!confirm('確定刪除此訓練項目？')) return;
+  const year = TR_DATA.find(r => r.roc === trActiveRoc);
+  if (!year) return;
+  year[locKey] = year[locKey].filter(s => s.id !== id);
+  saveTRLocal();
+  renderTRGrid();
+}
+
+function setTRUrl(locKey, id) {
+  const year = TR_DATA.find(r => r.roc === trActiveRoc);
+  if (!year) return;
+  const s = year[locKey].find(x => x.id === id);
+  if (!s) return;
+  const val = prompt(`${s.name}\nSharePoint 簽到表連結（留空則清除）：`, s.url || '');
+  if (val === null) return;
+  s.url = val.trim();
+  saveTRLocal();
+  renderTRGrid();
+}
+
+// ── AI Modal ───────────────────────────────────────────
+let _trLoc = null, _trId = null, _trAiFile = null, _trAiResult = null;
+
+function openTRModal(locKey, id) {
+  _trLoc = locKey; _trId = id; _trAiFile = null; _trAiResult = null;
+  const year = TR_DATA.find(r => r.roc === trActiveRoc);
+  const s = year && year[locKey].find(x => x.id === id);
+  document.getElementById('tr-modal-title').textContent = (s ? s.name : '') + '－上傳簽到表';
+  clearTRFile();
+  document.getElementById('tr-ai-status').textContent = '';
+  document.getElementById('tr-ai-status').className = 'tr-ai-status';
+  document.getElementById('tr-result-box').style.display = 'none';
+  document.getElementById('tr-confirm-btn').style.display = 'none';
+  document.getElementById('tr-modal-mask').classList.add('show');
+}
+function closeTRModal() {
+  document.getElementById('tr-modal-mask').classList.remove('show');
+}
+function clearTRFile() {
+  _trAiFile = null;
+  document.getElementById('tr-drop-zone').style.display = '';
+  document.getElementById('tr-file-row').style.display = 'none';
+  document.getElementById('tr-ai-run-btn').disabled = true;
+}
+function onTRFileChange(e) {
+  const f = e.target.files[0]; if (!f) return;
+  _trAiFile = f;
+  document.getElementById('tr-drop-zone').style.display = 'none';
+  document.getElementById('tr-file-name').textContent = f.name;
+  document.getElementById('tr-file-row').style.display = 'flex';
+  document.getElementById('tr-ai-run-btn').disabled = false;
+  e.target.value = '';
+}
+function onTRDrop(e) {
+  const f = e.dataTransfer.files[0]; if (!f) return;
+  document.getElementById('tr-file-input').files; // reset
+  _trAiFile = f;
+  document.getElementById('tr-drop-zone').style.display = 'none';
+  document.getElementById('tr-file-name').textContent = f.name;
+  document.getElementById('tr-file-row').style.display = 'flex';
+  document.getElementById('tr-ai-run-btn').disabled = false;
+}
+
+async function extractPdfTextTR(file) {
+  if (typeof pdfjsLib === 'undefined') throw new Error('PDF.js 未載入，請重新整理頁面');
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+  let text = '';
+  for (let i = 1; i <= Math.min(pdf.numPages, 4); i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    text += content.items.map(it => it.str).join(' ') + '\n';
+  }
+  return text.trim();
+}
+
+async function fileToBase64TR(file) {
+  return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); });
+}
+
+async function runTRAi() {
+  if (!_trAiFile) return;
+  const runBtn   = document.getElementById('tr-ai-run-btn');
+  const statusEl = document.getElementById('tr-ai-status');
+  runBtn.disabled = true;
+  statusEl.className = 'tr-ai-status loading';
+  statusEl.innerHTML = '<span class="tr-spin"></span>AI 判讀中…';
+  document.getElementById('tr-result-box').style.display = 'none';
+  document.getElementById('tr-confirm-btn').style.display = 'none';
+  _trAiResult = null;
+
+  try {
+    let docText = '';
+    if (_trAiFile.type === 'application/pdf') {
+      docText = await extractPdfTextTR(_trAiFile);
+    }
+
+    const payload = docText
+      ? { text: `這是大豐環保科技的教育訓練簽到表，請從以下文字擷取資訊並以 JSON 回覆。欄位：date（訓練日期 YYYY-MM-DD，無則空字串）、count（參加人數整數，無則 null）、summary（一句話摘要）。\n\n文件內容：\n${docText.slice(0, 3000)}` }
+      : await (async () => {
+          const b64 = await fileToBase64TR(_trAiFile);
+          return { text: '這是大豐環保科技的教育訓練簽到表圖片，請辨識並回傳 JSON。欄位：date（訓練日期 YYYY-MM-DD）、count（參加人數整數）、summary（一句話摘要）。', image: b64 };
+        })();
+
+    const resp = await fetch(TR_AI_WORKER, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const raw = await resp.text();
+    const data = JSON.parse(raw);
+    const aiText = data?.data || data?.choices?.[0]?.message?.content || data?.text || '';
+    const match = aiText.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('AI 未回傳有效 JSON，請重試');
+    _trAiResult = JSON.parse(match[0]);
+
+    document.getElementById('tr-result-date').textContent    = _trAiResult.date    || '（無法辨識）';
+    document.getElementById('tr-result-count').textContent   = _trAiResult.count != null ? _trAiResult.count + ' 人' : '（無法辨識）';
+    document.getElementById('tr-result-summary').textContent = _trAiResult.summary || '';
+    document.getElementById('tr-result-box').style.display   = '';
+    document.getElementById('tr-confirm-btn').style.display  = '';
+    statusEl.className = 'tr-ai-status success';
+    statusEl.textContent = '✅ 判讀完成，請確認後儲存';
+  } catch(err) {
+    statusEl.className = 'tr-ai-status error';
+    statusEl.textContent = '❌ ' + err.message;
+  } finally {
+    runBtn.disabled = false;
+  }
+}
+
+function confirmTRUpdate() {
+  if (!_trAiResult) return;
+  const year = TR_DATA.find(r => r.roc === trActiveRoc);
+  if (!year) return;
+  const s = year[_trLoc].find(x => x.id === _trId);
+  if (!s) return;
+  if (_trAiResult.date) { s.d = String(_trAiResult.date).slice(0, 10); s.s = 'done'; }
+  else { s.s = 'pending'; }
+  saveTRLocal();
+  renderTRGrid();
+  closeTRModal();
+}
+
+// init
+loadTRLocal();
+buildYearBar();
+renderTRGrid();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="../shared/sidebar.js"></script>
 </body>
 </html>
