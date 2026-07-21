@@ -6,11 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>職業災害分析系統 | 大豐環保科技</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root {
-  --navy:#1e3a5f; --bg:#f1f5f9; --card:#fff; --border:#e2e8f0;
-  --text:#1e293b; --sub:#64748b;
-  --red:#dc2626; --orange:#f97316; --green:#16a34a; --blue:#2563eb; --amber:#f59e0b;
+  --navy:   var(--ohs-navy);
+  --bg:     var(--ohs-bg);
+  --card:   var(--ohs-card);
+  --border: var(--ohs-border);
+  --text:   var(--ohs-text);
+  --sub:    var(--ohs-muted);
+  --red:    var(--ohs-red);
+  --orange: var(--ohs-orange);
+  --green:  var(--ohs-green);
+  --blue:   var(--ohs-blue);
+  --amber:  var(--ohs-amber);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);font-size:14px;}

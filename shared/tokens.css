@@ -1,0 +1,43 @@
+/* ══════════════════════════════════════════════════════════
+   OHS Portal Design Tokens — shared/tokens.css
+   用法：在各模組 <style> 標籤之前加入
+   <link rel="stylesheet" href="../shared/tokens.css">
+
+   規則：
+   - 新寫的樣式請直接用 var(--ohs-*) 取用色票
+   - 既有模組遷移時，把 :root 裡的硬碼色值改成 var(--ohs-*)
+   - 元件樣式（按鈕、表格、Modal）在 shared/components.css
+   ══════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── 品牌主色 ── */
+  --ohs-navy:    #1e3a5f;   /* 側欄、頁首、標題 */
+  --ohs-blue:    #2563eb;   /* 主要行動按鈕、連結 */
+  --ohs-teal:    #0d9488;   /* 成功狀態、通過標籤 */
+
+  /* ── 語意色 ── */
+  --ohs-red:     #dc2626;   /* 危險、錯誤、高風險 */
+  --ohs-orange:  #f97316;   /* 警示、中高風險 */
+  --ohs-amber:   #f59e0b;   /* 注意、待確認 */
+  --ohs-green:   #16a34a;   /* 安全、通過、合規 */
+  --ohs-gold:    #b45309;   /* 中等風險（深琥珀） */
+
+  /* ── 中性色階 ── */
+  --ohs-bg:      #f1f5f9;   /* 頁面背景 */
+  --ohs-card:    #ffffff;   /* 卡片背景 */
+  --ohs-border:  #e2e8f0;   /* 分隔線、邊框 */
+  --ohs-text:    #1e293b;   /* 主文字 */
+  --ohs-muted:   #64748b;   /* 次要文字、說明 */
+
+  /* ── 字體 ── */
+  --ohs-font: "Microsoft JhengHei", "Noto Sans TC", "PingFang TC", sans-serif;
+
+  /* ── 圓角 ── */
+  --ohs-radius-sm: 6px;
+  --ohs-radius-md: 10px;
+  --ohs-radius-lg: 16px;
+
+  /* ── 陰影 ── */
+  --ohs-shadow:    0 2px 8px rgba(0, 0, 0, .08);
+  --ohs-shadow-lg: 0 4px 24px rgba(0, 0, 0, .12);
+}
