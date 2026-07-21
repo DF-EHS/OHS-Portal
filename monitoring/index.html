@@ -6,18 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>作業環境監測 | 大豐環保科技</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root {
+  /* 模組專屬色（水藍系，monitoring 獨有） */
   --mon:        #0284c7;
   --mon-dark:   #0369a1;
   --mon-darker: #0c4a6e;
   --mon-light:  #f0f9ff;
   --mon-border: #bae6fd;
-  --green:  #16a34a; --green-light: #f0fdf4; --green-border: #bbf7d0;
-  --red:    #dc2626; --red-light:   #fef2f2; --red-border:   #fecaca;
+  /* 語意色淡版（模組 UI 背景用，保留硬碼） */
+  --green-light: #f0fdf4; --green-border: #bbf7d0;
+  --red-light:   #fef2f2; --red-border:   #fecaca;
   --amber:  #d97706; --amber-light: #fffbeb; --amber-border: #fde68a;
-  --navy:   #1e3a5f;
-  --bg: #f8fafc; --card: #fff; --border: #e2e8f0; --text: #1e293b; --sub: #64748b;
+  /* 共用色 → 指向全域 token */
+  --green:  var(--ohs-green);
+  --red:    var(--ohs-red);
+  --navy:   var(--ohs-navy);
+  --bg:     var(--ohs-bg);
+  --card:   var(--ohs-card);
+  --border: var(--ohs-border);
+  --text:   var(--ohs-text);
+  --sub:    var(--ohs-muted);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
