@@ -669,7 +669,7 @@ function renderTRRow(s, locKey) {
   const lbl = s.s === 'done' ? '✅ 已完成' : s.s === 'pending' ? '⏳ 進行中' : '📅 待辦';
   const dateHtml = s.d ? `<div class="tr-date">📅 ${s.d}</div>` : '';
   const urlBtn = s.url
-    ? `<a href="${s.url}" target="_blank" rel="noopener" class="tr-url-btn tr-url-done">📄 查看簽到表</a>
+    ? `<a href="${s.url}" target="_blank" rel="noopener" class="tr-url-btn tr-url-done">📄 查看紀錄</a>
        <button class="tr-url-btn" onclick="setTRUrl('${locKey}','${s.id}')" title="更新連結" style="padding:4px 6px">✏️</button>`
     : `<button class="tr-url-btn" onclick="setTRUrl('${locKey}','${s.id}')">📎 設定連結</button>`;
   return `
