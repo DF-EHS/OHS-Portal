@@ -2,7 +2,7 @@
 // 公共危險物品申報記錄  Apps Script API
 // ════════════════════════════════════════════════════
 
-const SPREADSHEET_ID   = 'YOUR_SPREADSHEET_ID';
+const SPREADSHEET_ID   = '1mL3Iwl6Mj3jqNL8IPsGjgrmUh4Ow_-xl20jBhS8_DtY';
 const SHEET_NAME       = '申報記錄';
 const HEADERS          = ['roc','period','status','date','note','url','updatedAt'];
 
