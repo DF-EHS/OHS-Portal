@@ -766,13 +766,26 @@ async function renderPdfPageAsImageTR(file) {
     'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   const buf = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
-  const page = await pdf.getPage(1);
-  const viewport = page.getViewport({ scale: 1.5 });
-  const canvas = document.createElement('canvas');
-  canvas.width = viewport.width;
-  canvas.height = viewport.height;
-  await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-  return canvas.toDataURL('image/jpeg', 0.85);
+  const scale = 1.2;
+  const canvases = [];
+  for (let i = 1; i <= Math.min(pdf.numPages, 4); i++) {
+    const page = await pdf.getPage(i);
+    const viewport = page.getViewport({ scale });
+    const c = document.createElement('canvas');
+    c.width = viewport.width;
+    c.height = viewport.height;
+    await page.render({ canvasContext: c.getContext('2d'), viewport }).promise;
+    canvases.push(c);
+  }
+  // 所有頁垂直拼接成單張圖
+  const totalH = canvases.reduce((s, c) => s + c.height, 0);
+  const combined = document.createElement('canvas');
+  combined.width = canvases[0].width;
+  combined.height = totalH;
+  const ctx = combined.getContext('2d');
+  let y = 0;
+  for (const c of canvases) { ctx.drawImage(c, 0, y); y += c.height; }
+  return combined.toDataURL('image/jpeg', 0.8);
 }
 
 async function fileToBase64TR(file) {
@@ -792,7 +805,11 @@ async function runTRAi() {
 
   try {
     let docText = '';
-    const JSON_INST = '只回傳純 JSON，不要 markdown、不要說明文字，格式：{"date":"YYYY-MM-DD","count":整數,"summary":"一句話摘要"}，無法辨識則 date 填空字串、count 填 null。';
+    const JSON_INST = `只回傳純 JSON，不要 markdown、不要說明文字。格式：{"date":"YYYY-MM-DD","count":整數,"summary":"一句話摘要"}。
+規則：
+1. 日期欄是民國年，需換算為西元：民國年+1911=西元年。例如「115年5月21日」→「2026-05-21」
+2. count 是姓名欄有填寫的列數（空白列不計，跨頁累計）
+3. 無法辨識則 date 填空字串、count 填 null`;
 
     let payload;
     if (_trAiFile.type === 'application/pdf') {
