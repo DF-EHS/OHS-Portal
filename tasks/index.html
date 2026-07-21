@@ -5,20 +5,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>職安工作中樞 | 大豐環保科技</title>
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root {
+  /* 模組專屬色（green 系，保留硬碼） */
   --accent:    #15803d;
   --accent-h:  #14532d;
   --accent-bg: #f0fdf4;
   --accent-bd: #bbf7d0;
-  --bg:     #f1f5f9;
-  --card:   #ffffff;
-  --border: #e2e8f0;
-  --text:   #1e293b;
-  --sub:    #64748b;
-  --red:    #dc2626;
-  --orange: #d97706;
-  --blue:   #2563eb;
+  --orange:    #d97706;
+  /* 共用色 → 全域 token */
+  --bg:     var(--ohs-bg);
+  --card:   var(--ohs-card);
+  --border: var(--ohs-border);
+  --text:   var(--ohs-text);
+  --sub:    var(--ohs-muted);
+  --red:    var(--ohs-red);
+  --blue:   var(--ohs-blue);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {

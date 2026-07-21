@@ -5,22 +5,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>化學品管理 | 大豐環保科技</title>
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root {
+  /* 模組專屬色（化學品琥珀系 + 淡色變體，保留硬碼） */
   --chem:        #d97706;
-  --chem-dark:   #b45309;
+  --chem-dark:   var(--ohs-gold);  /* #b45309，與 ohs-gold 相同 */
   --chem-darker: #78350f;
   --chem-light:  #fffbeb;
   --chem-border: #fde68a;
-  --green:       #16a34a;
   --green-light: #f0fdf4;
-  --red:         #dc2626;
   --red-light:   #fef2f2;
-  --navy:        #1e3a5f;
-  --bg:          #f8fafc;
-  --card:        #ffffff;
-  --border:      #e2e8f0;
-  --text:        #1e293b;
+  /* 共用色 → 全域 token */
+  --green:  var(--ohs-green);
+  --red:    var(--ohs-red);
+  --navy:   var(--ohs-navy);
+  --bg:     var(--ohs-bg);
+  --card:   var(--ohs-card);
+  --border: var(--ohs-border);
+  --text:   var(--ohs-text);
   --sub:         #64748b;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }

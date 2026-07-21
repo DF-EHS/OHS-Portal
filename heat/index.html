@@ -5,20 +5,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>熱危害風險即時查詢 | 大豐環保科技</title>
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root {
-  --bg:      #f1f5f9;
-  --card:    #ffffff;
-  --navy:    #1e3a5f;
-  --text:    #1e293b;
-  --sub:     #64748b;
-  --muted:   #94a3b8;
-  --border:  #e2e8f0;
-
+  /* WBGT 熱危害等級色（語意明確，保留硬碼） */
+  --muted:   #94a3b8;   /* heat 專屬淺灰，比 ohs-muted 更淡 */
   --c-low:   #16a34a; --c-low-bg:  #dcfce7; --c-low-bd:  #86efac;
   --c-mid:   #ca8a04; --c-mid-bg:  #fef9c3; --c-mid-bd:  #fde047;
   --c-high:  #ea580c; --c-high-bg: #ffedd5; --c-high-bd: #fdba74;
   --c-ext:   #dc2626; --c-ext-bg:  #fee2e2; --c-ext-bd:  #fca5a5;
+  /* 共用色 → 全域 token */
+  --bg:     var(--ohs-bg);
+  --card:   var(--ohs-card);
+  --navy:   var(--ohs-navy);
+  --text:   var(--ohs-text);
+  --sub:    var(--ohs-muted);
+  --border: var(--ohs-border);
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
