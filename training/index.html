@@ -777,16 +777,17 @@ async function runTRAi() {
 
   try {
     let docText = '';
+    const JSON_INST = '只回傳純 JSON，不要 markdown、不要說明文字，格式：{"date":"YYYY-MM-DD","count":整數,"summary":"一句話摘要"}，無法辨識則 date 填空字串、count 填 null。';
+
+    let payload;
     if (_trAiFile.type === 'application/pdf') {
       docText = await extractPdfTextTR(_trAiFile);
+      if (!docText) throw new Error('PDF 無法擷取文字（可能是掃描版），請將簽到表拍照後改用圖片格式上傳');
+      payload = { text: `${JSON_INST}\n\n這是大豐環保科技的教育訓練簽到表，內容如下：\n${docText.slice(0, 3000)}` };
+    } else {
+      const b64 = await fileToBase64TR(_trAiFile);
+      payload = { text: `${JSON_INST}\n\n這是大豐環保科技的教育訓練簽到表圖片。`, image: b64 };
     }
-
-    const payload = docText
-      ? { text: `這是大豐環保科技的教育訓練簽到表，請從以下文字擷取資訊並以 JSON 回覆。欄位：date（訓練日期 YYYY-MM-DD，無則空字串）、count（參加人數整數，無則 null）、summary（一句話摘要）。\n\n文件內容：\n${docText.slice(0, 3000)}` }
-      : await (async () => {
-          const b64 = await fileToBase64TR(_trAiFile);
-          return { text: '這是大豐環保科技的教育訓練簽到表圖片，請辨識並回傳 JSON。欄位：date（訓練日期 YYYY-MM-DD）、count（參加人數整數）、summary（一句話摘要）。', image: b64 };
-        })();
 
     const resp = await fetch(TR_AI_WORKER, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -796,7 +797,7 @@ async function runTRAi() {
     const data = JSON.parse(raw);
     const aiText = data?.data || data?.choices?.[0]?.message?.content || data?.text || '';
     const match = aiText.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error('AI 未回傳有效 JSON，請重試');
+    if (!match) throw new Error(`AI 未回傳有效 JSON。收到：「${aiText.slice(0, 80) || '(空白回應)'}」`);
     _trAiResult = JSON.parse(match[0]);
 
     document.getElementById('tr-result-date').textContent    = _trAiResult.date    || '（無法辨識）';
