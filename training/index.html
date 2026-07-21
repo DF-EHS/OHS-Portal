@@ -303,6 +303,11 @@ body.dark .ph-card  { background: #1e293b; border-color: #334155; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+.tr-sync-lbl { font-size: 11px; color: var(--sub); white-space: nowrap; align-self: center; }
+.tr-sync-lbl.ok  { color: #16a34a; }
+.tr-sync-lbl.err { color: #dc2626; font-weight: 600; }
+.tr-sync-lbl.ing { color: #d97706; }
+
 @media (max-width: 640px) {
   .loc-grid { grid-template-columns: 1fr; }
   .mod-nav { overflow-x: auto; }
@@ -577,11 +582,25 @@ async function trGasPost(payload) {
   try {
     const res = await fetch(TR_GAS_URL, {
       method: 'POST', redirect: 'follow',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' }, // text/plain 避免 CORS preflight
       body: JSON.stringify(payload)
     });
-    return await res.json();
-  } catch(e) { return null; }
+    const data = await res.json();
+    if (data && !data.ok) console.warn('[TR GAS]', payload.action, data.error);
+    return data;
+  } catch(e) {
+    console.error('[TR GAS] fetch failed:', e.message);
+    return null;
+  }
+}
+
+let _trSyncMsg = '', _trSyncOk = null;
+function trSetSync(msg, ok) {
+  _trSyncMsg = msg; _trSyncOk = ok;
+  const el = document.getElementById('tr-sync-lbl');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'tr-sync-lbl ' + (ok === true ? 'ok' : ok === false ? 'err' : 'ing');
 }
 
 function saveTRLocal() {
@@ -599,11 +618,14 @@ function loadTRLocal() {
 }
 
 function buildYearBar() {
+  const syncCls = _trSyncOk === true ? 'ok' : _trSyncOk === false ? 'err' : 'ing';
   document.getElementById('tr-year-bar').innerHTML =
     TR_DATA.map(r =>
       `<button class="yr-btn${r.roc === trActiveRoc ? ' active' : ''}" onclick="setTRYear(${r.roc})">民${r.roc}年</button>`
     ).join('') +
-    `<button class="yr-btn" style="border-style:dashed" onclick="addTRYear()">＋ 新增年度</button>`;
+    `<button class="yr-btn" style="border-style:dashed" onclick="addTRYear()">＋ 新增年度</button>` +
+    `<button class="yr-btn" style="margin-left:auto;padding:6px 10px" onclick="loadTRSessionsFromGAS()" title="從雲端重新載入">🔄</button>` +
+    (_trSyncMsg ? `<span class="tr-sync-lbl ${syncCls}" id="tr-sync-lbl">${_trSyncMsg}</span>` : '<span class="tr-sync-lbl" id="tr-sync-lbl"></span>');
 }
 
 function setTRYear(roc) {
@@ -884,9 +906,13 @@ function confirmTRUpdate() {
 }
 
 async function loadTRSessionsFromGAS() {
+  trSetSync('☁️ 同步中…', null);
+  buildYearBar();
   const res = await trGasPost({ action: 'loadSessions' });
-  if (!res || !res.ok || !Array.isArray(res.rows)) return;
-  // Collect all roc values (keep years user added locally that GAS may not have yet)
+  if (!res || !res.ok || !Array.isArray(res.rows)) {
+    trSetSync('⚠️ 雲端同步失敗', false);
+    return;
+  }
   const rocSet = new Set([...TR_DATA.map(r => r.roc), ...res.rows.map(row => Number(row.roc))]);
   const rocs = [...rocSet].sort((a, b) => b - a);
   TR_DATA = rocs.map(roc => {
@@ -901,6 +927,8 @@ async function loadTRSessionsFromGAS() {
   });
   trActiveRoc = TR_DATA[0]?.roc || trActiveRoc;
   saveTRLocal();
+  const t = new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
+  trSetSync(`✅ 已同步 ${t}`, true);
   buildYearBar();
   renderTRGrid();
 }
