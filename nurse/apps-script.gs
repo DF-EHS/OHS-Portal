@@ -7,6 +7,8 @@ const SS_ID      = '1YGYnBRusJAwE3gNQ7ot39Bk79apRf6KQTKogQsT23x8';
 const TAB_NAME   = '面談資料';
 const REPORT_TAB = '月報連結';
 const REPORT_HDR = ['year','month','location','url','updatedAt'];
+const SVC_LOG_TAB = '臨場服務紀錄';
+const SVC_LOG_HDR = ['id','year','month','date','location','timeIn','timeOut','consultCount','recorder','services','summary','followUp','updatedAt'];
 
 const C = {
   面談日期:    0,  姓名:        1,  員工編號:    2,
@@ -77,6 +79,9 @@ function doPost(e) {
     if (b.action === 'ai-parse')     return ok(aiParse(b));
     if (b.action === 'saveReport')   return ok(saveReport(b));
     if (b.action === 'loadReports')  return ok(loadReports());
+    if (b.action === 'saveSvcLog')   return ok(saveSvcLog(b));
+    if (b.action === 'deleteSvcLog') return ok(deleteSvcLog(b.id));
+    if (b.action === 'loadSvcLogs')  return ok(loadAllSvcLogs());
     return fail('unknown action');
   } catch(err) { return fail(err.message); }
 }
@@ -234,6 +239,70 @@ function saveReport(p) {
   const row = REPORT_HDR.map(h => h === 'updatedAt' ? now : (p[h] !== undefined ? p[h] : ''));
   sheet.appendRow(row);
   return { message: '已新增' };
+}
+
+// ── 臨場服務紀錄（upsert by id，刪除 by id）────────────
+
+function getSvcLogSheet() {
+  const ss = SpreadsheetApp.openById(SS_ID);
+  let sheet = ss.getSheetByName(SVC_LOG_TAB);
+  if (!sheet) {
+    sheet = ss.insertSheet(SVC_LOG_TAB);
+    sheet.appendRow(SVC_LOG_HDR);
+  }
+  return sheet;
+}
+
+function loadAllSvcLogs() {
+  const vals = getSvcLogSheet().getDataRange().getValues();
+  if (vals.length < 2) return { logs: [] };
+  const hdr = vals[0];
+  const logs = vals.slice(1).map(r => {
+    const o = {};
+    hdr.forEach((h, i) => o[h] = String(r[i] == null ? '' : r[i]));
+    return o;
+  });
+  return { logs };
+}
+
+function saveSvcLog(p) {
+  const sheet = getSvcLogSheet();
+  const vals  = sheet.getDataRange().getValues();
+  const hdr   = vals[0];
+  const idCol = hdr.indexOf('id');
+  const now   = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+  for (let i = 1; i < vals.length; i++) {
+    if (String(vals[i][idCol]) === String(p.id)) {
+      hdr.forEach((h, j) => {
+        if (h === 'updatedAt') sheet.getRange(i+1, j+1).setValue(now);
+        else if (p[h] !== undefined) sheet.getRange(i+1, j+1).setValue(p[h]);
+      });
+      return { message: '已更新' };
+    }
+  }
+
+  const row = SVC_LOG_HDR.map(h => {
+    if (h === 'updatedAt') return now;
+    return p[h] !== undefined ? p[h] : '';
+  });
+  sheet.appendRow(row);
+  return { message: '已新增' };
+}
+
+function deleteSvcLog(id) {
+  if (!id) throw new Error('缺少 id');
+  const sheet = getSvcLogSheet();
+  const vals  = sheet.getDataRange().getValues();
+  const hdr   = vals[0];
+  const idCol = hdr.indexOf('id');
+  for (let i = vals.length - 1; i >= 1; i--) {
+    if (String(vals[i][idCol]) === String(id)) {
+      sheet.deleteRow(i + 1);
+      return { message: '已刪除' };
+    }
+  }
+  return { message: '查無此筆' };
 }
 
 // ── IT OpenRouter Dispatch API 設定 ───────────────────

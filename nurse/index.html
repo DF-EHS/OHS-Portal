@@ -1438,6 +1438,28 @@ async function loadReportsFromGAS() {
   renderSvcCards();
 }
 
+async function loadSvcLogsFromGAS() {
+  const res = await nurseGasPost({ action:'loadSvcLogs' });
+  if (!res || !res.ok || !res.logs) return;
+  if (!res.logs.length) return;
+  svcLogs = res.logs.map(r => ({
+    id:           r.id,
+    year:         Number(r.year),
+    month:        Number(r.month),
+    date:         r.date,
+    location:     r.location,
+    timeIn:       r.timeIn,
+    timeOut:      r.timeOut,
+    consultCount: Number(r.consultCount) || 0,
+    recorder:     r.recorder,
+    services:     (() => { try { return JSON.parse(r.services || '[]'); } catch { return []; } })(),
+    summary:      r.summary,
+    followUp:     r.followUp,
+  }));
+  saveSvcLogs();
+  renderSvcModule();
+}
+
 function setMonthReportUrl() {
   const cur = getSvcReportUrl(svcYear, svcMonth, svcLoc);
   const val = prompt(`${svcYear}年${svcMonth}月・${svcLoc}\nSharePoint 報告連結（留空則清除）：`, cur);
@@ -1454,6 +1476,7 @@ function setMonthReportUrl() {
 loadSvcLogs();
 loadSvcReports();
 loadReportsFromGAS();
+loadSvcLogsFromGAS();
 
 function svcYearChange() {
   svcYear = parseInt(document.getElementById('svc-year').value, 10);
@@ -1639,6 +1662,7 @@ function saveSvcRecord() {
   }
 
   saveSvcLogs();
+  nurseGasPost({ action:'saveSvcLog', ...rec, services: JSON.stringify(rec.services) });
   closeSvcModal();
 
   // switch view to the month of saved record
@@ -1657,6 +1681,7 @@ function deleteSvcRecord(id) {
   if (!confirm(`確定刪除 ${r.date} 的紀錄？`)) return;
   svcLogs = svcLogs.filter(x => x.id !== id);
   saveSvcLogs();
+  nurseGasPost({ action:'deleteSvcLog', id });
   renderSvcModule();
   showToast('已刪除');
 }
