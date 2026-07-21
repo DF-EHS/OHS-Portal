@@ -5,21 +5,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>工具箱會議 TBM/TBM-KY | 大豐環保科技</title>
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root {
-  --primary: #059669;
+  /* 模組專屬色（green 系 + 模組背景，保留硬碼） */
+  --primary:      #059669;
   --primary-dark: #047857;
   --primary-light: #ecfdf5;
-  --primary-bd: #6ee7b7;
-  --amber: #d97706;
-  --amber-bg: #fffbeb;
-  --red: #dc2626;
-  --navy: #1e3a5f;
-  --bg: #f0fdf4;
-  --card: #fff;
-  --border: #e2e8f0;
-  --text: #1e293b;
-  --sub: #64748b;
+  --primary-bd:   #6ee7b7;
+  --amber:        #d97706;
+  --amber-bg:     #fffbeb;
+  --bg:           #f0fdf4;   /* toolbox 專屬綠調背景 */
+  /* 共用色 → 全域 token */
+  --red:    var(--ohs-red);
+  --navy:   var(--ohs-navy);
+  --card:   var(--ohs-card);
+  --border: var(--ohs-border);
+  --text:   var(--ohs-text);
+  --sub:    var(--ohs-muted);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {

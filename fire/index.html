@@ -5,23 +5,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>消防管理 | 大豐環保科技</title>
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root {
-  --fire:        #dc2626;
+  /* 模組專屬色（fire 紅系 + 淡色變體，保留硬碼） */
+  --fire:        var(--ohs-red);   /* #dc2626，直接對應 ohs-red */
   --fire-dark:   #991b1b;
   --fire-light:  #fef2f2;
   --fire-border: #fecaca;
   --orange:      #ea580c;
-  --green:       #16a34a;
   --green-light: #f0fdf4;
   --amber:       #d97706;
   --amber-light: #fffbeb;
-  --navy:        #1e3a5f;
-  --bg:          #f8fafc;
-  --card:        #ffffff;
-  --border:      #e2e8f0;
-  --text:        #1e293b;
-  --sub:         #64748b;
+  /* 共用色 → 全域 token */
+  --navy:   var(--ohs-navy);
+  --bg:     var(--ohs-bg);
+  --card:   var(--ohs-card);
+  --border: var(--ohs-border);
+  --text:   var(--ohs-text);
+  --sub:    var(--ohs-muted);
+  --green:  var(--ohs-green);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {

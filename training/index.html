@@ -5,16 +5,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>教育訓練 | 大豐環保科技</title>
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root {
-  --navy:   #1e3a5f;
-  --bg:     #f1f5f9;
-  --card:   #ffffff;
-  --border: #e2e8f0;
-  --text:   #1e293b;
-  --sub:    #64748b;
-  --green:  #16a34a;
-  --orange: #d97706;
+  --orange: #d97706;   /* 深琥珀，保留硬碼 */
+  /* 共用色 → 全域 token */
+  --navy:   var(--ohs-navy);
+  --bg:     var(--ohs-bg);
+  --card:   var(--ohs-card);
+  --border: var(--ohs-border);
+  --text:   var(--ohs-text);
+  --sub:    var(--ohs-muted);
+  --green:  var(--ohs-green);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
