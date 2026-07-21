@@ -5,11 +5,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>安全衛生管理委員會 | 大豐環保科技</title>
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root {
-  --navy: #1e3a5f; --bg: #f1f5f9; --card: #ffffff;
-  --border: #e2e8f0; --text: #1e293b; --sub: #64748b;
-  --blue: #2563eb; --green: #16a34a; --orange: #d97706; --purple: #7c3aed;
+  /* 模組專屬色（保留硬碼） */
+  --orange: #d97706;   /* 深琥珀，與 ohs-orange 色調不同 */
+  --purple: #7c3aed;
+  /* 共用色 → 指向全域 token */
+  --navy:   var(--ohs-navy);
+  --bg:     var(--ohs-bg);
+  --card:   var(--ohs-card);
+  --border: var(--ohs-border);
+  --text:   var(--ohs-text);
+  --sub:    var(--ohs-muted);
+  --blue:   var(--ohs-blue);
+  --green:  var(--ohs-green);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
