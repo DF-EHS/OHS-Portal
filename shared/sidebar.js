@@ -193,7 +193,7 @@
         <span class="nav-icon">🪪</span>證照管理
       </a>
       <a class="nav-item" href="${BASE}training/" data-match="/training/">
-        <span class="nav-icon">🎓</span>教育訓練教材庫
+        <span class="nav-icon">🎓</span>教育訓練
       </a>
 
       <div class="nav-section">制度文件</div>
