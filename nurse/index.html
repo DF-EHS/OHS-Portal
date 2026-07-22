@@ -5,14 +5,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>職護臨場服務 | 大豐環保科技</title>
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root {
+  /* 模組專屬色（teal 系 + 深琥珀，保留硬碼） */
   --accent:      #0d9488;
   --accent-dk:   #0f766e;
   --accent-soft: #ccfbf1;
-  --navy: #1e3a5f; --bg: #f1f5f9; --card: #fff;
-  --border: #e2e8f0; --text: #1e293b; --sub: #64748b;
-  --green: #16a34a; --red: #dc2626; --orange: #d97706;
+  --orange:      #d97706;
+  /* 共用色 → 全域 token */
+  --navy:   var(--ohs-navy);
+  --bg:     var(--ohs-bg);
+  --card:   var(--ohs-card);
+  --border: var(--ohs-border);
+  --text:   var(--ohs-text);
+  --sub:    var(--ohs-muted);
+  --green:  var(--ohs-green);
+  --red:    var(--ohs-red);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {

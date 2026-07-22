@@ -5,13 +5,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>人因性危害預防系統 | 大豐環保科技</title>
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root {
+  /* 模組主題色（綠色系）— bg/border/text 均為主題色，保留硬碼 */
   --accent: #059669; --accent-h: #065f46;
   --accent-bg: #ecfdf5; --accent-bd: #a7f3d0;
-  --bg: #f0fdf4; --card: #fff; --border: #d1fae5;
-  --text: #064e3b; --sub: #64748b;
-  --red: #dc2626; --orange: #ea580c; --amber: #d97706; --green: #16a34a;
+  --bg: #f0fdf4; --border: #d1fae5;
+  --text: #064e3b;
+  --orange: #ea580c; --amber: #d97706;
+  /* 中性色 → 全域 token */
+  --card:  var(--ohs-card);
+  --sub:   var(--ohs-muted);
+  --red:   var(--ohs-red);
+  --green: var(--ohs-green);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }

@@ -5,13 +5,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>母性健康保護系統 | 大豐環保科技</title>
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root {
+  /* 模組主題色（粉色系）— bg/border/text 均為主題色，保留硬碼 */
   --accent: #be185d; --accent-h: #9d174d;
   --accent-bg: #fdf2f8; --accent-bd: #fbcfe8;
-  --bg: #fdf2f8; --card: #fff; --border: #fbcfe8;
+  --bg: #fdf2f8; --border: #fbcfe8;
   --text: #500724; --sub: #78716c;
-  --red: #dc2626; --orange: #ea580c; --amber: #d97706; --green: #16a34a; --blue: #2563eb;
+  --orange: #ea580c; --amber: #d97706;
+  /* 中性色 → 全域 token */
+  --card:  var(--ohs-card);
+  --red:   var(--ohs-red);
+  --green: var(--ohs-green);
+  --blue:  var(--ohs-blue);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: "Microsoft JhengHei","Noto Sans TC",sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
