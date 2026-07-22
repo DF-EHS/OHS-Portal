@@ -1,0 +1,197 @@
+/* ══════════════════════════════════════════════
+   OHS Portal — Shared Component Styles
+   依賴：shared/tokens.css（需先載入）
+   ══════════════════════════════════════════════ */
+
+/* ── Header ────────────────────────────────── */
+/* 選擇器用 header.ohs-header（specificity 0-1-1）
+   高於模組內 header{}（0-0-1），確保統一版型蓋過舊值   */
+header.ohs-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.35);
+  color: #fff;
+  font-family: var(--ohs-font);
+}
+header.ohs-header h1 {
+  font-size: 18px;
+  font-weight: 700;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+header.ohs-header .subtitle {
+  font-size: 12px;
+  color: rgba(255,255,255,.6);
+  margin-left: auto;
+}
+
+/* ── Header Button ──────────────────────────── */
+.ohs-hdr-btn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.3);
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  font-size: 12px;
+  font-family: var(--ohs-font);
+  cursor: pointer;
+  transition: background .15s;
+  flex-shrink: 0;
+}
+.ohs-hdr-btn:hover { background: rgba(255,255,255,.22); }
+.ohs-hdr-btn.danger:hover { background: var(--ohs-red); border-color: var(--ohs-red); }
+
+/* ── Brand Logo（右側公司 logo + 名稱）─────── */
+.ohs-hdr-brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.ohs-hdr-brand img { height: 24px; object-fit: contain; }
+.ohs-hdr-brand span {
+  font-size: 12px;
+  color: rgba(255,255,255,.6);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ── Buttons ────────────────────────────────── */
+.ohs-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 18px;
+  border-radius: var(--ohs-radius-sm);
+  border: none;
+  cursor: pointer;
+  font-family: var(--ohs-font);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  transition: filter .15s, opacity .15s;
+}
+.ohs-btn:hover   { filter: brightness(1.08); }
+.ohs-btn:active  { opacity: .85; }
+.ohs-btn:disabled { opacity: .45; cursor: not-allowed; filter: none; }
+
+.ohs-btn-primary { background: var(--ohs-blue);  color: #fff; }
+.ohs-btn-danger  { background: var(--ohs-red);   color: #fff; }
+.ohs-btn-success { background: var(--ohs-green); color: #fff; }
+.ohs-btn-navy    { background: var(--ohs-navy);  color: #fff; }
+.ohs-btn-outline {
+  background: transparent;
+  border: 2px solid var(--ohs-blue);
+  color: var(--ohs-blue);
+}
+.ohs-btn-ghost {
+  background: transparent;
+  border: 1px solid var(--ohs-border);
+  color: var(--ohs-text);
+}
+.ohs-btn-sm { padding: 4px 11px; font-size: 11px; }
+.ohs-btn-lg { padding: 10px 26px; font-size: 15px; }
+
+/* ── Status Badges ──────────────────────────── */
+.ohs-badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.ohs-badge-ok     { background: #dcfce7; color: #166534; }
+.ohs-badge-warn   { background: #fef9c3; color: #854d0e; }
+.ohs-badge-danger { background: #fee2e2; color: #991b1b; }
+.ohs-badge-info   { background: #dbeafe; color: #1e40af; }
+.ohs-badge-gray   { background: #f1f5f9; color: #475569; }
+.ohs-badge-teal   { background: #ccfbf1; color: #0f766e; }
+
+/* ── Data Table ─────────────────────────────── */
+.ohs-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--ohs-card);
+  font-family: var(--ohs-font);
+  font-size: 13px;
+  border-radius: var(--ohs-radius-md);
+  overflow: hidden;
+}
+.ohs-table thead th {
+  background: var(--ohs-navy);
+  color: #fff;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.ohs-table thead th:first-child { border-radius: var(--ohs-radius-md) 0 0 0; }
+.ohs-table thead th:last-child  { border-radius: 0 var(--ohs-radius-md) 0 0; }
+.ohs-table tbody td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--ohs-border);
+  color: var(--ohs-text);
+  vertical-align: middle;
+}
+.ohs-table tbody tr:hover td   { background: #f8fafc; }
+.ohs-table tbody tr:last-child td { border-bottom: none; }
+
+/* ── Card ───────────────────────────────────── */
+.ohs-card {
+  background: var(--ohs-card);
+  border-radius: var(--ohs-radius-md);
+  box-shadow: var(--ohs-shadow);
+  border: 1px solid var(--ohs-border);
+  padding: 20px;
+}
+
+/* ── Modal ──────────────────────────────────── */
+.ohs-modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.ohs-modal-box {
+  background: var(--ohs-card);
+  border-radius: var(--ohs-radius-lg);
+  box-shadow: var(--ohs-shadow-lg);
+  max-height: 92vh;
+  overflow-y: auto;
+  width: 100%;
+  max-width: 640px;
+  padding: 28px;
+}
+.ohs-modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ohs-text);
+  margin-bottom: 16px;
+}
+.ohs-modal-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ohs-border);
+}
