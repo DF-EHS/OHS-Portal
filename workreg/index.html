@@ -538,7 +538,20 @@ const RECORDS = [
 ];
 
 const AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
-const GAS_URL = '';
+const GAS_URL = ''; // 部署 apps-script.gs 後填入 Web App URL
+
+let gasData = {}; // { recId: { url, regDate, regNo, agency } }
+
+async function loadGasData() {
+  if (!GAS_URL) return;
+  try {
+    const resp = await fetch(GAS_URL + '?action=getAll', { redirect: 'follow' });
+    const j = await resp.json();
+    if (j.success) gasData = j.data || {};
+  } catch (e) {
+    gasData = {};
+  }
+}
 
 /* ═══════════════════════════════════════════════════════════
    CHAPTER ICONS
@@ -729,10 +742,9 @@ function buildRecords() {
 }
 
 function buildRecCardHTML(rec) {
-  const urlKey  = 'workreg_url_'  + rec.id;
-  const dateKey = 'workreg_date_' + rec.id;
-  const storedUrl  = localStorage.getItem(urlKey)  || '';
-  const storedDate = localStorage.getItem(dateKey) || '';
+  const d = gasData[rec.id] || {};
+  const storedUrl  = d.url     || '';
+  const storedDate = d.regDate || '';
 
   const urlBtn = storedUrl
     ? `<div class="url-btn-set">
@@ -776,8 +788,7 @@ function refreshCard(id) {
    URL MODAL
 ═══════════════════════════════════════════════════════════ */
 function openUrlModal(recId) {
-  const urlKey = 'workreg_url_' + recId;
-  const current = localStorage.getItem(urlKey) || '';
+  const current = (gasData[recId] || {}).url || '';
   const rec = RECORDS.find(r => r.id === recId);
 
   document.getElementById('modal-title').textContent = '設定文件連結｜' + rec.regNo;
@@ -792,10 +803,9 @@ function openUrlModal(recId) {
 }
 
 function saveUrl(recId) {
-  const urlKey = 'workreg_url_' + recId;
   const val = document.getElementById('url-input').value.trim();
-  if (val) localStorage.setItem(urlKey, val);
-  else localStorage.removeItem(urlKey);
+  gasData[recId] = { ...(gasData[recId] || {}), url: val };
+  gasPost({ action: 'saveRecord', recId, url: val });
   closeModal();
   refreshCard(recId);
 }
@@ -940,20 +950,15 @@ function setProgress(pct, msg) {
 
 function confirmAIResult() {
   if (!_aiResult || !_aiRecId) { closeModal(); return; }
-  const dateKey = 'workreg_date_' + _aiRecId;
-  const dateVal = _aiResult.regDate || '';
-  if (dateVal) localStorage.setItem(dateKey, dateVal);
+  gasData[_aiRecId] = { ...(gasData[_aiRecId] || {}), ..._aiResult };
+  gasPost({ action: 'saveRecord', recId: _aiRecId, ..._aiResult });
   closeModal();
   refreshCard(_aiRecId);
-
-  if (GAS_URL && _aiResult) {
-    gasPost({ module: 'workreg', recId: _aiRecId, ..._aiResult });
-  }
 }
 
 function gasPost(payload) {
   if (!GAS_URL) return Promise.resolve(null);
-  return fetch(GAS_URL, { method:'POST', redirect:'follow', body: JSON.stringify(payload) })
+  return fetch(GAS_URL, { method: 'POST', redirect: 'follow', body: JSON.stringify(payload) })
     .then(r => r.json()).catch(() => null);
 }
 
@@ -974,13 +979,14 @@ document.getElementById('modal-overlay').addEventListener('click', function(e) {
 /* ═══════════════════════════════════════════════════════════
    INIT
 ═══════════════════════════════════════════════════════════ */
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   // PDF.js worker config
   if (window['pdfjs-dist/build/pdf']) {
     window['pdfjs-dist/build/pdf'].GlobalWorkerOptions.workerSrc =
       'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   }
 
+  await loadGasData(); // 先從 GAS 取回已儲存的 URL 與日期
   buildSidebar();
   renderChapter(1, '');
   buildRecords();
