@@ -209,6 +209,9 @@
       <a class="nav-item" href="${BASE}plans/" data-match="/plans/">
         <span class="nav-icon">🗂️</span>職業安全衛生計畫書
       </a>
+      <a class="nav-item" href="${BASE}workreg/" data-match="/workreg/">
+        <span class="nav-icon">📜</span>安全衛生工作守則
+      </a>
 
       <div class="nav-section">四大防護計畫</div>
       <a class="nav-item" href="${BASE}ergonomic/" data-match="/ergonomic/">

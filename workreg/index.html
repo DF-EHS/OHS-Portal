@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>安全衛生工作守則 — 大豐環保科技</title>
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="../shared/components.css">
+  <style>
+:root {
+  --navy:   var(--ohs-navy);
+  --bg:     var(--ohs-bg);
+  --card:   var(--ohs-card);
+  --border: var(--ohs-border);
+  --text:   var(--ohs-text);
+  --sub:    var(--ohs-muted);
+  --blue:   var(--ohs-blue);
+  --green:  var(--ohs-green);
+  --wr-accent: #2b4890;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;}
+
+/* ── header ── */
+header.ohs-header{
+  background:linear-gradient(135deg,#1a2744 0%,#2b4890 55%,#4169d4 100%);
+  color:#fff;padding:13px 22px;display:flex;align-items:center;gap:12px;
+  position:sticky;top:0;z-index:300;box-shadow:0 2px 16px rgba(0,0,0,.35);
+}
+header.ohs-header h1{font-size:17px;font-weight:700;flex:1;}
+.hdr-btn{padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.1);color:#fff;font-size:12px;cursor:pointer;
+  text-decoration:none;transition:background .15s;font-family:inherit;}
+.hdr-btn:hover{background:rgba(255,255,255,.2);}
+.hdr-brand{display:flex;align-items:center;gap:7px;flex-shrink:0;}
+.hdr-brand img{height:24px;object-fit:contain;}
+.hdr-brand span{font-size:12px;color:#94a3b8;font-weight:600;white-space:nowrap;}
+
+/* ── breadcrumb ── */
+#breadcrumb{padding:7px 22px;background:#fff;border-bottom:1px solid var(--border);
+  font-size:12px;color:var(--sub);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.bc-btn{display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:16px;
+  font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;border:none;transition:background .15s;}
+#bc-home{background:var(--navy);color:#fff;}
+#bc-home:hover{background:#16305a;}
+#bc-cur{background:#f1f5f9;color:var(--sub);}
+.bc-sep{color:#cbd5e1;}
+
+/* ── main tabs ── */
+#tab-bar{display:flex;gap:0;border-bottom:2px solid var(--border);background:#fff;padding:0 22px;}
+.main-tab{padding:11px 22px;font-size:14px;font-weight:600;border:none;background:none;
+  color:var(--sub);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;
+  font-family:inherit;transition:color .15s,border-color .15s;}
+.main-tab.active{color:var(--wr-accent);border-bottom-color:var(--wr-accent);}
+.main-tab:hover:not(.active){color:var(--text);}
+
+/* ── TAB 1 layout ── */
+#view-rules{display:flex;height:calc(100vh - 130px);overflow:hidden;}
+#view-records{display:none;padding:24px 22px;max-width:900px;margin:0 auto;}
+
+/* ── chapter sidebar ── */
+#chapter-sidebar{
+  width:220px;flex-shrink:0;background:#fff;border-right:1px solid var(--border);
+  overflow-y:auto;display:flex;flex-direction:column;
+}
+#sidebar-header{padding:12px 14px;border-bottom:1px solid var(--border);}
+#search-box{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:6px;
+  font-size:13px;outline:none;background:var(--bg);font-family:inherit;}
+#search-box:focus{border-color:var(--wr-accent);}
+.ch-item{padding:9px 14px;cursor:pointer;border-left:3px solid transparent;
+  font-size:13px;transition:background .12s,border-color .12s;color:var(--text);}
+.ch-item:hover{background:#eff6ff;}
+.ch-item.active{background:#eff6ff;border-left-color:var(--wr-accent);color:var(--wr-accent);font-weight:700;}
+.ch-item .ch-num{font-size:11px;color:var(--sub);margin-bottom:2px;}
+
+/* ── article area ── */
+#article-area{flex:1;overflow-y:auto;padding:20px 24px;}
+.chapter-banner{
+  background:linear-gradient(135deg,#1a2744 0%,#2b4890 60%,#4169d4 100%);
+  color:#fff;border-radius:10px;padding:16px 22px;margin-bottom:20px;
+  display:flex;align-items:center;gap:14px;
+}
+.chapter-banner .ch-icon{font-size:32px;}
+.chapter-banner h2{font-size:17px;font-weight:700;}
+.chapter-banner .ch-range{font-size:12px;color:#a5c1f5;margin-top:3px;}
+
+.article-card{background:var(--card);border-radius:8px;margin-bottom:12px;
+  box-shadow:0 1px 4px rgba(0,0,0,.07);border-left:4px solid var(--wr-accent);overflow:hidden;}
+.art-header{padding:11px 16px;display:flex;align-items:flex-start;gap:10px;cursor:pointer;user-select:none;}
+.art-header:hover{background:#f8fafc;}
+.art-no{font-weight:800;color:var(--wr-accent);font-size:14px;min-width:52px;flex-shrink:0;}
+.art-preview{font-size:13px;line-height:1.65;color:var(--text);flex:1;}
+.art-toggle{margin-left:auto;color:var(--sub);font-size:11px;flex-shrink:0;padding-top:2px;transition:transform .2s;}
+.art-toggle.open{transform:rotate(180deg);}
+.art-body{display:none;padding:0 16px 14px 78px;}
+.art-body.open{display:block;}
+.art-content{font-size:13px;line-height:1.8;color:var(--text);}
+.art-items{list-style:none;margin-top:6px;}
+.art-items li{padding:4px 0;font-size:13px;line-height:1.75;border-bottom:1px dashed #e2e8f0;}
+.art-items li:last-child{border-bottom:none;}
+
+/* search highlight */
+mark{background:#fde68a;border-radius:2px;padding:0 1px;}
+.search-active .article-card.no-match{display:none;}
+#search-info{font-size:12px;color:var(--sub);margin-bottom:12px;padding:6px 10px;
+  background:#f8fafc;border-radius:6px;display:none;}
+
+/* ── TAB 2 records ── */
+.rec-section-title{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:20px;
+  display:flex;align-items:center;gap:8px;}
+.record-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:20px;margin-bottom:32px;}
+.rec-card{background:var(--card);border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.09);
+  border:1px solid var(--border);overflow:hidden;}
+.rec-card-head{background:linear-gradient(135deg,#1a2744 0%,#2b4890 60%,#4169d4 100%);
+  color:#fff;padding:16px 20px;}
+.rec-card-head .reg-badge{font-size:11px;font-weight:700;background:rgba(255,255,255,.15);
+  padding:2px 9px;border-radius:10px;margin-bottom:8px;display:inline-block;}
+.rec-card-head h3{font-size:15px;font-weight:700;}
+.rec-card-body{padding:16px 20px;}
+.rec-meta-grid{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px;margin-bottom:14px;}
+.rec-meta-grid .lbl{color:var(--sub);white-space:nowrap;font-size:12px;}
+.rec-meta-grid .val{color:var(--text);font-weight:600;}
+.rec-note{background:#f8fafc;border-radius:6px;padding:10px 12px;font-size:12px;
+  color:var(--sub);line-height:1.7;border-left:3px solid var(--wr-accent);margin-bottom:14px;}
+.rec-note strong{color:var(--text);}
+.rec-actions{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* URL button */
+.url-btn-set{display:flex;align-items:center;gap:6px;}
+.btn-url-set{padding:6px 14px;border-radius:6px;border:1.5px dashed #94a3b8;
+  background:#f8fafc;color:#64748b;font-size:12px;cursor:pointer;font-family:inherit;
+  transition:all .15s;}
+.btn-url-set:hover{border-color:var(--wr-accent);color:var(--wr-accent);}
+.btn-url-view{padding:6px 14px;border-radius:6px;border:1.5px solid var(--green);
+  background:#f0fdf4;color:#15803d;font-size:12px;cursor:pointer;font-family:inherit;
+  text-decoration:none;transition:all .15s;}
+.btn-url-view:hover{background:var(--green);color:#fff;}
+.btn-url-edit{padding:5px 9px;border-radius:6px;border:1.5px solid var(--border);
+  background:#fff;color:var(--sub);font-size:12px;cursor:pointer;transition:all .15s;}
+.btn-url-edit:hover{border-color:#94a3b8;color:var(--text);}
+
+/* AI upload button */
+.insp-ai-btn{padding:6px 14px;border-radius:6px;border:none;
+  background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff;
+  font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s;}
+.insp-ai-btn:hover{opacity:.88;}
+
+/* date display */
+.rec-date-display{font-size:11px;color:var(--sub);margin-top:6px;}
+.rec-date-display .date-val{color:var(--green);font-weight:700;}
+
+/* ── Modal ── */
+#modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;
+  align-items:center;justify-content:center;}
+#modal-overlay.open{display:flex;}
+.modal-box{background:#fff;border-radius:14px;width:min(520px,95vw);max-height:90vh;
+  overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.25);}
+.modal-head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.modal-head h3{font-size:15px;font-weight:700;flex:1;}
+.modal-close{border:none;background:none;font-size:20px;color:var(--sub);cursor:pointer;padding:0 4px;}
+.modal-body{padding:20px 22px;}
+.modal-footer{padding:14px 22px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;}
+.modal-step{display:none;}
+.modal-step.active{display:block;}
+
+/* modal form */
+.modal-label{font-size:12px;font-weight:700;color:var(--sub);margin-bottom:6px;display:block;}
+.modal-input{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:6px;
+  font-size:13px;outline:none;font-family:inherit;}
+.modal-input:focus{border-color:var(--wr-accent);}
+.file-drop{border:2px dashed var(--border);border-radius:8px;padding:28px 20px;text-align:center;
+  cursor:pointer;transition:border-color .15s;background:#fafafa;margin-bottom:14px;}
+.file-drop:hover{border-color:var(--wr-accent);}
+.file-drop input[type=file]{display:none;}
+.file-drop-ico{font-size:32px;margin-bottom:8px;}
+.file-drop p{font-size:13px;color:var(--sub);}
+.file-chosen{font-size:12px;color:var(--green);font-weight:600;margin-top:6px;}
+.ai-result-box{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px;
+  font-size:13px;line-height:1.7;margin-bottom:14px;}
+.ai-result-box .field{display:flex;gap:8px;margin-bottom:4px;}
+.ai-result-box .lbl{color:var(--sub);min-width:80px;}
+.ai-result-box .val{font-weight:700;color:var(--text);}
+.progress-bar{height:4px;background:var(--border);border-radius:4px;overflow:hidden;margin:10px 0;}
+.progress-bar .fill{height:100%;background:var(--wr-accent);border-radius:4px;transition:width .3s;}
+.status-msg{font-size:12px;color:var(--sub);margin-top:6px;}
+
+.btn-primary{padding:8px 20px;border-radius:6px;border:none;background:var(--wr-accent);
+  color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+.btn-primary:hover{background:#1a3870;}
+.btn-cancel{padding:8px 16px;border-radius:6px;border:1px solid var(--border);background:#fff;
+  color:var(--sub);font-size:13px;cursor:pointer;font-family:inherit;}
+.btn-cancel:hover{background:var(--bg);}
+
+/* ── Dark mode ── */
+body.dark{--bg:#0f172a;--card:#1e293b;--border:#334155;--text:#e2e8f0;--sub:#94a3b8;}
+body.dark #breadcrumb,body.dark #tab-bar,body.dark #chapter-sidebar,body.dark .modal-box{background:#1e293b;}
+body.dark .art-header:hover,body.dark .ch-item:hover{background:#1e3a5f;}
+body.dark .file-drop{background:#1e293b;}
+
+/* ── Responsive ── */
+@media(max-width:680px){
+  #view-rules{flex-direction:column;height:auto;}
+  #chapter-sidebar{width:100%;height:auto;border-right:none;border-bottom:1px solid var(--border);}
+  .ch-list{display:flex;flex-wrap:nowrap;overflow-x:auto;padding:0;}
+  .ch-item{white-space:nowrap;border-left:none;border-bottom:3px solid transparent;padding:8px 12px;}
+  .ch-item.active{border-bottom-color:var(--wr-accent);border-left:none;}
+  #article-area{overflow-y:visible;}
+  .art-body.open{padding-left:16px;}
+  .record-cards{grid-template-columns:1fr;}
+}
+  </style>
+</head>
+<body>
+
+<header class="ohs-header">
+  <a class="hdr-btn" href="../" title="回到系統入口">← 系統入口</a>
+  <h1>📜 安全衛生工作守則</h1>
+  <div class="hdr-brand">
+    <img src="../dafon-logo.png" alt="大豐環保科技">
+    <span>大豐環保科技</span>
+  </div>
+</header>
+
+<div id="breadcrumb">
+  <a class="bc-btn" id="bc-home" href="../">🏠 系統入口</a>
+  <span class="bc-sep">›</span>
+  <span class="bc-btn" id="bc-cur">安全衛生工作守則</span>
+</div>
+
+<div id="tab-bar">
+  <button class="main-tab active" onclick="switchMainTab('rules')" id="mtab-rules">📖 安全衛生工作守則</button>
+  <button class="main-tab" onclick="switchMainTab('records')" id="mtab-records">📋 備查記錄</button>
+</div>
+
+<!-- ══════════════ TAB 1: RULES ══════════════ -->
+<div id="view-rules">
+
+  <nav id="chapter-sidebar">
+    <div id="sidebar-header">
+      <input type="text" id="search-box" placeholder="🔍 搜尋條文內容…" oninput="onSearch(this.value)">
+    </div>
+    <div class="ch-list" id="ch-list"></div>
+  </nav>
+
+  <div id="article-area">
+    <div id="search-info"></div>
+    <div id="chapter-content"></div>
+  </div>
+
+</div>
+
+<!-- ══════════════ TAB 2: RECORDS ══════════════ -->
+<div id="view-records">
+  <div class="rec-section-title">📋 備查記錄</div>
+  <div class="record-cards" id="record-cards"></div>
+</div>
+
+<!-- ══════════════ MODAL ══════════════ -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modal-title">操作</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer" id="modal-footer"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+'use strict';
+
+/* ═══════════════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════════════ */
+const RULES_DATA = {
+  version: '111.09',
+  chapters: [
+    {
+      num: 1, title: '總則',
+      articles: [
+        { num: 1, content: '為防止職業災害，保障勞工安全與健康，依職業安全衛生法第三十四條之規定，特訂定本守則。' },
+        { num: 2, content: '依職業安全衛生法第三十四條有關規定會同勞工代表訂定適合其需要之安全衛生工作守則，報經勞動檢查機構備查後，公告實施，全體勞工均遵守安全衛生工作守則規定，共同防範各種意外事故發生。' }
+      ]
+    },
+    {
+      num: 2, title: '職業安全衛生管理及各級主管之權責',
+      articles: [
+        { num: 3, content: '本公司之勞工安全衛生管理由雇主或對事業具有管理權限之雇主代理人綜理；由事業各部門主管負執行之責。' },
+        { num: 4, title: '本公司依職業安全衛生法規定，設置下列之職業安全衛生管理單位：',
+          items: [
+            '一、職業安全衛生業務主管應負之職責：（一）規劃、督導各部門之職業安全衛生管理。（二）釐訂職業災害防止計畫、緊急應變計畫，並指導有關部門實施。（三）規劃、督導各部門辦理勞工安全衛生稽核及管理。（四）規劃、督導檢點與檢查並記錄。（五）規劃、督導有關人員實施巡視、定期檢查、重點檢查、危害通識及作業環境測定。（六）規劃、實施勞工安全衛生教育訓練。（七）規劃勞工健康檢查，實施健康管理。（八）督導勞工疾病、傷害、殘廢、死亡等職業災害之調查處理及統計分析。（九）職業安全衛生管理人員報備，報請勞工檢查機構備查。（十）實施安全衛生績效管理評估，並提供勞工安全衛生諮詢服務。（十一）其他有關勞工安全衛生管理事項。',
+            '二、職業安全衛生管理人員：應負職責：接受安全衛生業務主管之命，辦理職業安全衛生管理、指揮或監督事項。',
+            '三、各單位主管及工作場所指定負責人應執行：（一）職業災害防止計畫事項。（二）安全衛生管理執行事項。（三）定期檢查、重點檢查、檢點及其他有關檢查督導事項。（四）定期或不定期實施巡視。（五）擬定安全作業標準。（六）教導及督導所屬依安全作業標準方法實施健康管理。（七）各項作業之安全衛生監督及指導。（八）事故發生時處理及呈報。（九）其他交辦有關安全衛生管理事項。'
+          ]
+        }
+      ]
+    },
+    {
+      num: 3, title: '設備之維護與檢查',
+      articles: [
+        { num: 5, title: '維護與檢查：',
+          items: [
+            '一、依職業安全衛生管理辦法有關規定，相關機械設備實施作業檢點、定期檢查及維護與保養。',
+            '二、檢查方式分為定期檢查、重點檢查、作業檢查等，則由職業安全衛生業務主管與使用單位共同研擬並依計畫實施。',
+            '三、各機械設備實施之定期檢查、重點檢查，應就下列事項記錄，並保存三年：（一）檢查年月日。（二）檢查方法。（三）檢查部份（包括有關之工作流程圖、機械設備結構圖）。（四）檢查發現危害，分析危害因素。（五）評估危害風險（嚴重性及可能性分析）。（六）實施檢查者之姓名。（七）依檢查及風險評估結果採取改善措施之內容。（八）定期檢討改善措施之合宜性。'
+          ]
+        },
+        { num: 6, content: '檢查人員及職業安全衛生管理人員實施檢查、檢點，如發現對勞工有危害之虞時應即報告上級主管，並立即檢修及採取必要安全措施。' },
+        { num: 7, content: '廠內外保持清潔，排水溝保持通暢。' },
+        { num: 8, content: '本公司實施健康檢查時，員工不得拒絕接受任何預防接種及特殊健康檢查。' }
+      ]
+    },
+    {
+      num: 4, title: '工作安全與衛生標準',
+      articles: [
+        { num: 9, title: '一般性安全衛生工作守則：',
+          items: ['一、操作各種機械前，必須檢查電源及機械運轉是否正常。','二、非本身經營之機械設備，切勿擅自啟動或操作。','三、依照標準工作方法或上級指示方法工作，不得擅自改變工作方法。','四、機器開動後操作人員不得擅自離開工作場所。','五、機器儀表發生故障修理時或機器及動力裝備等遇異狀時，須立即停機並在電氣開關處懸掛警告牌，始可進行檢查、修理，以免失誤而造成事故，而清掃、擦拭、上油等工作亦應停止運轉該機械。','六、隨時保持使用機器設備及工具之整潔及保持其良好之性能。','七、本廠安全衛生設備，工具不得任意拆卸或使其失去效能，發現被拆卸或喪失效能時，應即報告雇主或主管人員。','八、手工具應保持良好狀態，使用前應檢查有無鬆動或破損，若有此現象時不得使用以確保安全，使用後應歸回工具存放處。','九、電氣手工具應絕緣良好才能使用。','十、各部門應指派人員負責開閉門窗及電氣開關，下班後尤須注意將門窗關閉，熄滅燈火。','十一、機械或材料上面不可任意放置工具，以免掉落擊傷人體。','十二、工作中之材料及半製品、成品勿堆放於通路、安全門、安全梯及各門口，且安全門於上班時間內不得上鎖。','十三、在工作中所產生之廢料、廢品以及垃圾或其他雜物，應分別放置於指定地點，並經常保持完整清潔。','十四、不可靠在機器上工作或休息，以免危險。','十五、穿著合身整齊之服裝，最好穿工作服，並要穿鞋，禁穿拖鞋、木屐等，禁止赤膊、赤腳工作。','十六、作業時間內通風換氣設備應連續保持運轉，不得關閉。','十七、廠內裝設的照明設備，不得隨意破壞，遇有損壞立刻報修。','十八、任何人員非經正常手續許可，不得擅自拆修機器設備或擅自操作任何機件設備。','十九、對於手工具、機械及設備之護罩、護圍、接地及其它安全裝置不得破壞或使其失效，若發現安全裝置損壞應立即向主管或領班報告。']
+        },
+        { num: 10, title: '堆高機（任一型式）作業安全工作守則：',
+          items: ['一、非經受訓合格人員，不得任意駕駛。','二、堆高機行駛前，須例行檢查機油、水箱、剎車油、離合器、剎車裝置、蓄電池等機件是否鬆弛、有無漏水、輪胎氣壓是否足夠等。','三、引擎發動後，應低速空轉、溫車二至三分鐘，方可駕駛。','四、堆高機最高時速一五公里（每小時），且不宜行駛在不平地面，並注意地面是否牢固。','五、堆高機空車行駛時，應將貨叉升高至離地面約一五公分。','六、經過通道和十字路口或急轉彎時，應完全停車，鳴喇叭表示手勢，然後緩緩行進。','七、無論何時載重下坡，均應倒退而下。','八、當舉起、放下重物或起步行駛時，均應緩慢行駛。','九、除卸放搬運貨物時，升降架可往前傾外，一般貨物升降時，升降架均需保持垂直或往後傾。','十、絕對不允許任何人員攀搭在貨叉桿或所舉重物上。','十一、在危險品倉庫內不得使用堆高機作業。','十二、堆高機上所裝之物料，應整齊放置，其高度不得妨礙司機之視線，並不宜作快速之急轉彎。','十三、貨物太龐大致前面視線被阻擋時，須後退行駛。','十四、堆高機行駛時，司機應注視行進或後退之方向，避免發生碰撞事故。','十五、堆高機負重行駛前，應先將所載物料放低至離地約二十公分左右，始可行駛，因降低重心後，穩度增大。','十六、非必要時，不得將貨物升高至頂端行駛。','十七、搬運及起吊等工具之裝載量，不得超過規定之安全荷量。','十八、司機不得放置其身體之任何部份於車外，但打手勢時例外。','十九、停用時不得未拉緊手剎車即離車而去。','二十、任何時間發現有故障或不安全時，應報告上級迅速處理，不得任意改裝使用。']
+        },
+        { num: 11, title: '固定式、移動式起重機作業安全工作守則：',
+          items: ['一、從事起重工作時應戴安全帽，以防被落下物件所擊傷。','二、作業中人員不可利用吊車上下並防止人員進入吊舉物下方，應禁止人員進入有發生吊掛物飛落、碰撞等造成危害之虞之作業範圍內。','三、使用主管指定之繩鏈吊具，並作定期檢查。','四、麻索、鋼索通過鋒利的尖稜時，要墊以木板以防割斷。','五、吊起易於擺動之重物要另加麻繩位牽，以便控制其位置減少擺動情形。','六、用吊索綑綁圓或表面光滑之物體時，至少須將繩索纏繞於物體上兩週，且須注意綑綁牢固。','七、有下列任何一種情況之鋼纜不得作為起重吊掛使用：(1)鋼纜一撚間有百分之十以上素線截斷者；(2)直徑減少達公稱直徑百分之七者；(3)有顯著變形或腐蝕者；(4)扭結者。','八、在離電力送配電線十呎以內起重時，應與電力管理人員連絡以策安全。','九、起重機上鋼索要有足夠之長度，在任何情形下捲筒上之餘索不得少於五個。','十、注意起重處之基地是否穩固。','十一、起重機用鋼索及鐵鍊為起重工作必需之物，工作人員對其一般性能、負荷強度、保養方法等應有充分之認識，起重之荷重絕對不可超過鋼索製造廠之規定。','十二、若未徵得主管、部門之許可，在離鐵軌六呎以內地區不得從事起重工作。','十三、電動起重機具，應經常保持剎車之靈活，使用前應首先加以檢查。','十四、起吊移動或搬運管件，勿將手指放於管端。','十五、重物之搬運，應儘可利用起重工作或搬運工具。','十六、鍊條或鋼索使用前必須整理妥當，不得搓扭打結。','十七、物料、重物提吊，應緩慢加力注意重力，放下時應輕放穩置。','十八、起重設備之拉繩不可綑綁於生產設備上。','十九、非經受訓合格者不得擅自操作起重機。','二十、每天應由操作人員檢查起重機一次，查看齒輪、鍊條、軌道、警鈴、總開關、鋼索制動器等是否正常，並應持清潔及注意潤滑。','二十一、起重設備之吊鉤或吊具，必須要有防止所吊物意外脫落之裝置，並且不得此裝置卸下。','二十二、起重機應由使用單位按規定申請實施月度檢查及年度檢查，並將查紀錄保存三年。']
+        },
+        { num: 12, title: '鏟裝機作業安全工作守則：',
+          items: ['一、非經受訓合格人員，不得任意駕駛，在任何時間均須防止有人未經批准，擅自移動或使用。','二、鏟裝機行駛前，須例行檢查機油、液壓油、水箱、剎車油、離合器、剎車裝置、蓄電池等機件是否鬆弛、有無漏水、輪胎氣壓是否足夠等。','三、引擎發動後，應確認各項操作功能是否正常。','四、駕駛或操作鏟裝機時，須經常留在駕駛位置，如設有安全帶就需扣緊。在鏟裝機靜止前，切勿進行離開駕駛座。','五、鏟裝機最高時速十公里（每小時），且不宜行駛在不平地面，並注意地面是否牢固。','六、如必須在建築物或其他密封地方內操作，須確保該處有足夠通風來有效地驅散引擎之廢氣。','七、如操作員之視線受阻，不得進行鏟裝作業，除非現場有專人提供指引，為安全操作而發出指揮訊號。','八、經過通道或急轉彎時，應完全停車，鳴喇叭表示手勢，然後緩緩行進。','九、切勿在照明不足的地方操作鏟裝機。在密閉地方和夜間工作時，須安排足夠的照明。','十、當舉起、放下重物或起步行駛時，均應緩慢行駛。','十一、引擎運轉時不應進行潤滑和其他保養及修理工作。','十二、絕對不允許任何人員攀搭在鏟斗或所舉重物上。','十三、鏟裝機上所裝之物料，其高度不得妨礙司機之視線，不宜作快速之急轉彎。','十四、物料過於龐大致前面視線被阻擋時，須倒退行駛。','十五、鏟裝機行駛時，司機應注視行進或後退之方向，避免發生碰撞事故。','十六、鏟裝機負重行駛前，應先將所載物料放低至離地約二十公分左右，始可行駛，因降低重心後，穩度增大。','十七、非必要時，不得將貨物升高至頂端行駛。','十八、搬運及起吊等工具之裝載量，不得超過規定之安全荷量。','十九、司機不得放置其身體之任何部份於車外，但打手勢時例外。','二十、停用時不得未拉緊手剎車即離車而去。','二十一、任何時間發現有故障或不安全時，應報告上級迅速處理，不得任意改裝使用。','二十二、人員離開駕駛座時，應關閉鏟裝機電源，並拔除及妥善保管鑰匙。','二十三、作業後，鏟裝機應駛至指定停放位置，並將所有工作部件降至地面。']
+        },
+        { num: 13, title: '自動壓縮打包機作業安全工作守則：',
+          items: ['一、非經主管許可或非指定之專責人員，一律不得操作自動壓縮打包機設備。','二、作業前應確實檢查設備各部件功能、打包帶穿插是否正確。','三、勿用水冲洗設備，工作場所潮濕時，操作人員不得赤腳工作。','四、檢查電源線是否破損。','五、開啟電源後，應先使打包機進行預熱。','六、設備維修時，應確實停機斷電，並掛牌上鎖。','七、進行打包作業時，應確實將物料投入料口，如發現異常時應立即停機回報。','八、進行打包作業時，人員不得將手足或身體之任一部位伸入投入口。','九、設備運轉時，嚴禁拆裝或維修設備。','十、操作結束後，應確實切斷電源並關閉開關。']
+        },
+        { num: 14, title: '機械維修、上油、掃除、調整作業工作守則：',
+          items: ['一、現場負責人對於機械之掃除、上油、檢查、修理或調整有導致危害勞工之虞者，應停止相關機械運轉及送料。','二、為防止他人操作該機械之起動等裝置或誤送料，應採上鎖或設置標示等措施，並設置防止落下物導致危害勞工之安全設備與措施。','三、前項機械停止運轉時，有彈簧等彈性元件、液壓、氣壓或真空蓄能等殘壓引起之危險者，現場負責人應採釋壓、關斷或阻隔等適當設備或措施。','四、第一項工作必須在運轉狀態下施行者，現場負責人應於危險之部分設置護罩、護圍等安全設施或使用不致危及勞工身體之足夠長度之作業用具。','五、人員從事機械之掃除、上油、檢查、修理或調整作業，應建立警示界線，進行作業勞工之管制，防止非相關作業勞工進入該作業區。']
+        },
+        { num: 15, title: '動火作業工作守則：',
+          items: ['一、現場負責人應向作業人員進行施工作業安全資訊告知。','二、動火作業前，應先經現場負責人確認明火作業時間、地點、工作內容是否相符，並取得動火許可後，始可進行。','三、3公尺內備有可使用/正常操作之自動灑水或手提滅火器。','四、因靜電引起爆燃之虞時，應採取接地、加濕、除塵或其他消除靜電之措施。','五、有可燃性氣體、液體存在之場所，須先測定氣體濃度在該危險物爆炸下限值1/4以下，低凹地點尤應先予檢測。','六、儲存危險物之配管，嚴禁做為電焊接地回路用。','七、應使用無火花工具、防靜電工作服、防靜電安全鞋等作業用具。','八、動火時旁邊應有警戒人員並清除周邊3公尺內之可燃物或使用防火毯覆蓋保護。','九、工作區域易燃性地面予以防火保護。','十、動火作業人員的安全眼鏡、面罩、手套等防護具。','十一、施工產生之火花予以收集，工作區域內用防火布加以保護。','十二、電焊機接頭及接地良好，並有自動電擊防止裝置。','十三、鋼瓶直立或使用鋼瓶推車固定並有安全逆止閥。','十四、施工完畢後30分鐘動火場所覆查，沒有餘燼或悶燒情形。','十五、環境整理復歸，材料器材工具收拾整齊。']
+        },
+        { num: 16, title: '重型機具（如梅花怪手等）作業安全工作守則（挖斗改裝成任一型式）：',
+          items: ['一、未經主管許可或未經受訓合格者不得操作。','二、操作開始前應發出信號並確認迴轉半徑是否有其他人員。','三、嚴禁任何人停留於挖掘機之迴轉半徑內。','四、作業前應確實檢查挖掘機液壓係統、發動機、傳動裝置、制動裝置、迴轉裝置以及儀器、儀表，須經試運轉並確認正常後始可進行作業。','五、操作者應於挖掘機上擺設滅火器或確認3公尺內需有滅火設備。','六、操作者須注意作業環境之穩定性及安全性；嚴禁在電線等高空架設物下作業。','七、作業時，禁止擅自調節發動機、調速器以及液壓系统、電器系统。','八、挖掘機進行維保時，須確實停機斷電並拔除鑰匙。','九、禁止用挖掘機之吸電盤或夾具擊碎或用迴轉機械方式破碎堅固物體。','十、挖掘機應在運輸車輛停穩後再進行装料；卸料時，吸電盤或夾具應盡量放低，並禁止吸電盤或夾具自駕駛室上方越過。','十一、挖掘機行走時，應有專人指揮，且與人車保持安全距離、高空高壓線距離不得少於5米。禁止倒退行走。','十二、作業中離開駕駛室或作業结束後，應將機身轉正、吸電盤或夾具放置地面，並將所有操作桿置於空檔位置，駕駛者方可離開。']
+        },
+        { num: 17, title: '資源回收清運作業安全工作守則：',
+          items: ['一、資源回收車輛之各項部件應由駕駛確實點檢保養。','二、資源回收車輛應裝設倒退警示燈及蜂鳴器，如有故障應即報請修復。','三、資源回收作業人員應佩戴口罩、反光斑馬衣、安全帽、手套、安全鞋等安全防護用具。','四、回收車行進中，升降台不得放置回收物並關起升降台；回收車停置作業時，應放置交通錐，防止車輛衝撞，以維作業安全。','五、發現地面或回收車上有滾滑（濕滑）之物易使人跌倒受傷，應予撿拾清除。','六、回收物搬運作業中如須倒車，由隨車人員指揮引導並依交通規則注意安全。','七、回收物清運裝載應依規定分類，不得超高、超長、超寬或超重。','八、夜間或燈光昏暗之清運作業，應打開警示燈或工作燈。','九、回收物清運時須採取必要之措施，防止回收物飛散、濺落、溢滿等污染環境等之情事發生。','十、資源回收車垃圾清運作業人員嚴禁站立於升降台作業。','十一、車輛行駛中應與前車保持安全距離，並禁止不當超車。','十二、行車時應依道路交通車流、實際載重及天候狀況，控制適當速度，不得超速或其他違規情事。','十三、車輛停止時應確實上手煞車，停於上下坡道時須注意防止車輛滑動。','十四、車輛因故障檢修停於路肩時，須於適當距離設置車輛故障之警告標誌。','十五、檢查車輛水冷器打開旋塞時，為避免噴出之蒸氣或熱水燙傷，需採必要之安全措施。','十六、開關後車門時，人員應站立於側面安全位置，防止物料滑落遭受碰撞或被掩埋之危害。']
+        },
+        { num: 18, title: '高架作業安全工作守則（本公司設1.8公尺為高架作業）：',
+          items: ['一、人員有高血壓、心血管疾病、貧血、四肢不全、色盲、高度近視、聽力不正常、平衡機能失常者或曾患有癲癇者、精神或神經疾病者，不得使從事高架作業。','二、人員須選用高度適當之梯子或平穩且安全無虞之上下設備從事高架作業。','三、確認梯子結構是否有損壞及變形螺絲鬆脫情形。','四、注意工作場所地面是否潮濕平坦，架設梯子切勿其中一角騰空，以免發生危險。','五、使用垂直式梯子應注意防滑及垂直角度，作業時將身體靠實或使用安全帶以防失去身體平衡。','六、使用A型鋁梯應注意梯子要全開，安全扣要裝好，工作時應兩腳分開用力，如在高處作業，應一手抓住緊實物體，以防失去身體平衡。','七、使用1.8公尺以上工作平台時，應加裝護欄及平衡支架等設備。','八、從事高架作業時，應減少工作時間，應充分休息。','九、身體狀況不良時，應避免從事高架作業。','十、從事高架作業時，應禁止其他人員從底部通過，防止東西掉落或危急高架作業人員安全。','十一、高架作業人員須配戴安全帶、安全帽及其他必要之安全防護設備，必要時應張掛安全索及安全網。','十二、攜帶手工具時應使用工具袋，並不得將手工具、物料遺置於高處，避免物品掉落傷及他人。','十三、遇到地震或惡劣天候時應立即停止作業；復工前應實施自動檢查確認安全無誤後方可動工。','十四、使用合梯應符合下列各項規定：(一)避免於出入口處使用梯子，以防被人員撞倒。(二)不得將兩具梯子連接當長梯使用。(三)金屬梯子不得靠近電氣設備以免發生感電事故。(四)梯腳應具有堅固之構造及防滑或轉動之措施。(五)踏板（條）寬度應在三十公分以上。(六)合梯腳與地面之角度應在七十五度以內，且兩梯腳間應有堅韌繫材扣牢。(七)上下樓梯應面向梯子，雙手扶梯，踩滿踏板（條）。']
+        },
+        { num: 19, title: '空氣壓縮機安全守則：',
+          items: ['一、啟動空氣壓縮機前，應先檢查壓力表、安全閥、壓力調節閥、逆止閥等，並先放出空氣槽中水等經確認其機能正常後，始可開動。','二、在運轉前後，應注意油杯之油位。','三、啟動空氣壓縮機之前，操作人員應先行檢視其四週，清除靠近轉動部份之一切物件。','四、安全閥應調整在較常用壓力稍高之位置，以儲氣槽容許操作壓力加10%為上限。','五、壓縮機操作人員在壓縮機運轉中須經常監視，不得擅自離開工作崗位。','六、不允許任何人以手碰觸運轉中之機器。','七、在運轉中，應注意壓力表之指示，壓力不得過高。','八、運轉中如發現機器有異常聲響或振動，應立即停車作緊急處理，並作適當之調整或檢修。','九、空氣壓縮機之飛輪部份，應設置護罩，並經常保持其性能良好。','十、空氣壓縮機運轉中，不可用手探測轉動機件之溫度。','十一、不得將壓縮空氣吹向易燃油料及沾有油污之衣服棉紗，以免產生靜電引起火花，發生危險。','十二、輸送壓縮空氣之皮管接頭鬆脫時，應先關閉儲氣槽上之放氣閥，然後始可連接皮管。','十三、切勿以壓縮空氣吹向人體，更不宜用以吹除頭上、手上、鞋上及衣服上之塵埃，以免被壓縮空氣帶出之鐵屑、碳粒等雜物所擊傷。','十四、嚴禁在有壓力之儲氣槽或散熱器上，從事焊切工作。','十五、檢修壓縮機時，應先切斷電源，同時放盡儲氣槽內之壓縮空氣後，始可進行檢修作業。']
+        },
+        { num: 20, title: '集塵機安全守則：',
+          items: ['一、粉塵作業進行前，先啟動排氣機並確認運轉正常。','二、導管應定時清理積塵。','三、集塵機之濾袋應定時清理積塵，並檢查有否破孔，如有破漏應即予修補。','四、清理積塵人員應注意佩戴防塵口罩，預防肺部疾病。','五、粉塵作業人員應接受定期特殊健康檢查，並服從醫師之指導。','六、集塵作業場所，嚴禁飲食、吸煙。','七、每遇定期檢點集塵設備是否密閉，杜絕粉塵洩漏。']
+        },
+        { num: 21, title: '砂輪機作業安全守則：',
+          items: ['一、作業前檢點防護罩確實裝置妥善。','二、當從事研磨工作時，應戴安全眼鏡，勿戴手套。','三、當開動砂輪機時，工作人員應站於微側邊，以策安全。','四、應該逐漸推進工作物，以便使砂輪獲得正確磨損、接觸。','五、假使砂輪非設計以側面研磨時，應儘用砂輪正面修磨。','六、絕勿突然敲擊砂輪，亦勿使用大壓力推進被磨之工作物。','七、使用或裝置砂輪時應事前檢查，並選擇適用於加工物之砂輪。','八、停止使用時應即切斷電源。']
+        },
+        { num: 22, title: '押出機作業安全守則：',
+          items: ['一、押出機屬高溫設備，凡模頭拆裝清理或更換濾網等，有接觸高溫機件之作業均須使用適當之護具，避免燙傷。','二、粉碎料打料入槽或其他會產生粉末之作業均須配戴口罩，以防止粉塵吸入肺部危害健康。','三、切粒機刀座脫離水室時，應即刻將刀座護套套上，以避免碰觸割傷。','四、混合槽入口下方有轉動之螺旋葉片，如有積料下不去時，須以軟質之棍棒小心戳破攪碎，避免手部受傷。']
+        },
+        { num: 23, title: '粉碎機作業安全守則：',
+          items: ['一、粉碎機運作如須進入該密閉空間時，應依規定配戴適當聽力防護具。','二、粉碎機如遇故障或維修保養，應先予以斷電並上鎖後，始可為之。','三、為防止開口部份與可動部份之接觸而危害勞工之虞，應有護圍等之設備。']
+        },
+        { num: 24, title: '物料搬運儲存安全守則：',
+          items: ['一、倉庫內嚴禁煙火，並保持其整潔為要。','二、物料堆積要有規則、整齊及穩妥，以免坍落而造成不幸。','三、堆積的物料不得由其下部抽取使用。','四、物料應適當安全堆放，同時不可過高，以免搬運困難倒塌。','五、物料儲存不可影響交通或突出於通行道上導致危險。','六、搬運粗糙物件時應戴上防護手套。','七、搬運及開箱前，應將突出之鐵皮、鐵釘等先拔除。','八、兩人或兩人以上搬運物件，行動須共同一致或聽指揮者口令。','九、物料之堆放及其他應注意事項：(一)不得超過堆放最大安全負荷。(二)不得影響照明。(三)不得妨礙機械設備之操作。(四)不得妨礙交通或出入口。(五)不得妨礙消防器具之緊急使用。','十、堆積物料之地基應舖墊平實。','十一、倉庫內之通風設備，如未正常運轉應即通知主管人員。','十二、下班後或倉庫無人看管時，應切斷一切電源。','十三、單人用手搬起重物時，應先以半蹲姿勢抓牢工作物，然後用腿力站起，切勿彎腰搬起重物，以免扭傷腰部。','十四、不宜以拋擲方式遞送物件。','十五、在電線及電氣設備附近搬運物料時，須加倍小心，切勿觸及供電線路。']
+        },
+        { num: 25, title: '電氣安全守則：',
+          items: ['一、在修理電氣設備中切斷之開關必須懸掛明顯之標示牌，除該負責修理者外，任何人不得將該標示牌取下，以免發生傷亡。','二、隨時檢修電氣設備，遇有重大電氣故障及電氣火災等，應切斷電源，並即聯絡當地供電機構。','三、電線間直線、分岐接頭及電線與器具間接頭，應確實接牢。','四、拆除或接裝保險絲以前，應先切斷電源，並不得用銅絲或其他金屬代替保險絲。','五、以操作棒操作高壓開關，應使用橡皮手套。','六、廠內電氣設備及電氣修護工作由合格電工處理負責，其他人不准擔任。','七、與電路無關之任何物件，不得懸掛或放置於電線或電氣器具上。','八、不得使用未知規格之工業用電氣器具，必須符合國家規定者才能使用。','九、電動機械操作開關，不得設置於須使工作人員跨越操作之位置。','十、電氣器材之裝置設備與保養（包括修理、換保險絲等）非領有電匠執照或極具經驗之電氣工作人員外不得擔任。','十一、為調整電動機械而停電，其開關切斷後須掛牌標示。','十二、變電室或受電室，非工作人員不得任意進入。','十三、不得以肩負方式攜過長物體（如竹梯、鐵管等）通過電力設備或其中間。','十四、開關之關閉應完全，如有鎖緊設備，應於操作後加鎖。','十五、拔卸電氣插頭時，應拔插頭處。','十六、切斷開關，應迅速切實。','十七、不得以濕手或濕操作棒操作開關。','十八、非職權範圍，不得擅自操作各項電氣設備。','十九、如遇電氣設備或電路著火，須用不導電滅火設備如乾粉滅火器及砂等滅火。','二十、遇停電或電氣設備運轉中有不正常情形時，應即關閉機器之電氣開關。','二十一、勿於電線插座上接裝過多之電具，以免造成負荷過重發生火災。','二十二、廠內各動力機器必須經常保持良好接地線。']
+        },
+        { num: 26, title: '噪音作業場所工作守則：',
+          items: ['一、噪音作業勞工必須戴用聽力防護具。','二、機械設備支各部固定螺絲應定期檢查，鬆動者應立即旋緊。','三、機械設備附屬之隔音減振設施嚴禁拆除。','四、聽力防護具若有損壞、變形、硬化或遺失應即領取更換。','五、說話咀嚼食物等會使耳塞鬆動應隨時注意並戴好。','六、從事作業之勞工有接受特殊作業健康檢查之義務。']
+        },
+        { num: 27, title: '移動式起重機之操作、檢修、調整、組配、拆卸等應依下列規定：',
+          items: ['一、從事檢修、調整時，經指定之作業監督人員，應從事監督指揮工作（但無虞危險或採取其他安全確無危險之虞者不在此限）。','二、駕駛人員，不得擅自離開已經吊有貨物之駕駛位置。']
+        },
+        { num: 28, title: '一般車輛駕駛作業應依下列規定：',
+          items: ['一、應依製造廠商規定之安全度及最大使用荷重等操作。','二、禁止車輛放於有滑落之虞之斜坡。','三、除已採取警戒措施者外，禁止車輛夜間停放於交通要道。','四、駕駛員於每日開車前應檢查下列各部份機件：(一)輪胎、螺絲、螺帽、鋼圈有無鬆動、氣壓是否正常。(二)差速箱、變速箱、有無漏油。(三)前後鋼板有無折斷、騎馬螺絲有無鬆動，吊架、吊耳有無損壞。(四)大燈、剎車燈、方向指示燈、倒車燈是否正常、咈叭是否會響、雨刷是否能擺動。(五)冷卻水是否足，有無漏水。(六)機油是否指示壓力，燃料錶指示油量是否足夠。(七)剎車是否靈活有效。']
+        },
+        { num: 29, title: '手工具作業，應依下列規定：',
+          items: ['一、必須使用適當工具工作。','二、工具應加強檢查保持良好狀態。','三、必須以正確的方法使用工具。','四、工具存放應設置工具收存處所，工具使用完畢，必須擦拭乾淨並歸還原處擺放。','五、任何一種工具都有它的特殊性能，工作人員未明白它的特性以前不得亂用。','六、有柄的工具應裝妥大小適合而堅固的木柄，其錘柄頭必須打楔固定。','七、電動手工具應試驗絕緣良好後才能使用。']
+        },
+        { num: 30, title: '輸送帶安全作業守則：',
+          items: ['一、操作員必須受過安全作業程序的訓練，方可從事輸送帶作業。','二、操作員工作時應穿戴口罩、安全鞋，必要時應配戴安全眼鏡等必要之個人防護裝置。','三、操作員工作時應與輸送帶保持安全距離，避免機器捲入或夾傷，機器的所有咬合點應加上護罩。','四、輸送帶設備應裝設緊急停止開關。','五、嚴禁操作員穿寬鬆的衣服、手套、手錶或任何容易被捲入的服飾。','六、禁止跨越無跨橋之輸送裝置。','七、禁止搭乘輸送帶。','八、禁止清除運轉中滑輪上的殘渣。','九、輸送帶附近的作業區域，不可以堆積物料或貨品而造成空間不足的現象發生。','十、所有溢出的物料應立即清除，以免造成危險。','十一、定期清掃輸送帶為保障輸送帶作業安全的主要工作，清掃應在輸送帶停止時進行。','十二、當輸送帶運轉時，嚴禁工作人員攀登輸送帶機架，尤其是嚴禁搭乘輸送帶。','十三、除非電源開關確實被切斷並上鎖，嚴禁人員於皮帶上行走。','十四、跨越輸送帶時，不可以採取捷徑直接跨過，應走跨橋或繞道而行。']
+        },
+        { num: 31, title: '扳手使用，應依下列規定：',
+          items: ['一、須使用配合螺帽尺寸的扳手。','二、扳手口變形、有裂痕、扳柄有損壞，或不清楚的扳手，都不可使用。','三、扳手柄不得設法加長使用，以免超荷而發生事故。','四、不可為增加扭力而用重物敲打扳手柄。','五、不可猛扯扳手柄，施力時須逐步加強。','六、手口須與螺帽密切套合，不得在扳手口內加墊片來迎合較小尺寸的螺帽。','七、用活動扳手時，開口應擺向自身，操作時應將扳手柄向內拉，不可向外推。','八、有扭力表的扳手，應經常檢查扭力表是否準確，不得超荷使用。','九、不得將扳手當作榔頭使用。']
+        },
+        { num: 32, title: '螺絲起子使用，應依下列規定：',
+          items: ['一、螺絲上起子後之尺碼適用大小適當之起子。','二、使用時，起子口端須垂直插置於螺帽槽內，不可傾斜，以免口端滑出傷人。','三、不靠加用扳手、千鉗或其他工具增加起子扭轉力量，以防超荷使起子口端斷裂飛出傷人。','四、不可將起子橫插於螺帽槽內，扳轉螺絲。','五、應接規格尺寸修磨起子頭，切勿磨成尖銳或缺口。','六、避免用起子在手持工作物上旋鬆（緊）螺絲。','七、切勿把起子當作鑿子用，不得用搥打擊起子柄。','八、握柄破裂、桿身臂曲、口端鈍捲起的起子，不可使用。','九、起子金屬桿身穿露握柄端面起子，切勿使用於電氣工作。']
+        },
+        { num: 33, title: '手鎚使用，應依下列規定：',
+          items: ['一、鎚體起毛，鎚柄有裂痕、腐朽或粗糙的鎚，不可使用。','二、使用必須檢查鎚體與鎚柄楔合是否牢固，不可使用鎚體已銹的鎚。','三、打大鎚人員、不可戴手套，以防滑脫傷人。','四、鎚柄與鎚體均不可有油污。']
+        },
+        { num: 34, title: '手鉗使用，應依下列規定：',
+          items: ['一、直接施壓力於須切斷的橫斷面方向。','二、勿濫用手鉗敲物，或當作扳手使用。','三、當切斷的一端甚短時，應以手遮蓋，以防其飛出。','四、提鉗時要靠近尾端，不可將食指伸入兩柄之間，以防被夾傷。','五、勿使用鐵錘或他物敲打鉗子企圖剪斷鐵絲或其他物件。','六、電工應使用絕緣的鉗子，絕緣體必須無裂縫或損壞。','七、剪材時刀口應垂直受剪物平面，不可斜剪。','八、按工作需要，選用大小適用的剪刀，厚材勿用小剪刀。','九、剪刀手把不得設法加長使用，以免剪刀超荷。']
+        },
+        { num: 35, title: '車輛系營建機械安全守則：',
+          items: ['一、從事機械車輛之操作及修護作業之前，先要考慮到安全問題，並按照機械操作及維護手冊之規定從事檢修及操作。','二、從事下列工作時，不得吸煙，不得使用明火，亦不得使用發熱器具以免引起火災：(一)提運汽油、柴油等發揮性之油料。(二)加燃料油入油箱、或抽離油箱。(三)作業時禁止人員進入操作半徑內或附近有危險之虞之場所。','三、從事機械車輛之修護實應注意：(一)慎防運轉不傷人。(二)預防機械可能發生滾動或移動。(三)將舉起之車身確實撐牢，以防落下傷人。(四)使用必須之防護設備。(五)注意個人衣著，不致被機械運轉部份所捲入。']
+        },
+        { num: 36, title: '使用手推車應遵守之要則：',
+          items: ['一、車子使用前應檢查，並定期保養。','二、盡量先裝重的物品，使全車重心在下面。','三、物品必須堆好，不使滑溜跌落，所堆高度不可妨礙堆車人員視線。','四、利用車子搬運重物，堆車人員應注意，保持車子平衡。','五、推車時不可奔跑。','六、手推車下坡車應在人前，上坡時應在人後，並拉牢車柄，妥為控制。','七、發現車子把手或架子、輪或軸有損壞時，應立即停用請修。','八、車輪停用時，應妥當放置於規定地點，不得放於通道，以利通路。']
+        },
+        { num: 37, title: '人體安全防護安全守則：',
+          items: ['一、工作人員應隨時防範自己身體的安全及維護自己經管機器設備的操作安全。','二、在可能傷及身體的危險場所工作時，必須切實配帶各種適當的安全防護具，而確保安全。','三、在有發生塵埃之場所工作時，應佩帶防塵口罩。','四、服裝應保持清潔衛生。','五、現場工地及高處危險場所，須佩戴安全帽。']
+        },
+        { num: 38, title: '安全帽之使用要則：',
+          items: ['一、帽籃應牢固，籃帶應均勻地分佈以支持衝擊力。','二、頭帶不要過緊，以安全帽不發生傾側且感覺舒服為適度。','三、頭頂與帽殼間應留有空間。','四、為安全計，應使用顎帶。','五、不得在帽上打孔、鑽洞，以免破壞其強度。','六、電氣工作人員或在有裸線，帶電設備附近之工作人員，不可帶用金屬安全帽。']
+        },
+        { num: 39, title: '安全眼鏡之使用安全守則：',
+          items: ['一、佩帶前應適當調整，適合臉型。','二、安全眼鏡之橡皮帶，頭帶應長短適應，使能安穩佩戴於臉上。','三、眼鏡片應經常保持清潔，如有損壞應即更換。','四、確保頭帶之情況和彈性良好，如有損壞應即更換。','五、鏡片裝牢，如有裂紋或擦傷應即更換。','六、鏡片凝結過多之水霧，可使用清潔劑，抗霧混合劑防止。','七、安全眼鏡不用時應裝入鏡盒，不可放在工具箱或抽屜內，以免損壞。']
+        },
+        { num: 40, title: '一般車輛駕駛作業安全守則：',
+          items: ['一、應依製造廠商規定之安全度及最大使用荷重等操作。','二、禁止車輛停放於有滑落之虞之斜坡。','三、除已採取警戒措施者外，禁止車輛夜間停放於交通要道。','四、駕駛員於每日開車前應檢查各部份機件。']
+        },
+        { num: 41, title: '造粒機安全守則：',
+          items: ['一、應依製造廠商規定之安全注意事項進行操作。','二、依本廠之造粒機作業準則規範進行操作。','三、作業員於每日開機前應進行機台檢點。','四、若發現機台有異常狀況立即向主管反應。']
+        },
+        { num: 42, title: '廢水處理設施安全守則：',
+          items: ['一、本廠委託代操作廠商進行廠內廢水處理設施之相關維護工作。','二、禁止非相關人員進入該廢水處理設施內。','三、代操作廠商須依本廠之「D2-EM-005廢水處理管理辦法」規範進行操作。','四、若發現任何異常狀況立即向主管反應，相關主管亦須每日進行工作場所巡檢並稽查代操作維護情形。']
+        }
+      ]
+    },
+    {
+      num: 5, title: '教育與訓練',
+      articles: [
+        { num: 43, content: '本公司為防止職業災害，保障勞工安全與健康，並依照政府法令特舉辦勞工安全衛生教育及預防災變訓練。' },
+        { num: 44, content: '勞工對於安全衛生教育、訓練、有接受之義務。' },
+        { num: 45, content: '訓練方式：（1）講課解說。（2）動作示範。（3）實地演練。' },
+        { num: 46, title: '一般性勞工安全衛生教育訓練課程與時數：',
+          items: ['一、新僱或調換作業勞工依實際需要排定時數，不得少於三小時，其課程以與該勞工作業有關者：(一)作業安全衛生有關法規概要。(二)勞工安全衛生概念及安全衛生工作守則。(三)作業前、中、後之自動檢查。(四)標準作業程序。(五)緊急事故應變處理。(六)消防及急救常識暨演練。(七)其他與勞工作業有關之安全衛生知識。','二、各級業務主管人員於新僱或調換作業時，應參照下列課程增列六小時：(一)安全衛生管理與執行。(二)自動檢查。(三)改善工作方法。(四)安全作業標準。']
+        }
+      ]
+    },
+    {
+      num: 6, title: '健康指導及管理措施',
+      articles: [
+        { num: 47, content: '員工應依規定於受僱前接受一般體格檢查，並應定期接受一般健康檢查，從事特別危害健康作業之員工亦應依作業內容接受特殊健康檢查。' },
+        { num: 48, content: '員工應依規定接受特別危害健康作業之健康追蹤檢查，並接受分級健康管理。' },
+        { num: 49, content: '員工應接受依檢查結果有關適當之工作調整、醫療、療養與管理事項。' },
+        { num: 50, content: '員工應接受雇主安排有關工作內容、作業環境之監測及危害暴露情形之調查。' },
+        { num: 51, content: '員工應接受雇主依規定辦理有關身心健康保護之工時、休息、防疫及預防傷病與促進健康之指導及管理事項。' }
+      ]
+    },
+    {
+      num: 7, title: '急救與搶救',
+      articles: [
+        { num: 52, title: '搶救：',
+          items: ['一、進行急救搶救前應先考量自己之安全及考慮使用適當防護具，勿貿然進行。','二、任何傷害事故（不論輕重）應即向主管報告，不得隱匿不報。','三、遇感電災害時，應先設法切斷電源並確認無感電之虞後，再施以搶救。','四、對危害物災害之處置，應考量危害物質之性質及相容性，運用適當之方法進行搶救。','五、任何急救之處理僅在維持傷者之生命或避免傷害擴大，對於重大傷患應緊急送往醫療院所進一步處理。']
+        },
+        { num: 53, title: '一般性急救：',
+          items: ['一、在醫護人員抵達前受過急救訓練之員工應立刻對傷患作適當處理，避免導致更嚴重的後果。','二、在沒有確定受傷之實情前，應將傷患平臥，可防止昏厥與休克。','三、如傷患面色發紅，應將頭部墊高，如嘔吐則將頭部轉向一邊，以免窒息。','四、需要時可用棉被、衣物等保持傷患之體溫，以防止休克發生。','五、速召救護車或用擔架運送傷患至醫療處所或速請醫護人員。','六、急救者的責任在於（1）救命（2）防止傷勢或病情轉惡（3）保持傷患安靜及舒適，以靜候醫護人員到來。','七、在場急救者應協助傷患述說病情原因等，以幫助醫護人員治療及診斷。','八、擔任急救者必須：（1）不驚慌失措（2）給予遭外傷或急病者之立即和臨時性的照料，直至專業救護人員到時或能得到醫師的診治為止。']
+        },
+        { num: 54, title: '外傷急救：',
+          items: ['一、外部創傷之種類分為破開傷、擦傷、切傷、撕裂傷等，就醫前應注意止血及防止細菌進入傷口。','二、外傷的急救是以消毒之紗布敷蓋於傷口處，急救人員應有消毒觀念，手指不能直接接觸傷口，清洗消毒應由醫護人員行之。','三、止血法應先查看血色，如為鮮紅色則表示主動脈血，應在心臟及傷口間用帶束緊，暗紅色則為靜脈血，應在傷口及身體外緣之間束緊。']
+        },
+        { num: 55, title: '昏倒急救：',
+          items: ['一、昏倒又稱休克，起因如站立太久、受驚、激動、飢餓、疼痛或劇烈工作等，處理昏倒首先明白其為貧血或充血性分別處理之。','二、貧血性昏倒，特徵為臉色蒼白，四肢冰冷，處理法為使其頭部低腳高，斜躺在床上。','三、充血性昏倒，特徵為面紅耳赤，有時痰聲，處理法為將患者頭高腳低斜坐在椅子上。']
+        },
+        { num: 56, title: '觸電急救：',
+          items: ['一、觸電都會發生「假死」的現象，呼吸和心臟停止活動，首先須令其離開電源，千萬不可用赤裸的手去拉，可用乾燥之竹竿、木棒等將傷患者挑開。','二、然後送至通風良好地方，解開上衣、仰臥，稍抬頭部再用氧氣或進行人工呼吸，有時甚至須經三、四小時直至醫師到來。','三、甦醒後，如有電傷，則按灼傷處理之。']
+        },
+        { num: 57, title: '灼傷急救：',
+          items: ['一、急救時，如為輕度灼傷其皮膚未破時，則塗以消毒凡士林油膏或橄欖油等。','二、深度者，應即刻送醫，急救者僅將灼傷面覆以消毒紗布即可。']
+        },
+        { num: 58, title: '呼吸之急救（口對口人工呼吸法）：',
+          items: ['一、使遇難者仰臥，頭部後傾。','二、大姆指伸進遇難者上下齒之間，用力使下顎突出直至下齒高於上齒。','三、搶救者用右手大拇指捏住遇難者之鼻孔。','四、搶救者作深呼吸後，把口緊緊對準遇難者之口，向遇難者的口吹進空氣。','五、搶救者把空氣吹進遇難者之肺部時，必須注意遇難者的胸部有無隆起，以便確定氣道是否暢通無阻。','六、搶救者把嘴移開，讓遇難者吐氣數三後重覆吹進空氣，每分鐘應重覆十二次，直至遇難者被救活為止，如遇難者為小孩時，則應增加至每分鐘廿次。']
+        },
+        { num: 59, title: '骨折之急救：',
+          items: ['一、四肢骨折的急救：先把骨折的肢體，以正確的「附木」綁紮方法加以固定，綑縛時應鬆緊適度。','二、鎖骨骨折的急救：於傷側腋下墊以大而厚的棉布摺墊，然後以三角巾將傷側上肢固定。','三、脊椎骨骨折的急救：應絕對禁止傷者坐起，並勿使傷者抬頭，如係頸椎骨折或部位未明，應使傷者仰臥平木板上，如係頸部以下之脊椎骨折則應使傷者俯臥，搬運時用擔架並須水平移動，不可傾斜或顛倒。','四、肋骨骨折的急救：使用絆創膏，以重疊貼合之方式於傷口處加以固定，注意防止昏厥的發生，並趕緊用擔架送醫院醫治。']
+        }
+      ]
+    },
+    {
+      num: 8, title: '防護設備之準備、維持與使用',
+      articles: [
+        { num: 60, title: '防護設備之準備：',
+          items: ['一、各級主管應依據工作環境及職種需要，決定適用的防護具種類並提供從業員適用其工作上需要。','二、各級主管對防護具之準備應足夠勞工之需要，隨時保持防護具之性能與清潔並放置於員工需要。','三、安全衛生管理人員平時應協助單位主管教育及訓練工人正確使用防護具的重要性及平時保養管理指導等。']
+        },
+        { num: 61, title: '防護設備之維持：',
+          items: ['一、各主管人員對轄區內防護設備應定期檢查並負妥為保養及教導員工確實使用之責。','二、工作後，主管人員應親自巡視檢查各項機械防護設備、工具等安全防護設備及器具是否均已置回原處。']
+        },
+        { num: 62, title: '一般從業人員防護具之使用守則：',
+          items: ['一、進入廠區需著安全防護器具。','二、熟悉安全衛生防護設備及器具之使用方法及正確用途。','三、工作前應先檢查個人所需防護具是否堪用。','四、個人所保管使用的防護具，應經常保養，不堪使用時應即申請更換或修理，以確保良好可靠性。']
+        }
+      ]
+    },
+    {
+      num: 9, title: '事故通報與報告',
+      articles: [
+        { num: 63, content: '一般事故發生報告直屬單位主管，由單位主管轉報職業安全衛生管理人員。' },
+        { num: 64, content: '重大事故災害時，除採取必要之搶救措施外，受傷人員由本公司急救人員先施以急救，重傷者由救護車轉送大醫院治療。' },
+        { num: 65, content: '事故發生後，有關部門須會同做現場調查、原因分析及檢討，並作成紀錄，以防止類似災害發生。' },
+        { num: 66, title: '發生下列重大職業災害時，應於八小時內通報臺中市勞動檢查處（電話：04-25273553）：',
+          items: ['一、發生死亡災害。','二、發生災害之罹災人數在三人以上。','三、發生災害之罹災人數在一人以上，且需住院治療。','四、其他經中央主管機關指定公告之災害。']
+        }
+      ]
+    },
+    {
+      num: 10, title: '其他有關安全衛生事項',
+      articles: [
+        { num: 68, content: '本單位勞工如有違反本守則之規定者，得視情節輕重函報主管機關依法予以處分。' },
+        { num: 69, content: '非本單位雇用之工作者進入本單位工作，應遵守相關規定。' }
+      ]
+    },
+    {
+      num: 11, title: '附則',
+      articles: [
+        { num: 70, content: '本守則經會同勞工代表訂定，經過勞動檢查機構備查後公告實施，所有人員並應確實遵行守則內容。' }
+      ]
+    }
+  ]
+};
+
+/* records */
+const RECORDS = [
+  {
+    id: 'B111008116',
+    label: '最新備查',
+    regNo: 'B111008116',
+    regDate: '民國111年12月20日',
+    regDateISO: '2022-12-20',
+    docNo: '大豐科總管字第1110000004號',
+    docDate: '民國111年12月19日',
+    agency: '臺中市勞動檢查處',
+    note: '依下列事項修正後同意備查：第六十六條，請將電話修正為04-25273553。'
+  },
+  {
+    id: 'B110000777',
+    label: '前次備查',
+    regNo: 'B110000777',
+    regDate: '民國110年1月28日',
+    regDateISO: '2021-01-28',
+    docNo: '大豐科總管字第1100000001號',
+    docDate: '民國110年1月22日',
+    agency: '臺中市勞動檢查處',
+    note: '依下列事項修正後同意備查：1.第十二條、二十二、刪除堆高機三字；二十一至二十三內容重複。2.第十八條、六、刪除。3.第二十一條、五、應儘用砂輪正面修磨，請修正「嚴禁側磨」。'
+  }
+];
+
+const AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+const GAS_URL = '';
+
+/* ═══════════════════════════════════════════════════════════
+   CHAPTER ICONS
+═══════════════════════════════════════════════════════════ */
+const CH_ICONS = ['📜','🏢','🔧','⚙️','📚','❤️','🚑','🦺','📞','📌','📋'];
+
+/* ═══════════════════════════════════════════════════════════
+   TAB SWITCHING
+═══════════════════════════════════════════════════════════ */
+function switchMainTab(tab) {
+  document.getElementById('view-rules').style.display   = tab === 'rules'   ? 'flex' : 'none';
+  document.getElementById('view-records').style.display = tab === 'records' ? 'block' : 'none';
+  document.getElementById('mtab-rules').classList.toggle('active',   tab === 'rules');
+  document.getElementById('mtab-records').classList.toggle('active', tab === 'records');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BUILD CHAPTER SIDEBAR
+═══════════════════════════════════════════════════════════ */
+let activeChapter = 1;
+
+function buildSidebar() {
+  const list = document.getElementById('ch-list');
+  list.innerHTML = '';
+  RULES_DATA.chapters.forEach((ch, i) => {
+    const d = document.createElement('div');
+    d.className = 'ch-item' + (ch.num === activeChapter ? ' active' : '');
+    d.innerHTML = `<div class="ch-num">第 ${ch.num} 章</div>${ch.title}`;
+    d.onclick = () => selectChapter(ch.num);
+    list.appendChild(d);
+  });
+}
+
+function selectChapter(num) {
+  activeChapter = num;
+  document.querySelectorAll('.ch-item').forEach((el, i) => {
+    el.classList.toggle('active', RULES_DATA.chapters[i].num === num);
+  });
+  renderChapter(num, document.getElementById('search-box').value.trim());
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RENDER CHAPTER
+═══════════════════════════════════════════════════════════ */
+function hl(text, q) {
+  if (!q) return text;
+  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
+  return text.replace(re, m => `<mark>${m}</mark>`);
+}
+
+function articleText(art) {
+  if (art.content) return art.content;
+  if (art.items) return art.items.join(' ');
+  return '';
+}
+
+function renderChapter(num, q) {
+  const ch = RULES_DATA.chapters.find(c => c.num === num);
+  if (!ch) return;
+  const area = document.getElementById('chapter-content');
+
+  const artNums = ch.articles.map(a => a.num);
+  const rangeLabel = artNums.length > 1
+    ? `第 ${artNums[0]} 條 – 第 ${artNums[artNums.length-1]} 條`
+    : `第 ${artNums[0]} 條`;
+
+  let html = `<div class="chapter-banner">
+    <div class="ch-icon">${CH_ICONS[num-1]||'📄'}</div>
+    <div><h2>第 ${ch.num} 章　${ch.title}</h2><div class="ch-range">${rangeLabel}・共 ${ch.articles.length} 條</div></div>
+  </div>`;
+
+  ch.articles.forEach(art => {
+    const fullText = articleText(art);
+    const matched = !q || fullText.includes(q) || (art.title && art.title.includes(q));
+    const noMatchClass = (!q || matched) ? '' : ' no-match';
+
+    let bodyHtml = '';
+    if (art.content) {
+      bodyHtml = `<div class="art-content">${hl(art.content, q)}</div>`;
+    } else if (art.items) {
+      const hasTitle = art.title;
+      const titleHtml = hasTitle ? `<div class="art-content" style="margin-bottom:8px">${hl(art.title, q)}</div>` : '';
+      const itemsHtml = art.items.map(it => `<li>${hl(it, q)}</li>`).join('');
+      bodyHtml = `${titleHtml}<ul class="art-items">${itemsHtml}</ul>`;
+    }
+
+    const preview = art.title || (art.content ? art.content.slice(0,60)+'…' : '');
+
+    html += `<div class="article-card${noMatchClass}" id="art-${art.num}">
+      <div class="art-header" onclick="toggleArt(${art.num})">
+        <span class="art-no">第 ${art.num} 條</span>
+        <span class="art-preview">${hl(preview, q)}</span>
+        <span class="art-toggle" id="tog-${art.num}">▼</span>
+      </div>
+      <div class="art-body" id="body-${art.num}">
+        ${bodyHtml}
+      </div>
+    </div>`;
+  });
+
+  area.innerHTML = html;
+}
+
+function toggleArt(num) {
+  const body = document.getElementById('body-'+num);
+  const tog  = document.getElementById('tog-'+num);
+  if (!body) return;
+  const open = body.classList.toggle('open');
+  tog.classList.toggle('open', open);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SEARCH
+═══════════════════════════════════════════════════════════ */
+function onSearch(q) {
+  q = q.trim();
+  const info = document.getElementById('search-info');
+  const area = document.getElementById('chapter-content');
+  const sidebar = document.getElementById('ch-list');
+
+  if (!q) {
+    info.style.display = 'none';
+    area.classList.remove('search-active');
+    renderChapter(activeChapter, '');
+    return;
+  }
+
+  // Search all chapters
+  let totalMatches = 0;
+  let firstMatch = null;
+
+  // Render all matching articles across all chapters
+  let allHtml = '';
+  RULES_DATA.chapters.forEach(ch => {
+    ch.articles.forEach(art => {
+      const fullText = articleText(art) + (art.title || '');
+      if (fullText.includes(q)) {
+        totalMatches++;
+        if (!firstMatch) firstMatch = ch.num;
+
+        let bodyHtml = '';
+        if (art.content) {
+          bodyHtml = `<div class="art-content">${hl(art.content, q)}</div>`;
+        } else if (art.items) {
+          const hasTitle = art.title;
+          const titleHtml = hasTitle ? `<div class="art-content" style="margin-bottom:8px">${hl(art.title, q)}</div>` : '';
+          const itemsHtml = art.items.map(it => `<li>${hl(it, q)}</li>`).join('');
+          bodyHtml = `${titleHtml}<ul class="art-items">${itemsHtml}</ul>`;
+        }
+        const preview = art.title || (art.content ? art.content.slice(0,60)+'…' : '');
+        allHtml += `<div class="article-card" id="art-${art.num}">
+          <div class="art-header" onclick="toggleArt(${art.num})">
+            <span class="art-no">第 ${art.num} 條</span>
+            <span class="art-preview">${hl(preview, q)}</span>
+            <span class="art-toggle" id="tog-${art.num}">▼</span>
+          </div>
+          <div class="art-body open" id="body-${art.num}">${bodyHtml}</div>
+        </div>`;
+      }
+    });
+  });
+
+  if (totalMatches === 0) {
+    area.innerHTML = `<div style="padding:40px;text-align:center;color:var(--sub)">🔍 找不到「${q}」相關條文</div>`;
+  } else {
+    area.innerHTML = allHtml;
+  }
+
+  info.style.display = 'block';
+  info.textContent = totalMatches > 0
+    ? `搜尋「${q}」：共找到 ${totalMatches} 條相符條文`
+    : `搜尋「${q}」：無符合結果`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TAB 2: BUILD RECORD CARDS
+═══════════════════════════════════════════════════════════ */
+function buildRecords() {
+  const container = document.getElementById('record-cards');
+  container.innerHTML = '';
+  RECORDS.forEach(rec => {
+    const card = document.createElement('div');
+    card.className = 'rec-card';
+    card.id = 'card-' + rec.id;
+    card.innerHTML = buildRecCardHTML(rec);
+    container.appendChild(card);
+  });
+}
+
+function buildRecCardHTML(rec) {
+  const urlKey  = 'workreg_url_'  + rec.id;
+  const dateKey = 'workreg_date_' + rec.id;
+  const storedUrl  = localStorage.getItem(urlKey)  || '';
+  const storedDate = localStorage.getItem(dateKey) || '';
+
+  const urlBtn = storedUrl
+    ? `<div class="url-btn-set">
+        <a class="btn-url-view" href="${storedUrl}" target="_blank" rel="noopener">📄 查看備查文件</a>
+        <button class="btn-url-edit" onclick="openUrlModal('${rec.id}')" title="修改連結">✏️</button>
+       </div>`
+    : `<button class="btn-url-set" onclick="openUrlModal('${rec.id}')">📎 設定文件連結</button>`;
+
+  const dateDisp = storedDate
+    ? `<div class="rec-date-display">AI 讀取日期：<span class="date-val">${storedDate}</span></div>`
+    : '';
+
+  return `
+    <div class="rec-card-head">
+      <span class="reg-badge">${rec.label}</span>
+      <h3>登錄編號：${rec.regNo}</h3>
+    </div>
+    <div class="rec-card-body">
+      <div class="rec-meta-grid">
+        <span class="lbl">登錄日期</span><span class="val">${rec.regDate}</span>
+        <span class="lbl">來文字號</span><span class="val">${rec.docNo}</span>
+        <span class="lbl">來函日期</span><span class="val">${rec.docDate}</span>
+        <span class="lbl">轄區機構</span><span class="val">${rec.agency}</span>
+      </div>
+      <div class="rec-note"><strong>備註：</strong>${rec.note}</div>
+      <div class="rec-actions">
+        ${urlBtn}
+        <button class="insp-ai-btn" onclick="openAIModal('${rec.id}')">📎 上傳備查文件</button>
+      </div>
+      ${dateDisp}
+    </div>`;
+}
+
+function refreshCard(id) {
+  const rec = RECORDS.find(r => r.id === id);
+  const card = document.getElementById('card-' + id);
+  if (rec && card) card.innerHTML = buildRecCardHTML(rec);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   URL MODAL
+═══════════════════════════════════════════════════════════ */
+function openUrlModal(recId) {
+  const urlKey = 'workreg_url_' + recId;
+  const current = localStorage.getItem(urlKey) || '';
+  const rec = RECORDS.find(r => r.id === recId);
+
+  document.getElementById('modal-title').textContent = '設定文件連結｜' + rec.regNo;
+  document.getElementById('modal-body').innerHTML = `
+    <label class="modal-label">SharePoint 或其他文件連結</label>
+    <input class="modal-input" id="url-input" type="url" placeholder="https://…" value="${current}">
+    <p style="font-size:12px;color:var(--sub);margin-top:8px">貼上備查文件的 SharePoint 共用連結，儲存後可直接點擊開啟。</p>`;
+  document.getElementById('modal-footer').innerHTML = `
+    <button class="btn-cancel" onclick="closeModal()">取消</button>
+    <button class="btn-primary" onclick="saveUrl('${recId}')">儲存連結</button>`;
+  openModal();
+}
+
+function saveUrl(recId) {
+  const urlKey = 'workreg_url_' + recId;
+  const val = document.getElementById('url-input').value.trim();
+  if (val) localStorage.setItem(urlKey, val);
+  else localStorage.removeItem(urlKey);
+  closeModal();
+  refreshCard(recId);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   AI PDF UPLOAD MODAL
+═══════════════════════════════════════════════════════════ */
+let _aiRecId = null;
+let _aiFile  = null;
+let _aiResult = null;
+
+function openAIModal(recId) {
+  _aiRecId  = recId;
+  _aiFile   = null;
+  _aiResult = null;
+  const rec = RECORDS.find(r => r.id === recId);
+  document.getElementById('modal-title').textContent = '上傳備查文件｜' + rec.regNo;
+  showStep('upload');
+  openModal();
+}
+
+function showStep(step) {
+  const body   = document.getElementById('modal-body');
+  const footer = document.getElementById('modal-footer');
+
+  if (step === 'upload') {
+    body.innerHTML = `
+      <label class="file-drop" for="pdf-file-input">
+        <div class="file-drop-ico">📄</div>
+        <p>點擊或拖曳 PDF 備查文件至此</p>
+        <p style="font-size:11px;margin-top:4px">支援 PDF 格式</p>
+        <input type="file" id="pdf-file-input" accept=".pdf" onchange="onFileChosen(this)">
+        <div class="file-chosen" id="file-chosen-label"></div>
+      </label>`;
+    footer.innerHTML = `
+      <button class="btn-cancel" onclick="closeModal()">取消</button>
+      <button class="btn-primary" id="btn-analyze" onclick="startAnalyze()" disabled>開始 AI 分析</button>`;
+
+    // drag-drop
+    const drop = body.querySelector('.file-drop');
+    drop.addEventListener('dragover', e => { e.preventDefault(); drop.style.borderColor='var(--wr-accent)'; });
+    drop.addEventListener('dragleave', () => { drop.style.borderColor=''; });
+    drop.addEventListener('drop', e => {
+      e.preventDefault(); drop.style.borderColor='';
+      const f = e.dataTransfer.files[0];
+      if (f && f.type === 'application/pdf') setFile(f);
+    });
+  }
+
+  if (step === 'analyzing') {
+    body.innerHTML = `
+      <p style="font-size:13px;margin-bottom:10px">正在讀取 PDF 並送交 AI 分析…</p>
+      <div class="progress-bar"><div class="fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="status-msg" id="status-msg">擷取文字中…</div>`;
+    footer.innerHTML = '';
+  }
+
+  if (step === 'result') {
+    const r = _aiResult || {};
+    body.innerHTML = `
+      <p style="font-size:13px;margin-bottom:10px">AI 已完成分析，請確認以下資訊：</p>
+      <div class="ai-result-box">
+        <div class="field"><span class="lbl">登錄編號</span><span class="val">${r.regNo||'（未識別）'}</span></div>
+        <div class="field"><span class="lbl">登錄日期</span><span class="val">${r.regDate||'（未識別）'}</span></div>
+        <div class="field"><span class="lbl">備查機構</span><span class="val">${r.agency||'（未識別）'}</span></div>
+        ${r.summary ? `<div style="margin-top:8px;font-size:12px;color:var(--sub)">${r.summary}</div>` : ''}
+      </div>`;
+    footer.innerHTML = `
+      <button class="btn-cancel" onclick="closeModal()">取消</button>
+      <button class="btn-primary" onclick="confirmAIResult()">確認更新日期</button>`;
+  }
+}
+
+function onFileChosen(input) {
+  const f = input.files[0];
+  if (f) setFile(f);
+}
+
+function setFile(f) {
+  _aiFile = f;
+  const lbl = document.getElementById('file-chosen-label');
+  if (lbl) lbl.textContent = '✓ 已選擇：' + f.name;
+  const btn = document.getElementById('btn-analyze');
+  if (btn) btn.disabled = false;
+}
+
+async function startAnalyze() {
+  if (!_aiFile) return;
+  showStep('analyzing');
+
+  try {
+    setProgress(10, '擷取 PDF 文字中…');
+    const text = await extractPdfText(_aiFile);
+
+    setProgress(50, '送交 AI 分析中…');
+    const prompt = `這是大豐環保科技的安全衛生工作守則備查資料，請從文件中擷取：\n1. 登錄編號 regNo（格式如 B111008116）\n2. 登錄日期 regDate（格式 YYYY-MM-DD，需將民國年轉換為西元年）\n3. 備查機構 agency\n回傳純 JSON：{ regNo, regDate, agency, summary }`;
+
+    const resp = await fetch(AI_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: prompt + '\n\n文件內容：\n' + text.slice(0, 4000) })
+    });
+    const data = await resp.json();
+
+    setProgress(90, '解析結果中…');
+    let raw = (data.reply || data.content || data.result || '{}');
+    const match = raw.match(/\{[\s\S]*\}/);
+    if (match) raw = match[0];
+    _aiResult = JSON.parse(raw);
+
+    setProgress(100, '完成！');
+    setTimeout(() => showStep('result'), 300);
+
+  } catch (e) {
+    console.error(e);
+    _aiResult = {};
+    showStep('result');
+  }
+}
+
+async function extractPdfText(file) {
+  const pdfjsLib = window['pdfjs-dist/build/pdf'];
+  if (pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const ab = await file.arrayBuffer();
+  const pdf = await (pdfjsLib || window.pdfjsLib).getDocument({data: ab}).promise;
+  let text = '';
+  for (let i = 1; i <= Math.min(pdf.numPages, 6); i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    text += content.items.map(s => s.str).join(' ') + '\n';
+  }
+  return text;
+}
+
+function setProgress(pct, msg) {
+  const fill = document.getElementById('prog-fill');
+  const status = document.getElementById('status-msg');
+  if (fill) fill.style.width = pct + '%';
+  if (status) status.textContent = msg;
+}
+
+function confirmAIResult() {
+  if (!_aiResult || !_aiRecId) { closeModal(); return; }
+  const dateKey = 'workreg_date_' + _aiRecId;
+  const dateVal = _aiResult.regDate || '';
+  if (dateVal) localStorage.setItem(dateKey, dateVal);
+  closeModal();
+  refreshCard(_aiRecId);
+
+  if (GAS_URL && _aiResult) {
+    gasPost({ module: 'workreg', recId: _aiRecId, ..._aiResult });
+  }
+}
+
+function gasPost(payload) {
+  if (!GAS_URL) return Promise.resolve(null);
+  return fetch(GAS_URL, { method:'POST', redirect:'follow', body: JSON.stringify(payload) })
+    .then(r => r.json()).catch(() => null);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODAL HELPERS
+═══════════════════════════════════════════════════════════ */
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  _aiRecId = null; _aiFile = null; _aiResult = null;
+}
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  // PDF.js worker config
+  if (window['pdfjs-dist/build/pdf']) {
+    window['pdfjs-dist/build/pdf'].GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+
+  buildSidebar();
+  renderChapter(1, '');
+  buildRecords();
+});
+</script>
+<script src="../shared/sidebar.js"></script>
+</body>
+</html>
