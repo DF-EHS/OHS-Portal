@@ -37,45 +37,75 @@ header.ohs-header h1{font-size:17px;font-weight:700;flex:1;}
 .hdr-brand img{height:24px;object-fit:contain;}
 .hdr-brand span{font-size:12px;color:#94a3b8;font-weight:600;white-space:nowrap;}
 
-/* ── breadcrumb ── */
-#breadcrumb{padding:7px 22px;background:#fff;border-bottom:1px solid var(--border);
-  font-size:12px;color:var(--sub);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.bc-btn{display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:16px;
-  font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;border:none;transition:background .15s;}
-#bc-home{background:var(--navy);color:#fff;}
-#bc-home:hover{background:#16305a;}
-#bc-cur{background:#f1f5f9;color:var(--sub);}
-.bc-sep{color:#cbd5e1;}
+/* ── Layout ── */
+body{display:flex;flex-direction:column;}
+main{flex:1;max-width:960px;margin:0 auto;width:100%;padding:28px 24px 60px;}
 
-/* ── main tabs ── */
-#tab-bar{display:flex;gap:0;border-bottom:2px solid var(--border);background:#fff;padding:0 22px;}
-.main-tab{padding:11px 22px;font-size:14px;font-weight:600;border:none;background:none;
-  color:var(--sub);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;
-  font-family:inherit;transition:color .15s,border-color .15s;}
-.main-tab.active{color:var(--wr-accent);border-bottom-color:var(--wr-accent);}
-.main-tab:hover:not(.active){color:var(--text);}
-
-/* ── TAB 1 layout ── */
-#view-rules{display:flex;height:calc(100vh - 130px);overflow:hidden;}
-#view-records{display:none;padding:24px 22px;max-width:900px;margin:0 auto;}
-
-/* ── chapter sidebar ── */
-#chapter-sidebar{
-  width:220px;flex-shrink:0;background:#fff;border-right:1px solid var(--border);
-  overflow-y:auto;display:flex;flex-direction:column;
+/* ── Page Hero ── */
+.page-hero{
+  background:linear-gradient(135deg,#1a2744 0%,#2b4890 50%,#4169d4 100%);
+  color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:28px;
+  box-shadow:0 4px 20px rgba(43,72,144,.3);
+  display:flex;align-items:center;gap:20px;
 }
-#sidebar-header{padding:12px 14px;border-bottom:1px solid var(--border);}
-#search-box{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:6px;
-  font-size:13px;outline:none;background:var(--bg);font-family:inherit;}
-#search-box:focus{border-color:var(--wr-accent);}
-.ch-item{padding:9px 14px;cursor:pointer;border-left:3px solid transparent;
-  font-size:13px;transition:background .12s,border-color .12s;color:var(--text);}
-.ch-item:hover{background:#eff6ff;}
-.ch-item.active{background:#eff6ff;border-left-color:var(--wr-accent);color:var(--wr-accent);font-weight:700;}
-.ch-item .ch-num{font-size:11px;color:var(--sub);margin-bottom:2px;}
+.hero-icon{font-size:52px;flex-shrink:0;}
+.hero-text h2{font-size:22px;font-weight:800;margin-bottom:6px;}
+.hero-text p{font-size:13px;color:#a5c1f5;line-height:1.6;}
 
-/* ── article area ── */
-#article-area{flex:1;overflow-y:auto;padding:20px 24px;}
+/* ── Module Nav ── */
+.module-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+.module-nav a{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 18px;border-radius:24px;
+  font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;
+  border:1.5px solid var(--border);background:var(--card);color:var(--text);
+  transition:all .15s;
+}
+.module-nav a.active{background:var(--wr-accent);color:#fff;border-color:var(--wr-accent);}
+.module-nav a:hover:not(.active){border-color:var(--wr-accent);color:var(--wr-accent);}
+.module-nav a .nav-badge{
+  font-size:10px;padding:1px 6px;border-radius:10px;
+  font-weight:700;background:rgba(255,255,255,.2);
+}
+.module-nav a:not(.active) .nav-badge{background:#f1f5f9;color:var(--sub);}
+
+/* ── Section Block ── */
+.section-block{margin-bottom:40px;}
+.section-block.hidden{display:none;}
+.section-label{
+  font-size:11px;font-weight:700;color:var(--sub);
+  letter-spacing:3px;text-transform:uppercase;
+  margin:0 0 20px;display:flex;align-items:center;gap:10px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.section-label .mod-tag{
+  font-size:10px;padding:2px 8px;border-radius:10px;
+  font-weight:700;letter-spacing:0;text-transform:none;margin-left:6px;
+}
+.mod-tag.active{background:#dcfce7;color:#15803d;}
+.mod-tag.version{background:#dbeafe;color:#1e40af;}
+
+/* ── Search Row ── */
+.search-row{margin-bottom:16px;}
+#search-box{
+  width:100%;max-width:440px;padding:8px 12px;
+  border:1.5px solid var(--border);border-radius:8px;
+  font-size:13px;outline:none;font-family:inherit;background:var(--card);
+}
+#search-box:focus{border-color:var(--wr-accent);}
+
+/* ── Chapter Tabs ── */
+.chapter-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;}
+.chapter-tab{
+  padding:6px 14px;border-radius:20px;
+  border:1.5px solid var(--border);background:var(--card);
+  color:var(--sub);font-size:12px;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:all .15s;
+}
+.chapter-tab.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+.chapter-tab:hover:not(.active){border-color:var(--navy);color:var(--navy);}
+
+/* ── Article area (within section-block) ── */
 .chapter-banner{
   background:linear-gradient(135deg,#1a2744 0%,#2b4890 60%,#4169d4 100%);
   color:#fff;border-radius:10px;padding:16px 22px;margin-bottom:20px;
@@ -87,7 +117,7 @@ header.ohs-header h1{font-size:17px;font-weight:700;flex:1;}
 
 .article-card{background:var(--card);border-radius:8px;margin-bottom:12px;
   box-shadow:0 1px 4px rgba(0,0,0,.07);border-left:4px solid var(--wr-accent);overflow:hidden;}
-.art-header{padding:11px 16px;display:flex;align-items:flex-start;gap:10px;cursor:pointer;user-select:none;}
+.art-header{padding:11px 16px;display:flex;align-items:flex-start;gap:10px;cursor:pointer;-webkit-user-select:none;user-select:none;}
 .art-header:hover{background:#f8fafc;}
 .art-no{font-weight:800;color:var(--wr-accent);font-size:14px;min-width:52px;flex-shrink:0;}
 .art-preview{font-size:13px;line-height:1.65;color:var(--text);flex:1;}
@@ -194,18 +224,17 @@ mark{background:#fde68a;border-radius:2px;padding:0 1px;}
 
 /* ── Dark mode ── */
 body.dark{--bg:#0f172a;--card:#1e293b;--border:#334155;--text:#e2e8f0;--sub:#94a3b8;}
-body.dark #breadcrumb,body.dark #tab-bar,body.dark #chapter-sidebar,body.dark .modal-box{background:#1e293b;}
-body.dark .art-header:hover,body.dark .ch-item:hover{background:#1e3a5f;}
+body.dark .modal-box{background:#1e293b;}
+body.dark .art-header:hover{background:#1e3a5f;}
 body.dark .file-drop{background:#1e293b;}
+body.dark .module-nav a:not(.active){background:#1e293b;}
+body.dark .chapter-tab:not(.active){background:#1e293b;}
+body.dark #search-box{background:#1e293b;color:#e2e8f0;}
 
 /* ── Responsive ── */
 @media(max-width:680px){
-  #view-rules{flex-direction:column;height:auto;}
-  #chapter-sidebar{width:100%;height:auto;border-right:none;border-bottom:1px solid var(--border);}
-  .ch-list{display:flex;flex-wrap:nowrap;overflow-x:auto;padding:0;}
-  .ch-item{white-space:nowrap;border-left:none;border-bottom:3px solid transparent;padding:8px 12px;}
-  .ch-item.active{border-bottom-color:var(--wr-accent);border-left:none;}
-  #article-area{overflow-y:visible;}
+  main{padding:16px 14px 48px;}
+  .page-hero{flex-direction:column;text-align:center;padding:22px 20px;}
   .art-body.open{padding-left:16px;}
   .record-cards{grid-template-columns:1fr;}
 }
@@ -222,40 +251,61 @@ body.dark .file-drop{background:#1e293b;}
   </div>
 </header>
 
-<div id="tab-bar">
-  <button class="main-tab active" onclick="switchMainTab('rules')" id="mtab-rules">📖 安全衛生工作守則</button>
-  <button class="main-tab" onclick="switchMainTab('records')" id="mtab-records">📋 備查記錄</button>
-</div>
+<main>
 
-<!-- ══════════════ TAB 1: RULES ══════════════ -->
-<div id="view-rules">
+  <!-- Hero -->
+  <div class="page-hero">
+    <div class="hero-icon">📜</div>
+    <div class="hero-text">
+      <h2>安全衛生工作守則</h2>
+      <p>完整呈現 11 章 70 條安全衛生工作守則全文，供員工隨時查閱，<br>
+         並保存勞動主管機關備查登錄記錄。</p>
+    </div>
+  </div>
 
-  <nav id="chapter-sidebar">
-    <div id="sidebar-header">
+  <!-- Module Nav -->
+  <div class="module-nav">
+    <a id="nav-m1" class="active" onclick="showModule(1)">
+      📖 工作守則全文
+      <span class="nav-badge">11 章 70 條</span>
+    </a>
+    <a id="nav-m2" onclick="showModule(2)">
+      📋 備查記錄
+      <span class="nav-badge">已啟用</span>
+    </a>
+  </div>
+
+  <!-- ══ Module 1：工作守則全文 ══ -->
+  <div class="section-block" id="m1">
+    <div class="section-label">
+      模組一・安全衛生工作守則全文
+      <span class="mod-tag version">版本 111.09</span>
+    </div>
+    <div class="search-row">
       <input type="text" id="search-box" placeholder="🔍 搜尋條文內容…" oninput="onSearch(this.value)">
     </div>
-    <div class="ch-list" id="ch-list"></div>
-  </nav>
-
-  <div id="article-area">
+    <div class="chapter-tabs" id="ch-tabs"></div>
     <div id="search-info"></div>
     <div id="chapter-content"></div>
   </div>
 
-</div>
+  <!-- ══ Module 2：備查記錄 ══ -->
+  <div class="section-block hidden" id="m2">
+    <div class="section-label">
+      模組二・備查記錄
+      <span class="mod-tag active">已啟用</span>
+    </div>
+    <div class="record-cards" id="record-cards"></div>
+  </div>
 
-<!-- ══════════════ TAB 2: RECORDS ══════════════ -->
-<div id="view-records">
-  <div class="rec-section-title">📋 備查記錄</div>
-  <div class="record-cards" id="record-cards"></div>
-</div>
+</main>
 
 <!-- ══════════════ MODAL ══════════════ -->
 <div id="modal-overlay">
   <div class="modal-box">
     <div class="modal-head">
       <h3 id="modal-title">操作</h3>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <button type="button" class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body" id="modal-body"></div>
     <div class="modal-footer" id="modal-footer"></div>
@@ -553,38 +603,39 @@ async function loadGasData() {
 const CH_ICONS = ['📜','🏢','🔧','⚙️','📚','❤️','🚑','🦺','📞','📌','📋'];
 
 /* ═══════════════════════════════════════════════════════════
-   TAB SWITCHING
+   MODULE SWITCHING
 ═══════════════════════════════════════════════════════════ */
-function switchMainTab(tab) {
-  document.getElementById('view-rules').style.display   = tab === 'rules'   ? 'flex' : 'none';
-  document.getElementById('view-records').style.display = tab === 'records' ? 'block' : 'none';
-  document.getElementById('mtab-rules').classList.toggle('active',   tab === 'rules');
-  document.getElementById('mtab-records').classList.toggle('active', tab === 'records');
+function showModule(n) {
+  [1, 2].forEach(i => {
+    document.getElementById('m' + i).classList.toggle('hidden', i !== n);
+    document.getElementById('nav-m' + i).classList.toggle('active', i === n);
+  });
 }
 
 /* ═══════════════════════════════════════════════════════════
-   BUILD CHAPTER SIDEBAR
+   BUILD CHAPTER TABS
 ═══════════════════════════════════════════════════════════ */
 let activeChapter = 1;
 
-function buildSidebar() {
-  const list = document.getElementById('ch-list');
-  list.innerHTML = '';
-  RULES_DATA.chapters.forEach((ch, i) => {
-    const d = document.createElement('div');
-    d.className = 'ch-item' + (ch.num === activeChapter ? ' active' : '');
-    d.innerHTML = `<div class="ch-num">第 ${ch.num} 章</div>${ch.title}`;
-    d.onclick = () => selectChapter(ch.num);
-    list.appendChild(d);
+function buildChapterTabs() {
+  const container = document.getElementById('ch-tabs');
+  container.innerHTML = '';
+  RULES_DATA.chapters.forEach(ch => {
+    const btn = document.createElement('button');
+    btn.className = 'chapter-tab' + (ch.num === activeChapter ? ' active' : '');
+    btn.textContent = `第${ch.num}章 ${ch.title}`;
+    btn.onclick = () => selectChapter(ch.num);
+    container.appendChild(btn);
   });
 }
 
 function selectChapter(num) {
   activeChapter = num;
-  document.querySelectorAll('.ch-item').forEach((el, i) => {
+  document.querySelectorAll('.chapter-tab').forEach((el, i) => {
     el.classList.toggle('active', RULES_DATA.chapters[i].num === num);
   });
   renderChapter(num, document.getElementById('search-box').value.trim());
+  window.scrollTo({ top: document.getElementById('ch-tabs').offsetTop - 80, behavior: 'smooth' });
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -981,7 +1032,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
   await loadGasData(); // 先從 GAS 取回已儲存的 URL 與日期
-  buildSidebar();
+  buildChapterTabs();
   renderChapter(1, '');
   buildRecords();
 });
