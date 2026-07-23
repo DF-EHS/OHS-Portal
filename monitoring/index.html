@@ -531,6 +531,29 @@ let curYear = 115;
 
 const SP_FOLDER = 'https://dfrecyclecom.sharepoint.com/:f:/g/HR/IgBHmFEiVJQ8SoKrHTBNufrqAX32FJWtJMsKe8yZ2FSzgE8?e=MCBK03';
 
+// ── Power Automate 自動上傳至 SharePoint ──
+// 部署 Power Automate 流程後填入 HTTP trigger URL；留空則維持舊有「手動上傳提示」行為
+const PA_URL = '';
+// SharePoint 資料夾相對路徑（在 Power Automate 建立檔案時使用）
+// 例如：「7.工安/8.作業環境監測」
+const PA_FOLDER = '7.工安/8.作業環境監測';
+
+async function spUpload(file, folder) {
+  if (!PA_URL || !file) return null;
+  try {
+    const dataUrl = await toBase64(file);
+    const base64  = dataUrl.split(',')[1]; // 去掉 "data:...;base64," 前綴
+    const resp = await fetch(PA_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fileName: file.name, fileContent: base64, folderPath: folder })
+    });
+    if (!resp.ok) return null;
+    const j = await resp.json();
+    return j.webUrl || null;
+  } catch { return null; }
+}
+
 // ── Dark mode ──
 function toggleDark() {
   const isDark = document.body.classList.toggle('dark');
@@ -1039,20 +1062,35 @@ function renderModalResult(data) {
   `;
 }
 
-function confirmAndUpdate() {
+async function confirmAndUpdate() {
   if (!lastAIData) return;
   const { year, site, half } = modalCtx;
+  const siteId   = site;
+  const siteName = SITES.find(s => s.id === site)?.name;
+  const halfLabel = half === 'H1' ? '上半年' : '下半年';
+  const fileName  = modalFile ? modalFile.name : '監測報告.pdf';
 
-  // Update RECORDS status
+  // ── 1. 嘗試自動上傳至 SharePoint ──
+  closeModal();
+  let uploadedUrl = null;
+  if (PA_URL && modalFile) {
+    const uploadBanner = showBanner('uploading',
+      `⏳ 正在上傳 ${fileName} 至 SharePoint…`, siteName, year, halfLabel);
+    uploadedUrl = await spUpload(modalFile, PA_FOLDER);
+    uploadBanner.remove();
+  }
+
+  const finalUrl = uploadedUrl || SP_FOLDER;
+
+  // ── 2. 更新本地 RECORDS ──
   if (RECORDS[year]?.[site]?.[half]) {
     RECORDS[year][site][half].status = 'done';
-    if (!RECORDS[year][site][half].reportUrl) {
-      RECORDS[year][site][half].reportUrl = SP_FOLDER;
+    if (uploadedUrl || !RECORDS[year][site][half].reportUrl) {
+      RECORDS[year][site][half].reportUrl = finalUrl;
     }
   }
 
-  // Save values to Module 3
-  const siteId = site;
+  // ── 3. 寫入監測數值 ──
   (lastAIData.items || []).forEach(item => {
     (item.locations || []).forEach(loc => {
       VALUES.push({
@@ -1064,12 +1102,11 @@ function confirmAndUpdate() {
     });
   });
 
-  // Persist locally (immediate)
   saveAllRecords();
   saveValues();
 
-  // Persist to GAS (cross-device, async)
-  saveStatusToGAS(year, siteId, half, 'done', SP_FOLDER);
+  // ── 4. 同步至 GAS ──
+  saveStatusToGAS(year, siteId, half, 'done', finalUrl);
   const gasItems = (lastAIData.items || []).flatMap(item =>
     (item.locations || []).map(loc => ({
       item: item.name, location: loc.location,
@@ -1079,40 +1116,51 @@ function confirmAndUpdate() {
   );
   saveValuesToGAS(year, half, siteId, gasItems);
 
-  // Re-render Module 1 and 2
+  // ── 5. 重新渲染 ──
   if (curYear === year) renderYearReport(year);
   renderValues();
 
-  // Prompt manual SharePoint upload
-  const siteName = SITES.find(s => s.id === site)?.name;
-  const halfLabel = half === 'H1' ? '上半年' : '下半年';
-  const fileName = modalFile ? modalFile.name : '監測報告.pdf';
+  // ── 6. 結果橫幅 ──
+  if (uploadedUrl) {
+    showBanner('success',
+      `✅ 已上傳至 SharePoint 並自動歸檔`, siteName, year, halfLabel, uploadedUrl);
+  } else {
+    showBanner('manual',
+      `✅ 狀態已更新・監測數值已記錄`, siteName, year, halfLabel);
+  }
+}
 
-  closeModal();
-
-  // Show inline upload reminder instead of alert
+function showBanner(type, title, siteName, year, halfLabel, fileUrl) {
   const banner = document.createElement('div');
   banner.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9999;background:#0f172a;color:#fff;border-radius:14px;padding:18px 24px;box-shadow:0 8px 32px rgba(0,0,0,.4);max-width:480px;width:90%;font-size:13px;line-height:1.6';
+
+  if (type === 'uploading') {
+    banner.innerHTML = `<div style="font-weight:800;font-size:15px">${title}</div>`;
+    document.body.appendChild(banner);
+    return banner;
+  }
+
+  const actionBtn = type === 'success'
+    ? `<a href="${fileUrl}" target="_blank" style="flex:1;padding:9px 0;background:#15803d;color:#fff;border-radius:8px;text-align:center;font-weight:700;text-decoration:none;font-size:13px">📄 開啟已上傳檔案</a>`
+    : `<a href="${SP_FOLDER}" target="_blank" style="flex:1;padding:9px 0;background:#0284c7;color:#fff;border-radius:8px;text-align:center;font-weight:700;text-decoration:none;font-size:13px">📂 開啟 SharePoint 資料夾</a>`;
+
+  const note = type === 'success'
+    ? `<span style="color:#86efac">✔ 檔案已自動存入 SharePoint</span>`
+    : `請將檔案手動上傳至 SharePoint 資料夾以完成歸檔`;
+
   banner.innerHTML = `
-    <div style="font-weight:800;font-size:15px;margin-bottom:8px">✅ 狀態已更新・監測數值已記錄</div>
+    <div style="font-weight:800;font-size:15px;margin-bottom:8px">${title}</div>
     <div style="color:#94a3b8;margin-bottom:12px">
-      <strong style="color:#fff">${siteName}・${year}年度・${halfLabel}</strong><br>
-      📄 檔案：${fileName}<br>
-      請將此檔案上傳至 SharePoint 資料夾以完成歸檔：
+      <strong style="color:#fff">${siteName}・${year}年度・${halfLabel}</strong><br>${note}
     </div>
     <div style="display:flex;gap:10px">
-      <a href="${SP_FOLDER}" target="_blank"
-         style="flex:1;padding:9px 0;background:#0284c7;color:#fff;border-radius:8px;text-align:center;font-weight:700;text-decoration:none;font-size:13px">
-        📂 開啟 SharePoint 資料夾
-      </a>
-      <button onclick="this.closest('div[style]').remove()"
-              style="padding:9px 16px;background:#334155;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px">
-        關閉
-      </button>
-    </div>
-  `;
+      ${actionBtn}
+      <button onclick="this.closest('div[style*=fixed]').remove()"
+              style="padding:9px 16px;background:#334155;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px">關閉</button>
+    </div>`;
   document.body.appendChild(banner);
   setTimeout(() => banner.remove(), 30000);
+  return banner;
 }
 
 function toBase64(file) {
