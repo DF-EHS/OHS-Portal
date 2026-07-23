@@ -1069,27 +1069,63 @@ async function fireGasPost(payload) {
 }
 
 async function loadDrillsFromGAS() {
-  const res = await fireGasPost({ action:'loadDrills' });
-  if (!res || !res.ok || !res.rows || !res.rows.length) return;
-  res.rows.forEach(row => {
-    const entry = DRILLS.find(d => d.roc === Number(row.roc));
-    if (!entry) return;
-    const st = row.station, half = row.half;
-    if (!entry[st]) return;
-    entry[st][half] = { s: row.status, d: row.date || undefined, url: row.url || undefined };
-  });
-  renderDrills(activeRoc);
+  try {
+    const r = await fetch(FIRE_GAS_URL + '?action=loadDrills', { redirect: 'follow' });
+    const res = await r.json();
+    if (!res || !res.ok || !res.rows || !res.rows.length) {
+      console.warn('[fire GAS] loadDrills 無資料或失敗:', res);
+      return;
+    }
+    let rebuilt = false;
+    res.rows.forEach(row => {
+      let entry = DRILLS.find(d => d.roc === Number(row.roc));
+      if (!entry) {
+        // GAS 有此年度但前端陣列沒有（其他裝置新增的年度）→ 動態補上
+        entry = {
+          roc: Number(row.roc),
+          taichung: { h1: { s:'future' }, h2: { s:'future' } },
+          quanxing:  { h1: { s:'future' }, h2: { s:'future' } }
+        };
+        DRILLS.push(entry);
+        rebuilt = true;
+      }
+      const st = row.station, half = row.half;
+      if (!entry[st]) return;
+      entry[st][half] = { s: row.status, d: row.date || undefined, url: row.url || undefined };
+    });
+    if (rebuilt) {
+      DRILLS.sort((a, b) => b.roc - a.roc);
+      activeRoc = DRILLS[0].roc;
+      buildMatrix();   // 重建分頁標籤以顯示新年度
+    } else {
+      renderDrills(activeRoc);
+    }
+  } catch(e) {
+    console.error('[fire GAS] loadDrills 失敗:', e);
+  }
 }
 
 async function loadInspsFromGAS() {
-  const res = await fireGasPost({ action:'loadInsps' });
-  if (!res || !res.ok || !res.rows || !res.rows.length) return;
-  res.rows.forEach(row => {
-    const entry = INSPECTIONS.find(d => d.roc === Number(row.roc));
-    if (!entry) return;
-    entry[row.site] = { s: row.status, d: row.date || undefined, url: row.url || undefined };
-  });
-  buildInspMatrix();
+  try {
+    const r = await fetch(FIRE_GAS_URL + '?action=loadInsps', { redirect: 'follow' });
+    const res = await r.json();
+    if (!res || !res.ok || !res.rows || !res.rows.length) {
+      console.warn('[fire GAS] loadInsps 無資料或失敗:', res);
+      return;
+    }
+    res.rows.forEach(row => {
+      let entry = INSPECTIONS.find(d => d.roc === Number(row.roc));
+      if (!entry) {
+        entry = { roc: Number(row.roc), taichung: { s:'future' }, quanxing: { s:'future' }, wugu: { s:'future' } };
+        INSPECTIONS.push(entry);
+        INSPECTIONS.sort((a, b) => b.roc - a.roc);
+      }
+      entry[row.site] = { s: row.status, d: row.date || undefined, url: row.url || undefined };
+    });
+    buildInspMatrix();
+  } catch(e) {
+    console.error('[fire GAS] loadInsps 失敗:', e);
+  }
 }
 
 let _drillModalRoc     = null;
