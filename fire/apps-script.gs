@@ -4,7 +4,7 @@
 //  部署後，將 Web App URL 填入 fire/index.html FIRE_GAS_URL
 // ════════════════════════════════════════════════════
 
-const SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID'; // ← 填入你的 Google Sheet ID
+const SPREADSHEET_ID = '1HtyW2GtToFQVczVbchzQkYAlK3XsJU-djvkQqN5v4j4'; // ← 填入你的 Google Sheet ID
 
 const DRILL_SHEET   = '消防演練';
 const INSP_SHEET    = '年度檢修申報';
