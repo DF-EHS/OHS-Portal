@@ -1069,6 +1069,17 @@ async function fireGasPost(payload) {
   } catch(e) { return null; }
 }
 
+// GAS 從 Sheets 讀回日期時可能是 Date 物件 String()，需要標準化成 YYYY-MM-DD
+function parseGasDate(raw) {
+  if (!raw) return undefined;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;   // 已是 ISO 格式
+  const d = new Date(raw);
+  if (isNaN(d.getTime())) return undefined;
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${d.getFullYear()}-${m}-${day}`;
+}
+
 async function loadDrillsFromGAS() {
   try {
     const r = await fetch(FIRE_GAS_URL + '?action=loadDrills', { redirect: 'follow' });
@@ -1081,7 +1092,6 @@ async function loadDrillsFromGAS() {
     res.rows.forEach(row => {
       let entry = DRILLS.find(d => d.roc === Number(row.roc));
       if (!entry) {
-        // GAS 有此年度但前端陣列沒有（其他裝置新增的年度）→ 動態補上
         entry = {
           roc: Number(row.roc),
           taichung: { h1: { s:'future' }, h2: { s:'future' } },
@@ -1092,12 +1102,19 @@ async function loadDrillsFromGAS() {
       }
       const st = row.station, half = row.half;
       if (!entry[st]) return;
-      entry[st][half] = { s: row.status, d: row.date || undefined, url: row.url || undefined };
+      const existing = entry[st][half] || {};
+      const gasDate  = parseGasDate(row.date);
+      // merge：GAS 有值才覆蓋，避免 Sheets 日期格式問題蓋掉硬碼的正確值
+      entry[st][half] = {
+        s:   row.status || existing.s,
+        d:   gasDate    || existing.d,
+        url: row.url    || existing.url
+      };
     });
     if (rebuilt) {
       DRILLS.sort((a, b) => b.roc - a.roc);
       activeRoc = DRILLS[0].roc;
-      buildMatrix();   // 重建分頁標籤以顯示新年度
+      buildMatrix();
     } else {
       renderDrills(activeRoc);
     }
@@ -1121,7 +1138,13 @@ async function loadInspsFromGAS() {
         INSPECTIONS.push(entry);
         INSPECTIONS.sort((a, b) => b.roc - a.roc);
       }
-      entry[row.site] = { s: row.status, d: row.date || undefined, url: row.url || undefined };
+      const existing = entry[row.site] || {};
+      const gasDate  = parseGasDate(row.date);
+      entry[row.site] = {
+        s:   row.status || existing.s,
+        d:   gasDate    || existing.d,
+        url: row.url    || existing.url
+      };
     });
     buildInspMatrix();
   } catch(e) {

@@ -58,7 +58,17 @@ function getAllRows(sheetName, headers) {
   const hdr = vals[0];
   return vals.slice(1).map(r => {
     const o = {};
-    hdr.forEach((h, i) => o[h] = String(r[i] == null ? '' : r[i]));
+    hdr.forEach((h, i) => {
+      const v = r[i];
+      if (v instanceof Date) {
+        // Sheets 會把日期字串自動轉成 Date 物件，強制輸出 YYYY-MM-DD
+        const mm  = String(v.getMonth() + 1).padStart(2, '0');
+        const dd  = String(v.getDate()).padStart(2, '0');
+        o[h] = `${v.getFullYear()}-${mm}-${dd}`;
+      } else {
+        o[h] = String(v == null ? '' : v);
+      }
+    });
     return o;
   });
 }
