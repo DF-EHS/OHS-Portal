@@ -779,6 +779,11 @@ function promptAddDrillYear() {
     quanxing:  { h1: { s:'future' }, h2: { s:'future' } }
   });
   saveDrillsLocal();
+  ['taichung', 'quanxing'].forEach(st =>
+    ['h1', 'h2'].forEach(h =>
+      fireGasPost({ action:'saveDrill', roc: next, station: st, half: h, status:'future', date:'', url:'' })
+    )
+  );
   activeRoc = next;
   buildMatrix();
 }
