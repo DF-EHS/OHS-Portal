@@ -591,8 +591,14 @@ async function loadGasData() {
   try {
     const resp = await fetch(GAS_URL + '?action=getAll', { redirect: 'follow' });
     const j = await resp.json();
-    if (j.success) gasData = j.data || {};
+    if (j.success) {
+      gasData = j.data || {};
+      console.log('[workreg GAS] 讀取成功，筆數:', Object.keys(gasData).length);
+    } else {
+      console.error('[workreg GAS] GET 回傳錯誤:', j);
+    }
   } catch (e) {
+    console.error('[workreg GAS] GET 失敗（網路或 JSON 解析錯誤）:', e);
     gasData = {};
   }
 }
@@ -1001,10 +1007,17 @@ function confirmAIResult() {
   refreshCard(_aiRecId);
 }
 
-function gasPost(payload) {
-  if (!GAS_URL) return Promise.resolve(null);
-  return fetch(GAS_URL, { method: 'POST', redirect: 'follow', body: JSON.stringify(payload) })
-    .then(r => r.json()).catch(() => null);
+async function gasPost(payload) {
+  if (!GAS_URL) return null;
+  try {
+    const r = await fetch(GAS_URL, { method: 'POST', redirect: 'follow', body: JSON.stringify(payload) });
+    const j = await r.json();
+    if (!j.success) console.error('[workreg GAS] POST 回傳錯誤:', j);
+    return j;
+  } catch (e) {
+    console.error('[workreg GAS] POST 失敗:', e);
+    return null;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════
