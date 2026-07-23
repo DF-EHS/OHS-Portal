@@ -624,6 +624,8 @@ function showModule(n) {
   });
 }
 
+const FIRE_GAS_URL = 'https://script.google.com/macros/s/AKfycbx1uW0tYa7NjXQL1i4S1aNXFHxl_q7oLWhOxqfIfNTy4KlL8VggvyhLaQWgfJwrybDU3g/exec';
+
 // ─────────────────────────────────────────────
 //  消防演練合規矩陣
 //  s: 'done'=已完成  'missing'=未記錄  'pending'=待補上傳  'future'=未到期
@@ -1058,7 +1060,6 @@ loadInspsFromGAS();
 //  消防演練 — AI 日期上傳 Modal
 // ─────────────────────────────────────────────
 const FIRE_AI_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
-const FIRE_GAS_URL   = 'https://script.google.com/macros/s/AKfycbx1uW0tYa7NjXQL1i4S1aNXFHxl_q7oLWhOxqfIfNTy4KlL8VggvyhLaQWgfJwrybDU3g/exec';
 
 async function fireGasPost(payload) {
   if (!FIRE_GAS_URL || FIRE_GAS_URL === 'YOUR_FIRE_GAS_URL') return null;
