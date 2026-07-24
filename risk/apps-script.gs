@@ -136,7 +136,11 @@ function buildAllData() {
       };
     }
     // id === '__sheet__' 為空作業表 placeholder，只建立 sheet 結構，不加入 items
-    if (String(r.id) === '__sheet__') return;
+    if (String(r.id) === '__sheet__') {
+      // control 欄借用來存自訂 icon，優先於關鍵字自動偵測
+      if (r.control) depts[did]._sheets[sid].icon = r.control;
+      return;
+    }
     depts[did]._sheets[sid].items.push({
       id:          String(r.id          || ''),
       process:     String(r.process     || ''),
@@ -200,7 +204,7 @@ function deleteItem(id) {
 }
 
 // ── 新增或更新空作業表（placeholder row）────────────────
-function saveSheet(deptId, sheetId, sheetName) {
+function saveSheet(deptId, sheetId, sheetName, icon) {
   const sheet = getSheet();
   const vals  = sheet.getDataRange().getValues();
   if (vals.length < 2) return { ok: false, error: 'No header row' };
@@ -209,12 +213,14 @@ function saveSheet(deptId, sheetId, sheetName) {
   const sheetCol = hdr.indexOf('sheet_id');
   const idCol    = hdr.indexOf('id');
   const nameCol  = hdr.indexOf('sheet_name');
-  // 若已存在 placeholder，僅更新 sheet_name
+  const ctrlCol  = hdr.indexOf('control'); // 借用 control 欄存自訂 icon
+  // 若已存在 placeholder，更新 sheet_name 和 icon
   for (let i = 1; i < vals.length; i++) {
     if (String(vals[i][deptCol]) === String(deptId) &&
         String(vals[i][sheetCol]) === String(sheetId) &&
         String(vals[i][idCol]) === '__sheet__') {
       sheet.getRange(i + 1, nameCol + 1).setValue(sheetName);
+      if (icon && ctrlCol >= 0) sheet.getRange(i + 1, ctrlCol + 1).setValue(icon);
       return { ok: true, action: 'updated' };
     }
   }
@@ -224,6 +230,7 @@ function saveSheet(deptId, sheetId, sheetName) {
     if (h === 'sheet_id')   return sheetId;
     if (h === 'sheet_name') return sheetName;
     if (h === 'id')         return '__sheet__';
+    if (h === 'control')    return icon || '';  // 借用 control 欄存自訂 icon
     return '';
   });
   sheet.appendRow(row);

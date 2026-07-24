@@ -556,7 +556,7 @@
       </div>
       <div class="fg">
         <label>圖示（Emoji）</label>
-        <input id="sf-icon" class="fi" placeholder="e.g. 📦" maxlength="4">
+        <input id="sf-icon" class="fi" placeholder="e.g. 📦">
       </div>
     </div>
     <div class="mfoot">
@@ -6945,7 +6945,7 @@ function saveSheet() {
   renderSummary();
   renderStatsBar('summary');
   initHome();
-  apiPost({ action: 'saveSheet', dept_id: dept.dept_id, sheet_id: sheetId, sheet_name: name })
+  apiPost({ action: 'saveSheet', dept_id: dept.dept_id, sheet_id: sheetId, sheet_name: name, icon })
     .then(r => toast(r && r.ok ? '作業表已同步至雲端 ✓' : '本機已儲存，但雲端同步失敗', r && r.ok ? '' : 'err'))
     .catch(() => toast('本機已儲存，但雲端連線失敗', 'err'));
 }
