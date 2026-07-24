@@ -232,6 +232,17 @@
   body.dark .ai-photo-hdr{color:#93c5fd;}
   body.dark .ai-photo-label{background:#1e2d40;border-color:#2d4a7a;color:#93c5fd;}
   body.dark .ai-photo-label:hover{background:#243550;}
+  .modal-photos-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px;}
+  .mp-thumb-wrap{position:relative;width:60px;height:60px;flex-shrink:0;}
+  .mp-thumb-wrap img{width:60px;height:60px;object-fit:cover;border-radius:8px;border:1.5px solid #93c5fd;display:block;}
+  .mp-rm{position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:#dc2626;border:none;color:#fff;font-size:11px;line-height:18px;text-align:center;cursor:pointer;padding:0;}
+  .mp-add{width:60px;height:60px;border:2px dashed #93c5fd;border-radius:8px;background:#fff;color:#2563eb;font-size:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .mp-add:hover{background:#eff6ff;}
+  .ai-photo-desc{margin-top:8px;}
+  .ai-photo-desc textarea{width:100%;box-sizing:border-box;padding:6px 8px;border:1px solid #bfdbfe;border-radius:7px;font-size:12px;resize:none;background:#fff;color:inherit;font-family:inherit;}
+  body.dark .mp-add{background:#1e2d40;border-color:#2d4a7a;color:#93c5fd;}
+  body.dark .mp-add:hover{background:#243550;}
+  body.dark .ai-photo-desc textarea{background:#1e2d40;border-color:#2d4a7a;color:#e2e8f0;}
 
   /* confirm dialog */
   .confirm-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1100;
@@ -416,14 +427,15 @@
     </div>
     <div class="mbody">
       <div class="ai-photo-section">
-        <div class="ai-photo-hdr">📷 拍照辨識危害，AI 自動填入表單</div>
-        <div class="ai-photo-row">
-          <label class="ai-photo-label" for="modal-photo-input">📷 拍照 / 上傳圖片</label>
-          <input id="modal-photo-input" type="file" accept="image/*" capture="environment" style="display:none" onchange="onModalPhoto(this)">
-          <div id="modal-photo-preview" class="ai-photo-preview">
-            <img id="modal-photo-thumb" src="" alt="preview">
-            <button class="ai-photo-clear" onclick="clearModalPhoto()" title="移除照片">✕</button>
-          </div>
+        <div class="ai-photo-hdr">📷 拍照辨識危害，AI 自動填入表單（最多 5 張）</div>
+        <div id="modal-photos-row" class="modal-photos-row">
+          <button class="mp-add" id="mp-add-btn" onclick="document.getElementById('modal-photo-input').click()" title="新增照片">＋</button>
+        </div>
+        <input id="modal-photo-input" type="file" accept="image/*" capture="environment" style="display:none" onchange="onModalPhoto(this)">
+        <div class="ai-photo-desc">
+          <textarea id="modal-photo-desc" rows="2" placeholder="（選填）簡短描述作業情境，讓 AI 辨識更精準，例如：磨刀機台旁更換磨輪作業"></textarea>
+        </div>
+        <div style="margin-top:8px;">
           <button id="btn-ai-fill" class="btn-ai-fill" onclick="analyzeHazardPhoto()" disabled>🤖 AI 自動填入</button>
         </div>
         <div id="ai-fill-status" class="ai-fill-status"></div>
@@ -6067,11 +6079,33 @@ function renderStatsBar(view) {
 // ════════════════════════════════════════════════════════
 // Item Modal
 // ════════════════════════════════════════════════════════
-let modalPhotoB64 = null, modalPhotoMime = null;
+let modalPhotos = []; // [{b64, mime, dataUrl}, ...]
+
+function renderPhotoThumbs() {
+  const row = document.getElementById('modal-photos-row');
+  const addBtn = document.getElementById('mp-add-btn');
+  row.querySelectorAll('.mp-thumb-wrap').forEach(el => el.remove());
+  modalPhotos.forEach((photo, idx) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'mp-thumb-wrap';
+    wrap.innerHTML = `<img src="${photo.dataUrl}" alt="photo ${idx+1}">
+      <button class="mp-rm" onclick="removeModalPhoto(${idx})" title="移除">✕</button>`;
+    row.insertBefore(wrap, addBtn);
+  });
+  addBtn.style.display = modalPhotos.length >= 5 ? 'none' : 'flex';
+  document.getElementById('btn-ai-fill').disabled = modalPhotos.length === 0;
+}
+
+function removeModalPhoto(idx) {
+  modalPhotos.splice(idx, 1);
+  renderPhotoThumbs();
+}
 
 function onModalPhoto(input) {
   const file = input.files[0];
   if (!file) return;
+  input.value = '';
+  if (modalPhotos.length >= 5) return;
   const img = new Image();
   img.onload = () => {
     const MAX = 1024;
@@ -6084,11 +6118,8 @@ function onModalPhoto(input) {
     cv.width = w; cv.height = h;
     cv.getContext('2d').drawImage(img, 0, 0, w, h);
     const dataUrl = cv.toDataURL('image/jpeg', 0.85);
-    modalPhotoB64 = dataUrl.split(',')[1];
-    modalPhotoMime = 'image/jpeg';
-    document.getElementById('modal-photo-thumb').src = dataUrl;
-    document.getElementById('modal-photo-preview').style.display = 'flex';
-    document.getElementById('btn-ai-fill').disabled = false;
+    modalPhotos.push({ b64: dataUrl.split(',')[1], mime: 'image/jpeg', dataUrl });
+    renderPhotoThumbs();
     const st = document.getElementById('ai-fill-status');
     st.style.display = 'none'; st.textContent = '';
   };
@@ -6096,24 +6127,27 @@ function onModalPhoto(input) {
 }
 
 function clearModalPhoto() {
-  modalPhotoB64 = null; modalPhotoMime = null;
-  document.getElementById('modal-photo-preview').style.display = 'none';
-  document.getElementById('modal-photo-thumb').src = '';
+  modalPhotos = [];
+  renderPhotoThumbs();
   document.getElementById('modal-photo-input').value = '';
-  document.getElementById('btn-ai-fill').disabled = true;
+  document.getElementById('modal-photo-desc').value = '';
   const st = document.getElementById('ai-fill-status');
   st.style.display = 'none'; st.textContent = '';
 }
 
 async function analyzeHazardPhoto() {
-  if (!modalPhotoB64) return;
+  if (!modalPhotos.length) return;
   const btn = document.getElementById('btn-ai-fill');
   const st  = document.getElementById('ai-fill-status');
   btn.disabled = true; btn.textContent = '⏳ AI 辨識中…';
   st.style.display = 'block'; st.style.color = 'var(--blue)';
   st.textContent = '正在分析照片，請稍候…';
 
-  const prompt = `你是職業安全衛生危害辨識專家。請分析這張作業現場照片，辨識可見的危害。
+  const desc = document.getElementById('modal-photo-desc').value.trim();
+  const descHint = desc ? `\n\n補充說明：${desc}` : '';
+  const photoWord = modalPhotos.length > 1 ? '幾張' : '張';
+
+  const prompt = `你是職業安全衛生危害辨識專家。請分析這${photoWord}作業現場照片，辨識可見的危害。${descHint}
 只回傳 JSON，不要加任何說明文字，所有欄位使用繁體中文：
 {
   "process": "製程或活動（例如：機械作業、搬運作業、高架作業）",
@@ -6131,7 +6165,10 @@ async function analyzeHazardPhoto() {
     const resp = await fetch(RISK_WORKER, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: prompt, images: ['data:' + modalPhotoMime + ';base64,' + modalPhotoB64] }),
+      body: JSON.stringify({
+        text: prompt,
+        images: modalPhotos.map(p => 'data:' + p.mime + ';base64,' + p.b64)
+      }),
     });
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const d = await resp.json();
