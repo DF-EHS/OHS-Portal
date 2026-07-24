@@ -6747,12 +6747,19 @@ function showLoader(v) {
 }
 
 async function apiPost(payload) {
-  const res = await fetch(GS_API, {
-    method: 'POST', redirect: 'follow',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(payload)
-  });
-  return res.json();
+  try {
+    const res = await fetch(GS_API, {
+      method: 'POST', redirect: 'follow',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+    const j = await res.json();
+    if (!j.ok) console.error('[risk GAS] 回傳錯誤:', j);
+    return j;
+  } catch(e) {
+    console.error('[risk GAS] 連線失敗:', e);
+    throw e;
+  }
 }
 
 // 覆寫 confirmDeleteSheet：本機刪除後非同步同步雲端
@@ -6915,6 +6922,33 @@ async function loadFromCloud() {
 // 覆寫 loadData / saveData（雲端為主，localStorage 棄用）
 function loadData() { if (!ALL_DATA || !ALL_DATA.length) ALL_DATA = []; }
 function saveData() {}
+
+// 覆寫 saveSheet：新增/編輯作業表後同步雲端
+function saveSheet() {
+  const name = document.getElementById('sf-name').value.trim();
+  const icon = document.getElementById('sf-icon').value.trim() || '📄';
+  if (!name) { toast('請填寫作業表名稱', 'err'); return; }
+  const dept = ALL_DATA.find(d => d.dept_id === curDept.dept_id);
+  let sheetId;
+  if (sheetModalMode === 'add') {
+    sheetId = document.getElementById('sf-id').value;
+    dept.sheets.push({ id: sheetId, name, icon, ic:'ic-blue', items:[] });
+    toast('新增中，同步雲端…');
+  } else {
+    sheetId = document.getElementById('sf-id').value;
+    const sheet = findSheet(dept, sheetId);
+    if (sheet) { sheet.name = name; sheet.icon = icon; }
+    toast('更新中，同步雲端…');
+  }
+  curDept = dept;
+  closeSheetModal();
+  renderSummary();
+  renderStatsBar('summary');
+  initHome();
+  apiPost({ action: 'saveSheet', dept_id: dept.dept_id, sheet_id: sheetId, sheet_name: name })
+    .then(r => toast(r && r.ok ? '作業表已同步至雲端 ✓' : '本機已儲存，但雲端同步失敗', r && r.ok ? '' : 'err'))
+    .catch(() => toast('本機已儲存，但雲端連線失敗', 'err'));
+}
 
 // 覆寫 saveItem：更新記憶體後非同步同步雲端
 function saveItem() {

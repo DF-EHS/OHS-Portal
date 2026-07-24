@@ -76,6 +76,8 @@ function doPost(e) {
       result = p.action === 'add' ? addItem(item) : updateItem(item);
     } else if (p.action === 'delete') {
       result = deleteItem(p.item_id || p.id);
+    } else if (p.action === 'saveSheet') {
+      result = saveSheet(p.dept_id, p.sheet_id, p.sheet_name);
     } else if (p.action === 'deleteSheet') {
       result = deleteSheet(p.dept_id, p.sheet_id);
     } else if (p.action === 'bulkSync') {
@@ -133,6 +135,8 @@ function buildAllData() {
         items: []
       };
     }
+    // id === '__sheet__' 為空作業表 placeholder，只建立 sheet 結構，不加入 items
+    if (String(r.id) === '__sheet__') return;
     depts[did]._sheets[sid].items.push({
       id:          String(r.id          || ''),
       process:     String(r.process     || ''),
@@ -193,6 +197,37 @@ function deleteItem(id) {
     }
   }
   return { ok: false, error: 'Record not found' };
+}
+
+// ── 新增或更新空作業表（placeholder row）────────────────
+function saveSheet(deptId, sheetId, sheetName) {
+  const sheet = getSheet();
+  const vals  = sheet.getDataRange().getValues();
+  if (vals.length < 2) return { ok: false, error: 'No header row' };
+  const hdr      = vals[0];
+  const deptCol  = hdr.indexOf('dept_id');
+  const sheetCol = hdr.indexOf('sheet_id');
+  const idCol    = hdr.indexOf('id');
+  const nameCol  = hdr.indexOf('sheet_name');
+  // 若已存在 placeholder，僅更新 sheet_name
+  for (let i = 1; i < vals.length; i++) {
+    if (String(vals[i][deptCol]) === String(deptId) &&
+        String(vals[i][sheetCol]) === String(sheetId) &&
+        String(vals[i][idCol]) === '__sheet__') {
+      sheet.getRange(i + 1, nameCol + 1).setValue(sheetName);
+      return { ok: true, action: 'updated' };
+    }
+  }
+  // 不存在則新增 placeholder row
+  const row = hdr.map(h => {
+    if (h === 'dept_id')    return deptId;
+    if (h === 'sheet_id')   return sheetId;
+    if (h === 'sheet_name') return sheetName;
+    if (h === 'id')         return '__sheet__';
+    return '';
+  });
+  sheet.appendRow(row);
+  return { ok: true, action: 'inserted' };
 }
 
 // ── 刪除整個作業表（所有 sheet_id 符合的列）───────────
