@@ -2,7 +2,7 @@
 // 危害鑑別及風險評估  Apps Script API
 // ════════════════════════════════════════════════════
 
-const SPREADSHEET_ID = '1OPYxtVRu--L7NybnHOBvrwTCQVKxM9pGsu9DpbhJcy8';
+const SPREADSHEET_ID = '1-nifpmVMImmZ4aUCKrVjWxG6Tq_CKk9-TozoFrJ7PAA';
 
 // 廠別靜態資訊（圖示、類別等不常變動的欄位）
 const DEPT_META = {
@@ -77,7 +77,7 @@ function doPost(e) {
     } else if (p.action === 'delete') {
       result = deleteItem(p.item_id || p.id);
     } else if (p.action === 'saveSheet') {
-      result = saveSheet(p.dept_id, p.sheet_id, p.sheet_name);
+      result = saveSheet(p.dept_id, p.sheet_id, p.sheet_name, p.icon || '');
     } else if (p.action === 'deleteSheet') {
       result = deleteSheet(p.dept_id, p.sheet_id);
     } else if (p.action === 'bulkSync') {
