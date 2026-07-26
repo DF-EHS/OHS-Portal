@@ -28,7 +28,7 @@
       "link": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE93UFZZd2xzSFNoZVRnbVpMdGt0NXdTWmEzNWlYUnZUMzYxSzNsQ1dGaUdPZ3FjdzYtRC14NWFNQ1lpdGdFaFpB0gFLQVVfeXFMT2RrLU9fYmVaNmkxa3pQRjh0b3Y5S2RhYVJmbFVLOHUwRzBPeVhFWk9GYi1PWUFGbkhXUTQ4LXVjYnlNQWFSOXNyd2Zv?oc=5",
       "pubDate": "Thu, 23 Jul 2026 23:20:08 GMT",
       "pubTs": 1784848808.0,
-      "desc": "勞工職業災害保險及保護法 111年5月上路&nbsp;&nbsp;三立新聞網SETN.com",
+      "desc": "勞工職業災害保險及保護法 111年5月上路&nbsp;&nbsp;三立新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -177,6 +177,17 @@
       "badge": "red"
     },
     {
+      "key": "a94c2681f611bd25",
+      "title": "花蓮吉安高溫釀意外！工人從鷹架墜落破頭原因曝光",
+      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBzYjU4UVBwTmxlVzVtTlRvYV9UVDNrbmdISV9KZmxObHZiQXI3VWZCSE1xT29CMzFGUm84UXppUHlzTmF4dmltSDE0TzQ2UWhaeVdz?oc=5",
+      "pubDate": "Tue, 21 Jul 2026 07:16:36 GMT",
+      "pubTs": 1784618196.0,
+      "desc": "花蓮吉安高溫釀意外！工人從鷹架墜落破頭原因曝光&nbsp;&nbsp;中天新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "858abfbbf660a97d",
       "title": "吉安工安意外！ 梯子疑沒架穩工人1.5米高重摔- 社會",
       "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1vY2lTdDQwVUNNTEZyc1NPSlFjUllyRmVwYm5jYzVMTmdMZUtVYW5WR3RVV1JKMzlLeV84OFZOVE9PdlJDaE5FZWV2NTJzMUpLaXhqa3U2c3V2WlFJcnZIbW9kZ3JVY1VGdm5fb0hOVFI?oc=5",
@@ -285,6 +296,17 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "3268c84659139648",
+      "title": "《外送專法》明上路四大部會完成相關7項配套法規同步施行| 生活",
+      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFA2SVhyb0hwZlR5cTZlb3lMWmNOaTdYdFlBNjFFQXZYOTJ0MTFLVG9wZml0WFFxV3daS1lZd0N1M1JDUENOVDJGdElNY1Ixc3o4OWs3SXdSd3o1WjQ?oc=5",
+      "pubDate": "Mon, 20 Jul 2026 13:09:01 GMT",
+      "pubTs": 1784552941.0,
+      "desc": "《外送專法》明上路四大部會完成相關7項配套法規同步施行| 生活&nbsp;&nbsp;Newtalk新聞",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
     },
     {
       "key": "abc6a175c3c4009f",
@@ -587,8 +609,8 @@
       "key": "730d70f8610e2999",
       "title": "職業災害：2025年死傷人數（因職災停工4天以上）達13萬5000人 其中3成為60歲以上銀髮族",
       "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5uVmp3N2k2YlRJZVZlekwwQ2s4T00zV25kMWFMUmhTZW1kZWh5cXVBYkd3SV9YM0FHdzVSTlhlLXNUbDUySTJ4VUd5UUh0SUt4dnJmRlIzYw?oc=5",
-      "pubDate": "Thu, 16 Jul 2026 04:00:02 GMT",
-      "pubTs": 1784174402.0,
+      "pubDate": "Thu, 16 Jul 2026 07:00:00 GMT",
+      "pubTs": 1784185200.0,
       "desc": "職業災害：2025年死傷人數（因職災停工4天以上）達13萬5000人 其中3成為60歲以上銀髮族&nbsp;&nbsp;nippon.com",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
@@ -947,28 +969,6 @@
       "badge": "red"
     },
     {
-      "key": "fa1d1d365a481c18",
-      "title": "平台工作者工傷收入補償 孫玉菡：工時愈長愈貼近一般僱員 - 20260712 - 港聞",
-      "link": "https://news.google.com/rss/articles/CBMivgNBVV95cUxQWVExVllwWXNuNkVWTmhtTWc1bWFTajhuSlFMM2hSdzhyVmZkRGkxV0hxZUpNazZxZ21jcGRJdzJ1V3FqNjRMYjVlZTFwZGQ1eXlZNFQxWDVfYlg0SDRNTXJYQU9wc29CTjBTMHZDaFpiSnNXYkEtbHkwYzgzUm9ydDV3Ni1RTlhUMEQxUEhRdlFSS3BzNUJESVNwYjVlNmFCQUtCWTFzVWFCNjR4SnBHX2g3TTk2LVF5WjJjbHJCZ3UzbGlIaE9KaF9RSE1rRmlWRkQxVzhDVjUyXzFpLVM0LWQ3REhpSmNhWnVuOUhRZjQ1Sy1GdEt3Uk1nTjJ4d2FYUWFuYWs5MVFhZGxsOXFtVWJKZEc2bk5uTE1VSXk0RkMtY3l1MHdJWVQya0dMVVVzRGhQMkM1eXlJeTQzVmx5aTRHUG5RQTdzN2VSMmk1d0R2N0NDX3dZTXp1YVhJdGVNQ05iZzRlREtXU0VWRTZXWFoyUFYxZEUwdEtfTjlaS0xUcXFoZ2RyX0N0Ni1uSzNfamItMEpLc3QwcVFKQWFoZ2N2UXVJSjZYb1JyWEFkWUVxTGZsSGYteFRRZlBpZw?oc=5",
-      "pubDate": "Sat, 11 Jul 2026 20:30:00 GMT",
-      "pubTs": 1783801800.0,
-      "desc": "平台工作者工傷收入補償 孫玉菡：工時愈長愈貼近一般僱員 - 20260712 - 港聞&nbsp;&nbsp;明報新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "7c9c74b30dcc4071",
-      "title": "外賣員送貨員擬設工傷補償機制孫玉菡：計及不同平台收入保障僱員同時營運商可承擔（湯偉圓報道）",
-      "link": "https://news.google.com/rss/articles/CBMi0ARBVV95cUxNNnZYSVE1MXRTYV9nSHE5SjlUcmxXNDZtRjJmbWw5eVNaajRJRXFUVzF5OVBINGpMYkxYbkNvZDJlMkNaMmladFluSDZyTzZ1OGNEYlgyVXhFWmlnbTR0TjRmbU1aRWhMdkNUM1FfTlBxdVVEMlZndS13aHk2RDNscEFxMmVlZ1U2RElZWkpsTWg5OGZtZVpNTmJMWVRGRUZ0RWJJT0VadXBWR25ad3dORURlOXE0RE9oaVlYY21BUmJlMWlJSVZ3TGZYUy1WRzNWMmx5QUJpQW9UOHZ3Y1daeFo2aFMtSGF0eTNGTHB5NFV4Wi1DaThyS3JCSFhxSjdhdGRNYjJnV1VOdkVqZGg3NTBxQWs1VmVYN09CbWtZNFYxZUYxb01IY0tWZUdZRW1oQUp3SzV3Qk8yeUt3M1NHZktFejMzVFQ3Q19XTEdKaGswQTlCUnpzVVlRVjh6X2k5R2xkWm9OVWdVRzBQcGRyU3B5U0N4bS01MEpabHRkb05vV0NTekI0dnJDelpVbExONnNza01EY2lYWXJja3hTSWY0VDB0ZUs5dm1uMUhDRXR6WWhJMXdEYWZIRURRZDBmeUFBX0RDYzM4TWEwMTdXVnJFcGdhX1docjJlQ2FTRzVyRGxOVDZGaU1qTW4telpjNnRRNkVhblhabjM0MlhmQTRVSTJzNE5jVzNKUlNFNkFmZHpYam53czRkSUNWSzhtOWxUZUhFZUlpSDFXanZJNXpDQlRmSVlrUG9PV3JUQXVlSnBKV2dhbEdfeHBiR0dR?oc=5",
-      "pubDate": "Sat, 11 Jul 2026 10:20:23 GMT",
-      "pubTs": 1783765223.0,
-      "desc": "外賣員送貨員擬設工傷補償機制孫玉菡：計及不同平台收入保障僱員同時營運商可承擔（湯偉圓報道）&nbsp;&nbsp;Yahoo",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
       "key": "66f8cfa51575ac5a",
       "title": "安全衛生設施及熱危害防護具補助申請踴躍，年度經費將用罄暫緩受理，將優先補助小微型企業及自營作業者，並持續爭取經費續辦",
       "link": "https://www.osha.gov.tw/48110/48417/48423/208741/",
@@ -1233,5 +1233,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-07-25T03:55:50.647473+00:00"
+  "lastUpdated": "2026-07-26T04:19:36.257742+00:00"
 }
