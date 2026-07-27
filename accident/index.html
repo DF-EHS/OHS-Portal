@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>職業災害分析系統 | 大豐環保科技</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <link rel="stylesheet" href="../shared/tokens.css">
 <link rel="stylesheet" href="../shared/components.css">
 <style>
@@ -129,6 +130,25 @@ tbody tr{cursor:pointer;}
 .dtl-lbl{font-size:11px;color:#94a3b8;font-weight:600;margin-bottom:3px;letter-spacing:.5px;}
 .dtl-val{font-size:13px;color:#0f172a;font-weight:600;line-height:1.6;white-space:pre-wrap;word-break:break-word;}
 .dtl-mute{font-size:13px;color:#cbd5e1;font-style:italic;}
+
+/* ── Import Upload ── */
+.btn-upload{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);border-radius:8px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s;white-space:nowrap;margin-left:auto;}
+.btn-upload:hover{background:rgba(255,255,255,.28);}
+.imp-bg{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:16px;}
+.imp-bg.open{display:flex;}
+.imp-card{background:var(--card);border-radius:14px;width:100%;max-width:700px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.35);overflow:hidden;}
+.imp-hdr{padding:16px 22px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.imp-hdr-title{font-size:15px;font-weight:700;}
+.imp-body{flex:1;overflow-y:auto;padding:20px 22px;}
+.imp-stat{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+.imp-stat-chip{padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;}
+.imp-new{background:#dcfce7;color:#166534;}
+.imp-skip{background:#f1f5f9;color:#64748b;}
+.imp-tbl{width:100%;border-collapse:collapse;font-size:12.5px;}
+.imp-tbl th{background:var(--navy);color:#fff;padding:7px 10px;text-align:left;}
+.imp-tbl td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+.imp-tbl tr.skip-row td{color:#94a3b8;}
+.imp-foot{padding:16px 22px;display:flex;gap:10px;justify-content:flex-end;border-top:1px solid var(--border);flex-shrink:0;}
 </style>
 </head>
 <body>
@@ -140,6 +160,8 @@ tbody tr{cursor:pointer;}
     <img src="../dafon-logo.png" alt="大豐環保科技">
     <span>大豐環保科技</span>
   </div>
+  <label class="btn-upload" for="bpm-file-input" title="上傳 BPM 匯出的 XLSX，自動同步職災紀錄">📂 上傳 BPM 資料</label>
+  <input id="bpm-file-input" type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="onBpmUpload(this)">
 </header>
 
 <div id="fbar" style="display:none">
@@ -247,6 +269,21 @@ tbody tr{cursor:pointer;}
 
 </main>
 
+<!-- Import Preview Modal -->
+<div class="imp-bg" id="imp-bg" onclick="if(event.target===this)closeImport()">
+  <div class="imp-card">
+    <div class="imp-hdr">
+      <span class="imp-hdr-title">📂 確認寫入 BPM 資料</span>
+      <button type="button" class="dtl-close" onclick="closeImport()">✕</button>
+    </div>
+    <div class="imp-body" id="imp-body"></div>
+    <div class="imp-foot">
+      <button type="button" class="ohs-btn ohs-btn-outline" onclick="closeImport()">取消</button>
+      <button type="button" class="ohs-btn ohs-btn-primary" id="imp-confirm-btn" onclick="confirmImport()">確認寫入 →</button>
+    </div>
+  </div>
+</div>
+
 <!-- Detail Modal -->
 <div class="dtl-bg" id="dtl-bg" onclick="closeDtl()">
   <div class="dtl-card" onclick="event.stopPropagation()">
@@ -264,6 +301,108 @@ const DATA_URL = 'https://script.google.com/macros/s/AKfycbxpgGnRKUtNPK6WmOYtnl_
 
 const PG = 20;
 let ALL = [], FRSR = {}, mode = 'm', pg = 1, CH = {}, _dr = [];
+
+// ── BPM 資料上傳（取代 import_accidents.py）────────────────────
+let _importRows = [];
+
+function _normDate(v) {
+  const s = String(v || '').replace(/[^0-9]/g, '');
+  return s.length === 8 ? `${s.slice(0,4)}-${s.slice(4,6)}-${s.slice(6)}` : String(v || '');
+}
+function _normEmpId(v) {
+  const s = String(v || '').trim();
+  return /^\d+$/.test(s) ? String(parseInt(s, 10)) : s;
+}
+function _rowKey(r) {
+  return _normDate(r['發生日期']) + '|' + _normEmpId(r['員工工號'] || '');
+}
+
+async function onBpmUpload(input) {
+  const file = input.files[0]; if (!file) return;
+  input.value = '';
+  try {
+    const ab = await file.arrayBuffer();
+    const wb = XLSX.read(ab, { type: 'array', raw: false });
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(ws, { raw: false, defval: '' });
+    if (!rows.length) { alert('檔案內沒有資料，請確認格式。'); return; }
+
+    rows.forEach(r => {
+      r['發生日期']     = _normDate(r['發生日期']);
+      r['改善完成日期'] = _normDate(r['改善完成日期'] || '');
+    });
+
+    const existingKeys = new Set(ALL.map(a => a.date + '|' + _normEmpId(a.empId)));
+    const newRows  = rows.filter(r => !existingKeys.has(_rowKey(r)));
+    const skipRows = rows.filter(r =>  existingKeys.has(_rowKey(r)));
+    _importRows = newRows;
+    openImportPreview(newRows, skipRows);
+  } catch(e) {
+    alert('無法解析檔案：' + e.message);
+    console.error('[BPM Upload]', e);
+  }
+}
+
+function openImportPreview(newRows, skipRows) {
+  const allRows = [...newRows, ...skipRows];
+  const rowHtml = allRows.map(r => {
+    const isSkip = skipRows.includes(r);
+    return `<tr class="${isSkip ? 'skip-row' : ''}">
+      <td>${_esc(r['發生日期'])}</td>
+      <td>${_esc(r['員工姓名'])}</td>
+      <td>${_esc(r['事故類型'])}</td>
+      <td>${_esc(r['事發地點'] || '')}</td>
+      <td>${_esc(String(r['預估休息天數'] || 0))}</td>
+      <td>${isSkip ? '<span style="color:#94a3b8">略過</span>' : '<span style="color:#166534">✓ 新增</span>'}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('imp-body').innerHTML = `
+    <div class="imp-stat">
+      <span class="imp-stat-chip imp-new">✅ 新增：${newRows.length} 筆</span>
+      ${skipRows.length ? `<span class="imp-stat-chip imp-skip">⏭ 已存在（略過）：${skipRows.length} 筆</span>` : ''}
+    </div>
+    <div style="max-height:360px;overflow-y:auto">
+      <table class="imp-tbl">
+        <thead><tr><th>發生日期</th><th>姓名</th><th>事故類型</th><th>地點</th><th>休息天數</th><th>狀態</th></tr></thead>
+        <tbody>${rowHtml}</tbody>
+      </table>
+    </div>`;
+
+  const btn = document.getElementById('imp-confirm-btn');
+  btn.disabled = newRows.length === 0;
+  btn.textContent = newRows.length ? `確認寫入 ${newRows.length} 筆 →` : '無新資料';
+  document.getElementById('imp-bg').classList.add('open');
+}
+
+function closeImport() {
+  document.getElementById('imp-bg').classList.remove('open');
+}
+
+async function confirmImport() {
+  if (!_importRows.length) return;
+  const btn = document.getElementById('imp-confirm-btn');
+  btn.disabled = true; btn.textContent = '⏳ 寫入中…';
+  try {
+    const res = await fetch(DATA_URL, {
+      method: 'POST', redirect: 'follow',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'append', rows: _importRows })
+    });
+    const j = await res.json();
+    if (j.added !== undefined) {
+      closeImport();
+      alert(`✅ 成功新增 ${j.added} 筆！頁面即將重新載入。`);
+      location.reload();
+    } else {
+      throw new Error(j.error || '未知錯誤');
+    }
+  } catch(e) {
+    btn.disabled = false; btn.textContent = '重試';
+    alert('寫入失敗：' + e.message);
+    console.error('[confirmImport]', e);
+  }
+}
 
 // ── 載入 ────────────────────────────────────────────────────
 async function init() {
