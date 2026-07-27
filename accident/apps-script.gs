@@ -234,11 +234,17 @@ function _saveAnalysis(date, empId, analysisJson) {
     var s = String(v || '').trim();
     return /^\d+$/.test(s) ? String(parseInt(s, 10)) : s;
   };
-  var targetDate = String(date || '').trim();
+  // 統一日期格式為 YYYY-MM-DD（支援 20260304 與 2026-03-04 兩種輸入）
+  var normDateStr = function(v) {
+    var raw = _fmt(v).replace(/[^0-9]/g, '');
+    if (raw.length === 8) return raw.slice(0,4) + '-' + raw.slice(4,6) + '-' + raw.slice(6,8);
+    return _fmt(v);
+  };
+  var targetDate = normDateStr(date);
   var targetEmp  = normEmp(empId);
 
   for (var i = 1; i < data.length; i++) {
-    var rowDate = _fmt(data[i][dateCol]);
+    var rowDate = normDateStr(data[i][dateCol]);
     var rowEmp  = normEmp(data[i][empCol]);
     if (rowDate === targetDate && rowEmp === targetEmp) {
       sh.getRange(i + 1, aiCol + 1).setValue(analysisJson);
