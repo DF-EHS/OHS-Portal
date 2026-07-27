@@ -34,6 +34,7 @@ const COL_MAP = {
   '基本原因':                    'rootCause',
   '本案責任初步判定':            'responsibility',
   '是否懲處':                    'punished',
+  'ai_analysis':                 'aiAnalysis',
 };
 
 // 各年度總工時（人數 × 8小時 × 年工作天）
@@ -148,6 +149,7 @@ function doPost(e) {
     var b = JSON.parse(e.postData.contents);
     if (b.action === 'append')        return _resp(_appendRows(b.rows || []));
     if (b.action === 'deleteByKeys')  return _resp(_deleteByKeys(b.keys || []));
+    if (b.action === 'saveAnalysis')  return _resp(_saveAnalysis(b.date, b.empId, b.analysis));
     return _resp({ error: '未知的 action: ' + b.action });
   } catch(err) {
     return _resp({ error: err.toString() });
@@ -206,6 +208,44 @@ function _appendRows(rows) {
   });
 
   return { added: added };
+}
+
+// 儲存 AI 根因分析結果至 ai_analysis 欄（找不到欄則自動建立）
+function _saveAnalysis(date, empId, analysisJson) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheets()[0];
+  var data = sh.getDataRange().getValues();
+  if (data.length < 2) return { error: '無資料列' };
+
+  var rawHeaders = data[0].map(function(h){ return String(h).trim(); });
+  var dateCol = rawHeaders.indexOf('發生日期');
+  var empCol  = rawHeaders.indexOf('員工工號');
+  if (dateCol < 0 || empCol < 0) return { error: '找不到欄位' };
+
+  // ai_analysis 欄不存在則自動在最後一欄後新增
+  var aiCol = rawHeaders.indexOf('ai_analysis');
+  if (aiCol < 0) {
+    var nextCol = sh.getLastColumn() + 1;
+    sh.getRange(1, nextCol).setValue('ai_analysis');
+    aiCol = nextCol - 1; // 0-indexed
+  }
+
+  var normEmp = function(v) {
+    var s = String(v || '').trim();
+    return /^\d+$/.test(s) ? String(parseInt(s, 10)) : s;
+  };
+  var targetDate = String(date || '').trim();
+  var targetEmp  = normEmp(empId);
+
+  for (var i = 1; i < data.length; i++) {
+    var rowDate = _fmt(data[i][dateCol]);
+    var rowEmp  = normEmp(data[i][empCol]);
+    if (rowDate === targetDate && rowEmp === targetEmp) {
+      sh.getRange(i + 1, aiCol + 1).setValue(analysisJson);
+      return { ok: true };
+    }
+  }
+  return { error: '找不到對應記錄（' + date + ' / ' + empId + '）' };
 }
 
 function _resp(data) {

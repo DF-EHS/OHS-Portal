@@ -149,6 +149,35 @@ tbody tr{cursor:pointer;}
 .imp-tbl td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
 .imp-tbl tr.skip-row td{color:#94a3b8;}
 .imp-foot{padding:16px 22px;display:flex;gap:10px;justify-content:flex-end;border-top:1px solid var(--border);flex-shrink:0;}
+
+/* ── Detail Modal 加寬（容納 AI 三欄） ── */
+.dtl-card{max-width:780px!important;}
+
+/* ── AI 根因分析區塊 ── */
+.ai-gen-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;background:#7c3aed;border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s;}
+.ai-gen-btn:hover{background:#6d28d9;}
+.ai-gen-btn:disabled{opacity:.5;cursor:default;}
+.ai-5why{margin-bottom:14px;}
+.ai-5why-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;}
+.ai-5why-num{background:#7c3aed;color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;margin-top:2px;}
+.ai-5why-q{font-size:11px;color:var(--sub);margin-bottom:2px;}
+.ai-5why-a{font-size:12.5px;color:var(--text);font-weight:600;}
+.ai-dim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+.ai-dim-card{border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.5;}
+.ai-dim-eng{background:#eff6ff;border-left:3px solid #2563eb;}
+.ai-dim-mgmt{background:#fff7ed;border-left:3px solid #ea580c;}
+.ai-dim-train{background:#f0fdf4;border-left:3px solid #16a34a;}
+.ai-dim-title{font-weight:700;font-size:11px;margin-bottom:6px;color:var(--text);}
+.ai-dim-item{margin-bottom:3px;color:var(--text);}
+.ai-dim-item::before{content:'• ';}
+.ai-save-row{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);flex-wrap:wrap;}
+.ai-save-btn{padding:6px 16px;background:#059669;border:none;border-radius:7px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s;}
+.ai-save-btn:hover{background:#047857;}
+.ai-save-btn:disabled{opacity:.5;cursor:default;}
+.ai-saved-tag{font-size:11px;color:#059669;font-weight:700;}
+.ai-regen-btn{font-size:11px;color:var(--sub);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0;}
+.ai-sub-lbl{font-size:11px;color:var(--sub);margin-bottom:8px;}
+@media(max-width:600px){.ai-dim-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -595,6 +624,7 @@ function _esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'
 
 function openDtl(idx) {
   const a = _dr[idx]; if(!a) return;
+  _dtlAcc = a;
   function fv(v){ const s=(v!==undefined&&v!==null)?String(v).trim():''; return s?_esc(s):'<span class="dtl-mute">—</span>'; }
   function ft(v){ const s=(v!==undefined&&v!==null)?String(v).trim():''; return s?`<div class="dtl-val">${_esc(s)}</div>`:'<div class="dtl-mute">無資料</div>'; }
 
@@ -640,6 +670,10 @@ function openDtl(idx) {
         <div><div class="dtl-lbl">不安全狀況</div>${ft(a.unsafeCondition)}</div>
         <div><div class="dtl-lbl">基本原因</div>${ft(a.rootCause)}</div>
       </div>
+    </div>
+    <div class="dtl-sec">
+      <div class="dtl-sec-hd">🤖 AI 根因分析</div>
+      <div class="ai-sec-body" id="ai-sec-body">${_renderAiInitial(a)}</div>
     </div>`;
 
   document.getElementById('dtl-bg').classList.add('open');
@@ -647,6 +681,147 @@ function openDtl(idx) {
 
 function closeDtl() {
   document.getElementById('dtl-bg').classList.remove('open');
+}
+
+// ── AI 根因分析 ────────────────────────────────────────────────
+const RISK_WORKER = 'https://ohs-law-chatbot.df-hr-openai.workers.dev';
+const UNSAFE_BEHAVIORS = ['運轉中設備維護','使用設備不當','使安全裝置失效','胡亂喧鬧','未使用保護或警告措施','未使用個人防護裝備','穿戴不安全衣飾','使用手或肢體不當','不注意立足處','不安全的放置、混合、結合','採取不安全的動作，姿勢或位置','駕駛疏忽','以不安全的速度操作','採用不安全的設備（設備有缺陷）','其他'];
+const UNSAFE_CONDITIONS = ['工具、設備或物料有缺陷','防護不足或不當','佈置的危害','危險的方法或程序','工作環境以外的危害','警示系統不足','環境的危害','公共危害（交通）','其他'];
+const ROOT_CAUSES_LIST = ['缺乏知識或技能','身體不能適應','心智不適應','不適當的態度','不適當之機械或物質環境','不符合工作標準','工具或設備不足','壓力或疲勞','其他'];
+let _dtlAcc = null;
+
+function _renderAiInitial(a) {
+  let saved = null;
+  try { if (a.aiAnalysis) saved = JSON.parse(a.aiAnalysis); } catch(e){}
+  if (saved) return _renderAiResult(saved, true);
+  return `<button type="button" class="ai-gen-btn" onclick="runAiAnalysis()">🤖 AI 分析此事故</button>`;
+}
+
+function _renderAiResult(data, isSaved) {
+  const whyHtml = (data.fiveWhy || []).map((w, i) => `
+    <div class="ai-5why-row">
+      <div class="ai-5why-num">${i+1}</div>
+      <div>
+        <div class="ai-5why-q">${_esc(w.q)}</div>
+        <div class="ai-5why-a">${_esc(w.a)}</div>
+      </div>
+    </div>`).join('');
+
+  const imp = data.improvements || {};
+  const dimCards = `
+    <div class="ai-dim-grid">
+      <div class="ai-dim-card ai-dim-eng">
+        <div class="ai-dim-title">🔧 工程改善</div>
+        ${(imp.engineering||[]).map(t=>`<div class="ai-dim-item">${_esc(t)}</div>`).join('')}
+      </div>
+      <div class="ai-dim-card ai-dim-mgmt">
+        <div class="ai-dim-title">📋 管理改善</div>
+        ${(imp.management||[]).map(t=>`<div class="ai-dim-item">${_esc(t)}</div>`).join('')}
+      </div>
+      <div class="ai-dim-card ai-dim-train">
+        <div class="ai-dim-title">📚 教育訓練</div>
+        ${(imp.training||[]).map(t=>`<div class="ai-dim-item">${_esc(t)}</div>`).join('')}
+      </div>
+    </div>`;
+
+  const actionRow = isSaved
+    ? `<div class="ai-save-row">
+         <span class="ai-saved-tag">✅ 已儲存${data.generatedAt ? '（'+data.generatedAt+'）' : ''}</span>
+         <button type="button" class="ai-regen-btn" onclick="runAiAnalysis()">🔄 重新生成</button>
+       </div>`
+    : `<div class="ai-save-row">
+         <button type="button" class="ai-save-btn" id="ai-save-btn" onclick="saveAiAnalysis()">💾 儲存分析</button>
+         <button type="button" class="ai-regen-btn" onclick="runAiAnalysis()">🔄 重新生成</button>
+       </div>`;
+
+  return `
+    <div class="ai-sub-lbl">5 Why 根本原因推演</div>
+    <div class="ai-5why">${whyHtml}</div>
+    <div class="ai-sub-lbl">預防再發三維度改善建議</div>
+    ${dimCards}${actionRow}`;
+}
+
+async function runAiAnalysis() {
+  const a = _dtlAcc; if (!a) return;
+  const body = document.getElementById('ai-sec-body'); if (!body) return;
+  body.innerHTML = `<div style="color:var(--sub);font-size:13px;padding:10px 0">⏳ AI 分析中，請稍候…</div>`;
+
+  const prompt = `你是職業安全衛生分析專家。請分析以下職業災害，輸出結構化的根因分析結果。
+
+【事故資料】
+日期：${a.date}，部門：${a.dept}，地點：${a.location}
+事故分類：${a.accClass}，事故類型：${a.accType}
+描述：${a.description || '（無）'}
+不安全行為（原填）：${a.unsafeBehavior || '（無）'}
+不安全狀況（原填）：${a.unsafeCondition || '（無）'}
+基本原因（原填）：${a.rootCause || '（無）'}
+
+【不安全行為選項15項】：${UNSAFE_BEHAVIORS.join(' / ')}
+【不安全狀況選項9項】：${UNSAFE_CONDITIONS.join(' / ')}
+【基本原因選項9項】：${ROOT_CAUSES_LIST.join(' / ')}
+
+只回傳 JSON，不要加任何說明文字（繁體中文）：
+{
+  "fiveWhy": [
+    {"q":"為什麼發生此事故？","a":"..."},
+    {"q":"為什麼...？","a":"..."},
+    {"q":"為什麼...？","a":"..."},
+    {"q":"為什麼...？","a":"..."},
+    {"q":"根本原因是？","a":"..."}
+  ],
+  "improvements": {
+    "engineering": ["具體工程改善措施1","2"],
+    "management": ["管理改善措施1","2"],
+    "training": ["教育訓練措施1","2"]
+  }
+}`;
+
+  try {
+    const resp = await fetch(RISK_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: prompt })
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const d = await resp.json();
+    const raw = (d.data || d.text || '').replace(/```json\n?|```\n?/g, '').trim();
+    const m = raw.match(/\{[\s\S]*\}/);
+    if (!m) throw new Error('無法解析回應');
+    const parsed = JSON.parse(m[0]);
+    parsed.generatedAt = new Date().toISOString().slice(0, 10);
+    a._pendingAi = parsed;
+    body.innerHTML = _renderAiResult(parsed, false);
+  } catch(e) {
+    body.innerHTML = `<div style="color:var(--red);font-size:13px;margin-bottom:8px">❌ 分析失敗：${_esc(e.message)}</div>
+      <button type="button" class="ai-gen-btn" onclick="runAiAnalysis()">重試</button>`;
+    console.error('[runAiAnalysis]', e);
+  }
+}
+
+async function saveAiAnalysis() {
+  const a = _dtlAcc; if (!a) return;
+  const data = a._pendingAi; if (!data) return;
+  const btn = document.getElementById('ai-save-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ 儲存中…'; }
+  try {
+    const res = await fetch(DATA_URL, {
+      method: 'POST', redirect: 'follow',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'saveAnalysis', date: a.date, empId: a.empId, analysis: JSON.stringify(data) })
+    });
+    const j = await res.json();
+    if (j.ok) {
+      a.aiAnalysis = JSON.stringify(data);
+      a._pendingAi = null;
+      document.getElementById('ai-sec-body').innerHTML = _renderAiResult(data, true);
+    } else {
+      throw new Error(j.error || '未知錯誤');
+    }
+  } catch(e) {
+    if (btn) { btn.disabled = false; btn.textContent = '💾 儲存分析'; }
+    alert('儲存失敗：' + e.message);
+    console.error('[saveAiAnalysis]', e);
+  }
 }
 
 init();
