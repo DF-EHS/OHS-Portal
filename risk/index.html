@@ -583,7 +583,7 @@
     <div class="ua-body">
       <div id="re-stats" class="re-stat-chips"></div>
       <div style="font-size:12px;color:var(--sub);margin-bottom:10px;">
-        以下項目的建議等級與現值不同，將依職安署《風險評估技術指引》表九 4×4 矩陣重算。紅底 = 升級（風險提高）、綠底 = 降級（風險降低）。點「確認套用」後會逐筆同步至雲端。
+        僅重評 <b>現有等級 3、4、5</b> 的項目（L1、L2 維持原判斷不動）。以下為建議等級與現值不同的項目，依職安署《風險評估技術指引》表九 4×4 矩陣重算。紅底 = 升級（風險提高）、綠底 = 降級（風險降低）。點「確認套用」後會逐筆同步至雲端。
       </div>
       <table class="ua-table">
         <thead><tr>
@@ -7383,10 +7383,13 @@ var _reevalDiffs = [];
 function openReevalModal() {
   _reevalDiffs = [];
   var evaluable = 0;
+  var skippedLow = 0;
   ALL_DATA.forEach(function(dept) {
     (dept.sheets || []).forEach(function(sheet) {
       (sheet.items || []).forEach(function(item) {
         if (!item.freq || !item.prob || !item.severity) return;
+        // 現有等級 1 或 2 的項目維持原判斷，不列入重評
+        if (item.level === 1 || item.level === 2) { skippedLow++; return; }
         evaluable++;
         var newLv = suggestLevel(item.freq, item.prob, item.severity);
         if (newLv != null && newLv !== item.level) {
@@ -7405,9 +7408,10 @@ function openReevalModal() {
   var up = _reevalDiffs.filter(function(d){ return (d.newLv || 0) > (d.oldLv || 0); }).length;
   var down = _reevalDiffs.length - up;
   document.getElementById('re-count').textContent =
-    '掃描 ' + evaluable + ' 項可評估項目，需變動 ' + _reevalDiffs.length + ' 項';
+    '掃描 ' + (evaluable + skippedLow) + ' 項，僅重評等級 3–5，需變動 ' + _reevalDiffs.length + ' 項';
   document.getElementById('re-stats').innerHTML =
-    '<span class="re-stat-chip">可評估總數 <b>' + evaluable + '</b></span>' +
+    '<span class="re-stat-chip">重評範圍（L3–L5） <b>' + evaluable + '</b></span>' +
+    '<span class="re-stat-chip">跳過 L1/L2 <b>' + skippedLow + '</b></span>' +
     '<span class="re-stat-chip">🔺 升級 <b>' + up + '</b></span>' +
     '<span class="re-stat-chip">🔻 降級 <b>' + down + '</b></span>';
 
