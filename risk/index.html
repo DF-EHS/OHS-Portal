@@ -587,13 +587,14 @@
       </div>
       <table class="ua-table">
         <thead><tr>
-          <th style="width:70px">變動</th>
+          <th style="width:38px;text-align:center"><input type="checkbox" id="re-check-all" onchange="toggleReevalAll(this.checked)" checked></th>
+          <th style="width:60px">變動</th>
           <th style="width:72px">站點</th>
           <th style="width:110px">作業表</th>
           <th style="width:110px">危害因子</th>
-          <th style="width:70px">頻率</th>
-          <th style="width:70px">機率</th>
-          <th style="width:70px">嚴重度</th>
+          <th style="width:60px">頻率</th>
+          <th style="width:60px">機率</th>
+          <th style="width:60px">嚴重度</th>
           <th style="width:100px">原等級</th>
           <th style="width:100px">新等級</th>
         </tr></thead>
@@ -7415,18 +7416,24 @@ function openReevalModal() {
     '<span class="re-stat-chip">🔺 升級 <b>' + up + '</b></span>' +
     '<span class="re-stat-chip">🔻 降級 <b>' + down + '</b></span>';
 
+  // 預設全部勾選
+  _reevalDiffs.forEach(function(d){ d.checked = true; });
+
   var tbody = document.getElementById('re-tbody');
   var confirmBtn = document.getElementById('re-confirm');
+  var checkAll = document.getElementById('re-check-all');
   if (!_reevalDiffs.length) {
-    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:32px;color:var(--sub)">所有項目的現有等級都與新矩陣一致，無需重評 🎉</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:32px;color:var(--sub)">所有項目的現有等級都與新矩陣一致，無需重評 🎉</td></tr>';
     confirmBtn.disabled = true;
     confirmBtn.textContent = '無需套用';
+    if (checkAll) { checkAll.disabled = true; checkAll.checked = false; }
   } else {
-    tbody.innerHTML = _reevalDiffs.map(function(d) {
+    tbody.innerHTML = _reevalDiffs.map(function(d, idx) {
       var up = (d.newLv || 0) > (d.oldLv || 0);
       var cls = up ? 're-diff-up' : 're-diff-down';
       var arrow = up ? '🔺' : '🔻';
       return '<tr class="' + cls + '">' +
+        '<td style="text-align:center"><input type="checkbox" class="re-row-chk" data-idx="' + idx + '" checked onchange="onReevalRowCheck()"></td>' +
         '<td>' + arrow + '</td>' +
         '<td>' + esc(d.dept.dept_name) + '</td>' +
         '<td>' + esc(d.sheet.name) + '</td>' +
@@ -7438,11 +7445,41 @@ function openReevalModal() {
         '<td>' + lvBadge(d.newLv) + '</td>' +
         '</tr>';
     }).join('');
-    confirmBtn.disabled = false;
-    confirmBtn.textContent = '確認套用（' + _reevalDiffs.length + ' 筆）';
+    if (checkAll) { checkAll.disabled = false; checkAll.checked = true; checkAll.indeterminate = false; }
+    updateReevalConfirmBtn();
   }
   document.getElementById('re-progress').textContent = '';
   document.getElementById('reeval-modal').classList.add('open');
+}
+
+function toggleReevalAll(checked) {
+  _reevalDiffs.forEach(function(d){ d.checked = checked; });
+  document.querySelectorAll('.re-row-chk').forEach(function(cb){ cb.checked = checked; });
+  var checkAll = document.getElementById('re-check-all');
+  if (checkAll) checkAll.indeterminate = false;
+  updateReevalConfirmBtn();
+}
+
+function onReevalRowCheck() {
+  document.querySelectorAll('.re-row-chk').forEach(function(cb) {
+    var idx = parseInt(cb.dataset.idx, 10);
+    if (!isNaN(idx) && _reevalDiffs[idx]) _reevalDiffs[idx].checked = cb.checked;
+  });
+  var total = _reevalDiffs.length;
+  var checked = _reevalDiffs.filter(function(d){ return d.checked; }).length;
+  var checkAll = document.getElementById('re-check-all');
+  if (checkAll) {
+    checkAll.checked = checked === total;
+    checkAll.indeterminate = checked > 0 && checked < total;
+  }
+  updateReevalConfirmBtn();
+}
+
+function updateReevalConfirmBtn() {
+  var confirmBtn = document.getElementById('re-confirm');
+  var n = _reevalDiffs.filter(function(d){ return d.checked; }).length;
+  confirmBtn.disabled = n === 0;
+  confirmBtn.textContent = n === 0 ? '未選任何項目' : ('確認套用（' + n + ' 筆）');
 }
 
 function closeReevalModal() {
@@ -7450,14 +7487,15 @@ function closeReevalModal() {
 }
 
 async function confirmReeval() {
-  if (!_reevalDiffs.length) return;
+  var picked = _reevalDiffs.filter(function(d){ return d.checked; });
+  if (!picked.length) return;
   var confirmBtn = document.getElementById('re-confirm');
   var progress = document.getElementById('re-progress');
   confirmBtn.disabled = true;
   var ok = 0, fail = 0;
-  for (var i = 0; i < _reevalDiffs.length; i++) {
-    var d = _reevalDiffs[i];
-    progress.textContent = '同步中… ' + (i + 1) + ' / ' + _reevalDiffs.length;
+  for (var i = 0; i < picked.length; i++) {
+    var d = picked[i];
+    progress.textContent = '同步中… ' + (i + 1) + ' / ' + picked.length;
     d.item.level = d.newLv;
     try {
       await apiPost({
