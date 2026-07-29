@@ -7382,6 +7382,9 @@ function closeUnacceptableModal() {
 var _reevalDiffs = [];
 
 function openReevalModal() {
+  // 重置按鈕顯示狀態（上次執行若有失敗會隱藏）
+  var confirmBtn0 = document.getElementById('re-confirm');
+  if (confirmBtn0) confirmBtn0.style.display = '';
   _reevalDiffs = [];
   var evaluable = 0;
   var skippedLow = 0;
@@ -7492,30 +7495,87 @@ async function confirmReeval() {
   var confirmBtn = document.getElementById('re-confirm');
   var progress = document.getElementById('re-progress');
   confirmBtn.disabled = true;
-  var ok = 0, fail = 0;
+  var ok = 0, failed = [];
   for (var i = 0; i < picked.length; i++) {
     var d = picked[i];
     progress.textContent = '同步中… ' + (i + 1) + ' / ' + picked.length;
-    d.item.level = d.newLv;
+    // 先備份原值，同步失敗時要還原
+    var origLv = d.item.level;
+    var candidate = Object.assign({}, d.item, { level: d.newLv });
     try {
-      await apiPost({
+      var res = await apiPost({
         action: 'update',
         dept_id: d.dept.dept_id,
         sheet_id: d.sheet.id,
         sheet_name: d.sheet.name,
         category: d.sheet.category || '',
-        item: d.item
+        item: candidate
       });
-      ok++;
+      if (res && res.ok === true) {
+        d.item.level = d.newLv;
+        ok++;
+      } else {
+        var reason = (res && res.error) ? res.error : '未知錯誤';
+        // fallback：GAS Sheet 中沒有這筆記錄 → 用 add 補建
+        if (/not found/i.test(reason)) {
+          try {
+            var res2 = await apiPost({
+              action: 'add',
+              dept_id: d.dept.dept_id,
+              sheet_id: d.sheet.id,
+              sheet_name: d.sheet.name,
+              category: d.sheet.category || '',
+              item: candidate
+            });
+            if (res2 && res2.ok === true) {
+              d.item.level = d.newLv;
+              ok++;
+              console.log('[批次重評] 找不到記錄，已改用 add 補建', { id: d.item.id, dept: d.dept.dept_id });
+              continue;
+            }
+            reason = 'update+add 皆失敗：' + ((res2 && res2.error) || '未知');
+          } catch (e2) {
+            reason = 'update 找不到，add 連線失敗：' + (e2 && e2.message || e2);
+          }
+        }
+        console.warn('[批次重評失敗]', { id: d.item.id, dept: d.dept.dept_id, sheet: d.sheet.id, hazard: d.item.hazard, reason: reason, response: res });
+        failed.push({ diff: d, reason: reason });
+      }
     } catch (e) {
-      fail++;
+      console.warn('[批次重評連線失敗]', { id: d.item.id, dept: d.dept.dept_id, sheet: d.sheet.id, hazard: d.item.hazard, err: e });
+      failed.push({ diff: d, reason: '連線失敗：' + (e && e.message || e) });
     }
   }
-  progress.textContent = '完成：成功 ' + ok + ' 筆' + (fail ? '、失敗 ' + fail + ' 筆' : '');
+  var fail = failed.length;
+  progress.textContent = '完成：成功 ' + ok + ' 筆' + (fail ? '、失敗 ' + fail + ' 筆（詳見下方＆Console）' : '');
   toast(fail ? ('批次重評完成，' + fail + ' 筆同步失敗') : ('批次重評完成，' + ok + ' 筆已同步'), fail ? 'err' : '');
+
+  if (fail) {
+    // 顯示失敗清單於表格
+    var tbody = document.getElementById('re-tbody');
+    tbody.innerHTML = '<tr><td colspan="10" style="background:#fee2e2;color:#991b1b;padding:10px 14px;font-weight:700;">❌ 以下 ' + fail + ' 筆更新失敗，請檢查 id 是否存在於 GAS Sheet</td></tr>' +
+      failed.map(function(f) {
+        var d = f.diff;
+        return '<tr class="re-diff-up">' +
+          '<td style="text-align:center">✕</td>' +
+          '<td>' + esc(f.reason) + '</td>' +
+          '<td>' + esc(d.dept.dept_name) + '</td>' +
+          '<td>' + esc(d.sheet.name) + '</td>' +
+          '<td>' + esc(d.item.hazard) + '</td>' +
+          '<td colspan="2">id: <code>' + esc(d.item.id || '(空)') + '</code></td>' +
+          '<td>' + esc(d.item.severity || '—') + '</td>' +
+          '<td>' + (d.oldLv == null ? '未評估' : lvBadge(d.oldLv)) + '</td>' +
+          '<td>' + lvBadge(d.newLv) + '</td>' +
+          '</tr>';
+      }).join('');
+    // 更新表頭第二欄意義
+    confirmBtn.style.display = 'none';
+  }
+
   if (curSheet) { renderItems(); renderMetaBox(); renderStatsBar('detail'); }
   initHome();
-  setTimeout(function(){ closeReevalModal(); }, 1200);
+  // 有失敗就不自動關閉，讓使用者看
+  if (!fail) setTimeout(function(){ closeReevalModal(); }, 1200);
 }
 </script>
 <script src="../shared/sidebar.js"></script>
