@@ -1,6 +1,72 @@
 {
   "items": [
     {
+      "key": "5f3263a0567c56dc",
+      "title": "羅馬近郊彈藥工廠爆炸 濃煙密布但無人受傷",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE84dE1xdl90UjNVb0QydUV6Qm00c2FSM2J2TFlmUkdjRE5kSkNIUTlKRTQxMFREVjN1am9MempwckdVdUNhNVhIcHZiUkFhOVU?oc=5",
+      "pubDate": "Thu, 13 Aug 2026 21:36:00 GMT",
+      "pubTs": 1786656960.0,
+      "desc": "羅馬近郊彈藥工廠爆炸 濃煙密布但無人受傷&nbsp;&nbsp;news.tvbs.com.tw",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "b2eab8465c2c109e",
+      "title": "雲南塵肺病人申請工傷多次被拒 舉報企業卻換來五萬罰款",
+      "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9RM1E4aFhadkttVmtOdUJwNUl5QkFyVWpqMkNfU2pKUG1JZjNzcFFqVkxiM21iZG1IQ1VnWnhpMDZhM1dlNkdxRTJDekcwLWc4QWQxdUFrRVZ5MmU5Q1BDLdIBZkFVX3lxTE9iOGFibzNfTEo2ZFUtNzVuNWdmTkNfNG5RdkRMcWYyM3hpUEtpZF9xS1pRUks1UEpQdkViQTNHUVlYOXp1TmEzNnZ1ZFZ1djhaRVRoYWVPNXEyaFlDM2dEeU5POHBudw?oc=5",
+      "pubDate": "Thu, 13 Aug 2026 21:25:58 GMT",
+      "pubTs": 1786656358.0,
+      "desc": "雲南塵肺病人申請工傷多次被拒 舉報企業卻換來五萬罰款&nbsp;&nbsp;新唐人電視台",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "8579623104066af9",
+      "title": "正大專欄－企業不可忽視職安衛生人員設置與核備義務- 產業特刊- 工商時報",
+      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE84b3BIX0NaZXZPWjB0Z3NfWm9mU2t5eVp6a05HczFnZllneEsta1dlZEJzUWh4ajZHWjVCanVVLWZvZTI5cERNSW5PTGo2dmE0TWppX3RsOFNqT1NFa29Ka1FWRnZhWlhfMWlr?oc=5",
+      "pubDate": "Thu, 13 Aug 2026 20:10:00 GMT",
+      "pubTs": 1786651800.0,
+      "desc": "正大專欄－企業不可忽視職安衛生人員設置與核備義務- 產業特刊- 工商時報&nbsp;&nbsp;中時新聞網",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "7f8848dfe79322e2",
+      "title": "39歲工程師上班猝死公司馬桶上 深圳：沒在座位不算工傷",
+      "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPekFiTVMwcGxCNGNHcE1VVWZvUnFuTkdyc0RYRVlrcno1SUR6U1FwaEM3Mk5YNjBPeDE4WjVpM1ptT1lSU1NjVFJjZ01HMjM5Y05Fcjh0X1VuUGROVzRFMkJKV0xKdExTUkFwMjVkZV9vYjJGSkpudlZaZU5TeTFmTjRQYw?oc=5",
+      "pubDate": "Thu, 13 Aug 2026 16:00:00 GMT",
+      "pubTs": 1786636800.0,
+      "desc": "39歲工程師上班猝死公司馬桶上 深圳：沒在座位不算工傷&nbsp;&nbsp;壹蘋新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "73c9d995eeeb2788",
+      "title": "勞工赴中出差可拒絕嗎？陸委會：由勞動部根據勞基法10-1條法規解釋| 政治",
+      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE1EQU5zZWZhY2FlWWlBUGZrdW1WcEtqZW80QklRRW9IR1ZvdDM4akdsM0Z5WnJrUGEyTkczbmtEaDdsTjBTQVNLMGpQSEVzeVZnaHhfT1ZHVk1YUmc?oc=5",
+      "pubDate": "Thu, 13 Aug 2026 09:51:49 GMT",
+      "pubTs": 1786614709.0,
+      "desc": "勞工赴中出差可拒絕嗎？陸委會：由勞動部根據勞基法10-1條法規解釋| 政治&nbsp;&nbsp;Newtalk新聞",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
+    },
+    {
+      "key": "8b64381e4b6b0e1b",
+      "title": "桃園市府攜手聯新國際醫院桃新分院 降低醫療機構職業災害",
+      "link": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFBWY256U2d4UVFoMXFvclBUVmhWX3Jhby1aZDVvYnJhYzhHY05HbDVFbWFpMXJYdS00ZmpMVHVzenl3S29jZ0NVWTFrZk0?oc=5",
+      "pubDate": "Thu, 13 Aug 2026 09:06:48 GMT",
+      "pubTs": 1786612008.0,
+      "desc": "桃園市府攜手聯新國際醫院桃新分院 降低醫療機構職業災害&nbsp;&nbsp;桃園電子報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "1321c6581409affa",
       "title": "高雄港71號碼頭工安意外 女員工遭聯結車輾傷送醫",
       "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5qMWtvbS04Z0czSzdRalBLaWVTTmkwTTEzQU5PMmFSS0xwOGRnT0NqdmdUa3JiTlZnc3M1ZVgyM2xhWWtaTVRURzhxY2RzOC160gFWQVVfeXFMTUwtLTBvdzZoc2NySGJ5VGhmX24xR1Z3c05PV3ZRa1JBOUQwaUVyYXNsbEpLOUo4NjBSODdaU3pXeW9NVHl2alYzRGVDd2pqbW5jUXp1REE?oc=5",
@@ -10,6 +76,28 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "e336478fa4eb7a9a",
+      "title": "高雄港71號碼頭工安意外 女員工遭聯結車輾傷送醫",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1MLS0wb3c2aHNjckhieVRoZl9uMUdWd3NOT1d2UWtSQTlEMGlFcmFzbGxKSzlKODYwUjg3WlN6V3lvTVR5dmpWM0RlQ3dqam1uY1F6dURB0gFWQVVfeXFMTUwtLTBvdzZoc2NySGJ5VGhmX24xR1Z3c05PV3ZRa1JBOUQwaUVyYXNsbEpLOUo4NjBSODdaU3pXeW9NVHl2alYzRGVDd2pqbW5jUXp1REE?oc=5",
+      "pubDate": "Thu, 13 Aug 2026 03:00:05 GMT",
+      "pubTs": 1786590005.0,
+      "desc": "高雄港71號碼頭工安意外 女員工遭聯結車輾傷送醫&nbsp;&nbsp;UDN",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "a450aae047dbd51a",
+      "title": "內幕｜Uber Eats大膽「玩法」始末 外送專法因它嗆聲勞動部而生",
+      "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE02R18xQXdHRnZtY0d3MElJMXh0UUpic0lHYjhteURDdWVwLVZIb3dMREFfV2JiQl9yVnJ0V1ZNSkI2WFNiQ1hRWm14dFdnSFZjWTNDLWw3akFnR18zdkFOWHNTcWltYjAyN3RIUU1VZw?oc=5",
+      "pubDate": "Thu, 13 Aug 2026 02:30:00 GMT",
+      "pubTs": 1786588200.0,
+      "desc": "內幕｜Uber Eats大膽「玩法」始末 外送專法因它嗆聲勞動部而生&nbsp;&nbsp;知新聞",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
     },
     {
       "key": "bcbf5a10c3ac2c39",
@@ -182,7 +270,7 @@
       "link": "https://news.google.com/rss/articles/CBMivANBVV95cUxOd0NmbzQzRElCYVVfbldJVDJOb2hnLVdrQVpIZ2I3cU1zbHhQaU1FeWdNdFZZTDBHUEwzLTFVVUE4al9IVFk2TWdhY21zamdiV2NHS0FSb3JYd3R5cFQ3UFVVV3JFeU1uZl9oeUE5dFd5M0tuUnFLVDc1enZJblhWeENPdUhINDFaUER2NlF3anNyMGd3djVRV25ERzRwb213aWZ2S1N5cmZNLWRyNVZyOUh3NGRBS2g5dmdTck5xdk5VdTYwckFiZzRQVldrOVlGY1pBYUxnWWRuTmNndHN3YUQ5R3N6OUxnbFRuVDE0NHJOenJOZTJVRWNWOVlVMS1NZlVKbUpaU2lMQTZLOGdhdWplN25PcHM2YXN4OXNlbnZnWnI0OVg3ZC02MkNWMTlnSWhLYUxUQVEzZ1lVRTd0ZUVCU3BmUHFUNzdmSXlkV00yR2JnQ3d2d1hJT1NGZktrampBQ2pSNjUtVHNnbjdYV1U0eUU3TUdENEhXV0xTdFg3TkV4bUttaVpEc2Jkb004bmJOMWJtdmQyN0Q1WjA0LVdhbVUzQWNRR1ZfaTU1YXJLTFh5enpMNk91cVc?oc=5",
       "pubDate": "Mon, 10 Aug 2026 08:57:24 GMT",
       "pubTs": 1786352244.0,
-      "desc": "中暑死亡索償工傷難 須證與工作具單一關係 議員倡設支援基金&nbsp;&nbsp;香港01",
+      "desc": "中暑死亡索償工傷難 須證與工作具單一關係 議員倡設支援基金&nbsp;&nbsp;hk01.com",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -1145,61 +1233,6 @@
       "badge": "red"
     },
     {
-      "key": "9fbec05c1429478f",
-      "title": "花蓮工安意外！71歲工人遭壓路機重輾 下半身血肉模糊重傷亡",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5vTVd3MkpSZW1pYmtMNzNtWFZadVc5SDJWb05Wa0pfQlUzdHAycm1XODRLWXUtUTVjRk5FMUxVZThTaFJSdGhXVS1feUVYd3M?oc=5",
-      "pubDate": "Fri, 31 Jul 2026 02:42:00 GMT",
-      "pubTs": 1785465720.0,
-      "desc": "花蓮工安意外！71歲工人遭壓路機重輾 下半身血肉模糊重傷亡&nbsp;&nbsp;news.tvbs.com.tw",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "aca1376a4baca34c",
-      "title": "71歲男遭同事開壓路機輾死",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9zSm1MZlRvZ1E0cHdDNDhqckkzY1NqMWgxWFU2aWpCMHlWVWZCbTRhMGwwTUg1QnBVY1laSXNEcVJ4TUZZdDBPajZFZTJTX0JPME5BWVN3?oc=5",
-      "pubDate": "Fri, 31 Jul 2026 02:04:00 GMT",
-      "pubTs": 1785463440.0,
-      "desc": "71歲男遭同事開壓路機輾死&nbsp;&nbsp;東森新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "2a910286904e83af",
-      "title": "恆春清潔隊員摔落垃圾車亡 職安署令部分停工禁站後踏板",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9RQ2hvWUlNclM1TGJyRThEellDNC1UX01jU3VsbUc0VGRfRXRVT1hGWDM0c244SnhxdUZtYUlOcTNSMC0ta3NSaFVEcnJrZUFP0gFWQVVfeXFMT1BtQW45WGg2bFlUQkVjanRNcDJUVGh2X1dTN21qbExDcEQ1U1hQN0dPREJqcTB6LTNmbFBUN0dLcEluR2NZNkNMQzBCMXRFMHdXZURYc0E?oc=5",
-      "pubDate": "Thu, 30 Jul 2026 15:02:50 GMT",
-      "pubTs": 1785423770.0,
-      "desc": "恆春清潔隊員摔落垃圾車亡 職安署令部分停工禁站後踏板&nbsp;&nbsp;udn.com",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "4f96a9bd726c9e8d",
-      "title": "前亞姐陳秀茹美國工傷困境 醫療報告與現實落差 廚師工作難復工",
-      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPbEQ3MnByUFBZZV9oUURMNklpa2FmQ1RYOWx1QXBPdGtKdEsweGxpN3Zna3ROZnloR1g5ZlozMER1cXlXbVlIeGVKOVlhY1J2Q0dBYXlwQlExQ2NmV1dCR1dkODA1dVhaTjZzSG80T1BJSWVCNFd6dWZSTlZNa2hHbDF3dm9FUENUc2JqU3loOA?oc=5",
-      "pubDate": "Thu, 30 Jul 2026 15:01:13 GMT",
-      "pubTs": 1785423673.0,
-      "desc": "前亞姐陳秀茹美國工傷困境 醫療報告與現實落差 廚師工作難復工&nbsp;&nbsp;Singtaousa",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "91c7b47e2b07e415",
-      "title": "新北開罰481家違法雇主！台鐵、2校入列 罰鍰破2632萬",
-      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBqcVF2eUExYlV3VU1nSXEwQk10MTNTTWd4YVBBQjZESDQ5S0J6QUdCZkxDbHA3eXFtaXlDR0c1OVdhUmdwR3AzSjF5NVlCYXMxeXZocGRLMDV4RnhiWXBZd3pfazB4blRUMERB?oc=5",
-      "pubDate": "Thu, 30 Jul 2026 11:54:35 GMT",
-      "pubTs": 1785412475.0,
-      "desc": "新北開罰481家違法雇主！台鐵、2校入列 罰鍰破2632萬&nbsp;&nbsp;翻爆",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
       "key": "bfc8719752f429c1",
       "title": "本年7月30日起重新開放受理熱防護具補助 優先補助10人以下微型事業單位及自營作業者",
       "link": "https://www.osha.gov.tw/48110/48417/48423/210603/",
@@ -1209,28 +1242,6 @@
       "source_id": "osha_announce",
       "source_name": "職安署公告",
       "badge": "green"
-    },
-    {
-      "key": "ae18f1c0bb64f38a",
-      "title": "太保市中山路工安意外 民眾受傷OHCA 消防隊緊急處置後送醫搶救",
-      "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1NY2VLdC0wUzNaUW5uMlY3YWQ0WjBSamlCSlBydmp5allGZmJRZmpla2p3Y1NwbW85NlpSZk1UT2VQM3BXQWs5eWJDOUNlMzB3amhqVkRVb25FQkNfTWEyaVhfVVExbjJKelZ3dVRBQlVSN1U?oc=5",
-      "pubDate": "Thu, 30 Jul 2026 08:21:22 GMT",
-      "pubTs": 1785399682.0,
-      "desc": "太保市中山路工安意外 民眾受傷OHCA 消防隊緊急處置後送醫搶救&nbsp;&nbsp;環球日報社",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "b621ced7a099ea46",
-      "title": "台南市勞工局邀安衛家族成員辦理工安體感活動提升職安意識",
-      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE41TnZBcXc3UXdvMElEWTJ3Ri15V2R5UmFBMzZydTBmNVdxc2htMmhSYUhDRmpoTnZYb053cGxMMmcxMWZCU1RnVA?oc=5",
-      "pubDate": "Thu, 30 Jul 2026 06:48:26 GMT",
-      "pubTs": 1785394106.0,
-      "desc": "台南市勞工局邀安衛家族成員辦理工安體感活動提升職安意識&nbsp;&nbsp;台灣民眾電子報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
     },
     {
       "key": "5964a184fb5da232",
@@ -1508,5 +1519,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-08-13T03:20:37.548994+00:00"
+  "lastUpdated": "2026-08-14T03:17:23.159433+00:00"
 }
