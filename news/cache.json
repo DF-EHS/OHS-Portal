@@ -1,12 +1,56 @@
 {
   "items": [
     {
+      "key": "a178f3c41b75560d",
+      "title": "安衛家族訓練 職場霸凌法規上手",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9zMC1ZSlZ2alkwb3kxdnhkbnFXdFU0djhzRGU0OXZOMW11OFBxWUx5bmNzTndESXhGZDBxcDNqM1pZV0Y2a3Z4eDJ6QnFoWGJWeHc?oc=5",
+      "pubDate": "Wed, 19 Aug 2026 12:38:44 GMT",
+      "pubTs": 1787143124.0,
+      "desc": "安衛家族訓練 職場霸凌法規上手&nbsp;&nbsp;中華新聞雲／中華日報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "3c47e26a2150aaeb",
+      "title": "即日起開放未滿3公噸塔吊及載人吊車提前申請既有檢查，協助事業單位順利接軌危險性機械納管新制",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/210774/",
+      "pubDate": "Wed, 19 Aug 2026 11:26:54 GMT",
+      "pubTs": 1787138814.0,
+      "desc": "為強化高風險作業安全，職安署已將吊升荷重未滿3公噸之塔式起重機（塔吊）及載人吊車納入危險性機械管理，相關擴大納管規定並將於本(115)年12月23日正式施行。為避免新制施行前出現大量申請導致排程壅塞，職安署已通知代行檢查機構自即日起受理事業單位申請。 職安署表示，新制於115年12月23日上路後，新…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "43decdb58e5aa96d",
+      "title": "宣導反詐兼顧職安！臺南地檢署檢察長鍾和憲表揚義務勞務機構",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5XZGpuVk1rOXJ5ZVQtN2g1ZzVxNnA1Q1p3YVJKejhweVN2RmpzQnVwMlQ0U1pDYVRfakFsNG5UVkEzVlR6SWFoYm9kNlNaVnJpOGE1RE1lTQ?oc=5",
+      "pubDate": "Wed, 19 Aug 2026 08:18:41 GMT",
+      "pubTs": 1787127521.0,
+      "desc": "宣導反詐兼顧職安！臺南地檢署檢察長鍾和憲表揚義務勞務機構&nbsp;&nbsp;焦點時報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "85007fd9013c938b",
       "title": "台積電寶山廠區工安意外 22歲工人遭機台重壓「頭部受創」當場身亡",
       "link": "https://news.google.com/rss/articles/CBMingNBVV95cUxOUG9MUlFXbnc2dWVfSlVidm9fQXYtUEFtZkVLUzhDNEo3XzBQTk1IM2dZNmFDSkE3ZG5KTHZxUHluR1NObGpOSjE4eDA5d05WZUtnNDFrNjl4eG4xcWdSbGNITjNPcE1fb2pDcWtyazRObnVYcXZuQnY2ZWRtZmctVG91OUczbWtPRDRrOW5oWWdPN1NHQnk1U18wYm1LTkM2TXlSTll0ZUlBOXJja3pSMjVMa2pUa2NTSGs1aDRWQkJlNi1ab2VyY3RCdVhtSTdrTGdwQ2EtZk5DSzZIM0laYUdwZUZqR0pTMmRoTDU2UHRkOWd6Ty1mSVNiaWxybmFUNGgyaVowUWZGTExjWWtOTFhGSF9hZEVPa1lhRmZGOFlXYnVTSVpuRC00Y1JhMzZROGxwN1VJakg0NjRHcTZPNEpUQjh1bEhXRzVNcU5qWk9veGxiVElyOHIzbzdUMDVFVHVGRXNXS0g2dVZSSkZjYjBka2tiY3FpOUtpajZPS3ZSMXJzeGx4eDkwclI4NXFuT21VOERPVmhJUEl2TWc?oc=5",
       "pubDate": "Tue, 18 Aug 2026 10:10:00 GMT",
       "pubTs": 1787047800.0,
       "desc": "台積電寶山廠區工安意外 22歲工人遭機台重壓「頭部受創」當場身亡&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "13c24f6479459a7e",
+      "title": "台積電竹科工地工安意外 工程自主停工釐清原因",
+      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5MamFybk00U1J3MURYLVg3ZUtlYV96YjlaTzZQQnVVbXR1aUpWRGFqaUxlOUZBWnVEZTVKNlpacm5abDNfMlFVcQ?oc=5",
+      "pubDate": "Tue, 18 Aug 2026 08:45:49 GMT",
+      "pubTs": 1787042749.0,
+      "desc": "台積電竹科工地工安意外 工程自主停工釐清原因&nbsp;&nbsp;5168實價登錄比價王",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -56,6 +100,17 @@
       "badge": "red"
     },
     {
+      "key": "2ad622589e18b35d",
+      "title": "[職災法律扶助升級明年納入刑事審判]",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE8wajVYYy00NTZDeF9KLWl0NjFCcHBfeEd0dWtnZ0cwWWVmb2xDbkpGa1lCSTFoX3I4RjNYVGZDcHJtd1UxTmF3aVZkX1dCT2tjV1HSAVJBVV95cUxPMGo1WGMtNDU2Q3hfSi1pdDYxQnBwX3hHdHVrZ2dHMFllZm9sQ25KRmtZQkkxaF9yOEYzWFRmQ3BybXdVMU5hd2lWZF9XQk9rY1dR?oc=5",
+      "pubDate": "Tue, 18 Aug 2026 07:15:00 GMT",
+      "pubTs": 1787037300.0,
+      "desc": "[職災法律扶助升級明年納入刑事審判]&nbsp;&nbsp;1111人力銀行",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "fd3830d01667d2f4",
       "title": "簡化職災訴訟生活費撥款 勞動部新制必看",
       "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9TT2xoczRFM1ZzQ0FIY2QwTE9SQWdBNTM4ZGlPSkdoRlduOWlXampOazRjeEdzMWxzUWxoMmJ1eUI3OTVBbWVoRmtDa1ZVMG9zalFrWEhBbHBmYjhrSFN4Mmxn0gFiQVVfeXFMT1NPbGhzNEUzVnNDQUhjZDBMT1JBZ0E1MzhkaU9KR2hGV245aVdqak5rNGN4R3MxbHNRbGgyYnV5Qjc5NUFtZWhGa0NrVlUwb3NqUWtYSEFscGZiOGtIU3gybGc?oc=5",
@@ -83,7 +138,7 @@
       "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE4xMmFTbXBUc1NLdHhmX1V1S1d2SGxVM3VIOGV4VVBfTHplVDMteXl5RDNvUldKSVd0bndJU082SEJsRzdITzdydzBYOGlRY0h5bW9ER1Z6YXBMbTdSZGQza0pUX1NLUi1DY0Q3cjFR?oc=5",
       "pubDate": "Tue, 18 Aug 2026 04:53:56 GMT",
       "pubTs": 1787028836.0,
-      "desc": "台積電寶山F20廠區工安意外男工人遭電力設備重壓身亡- 社會&nbsp;&nbsp;中時新聞網",
+      "desc": "台積電寶山F20廠區工安意外男工人遭電力設備重壓身亡- 社會&nbsp;&nbsp;chinatimes.com",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -490,7 +545,7 @@
       "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE1EQU5zZWZhY2FlWWlBUGZrdW1WcEtqZW80QklRRW9IR1ZvdDM4akdsM0Z5WnJrUGEyTkczbmtEaDdsTjBTQVNLMGpQSEVzeVZnaHhfT1ZHVk1YUmc?oc=5",
       "pubDate": "Thu, 13 Aug 2026 09:51:49 GMT",
       "pubTs": 1786614709.0,
-      "desc": "勞工赴中出差可拒絕嗎？陸委會：由勞動部根據勞基法10-1條法規解釋| 政治&nbsp;&nbsp;Newtalk新聞",
+      "desc": "勞工赴中出差可拒絕嗎？陸委會：由勞動部根據勞基法10-1條法規解釋| 政治&nbsp;&nbsp;newtalk.tw",
       "source_id": "gnews_law",
       "source_name": "法規更新",
       "badge": "teal"
@@ -1123,83 +1178,6 @@
       "badge": "red"
     },
     {
-      "key": "e25fcea78570d9bd",
-      "title": "討論牆 | 職安署：H1重大職災死亡年減2成 營造業逆勢增加、新北19人居冠",
-      "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1NTmxJZS1hVlQzdlRLVUpwb1ZEa0IxNEFEUmliVFFjcFRsZ3N6YXJIcUxkUm9Xczh2alZTeG85Z2FOaHNjeGdJUTEwcDRwVWJJeFpFREtyY0JpVkk2RDhjeUlwRW4?oc=5",
-      "pubDate": "Wed, 05 Aug 2026 19:46:11 GMT",
-      "pubTs": 1785959171.0,
-      "desc": "討論牆 | 職安署：H1重大職災死亡年減2成 營造業逆勢增加、新北19人居冠&nbsp;&nbsp;LINE TODAY",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "afa87be6e944ec84",
-      "title": "職安新修法說明會 解析5大改革重點 - matsu-news.gov.tw",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE0wVGVIVHZFbGhYbUxLeGdwVkY2c1ExWXBwWm1FUkl4OHNlWWJJZ1ZiMmtKTnh6S0VQdG55Z0JXS1FsSWNKVFJKano5d2JsZ1RuYmdfdXRVU1JUcFAtM0E?oc=5",
-      "pubDate": "Wed, 05 Aug 2026 17:28:18 GMT",
-      "pubTs": 1785950898.0,
-      "desc": "職安新修法說明會 解析5大改革重點&nbsp;&nbsp;matsu-news.gov.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "82dcb6e5adfb5c92",
-      "title": "活動訊息－115年「職業災害勞工協助措施業務暨重返職場宣導」及「職業安全衛生講習」聯合會議",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE16NXZ6ZjVfdVZBT1R0WnlHblRTZ0QycFBoMk1yeU9uNndWTFIwRHl6LWdpMVZ0TFpaVk5lRUhHVXpqTjVfdDJWV090c1E2VVIyNWQzdFNVTjJfTDd0Y2c?oc=5",
-      "pubDate": "Wed, 05 Aug 2026 14:39:51 GMT",
-      "pubTs": 1785940791.0,
-      "desc": "活動訊息－115年「職業災害勞工協助措施業務暨重返職場宣導」及「職業安全衛生講習」聯合會議&nbsp;&nbsp;klcg.gov.tw",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "749c0d2b20252332",
-      "title": "115年「職業災害勞工協助措施業務暨重返職場宣導」及「職業安全衛生講習」聯合會議",
-      "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5MU2UwYWN5RG43MEFBNEl2ZjNhUDgyaDhYaktZbG5MRmdQaDZKSjdkbktUZVNsVHduc0lOemtxdE9kQUZIUy1Qd0Rua2wyRVRsbTMxaXBPdmc1UlFYTWhOTHhBMDA?oc=5",
-      "pubDate": "Wed, 05 Aug 2026 11:43:08 GMT",
-      "pubTs": 1785930188.0,
-      "desc": "115年「職業災害勞工協助措施業務暨重返職場宣導」及「職業安全衛生講習」聯合會議&nbsp;&nbsp;klcg.gov.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "c0068d2435101717",
-      "title": "挖到童骨「年11傷亡」！台積電嘉義廠 急請布袋戲壓煞 | EBC 東森新聞",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE15bG41RXZNUHJoazM1TXZkOFFLZHVGLXU4Z0JweDNLckFSTmF1WXhXNXZmaUJwNzJXa2NZdWxjYzRkRHZ5cEcxVHp4Y2tHMG9QeEgzTUp3?oc=5",
-      "pubDate": "Wed, 05 Aug 2026 09:51:47 GMT",
-      "pubTs": 1785923507.0,
-      "desc": "挖到童骨「年11傷亡」！台積電嘉義廠 急請布袋戲壓煞 | EBC 東森新聞&nbsp;&nbsp;LINE TODAY",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "6363b5ae6ec069a2",
-      "title": "台積電嘉義廠工安意外累計釀2死5重傷！ 8/6請布袋戲安撫好兄弟",
-      "link": "https://news.google.com/rss/articles/CBMihwNBVV95cUxQSFZld0xNUWJTNXdEVmRNXzVQVjA5YWpmS1BfOWNtM2FxempoOS1URUd2NGJOWGtCNGlURFJUbWI4QlNUSTczdWE4ckdNa0VFcGdZQzI3QWxrc0tITHp1b1RWSEJPOUctbFlFYTZfN1BSMTNDS2FBY3oyZ0laekxOckZIaHBneUJlRWFKUmlKWnllTGpYU1pHSTF0Q293Q1FCNHRqdkpxOHJpYnl2TkVxNkdiUDhIMDMxemYxX09fZW9Kc19QMVAwQ2lDcVprOGpSVnZReU9zQTlvWGZfa0o3NzBnSkc5ZHJNX0JWYkVwa0p6S000VWhkNkdQWFIyRnFpTjRHcGRteV9fMXM2M2VGdF9hQmFuVERqSWRqTGplY2I3aTRYRkFMdEZ2SmkwMUlRV2pzSHZnWHNOSjNsSUgtdXVxN0hHTXVBenRUUzhHWVFFNE4wNkZwWnZpU1Q4anVEUE9HYVZFUHp5SVNfT1BKSUxsbEM5dkNLdGFaQzY0QjNyd0xqeW5Z?oc=5",
-      "pubDate": "Wed, 05 Aug 2026 08:34:54 GMT",
-      "pubTs": 1785918894.0,
-      "desc": "台積電嘉義廠工安意外累計釀2死5重傷！ 8/6請布袋戲安撫好兄弟&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "3c47e26a2150aaeb",
-      "title": "危險性機械擴大納管",
-      "link": "https://www.osha.gov.tw/48110/48417/48423/210774/",
-      "pubDate": "Tue, 04 Aug 2026 15:30:17 GMT",
-      "pubTs": 1785857417.0,
-      "desc": "115年12月23日起，吊升荷重在未滿3公噸之塔吊及載人吊車，納入危險性機械管理，未經檢查合格，不得使用，詳情請洽3區代行檢查機構(網址：https://www.aia.org.tw/)： 【中華鍋爐協會代行檢查組】諮詢電話：03-3163395；責任轄區：臺北市、新北市、基隆市、桃園市、新竹縣、新…",
-      "source_id": "osha_announce",
-      "source_name": "職安署公告",
-      "badge": "green"
-    },
-    {
       "key": "7952dc02a979a8e6",
       "title": "勞動部修正發布「外送作業安全衛生指引」",
       "link": "https://www.osha.gov.tw/48110/48417/48423/210646/",
@@ -1497,5 +1475,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-08-19T02:10:02.331789+00:00"
+  "lastUpdated": "2026-08-20T02:08:42.452036+00:00"
 }
