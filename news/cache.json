@@ -1,6 +1,17 @@
 {
   "items": [
     {
+      "key": "e43f01a46667eacc",
+      "title": "從職業傷害找到創業新路 許晏寧打造「科技洗酸」助攻女性二度就業",
+      "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE0tM1NDVWZWQTFld3MzUW1oLTFQZmhWam9uN0NPb1ZLTzJ2YzBaUmxISTZSa2xYTm96cFlXbUtaQ1M0OUx6Q1FmS0NZR1l6RXNDTHExdQ?oc=5",
+      "pubDate": "Sat, 22 Aug 2026 05:52:26 GMT",
+      "pubTs": 1787377946.0,
+      "desc": "從職業傷害找到創業新路 許晏寧打造「科技洗酸」助攻女性二度就業&nbsp;&nbsp;新頭條",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "866428e747f2e62a",
       "title": "快新聞／台中食品廠爆嚴重工安意外！年輕員工手遭絞肉機捲入「連人帶機」送醫搶救",
       "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1uN2t2OF9hOVFSRm80R2xZVVZodUVtaVpBVGdDOHh6NHA3Z0JWeE8ySnRPQWFGeWI4eEk3QmV0N0J4WjlyYmRuVno5d19tX25td2tSNUt4Tkd3cXBoYWUzUQ?oc=5",
@@ -98,6 +109,17 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "e0f8750988e52060",
+      "title": "職安新制上路 高溫防護成企業治理新課題",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9JcjZ0UWNtZlJLT0tOaG9jVHoydjZkWGw4cEQyMS1TRHFPUG12ZmdGbzVyQVJjdWI2XzFaZ2VhMnpGMlV3d1RxZUFoRFZ6X0VKVE1SYzJR?oc=5",
+      "pubDate": "Thu, 20 Aug 2026 21:30:00 GMT",
+      "pubTs": 1787261400.0,
+      "desc": "職安新制上路 高溫防護成企業治理新課題&nbsp;&nbsp;自由財經",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "e7cc69d35565b01d",
@@ -565,12 +587,23 @@
       "key": "4388439fe0e59dd8",
       "title": "最新勞動法令隨手查 系統無障礙升級",
       "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9wLVllWERFalpSRUJZLWU5RHpsbkdxSEhVNVhpUXRqb1VRUUlyRUQ2dlhiQkoybWdSLVk4bWFmeFlOOFJKVlpUb3hqWVdOSzBJQkVrVW1kQ2Vwd9IBX0FVX3lxTE1xNzZxRnh6VjlTYjhLMGZ2MFBZdWZEWFU4MmU3Skk4VHZGbVdJRzVCRmNHT21oMlRLVkxqcGFiWUZjYl9Dcm1KYzQ1TzFqWHBfLUlKOUl6anNqaEIzV0Q0?oc=5",
-      "pubDate": "Fri, 14 Aug 2026 06:31:46 GMT",
-      "pubTs": 1786689106.0,
+      "pubDate": "Fri, 14 Aug 2026 07:00:00 GMT",
+      "pubTs": 1786690800.0,
       "desc": "最新勞動法令隨手查 系統無障礙升級&nbsp;&nbsp;經濟日報",
       "source_id": "gnews_law",
       "source_name": "法規更新",
       "badge": "teal"
+    },
+    {
+      "key": "be8e4cd49c6414f8",
+      "title": "企業不可忽視職安衛生人員設置與核備義務- 日報",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9wYWd3bGt2ZkFDS1Yxd0FRZzJqX1VIV2xLbFdVaHNUWHBkd2wxQm1ZUTFORlBjX01PbHkxSDRaajlIYVprV3FIQTVoOVh2SFhoZW9tbXRVNFFPQTdXcFJv?oc=5",
+      "pubDate": "Fri, 14 Aug 2026 07:00:00 GMT",
+      "pubTs": 1786690800.0,
+      "desc": "企業不可忽視職安衛生人員設置與核備義務- 日報&nbsp;&nbsp;工商時報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "dea3e5c2fd4dbedd",
@@ -689,17 +722,6 @@
       "pubDate": "Thu, 13 Aug 2026 20:10:00 GMT",
       "pubTs": 1786651800.0,
       "desc": "正大專欄－企業不可忽視職安衛生人員設置與核備義務- 產業特刊- 工商時報&nbsp;&nbsp;中時新聞網",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "be8e4cd49c6414f8",
-      "title": "企業不可忽視職安衛生人員設置與核備義務- 日報",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9wYWd3bGt2ZkFDS1Yxd0FRZzJqX1VIV2xLbFdVaHNUWHBkd2wxQm1ZUTFORlBjX01PbHkxSDRaajlIYVprV3FIQTVoOVh2SFhoZW9tbXRVNFFPQTdXcFJv?oc=5",
-      "pubDate": "Thu, 13 Aug 2026 19:00:00 GMT",
-      "pubTs": 1786647600.0,
-      "desc": "企業不可忽視職安衛生人員設置與核備義務- 日報&nbsp;&nbsp;工商時報",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
@@ -1376,5 +1398,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-08-22T02:06:47.165167+00:00"
+  "lastUpdated": "2026-08-23T02:16:00.307175+00:00"
 }
