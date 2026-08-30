@@ -90,11 +90,11 @@
     },
     {
       "key": "de3775b88ef22ea0",
-      "title": "快訊／新北工安意外！男修理工廠鐵捲門觸電 無生命跡象送醫搶救",
+      "title": "快訊／新北工安意外！男修理工廠鐵捲門觸電 命危送醫搶救無效身亡",
       "link": "https://news.google.com/rss/articles/CBMimwNBVV95cUxNVFExeHh3WllWeGZWM1JXVjBnQURfSTBJS0VjOHdWWkx0dEJtNmZoejJmSHozUDd5WmdRS1duV0RvMDhreDlIM25uempZbUl2Z0JpOEhLVVUzQ0RidjlxT0F4Vm9aRFF5UW5aa05XRENuMS00RTNXSk8tbDNSQ0xuX1V2UVAxQlJhWTdwd2NIZGZIWEtfZm9pQnZKNFZ1WnZhaWdSeFhXaDg3dE9fXzYybGVRaV9tc00zYUp0aGZhM1BYcmJ0VXJ6eEQ2RVVaR3FOMWtUNzc4Ynl2Z1dpR3g3Y0lJUnZFaFBoNmpya21EbHVrbjktOEhKVXBrdldOWkd6YUgtUkVUSm1LZGc1VU1sZU0zR2FPRG5ZU3lyenFUMVFvbjFDbEdmVFFQR0JrRm5lZWhDT3ZIbXNrOEFiZGJwdENyMGtGQi1jYjV2UTNaYkk0eXJyeFdIQ1R6bndKd1pkcVZPVzBjZy1PRzh0SDlINEV6dUlCcFowUUc5UVpobU1KYjFlTkVWbjdwdmhLVy1iUnZ0c2JXOGhhbWM?oc=5",
       "pubDate": "Fri, 28 Aug 2026 09:33:00 GMT",
       "pubTs": 1787909580.0,
-      "desc": "快訊／新北工安意外！男修理工廠鐵捲門觸電 無生命跡象送醫搶救&nbsp;&nbsp;Yahoo新聞",
+      "desc": "快訊／新北工安意外！男修理工廠鐵捲門觸電 命危送醫搶救無效身亡&nbsp;&nbsp;Yahoo新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -312,8 +312,8 @@
       "key": "72232ef39424b447",
       "title": "視障按摩升級 撥筋技法避免職業傷害",
       "link": "https://news.google.com/rss/articles/CBMilAJBVV95cUxQQnQ1N3p4X2NPdXhTdDY3aEpHdHFBRWkzdHdJdWF5RGlLeUZ5c3NwbnpfS3p6TUh5QzJmcllVWVVrZW5tN1JkanZYSHc0RlVmNlVZck1RNk1QSXZUelI2VXJGY2R0NVBtMEI2eDNUcnZ1azRqY2hMTjhFdEhXMmZWbTMwZkVuZGpMSkMzZklvbFFMZnJsTjV2OVc5WlNGWk5XRVdONEU4UHBVRjJ1X1ZUdC14bFFHSUhLMlQ1bl9Pcm94V1RXaWkxOWNpTTNvOU5QRzV4TEdVb0xsU3lVcG1JTUFRQkpxRW5KaXJaQUVCeXpHdjF0VHVxQlNGNlJiendrM1pkcWhoYWptdDRXakZoY09Yc0Y?oc=5",
-      "pubDate": "Tue, 25 Aug 2026 05:41:38 GMT",
-      "pubTs": 1787636498.0,
+      "pubDate": "Tue, 25 Aug 2026 04:00:13 GMT",
+      "pubTs": 1787630413.0,
       "desc": "視障按摩升級 撥筋技法避免職業傷害&nbsp;&nbsp;Yahoo新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
@@ -738,6 +738,17 @@
       "badge": "teal"
     },
     {
+      "key": "d4891cfb9632ee47",
+      "title": "台積電寶山 F20 廠工安意外 公司完整回應來了",
+      "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBqTXE3X3ViQm4zVk9jb19HeHZxRkMzOTNFQVNTOV9DUmhXU0NJa2QyWGNPV3VhM1BRVkx2Nzg2X2c1WDd6cUt5Qmw2Z0tPQ1kxYllQSTNLUHV3d9IBX0FVX3lxTE9YdUJzUi1iRjQwWlFQZFg0X2NaWjhySjFZNmw2U3hqblZRanZpU09veDVJTWQ0VzFib0hDc2NESjMzQlZZcVZWb0hDTF9aS0JEMDAwb0J4d3VLUUNpTXMw?oc=5",
+      "pubDate": "Tue, 18 Aug 2026 07:00:00 GMT",
+      "pubTs": 1787036400.0,
+      "desc": "台積電寶山 F20 廠工安意外 公司完整回應來了&nbsp;&nbsp;經濟日報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "fd3830d01667d2f4",
       "title": "簡化職災訴訟生活費撥款 勞動部新制必看",
       "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9TT2xoczRFM1ZzQ0FIY2QwTE9SQWdBNTM4ZGlPSkdoRlduOWlXampOazRjeEdzMWxzUWxoMmJ1eUI3OTVBbWVoRmtDa1ZVMG9zalFrWEhBbHBmYjhrSFN4Mmxn0gFiQVVfeXFMT1NPbGhzNEUzVnNDQUhjZDBMT1JBZ0E1MzhkaU9KR2hGV245aVdqak5rNGN4R3MxbHNRbGgyYnV5Qjc5NUFtZWhGa0NrVlUwb3NqUWtYSEFscGZiOGtIU3gybGc?oc=5",
@@ -824,28 +835,6 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
-    },
-    {
-      "key": "501e2683050138cf",
-      "title": "動作戲全來真的！李國毅「舉不起來」驚曝職業傷害 真實傷勢曝光",
-      "link": "https://news.google.com/rss/articles/CBMikANBVV95cUxOcmFIOU9RRXpjemtaSVVjamZCNHVUQlJGTUU5ZlF1NVNMVlNWTUxWU0IwNXA2VHhhYy16ZVBRaGhXclUzVmczY0tYMWtUX1EwQVlpMURnd3JCS0ttMkI4T0RjSUY2R1pJMW9SNm9ZVGxwMEY3MTVCN21LMWJ4dlhGR3VfdUZyWEwwekVlRS0zdW1nVW5pTWdDWFpLNkpReUZZazJnUXJRUm9adS1BdW94SEhqZUJoSlRyeGJuaWVRWHpuRVVpM3B4UGNGN2FETmR2Tk1YWGNCX0JiblFHbmxTc09aaGRvQ2FDbEFlTTlFWEYwZkdjLWJFR251b2NXOFlaQzhnaHBiRTBONTcyamItbFptcDVxM0FXY2ZYQ3phZFdTb2tWSWl1ZFg2NTBaVGs4SzhQTWVlREVSMWVTLWtvX09TclFwMFluTTlINnVoOF9PTDhISHQ3NzFZODh0bmlBYnhpSlFZSnlWSTEyM1hiaXJYdk5OQjd0a3ViZ21ESTE3bzdySV9jS0hyNVlJQklr?oc=5",
-      "pubDate": "Sun, 16 Aug 2026 03:00:41 GMT",
-      "pubTs": 1786849241.0,
-      "desc": "動作戲全來真的！李國毅「舉不起來」驚曝職業傷害 真實傷勢曝光&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "8550fc91988ebff9",
-      "title": "消防職安現場評鑑 檢視職安推動成果",
-      "link": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxNaGpsOU9PcEVLNzg3U1hLT2xhZnI1RF91NkYxVUVPRUhxamlNSE9ncVRvdkd2TWNQeGp4MWtCT1pLbXlWbEpndVZZVTI0UjZWZVdsVE5BWkRGNmI3dXI0anFsVktVSWpQMHVTdENSX3hTd3V4c213NFZ6b3kzTC0wTS1HYmJoY1FHblFVTVJraU53RnB4SnM0QnJZTDVrU1E1ay1tVTVYanN3bjhBMndNY0pUMXN4SHRpcDZpa21WRVpDVFRRbTJ3M0o4eWFuX0dPUmdSV2F0aTI5MFJESE9la0s5OGZwZnM1NFAxX3F3cFZYTGR1cXRBQllURQ?oc=5",
-      "pubDate": "Sat, 15 Aug 2026 16:08:25 GMT",
-      "pubTs": 1786810105.0,
-      "desc": "消防職安現場評鑑 檢視職安推動成果&nbsp;&nbsp;澎湖e傳媒",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
     },
     {
       "key": "7952dc02a979a8e6",
@@ -1145,5 +1134,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-08-29T07:30:05.441635+00:00"
+  "lastUpdated": "2026-08-30T05:59:20.428007+00:00"
 }
