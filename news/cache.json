@@ -1,23 +1,45 @@
 {
   "items": [
     {
+      "key": "623195de62997989",
+      "title": "台積電嘉義廠區工安意外1死承包商遭起訴| 社會",
+      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE03ZU1QbHF4dUNyVm85OUJkdGhwQ1dFdWpGQ3AtNXc4TzFEUjMwM21Zdk5zZWhMNVc4SWdZM0NzdldUdkhwWEh1OHBTRjJLMGFid25kVExNYUVYMTg?oc=5",
+      "pubDate": "Wed, 02 Sep 2026 04:50:03 GMT",
+      "pubTs": 1788324603.0,
+      "desc": "台積電嘉義廠區工安意外1死承包商遭起訴| 社會&nbsp;&nbsp;Newtalk新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "2595583f89f1facd",
+      "title": "影／加氣站工安意外！高壓軟管突爆裂影片瘋傳 印24歲員工「遭噴嘴重擊頭部」慘死",
+      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5IYVd3Um5xTGZZNHZsanZmUkxRQlEtVmRjajBjcUZ2R01ucHZaSkUzeldYZGcxSGpFVkZpZ015LVJ3SDhCa1BCbDZlbzhEdw?oc=5",
+      "pubDate": "Wed, 02 Sep 2026 03:14:00 GMT",
+      "pubTs": 1788318840.0,
+      "desc": "影／加氣站工安意外！高壓軟管突爆裂影片瘋傳 印24歲員工「遭噴嘴重擊頭部」慘死&nbsp;&nbsp;記者爆料網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "7256bd6b5c8932e0",
+      "title": "勞動部邀請產官學研召開專家座談會 推動防災科技導入高風險作業場域",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/211872/",
+      "pubDate": "Tue, 01 Sep 2026 14:00:25 GMT",
+      "pubTs": 1788271225.0,
+      "desc": "為推動並鼓勵業界運用科技協助降低高風險作業危害，勞動部於28日辦理「高風險廠場防災科技應用專家座談會」，邀請人工智慧專家、防災科技業者、製造業與營造業代表及職安團體進行跨域對話。座談會主席勞動部鄒主任秘書子廉表示，近期工廠火災事件凸顯了高風險場所強化風險辨識與即時應變的重要性，企業除持續落實既有職安…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
       "key": "5964a184fb5da232",
       "title": "勞動部職安署未授權民間團體辦理職場霸凌調查專業人士收費培訓課程，相關課程時數不予採認亦無法納入人才資料庫",
       "link": "https://www.osha.gov.tw/48110/48417/48423/210344/",
       "pubDate": "Tue, 01 Sep 2026 11:17:36 GMT",
       "pubTs": 1788261456.0,
       "desc": "近期本署接獲民眾詢問，坊間單位開辦職場霸凌調查人員相關課程，是否得作為職場霸凌調查專業人士培訓時數，或作為納入職場霸凌調查專業人才資料庫之依據。對此，本署說明如下： 依《職場霸凌調查專業人士培訓及專業人才資料庫建置要點》第4點及第5點規定，職場霸凌調查知能培訓課程，由勞動部或地方主管機關辦理；調查專…",
-      "source_id": "osha_announce",
-      "source_name": "職安署公告",
-      "badge": "green"
-    },
-    {
-      "key": "7256bd6b5c8932e0",
-      "title": "勞動部邀請產官學研召開專家座談會 推動防災科技導入高風險作業場域",
-      "link": "https://www.osha.gov.tw/48110/48417/48423/211872/",
-      "pubDate": "Tue, 01 Sep 2026 10:00:04 GMT",
-      "pubTs": 1788256804.0,
-      "desc": "為推動並鼓勵業界運用科技協助降低高風險作業危害，勞動部於28日辦理「高風險廠場防災科技應用專家座談會」，邀請人工智慧專家、防災科技業者、製造業與營造業代表及職安團體進行跨域對話。座談會主席勞動部鄒主任秘書子廉表示，近期工廠火災事件凸顯了高風險場所強化風險辨識與即時應變的重要性，企業除持續落實既有職安…",
       "source_id": "osha_announce",
       "source_name": "職安署公告",
       "badge": "green"
@@ -34,6 +56,28 @@
       "badge": "green"
     },
     {
+      "key": "e5d0145a57e76b53",
+      "title": "勞工發生職災仍可續加勞保 勞動部提醒：「這情況」不得適用 | Newtalk",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5zYnItLUlqdWZfeG91dW9rbjBnYzl2ZzBOS3kzNmJNaXZsM2xtb3daMFp5eGo5YXNvMS1xVTlZcjRROGFPbjh2QVpzMWVNTV9vVHRtcFFn?oc=5",
+      "pubDate": "Tue, 01 Sep 2026 08:37:32 GMT",
+      "pubTs": 1788251852.0,
+      "desc": "勞工發生職災仍可續加勞保 勞動部提醒：「這情況」不得適用 | Newtalk&nbsp;&nbsp;LINE TODAY",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "a9956a256d3c7198",
+      "title": "職災離職別急著退保！符合條件可續保 保費最高80%有補助 - 生活新聞 - PChome Online 新聞",
+      "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNMzNfcThqY1NmVzdiS1ptTWQxVGl3eGFXRzEydGZjVUJObmlfUVF5S2FZM1BLb2xHZ3VuMnVqNkZjRGlrdnZMYzBJbmZQelI5VzJRdmZyRUxidXVUNGtUMnltc2Nkel9wQzRsT01GVkFXcXI0VkZJQzlHSGYtemdNN0hmX05CbU0yTEpN?oc=5",
+      "pubDate": "Tue, 01 Sep 2026 07:44:51 GMT",
+      "pubTs": 1788248691.0,
+      "desc": "職災離職別急著退保！符合條件可續保 保費最高80%有補助 - 生活新聞 - PChome Online 新聞&nbsp;&nbsp;PChome Online 新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "f9a56000063b2749",
       "title": "台中1日2工安意外 1死1命危",
       "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE91NXIzS1Q4dlhnQmhBWlk4U2xDSjRtTklOQWVpeXVoSDAzZnBZRHdPS0Rybm54bWVHV3c5UmpZRWZZNWtsMEYwOHBVRTROMnJNbkJnNWcxQjhtSTgzX3JZSXF1b1VJeTkwOS1N?oc=5",
@@ -43,6 +87,17 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "698041c706caf8b2",
+      "title": "台灣中油強化職安管理 31日舉辦安全衛生觀摩研討會",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5TRDRsMVIyX1FLRGN6cVBYSHU4MnpLQjRSSVQ4QU1uZHotT1VsNjc3dnFOdjFFTDFKenh4YWFKU1ZOdC1rTUxhTktOamZHeHljQ0E?oc=5",
+      "pubDate": "Mon, 31 Aug 2026 17:14:00 GMT",
+      "pubTs": 1788196440.0,
+      "desc": "台灣中油強化職安管理 31日舉辦安全衛生觀摩研討會&nbsp;&nbsp;蕃新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "f8ca8f1923ba750d",
@@ -67,12 +122,23 @@
       "badge": "red"
     },
     {
+      "key": "2286995d9f4735d0",
+      "title": "台中死亡工安意外！「工人墜B4」頭部重創亡",
+      "link": "https://news.google.com/rss/articles/CBMimAJBVV95cUxNc0h1MEFUemdrMFE3b0VYUzhGSGZiT1pHU0JFS3YxTmJwUUlYR2p3R19qSDJqbE9Oek9yNEZZSDlaYWJtaGgwZmtmaGsxMHB5dTZQcnFxZnFyX1J4U3NsMU5HaVJSOVJUQWltMU51QjdOdmhUajgwV3EtZWpwYm1KV212LS15UFNDOUJhR2R6aGhfWTlLUk0yakpGZXZzZlNON256ODhEVjhRSXQxZDRrSHhBNkhZaTFHakdKanh2OG9FTFRqR1NMSWJGTGpJTld2OUppMHVuQ25WbmZEQ1JJZGZlbHpwb2taM0RIZ3YyT2Z4M0RZWkJ5Y2E0SDVWdElCVmItcWotODl5ZEZ6eEZwa2Z5dUlpRlJ4?oc=5",
+      "pubDate": "Mon, 31 Aug 2026 10:34:00 GMT",
+      "pubTs": 1788172440.0,
+      "desc": "台中死亡工安意外！「工人墜B4」頭部重創亡&nbsp;&nbsp;tw.news.yahoo.com",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "84dcdfe0e3a49c8d",
       "title": "快新聞／台中建案驚悚工安意外！板模工踩空...墜B4慘死",
       "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9ZYm9ValhmVGdpbEdlN3dxclhxY3B6emFtZllvZ2l4N21oeU4zWkZaWkRzeWFtc1lkR3RPWmdpWWlrQ3BVSC1NM0NhYlVNaXMwNmVyT1NtUXE0d3B3T0dMNA?oc=5",
       "pubDate": "Mon, 31 Aug 2026 10:32:56 GMT",
       "pubTs": 1788172376.0,
-      "desc": "快新聞／台中建案驚悚工安意外！板模工踩空...墜B4慘死&nbsp;&nbsp;民視新聞網",
+      "desc": "快新聞／台中建案驚悚工安意外！板模工踩空...墜B4慘死&nbsp;&nbsp;ftvnews.com.tw",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -109,6 +175,17 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "d4059232c04a9fee",
+      "title": "中油舉辦安全衛生觀摩研討會 強化職安管理",
+      "link": "https://news.google.com/rss/articles/CBMiwAJBVV95cUxQS2M4QXhJMGJleW5XOHpGQTJpOHFSSmtGSEFkbk1PR1djU3BQUmZDMU1NYnEzRkU5cVlmUE5qX0Zqa2pnUHM0ZENqS0hLZGJ3dHQzQlNVaGlDcmR3N1hrN0piaUhGUzZkSG5VaFdpUFRybmdZVzRwZE12SjVRTWI1Mk9MbUxiUl9zV1JNRndQQTlyZEJkWElDOHQzSHUzdWZHX29peEhQMGpiS2tZd0VJQmpSSk0tcURCcWVkRjg3NWdoeGMyVl9nMnRucU55Zlh3THZfM1hBSzlPSkNyUXhuZGl5ejNGb0FtMjFueURhcDFlQ3RwY1BjcGNjNUx1bGxTYzIxeFZoRS1HRWJxOXpaWUlQYlA4Sl9QMmUtcXRaMjlNZVljaU41bW16TjVxZ2FNTmF6RW0tdXNYTGZrRHB3Mg?oc=5",
+      "pubDate": "Mon, 31 Aug 2026 06:46:18 GMT",
+      "pubTs": 1788158778.0,
+      "desc": "中油舉辦安全衛生觀摩研討會 強化職安管理&nbsp;&nbsp;Yahoo股市",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "901d2126fd47e5b4",
@@ -194,6 +271,17 @@
       "pubDate": "Sun, 30 Aug 2026 16:00:00 GMT",
       "pubTs": 1788105600.0,
       "desc": "第一起海外工傷NCP申訴來了！當台灣企業大賺印尼鎳礦財，誰來接住墜落高空的勞工？&nbsp;&nbsp;CSR@天下",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "c771f8c0bb60892d",
+      "title": "死亡率是5倍！營造業不安全行為多重大職災居各界之冠| 生活",
+      "link": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE1TVW40MHpHTE9rdWtPOGg3LWlNWnBnZ3ZjanJVa2NpN0ltQXdXN1NqREltWW5qRzNPQTJHc2VYY1laLVBUYTNF?oc=5",
+      "pubDate": "Sun, 30 Aug 2026 10:26:03 GMT",
+      "pubTs": 1788085563.0,
+      "desc": "死亡率是5倍！營造業不安全行為多重大職災居各界之冠| 生活&nbsp;&nbsp;三立新聞網SETN.com",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -837,116 +925,6 @@
       "badge": "purple"
     },
     {
-      "key": "85007fd9013c938b",
-      "title": "台積電寶山廠區工安意外 22歲工人遭機台重壓「頭部受創」當場身亡",
-      "link": "https://news.google.com/rss/articles/CBMingNBVV95cUxOUG9MUlFXbnc2dWVfSlVidm9fQXYtUEFtZkVLUzhDNEo3XzBQTk1IM2dZNmFDSkE3ZG5KTHZxUHluR1NObGpOSjE4eDA5d05WZUtnNDFrNjl4eG4xcWdSbGNITjNPcE1fb2pDcWtyazRObnVYcXZuQnY2ZWRtZmctVG91OUczbWtPRDRrOW5oWWdPN1NHQnk1U18wYm1LTkM2TXlSTll0ZUlBOXJja3pSMjVMa2pUa2NTSGs1aDRWQkJlNi1ab2VyY3RCdVhtSTdrTGdwQ2EtZk5DSzZIM0laYUdwZUZqR0pTMmRoTDU2UHRkOWd6Ty1mSVNiaWxybmFUNGgyaVowUWZGTExjWWtOTFhGSF9hZEVPa1lhRmZGOFlXYnVTSVpuRC00Y1JhMzZROGxwN1VJakg0NjRHcTZPNEpUQjh1bEhXRzVNcU5qWk9veGxiVElyOHIzbzdUMDVFVHVGRXNXS0g2dVZSSkZjYjBka2tiY3FpOUtpajZPS3ZSMXJzeGx4eDkwclI4NXFuT21VOERPVmhJUEl2TWc?oc=5",
-      "pubDate": "Tue, 18 Aug 2026 10:10:00 GMT",
-      "pubTs": 1787047800.0,
-      "desc": "台積電寶山廠區工安意外 22歲工人遭機台重壓「頭部受創」當場身亡&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "13c24f6479459a7e",
-      "title": "台積電竹科工地工安意外 工程自主停工釐清原因",
-      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5MamFybk00U1J3MURYLVg3ZUtlYV96YjlaTzZQQnVVbXR1aUpWRGFqaUxlOUZBWnVEZTVKNlpacm5abDNfMlFVcQ?oc=5",
-      "pubDate": "Tue, 18 Aug 2026 08:45:49 GMT",
-      "pubTs": 1787042749.0,
-      "desc": "台積電竹科工地工安意外 工程自主停工釐清原因&nbsp;&nbsp;5168實價登錄比價王",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "f3fd96b2c5b36226",
-      "title": "寶山F20廠發生工安意外 台積電：自主停工全力配合調查",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1WbUpBeFFId0ZHU3JnU3NhQVlmNDFHWktoQUY3M0ZwRXlxVk1KSkg1UkI5OXdhZ0dGXzJTd2NMLWhSb1BFcTQyRzNvUUlPU0k3VUpOLVpjOF91MF8yc2Uw?oc=5",
-      "pubDate": "Tue, 18 Aug 2026 08:10:13 GMT",
-      "pubTs": 1787040613.0,
-      "desc": "寶山F20廠發生工安意外 台積電：自主停工全力配合調查&nbsp;&nbsp;自由財經",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "e41cf11bd076a87b",
-      "title": "一個月內第2起 新竹台積電F20工安意外 工人遭500公斤配電盤壓死",
-      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1NdVA4T0NZVmdnQWdRZ0ExX2ZVU2FYaG1GYXBnYUhPenYwOWtRVUoybVFpc2htSER5RE1iQXBVYU1oME5meEg2TFlxdldVdmY1eVJadDNMOA?oc=5",
-      "pubDate": "Tue, 18 Aug 2026 07:54:41 GMT",
-      "pubTs": 1787039681.0,
-      "desc": "一個月內第2起 新竹台積電F20工安意外 工人遭500公斤配電盤壓死&nbsp;&nbsp;觀傳媒",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "efc4a20705d9e215",
-      "title": "台積電F20廠區工安意外 公司：已自主停工、全力配合調查",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFAwWkpVZWJ6SWNvMVVRdFF4WEZ6N040bGRqMnpVNW5WcERGRzJqRFBmREg1M2pOVEdZdUE0Rnctc2E3VlMwUm4zazdGZnhBTlBGTFHSAVBBVV95cUxQbzdmbUtuUkYwQlFOVTM0aEkxclpTdkFsbzNvWDVoTWh1eFZLMF9BNGZaVV9uZDdFcFFOUlNhZHEzaWRmTG9Cb3B4eE9QamptUQ?oc=5",
-      "pubDate": "Tue, 18 Aug 2026 07:40:00 GMT",
-      "pubTs": 1787038800.0,
-      "desc": "台積電F20廠區工安意外 公司：已自主停工、全力配合調查&nbsp;&nbsp;ETtoday財經雲",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "2ad622589e18b35d",
-      "title": "[職災法律扶助升級明年納入刑事審判]",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE8wajVYYy00NTZDeF9KLWl0NjFCcHBfeEd0dWtnZ0cwWWVmb2xDbkpGa1lCSTFoX3I4RjNYVGZDcHJtd1UxTmF3aVZkX1dCT2tjV1HSAVJBVV95cUxPMGo1WGMtNDU2Q3hfSi1pdDYxQnBwX3hHdHVrZ2dHMFllZm9sQ25KRmtZQkkxaF9yOEYzWFRmQ3BybXdVMU5hd2lWZF9XQk9rY1dR?oc=5",
-      "pubDate": "Tue, 18 Aug 2026 07:15:00 GMT",
-      "pubTs": 1787037300.0,
-      "desc": "[職災法律扶助升級明年納入刑事審判]&nbsp;&nbsp;1111人力銀行",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "a5e7b72b40ee2170",
-      "title": "台積電竹科工地工安意外 工程自主停工釐清原因",
-      "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBRLXhYbXZlMkQtZ1IxT1RJZ1BJNzZZdzI0amRKeFRtTUpEa2R3NlVxblY2OXhiWWFIaF9LQ1ZkTlpoczhXWFZPLUZpOWZmOW5zc0tabVZaTUtyQdIBX0FVX3lxTE8teHF3WmhYeW4xWDBZYnQ0XzUtSU92QnUwcFdyS0xHdUV5VVhCT1dNVHlDQUpsU1RxZHZEYlZzdldLUlVJa1pRajV1N2kySmdseG5IR2ZyRVJxOGJQVFdF?oc=5",
-      "pubDate": "Tue, 18 Aug 2026 07:00:00 GMT",
-      "pubTs": 1787036400.0,
-      "desc": "台積電竹科工地工安意外 工程自主停工釐清原因&nbsp;&nbsp;經濟日報",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "0378022eb88172d9",
-      "title": "動動手指查找最新勞動法令，查詢系統無障礙升級，使用更加便利!",
-      "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5UNDNuNDk0OS0wQkpKcGNqRUlRQno2dFV1aXhTYlJUaW1IeE40TXlIQ3hMRnpZR2RabjZpcDJRaldCdzFEakdPNFBnUk1aV2xfb2dyR3dTa1dVcEhy?oc=5",
-      "pubDate": "Tue, 18 Aug 2026 07:00:00 GMT",
-      "pubTs": 1787036400.0,
-      "desc": "動動手指查找最新勞動法令，查詢系統無障礙升級，使用更加便利!&nbsp;&nbsp;mol.gov.tw",
-      "source_id": "gnews_law",
-      "source_name": "法規更新",
-      "badge": "teal"
-    },
-    {
-      "key": "d4891cfb9632ee47",
-      "title": "台積電寶山 F20 廠工安意外 公司完整回應來了",
-      "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBqTXE3X3ViQm4zVk9jb19HeHZxRkMzOTNFQVNTOV9DUmhXU0NJa2QyWGNPV3VhM1BRVkx2Nzg2X2c1WDd6cUt5Qmw2Z0tPQ1kxYllQSTNLUHV3d9IBX0FVX3lxTE9YdUJzUi1iRjQwWlFQZFg0X2NaWjhySjFZNmw2U3hqblZRanZpU09veDVJTWQ0VzFib0hDc2NESjMzQlZZcVZWb0hDTF9aS0JEMDAwb0J4d3VLUUNpTXMw?oc=5",
-      "pubDate": "Tue, 18 Aug 2026 07:00:00 GMT",
-      "pubTs": 1787036400.0,
-      "desc": "台積電寶山 F20 廠工安意外 公司完整回應來了&nbsp;&nbsp;經濟日報",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "fd3830d01667d2f4",
-      "title": "簡化職災訴訟生活費撥款 勞動部新制必看",
-      "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9TT2xoczRFM1ZzQ0FIY2QwTE9SQWdBNTM4ZGlPSkdoRlduOWlXampOazRjeEdzMWxzUWxoMmJ1eUI3OTVBbWVoRmtDa1ZVMG9zalFrWEhBbHBmYjhrSFN4Mmxn0gFiQVVfeXFMT1NPbGhzNEUzVnNDQUhjZDBMT1JBZ0E1MzhkaU9KR2hGV245aVdqak5rNGN4R3MxbHNRbGgyYnV5Qjc5NUFtZWhGa0NrVlUwb3NqUWtYSEFscGZiOGtIU3gybGc?oc=5",
-      "pubDate": "Tue, 18 Aug 2026 06:15:00 GMT",
-      "pubTs": 1787033700.0,
-      "desc": "簡化職災訴訟生活費撥款 勞動部新制必看&nbsp;&nbsp;mirrormedia.mg",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
       "key": "7952dc02a979a8e6",
       "title": "勞動部修正發布「外送作業安全衛生指引」",
       "link": "https://www.osha.gov.tw/48110/48417/48423/210646/",
@@ -1233,5 +1211,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-09-01T05:48:03.421387+00:00"
+  "lastUpdated": "2026-09-02T05:10:35.518717+00:00"
 }
