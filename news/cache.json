@@ -61,7 +61,7 @@
       "link": "https://news.google.com/rss/articles/CBMipwNBVV95cUxQQlNNVmRUU0ZRVnREWVl0azl2YmliWFZ1ZVlFTTlzRDNLMDFGVVdnZ191MWo2TlBLV2hvT01XOVlRUkFsTUl5OTRVTkdrWGpNOFItT0t3aDFQNUJFd0Rsd05iRklyMGRPbU45dlk5V3M5Z04yY1NEVXpyanhkN1luSEcwOWdhb25McUNzRmxVVlVQbURlWENKSVdkNUNUaWFDVU10ZmxZYVM3d0dIRVppcDRqLWEta2FmT1NkSi0yTlRZOHBwU3l3WW95RkVZMTdRaDFzdjgyXzVDdjV6NDlLY1BkWWxJdThQbFhZQmhUQ0JUYkdNUnlGejFWV0JxX2lKUkc0RlBuTUJsVUxGU1BGVUNPcmt5VXRDUEsyNE4zR0hQSHVPaDVOaUlpZDctZUlIeksyRUR0b1pJMVoyU2IwZDhYM2hscVNZeDNnQi1fTHB1TTVsUkFsSlZENVVKZk1VQWZXQWlQT3gwdXVDMGcxMzhaSnJkWDF2cDE0SFpZUE10ZzRBc0s4SzVvbGFWREdaLVlRSll2bHB2bEZvTTZ4SnE5RV9VUW8?oc=5",
       "pubDate": "Wed, 02 Sep 2026 11:57:00 GMT",
       "pubTs": 1788350220.0,
-      "desc": "台積電嘉義廠工安意外砸死清潔員 檢方起訴7人 配管包商遭求重刑&nbsp;&nbsp;Yahoo新聞",
+      "desc": "台積電嘉義廠工安意外砸死清潔員 檢方起訴7人 配管包商遭求重刑&nbsp;&nbsp;tw.news.yahoo.com",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -155,17 +155,6 @@
       "badge": "red"
     },
     {
-      "key": "e5d0145a57e76b53",
-      "title": "勞工發生職災仍可續加勞保 勞動部提醒：「這情況」不得適用 | Newtalk",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5zYnItLUlqdWZfeG91dW9rbjBnYzl2ZzBOS3kzNmJNaXZsM2xtb3daMFp5eGo5YXNvMS1xVTlZcjRROGFPbjh2QVpzMWVNTV9vVHRtcFFn?oc=5",
-      "pubDate": "Tue, 01 Sep 2026 18:30:38 GMT",
-      "pubTs": 1788287438.0,
-      "desc": "勞工發生職災仍可續加勞保 勞動部提醒：「這情況」不得適用 | Newtalk&nbsp;&nbsp;LINE TODAY",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
       "key": "7256bd6b5c8932e0",
       "title": "勞動部邀請產官學研召開專家座談會 推動防災科技導入高風險作業場域",
       "link": "https://www.osha.gov.tw/48110/48417/48423/211872/",
@@ -197,6 +186,17 @@
       "source_id": "osha_announce",
       "source_name": "職安署公告",
       "badge": "green"
+    },
+    {
+      "key": "e5d0145a57e76b53",
+      "title": "勞工發生職災仍可續加勞保 勞動部提醒：「這情況」不得適用 | Newtalk",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5zYnItLUlqdWZfeG91dW9rbjBnYzl2ZzBOS3kzNmJNaXZsM2xtb3daMFp5eGo5YXNvMS1xVTlZcjRROGFPbjh2QVpzMWVNTV9vVHRtcFFn?oc=5",
+      "pubDate": "Tue, 01 Sep 2026 08:37:32 GMT",
+      "pubTs": 1788251852.0,
+      "desc": "勞工發生職災仍可續加勞保 勞動部提醒：「這情況」不得適用 | Newtalk&nbsp;&nbsp;LINE TODAY",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "a9956a256d3c7198",
@@ -292,7 +292,7 @@
       "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9ZYm9ValhmVGdpbEdlN3dxclhxY3B6emFtZllvZ2l4N21oeU4zWkZaWkRzeWFtc1lkR3RPWmdpWWlrQ3BVSC1NM0NhYlVNaXMwNmVyT1NtUXE0d3B3T0dMNA?oc=5",
       "pubDate": "Mon, 31 Aug 2026 10:32:56 GMT",
       "pubTs": 1788172376.0,
-      "desc": "快新聞／台中建案驚悚工安意外！板模工踩空...墜B4慘死&nbsp;&nbsp;ftvnews.com.tw",
+      "desc": "快新聞／台中建案驚悚工安意外！板模工踩空...墜B4慘死&nbsp;&nbsp;民視新聞網",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -356,8 +356,8 @@
       "key": "d4059232c04a9fee",
       "title": "中油舉辦安全衛生觀摩研討會 強化職安管理",
       "link": "https://news.google.com/rss/articles/CBMiwAJBVV95cUxQS2M4QXhJMGJleW5XOHpGQTJpOHFSSmtGSEFkbk1PR1djU3BQUmZDMU1NYnEzRkU5cVlmUE5qX0Zqa2pnUHM0ZENqS0hLZGJ3dHQzQlNVaGlDcmR3N1hrN0piaUhGUzZkSG5VaFdpUFRybmdZVzRwZE12SjVRTWI1Mk9MbUxiUl9zV1JNRndQQTlyZEJkWElDOHQzSHUzdWZHX29peEhQMGpiS2tZd0VJQmpSSk0tcURCcWVkRjg3NWdoeGMyVl9nMnRucU55Zlh3THZfM1hBSzlPSkNyUXhuZGl5ejNGb0FtMjFueURhcDFlQ3RwY1BjcGNjNUx1bGxTYzIxeFZoRS1HRWJxOXpaWUlQYlA4Sl9QMmUtcXRaMjlNZVljaU41bW16TjVxZ2FNTmF6RW0tdXNYTGZrRHB3Mg?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 06:46:18 GMT",
-      "pubTs": 1788158778.0,
+      "pubDate": "Mon, 31 Aug 2026 07:10:13 GMT",
+      "pubTs": 1788160213.0,
       "desc": "中油舉辦安全衛生觀摩研討會 強化職安管理&nbsp;&nbsp;Yahoo股市",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
@@ -727,6 +727,17 @@
       "badge": "red"
     },
     {
+      "key": "50a48d265a13f903",
+      "title": "南投縣府9月開辦「職安卡」訓練全面防範職業災害",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE96QmtwZkxoZnlESnEweC1McndoZU51a3Yycmlpb3ZPRVdxRk1GeVhKT0lrcnEzZHJ5LWdYano1eE9wYnpEd2x1S1FvWTY2Um9Jd1E?oc=5",
+      "pubDate": "Thu, 27 Aug 2026 05:22:10 GMT",
+      "pubTs": 1787808130.0,
+      "desc": "南投縣府9月開辦「職安卡」訓練全面防範職業災害&nbsp;&nbsp;蕃新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "0023e188ea0d6e0e",
       "title": "營造業戶外作業熱危害高風險 台南市工務局帶頭示範防護",
       "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBWVDdoZExqYm9zN1lsQzRyTUJmTlBUQmx0R18xQk9CTFVVX2NSMExNd3kyZ0dQMEUyZW5qdHdrcW9IZWxiVVQ0TXVNeEx3clBXc2NhX1dRYVRob2FJT2M4NENrNzdleGFq?oc=5",
@@ -736,17 +747,6 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
-    },
-    {
-      "key": "50a48d265a13f903",
-      "title": "南投縣府9月開辦「職安卡」訓練全面防範職業災害",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE96QmtwZkxoZnlESnEweC1McndoZU51a3Yycmlpb3ZPRVdxRk1GeVhKT0lrcnEzZHJ5LWdYano1eE9wYnpEd2x1S1FvWTY2Um9Jd1E?oc=5",
-      "pubDate": "Wed, 26 Aug 2026 12:14:00 GMT",
-      "pubTs": 1787746440.0,
-      "desc": "南投縣府9月開辦「職安卡」訓練全面防範職業災害&nbsp;&nbsp;蕃新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
     },
     {
       "key": "bbfc20d34705f425",
@@ -876,61 +876,6 @@
       "pubDate": "Sun, 23 Aug 2026 11:07:39 GMT",
       "pubTs": 1787483259.0,
       "desc": "快訊／新店商辦大樓傳工地意外 工人從12樓鷹架墜深溝亡&nbsp;&nbsp;三立新聞網SETN.com",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "c78bdf677ae24d66",
-      "title": "中鋼子公司傳工安意外！孝子遭25噸鋼卷彈開重擊慘死",
-      "link": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE1pMm1PTkdaU0JzNThFVWhxcTNwSnJhQmZGZzZVYnhaUjI5ekstNXcyMm9mUmdOeVFxb29lX08tZUlYWVg0V24w0gFLQVVfeXFMUDhnU3FZSThoQmRsQ2Z5S1FIZ2JLbVlyUlo4V0xEcmpHSDlWU2h3SW01a253ODk0aFQyclVkTUdVNlV5eVBaWG9Ea3Jn?oc=5",
-      "pubDate": "Sat, 22 Aug 2026 13:12:48 GMT",
-      "pubTs": 1787404368.0,
-      "desc": "中鋼子公司傳工安意外！孝子遭25噸鋼卷彈開重擊慘死&nbsp;&nbsp;三立新聞網SETN.com",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "75e6b461e329ed7d",
-      "title": "新北景觀處開辦115年度景觀樹木修剪培訓認證",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBtdUNEaEdHekN0NHpCRGc2R0Fxd20tRzRZOWEya0szLXBmUFZSZlBZSlJLelE2bElMbk5ZTnpuMnJkSm5xQ2RqRkdqVXdpUF9UMWc?oc=5",
-      "pubDate": "Sat, 22 Aug 2026 10:40:28 GMT",
-      "pubTs": 1787395228.0,
-      "desc": "新北景觀處開辦115年度景觀樹木修剪培訓認證&nbsp;&nbsp;中華新聞雲／中華日報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "e43f01a46667eacc",
-      "title": "從職業傷害找到創業新路 許晏寧打造「科技洗酸」助攻女性二度就業",
-      "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE0tM1NDVWZWQTFld3MzUW1oLTFQZmhWam9uN0NPb1ZLTzJ2YzBaUmxISTZSa2xYTm96cFlXbUtaQ1M0OUx6Q1FmS0NZR1l6RXNDTHExdQ?oc=5",
-      "pubDate": "Sat, 22 Aug 2026 05:52:26 GMT",
-      "pubTs": 1787377946.0,
-      "desc": "從職業傷害找到創業新路 許晏寧打造「科技洗酸」助攻女性二度就業&nbsp;&nbsp;新頭條",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "dee4e0e120156c7a",
-      "title": "從職業傷害找到創業新路許晏寧打造「科技洗酸」助攻女性二度就業- 生活新聞- PChome Online 新聞",
-      "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNYlo2WkNMS0lXTlhrOGo3WGQzQlpCejM4eURnQy1ycm81ci1Xd0ZiTFRjNi1lVGVmSGIxcXhwY1dCV0RURVJkNW93Y1BIZVpUNGdDYnBlY1g5T1EtaHFzRFJ6dUZsOXpqOGh2VjVyeGdfckpPSkpISm5RQ3psMVRFLU9peUMwZGx5R0FWQjln?oc=5",
-      "pubDate": "Sat, 22 Aug 2026 05:52:26 GMT",
-      "pubTs": 1787377946.0,
-      "desc": "從職業傷害找到創業新路許晏寧打造「科技洗酸」助攻女性二度就業- 生活新聞- PChome Online 新聞&nbsp;&nbsp;PChome Online 新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "f294e4ffc20b53eb",
-      "title": "從職業傷害找到創業新路 許晏寧打造「科技洗酸」助攻女性二度就業",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1RdDliQllVSmdEVnF1bzhtY3FscXZoUWUwSGhYZVUyQmhFNGdVYVYzSXJVWWtaUElob0F5aUdWQ2FVVGMzUURfTkdVVU9sOE9WX2c?oc=5",
-      "pubDate": "Sat, 22 Aug 2026 05:52:00 GMT",
-      "pubTs": 1787377920.0,
-      "desc": "從職業傷害找到創業新路 許晏寧打造「科技洗酸」助攻女性二度就業&nbsp;&nbsp;蕃新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -1244,5 +1189,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-09-05T05:00:14.615582+00:00"
+  "lastUpdated": "2026-09-06T05:12:57.894483+00:00"
 }
