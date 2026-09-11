@@ -1,12 +1,89 @@
 {
   "items": [
     {
+      "key": "ad4c8f7b45af9082",
+      "title": "公告本部辦理「危險性機械及設備代行檢查業務行政委託」評選案。",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/212297/",
+      "pubDate": "Fri, 11 Sep 2026 09:49:45 GMT",
+      "pubTs": 1789120185.0,
+      "desc": "依據：依行政程序法第138條規定辦理。 公告事項： 1. 評選文件送達時間及方式：即日起至115年10月12日(星期一)下午5時前送達或寄達本部職業安全衛生署（新北市新莊區中平路439號南棟11樓，職業安全組)，逾期概不受理。 2. 有關申請機構資格條件、標的、委託期間、委託經費、委託限制、評選方式…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "52f05b7387fee4af",
+      "title": "投縣府辦理風險評估訓練暨職場霸凌防治宣導 打造安全友善職場讓同仁安心工作持續為民服務 - 墨新聞-MORE News",
+      "link": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE5ScXRKSG9YdTRFS2JrM0RqdDNtX25JbjJ6ci13QXBYSW0xTy0ySzBRbjBGOTFiMThqTDNSZDZrRlBJUQ?oc=5",
+      "pubDate": "Fri, 11 Sep 2026 03:17:57 GMT",
+      "pubTs": 1789096677.0,
+      "desc": "投縣府辦理風險評估訓練暨職場霸凌防治宣導 打造安全友善職場讓同仁安心工作持續為民服務&nbsp;&nbsp;墨新聞-MORE News",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "07d0ded8160d13f1",
+      "title": "勞工局辦理聯合把關安衛家族教育訓練 加強職場反霸凌宣導",
+      "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1oU0dSLUlVeGR6cUd4aTY4WmlPSmZSanVPQmpZQUpDYldueFpScVQ5ektTMl84ZzdLUVZmcF9ISEQzSW11cFJjY3JuZ3VoYjNnYW1wT2VuX0JPODZKYko2dWU4V1dzcEtt?oc=5",
+      "pubDate": "Fri, 11 Sep 2026 02:52:34 GMT",
+      "pubTs": 1789095154.0,
+      "desc": "勞工局辦理聯合把關安衛家族教育訓練 加強職場反霸凌宣導&nbsp;&nbsp;博識高科技",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "ab5b23f39acbde1e",
+      "title": "28歲工程師「不舉」是職業傷害？醫揭久坐、高壓最危險",
+      "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFA1bnlHa1NCZlFWcktsV2lUQjNfTV9YWlJmM28xYTQ1Y0pocXItajJvX2tDalZyN1ozWWxpNWFPQks2ZTdNUGQ2UGFYVGNITHM0T0ZzaFZvOWlBNVUyazRodjFaR3rSAWpBVV95cUxOQWxkWG5QOGgwYmZMOE1jZHFRUnEyZ21GaXJ2ZDBGdUFnY01LbkJua2J4UDhXR05sRkFKNkpnNF9BY2EwNFliNjRIRzFlaUNBVUI3XzFXNWxiRU5DSk0yMWFGa196ZG5ZeWhR?oc=5",
+      "pubDate": "Thu, 10 Sep 2026 12:38:13 GMT",
+      "pubTs": 1789043893.0,
+      "desc": "28歲工程師「不舉」是職業傷害？醫揭久坐、高壓最危險&nbsp;&nbsp;自由時報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "d5b539384351e8cd",
       "title": "勞動部表揚地方職災服務久任人員 陪伴職災勞工走過傷病、復健與復工歷程",
       "link": "https://www.osha.gov.tw/48110/48417/48419/212270/",
       "pubDate": "Thu, 10 Sep 2026 12:19:57 GMT",
       "pubTs": 1789042797.0,
       "desc": "勞動部洪申翰部長於9月9日出席「115年地方政府職災服務久任人員表揚暨交流座談會」，表揚12位服務年資滿15年以上的地方政府職災服務專業人員(PAS)，感謝第一線夥伴長期以專業與耐心，陪伴職災勞工及其家庭，從權益協助、醫療復健到復工與重返職場，一路提供最即時、最貼近需求的支持。 洪部長表示，地方職災…",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "2ceb52a07c0ba067",
+      "title": "陳美雅指高雄工安事故頻傳 促提高稽查密度重罰累犯業者",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE84bFlVREJEOWFiMVVjVDNrYjY2UUN1OERheTlyV25EQ1UxQ1lWZE9sU2lEYUlHQWc1SExOTGZTQ0ZQX0lSSEZsNjF3RkJtLU5LUWc?oc=5",
+      "pubDate": "Thu, 10 Sep 2026 09:10:16 GMT",
+      "pubTs": 1789031416.0,
+      "desc": "陳美雅指高雄工安事故頻傳 促提高稽查密度重罰累犯業者&nbsp;&nbsp;中華新聞雲／中華日報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "cc83d445c5508da6",
+      "title": "高雄捷運工地意外！工人遭鋼板砸中頭部昏迷急救",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE04c18tNUxiYy1saUpoRjA2clZ4YkZ3ZE9yNXVOcVhVYUNuUjZIaW5CNExISjF2LXBUc2RxT1N0d2xWVjVoOFdCVEt0MkpjWnFjUkxrcDhYY190OE9NbWgyVEVJVUtnd3NkMnUycVNn?oc=5",
+      "pubDate": "Thu, 10 Sep 2026 07:04:30 GMT",
+      "pubTs": 1789023870.0,
+      "desc": "高雄捷運工地意外！工人遭鋼板砸中頭部昏迷急救&nbsp;&nbsp;中時新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "ffa3210d34ac868d",
+      "title": "高雄捷運工地意外 移工遭鋼板樁壓傷 意識不清送醫",
+      "link": "https://news.google.com/rss/articles/CBMi3gJBVV95cUxOSGt1RHlDbWNSdEcxQUpuamV1UUZJN0FOT2FzZUlyNFRaaHNqTjUwWGU4eks5S0wyQkVMM2ZjSlpHcllTS2J0RTMtN3E2eEdneURaeWFBWnZRQ2VRUUl5dE5kdGNidFg2b0VoZU8xaFZKdFJ1M2JCUTd3Y3JIX2wtZ0ExbktnTld0aWFWRDlNczJ2THdSemtmbEFCYUhPMUMxWnFXaGNVSmdjTVlwZmR1ZXRSUlV5MXc1eGJQQ0pVM3g4Nkp1eGRjQUxWU0xXT0RVa0pfRFB6Mi1fWG1rX2Y3U190cFl3TjdrdzVTX0xzS2VCeVFfc1ZsNS0zaDJhMnhBZnFDTkRqMmZkb1VyY1hZMHFIN1NUVlJLSWtyR1BnSmR2WmFMOGVWNTFEREpCR1JRSHoyaExGNFdLd0xiUTdiZmM2Q0x5S2FwOTBRakE1SE1hb3FHN3ZsR3BOdWNTdw?oc=5",
+      "pubDate": "Thu, 10 Sep 2026 05:39:03 GMT",
+      "pubTs": 1789018743.0,
+      "desc": "高雄捷運工地意外 移工遭鋼板樁壓傷 意識不清送醫&nbsp;&nbsp;Yahoo新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -34,12 +111,34 @@
       "badge": "red"
     },
     {
+      "key": "bb7b4490abd625a2",
+      "title": "新／高捷工地意外！半空中鋼板砸破工人頭",
+      "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFA5NnBoLVVzWDZsV1ZIdjVJMktBQzZkMHpoRGZqLThuVVdvREtVdVVpVUthMWNtcmJ6aVpkc2dvSWZyMUVDTXpURm1qYXc5amVqRkFhWkFLMnM5dU5Hd1h1akxB0gFiQVVfeXFMUDk2cGgtVXNYNmxXVkh2NUkyS0FDNmQwemhEZmotOG5VV29ES1V1VWlVS2ExY21yYnppWmRzZ29JZnIxRUNNelRGbWphdzlqZWpGQWFaQUsyczl1Tkd3WHVqTEE?oc=5",
+      "pubDate": "Thu, 10 Sep 2026 04:17:00 GMT",
+      "pubTs": 1789013820.0,
+      "desc": "新／高捷工地意外！半空中鋼板砸破工人頭&nbsp;&nbsp;鏡週刊Mirror Media",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "cd2cbd889e63fa48",
       "title": "高雄岡山捷運工地意外！工人遭鋼板樁壓傷送醫搶救",
       "link": "https://news.google.com/rss/articles/CBMi3AJBVV95cUxOcC1vM2pLTXRBWVhsNEl3ajJLallfNm5vWXVXSTlzUzhsNFBZYmh2MGhJc3B3NGNFTnlRdUFJOHhrcTVIVk5rdWFzd0x3RnYxNmxHVlNETmhnV0pYUUxUckFfNjAwX25xZTdjdlVhVHdoRlJjcUstWkVPcGpiNHVuWTVqT1BqamV1ZzhSS2hUNFR5S0pYZlhyWlhrbmI3Q1g1b2pEcmo3NEo2OXpZWXBSRjBuaUNuTTFkODNpanBJU2xDcmRsWmpjbnNESVNtY0dSNE13ZDlGMGFQdHAyUW1LazNJaE1iaVR6THphYW41c0ZPNGtod0F2SlZJSVFrVTM2Qi1ueU9YRzg1bE82cXhRdVZ1b1F5a3RhN09GWUJTLVU1YmpwLVF0N1ZUbVRfQ0FPQ1NWeS1ubXRNcjJ6MGRxNzdhbnB6cUpIODhJLUF3R3N6dHgwMWJEc0ZxM04?oc=5",
       "pubDate": "Thu, 10 Sep 2026 04:14:28 GMT",
       "pubTs": 1789013668.0,
       "desc": "高雄岡山捷運工地意外！工人遭鋼板樁壓傷送醫搶救&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "5d6f5ec1762bf78e",
+      "title": "高雄岡山捷運工地意外！工人遭鋼板樁壓傷送醫搶救 - 社會新聞 - PChome Online 新聞",
+      "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPQ3U5ZGw3bFppMWNLeFNaMXlCY3N2d3MxRnZ6Sjd3MEJhRlNObTVOTmxQcjRkY09rdTZ1SFhwRXdZR1VvMlBkZFYyQzVfdW1sRUZnbzB5QlRSMjExcXMtdmhQZTBfWWoycEg2TmxVMklQSTNSTDFEZmdyWlkzbS0yS0tSQS0zd1RySjhj?oc=5",
+      "pubDate": "Thu, 10 Sep 2026 04:00:43 GMT",
+      "pubTs": 1789012843.0,
+      "desc": "高雄岡山捷運工地意外！工人遭鋼板樁壓傷送醫搶救 - 社會新聞 - PChome Online 新聞&nbsp;&nbsp;PChome Online 新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -917,9 +1016,9 @@
       "key": "c006ba2fe33da671",
       "title": "南亞塑膠林口廠工安意外！外包工修鐵捲門觸電慘死勞檢處介入釐清責任| 社會",
       "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE9Bc1hpMXl0LWtZaGZRNEFhR2NoM2JfUDZiZU1IVGtpN0pTUHJqNjNWWml0dWtjVG93T3pJMldBcldTeHhJN1RRbQ?oc=5",
-      "pubDate": "Sat, 29 Aug 2026 03:24:00 GMT",
-      "pubTs": 1787973840.0,
-      "desc": "南亞塑膠林口廠工安意外！外包工修鐵捲門觸電慘死勞檢處介入釐清責任| 社會&nbsp;&nbsp;三立新聞網SETN.com",
+      "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT",
+      "pubTs": 1787986800.0,
+      "desc": "南亞塑膠林口廠工安意外！外包工修鐵捲門觸電慘死勞檢處介入釐清責任| 社會&nbsp;&nbsp;三立新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -1033,105 +1132,6 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
-    },
-    {
-      "key": "ca64b2799d5d629d",
-      "title": "守護「做工行善」修繕英雄！南市勞工局攜手泥水工會辦理職安教育訓練",
-      "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE15S2pKWEpjb1BST1I4aEItSGZGeElZWDZjRVJ2UVROaTlhcHZkTWNXSzBMaTM1OXlreEs5VVFWZUZMNGg3ZFJUQWFVY01YQUdvdXhTLUZ1RGpDcjdDaE12RDB3?oc=5",
-      "pubDate": "Fri, 28 Aug 2026 02:53:56 GMT",
-      "pubTs": 1787885636.0,
-      "desc": "守護「做工行善」修繕英雄！南市勞工局攜手泥水工會辦理職安教育訓練&nbsp;&nbsp;新媒體經紀人",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "84b180df84bbf155",
-      "title": "守護勞工安全健康！投縣府接受勞動部職業安全衛生評核實地訪查",
-      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE84QnFjaHNVSkhNc1phdW5adTRzaU9LSElHeDhzNGR6bXNBaFlRUzZnV3VWZl9ZLVhieXRsZXlWVUVCOFFCdkFQYTZpVQ?oc=5",
-      "pubDate": "Thu, 27 Aug 2026 15:15:28 GMT",
-      "pubTs": 1787843728.0,
-      "desc": "守護勞工安全健康！投縣府接受勞動部職業安全衛生評核實地訪查&nbsp;&nbsp;樂聯網",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "eadf0f661aa53e86",
-      "title": "守護勞工安全健康！投縣府接受勞動部職業安全衛生評核實地訪查 - 墨新聞-MORE News",
-      "link": "https://news.google.com/rss/articles/CBMiQkFVX3lxTFB3Z1oyaVFULS1JSHdYWUppM2lSZGVVSkYzYk0zYkRZbldFelpXS1BjVzh3OHhlMWYzNzBMZjhiWk1yUQ?oc=5",
-      "pubDate": "Thu, 27 Aug 2026 14:17:06 GMT",
-      "pubTs": 1787840226.0,
-      "desc": "守護勞工安全健康！投縣府接受勞動部職業安全衛生評核實地訪查&nbsp;&nbsp;墨新聞-MORE News",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "3c9165ea3b8de779",
-      "title": "防範戶外熱危害 勞工局辦講習",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5yaVBUYjFObGlRcUFCR1M0MGs5bDNjMVpnUEdTSDU2TW81dTdvOUk2V1FPWEhldDdBNDN1TnM3UHVZTTdzVmJkM2xuOHM1dnJJX0E?oc=5",
-      "pubDate": "Thu, 27 Aug 2026 13:26:15 GMT",
-      "pubTs": 1787837175.0,
-      "desc": "防範戶外熱危害 勞工局辦講習&nbsp;&nbsp;中華新聞雲／中華日報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "369079c6b0a352d8",
-      "title": "營造業戶外作業熱危害高風險 南市府工務局帶頭示範防護",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFB3ZFpmM3I3TGp2QkhTQW5FNnJfS1pWcW84WFFIWnZybW9oLWs4Y2M1YUlpUjBJU3FyMlc2UlNyQmdBY0ZGbXQwMDdmNVkxeHpNM3c?oc=5",
-      "pubDate": "Thu, 27 Aug 2026 10:03:00 GMT",
-      "pubTs": 1787824980.0,
-      "desc": "營造業戶外作業熱危害高風險 南市府工務局帶頭示範防護&nbsp;&nbsp;蕃新聞",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "0e8f8d37a3e421b1",
-      "title": "智慧科技導入港埠工安 高雄港高階主管座談會拚「零災害」",
-      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1FSHBDTEdhTkVzMUF5dENQMGtFWFJIR3lfTHJoTGhDWDVRX3AyaEtCd3JWV3dlcHVvSWs3Y1hacUl2cEVBNXZ2RDBoSXVPMWRaR3J3?oc=5",
-      "pubDate": "Thu, 27 Aug 2026 08:29:23 GMT",
-      "pubTs": 1787819363.0,
-      "desc": "智慧科技導入港埠工安 高雄港高階主管座談會拚「零災害」&nbsp;&nbsp;台灣好報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "92fbfa68a73f30a2",
-      "title": "守護勞工安全健康！南投縣府接受勞動部職業安全衛生評核實地訪查",
-      "link": "https://news.google.com/rss/articles/CBMisANBVV95cUxPRjNBNlpzQzUydWQ2eVoxQ3lJc1YzR0dmMFN1VFAzYVdqcGxfYUFYOU9FMkpVNGpFUG1lZlRQRENibWVOcjFyUVp6WUFrazVSbjhYcVY4d0tWdlpFZUZtWXBkYmNoUUtrb0ZIWVpCY3hSRy1XeXVIcWV4Q3VEX2VTMldFdEtCc21WS1QtRm1KRkZiR1FUa2pIa2d5RVZDc1lmeFVsUk9qWmxkZ0VqYmMwcWJ6TUlJWWlhOWJoSDVKajYtaEJfY2tiLVdFN2VpU09VV1NKTHY2UzRqM3JreEx3NXJlM0xEeUhkbkN4N2pwSGdqX3dYQlBBLVA3MlcxdEp2MWpRTWhmZEtiZjdvRTNjU1BaQlRJaTVheURoTVVUR0VLY1ZHRTlXLWl2Nklnb0ZrXzI2aXNkZGdZWjBlcFc5ZjBKVG9pbS1xRXlyU01sN3V6UUR5QVU1dHdhYktxSDVZeUh4aUxkYkhqNXJGZFFPOUpZWGJXY3oxU2hsUnc4Z0xrdlk1dVhwTktUd0tjck56dVVScHJZT0FHNW5MRUpZaTdSOG1oalBZdEQzVDZsSTc?oc=5",
-      "pubDate": "Thu, 27 Aug 2026 08:12:34 GMT",
-      "pubTs": 1787818354.0,
-      "desc": "守護勞工安全健康！南投縣府接受勞動部職業安全衛生評核實地訪查&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "7cadc3a9016d86a9",
-      "title": "可成安衛家族教育訓練 勞工局盼勞工落實職安保安康",
-      "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1sWlRpaWpESVZ4U3czdGJfaXdYemc1bzdnMnIzNURWa0NRbGtuS3c4VHMwZFVmejlSUmNpY1liVjVtcWN0LXE0LUtaQ09ZeFlmbGtQeFYyNmZWSEk5Skt6LWpfMFJ1dGtZ?oc=5",
-      "pubDate": "Thu, 27 Aug 2026 07:21:45 GMT",
-      "pubTs": 1787815305.0,
-      "desc": "可成安衛家族教育訓練 勞工局盼勞工落實職安保安康&nbsp;&nbsp;視傳媒",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "962121087380432d",
-      "title": "工傷宣講進園區 莆田市人社局筑牢企業安全發展防線",
-      "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBaR3ZmaC10RVZKQUZDZlBWallXR1hqMlZRN1IySEtYTGFZTnkweFlHR1EyNlZoZlVIdUVjZ2dMNEJCdTNBM2NnTEpUYllqTlo3c1dwRHRLZGlOZ3JhMlZWU05zbE56Ykg1aHVyZC10ank?oc=5",
-      "pubDate": "Thu, 27 Aug 2026 06:49:00 GMT",
-      "pubTs": 1787813340.0,
-      "desc": "工傷宣講進園區 莆田市人社局筑牢企業安全發展防線&nbsp;&nbsp;人民网",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
     },
     {
       "key": "e7cc69d35565b01d",
@@ -1442,5 +1442,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-09-10T05:23:53.356755+00:00"
+  "lastUpdated": "2026-09-11T05:21:34.784441+00:00"
 }
