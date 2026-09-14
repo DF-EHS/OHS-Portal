@@ -1,6 +1,61 @@
 {
   "items": [
     {
+      "key": "5f487b76609c67d2",
+      "title": "公告「推動職業災害勞工重建服務訓練學程補助試辦計畫」，並自即日生效。",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/212331/",
+      "pubDate": "Mon, 14 Sep 2026 11:27:35 GMT",
+      "pubTs": 1789385255.0,
+      "desc": "為推動職業災害勞工重建服務，本署辦理推動職業災害勞工重建服務訓練學程補助試辦計畫，鼓勵設有職能治療學系等相關科系之大專校院開設相關學程，培育具備職能復健與工作能力評估知能之專業人員(職能治療師或物理治療師)，以促進各地區職能復健專業機構之設立及符合運作需求，詳細內容請參閱附件1。 依補助計畫第7點規…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "c7f096a6b96d2545",
+      "title": "3項職安驗證到位 允祥營造深化安全治理",
+      "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBmc0lMVnhLUmpBMzF5dzVMTkVzSlRvNkpBV29Hb29HWExINGZ5SnRmQjRSckg5NXJSVjRpTHU4Znpqak9HR1hfU3RQcXh5ZFRCNWo3dVBNYml2eVA2VlVCdXh2S2JtbTV4WUFLX3lrWExkQ3FiTzc3ZGJUSVpVZ9IBX0FVX3lxTE80YzJ1S3l0MEhVSXBSQjkySjZHalVjSS1zaENjMEFpNGR6ZHJldUhmcGJkdUJWTjBXRTBTN2hlSmIzcGtyRnNjX2dDb0R2NC1iaW1PY0ZVT1VGS0dYRXRR?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 05:02:51 GMT",
+      "pubTs": 1789362171.0,
+      "desc": "3項職安驗證到位 允祥營造深化安全治理&nbsp;&nbsp;經濟日報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "36996d4ee9abfbcf",
+      "title": "快訊／東京工廠爆炸 疑瓦斯氣爆玻璃噴飛釀3傷",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE56aEpnb0QwZUUyM04taXJKOXlFcHVpcEhJWDlsOUc3c1dvUFVjRnFJazg1dFlnMlhYNHo5TngzeXg4X0VzVEx2MXhPdm1Ja2s?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 01:18:00 GMT",
+      "pubTs": 1789348680.0,
+      "desc": "快訊／東京工廠爆炸 疑瓦斯氣爆玻璃噴飛釀3傷&nbsp;&nbsp;TVBS新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "be0fd49f24d2c377",
+      "title": "影／工安意外！巴西男「手指慘卡肉鎚機」人機送醫院麻醉拆解 保住手指免截肢",
+      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1JcFlJdG56TDdOQTdCcjZRczVZbUlxeURBTW1PVHpJdWw1cnlnRVd5SXpJNFVXU3k0MU1Tb2tDcGlHRzZ2NmhLblRHdzNUdw?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 01:11:00 GMT",
+      "pubTs": 1789348260.0,
+      "desc": "影／工安意外！巴西男「手指慘卡肉鎚機」人機送醫院麻醉拆解 保住手指免截肢&nbsp;&nbsp;記者爆料網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "920f7cb9b752dfb1",
+      "title": "落實職場安全衛生 林業保育署屏東分署辦理林業技術人員職能訓練",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE91TUg1ZnVZTTc2T3l0cms5RENUVmFLR1hob2RsYUpqR3lpYnJlcUNxUTNxeFlkWUlTZHNxanpzc2dVTHlPVkJDWkFnRmdrOEFBaVE?oc=5",
+      "pubDate": "Sun, 13 Sep 2026 06:40:00 GMT",
+      "pubTs": 1789281600.0,
+      "desc": "落實職場安全衛生 林業保育署屏東分署辦理林業技術人員職能訓練&nbsp;&nbsp;蕃新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "0396da1f4b530f8f",
       "title": "澎湖縣政府9月開辦「臺灣職安卡」訓練 提升職業安全衛生意識",
       "link": "https://news.google.com/rss/articles/CBMixAJBVV95cUxQbDVEMVlLbWhEQWpNZTdBUnJ1eU1VdHNDSERWM282VjFiZURiZ1FRcTh1OHhWOEdkdFhVQjhTdzJqY2Q4Z2RkY3AxZUlsMURMYkl1bzFTMFhFLXJUQ2laNE8wRURGQ2c2M1l6cjFKNGZjckRCQ0pJUDNDeFhSbmhLWXpSX3VJS1FMZWNLVUtGcVpscTFvQkVTTV9XVW5HaGZmYnV5MklrWEJ6NmdIbWdWOHZmTmd4bWVoc3RvRlF6WDVCMUZBWnBjRU52ZzJVUldDR000R3E4cVhPR0FNZnZ5U0lxYnNBM3NBNUJkUjRqU1NoTHBRMFFvcUZwMmNqMzBvMVZjUjBSd01FaXpmQms1U2tUNFc0TmNzY2RWMU54ZnA4RW0yM3lwR0VNamZQRF9nd3gtejRkWUZsVGFyeGtSZVR6SDA?oc=5",
@@ -83,10 +138,21 @@
       "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBYbGYwVTNTQU5pampqdklkeXF3OTdzQ3BybEE3WDF0WkVxWkwyVkw1Yk56SWlGdW5KNGoxYXZQNk0wbDhYOEFhUlM5SUtycUItWWRsZEVXb1o2STdsbzV4VtIBZkFVX3lxTE1KRklqdU81TWRneE9mZVItRTk5LXc5TzlLOHEyeENUaHpob2ZsN0ZadVRNTFpWNllrSXQ3ci0xYzg1S3RsZGlPbUNMTGt2Z04wRE5mS2dTNW4zOThtNVR4d1JVRUhEUQ?oc=5",
       "pubDate": "Fri, 11 Sep 2026 07:50:00 GMT",
       "pubTs": 1789113000.0,
-      "desc": "高雄去年前7月重大職災死亡13人 陳美雅籲累犯應重罰&nbsp;&nbsp;大纪元",
+      "desc": "高雄去年前7月重大職災死亡13人 陳美雅籲累犯應重罰&nbsp;&nbsp;epochtimes.com",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "f970d91b295d7f4c",
+      "title": "基隆市政府115年「職災勞工專服員及勞政志工教育訓練暨聯繫會報」、「重返職場宣導」及「職業安全衛生講習」聯合會議",
+      "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBoTHpjRDk5M3lKOEcyX2g0SEpYVkVEZmZPVVhDT1VqdklaZWQwUjBWVTEwU00wVkdtQmdVRk5nZlUwNG13TEdhNDJrWmF1Wjk5REViaUhaQ0F1V1Z5MlM3Mm9oZ0U?oc=5",
+      "pubDate": "Fri, 11 Sep 2026 07:00:00 GMT",
+      "pubTs": 1789110000.0,
+      "desc": "基隆市政府115年「職災勞工專服員及勞政志工教育訓練暨聯繫會報」、「重返職場宣導」及「職業安全衛生講習」聯合會議&nbsp;&nbsp;klcg.gov.tw",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "ffebb1b3170f6076",
@@ -105,7 +171,7 @@
       "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE04TGU0N0FRdVRYVVlLemFQNGlLdkdpZ2NOXy1FSFF0cmF2ejNMdmM5cGhGa25qQl8ySjVQLW9kZ0E1cDBPdUJNMVJwUE02M0FpNVlzeERPN1IybTZHTW1r?oc=5",
       "pubDate": "Fri, 11 Sep 2026 06:13:00 GMT",
       "pubTs": 1789107180.0,
-      "desc": "中鋼工安意外害包商喪命 廠長與操作員各判6月&nbsp;&nbsp;cna.com.tw",
+      "desc": "中鋼工安意外害包商喪命 廠長與操作員各判6月&nbsp;&nbsp;中央社 CNA",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -204,7 +270,7 @@
       "link": "https://news.google.com/rss/articles/CBMi3gJBVV95cUxOSGt1RHlDbWNSdEcxQUpuamV1UUZJN0FOT2FzZUlyNFRaaHNqTjUwWGU4eks5S0wyQkVMM2ZjSlpHcllTS2J0RTMtN3E2eEdneURaeWFBWnZRQ2VRUUl5dE5kdGNidFg2b0VoZU8xaFZKdFJ1M2JCUTd3Y3JIX2wtZ0ExbktnTld0aWFWRDlNczJ2THdSemtmbEFCYUhPMUMxWnFXaGNVSmdjTVlwZmR1ZXRSUlV5MXc1eGJQQ0pVM3g4Nkp1eGRjQUxWU0xXT0RVa0pfRFB6Mi1fWG1rX2Y3U190cFl3TjdrdzVTX0xzS2VCeVFfc1ZsNS0zaDJhMnhBZnFDTkRqMmZkb1VyY1hZMHFIN1NUVlJLSWtyR1BnSmR2WmFMOGVWNTFEREpCR1JRSHoyaExGNFdLd0xiUTdiZmM2Q0x5S2FwOTBRakE1SE1hb3FHN3ZsR3BOdWNTdw?oc=5",
       "pubDate": "Thu, 10 Sep 2026 05:39:03 GMT",
       "pubTs": 1789018743.0,
-      "desc": "高雄捷運工地意外 移工遭鋼板樁壓傷 意識不清送醫&nbsp;&nbsp;tw.news.yahoo.com",
+      "desc": "高雄捷運工地意外 移工遭鋼板樁壓傷 意識不清送醫&nbsp;&nbsp;Yahoo新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -314,7 +380,7 @@
       "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5KYmFOQWU3ZHR3alJXcnpXa09NMFh4MzZTbEtXdldYZDE1X3g0MW5YMjMteGZ2NVBIX3ctRVFUNGNvVFl6ZWtCencwbEc1YW1oTWRMVjVR?oc=5",
       "pubDate": "Tue, 08 Sep 2026 09:36:55 GMT",
       "pubTs": 1788860215.0,
-      "desc": "116年職安新制將啟動 臺東提前布局 職安卡訓練9、10月登場開放報名&nbsp;&nbsp;cna.com.tw",
+      "desc": "116年職安新制將啟動 臺東提前布局 職安卡訓練9、10月登場開放報名&nbsp;&nbsp;中央社 CNA",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
@@ -391,7 +457,7 @@
       "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9VYlV1aVQtOUJQZkdRNWxoTDZwNkNIT29ORU1EV2dnUUtzcDI3Wk5vRVpJZ2NkWU9iV1VDSVItbktDVmE4bExwTzhUdmtSSkg1aGc?oc=5",
       "pubDate": "Tue, 08 Sep 2026 05:13:00 GMT",
       "pubTs": 1788844380.0,
-      "desc": "職業災害預防及重建中心攜手交通部鐵道局南部工程分局舉辦「115年營造業熱危害及科技減災觀摩會」&nbsp;&nbsp;n.yam.com",
+      "desc": "職業災害預防及重建中心攜手交通部鐵道局南部工程分局舉辦「115年營造業熱危害及科技減災觀摩會」&nbsp;&nbsp;蕃新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -969,6 +1035,17 @@
       "badge": "purple"
     },
     {
+      "key": "cf9b449e7dc5c27d",
+      "title": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理",
+      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQVDV0blhkcFdXU1c0ZXM2ek9aV2VEOGl1aHRreFk0am5ORDdKc3dYTE01czBENUUzYkNoYko2Z1dlSE1rMjdUUGtFOWhKTW0wSUVFQWdNdm41YTlQVENjZ1ZqN1FiaG9ZZC1QZlRzazJPYXBFd1JHVzVWNlRCeVVXZVJKOUZvcHpmUk5LNw?oc=5",
+      "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT",
+      "pubTs": 1788159600.0,
+      "desc": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理&nbsp;&nbsp;moea.gov.tw",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "8304f9481fc40db5",
       "title": "中油舉辦安全衛生觀摩研討會強化職安管理- 要聞",
       "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1ZWkMwSkVPVDc4WWxfQ21heUFfU2MxYXowUFU3dklJVThRUzFnZm9Yd3VsdjhVVWNlZUlMdlhrOWt1V05wNXo4WFlEdmduMXowSHBVSGxBM2t6UWdsS3Nn?oc=5",
@@ -1013,17 +1090,6 @@
       "badge": "purple"
     },
     {
-      "key": "cf9b449e7dc5c27d",
-      "title": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理",
-      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQVDV0blhkcFdXU1c0ZXM2ek9aV2VEOGl1aHRreFk0am5ORDdKc3dYTE01czBENUUzYkNoYko2Z1dlSE1rMjdUUGtFOWhKTW0wSUVFQWdNdm41YTlQVENjZ1ZqN1FiaG9ZZC1QZlRzazJPYXBFd1JHVzVWNlRCeVVXZVJKOUZvcHpmUk5LNw?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 06:15:00 GMT",
-      "pubTs": 1788156900.0,
-      "desc": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理&nbsp;&nbsp;moea.gov.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
       "key": "e7edadd9c6388c6e",
       "title": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理",
       "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOdkxhSXJXaVFDNFBzR01SVTFEZFBKa1JpOVl3bGhwamk4WXB4MnVmOFNtOTVVay04ZVEyUU1USXc0djRIeGZwbzZhSnY2bWlieGhmN01JeUhIMnNjUGNwaTRkcWRWRVBCMEQydlpsV0N3LXZCZXl0T0NlWHFSU1JvTkdNNTdvdGJHYi16Mw?oc=5",
@@ -1033,94 +1099,6 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
-    },
-    {
-      "key": "45da06c703b37113",
-      "title": "快訊／台中工安意外 ！1工人摔落鷹架 無生命跡象搶救中",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5MazNoaTYzYV9UTUt2cmxJaW91WlIwVWFDQXVHNFhweFhTYnJNUVJlci1wVU0tczNvaTlxQ1NKRUpLU0VpbEFDbEdzUHVRWlE?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 05:21:00 GMT",
-      "pubTs": 1788153660.0,
-      "desc": "快訊／台中工安意外 ！1工人摔落鷹架 無生命跡象搶救中&nbsp;&nbsp;TVBS新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "ec53dcec5503835c",
-      "title": "快訊／台中工安意外！45歲工人鷹架摔落 無生命跡象搶救中",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE44X1EtNE1aNkhoS09mRHZKWml5Y2hvTEItTFV6VHJ2RUZqTTVoWEJLcUcwVlRRaEJQY1R5cGs3azhiUVhYYjJzeFJnX1hKa3ltdG5JellBVHJkMHROdVHSAUtBVV95cUxNWmZCY1gwOVNqVlFoTzBhM0lfS3NnX1lQZ00zczdJd2dwaEdITEdLdVp6WEJjSjB3OVdkcnJSN2NWZnBTeW9XQjJ0dzA?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 04:45:00 GMT",
-      "pubTs": 1788151500.0,
-      "desc": "快訊／台中工安意外！45歲工人鷹架摔落 無生命跡象搶救中&nbsp;&nbsp;ETtoday新聞雲",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "514754dff71d44bc",
-      "title": "台中嚴重工安意外！工人站路邊遇天降招牌 嚇壞急閃頭撞地命危",
-      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9SdnlUMk0tYnpIb05lOGhaOVp4LWs5c2J6TFplN3RfUWpQakg3eU9wT1BYVVUwYkZucWw0eVMxaVB2QkFPTUtqeWlTd1BhZ0RJNkZiS1B5QVh0ZFVTdFBOSW5pWmRLMHBmZHgtUVlB?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 04:31:06 GMT",
-      "pubTs": 1788150666.0,
-      "desc": "台中嚴重工安意外！工人站路邊遇天降招牌 嚇壞急閃頭撞地命危&nbsp;&nbsp;中時新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "cf3ab9c99658e731",
-      "title": "守護勞工安全健康！縣府接受勞動部職業安全衛生評核實地訪查",
-      "link": "https://news.google.com/rss/articles/CBMiREFVX3lxTE1Sd1JsTGttUU1vTzFoWUhlWWFTWDM4NGY2ZmQ3akJUbnpOYXJkWVF3aHJpMU5CVGhySDlWWUpyMW1Ya3hf?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 03:41:00 GMT",
-      "pubTs": 1788147660.0,
-      "desc": "守護勞工安全健康！縣府接受勞動部職業安全衛生評核實地訪查&nbsp;&nbsp;全國旅遊時報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "b88d551911d1c1ec",
-      "title": "科技沉浸式防災體驗 中市勞工局辦理VR/XR防災模擬圓滿完成",
-      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPdm82UHI0Qm15WHVKcVFUT3B4VENNZjh0a2szTldjaGRuMV9VM2V0czhaQkpYeE1GdFoyN1l6S2lrOVppX3JPVmI2Z2M4NktVR2wwcUNTMGpRdFBJVEtMQzY0Sm4xQjVvdTlhUlFhVlpfaU5IMDJ5c1QzUVNjSE9wYzNuaEJyM3gy?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 02:07:52 GMT",
-      "pubTs": 1788142072.0,
-      "desc": "科技沉浸式防災體驗 中市勞工局辦理VR/XR防災模擬圓滿完成&nbsp;&nbsp;PChome Online 新聞",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "84e6bdada1de8eda",
-      "title": "討論牆 | 上半年重大職災統計出爐 勞動部：趨勢下降、營造業事故為大宗",
-      "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5jWnRqOEN0ZXVGWThWSFhuMHh1SDRPeWx3TVY1Z3dyMUQxVXdDMzdXNHNvQjhJUUxyWnVzMDdrbVlmVC1qLV9Ed2JBcmg0dEs3WlNYZmVSQnpDWlBEdUYtVHZiSTg?oc=5",
-      "pubDate": "Sun, 30 Aug 2026 18:29:51 GMT",
-      "pubTs": 1788114591.0,
-      "desc": "討論牆 | 上半年重大職災統計出爐 勞動部：趨勢下降、營造業事故為大宗&nbsp;&nbsp;LINE TODAY",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "016cda97b6492c41",
-      "title": "第一起海外工傷NCP申訴來了！當台灣企業大賺印尼鎳礦財，誰來接住墜落高空的勞工？",
-      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE5NRHZ1Y2x0elVsaUlrSnhEdm5zWk4yQ3F5dllxMmVkaHVsLThISEE3aHdlR2JOZm1lUVZJTVBHU3VPVW5mNlFuUHh2VQ?oc=5",
-      "pubDate": "Sun, 30 Aug 2026 16:00:00 GMT",
-      "pubTs": 1788105600.0,
-      "desc": "第一起海外工傷NCP申訴來了！當台灣企業大賺印尼鎳礦財，誰來接住墜落高空的勞工？&nbsp;&nbsp;CSR@天下",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "c771f8c0bb60892d",
-      "title": "死亡率是5倍！營造業不安全行為多重大職災居各界之冠| 生活",
-      "link": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE1TVW40MHpHTE9rdWtPOGg3LWlNWnBnZ3ZjanJVa2NpN0ltQXdXN1NqREltWW5qRzNPQTJHc2VYY1laLVBUYTNF?oc=5",
-      "pubDate": "Sun, 30 Aug 2026 10:26:03 GMT",
-      "pubTs": 1788085563.0,
-      "desc": "死亡率是5倍！營造業不安全行為多重大職災居各界之冠| 生活&nbsp;&nbsp;三立新聞網SETN.com",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
     },
     {
       "key": "e7cc69d35565b01d",
@@ -1431,5 +1409,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-09-13T05:27:15.742416+00:00"
+  "lastUpdated": "2026-09-14T05:31:37.326925+00:00"
 }
