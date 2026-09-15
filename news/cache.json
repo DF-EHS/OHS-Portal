@@ -1,6 +1,17 @@
 {
   "items": [
     {
+      "key": "e40af1b5241984fa",
+      "title": "邁阿密工安意外！ 工地吊車倒塌 吊臂砸車釀4人傷",
+      "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5jQVdfakc3b3d5UkJpaTVMLWNaUF9iNklxTXFfcElPa0xDLUxpdFhsUW1Vbm1qbzRPaGtwdTBoeVd5WVQ5NnRrQlpGWS02NXg3UThSbXM4bXrSAV5BVV95cUxNRHJuaXpiWjZNVEVoWkFLSzNBMmFhc0RwazNhVFpMU1NLYUFSdzFzYUhGRGdUZzNJQzM3QzlQWTFoZWNTZEgzVE9QNFpYRjhHMXExZ3F2eXgwcEk1RlNR?oc=5",
+      "pubDate": "Tue, 15 Sep 2026 03:05:00 GMT",
+      "pubTs": 1789441500.0,
+      "desc": "邁阿密工安意外！ 工地吊車倒塌 吊臂砸車釀4人傷&nbsp;&nbsp;mnews.tw",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "5f487b76609c67d2",
       "title": "公告「推動職業災害勞工重建服務訓練學程補助試辦計畫」，並自即日生效。",
       "link": "https://www.osha.gov.tw/48110/48417/48423/212331/",
@@ -10,6 +21,28 @@
       "source_id": "osha_announce",
       "source_name": "職安署公告",
       "badge": "green"
+    },
+    {
+      "key": "756be55f694c7d86",
+      "title": "影／驚悚工安意外！陸工人操作大型設備手伸入壓合區 機器突啟動「雙手慘遭壓斷」",
+      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9DQWl4eU1uYzNIVmpvVjhfQWluTVc5VjN5NG5CdW15ZGFXTXBzM3Zhczc2NjU5SzZoRHF6d2ItX2NYVExLTDIybmY2TVdzZw?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 09:55:00 GMT",
+      "pubTs": 1789379700.0,
+      "desc": "影／驚悚工安意外！陸工人操作大型設備手伸入壓合區 機器突啟動「雙手慘遭壓斷」&nbsp;&nbsp;記者爆料網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "819a060a38772446",
+      "title": "高榮南院打造安全健康職場 通過ISO 45001、TOSHMS雙驗證 | 中華日報",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9jdFVtRXdQalFseFVCLS1JTk45dnJXaG9Ua2NuQWtsWjdmUV81THNaeEJTVXQ5aWktVXlhSXV6Q2ppU3JTTFZZUkpNMFFfSUxPNW0tZkhB?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 09:21:35 GMT",
+      "pubTs": 1789377695.0,
+      "desc": "高榮南院打造安全健康職場 通過ISO 45001、TOSHMS雙驗證 | 中華日報&nbsp;&nbsp;LINE TODAY",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "c7f096a6b96d2545",
@@ -43,6 +76,17 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "f4d83922265c3b49",
+      "title": "澎湖縣政府開辦「臺灣職安卡」訓練 提升職業安全衛生意識",
+      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE94c1VuOGJfLWNJSUhlSHBSTFhTdkI5YWo5Yl9vX0tELVFjel83RFNrTi1iT1FibUlWa0stRDRfSTM3dUNIbmxoOVZNM3RHUFdqcG56ZThDYzNNYXBTNENtWEMxTkhlYnJZdWdv?oc=5",
+      "pubDate": "Sun, 13 Sep 2026 23:37:06 GMT",
+      "pubTs": 1789342626.0,
+      "desc": "澎湖縣政府開辦「臺灣職安卡」訓練 提升職業安全衛生意識&nbsp;&nbsp;澎湖日報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "920f7cb9b752dfb1",
@@ -144,6 +188,17 @@
       "badge": "red"
     },
     {
+      "key": "39fa03521eb7a62c",
+      "title": "高雄去年前7月重大職災死亡13人陳美雅籲累犯應重罰| 工安| 勞檢| 工地",
+      "link": "https://news.google.com/rss/articles/CBMi4wJBVV95cUxPYXR0OXpUU3BVUEZITVN1aThFdGxzaFN2Y0J6dkxGZkdUelMyWW5XZlZQNE5NeUFfTGhPeTFqQnNyY3NNODBnOGtaeXpyTmdaeUVhRjFGTlphMFdldnJkOGR5cHdZUVZnMVd1ZnB4OHJlU0ZDQjhhWjRUYkRIcEg2MVFjeVYyMk41SkNCcy0zV2xVWlFKeTI4X3UtREsyUm90a0xHYlRISXdfaDRlLVNKOTY2TkIwNEpDbUJfNXNxNFdGSlBzTnBoNklJaDNIOGk2cjZEdkhuOHp0Z09NTk81SWtGOEtWS1Vod2VNSy1nd05NNXZkTERtN3ZUTzVkZGRiSzhmZXBrMnBKWUI3Y3VmSTBac1JKcE9ybHg3TmZtTE5Wd3JaMTBXOFF2MU0tTTU4N0hNeWFRWUxwTnFGUlB3b0F4dVZiTC1LMno3NVptQXQwenZib2FPaEtfRWJoNGx5ZUdR?oc=5",
+      "pubDate": "Fri, 11 Sep 2026 07:21:07 GMT",
+      "pubTs": 1789111267.0,
+      "desc": "高雄去年前7月重大職災死亡13人陳美雅籲累犯應重罰| 工安| 勞檢| 工地&nbsp;&nbsp;台灣大紀元",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "f970d91b295d7f4c",
       "title": "基隆市政府115年「職災勞工專服員及勞政志工教育訓練暨聯繫會報」、「重返職場宣導」及「職業安全衛生講習」聯合會議",
       "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBoTHpjRDk5M3lKOEcyX2g0SEpYVkVEZmZPVVhDT1VqdklaZWQwUjBWVTEwU00wVkdtQmdVRk5nZlUwNG13TEdhNDJrWmF1Wjk5REViaUhaQ0F1V1Z5MlM3Mm9oZ0U?oc=5",
@@ -197,6 +252,17 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
+    },
+    {
+      "key": "d2a95ca780c5c9e3",
+      "title": "洪申翰訪歐經費遭質疑 勞動部駁違法濫用：支用均依規定辦理",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1LaHJkZ2J6OXhDbXFuelRFeHhRbWs1SFAzVk1RTU12NzRsa0ZiOGs2Y1Nacnl6NVh5WG1ReXVsR3BudjRhc3VFaVBSOW8tSGhzaHc?oc=5",
+      "pubDate": "Thu, 10 Sep 2026 22:31:00 GMT",
+      "pubTs": 1789079460.0,
+      "desc": "洪申翰訪歐經費遭質疑 勞動部駁違法濫用：支用均依規定辦理&nbsp;&nbsp;蕃新聞",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
     },
     {
       "key": "ab5b23f39acbde1e",
@@ -329,6 +395,17 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "58375bbabe2ed6c4",
+      "title": "接軌臺灣職安卡政策 嘉義分署攜手廠商落實「先受訓、後上工」",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBEdkcxOXJqT1hQVlhKQlZEZFYyUGxSS0dVVW1STXpxSkxwdFNvVm03a21wTkQzdXJrbFN0TGI1RVAwcUVrbUpDempnV0d5eXc?oc=5",
+      "pubDate": "Thu, 10 Sep 2026 03:09:30 GMT",
+      "pubTs": 1789009770.0,
+      "desc": "接軌臺灣職安卡政策 嘉義分署攜手廠商落實「先受訓、後上工」&nbsp;&nbsp;forest.gov.tw",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "838e7123cb6a604b",
@@ -892,28 +969,6 @@
       "badge": "red"
     },
     {
-      "key": "f9a56000063b2749",
-      "title": "台中1日2工安意外 1死1命危",
-      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE91NXIzS1Q4dlhnQmhBWlk4U2xDSjRtTklOQWVpeXVoSDAzZnBZRHdPS0Rybm54bWVHV3c5UmpZRWZZNWtsMEYwOHBVRTROMnJNbkJnNWcxQjhtSTgzX3JZSXF1b1VJeTkwOS1N?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 20:10:00 GMT",
-      "pubTs": 1788207000.0,
-      "desc": "台中1日2工安意外 1死1命危&nbsp;&nbsp;中時新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "698041c706caf8b2",
-      "title": "台灣中油強化職安管理 31日舉辦安全衛生觀摩研討會",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5TRDRsMVIyX1FLRGN6cVBYSHU4MnpLQjRSSVQ4QU1uZHotT1VsNjc3dnFOdjFFTDFKenh4YWFKU1ZOdC1rTUxhTktOamZHeHljQ0E?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 17:14:00 GMT",
-      "pubTs": 1788196440.0,
-      "desc": "台灣中油強化職安管理 31日舉辦安全衛生觀摩研討會&nbsp;&nbsp;蕃新聞",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
       "key": "f8ca8f1923ba750d",
       "title": "勞動部修正「從事勞工健康服務醫護與相關人員之訓練機構認可及管理作業要點」第1點、第3點、第8點及第4點附表1、附表2、附表3、附表4、第6點附表8",
       "link": "https://www.osha.gov.tw/48110/48417/48423/211840/",
@@ -923,182 +978,6 @@
       "source_id": "osha_announce",
       "source_name": "職安署公告",
       "badge": "green"
-    },
-    {
-      "key": "6562d72d2a96c5e5",
-      "title": "台中死亡工安意外！「工人墜B4」頭部重創亡 | EBC 東森新聞",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE80bk85Z3drOFFidXVoMVhoRHRaOVdUekctT21vU0h5Z1d0TVVFOFR4Tm9MZ09lSTBKVE9lbXVoR1RiY2lFWk9XZG5mNU1FQkdTMmZ2UnF3?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 11:11:34 GMT",
-      "pubTs": 1788174694.0,
-      "desc": "台中死亡工安意外！「工人墜B4」頭部重創亡 | EBC 東森新聞&nbsp;&nbsp;LINE TODAY",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "fe84650c5cb7285d",
-      "title": "台中死亡工安意外！「工人墜B4」頭部重創亡",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBWOHFXbW51NFhZUnpMUk1Rek00VHBDc3dXc0ROWWVwLWt4dWs5M0pELVRfc3BxSVhWMEZfOEpvM1FocExMVjgzRG9rSlpmMFVHZ0cxRmtn?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 10:34:00 GMT",
-      "pubTs": 1788172440.0,
-      "desc": "台中死亡工安意外！「工人墜B4」頭部重創亡&nbsp;&nbsp;東森新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "2286995d9f4735d0",
-      "title": "台中死亡工安意外！「工人墜B4」頭部重創亡",
-      "link": "https://news.google.com/rss/articles/CBMimAJBVV95cUxNc0h1MEFUemdrMFE3b0VYUzhGSGZiT1pHU0JFS3YxTmJwUUlYR2p3R19qSDJqbE9Oek9yNEZZSDlaYWJtaGgwZmtmaGsxMHB5dTZQcnFxZnFyX1J4U3NsMU5HaVJSOVJUQWltMU51QjdOdmhUajgwV3EtZWpwYm1KV212LS15UFNDOUJhR2R6aGhfWTlLUk0yakpGZXZzZlNON256ODhEVjhRSXQxZDRrSHhBNkhZaTFHakdKanh2OG9FTFRqR1NMSWJGTGpJTld2OUppMHVuQ25WbmZEQ1JJZGZlbHpwb2taM0RIZ3YyT2Z4M0RZWkJ5Y2E0SDVWdElCVmItcWotODl5ZEZ6eEZwa2Z5dUlpRlJ4?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 10:34:00 GMT",
-      "pubTs": 1788172440.0,
-      "desc": "台中死亡工安意外！「工人墜B4」頭部重創亡&nbsp;&nbsp;tw.news.yahoo.com",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "84dcdfe0e3a49c8d",
-      "title": "快新聞／台中建案驚悚工安意外！板模工踩空...墜B4慘死",
-      "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9ZYm9ValhmVGdpbEdlN3dxclhxY3B6emFtZllvZ2l4N21oeU4zWkZaWkRzeWFtc1lkR3RPWmdpWWlrQ3BVSC1NM0NhYlVNaXMwNmVyT1NtUXE0d3B3T0dMNA?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 10:32:56 GMT",
-      "pubTs": 1788172376.0,
-      "desc": "快新聞／台中建案驚悚工安意外！板模工踩空...墜B4慘死&nbsp;&nbsp;民視新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "92b42287bdd895fa",
-      "title": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理 | 生活 | CTWANT",
-      "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE9neUIwdUtZOGQ5cWc1YkNlVXFmTExyeF9NdjV4bG45Ny1MS1ZNTllBMTI1SE92ZmxwQXRnUU9VVTNHQmRfb2R4TUFIV2I4TEp1amRVadIBVEFVX3lxTE9neUIwdUtZOGQ5cWc1YkNlVXFmTExyeF9NdjV4bG45Ny1MS1ZNTllBMTI1SE92ZmxwQXRnUU9VVTNHQmRfb2R4TUFIV2I4TEp1amRVaQ?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 08:02:01 GMT",
-      "pubTs": 1788163321.0,
-      "desc": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理 | 生活 | CTWANT&nbsp;&nbsp;CTWANT",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "a0a1d1977b618d07",
-      "title": "台中傳工安意外 工人頭撞地一度無呼吸心跳",
-      "link": "https://news.google.com/rss/articles/CBMirgJBVV95cUxPOVZfcWlDcDdvaHZoUl8zekp1Q0pPZWxyWFZnbVRCQkh0TGhieXZSZlNSQkYtdXNaUG4xdlpYVkdkdlRYVGd6eTF3aVFsY2V1eVNrMm11aVpuZGhTTzl0TVplcWc5ZWVRSmlzYkRXWmVvNW1Sa085RkVkNUhnZG40RGZ6aEFUMHFZQTl1cUlRcUh4NHJTcUdTdUQ0ejJvZ0JQRnp1YjRya0tWX1AzUng3YW01MGpoV3hOdXZuc1kyTGxVTWk0ei0wUG83akswajRZeTZjRkw4ZzNJd3Vka3AtaC1aRmVHOS1MbzNMVFJUdUIxS0MxMjJ2YzJBSDFSb2F4ZlFFNGpuTk5CVU5POXRaWmJQQXZVOUNoXzZjcGNpMk5JZWlMUW45SXdPdUE1Zw?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 07:37:46 GMT",
-      "pubTs": 1788161866.0,
-      "desc": "台中傳工安意外 工人頭撞地一度無呼吸心跳&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "4235b9de40adcc4b",
-      "title": "台中傳工安意外工人頭撞地一度無呼吸心跳- 社會",
-      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1PQ1ZZZjV3cjhWMVdKWWtNemhQR01GV0tuUDA0OE8yM1V0RzB2dFJmQUZJdlN0N0NfTDVlX3BDTy13SVhjaFc2NS1YMmwwRGVyUFUxTWtiSGFkc2pmUW1KMDYzQnZ0V25sTEIwSi13?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 07:37:46 GMT",
-      "pubTs": 1788161866.0,
-      "desc": "台中傳工安意外工人頭撞地一度無呼吸心跳- 社會&nbsp;&nbsp;news.ltn.com.tw",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "ed3ca77f019dfa44",
-      "title": "台中傳工安意外工人頭撞地一度無呼吸心跳- 社會",
-      "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9OQ3dXTjJGSkVKSEhzN0E1cDcxRHpxRC1LZEVFMVZpeFlOY3M4T2d4bTdyT0kwTGJrZnlzZU02OWl1bmRHalF5dlhMeHVRM0wza3IxS1hXYkx4S2RhVmV1bE1MMFBUbkZV?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 07:37:46 GMT",
-      "pubTs": 1788161866.0,
-      "desc": "台中傳工安意外工人頭撞地一度無呼吸心跳- 社會&nbsp;&nbsp;自由時報",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "80c04ea496e23121",
-      "title": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBJazZfclctWFhEbTBkcnM3N3FwMU83dmwtbzdmUjVuSk92UFZLQ1cyWnVod2YxSkVKdWFBN3YxRS1kbWUwRlZEZFlIVF9TNUQ10gFWQVVfeXFMTWFuTnBWV0ZwTzZWakRoeS1mZmtwcjVUTm0wRjZIQ2R2THJEMC16UjlwYzdJcTYwUVNrWU83QmpMQUI5MGRpZnFRa1ZXZ1VWakFrcTBpX2c?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 07:22:11 GMT",
-      "pubTs": 1788160931.0,
-      "desc": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理&nbsp;&nbsp;udn.com",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "d4059232c04a9fee",
-      "title": "中油舉辦安全衛生觀摩研討會 強化職安管理",
-      "link": "https://news.google.com/rss/articles/CBMiwAJBVV95cUxQS2M4QXhJMGJleW5XOHpGQTJpOHFSSmtGSEFkbk1PR1djU3BQUmZDMU1NYnEzRkU5cVlmUE5qX0Zqa2pnUHM0ZENqS0hLZGJ3dHQzQlNVaGlDcmR3N1hrN0piaUhGUzZkSG5VaFdpUFRybmdZVzRwZE12SjVRTWI1Mk9MbUxiUl9zV1JNRndQQTlyZEJkWElDOHQzSHUzdWZHX29peEhQMGpiS2tZd0VJQmpSSk0tcURCcWVkRjg3NWdoeGMyVl9nMnRucU55Zlh3THZfM1hBSzlPSkNyUXhuZGl5ejNGb0FtMjFueURhcDFlQ3RwY1BjcGNjNUx1bGxTYzIxeFZoRS1HRWJxOXpaWUlQYlA4Sl9QMmUtcXRaMjlNZVljaU41bW16TjVxZ2FNTmF6RW0tdXNYTGZrRHB3Mg?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 07:10:13 GMT",
-      "pubTs": 1788160213.0,
-      "desc": "中油舉辦安全衛生觀摩研討會 強化職安管理&nbsp;&nbsp;Yahoo股市",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "cf9b449e7dc5c27d",
-      "title": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理",
-      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQVDV0blhkcFdXU1c0ZXM2ek9aV2VEOGl1aHRreFk0am5ORDdKc3dYTE01czBENUUzYkNoYko2Z1dlSE1rMjdUUGtFOWhKTW0wSUVFQWdNdm41YTlQVENjZ1ZqN1FiaG9ZZC1QZlRzazJPYXBFd1JHVzVWNlRCeVVXZVJKOUZvcHpmUk5LNw?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT",
-      "pubTs": 1788159600.0,
-      "desc": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理&nbsp;&nbsp;moea.gov.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "8304f9481fc40db5",
-      "title": "中油舉辦安全衛生觀摩研討會強化職安管理- 要聞",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1ZWkMwSkVPVDc4WWxfQ21heUFfU2MxYXowUFU3dklJVThRUzFnZm9Yd3VsdjhVVWNlZUlMdlhrOWt1V05wNXo4WFlEdmduMXowSHBVSGxBM2t6UWdsS3Nn?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 06:41:00 GMT",
-      "pubTs": 1788158460.0,
-      "desc": "中油舉辦安全衛生觀摩研討會強化職安管理- 要聞&nbsp;&nbsp;工商時報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "901d2126fd47e5b4",
-      "title": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理",
-      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNX0JMOFAzQ0VhcTZmb3JHUGZuVEg2a2hvblozQlQyVUhYYUI2UHdEOEdNTm04bXpuLWdiVTgxSDZGSVNPNmVSS1NYUk1PdS0zZUJ0QmVxSDM2bS1WZHdnQXhfV2tpM2xOX0lnSmdMNnZMWnBGcGJ3OVhuX0NkSW5oN2JIMWlBajdMVjJTQw?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 06:15:00 GMT",
-      "pubTs": 1788156900.0,
-      "desc": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理&nbsp;&nbsp;moea.gov.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "a935948fbe4542b0",
-      "title": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理",
-      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNSWZtQ2dWZk85azMyLW1RQVVKQmJ0YXhvV3c0SHkzUWVOQWRqdDdFemdyeHVzRUVNQXBFSGN0eHZjMFZBeWNCdXBOVmRnLWk5Y3JsYTQzeEVRTURMcllyM3l4aEJkT3pScW5lbGwtMHpxMzBEYzdHcjZxRE9RcjBuUEY2RGRVa1lnb1VfZA?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 06:15:00 GMT",
-      "pubTs": 1788156900.0,
-      "desc": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理&nbsp;&nbsp;moea.gov.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "f7b22cdc1c151b9b",
-      "title": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理",
-      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOekVGemRRTHYwMlJXQ2YtcFAweXF5aTg3SF9oc0dQVUhvWDAwSFZ2UUdtbkZiTmFUMTMybFRERWJsWVlaUHNiUGh1YmdnZUxZZk44WVotZkx1b00xbFBUWFdCWEoyaGF2di15dDhIRkJFUVV0RE1HV1FsTlhua3ZLQ0pCV0pKbWJ6SzhuMA?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 06:15:00 GMT",
-      "pubTs": 1788156900.0,
-      "desc": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理&nbsp;&nbsp;moea.gov.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "e7edadd9c6388c6e",
-      "title": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理",
-      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOdkxhSXJXaVFDNFBzR01SVTFEZFBKa1JpOVl3bGhwamk4WXB4MnVmOFNtOTVVay04ZVEyUU1USXc0djRIeGZwbzZhSnY2bWlieGhmN01JeUhIMnNjUGNwaTRkcWRWRVBCMEQydlpsV0N3LXZCZXl0T0NlWHFSU1JvTkdNNTdvdGJHYi16Mw?oc=5",
-      "pubDate": "Mon, 31 Aug 2026 06:15:00 GMT",
-      "pubTs": 1788156900.0,
-      "desc": "台灣中油舉辦安全衛生觀摩研討會 強化職安管理&nbsp;&nbsp;moea.gov.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
     },
     {
       "key": "e7cc69d35565b01d",
@@ -1409,5 +1288,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-09-14T05:31:37.326925+00:00"
+  "lastUpdated": "2026-09-15T05:31:16.795006+00:00"
 }
