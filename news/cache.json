@@ -1,6 +1,39 @@
 {
   "items": [
     {
+      "key": "1ac1e5764ae4ac05",
+      "title": "職安署攜手國際勞檢專家 推動高風險產業防災與勞動檢查轉型-借鏡英國、拉脫維亞及挪威經驗，強化科技防災與職場心理健康",
+      "link": "https://www.osha.gov.tw/48110/48417/48419/212554/",
+      "pubDate": "Wed, 23 Sep 2026 09:02:31 GMT",
+      "pubTs": 1790154151.0,
+      "desc": "勞動部職業安全衛生署於9月22日舉辦「2026年高風險防災技術國際研討會」，與國際勞動檢查協會（International Association of Labour Inspection,IALI）合作，邀請英國、拉脫維亞及挪威勞動檢查與職業安全衛生專家，分享安全科技監理、營造業及製造業危害預防，…",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "7bc8905f9eed128c",
+      "title": "職安署串聯企業深化ESG治理，推動職場健康安全永續轉型",
+      "link": "https://www.osha.gov.tw/48110/48417/48419/212557/",
+      "pubDate": "Tue, 22 Sep 2026 16:13:35 GMT",
+      "pubTs": 1790093615.0,
+      "desc": "為展現我國推動職場健康與安全的階段性成果，勞動部職業安全衛生署今（22）日在政大公企中心舉辦「2026推動職場永續健康與安全成果發表會」，邀集歷屆「健康勞動力永續領航企業」、專家學者及產業代表共同參與，透過成果分享、主題對談及夥伴承諾儀式，凝聚公私協力推動職場健康與安全永續發展的共識。 職安署自11…",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "917280d8d589f735",
+      "title": "南部火力發電廠工安意外 55歲工人墜鹽酸槽灼傷",
+      "link": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE02ZkhvMFVyTGg2WDRwZnBOYnhhUkVrMUcwQ1hYSlppd1dCSkExMjBwdXJRa1djbXFjRUh5QVlOcnR1TXVCUTA2dlFYYUQ?oc=5",
+      "pubDate": "Tue, 22 Sep 2026 10:41:56 GMT",
+      "pubTs": 1790073716.0,
+      "desc": "南部火力發電廠工安意外 55歲工人墜鹽酸槽灼傷&nbsp;&nbsp;樂上新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "e35e990e0dff4989",
       "title": "職業安全衛生署函頒「風險評估指引」",
       "link": "https://www.osha.gov.tw/48110/48417/48423/212509/",
@@ -12,12 +45,67 @@
       "badge": "green"
     },
     {
+      "key": "765e4d2449e2fdad",
+      "title": "高雄南部電廠工安意外 一工人摔落鹽酸槽灼傷、10人救援嗆傷",
+      "link": "https://news.google.com/rss/articles/CBMijwNBVV95cUxPME1SNi0yMlVjTEhSODctUnZQOWtKNGxQY3NHQ1pnVVNvTGRhRndfbEc1V09QRkp5UXU5QTdqSXFLQ3psVWplQ25aQmxIbFRIaGVLaHB0VGY2WFVZdVEyWkhVLTg0d0h5YW41dW9UQ0pFcHdSQ09rLW5ybmIyeGlYcmYzSzRNdi0yQVF5SkZ5d0RCQVltQUtKVFhVVlZvbWQ0OG5iNTVPWmRxU29KbDVkRjhpQWpZMVBWTVkxZm1PSGNTQ3ZOSE9pWkgtTGFiblhYVkw2T0VZTkZrblRIcVd1LURmZm5seUR1VHh1bjdEbnRScXVhM1ppSDJiaENoUXhHV2VVRlBDOEVsLUNVaF80LS1SelJvRlVqeGlldm1UQkxMdW5QOXFZXzktRWtQRFhZU2MtYU4yR3FRS0t6MThscmVvSE1vNHJXYW1Va2R0ZG84Y1pRTjhzN29COW1vZ3lJZG9QV1E0blZvNGppTFN3SDhxYWtoajVMY2dDWWRUQUxKUFJBVU1YeEthN2NVTE0?oc=5",
+      "pubDate": "Tue, 22 Sep 2026 08:36:04 GMT",
+      "pubTs": 1790066164.0,
+      "desc": "高雄南部電廠工安意外 一工人摔落鹽酸槽灼傷、10人救援嗆傷&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "38a859823bffc4bc",
+      "title": "台電南部電廠爆工安意外！工人墜鹽酸槽釀1人重傷10人嗆傷| 社會",
+      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5GV3dxU3dKWHdkSVFoTlhQX1A5dlluZlVfQmFiS0hvVC1JWWZBdXVvUGxoMXZHQVkzYmhTSXp3ODBZNHFRdXRWdWhNQmNmU1FEQmJFeXVwQlJBbDQ?oc=5",
+      "pubDate": "Tue, 22 Sep 2026 06:05:38 GMT",
+      "pubTs": 1790057138.0,
+      "desc": "台電南部電廠爆工安意外！工人墜鹽酸槽釀1人重傷10人嗆傷| 社會&nbsp;&nbsp;Newtalk新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "405fa67a08c9033b",
+      "title": "台電南火電廠工安意外 一人接觸鹽酸灼傷 十人吸入鹽酸",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBDNzlyNXlfekhUTm40S3B4MXVoNlRrc3dMbWhTNDJ6eWdsd2V5S1FNWHRRcFJ3U2ZaRE42RzVkblZBNnJVLWtocEwxOFd5TmEy0gFWQVVfeXFMTkRCOWZrQ1VvLUVISnRZX3dIcGZ6UjRUN1dibm9kbVVEejJUMVVvOVN1SFhvU0lWMmpmVGJ2bHdtZHZTWjd1N19adU9yUS11YUl4M0FmZGc?oc=5",
+      "pubDate": "Tue, 22 Sep 2026 05:15:24 GMT",
+      "pubTs": 1790054124.0,
+      "desc": "台電南火電廠工安意外 一人接觸鹽酸灼傷 十人吸入鹽酸&nbsp;&nbsp;UDN",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "9cf5d7a5c934e47c",
       "title": "南部發電廠嚴重工安事故！台電：1人跌落酸槽命危 10人嗆傷送醫",
       "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1qU3dxMGhZcGd2OE1jRmc5alhXdnVSdkNfSjRyaUlYal92TFE3WVdxdi1TRWxhakwza2dVUTZNQzRTRi1GTjlaUWJzR3duc2lMb2fSAVBBVV95cUxOV3pSOTdtSjVBcUVLNVZwZTByUzBwM0h3eUNLdGppRFJHSDdRNlZ3ZTR4S1czVlZMVDFLMTBpdFIydUtvb0hLNndpdExsMFB2YQ?oc=5",
       "pubDate": "Tue, 22 Sep 2026 05:04:00 GMT",
       "pubTs": 1790053440.0,
-      "desc": "南部發電廠嚴重工安事故！台電：1人跌落酸槽命危 10人嗆傷送醫&nbsp;&nbsp;finance.ettoday.net",
+      "desc": "南部發電廠嚴重工安事故！台電：1人跌落酸槽命危 10人嗆傷送醫&nbsp;&nbsp;ETtoday財經雲",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "cded7f38dda5b46f",
+      "title": "南部電廠工安意外11人送醫台電：供電正常不受影響| 產經",
+      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1XQUNacTZQeXU1MVlXa0pRWUt6QnVBWTNEQ0t5X3VHNjU0dTJFdlBjazJIRUtXSWxCaEVHa3Y0aUNiejA2cXBxbHNzX0tNRDEtd0FCR0VvZTlwNTZYSGc?oc=5",
+      "pubDate": "Tue, 22 Sep 2026 05:02:00 GMT",
+      "pubTs": 1790053320.0,
+      "desc": "南部電廠工安意外11人送醫台電：供電正常不受影響| 產經&nbsp;&nbsp;中央社 CNA",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "377a91e94d13ca16",
+      "title": "台電南部電廠工安意外釀11人送醫台電：深切檢討事故肇因| 財經焦點",
+      "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBzdEhrSGRKWXFXdHBPSFpIaXpEbjRUWWp5Q3ZJaWRyRHFoLXdqUlZkdlBybXlTaWVYaDhwLU9NVmpwa2FsM19Tejh6NDNNeWtSNzNlZWVRS2JRcEFL?oc=5",
+      "pubDate": "Tue, 22 Sep 2026 04:45:20 GMT",
+      "pubTs": 1790052320.0,
+      "desc": "台電南部電廠工安意外釀11人送醫台電：深切檢討事故肇因| 財經焦點&nbsp;&nbsp;太報 TaiSounds",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -29,17 +117,6 @@
       "pubDate": "Tue, 22 Sep 2026 04:45:00 GMT",
       "pubTs": 1790052300.0,
       "desc": "台電廠爆工安意外！ 1人墜鹽酸桶槽10人救遭嗆傷- 社會&nbsp;&nbsp;華視新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "765e4d2449e2fdad",
-      "title": "高雄南部電廠工安意外 一工人摔落鹽酸槽灼傷、10人救援嗆傷",
-      "link": "https://news.google.com/rss/articles/CBMijwNBVV95cUxPME1SNi0yMlVjTEhSODctUnZQOWtKNGxQY3NHQ1pnVVNvTGRhRndfbEc1V09QRkp5UXU5QTdqSXFLQ3psVWplQ25aQmxIbFRIaGVLaHB0VGY2WFVZdVEyWkhVLTg0d0h5YW41dW9UQ0pFcHdSQ09rLW5ybmIyeGlYcmYzSzRNdi0yQVF5SkZ5d0RCQVltQUtKVFhVVlZvbWQ0OG5iNTVPWmRxU29KbDVkRjhpQWpZMVBWTVkxZm1PSGNTQ3ZOSE9pWkgtTGFiblhYVkw2T0VZTkZrblRIcVd1LURmZm5seUR1VHh1bjdEbnRScXVhM1ppSDJiaENoUXhHV2VVRlBDOEVsLUNVaF80LS1SelJvRlVqeGlldm1UQkxMdW5QOXFZXzktRWtQRFhZU2MtYU4yR3FRS0t6MThscmVvSE1vNHJXYW1Va2R0ZG84Y1pRTjhzN29COW1vZ3lJZG9QV1E0blZvNGppTFN3SDhxYWtoajVMY2dDWWRUQUxKUFJBVU1YeEthN2NVTE0?oc=5",
-      "pubDate": "Tue, 22 Sep 2026 04:06:51 GMT",
-      "pubTs": 1790050011.0,
-      "desc": "高雄南部電廠工安意外 一工人摔落鹽酸槽灼傷、10人救援嗆傷&nbsp;&nbsp;tw.news.yahoo.com",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -62,6 +139,17 @@
       "pubDate": "Tue, 22 Sep 2026 02:58:00 GMT",
       "pubTs": 1790045880.0,
       "desc": "不到半年2員工亡！台船再發生工安事故 疑遭螺旋槳夾住不治&nbsp;&nbsp;knews.com.tw",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "af4f17c4c77bc5a0",
+      "title": "別白繳了！4職業工會欠繳保費列黑名單 勞保局暫拒給付 - 生活新聞 - PChome Online 新聞",
+      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOc0MxbmR0RFdsSUJiZkRkY2Z4cVRJeG10c0xrVnQ1SmFKZmdBR1dwT1FVczd1aHJpOTM4TzZaZ2hrOHY3S2F5ZzJfV2wtcldFX1ltdWFEX1VTV3dzM1VxVXAyOWUtNExuYkdQUTlPWHNfRDRsdVBqem4zaXFxQVdHQmhvdGVpUEdz?oc=5",
+      "pubDate": "Tue, 22 Sep 2026 02:52:31 GMT",
+      "pubTs": 1790045551.0,
+      "desc": "別白繳了！4職業工會欠繳保費列黑名單 勞保局暫拒給付 - 生活新聞 - PChome Online 新聞&nbsp;&nbsp;PChome Online 新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -106,6 +194,17 @@
       "pubDate": "Mon, 21 Sep 2026 08:28:25 GMT",
       "pubTs": 1789979305.0,
       "desc": "死亡率是5倍！營造業不安全行為多重大職災居各界之冠| 生活&nbsp;&nbsp;三立新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "4fd8fe95e9bf58a3",
+      "title": "內幕》台船不到半年再傳工安意外 一年輕工人身亡、高市府立即進駐勞檢",
+      "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBWRlhjVzA1ZE1Pc3Rnb3J4Zm5saEFISUpVd0hWcUhXSWV5a25fWndDTWIxTW9JTThKbFZPZFlYZ2otV3M1WmpQWXpKdUtmd1VIUEVyNEVQaE1JQQ?oc=5",
+      "pubDate": "Mon, 21 Sep 2026 06:30:00 GMT",
+      "pubTs": 1789972200.0,
+      "desc": "內幕》台船不到半年再傳工安意外 一年輕工人身亡、高市府立即進駐勞檢&nbsp;&nbsp;信傳媒",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -219,6 +318,17 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "a07b875019e0c714",
+      "title": "勞動部預告修正勞工請假規則：幸福加碼！勞動部挺成家，婚假升級14日",
+      "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5QNXNNWnhHMjR1TFVCRmhMTDFFRHdwajlYM1g0bGJhQlctaGotb2dHZFVmbUpnQzhfOS0xSGhWbTcwblYzbXloMWNtUFJDcXlYRzUzZFRIb3JQc3Vi?oc=5",
+      "pubDate": "Fri, 18 Sep 2026 07:00:00 GMT",
+      "pubTs": 1789714800.0,
+      "desc": "勞動部預告修正勞工請假規則：幸福加碼！勞動部挺成家，婚假升級14日&nbsp;&nbsp;mol.gov.tw",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
     },
     {
       "key": "b56fd2f01d3e4c35",
@@ -380,7 +490,7 @@
       "link": "https://news.google.com/rss/articles/CBMi4gJBVV95cUxNSzg1WHFGRE1zLUJiMXpaeU1TUldQUmVkQWRKZEtlNEFFSVM3dXRLZG1XLWlaZl9xNFB6NTJVckRkWnNBaWdKRjFQSUoxLUg4VHBhYUI1R0tvWHM5dVV4U3Bha2ZPYkpRUFc3Nnh3dUtYejQxWGRlV3FNZ0lqUTZpSTBKaF9teGMxVmQ2RklKN1BzTGEzLXFXSmpvbEFWZ1VvVEJVbUhWUXZ0dEt5ZTRVYlV6RlNYeUJMc0xyaTdQRl9LcUJuUlNXY1dhdzhETFNhckxhelZkUmpvbGNEMHJBQm1yR1dMNkVGX0Nta0E4WUVodHBDRUlCdWRucWtPZHJ6VVNuSzBBWjY4cXQwZDFIN1pmZktiZ2YyZzNnX0Vrc2FlREdHdEpvUDBDR00xWWRLUXBTWVAxekxOOHVYOVFMa2VTWWtwdjZSLUR6RGM2cnNTSUFjUkdudkU4VXpOeXJpY3c?oc=5",
       "pubDate": "Thu, 17 Sep 2026 04:31:18 GMT",
       "pubTs": 1789619478.0,
-      "desc": "洗冷氣「正妹師傅」竟是引退主播！近況被挖「認1職業傷害」太反差&nbsp;&nbsp;tw.news.yahoo.com",
+      "desc": "洗冷氣「正妹師傅」竟是引退主播！近況被挖「認1職業傷害」太反差&nbsp;&nbsp;Yahoo新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -611,7 +721,7 @@
       "link": "https://news.google.com/rss/articles/CBMixAJBVV95cUxQbDVEMVlLbWhEQWpNZTdBUnJ1eU1VdHNDSERWM282VjFiZURiZ1FRcTh1OHhWOEdkdFhVQjhTdzJqY2Q4Z2RkY3AxZUlsMURMYkl1bzFTMFhFLXJUQ2laNE8wRURGQ2c2M1l6cjFKNGZjckRCQ0pJUDNDeFhSbmhLWXpSX3VJS1FMZWNLVUtGcVpscTFvQkVTTV9XVW5HaGZmYnV5MklrWEJ6NmdIbWdWOHZmTmd4bWVoc3RvRlF6WDVCMUZBWnBjRU52ZzJVUldDR000R3E4cVhPR0FNZnZ5U0lxYnNBM3NBNUJkUjRqU1NoTHBRMFFvcUZwMmNqMzBvMVZjUjBSd01FaXpmQms1U2tUNFc0TmNzY2RWMU54ZnA4RW0yM3lwR0VNamZQRF9nd3gtejRkWUZsVGFyeGtSZVR6SDA?oc=5",
       "pubDate": "Sat, 12 Sep 2026 16:05:38 GMT",
       "pubTs": 1789229138.0,
-      "desc": "澎湖縣政府9月開辦「臺灣職安卡」訓練 提升職業安全衛生意識&nbsp;&nbsp;澎湖e傳媒",
+      "desc": "澎湖縣政府9月開辦「臺灣職安卡」訓練 提升職業安全衛生意識&nbsp;&nbsp;phnes.net",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
@@ -688,7 +798,7 @@
       "link": "https://news.google.com/rss/articles/CBMi4wJBVV95cUxPYXR0OXpUU3BVUEZITVN1aThFdGxzaFN2Y0J6dkxGZkdUelMyWW5XZlZQNE5NeUFfTGhPeTFqQnNyY3NNODBnOGtaeXpyTmdaeUVhRjFGTlphMFdldnJkOGR5cHdZUVZnMVd1ZnB4OHJlU0ZDQjhhWjRUYkRIcEg2MVFjeVYyMk41SkNCcy0zV2xVWlFKeTI4X3UtREsyUm90a0xHYlRISXdfaDRlLVNKOTY2TkIwNEpDbUJfNXNxNFdGSlBzTnBoNklJaDNIOGk2cjZEdkhuOHp0Z09NTk81SWtGOEtWS1Vod2VNSy1nd05NNXZkTERtN3ZUTzVkZGRiSzhmZXBrMnBKWUI3Y3VmSTBac1JKcE9ybHg3TmZtTE5Wd3JaMTBXOFF2MU0tTTU4N0hNeWFRWUxwTnFGUlB3b0F4dVZiTC1LMno3NVptQXQwenZib2FPaEtfRWJoNGx5ZUdR?oc=5",
       "pubDate": "Fri, 11 Sep 2026 07:21:07 GMT",
       "pubTs": 1789111267.0,
-      "desc": "高雄去年前7月重大職災死亡13人陳美雅籲累犯應重罰| 工安| 勞檢| 工地&nbsp;&nbsp;epochtimes.com.tw",
+      "desc": "高雄去年前7月重大職災死亡13人陳美雅籲累犯應重罰| 工安| 勞檢| 工地&nbsp;&nbsp;台灣大紀元",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -964,83 +1074,6 @@
       "pubDate": "Wed, 09 Sep 2026 10:39:33 GMT",
       "pubTs": 1788950373.0,
       "desc": "近期全國各地連日降雨，雨後地盤可能因積水、滲水或沖刷等情形，造成土壤軟化或局部承載能力下降，接連發生吊車因作業位置承載力不足，造成支腿下陷、車體傾斜或翻覆事件，職安署提醒事業單位應妥為評估，雨勢停止不代表地盤已恢復安全，起重作業前應重新確認作業位置及支撐點狀況，確認安全後再進行吊掛作業。 職安署指出…",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "06b31034c3ca4f3e",
-      "title": "南投縣職安卡訓練 提升營造業工作者安全意識 - news.st-media.com.tw",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9qb3Ntal9IZkh4NTMwZW91bUcwT1c5RjBjUXFqS29KZlVFdEdvbm5HWndmY0JxNTF1LUJPMzZGSDlGWTN2WXhMbnVpdEZTd3d2?oc=5",
-      "pubDate": "Tue, 08 Sep 2026 12:03:46 GMT",
-      "pubTs": 1788869026.0,
-      "desc": "南投縣職安卡訓練 提升營造業工作者安全意識&nbsp;&nbsp;news.st-media.com.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "8790d3cf26820281",
-      "title": "職業災害預防及重建中心攜手交通部鐵道局南部工程分局舉辦「115年營造業熱危害及科技減災觀摩會」",
-      "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9FNWxKLVlLa3p0Vkhxb0pRYnRzdWFLT0JGSmlaaVdiSTQ0bzVjNGduVHNXcEVXQ3lRNUtxU28tNUhqT2F3RDRSZUMzbWV3Q2FXZW1kOFFPRkw?oc=5",
-      "pubDate": "Tue, 08 Sep 2026 11:10:55 GMT",
-      "pubTs": 1788865855.0,
-      "desc": "職業災害預防及重建中心攜手交通部鐵道局南部工程分局舉辦「115年營造業熱危害及科技減災觀摩會」&nbsp;&nbsp;住展雜誌",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "220e3ffa6deeb376",
-      "title": "116年職安新制將啟動 臺東提前布局 職安卡訓練9、10月登場開放報名",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5KYmFOQWU3ZHR3alJXcnpXa09NMFh4MzZTbEtXdldYZDE1X3g0MW5YMjMteGZ2NVBIX3ctRVFUNGNvVFl6ZWtCencwbEc1YW1oTWRMVjVR?oc=5",
-      "pubDate": "Tue, 08 Sep 2026 09:36:55 GMT",
-      "pubTs": 1788860215.0,
-      "desc": "116年職安新制將啟動 臺東提前布局 職安卡訓練9、10月登場開放報名&nbsp;&nbsp;中央社 CNA",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "ef528b1ae0bd127e",
-      "title": "116年職安新制將啟動 臺東提前布局 職安卡訓練9、10月登場開放報名",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFB3Ymd2M0RBTUtva2JYSVlKeEF6VklxZlp5NXRScHZSSGNyMEcxVlhTQXR4RHN4cGdaYUpaMl9SbWQ0dUp4V3hUYnN1SVhXN29hRWc?oc=5",
-      "pubDate": "Tue, 08 Sep 2026 09:36:00 GMT",
-      "pubTs": 1788860160.0,
-      "desc": "116年職安新制將啟動 臺東提前布局 職安卡訓練9、10月登場開放報名&nbsp;&nbsp;n.yam.com",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "682a81376c79b1e7",
-      "title": "守護營造工人安全！南投推「臺灣職安卡」6小時訓練 通過後換工地免重複受訓",
-      "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFB5WlZNM2t1VVZIZ2VjNXdKRzNqclk4YWRLQTV3UTlQYWVyakZVMmVYNDRLU05uclkzQ2ZWOVd6SHg3MGprZ18zcXQ4RmZoY29UQkhXSW00SFZOV1Rm?oc=5",
-      "pubDate": "Tue, 08 Sep 2026 07:15:35 GMT",
-      "pubTs": 1788851735.0,
-      "desc": "守護營造工人安全！南投推「臺灣職安卡」6小時訓練 通過後換工地免重複受訓&nbsp;&nbsp;住展雜誌",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "9b056e3ad8e5745e",
-      "title": "營造工人注意！取得這張「職安卡」 全台安全上工",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5HZDNxWjZRWVV4dm1CTGpmWXFPN1h3aHEwLVpXdnBuX1BCeGw4MWRSb240T0FhSG5BdkZfVVlwcS01UDl3UkF3TlJleW9Zd1pWa2locXBCelBnQlNaLUVj0gFkQVVfeXFMT0pETFRqaWRPOWRwN0o2ckJZWUlYY1h6OGR5VjlLS0VKRW5idEhVaXJsZEhEMDM4Q21LRVEzMjhIZ04tamtIcDVHSklZblltd1dfbDl6emNyTnpUWl81U2MxdFN5bQ?oc=5",
-      "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT",
-      "pubTs": 1788850800.0,
-      "desc": "營造工人注意！取得這張「職安卡」 全台安全上工&nbsp;&nbsp;自由財經",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "ed7e8ef899870ba6",
-      "title": "職業災害預防及重建中心攜手交通部鐵道局南部工程分局舉辦「115年營造業熱危害及科技減災觀摩會」",
-      "link": "https://news.google.com/rss/articles/CBMi5wJBVV95cUxOUFpxcEg2cDdxRzZmdkFSUXkxd05MWlpCSGtCOUpsMWxXVjVzNnVRYjkwZWhoT2JGZWxXZFdLOU5QanhUNzB4N2YzWnBkSFpQU1RXR3I4VTFTWkh6TUNOSE5LTG1KZkdvbWdFY2R1Z19Oano3MnlUdUhzbTlFcmxKcVFPaWR0OHNQMzJsRms5NG9sZHdHNUlwT3lRWFRpVTlRRnE1SzAwZUFlMS15Vzl3SVdjXzRRVmRvNi1OYi03N1hXSTR3UTQtWmJCNFNKYzhfdnBkOE82MjN1ckFOVVY4NHpqYVdQeUpLS2RadjlLbzVUTERmNXg3T0VYczY0TXVYNmdLU1kyeUJFN2lFZ0lLQmJqbjFUOFNnU09xZkVHMW1EeFA3b05KNnlnQWNrN0hVbnFRdDUzblhoYllkeVFTRmxIZ0tvMmNYRWJLejNJYjB4amwtcTB5R2tGVTVGYl9rXzdibk4wTQ?oc=5",
-      "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT",
-      "pubTs": 1788850800.0,
-      "desc": "職業災害預防及重建中心攜手交通部鐵道局南部工程分局舉辦「115年營造業熱危害及科技減災觀摩會」&nbsp;&nbsp;報新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -1420,5 +1453,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-09-22T05:31:44.990647+00:00"
+  "lastUpdated": "2026-09-23T05:19:39.183261+00:00"
 }
