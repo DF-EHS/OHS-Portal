@@ -1,6 +1,61 @@
 {
   "items": [
     {
+      "key": "1561a3440ed3555a",
+      "title": "深化國際交流、接軌全球職災勞工保護趨勢 職安署赴美分享我國推動職災勞工保護成果",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/213352/",
+      "pubDate": "Tue, 13 Oct 2026 12:00:35 GMT",
+      "pubTs": 1791892835.0,
+      "desc": "為深化職業災害勞工保護業務國際交流，掌握各國職災保障制度及勞工復工政策發展趨勢，職安署代表日前赴美國參加第112屆國際工業意外協會（International Association of Industrial Accident Boards and Commissions, IAIABC）年度大會…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "6bfe660a8b8ba1de",
+      "title": "職安法新制首月通報223件 主管罵人算霸凌 律師揭判定關鍵",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9aajJ4VFA4eS02anN4cTNKLVN6UnJ6NjA0X0NzNWtDUHN2MzFhb3pOMThOZmtmLTZvR0VKbzRFUFFqN2gyNDFwUjM4VTNQWlJ4cWc?oc=5",
+      "pubDate": "Tue, 13 Oct 2026 05:48:00 GMT",
+      "pubTs": 1791870480.0,
+      "desc": "職安法新制首月通報223件 主管罵人算霸凌 律師揭判定關鍵&nbsp;&nbsp;蕃新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "b61712d5dc829bcb",
+      "title": "職業傷害+1！沈伯洋北投掃街握手無數 右手受傷塗藥超痛表情曝光",
+      "link": "https://news.google.com/rss/articles/CBMinANBVV95cUxOQU9PRHppbE5zZmhkcy1jQmREV2VuQXBfS2Z0WjBscmV4dTZoZkh4cXFjT2FHY1lKMmZVTWRPUklJMlR6a0stWU9kYjhtS3RYd1F4V1Zwd2JHQ1VLTUdYNW9uZ1JnTVlRSHp6NHBwOFEzSUJzbkVTVHAtXzBsWkNwQlh1M0pFV3BWNXo2OXkteW94Rk5zcEVPVlgxV3dncXdZOGlIXzl6dmw1b1FZQ0tnT283NHV0dXdhdjFCd1N0VG5kTU44aVBnRmd6UHJtM25COHQwR2J0T2xuR2JjTVdUMW9Ubk5PNVFuNVA3NWE3azJ4MXFQcV9xSEZPSHFqVFFVOFlReko1blZoNERwcFl2XzhzZUJPSmJPNFdDLWg4amFnWHI2WnRmeUQwcG5ocGpjMkV5Wjlud2VzblJGUGJ6Yng3dnhSMkptbWlPLTh2T0s5YmtoamU2MjZKRmpJdjZNUFhkdWhubHZzX0FBVzV3VDFYYWo5WVJORG1iWjdGbm1sa1hyTFNsSklHMjZveGp0c3NDQmRrOEk4YS1I?oc=5",
+      "pubDate": "Tue, 13 Oct 2026 05:43:00 GMT",
+      "pubTs": 1791870180.0,
+      "desc": "職業傷害+1！沈伯洋北投掃街握手無數 右手受傷塗藥超痛表情曝光&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "031386ba5081887a",
+      "title": "職業傷害+1！沈伯洋北投掃街握手無數 右手受傷塗藥超痛表情曝光",
+      "link": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE9ydEVsWXdmb0V3cHp4QTBhOVFwR29ZT0xlSlZFRTZ1LTlONXFfZk5lVDNvU203dHF1OTUwei1JSklGWW9KYWZNOWV0cGPSAUxBVV95cUxPcnRFbFl3Zm9Fd3B6eEEwYTlRcEdvWU9MZUpWRUU2dS05TjVxX2ZOZVQzb1NtN3RxdTk1MHotSUpJRllvSmFmTTlldHBj?oc=5",
+      "pubDate": "Tue, 13 Oct 2026 05:38:00 GMT",
+      "pubTs": 1791869880.0,
+      "desc": "職業傷害+1！沈伯洋北投掃街握手無數 右手受傷塗藥超痛表情曝光&nbsp;&nbsp;三立新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "d255732b1e83116a",
+      "title": "轉知勞動部職業安全衛生署訂於115年11月4日至11日分區辦理「全國勞工健康檢查資料庫登錄平臺（HCD）教育訓練」",
+      "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPbmhobWtxdktwTDhrWVVwWkRYaS1HU19HRE8wNmJhcVBoZUNlNVo3SG1hbC1Pejk5aXA4NVRmTWE3bFNFLW44UkM1emtZRTJkYS1aemc4dFFwcTJ0cGxGMkJaNzZJTEhlaFNMSVk5Z19JeXE0RWJ0ZGdmbjlpc0xKdVZwYTFMdw?oc=5",
+      "pubDate": "Tue, 13 Oct 2026 01:06:22 GMT",
+      "pubTs": 1791853582.0,
+      "desc": "轉知勞動部職業安全衛生署訂於115年11月4日至11日分區辦理「全國勞工健康檢查資料庫登錄平臺（HCD）教育訓練」&nbsp;&nbsp;彰化縣政府全球資訊網",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "4f46962759b5c442",
       "title": "希臘大型煉油廠驚傳工安事故釀2死 展開調查",
       "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9jbGRra25QZE9Wb3JWd0Iwd1RGeExtZ082QnFhLXJfTmVLUjN2Vi1pTHhfUFJfd1pyT1BXbmZ2TGhsRzFyallpWGFEYzh6R2JEUFdsOEN1MW5iTFo4M1d3Nw?oc=5",
@@ -485,6 +540,17 @@
       "badge": "red"
     },
     {
+      "key": "82cae16eb5dbaa94",
+      "title": "華邦電路竹廠工安意外 4工人遭化學廢液灼傷送醫",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE42YVItdmIxa1Z2WTItdzFSNTNLZVhYUi1UdndQOVlvWlZSenNjSHBDRGdhQThyTTZtMGRmUDNjTEM2S1pSQ2lrOVk3VGJhOEk?oc=5",
+      "pubDate": "Fri, 02 Oct 2026 07:00:00 GMT",
+      "pubTs": 1790924400.0,
+      "desc": "華邦電路竹廠工安意外 4工人遭化學廢液灼傷送醫&nbsp;&nbsp;你的公共電視",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "af8362ed663dd29d",
       "title": "華邦電路竹廠嚴重工安意外 4工人遭「化骨水」噴濺送醫",
       "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBCYWlkZzRjaFJlLVdpMm5Tb3FWckozbl84T2tqdkJTWUVDQlpDZ1BLLU4tdjZEM0dCSkh3SURSY0paS28xZlZKYUg2MVphNTN4ZWNCUW5jWDR4VkJRcjZzVlZONzFncXdiS21RZWxB?oc=5",
@@ -678,138 +744,6 @@
       "pubDate": "Wed, 30 Sep 2026 11:22:00 GMT",
       "pubTs": 1790767320.0,
       "desc": "太麻里工安意外 板模工休息遭水泥車輾斃&nbsp;&nbsp;原住民族文化事業基金會",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "3d39b9eeaaee8d21",
-      "title": "影／驚悚工安意外！越南工人操作切割機突彈飛 「刀片直擊頸部」血流不止身亡",
-      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE54S0diRzZUYkZxU2RmQTNiemlLZm1fTDlyMWJ5eFhzdzhkSExVMmRpQW1EcXZrWlFfQnBBODRKa1E5MFlicS15UWVqUGduZw?oc=5",
-      "pubDate": "Tue, 29 Sep 2026 05:35:00 GMT",
-      "pubTs": 1790660100.0,
-      "desc": "影／驚悚工安意外！越南工人操作切割機突彈飛 「刀片直擊頸部」血流不止身亡&nbsp;&nbsp;記者爆料網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "ef72ad2c1e27fbc2",
-      "title": "職場安全 尊嚴勞動！勞安所研究成果亮相 聚焦AI、智慧科技與勞工健康 | 熱門亮點 | 商情",
-      "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBZY1lDSW1WV0FtOUtwZTM5cmpsU3FPYUtvUjZoTmo2VWtaTlFYTldETHRCVmNQUURkc2c0VGI3YnVXaHVpOE5ZTHNLeHlRbHNsemo0LWtZTXVLUQ?oc=5",
-      "pubDate": "Tue, 29 Sep 2026 02:02:31 GMT",
-      "pubTs": 1790647351.0,
-      "desc": "職場安全 尊嚴勞動！勞安所研究成果亮相 聚焦AI、智慧科技與勞工健康 | 熱門亮點 | 商情&nbsp;&nbsp;經濟日報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "47e985e77fb541c9",
-      "title": "南投縣營造勞工職安卡10月增5場 取得資格可免重複受訓",
-      "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQNU04YnVubzJjaG93Sm1sMkxsUW12ZjhGNkl3Q0ItSVloYy15RTE4Qk1fMlg1N3U5TloyaU9EemZJVTlHUEhsX0JUZHhyRm9QLThaeV9jUlFBT3B5bVRIeEYyUjRRRDFpQWlaLUdCeWhrUEd0WklnR3F1QUZwNUxmUklRZlVKUFBJSjB0OTd5eUs?oc=5",
-      "pubDate": "Tue, 29 Sep 2026 00:53:49 GMT",
-      "pubTs": 1790643229.0,
-      "desc": "南投縣營造勞工職安卡10月增5場 取得資格可免重複受訓&nbsp;&nbsp;新住民全球新聞網",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "b9602f8c2bd7dec0",
-      "title": "台中豐原自來水送水管工程發生工安意外5人送醫幸無生命危險- 股市爆料同學會",
-      "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFB6TlNVamxMYnczdHJUbDExTmVNeENlMzQ1X3REV1RUdDM1SER5X0ptazFJa05kVVpyNFE0MThnWExRSTRpaGR6Y2ZPUVFOcmIxR1lWcWhWREY?oc=5",
-      "pubDate": "Mon, 28 Sep 2026 09:54:40 GMT",
-      "pubTs": 1790589280.0,
-      "desc": "台中豐原自來水送水管工程發生工安意外5人送醫幸無生命危險- 股市爆料同學會&nbsp;&nbsp;CMoney",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "2c5254ead5eea469",
-      "title": "台中工安意外！下水道工程疑通風不良 5人一氧化碳中毒送醫",
-      "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9oQ3VyTFdUbE5YUHR4dzhPM296ZUZrdDNHZEI2aFNrYk9tWDNURkczbTdEUnFfaVlVRk9yeE9aT2Zlb3VwUHY2dXZjXzhYb2ZESDg3dnBFUHpmcFlkc0EzaQ?oc=5",
-      "pubDate": "Mon, 28 Sep 2026 09:49:24 GMT",
-      "pubTs": 1790588964.0,
-      "desc": "台中工安意外！下水道工程疑通風不良 5人一氧化碳中毒送醫&nbsp;&nbsp;民視新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "ec355269cbf3d5e6",
-      "title": "快訊／台中重大工安意外5人昏迷送醫搶救 台水：均脫險治療中",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1Ba3VSOU9xaU1FeS1aRGUtbGpaU1l6MFV1SEpRMlJKTnVHUDVuQnBLc1VpZnV1M1dJX3ZBM05ldXZOVU12R1pNT1NmLXRWcTA?oc=5",
-      "pubDate": "Mon, 28 Sep 2026 09:47:00 GMT",
-      "pubTs": 1790588820.0,
-      "desc": "快訊／台中重大工安意外5人昏迷送醫搶救 台水：均脫險治療中&nbsp;&nbsp;TVBS新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "ffbce7f076fa29c1",
-      "title": "影/台中豐原下水道工安意外！5工人緊急送醫2人昏迷",
-      "link": "https://news.google.com/rss/articles/CBMi1AJBVV95cUxNV1U1VlplY0pCZzBtcFFJY2ZnOUd5Z195QU1INnFJTnFEc0szdVRyTFlOamtlUW4wSVdETEtkZndwZ0xpNWdTQ1M1OUVScjdRcm1JNnc0S1U5ZER0TGRlVEVyenVibmRmUHdVOWQwNlptS0diTjVNMndXWFhQWGNkTE1qQlJiOXVOc1htRzVuMlNQdktZVVJWTXd5bEFEZnBsc0UtdzBTVWE5Y0E4aW4tVUo5TnR2ek10dmIxLWpkSGRSWjJacXdEQi14QkZZdjFYc0ZmdHNSNjlfcWpfSE5aZ3pxLXltV2FXS2FTVG1xcHpoemt5TWQ5VHVkYnhrWFVVYXhPVUE2RnZ6bS0zWW1DMUdKcFd3LXhGS001eW02UWVTNnU3czdtSExpODc5dU9ZS0w3SlFkNGpIOUd4SkhpU2FjclBNc1hjN3ZIYTI2c05KOXpJ?oc=5",
-      "pubDate": "Mon, 28 Sep 2026 09:25:10 GMT",
-      "pubTs": 1790587510.0,
-      "desc": "影/台中豐原下水道工安意外！5工人緊急送醫2人昏迷&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "6434b0f50b16c32a",
-      "title": "台中豐原自來水送水管工程發生工安意外5人送醫 幸無生命危險",
-      "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5WRFB6RWNsOVlidEpVWGZtT2l2UEpycHQ0M2R0QnFzVWpyalNwT3EyWmhQZHB3ZnRGdHZBaDFHYnR4TkhBR2ZHSktiSFpScllDQThLYmtXdTFtZTExbDk5ckdzZ3ZkRnR40gFuQVVfeXFMTmhZX2hCNXpqMk11Z3pUNm9VQmdjUV92b25GRjJRd1Q1WmQtRjBVSkZuUDl1Z1VkSTZROTVQQ1piUF9Dd0lnNmh5akFRS2kzQlJ0bno1aFhObVJIdkdrVjBfOUZFRldoU2xSZ3dleEE?oc=5",
-      "pubDate": "Mon, 28 Sep 2026 09:10:00 GMT",
-      "pubTs": 1790586600.0,
-      "desc": "台中豐原自來水送水管工程發生工安意外5人送醫 幸無生命危險&nbsp;&nbsp;自由時報",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "d154114578e28226",
-      "title": "推動職安全永續轉型 職安署串聯企業深化 ESG 治理",
-      "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE85SEw1MXkySFVUdVNlX0ltSnNOZW9velRDNko3T3dKaEw4ODVGYkp6eUFINXpnMGljY3ZMY0NScTRMZTVxQVBaQ0dNOEQ0NVJQNS0zWWs4aFRxZ9IBX0FVX3lxTE1OU25ZQzVrU2w3UnpCUnJLZm9jd01KY192NjJDS3BZclhFLWtfR0RFY0wydnNMYlVBWjg2TUlTcThSZUlKX3Q4T18wRlhqVTNaYXA5SklkZU81NjBCYWI0?oc=5",
-      "pubDate": "Mon, 28 Sep 2026 09:00:00 GMT",
-      "pubTs": 1790586000.0,
-      "desc": "推動職安全永續轉型 職安署串聯企業深化 ESG 治理&nbsp;&nbsp;經濟日報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "415e16e3c3a30d70",
-      "title": "台中工安意外！5工人疑墜落20公尺深管道 4人意識不清",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9jaDZQdFN1VGxJVGhXRFRnaVlMUzJWNkwzU3JtLTkxQmFFVVJVTVU0V05yVjZNTk5PdjhDV0FnWDkzNmxzM1NQUDVDRkR0aFVKbGdyRUNn?oc=5",
-      "pubDate": "Mon, 28 Sep 2026 08:24:00 GMT",
-      "pubTs": 1790583840.0,
-      "desc": "台中工安意外！5工人疑墜落20公尺深管道 4人意識不清&nbsp;&nbsp;東森新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "6f1a55daa7e00dc3",
-      "title": "豐原工安意外！地下管線工程工人昏迷 消防隊員搶救中",
-      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5zSlNPTWYzOWw0dUluLUlESU54MWpnaXY3SHpKeDkzSzNUTlJRTThsRmc3QWVNcThLa3dvSzUzNEE2dDd3TVdhV3hmbEdxUQ?oc=5",
-      "pubDate": "Mon, 28 Sep 2026 08:11:00 GMT",
-      "pubTs": 1790583060.0,
-      "desc": "豐原工安意外！地下管線工程工人昏迷 消防隊員搶救中&nbsp;&nbsp;記者爆料網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "bb8664ec93a62e4c",
-      "title": "下水道1工人吸一氧化碳昏迷...4人為救同事也受困 皆獲救無生命危險",
-      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBnT3ktdUxwV3dLYnRVR0pjaXp1UHh2RUlVa0FZRHJjUFRjUVN2ckJYQ1U0dXhNYmRtX2dZMl9TSGhTendqUU94Ujg0MThnMzlfSG16LTloZw?oc=5",
-      "pubDate": "Mon, 28 Sep 2026 07:28:33 GMT",
-      "pubTs": 1790580513.0,
-      "desc": "下水道1工人吸一氧化碳昏迷...4人為救同事也受困 皆獲救無生命危險&nbsp;&nbsp;台視新聞網",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -1233,5 +1167,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-10-12T06:40:03.141280+00:00"
+  "lastUpdated": "2026-10-13T07:12:34.840790+00:00"
 }
