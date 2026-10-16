@@ -1,6 +1,149 @@
 {
   "items": [
     {
+      "key": "56b5c002814018be",
+      "title": "局部排氣裝置設計訓練合格專業人員名單",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/213467/",
+      "pubDate": "Fri, 16 Oct 2026 09:27:40 GMT",
+      "pubTs": 1792142860.0,
+      "desc": "",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "e2e4f07d466d8e54",
+      "title": "大葉大學環安系把職安現場搬進教室 體驗噪音、化學及高空作業危害",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9wSmhoRV9OQnktcHc0WEtDOU5oRmJBYm55M0Z6NHJSTWpsVVU1SjVQODlfWDhiX2EyMzlKSUV0YVJ5eEplbEg0QVdtQ25jeTRGa1E?oc=5",
+      "pubDate": "Fri, 16 Oct 2026 04:35:03 GMT",
+      "pubTs": 1792125303.0,
+      "desc": "大葉大學環安系把職安現場搬進教室 體驗噪音、化學及高空作業危害&nbsp;&nbsp;蕃新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "6aa07c2c130d09ea",
+      "title": "馬祖工安意外 一氧化碳奪3命",
+      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBDNHoyeEZrbGJzLUh1YktaQ29vX0Nlamo5Z3VkZ1VSMXJ4Mkh1X2lFVHUtNUJoRURSMGZYakNHQWJxWF8tbFlSN1BOVmR2TlVHNlZ2Z0R3czZnTFZjekJGdWNnM3hnbFpvVFdR?oc=5",
+      "pubDate": "Thu, 15 Oct 2026 20:10:00 GMT",
+      "pubTs": 1792095000.0,
+      "desc": "馬祖工安意外 一氧化碳奪3命&nbsp;&nbsp;中時新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "ec7c7f9bfd6c6669",
+      "title": "英特爾工廠爆炸PC業警戒 供貨宏碁、華碩等CPU產品恐生變",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1KVElRaG53UVlvbXhaWnBFV0xFYlJGNzAwOWF3UGdLSFRndzhLbnRFNHcwQ3E3dHh3Q1JuTXhFNTdPeTE4UzNBbFVZMzFLeG5D0gFWQVVfeXFMUDRuSlp3TTIwMFlfcHhqbV9OUVBHS2VDeHZFUndoNXFnUmtKNlFVeW5UMGc4M0F4eWdsSzFFSWxZcDl5clRXNnlQblY2Wkg3QW1INFg5d2c?oc=5",
+      "pubDate": "Thu, 15 Oct 2026 18:28:26 GMT",
+      "pubTs": 1792088906.0,
+      "desc": "英特爾工廠爆炸PC業警戒 供貨宏碁、華碩等CPU產品恐生變&nbsp;&nbsp;UDN",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "ce3a6e8bc16c10a6",
+      "title": "王忠銘召開危機處理會議 全力協助東莒工安事故家屬",
+      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1mdDkxM0c0M0paZ0x4QzBCNGhjUTNuekc3SW5PWmhMeFlVSk9UNl9qRHZMMlphVTVndkgtemhBZkV2YXhkWkxXM1NtTUFDcmw5bTVmcHBGR2tnTTgxd0E?oc=5",
+      "pubDate": "Thu, 15 Oct 2026 16:05:07 GMT",
+      "pubTs": 1792080307.0,
+      "desc": "王忠銘召開危機處理會議 全力協助東莒工安事故家屬&nbsp;&nbsp;馬祖日報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "4bb416b673117a38",
+      "title": "打造全方位友善職場！南市勞工局攜手長榮大學強化庇護員工職安防護",
+      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1sOUVKeG9EZE9FM2hlUmVkUk9xVGdxUWdhamhtZUpLREVNUEJ0Ni1pYVFUN1laZkNfQmkxeTRpQUdud1hJUWEtd0dKWVk1UXUySGYwT0JWWEpSZElNb2Y0blRMMVhNQ1pjN0Zj?oc=5",
+      "pubDate": "Thu, 15 Oct 2026 13:13:32 GMT",
+      "pubTs": 1792070012.0,
+      "desc": "打造全方位友善職場！南市勞工局攜手長榮大學強化庇護員工職安防護&nbsp;&nbsp;台灣華報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "6b2bc47b199af6cf",
+      "title": "馬祖猛澳港工安意外 3作業員疑吸入氣體昏迷不治",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5vN3RiRUxLWnZyN0RhcFBvLWxHc0VsazhKWXlvQ1p2eDgyQVV5b0E3Y3MtenVabGtZdy0zam9RcWV4cFdSUVFvZjctQXBiX3c?oc=5",
+      "pubDate": "Thu, 15 Oct 2026 11:59:16 GMT",
+      "pubTs": 1792065556.0,
+      "desc": "馬祖猛澳港工安意外 3作業員疑吸入氣體昏迷不治&nbsp;&nbsp;你的公共電視",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "c1264f2ceea9a752",
+      "title": "東莒猛澳港工安意外 3人搶救不治 (圖)",
+      "link": "https://news.google.com/rss/articles/CBMiiwJBVV95cUxPQ3JaLUM3MU1wRVo0RmVzSmlXX1ZKRUxwczI1UDNMNUI3TTVadUd6R01OQWRjaWw1UVdUZWRyV2pCUU9YeHZCeUZHdWctODItUzU1ZzJqOFRvb0ZrQmJzZWhZRTdlWnZXcFJMWXU0UGgxT2dUU0VfTEcyVWhCZ0FNdVpkaDdoV2F1VG5yclBSV2hZUHgyUjIyWVdtMjBObGZ5OTYxc3pOUVd3QjYteFdiMlliY3pMM3JFckYtcFZkeWJWTzNnNFJ2SzJCNUhpaUhJSDVBZjRDejRLVkJFV2tyNk5QdDJTMUZuZWROX05vSGMzaE16a2JLN0VxeFkzRUM1cWxicm9FNlhfaVE?oc=5",
+      "pubDate": "Thu, 15 Oct 2026 11:01:03 GMT",
+      "pubTs": 1792062063.0,
+      "desc": "東莒猛澳港工安意外 3人搶救不治 (圖)&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "9838a2bad7330acd",
+      "title": "東莒猛澳港發生重大工安事故 3名工人送醫搶救不治 縣府、莒光鄉公所全力協助家屬並配合調查",
+      "link": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE9Ta3ByenRPUHBKNGpuNS1ZY09VcnNfN3k1Q0ZtYXMxNmMySUFSemdQNlJwVXVWN3puZzJBM1d4bHY3WUVxODBr?oc=5",
+      "pubDate": "Thu, 15 Oct 2026 09:05:10 GMT",
+      "pubTs": 1792055110.0,
+      "desc": "東莒猛澳港發生重大工安事故 3名工人送醫搶救不治 縣府、莒光鄉公所全力協助家屬並配合調查&nbsp;&nbsp;台灣新聞雲",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "fdac5c76a5ddbff5",
+      "title": "馬祖東莒猛澳港浮動平台工安意外 3名作業員送醫不治",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE00LXFPbG1uQ3NSRVdGYS1VOVh2R0RBTTNCU2hxRlFpcWJCQ3RwLURnRHR0R3BBX2FCUXF6TWIzSjV2VmVEcWZIRXV3QXNyYV9GOWNPUW5QYw?oc=5",
+      "pubDate": "Thu, 15 Oct 2026 08:52:23 GMT",
+      "pubTs": 1792054343.0,
+      "desc": "馬祖東莒猛澳港浮動平台工安意外 3名作業員送醫不治&nbsp;&nbsp;台視新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "41e5f4fc2aa20fdd",
+      "title": "南市勞工局攜手長榮大學 深化庇護員工健康促進與安全防護",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1FQks0TkF1NmpuaWR3LVYxXzFOYzZmX2pCOG5ITEVQNF9OUjJtV0NKMnEzT2pKNlpoazdkVlEwb01CX2M5NnJmYmJCdTdrZzBneXc?oc=5",
+      "pubDate": "Thu, 15 Oct 2026 05:59:29 GMT",
+      "pubTs": 1792043969.0,
+      "desc": "南市勞工局攜手長榮大學 深化庇護員工健康促進與安全防護&nbsp;&nbsp;中華新聞雲／中華日報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "a4d4a99946da4a16",
+      "title": "打造全方位友善職場！南市勞工局攜手長榮大學辦「庇護職場安全衛生研討會暨觀摩交流活動」",
+      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE1Dc0xIR3NsQWtzNWZTYXoxazluN19zdXQ5SHNTZEJ5Q1VWRXhOMy1TWExNa1ZmT25relgtZ0kwRHlSUkZLWGlkRQ?oc=5",
+      "pubDate": "Thu, 15 Oct 2026 05:30:27 GMT",
+      "pubTs": 1792042227.0,
+      "desc": "打造全方位友善職場！南市勞工局攜手長榮大學辦「庇護職場安全衛生研討會暨觀摩交流活動」&nbsp;&nbsp;台灣民眾電子報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "7b375636c02402cf",
+      "title": "勞工局攜手美光領航安衛家族 辦理職場安全衛生教育訓練",
+      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPcDREVzhMSzFWcjJVaTBBUzhRQkgzR1NyQkUwTXBxbDRGMjE5ODdXVmdnSVJUbnZ2TVZDYmpEbnFaajNycnNEVzhHbXB2Y3h3cEFTVG9RczY3MlQwc294dE9tRnpJOXcxQjcyTFc3UmlWZXNBSkxPYWZUNzVsRWc2MDBidDF1Um5oNDNuajZqRnI5Vjl0eVBvdA?oc=5",
+      "pubDate": "Thu, 15 Oct 2026 04:48:11 GMT",
+      "pubTs": 1792039691.0,
+      "desc": "勞工局攜手美光領航安衛家族 辦理職場安全衛生教育訓練&nbsp;&nbsp;視傳媒",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "e82b328cf4de02b1",
       "title": "打造全方位友善職場！南市勞工局攜手長榮大學 深化庇護員工健康促進安全防護",
       "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9NUFRGLWxpZEYtbUIxclJTVTZqcVQ2YzI1TWRSaVJCN0x3ZjZsaVc1Qkdhano4RWNsVlhUWGlnSEpnSzBKZjBvNktXZjJlbEtzTFlETlZGbmZBclZGT3pXcnZR?oc=5",
@@ -914,39 +1057,6 @@
       "badge": "red"
     },
     {
-      "key": "f73e7481a7f0604b",
-      "title": "豐原大道工安事故 邱愛珊要求市府給工期、顧安全",
-      "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1TMUJxQjdsd3lwT3FyeklVY25CZ3lHcUZPb0p6OGJ0cEJyTm56ZGJ6YUdQaWFzUjFZYXJaZHpFUkI4TGc5WnQtSnNQWUtZakEtTW84NTFnNXg1N2pJcEgtbm8zbDlXYkJB?oc=5",
-      "pubDate": "Thu, 01 Oct 2026 10:28:19 GMT",
-      "pubTs": 1790850499.0,
-      "desc": "豐原大道工安事故 邱愛珊要求市府給工期、顧安全&nbsp;&nbsp;yuanfengmedia.tw",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "631fdef69c6f06e8",
-      "title": "南市勞工局舉辦安衛家族教育訓練 提升危害預防意識",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1mNk1CWG5BZm04dGI0TU5za0EyTEk5Zk0xM3F6NzJaeVVDWVVDdFBzc1hCcV8zMnJ2aW1SU1JaX0h5S0hDMlNBdkF3czI2ZXNwRkE?oc=5",
-      "pubDate": "Thu, 01 Oct 2026 07:14:26 GMT",
-      "pubTs": 1790838866.0,
-      "desc": "南市勞工局舉辦安衛家族教育訓練 提升危害預防意識&nbsp;&nbsp;中華新聞雲",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "e0710cc274b13cd9",
-      "title": "豐原大道工安事故 邱愛珊要求市府給工期、顧安全",
-      "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE95LUp1V00yaGNOUFgxdTZ0LW9keHZQZG9ZMUlCSWs4Mm1pVnJwYmNRd21tYno0VDhEZ3lkX01NLWUtUzlNSDF5ZGE5aGZCV3pUZm5UbXcwcTNQeC13a2lrVFJlYWtPZG8?oc=5",
-      "pubDate": "Thu, 01 Oct 2026 05:55:00 GMT",
-      "pubTs": 1790834100.0,
-      "desc": "豐原大道工安事故 邱愛珊要求市府給工期、顧安全&nbsp;&nbsp;新華報導",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
       "key": "c45f051b914165ca",
       "title": "公告115年第3梯次申請認可辦理勞工體格及健康檢查之醫療機構名單",
       "link": "https://www.osha.gov.tw/48110/48417/48423/212782/",
@@ -1376,5 +1486,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-10-15T05:21:43.550781+00:00"
+  "lastUpdated": "2026-10-16T05:12:51.030813+00:00"
 }
