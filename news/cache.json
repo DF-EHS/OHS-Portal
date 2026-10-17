@@ -1,6 +1,39 @@
 {
   "items": [
     {
+      "key": "f89e0964a0da79d1",
+      "title": "東莒猛澳港工安意外 檢測發現相鄰艙室含氧量僅15％",
+      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFAtZjhwalBrVm9UV2VrR1ZTNFNiWFp1dk1iZThuUWpLVF9rcUtPcTlmZlY5SnpSYlpXWDN1anV3YzBuS3BwNmFST2d5djlKd0dqRmxYYUhSQVF3NkU4VHc?oc=5",
+      "pubDate": "Fri, 16 Oct 2026 16:04:09 GMT",
+      "pubTs": 1792166649.0,
+      "desc": "東莒猛澳港工安意外 檢測發現相鄰艙室含氧量僅15％&nbsp;&nbsp;馬祖日報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "4a5c7e1ef55f484f",
+      "title": "大葉環安系把職安現場搬進教室",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBad3pnM05ld2RZSDBkYktYbE5WRHRQNDN3VVdjUkNURks4N0pPMFVBS0JzV1V4b3BJUDNfbUsyaU11ZXFkX1hMaGVsUk1DVFh0TUVlNDFpNA?oc=5",
+      "pubDate": "Fri, 16 Oct 2026 13:44:55 GMT",
+      "pubTs": 1792158295.0,
+      "desc": "大葉環安系把職安現場搬進教室&nbsp;&nbsp;焦點時報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "0abcf59a79709c8b",
+      "title": "勞工局職安測驗上路 強化移工職場安全",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1ndWx4NWVhdmg4cV92OG53bzJwRGJuSmFGbkNLQlB1cHNYc1VsQngyaFdHNzlyeWY4SVJyRUtvamdnNWdDNE9CdTgzN2VQeFR1?oc=5",
+      "pubDate": "Fri, 16 Oct 2026 09:58:53 GMT",
+      "pubTs": 1792144733.0,
+      "desc": "勞工局職安測驗上路 強化移工職場安全&nbsp;&nbsp;台灣生活新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "56b5c002814018be",
       "title": "局部排氣裝置設計訓練合格專業人員名單",
       "link": "https://www.osha.gov.tw/48110/48417/48423/213467/",
@@ -210,6 +243,17 @@
       "badge": "red"
     },
     {
+      "key": "72fa0d40dc148720",
+      "title": "助職災勞工重返職場中市辦7場宣導會逾340人次參與- 政府消息新聞",
+      "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPYm81RDZja2pWUFBWWkhPb2RLV0VhSWFwU0o3VHdPb3lVUUZzbUJCU1lydEJkc3BGQ0Q2TEF3Z3F1ZDRHQmF4RzVfY3lSbXRsRnliZzlaeHNCa2hFX0VRSmlTZlRIQW9tUDR6T05EaXA4c0dHVXJqR1VUZTQ2clBTMEJOdzM0VHE0SFBn?oc=5",
+      "pubDate": "Wed, 14 Oct 2026 08:18:47 GMT",
+      "pubTs": 1791965927.0,
+      "desc": "助職災勞工重返職場中市辦7場宣導會逾340人次參與- 政府消息新聞&nbsp;&nbsp;PChome Online 新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "b7d37170322eef50",
       "title": "助職災勞工重返職場 中市辦7場宣導會逾340人次參與",
       "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5oUThLVlBKaE1GVVVmaGtjTy1tT09LbUZmdktCSU15dmItcjFwUWRJZmZENEFKd1A5OG1hbGJHaVBpN0dZekhxdWp0eVJ0Nk9hTHc?oc=5",
@@ -241,6 +285,17 @@
       "source_id": "gnews_law",
       "source_name": "法規更新",
       "badge": "teal"
+    },
+    {
+      "key": "89c0417913604efc",
+      "title": "楊梅廠工安事故致死、勒令停工 欣興回應了",
+      "link": "https://news.google.com/rss/articles/CBMirgJBVV95cUxNNDlLNlh3cDRrbGJMbjdfSzZ0NHpQR21FdzlBSlI1S2phb1FRZWhyeVQ4dWtCekxMZnRIeThFMGpKMkZMZHJFWEFGT2txVkxDR2ZzRjdxWDNHRnRfemFoTGt1WmY5b2hnUVdCcnpJREt6TGdpVE5MOTNhYnNrNUJqcGFBX0lSV05wRmdaQ2VZUDJLUUxzSFdFNGJ1UmdxM0o2WXp5Uk9CekJlc0NIZ1VqVTJteFFIaHZWN2JYaHZ2QWZUZGIta3lLVnRXenJIWG9BcWd4dHVUS2lMVi1UQjEzMjJGbG1uOGRpdjl5TzhhbU1qT0FEYXRpMjFpa0xVS3FFV0psZEJYYlRPRXZCdTZkZVhjdTMtZzdjT2p3cXB5QlVpNi1NM1k1YVpZSU81Zw?oc=5",
+      "pubDate": "Wed, 14 Oct 2026 03:24:27 GMT",
+      "pubTs": 1791948267.0,
+      "desc": "楊梅廠工安事故致死、勒令停工 欣興回應了&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "4c0284cc71f08dfb",
@@ -342,6 +397,17 @@
       "badge": "red"
     },
     {
+      "key": "211097bdf3aa096d",
+      "title": "欣興楊梅一廠重大工安意外！員工維修機台慘遭夾死 公司發重訊了",
+      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFA0cjhIeml5N2NsYlc1MVdpNXJHS0VRLXdxVU1sMnY4WGJvbWp2TmFlNEFreF96bUVCTVI0dU9TTE5UVU1PMmZ6VHhsRQ?oc=5",
+      "pubDate": "Tue, 13 Oct 2026 14:46:28 GMT",
+      "pubTs": 1791902788.0,
+      "desc": "欣興楊梅一廠重大工安意外！員工維修機台慘遭夾死 公司發重訊了&nbsp;&nbsp;三立新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "b878e796db9a42cf",
       "title": "欣興楊梅廠重大工安意外！員工遭夾「傷重不治」 公司重訊回應",
       "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBLc3lGQVlUTEtUNHJNTmh5YVV4Q0cyRkZiV1F0ZHZnZk5WeWZ5eXZaYi1VNHpQcDN6LVpXOTZydU1Tb3VPN0VQZ1VyTlBTOURIS1o1ZVlxUmg4ZjFCZFHSAUtBVV95cUxQZVZvZlBuRS0zczZJWl82SlhmbGpXNVFkRzdGTFhXV1BCemx0dEpIbzJ3ZVZpVVBITEtYWUx4anJuN1JXT0c5Sm95SDQ?oc=5",
@@ -414,6 +480,17 @@
       "pubDate": "Tue, 13 Oct 2026 07:50:45 GMT",
       "pubTs": 1791877845.0,
       "desc": "移工懷孕勞動部要雇主養全家？ 真相曝光&nbsp;&nbsp;三立新聞",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
+    },
+    {
+      "key": "d5395abe4d5d4dbd",
+      "title": "移工懷孕勞動部要雇主養全家？ 真相曝光",
+      "link": "https://news.google.com/rss/articles/CBMioAJBVV95cUxPLWVPUloyQWl2dmNid0wwdHdPNlIwSHFxbGNjLXpTZEExS01aSTdscmRxUHBWbHptRS05NEExb2pjSXg1UFB6dnNfcW1lcUF3YWk3dlRPM2VYeVdId2pKZWNXZGVVekl2clhYQmFDd2VYSnA3bjRhZ1NPRVh4ZDZ6VnBqd3FKV0NlYnFqTm1uNWswbG9Udjc2ZS1IRWZ0Ry1yMEdfc1lsVGZqdkFUb2U2ajEwNHV0bS00NUxpdkt0aWpjS1k3UGNLVDQ4UWxQM2l1d2dteVU3YkhSSVA1SE80NnBzVTh4VVhyY1FZTEdYbk9GR3J0NkUwZHpPYXVNOXN0amYtQXdnbDZxSG8wazN5cGpOamd3VndxN09IakZYdng?oc=5",
+      "pubDate": "Tue, 13 Oct 2026 07:49:00 GMT",
+      "pubTs": 1791877740.0,
+      "desc": "移工懷孕勞動部要雇主養全家？ 真相曝光&nbsp;&nbsp;Yahoo新聞",
       "source_id": "gnews_law",
       "source_name": "法規更新",
       "badge": "teal"
@@ -813,248 +890,6 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
-    },
-    {
-      "key": "d8f3a1d2153c3698",
-      "title": "宜蘭科學園區工安意外 外牆清洗作業吊車翻覆1死1傷",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1SelVMNC16RXZQVnB1WVBueTBGRTFEYk80TlBQRU5oTmpCN2t4WUNsOUZhd0x5d2VMU2FaYXg5elJLdWowOVNOYXhfU0YyRUk?oc=5",
-      "pubDate": "Sat, 03 Oct 2026 04:46:59 GMT",
-      "pubTs": 1791002819.0,
-      "desc": "宜蘭科學園區工安意外 外牆清洗作業吊車翻覆1死1傷&nbsp;&nbsp;你的公共電視",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "b08ac3aa6bbc3838",
-      "title": "宜蘭科學園區工安事故！吊車清洗外牆突傾倒 2工人墜落釀1死1傷",
-      "link": "https://news.google.com/rss/articles/CBMikgNBVV95cUxOb2RnQlA2aGt5Q3RGQTM0MnFSdFVfd0RTWnMzUUdUZmdEYUx4VmFrUGdWVVFGUkk1VmhlSnRHbHFaQ25jdjhSQlV2Rmg2a0dLdVgtNVQ0X3UySVJEMy1BY2dYM1hzckVrMGJIVnBuS3Z6SnJBTHg1MDJzb0tIblBUdWx3TnVSa0dtQ1BuS2htbEhRdEJmUUVnR1RWUjcxRmdxaDdFUHFsdHZQOXZvMDF0a3VxRnI1Ymt4NUtwNFRGY3hTejJzdFB4dXQ1MEQtUEltYTI3OExaYWVjcFlLUGhYWHJzSGFfWnh1ZVRiZEdSaFBzYzZRdUdnNzJYOTZuNF9keWduRlZYZEk1dGJXbTdkcVBFemo3d2tyakE1VXQxRFBLQUI1eDIwUS00LU0ySEZYdWN0YWNHY2pkdlUyVkpWeFg1RFlIWnZDRFc0cVdXLU14eXJlTjdGRjdUMWRaQVhwb3haWGJqOWh0NHlQR0Vlc0hXdC1RdWtQdW5ERGRXOGViQXdVdUdfYkktYnNfLXp1RlE?oc=5",
-      "pubDate": "Sat, 03 Oct 2026 04:10:44 GMT",
-      "pubTs": 1791000644.0,
-      "desc": "宜蘭科學園區工安事故！吊車清洗外牆突傾倒 2工人墜落釀1死1傷&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "848dd493dce5953b",
-      "title": "宜科洗牆工安意外！吊車翻覆工人墜落釀1死 疑吊臂機械故障釀禍",
-      "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBRMGxFOE9naS13SExDQnd4RVBIVl9Ea2VEZ0QyZ2Rwb0RxWnMybEdlWG9NX2J5YnF2NHQxMDVmM1hDWmlVbUwtYmNHVElEekUybWNNVFh4OGZYTGlfelNKaGR1dWN0dzNS0gFuQVVfeXFMTm5FMVVtVFl6TkotaXNmVjVLZDlUZ0hqNGlQLWRiTkktcTFWV1hPeGdpd0pCV3FLbDBVcFNzc0dEWkxPcUg2b0otSlNWYXdLOWtES2t1MGVhV1Y2VnI5QmdLczRka3FYY3pDQ2IzN2c?oc=5",
-      "pubDate": "Sat, 03 Oct 2026 03:22:34 GMT",
-      "pubTs": 1790997754.0,
-      "desc": "宜科洗牆工安意外！吊車翻覆工人墜落釀1死 疑吊臂機械故障釀禍&nbsp;&nbsp;news.ltn.com.tw",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "9c363211ab552c72",
-      "title": "宜蘭科學園區工安意外 洗外牆吊車「翻肚」2工人高空墜落1死1重傷",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBwVURUQzk4WV9oLWpmSDM1NjN0cFMwdVRsWW16SDRLXzJ3OUF4MTAzdThzcGZTNE82dUR2azFHYzYzWFhvTlBlZnNmekowMGFHYWc?oc=5",
-      "pubDate": "Sat, 03 Oct 2026 03:13:00 GMT",
-      "pubTs": 1790997180.0,
-      "desc": "宜蘭科學園區工安意外 洗外牆吊車「翻肚」2工人高空墜落1死1重傷&nbsp;&nbsp;鏡報",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "a019c8f46db68f53",
-      "title": "宜蘭科學園區工安意外！吊車20公尺高空翻覆 2工人墜落1死1傷",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE14QjdVZ0VCaGJpendUNGI3M2R5dG1qQWpQY1hBVm1FQzMzTDM3N0xSaEFJSXBOdS04NFRIbzRwUV9KZWFIN2txOE1JSXE0ckU?oc=5",
-      "pubDate": "Sat, 03 Oct 2026 03:11:00 GMT",
-      "pubTs": 1790997060.0,
-      "desc": "宜蘭科學園區工安意外！吊車20公尺高空翻覆 2工人墜落1死1傷&nbsp;&nbsp;TVBS新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "cda4ee2ed1e85ff0",
-      "title": "宜蘭科學園區工安事故 吊車傾倒吊籃墜落…65歲工人送醫不治",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFAzQlVwYkhMRFpYMnBkbXotZGtmQVFUcS1idnl3RklOWDM1TkRVbWp0VHZMTGEyTTd2QTNzdllkZzhOeHltei0xcVRfYmpJSzdG0gFWQVVfeXFMUHJubU9EUFd1by1md0VoSk0wb3lhUm9VeFViVWxaR01jRmQ5OElPYzViZ1B4ZnV5eWZtdzdLeUlsSENHcnN6WExmWHAwRU9LSFQtaERhN2c?oc=5",
-      "pubDate": "Sat, 03 Oct 2026 03:00:37 GMT",
-      "pubTs": 1790996437.0,
-      "desc": "宜蘭科學園區工安事故 吊車傾倒吊籃墜落…65歲工人送醫不治&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "e8489aea4669a339",
-      "title": "宜蘭科學園區驚傳工安意外！吊車傾倒～2名外牆清洗工墜落1人OHCA",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9Ud0IyME5KaUgtSUdoUUdfTmU0UXlDRnphbXVjdTJNdWNPVFA0emg0cF9uM3YxUzExVXh2emtheXQzWnBqOEJrZld2ZXowSTlkTjJacUl3?oc=5",
-      "pubDate": "Sat, 03 Oct 2026 02:33:00 GMT",
-      "pubTs": 1790994780.0,
-      "desc": "宜蘭科學園區驚傳工安意外！吊車傾倒～2名外牆清洗工墜落1人OHCA&nbsp;&nbsp;葛瑪蘭新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "546bbcbf86e1fa38",
-      "title": "南華大學獲頒「職業安全衛生管理系統」國際認證",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1JT2lTV1UzUm0tRTNQdG5SdXB2SE1EWWhlU09XZUN3ODZrbGpsbmVBN2lzcWR0andjdF9IOXNsM0hiNTh3NHJ0QnI5M003RWwt?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 18:01:28 GMT",
-      "pubTs": 1790964088.0,
-      "desc": "南華大學獲頒「職業安全衛生管理系統」國際認證&nbsp;&nbsp;lnanews.com",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "ddf15b5f80a9ae30",
-      "title": "首波秒殺再加碼 南投免費職安卡課程10／5搶報...限設籍勞工",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE9aTVJPX2hOVjZBRS1uN0RYWVdERzJmYi1SS2FjdXBrTFh5cmpCLWtQT2tRQmJ0cWpuS1dWUlZhTHB2T1B6aU9paDBsM2dFVlFfYU9jRHVjUWJVOE1MTVHSAUtBVV95cUxNWEtGSTk0SjZDTjNtc2c4Q3ZweXZ2NnhVWEs3MnJOR2xLUlp5c2xraHduV2ttdlVXblFVc0hnNVZ2QmhpUEx4MTJ0TXc?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 14:17:00 GMT",
-      "pubTs": 1790950620.0,
-      "desc": "首波秒殺再加碼 南投免費職安卡課程10／5搶報...限設籍勞工&nbsp;&nbsp;ETtoday新聞雲",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "c3ca7edaffa46368",
-      "title": "高雄路竹廠傳工安意外 華邦電：全力協助、配合調查",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1PbV9YMVRyTmlSa1l0SHBKbjFaN0RHbFB4UTFYVWFwem5SUEtBNDlkaWd1ekVtR1ZWQm5qcUdycmtlRWZVSW83SXJ1My1jbXhRcEhHT1d0SVhCNUJIQ0VZ0gFkQVVfeXFMTTFxdmRhNWtheVpnYlcyVFJkUzRGVmFKVFE3NG9FSWhMOUJVa3JYNjBQeTl2dUhTLXc5emp2bEdhVXhWSno5WUlLQTQzNGR3UFk1RTZzTXd4NmZwN1lnMW83UzlENA?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 10:17:11 GMT",
-      "pubTs": 1790936231.0,
-      "desc": "高雄路竹廠傳工安意外 華邦電：全力協助、配合調查&nbsp;&nbsp;自由財經",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "565a0ba550e3d060",
-      "title": "華邦電4工人傳工安意外 公司：已送醫治療、將配合後續調查",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBHQXZkeHRtNkE2dll2RDFidm5JZ0pFajF0akRJOHpGSng1RVlhcFFiVWk0OExnU1N0LV9BMGN6aGpQQjJzX1Blcm1iY19INUk?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 10:13:03 GMT",
-      "pubTs": 1790935983.0,
-      "desc": "華邦電4工人傳工安意外 公司：已送醫治療、將配合後續調查&nbsp;&nbsp;鉅亨網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "bcdf453c0bd6c0f7",
-      "title": "記憶體大廠爆工安意外！ 4人遭「化骨水」灼傷 公司回應了",
-      "link": "https://news.google.com/rss/articles/CBMi6gJBVV95cUxPRmFBZmQxU3d4WkNfRU9zbXJSUzNkSk8zVm1zVkpjSUp0NER0c3dicHZoNVh6SFktUVIwQTQyU3U1Qi1VbzVpTHhyMEs2OGYxTWlhaHFybXB2MDVpdk5JdkQxejJrMlVRaGRXYjR0ZDBQaEtLRkxST0JEZVFlTDlsVlhuYnFEMS1NN0x4LU1ITW83VVlpYjVaOHNqMmZFSjFSc3VHWnJkUm82clY3WHBmdGxjRGxlaHctRXp0ajNRNGNKMTVWZHZyeGlYQ2Nqby1veDhKS250ZTQtbFhLaFg2NmhtcTI3LVJKd01WVU9pZ01KTDdOejhNZmVURVJ3U0c1eHZLVEtNeXcwUEtmYUgxV21iSjlKcW1oNDZ4MGQ3TDBBRmxnSV8tWkRrak1CVHNJVVZ6SmtxQ1FQOGpIUG5uemxJcWhjNVhmZl8xWkNwYldySGxsbmFqUGdST25lbG9xd2NXUHFGUDl2UQ?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 08:55:00 GMT",
-      "pubTs": 1790931300.0,
-      "desc": "記憶體大廠爆工安意外！ 4人遭「化骨水」灼傷 公司回應了&nbsp;&nbsp;Yahoo股市",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "6f2aeb46e51b958d",
-      "title": "華邦電外包商施工釀工安意外 4人遭化骨水噴濺緊急送醫",
-      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE1FUDR2cW9zV2l0UGhkMGZxZXk1YUtQNWpsMFlRa0ZhdDZWajB3QlRFSzFacTZ4MUI0aktmdXRHcXFiZmFRQXdoYS16N3FScjFMMGVWMlhGemhTVUnSAWBBVV95cUxNei13Nk1JcUgtcGRXcEJ2NmYyaDBFLXBmT051MWNocnJyN003djJLNExNR2ZuNG5UVmpiNGpXdmtIdVVQclBGdkh2MDloWW5VbU1ITkFsdjlpRF82SEZmdUQ?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 07:39:00 GMT",
-      "pubTs": 1790926740.0,
-      "desc": "華邦電外包商施工釀工安意外 4人遭化骨水噴濺緊急送醫&nbsp;&nbsp;鏡週刊Mirror Media",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "4a6d510529c8e00d",
-      "title": "華邦電路竹廠嚴重工安意外4工人遭「化骨水」噴濺送醫- 其他",
-      "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1tV1YwSFVMVm9tcnN6ZzZBRGtYRjc3WW90ZTVEb3gwanpoZVVLY1l5YUNoZktaWFZhR2VXU2FWR1JwTXBvMW53TnNxUWhYSVAxRHJacFFlNDVDaFpUOWFXVmVHa3ZlWUM3Tmc?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 07:29:10 GMT",
-      "pubTs": 1790926150.0,
-      "desc": "華邦電路竹廠嚴重工安意外4工人遭「化骨水」噴濺送醫- 其他&nbsp;&nbsp;旺得富理財網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "82cae16eb5dbaa94",
-      "title": "華邦電路竹廠工安意外 4工人遭化學廢液灼傷送醫",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE42YVItdmIxa1Z2WTItdzFSNTNLZVhYUi1UdndQOVlvWlZSenNjSHBDRGdhQThyTTZtMGRmUDNjTEM2S1pSQ2lrOVk3VGJhOEk?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 07:00:00 GMT",
-      "pubTs": 1790924400.0,
-      "desc": "華邦電路竹廠工安意外 4工人遭化學廢液灼傷送醫&nbsp;&nbsp;你的公共電視",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "af8362ed663dd29d",
-      "title": "華邦電路竹廠嚴重工安意外 4工人遭「化骨水」噴濺送醫",
-      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBCYWlkZzRjaFJlLVdpMm5Tb3FWckozbl84T2tqdkJTWUVDQlpDZ1BLLU4tdjZEM0dCSkh3SURSY0paS28xZlZKYUg2MVphNTN4ZWNCUW5jWDR4VkJRcjZzVlZONzFncXdiS21RZWxB?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 06:26:53 GMT",
-      "pubTs": 1790922413.0,
-      "desc": "華邦電路竹廠嚴重工安意外 4工人遭「化骨水」噴濺送醫&nbsp;&nbsp;中時新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "08eb6927fe6b554a",
-      "title": "桃園｜職安巡迴展示10/22登場 體驗中學會危害預防",
-      "link": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE5PaWdET1BGVjNyemtFQjZDZ21aTjRwUTUwV0RRSjhCSFQtdTAxODNNVHcyX012UnN3c3ZKclBod0RrSHBMdXlzckJ3?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 06:00:54 GMT",
-      "pubTs": 1790920854.0,
-      "desc": "桃園｜職安巡迴展示10/22登場 體驗中學會危害預防&nbsp;&nbsp;week.mcu.edu.tw",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "b120fdbea6e14985",
-      "title": "快訊／半導體大廠爆重大工安意外！化學液體灼傷4人搶救中",
-      "link": "https://news.google.com/rss/articles/CBMi9wJBVV95cUxOUHF1Qm9ueWhFRnVrRGR5RmljSTYyQmV0am1YMDdjYjdsYV9tNEFEN25VOHFfNjFhNmdvZTNFYm5VdFl2ZC04SFJFQnZoYWN4MHZ2cXpnaTRFRHJ3Mm5UZ1luTDVXQWRrbGc5ekdWdWtqQk9lSEJFNU5ZQ3lGRldTQm04aDhhM19lWUJocWVVQnpTYkFIUExLblhnbzNQRWQzQWwxTGtJempOZFBfNGJkMkphNGl2RmxzUWR1eTRSeG5rdnFaU3pDN3NUVVhPVkg4blloOWFQQUpJMlN3Ny04TDJ5T3gtQnVrWFlSS291Y2NUVmNsdm1udmNaTERFdnZzcHkxVm1GbVdRQUVOOGppaFVsWGdNX2RUcHRrb28wcEhPSzJuTmpETWl4UVpnVjh6OFZfaWxPUEVOVVZNQlhVamMySU1XZmlaQm9KWXBnTWZ6V041UmhPSVFuZGZ4bmR1YVp3dXRIS3Nnbjd0WDBnWVQ3dDNBNk0?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 05:48:00 GMT",
-      "pubTs": 1790920080.0,
-      "desc": "快訊／半導體大廠爆重大工安意外！化學液體灼傷4人搶救中&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "d8618d582e32e7bb",
-      "title": "快訊／半導體大廠爆重大工安意外！化骨水灼傷4人搶救中| 三立新聞網",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBtMnlwZzdPMWZUSkhHX25lcHNQME1KV0NoUEplRC0yMVlFdjVXa3VycXN0MEIySmdHQVhIS3U2NmdNQnd0M0E2RWdiNjJkVHR2dlozVHhR?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 05:46:02 GMT",
-      "pubTs": 1790919962.0,
-      "desc": "快訊／半導體大廠爆重大工安意外！化骨水灼傷4人搶救中| 三立新聞網&nbsp;&nbsp;LINE TODAY",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "807a6b1952f4350b",
-      "title": "快訊／半導體大廠爆重大工安意外！化學液體灼傷4人搶救中| 社會",
-      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE9ub1FtaDFJelRrVEFhTE03R08wc2MtN0twbG4wQXJ3a3owdGlpQ1BxMmZ2aDdpZTRCY0JITTJTUzdUaTBSbHZqdw?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 05:43:00 GMT",
-      "pubTs": 1790919780.0,
-      "desc": "快訊／半導體大廠爆重大工安意外！化學液體灼傷4人搶救中| 社會&nbsp;&nbsp;三立新聞網SETN.com",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "8b05311994278f9d",
-      "title": "快訊／華邦電路竹分公司工安意外！4人遭「化骨水廢液」噴濺送醫",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE0tR2xHZ1hOUnZFaXJvd3Mwbko4Y0FfQVdNYUNOLXpDT2hHZHhQaFdTZEN2a2RKWUZhYjExTlhsc05Bbkt2Ti1fSlpvNzNFcVJjZ1JmcThFQWIwNXE5Z3fSAUtBVV95cUxOWFhqYTZxb2NWcnFhVEl0S3JvaGl0TEE2bXdzTkhqcEdMVGhTbW8wUlNUcDRHdmJFejl0YXM2ZjFVVEFzdjF0R2RzMk0?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 05:43:00 GMT",
-      "pubTs": 1790919780.0,
-      "desc": "快訊／華邦電路竹分公司工安意外！4人遭「化骨水廢液」噴濺送醫&nbsp;&nbsp;ETtoday新聞雲",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "e9f5e0aaa1212ede",
-      "title": "快訊／高雄電子大廠工安意外！化學液體噴濺 多人受傷送醫",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1pOUtVZUZGRzRiOXVteGZYMzk2akplOFR1azBISUhUdFdfUXpmeGUzQ3ZqR3FXT0dzQU5iTmZnc0FLa2g1QUFtQXVRQ0Z4Z0U?oc=5",
-      "pubDate": "Fri, 02 Oct 2026 05:41:00 GMT",
-      "pubTs": 1790919660.0,
-      "desc": "快訊／高雄電子大廠工安意外！化學液體噴濺 多人受傷送醫&nbsp;&nbsp;news.tvbs.com.tw",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
     },
     {
       "key": "c45f051b914165ca",
@@ -1486,5 +1321,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-10-16T05:12:51.030813+00:00"
+  "lastUpdated": "2026-10-17T05:07:51.621386+00:00"
 }
