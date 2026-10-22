@@ -1,11 +1,154 @@
 {
   "items": [
     {
+      "key": "2dac9da399d09da9",
+      "title": "職安署推動科技防災與創新工法 從源頭降低營造施工風險",
+      "link": "https://www.osha.gov.tw/48110/48417/48419/213767/",
+      "pubDate": "Thu, 22 Oct 2026 13:16:03 GMT",
+      "pubTs": 1792674963.0,
+      "desc": "為降低營造工地高處墜落等職業災害風險，推動科技防災與施工方法革新，勞動部職業安全衛生署攜手陶盛營造有限公司，於今（22）日在臺南市「陶喜開發建設永和段集合住宅新建工程」舉辦建築工地安全衛生觀摩會，展示智慧科技預警、施工架爬升系統及鋁模模組化施工等創新技術，透過實際案例，鼓勵營造業從工程規劃、施工方法…",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "4b8bc5af76cc8f5e",
+      "title": "營造作業安全訓練(職安卡)新制上路 勞動部強化教材、數位管理及授課品質",
+      "link": "https://www.osha.gov.tw/48110/48417/48419/213772/",
+      "pubDate": "Thu, 22 Oct 2026 11:05:00 GMT",
+      "pubTs": 1792667100.0,
+      "desc": "為提升營造作業人員安全意識及訓練品質，勞動部依據《營造安全衛生設施標準》及《職業安全衛生教育訓練規則》，今(22)日發布《營造作業安全訓練實施要點》，從教材內容、訓練管理及講師資格三大面向精進訓練制度，讓安全教育更貼近工地實際需求，並透過數位化管理及品質查核，確保訓練確實落實。新制不增加工作者的訓練…",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
+    },
+    {
+      "key": "d78d111bbc89bdc8",
+      "title": "南市勞工局與中鋼合作 職安文化向下扎根",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1WcWV4YS01eEpnVEMteE5LR01JV2Y1Y0NSdVVDUDZkVGx0cy04bzd0b3NITkFFSktkaVZMWXpFZEREY3BTWEY3TnVrSnkwcVRoZXc?oc=5",
+      "pubDate": "Thu, 22 Oct 2026 05:19:48 GMT",
+      "pubTs": 1792646388.0,
+      "desc": "南市勞工局與中鋼合作 職安文化向下扎根&nbsp;&nbsp;中華新聞雲／中華日報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "420c4761f50cca26",
+      "title": "冷氣外機出窗外牆維修屬高處作業 墜落死亡占73% 罰5萬至300萬元 - 墨新聞-MORE News",
+      "link": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE5Kb1JldEVralFucGp5b0ptbF9waGNhSzY4ZVJSbEpmbTZDR1dQV21XbWYweElqMF8tUUw0aFpNbFNnZw?oc=5",
+      "pubDate": "Thu, 22 Oct 2026 04:58:22 GMT",
+      "pubTs": 1792645102.0,
+      "desc": "冷氣外機出窗外牆維修屬高處作業 墜落死亡占73% 罰5萬至300萬元&nbsp;&nbsp;墨新聞-MORE News",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "b3a2819fa9424e14",
+      "title": "職安卡新制上路 勞動部強化三大面向制度",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE96dk96c0JET3k4bjBseHhHTWo3VTVQS0dKaFpNYUNrTnE4RUw5dGRpMHQtWEo5M0JJeTNESUVFMkdTTE9VVUR5cVpLZ3k0M3A00gFWQVVfeXFMTlZZNkJmMzVYMVBmUk9wekI1QW9uX01FNURURTZrZ05ScDF5QTVpMWtZMnRqbnV3SDlZMDZKYTdJTTN6Mzd1QUVOSGxqM3g3NE1sOFBTZWc?oc=5",
+      "pubDate": "Thu, 22 Oct 2026 04:58:12 GMT",
+      "pubTs": 1792645092.0,
+      "desc": "職安卡新制上路 勞動部強化三大面向制度&nbsp;&nbsp;UDN",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "a1c9b76b80adf318",
+      "title": "台南工安意外4成遭機械捲夾 嘉藥生搶先體驗XR防災訓練",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1ReFR2anBUZ0h6eEFmMk8wanFSZjVkOUNCbkZUc2FYRWVRZ0ZWMkxPWXV0S1FjSUJ1TWZaalpIYnpMUkxJdzFORGpoMVRxU3NLSzlZMmRLZnMwOFhNYW01WG5QOFhUX09fa3dxY3dR?oc=5",
+      "pubDate": "Thu, 22 Oct 2026 04:55:42 GMT",
+      "pubTs": 1792644942.0,
+      "desc": "台南工安意外4成遭機械捲夾 嘉藥生搶先體驗XR防災訓練&nbsp;&nbsp;中時新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "28ad430fcf7e01de",
+      "title": "營造職安卡新制上路！新增數位管理、講師回訓 舊卡免重訓 | 太報",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9OaWgxSkxnNzliUWxJQ2pac05UMXVXTnp5VFVYY1ZobUVCTzB3NWYteGprNlRSN0hWTjhQUG5WVy1OOFQzVUtjT0wxc1BBM1lRRWRkN1lR?oc=5",
+      "pubDate": "Thu, 22 Oct 2026 04:09:34 GMT",
+      "pubTs": 1792642174.0,
+      "desc": "營造職安卡新制上路！新增數位管理、講師回訓 舊卡免重訓 | 太報&nbsp;&nbsp;LINE TODAY",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "547a1d196dbbc886",
+      "title": "台積電工安意外釀4死 家屬相驗見傷勢悲慟｜#鏡新聞",
+      "link": "https://news.google.com/rss/articles/CBMi0wJBVV95cUxNUTBwbTdlSEplal93VW1CeEJDUzdNNHJoYURtOUtZRzZQbzFIUDIyOW9yMk1GcWJKVGhCMzJkVl9RLVh4UWZhMWFMNXF4UVFYWjBLM2xrMW1zS29yZk5yRWFNblk2NUlkeFZibjJhTU5ETFUwNTdiOGZMNy0zUjBWZVZGdHhXeW5fLWxoUzkzUVdHT3FWZDZJeVhTMDYzWkM5MDR2ZjBwYV9mZVc5WmFucHVxYURHSlBObmZyYVNHcnNodmxYTEJoTWZtWkgtLVFOSlRBWVJDTzFXUzl3QmRkRmNqREY0Z3lhOEc5SlhXMXduX2RlSmxNMHVZV2dpUi16ZXUxNmN5N1ZYd1BUNHVlYmk5ZC1reDBHNnlJekNzc2k3Nno2VHhZZWtMZkhUdVFSa0Q4d3FKZElVM3ZQNkNsNmxOV2NiYjZ3Sk82QjlRZC05Qm8?oc=5",
+      "pubDate": "Wed, 21 Oct 2026 18:43:51 GMT",
+      "pubTs": 1792608231.0,
+      "desc": "台積電工安意外釀4死 家屬相驗見傷勢悲慟｜#鏡新聞&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "f2083c128db0fde6",
+      "title": "花蓮港防波堤修復爆工安意外 4工人落海驚險獲救",
+      "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1XTWQ4dldzMlU2dUMxZU4wdnRrUXEwQnBmOHE2NFp6Z28xUXNycERQbk1jOG9QbVNmMFJlOXFUVXZJcUE0cWZWYVdtWEw5ZWdiVkhyLXdSbkhlSDNoNG9WZXRmR3N2QkxxbDk4Yld2b2M5bHRWcnJxNHhIRTJQTlU?oc=5",
+      "pubDate": "Wed, 21 Oct 2026 11:05:00 GMT",
+      "pubTs": 1792580700.0,
+      "desc": "花蓮港防波堤修復爆工安意外 4工人落海驚險獲救&nbsp;&nbsp;壹蘋新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "edc45aca8c239153",
+      "title": "台積電高雄F22廠工安意外釀4死！2包商負責人涉過失致死| 社會",
+      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFA3RHZKckkybUx1QUVOeElpTkxEN2p5b0JJN3J4VW9rODRRbHdtS3hfYV90am1ISFRCdzFpYm1hOUFUazNVQzNMUDhMWm96N09Tdy1hR0hMd0J0Zm8?oc=5",
+      "pubDate": "Wed, 21 Oct 2026 09:51:41 GMT",
+      "pubTs": 1792576301.0,
+      "desc": "台積電高雄F22廠工安意外釀4死！2包商負責人涉過失致死| 社會&nbsp;&nbsp;Newtalk新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "3650e4967a42e108",
+      "title": "南市勞工局安衛家族師關子嶺大會師 聚焦職安法修法守護勞工安全健康",
+      "link": "https://news.google.com/rss/articles/CBMiyANBVV95cUxNR1I4elJHNkxBZ1pDV3NqSjA0N1ZTeHA0YjZRWWZicTZHZkdMLTlYSHFMQ3JyTjhsQXZ5QTNSMDI5RGlNQUpLTjh1SFRabkNpcmJNZzhrY05zWEFWRFJtWlBxRF9YUTBPMkhOZVBnWXNUZFYtU3FMXzJJcFBZelNJbUpNam04TzFTRVgzSVBRN0JYWmtsUWxXdjFCRHRyYTZJZWU1ZDFleU1UekRZcHdsOG42M1dfamx1M1lOSkhfMVplNDNONWxEQ2FhZ0dZREo4QzJVVi1BNEtpbE55LWMwXzV3MDNkdVo5MWkwa3dybi1uZ3VneGhSZElmVHNST2lMNDJBdXVHUjVPOFFwc0EtTHdNU2VtQUZSaDRVSEREcE9oTEZSNXN4VXozNk9wb3I2bWtjbWdhNVJOLTlGY0U1NnRlZWlLSmVlT2RlR1VlV0FqNTQtcmhQMGtJZGNjTFlIUHJIWWI3cTAyLW01REQ0NkR4bmd0d2dVWUlvcm04NllTcmdRRjV3bnlSZjhwOV80UldlQ2RGTlRvUVEtaEVhTDlrYmdLRjdfcWo3UVY1am1xdVZiZGxZVExaaE85a2VrTWJZcXJoLUY?oc=5",
+      "pubDate": "Wed, 21 Oct 2026 09:17:58 GMT",
+      "pubTs": 1792574278.0,
+      "desc": "南市勞工局安衛家族師關子嶺大會師 聚焦職安法修法守護勞工安全健康&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "aa846a99c9635dfa",
+      "title": "台積電建廠6年死18人工傷協會：罰鍰無法阻止悲劇籲政府介入| 職場觀測| 生活",
+      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOM2hFWU1mM21VZ1NRdkZ2djM4bEJuOHpYd3hkOW02aGlwSHhSc2VtTm9icG5GZGVOMzdfTVhfWGZseER0RlBCLUQtNllaOFlsLW4tLXItWjlLT2FyNFdob3E4RGl4clV5NnNCT28tUkl5enBxeGFIWk5GdUlpQnl1UQ?oc=5",
+      "pubDate": "Wed, 21 Oct 2026 09:00:18 GMT",
+      "pubTs": 1792573218.0,
+      "desc": "台積電建廠6年死18人工傷協會：罰鍰無法阻止悲劇籲政府介入| 職場觀測| 生活&nbsp;&nbsp;UDN",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "2cf9aac719b45393",
+      "title": "轉知勞動部職業安全衛生署訂於115年11月6日及17日分區辦理「115年度勞工體格與健康檢查認可醫療機構教育訓練」",
+      "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQOUZKSmFXNUtfZnM5aE1hT21kQjdQeGhQSGJxOUh4cU1UUWFSanVaLXV6anZMN3dhRDh5cm1panhFY0F1cE5GOXBxbkFUU3FTbW9zU05aREtjR0h1SjZvdnYybjJXa01YWHN3OEpLWGhVRHVDT0tUT2JsM0Y1OXJzejExYTN6QQ?oc=5",
+      "pubDate": "Wed, 21 Oct 2026 08:38:05 GMT",
+      "pubTs": 1792571885.0,
+      "desc": "轉知勞動部職業安全衛生署訂於115年11月6日及17日分區辦理「115年度勞工體格與健康檢查認可醫療機構教育訓練」&nbsp;&nbsp;彰化縣政府全球資訊網",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "603c21b86505c84c",
       "title": "台積電楠梓廠工安意外釀4死 疑螺栓斷裂致工人與鋼梁墜落",
       "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5GenlVVlRzQ3FsT0pabU1KN25mREp1U2JwRWlNMVRKcTRpdms3VGpIMGdrbVVVNGNQZC0zOXp6SDJrMG9hb3dFa29NR2stNGc?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 05:10:13 GMT",
-      "pubTs": 1792559413.0,
+      "pubDate": "Wed, 21 Oct 2026 05:10:00 GMT",
+      "pubTs": 1792559400.0,
       "desc": "台積電楠梓廠工安意外釀4死 疑螺栓斷裂致工人與鋼梁墜落&nbsp;&nbsp;你的公共電視",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
@@ -40,6 +183,17 @@
       "pubDate": "Wed, 21 Oct 2026 04:41:12 GMT",
       "pubTs": 1792557672.0,
       "desc": "更新／台積電F22廠工安事故釀4人身亡 台積電嚴正看待、全台新建廠鋼構作業停工&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "d874b7973b4293df",
+      "title": "台積電高雄廠工安意外螺栓斷裂4工人墜落亡- 社會",
+      "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1IajQ2Z0dxUXNLeFpYMmYtcEpsR09fVmNiSjVVVHRBbXdHMm9YeTBpZkt4WVFralNLMTNLZTlQdGZBSF9xVmlpNFNueWpfX1d3V2lpTjQ3Q0ROUndfb1RTdDJHdjBKaXFaenFmbUV1SEs?oc=5",
+      "pubDate": "Wed, 21 Oct 2026 04:05:00 GMT",
+      "pubTs": 1792555500.0,
+      "desc": "台積電高雄廠工安意外螺栓斷裂4工人墜落亡- 社會&nbsp;&nbsp;華視新聞網",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -120,6 +274,17 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
+    },
+    {
+      "key": "415ed0745403d4cc",
+      "title": "台積電高雄廠工安事故4人墜落送醫 相關工程已自主停工",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9rdHZ0MDdCSW56RmtUclpfdDY5V1Q3M0FLLUJ3eGxERjl3Y3VDdDQ2YU5ickhZR0ltSVFGZTMxZzNuX0wtTkMydGJNVi0xSnc?oc=5",
+      "pubDate": "Tue, 20 Oct 2026 12:33:27 GMT",
+      "pubTs": 1792499607.0,
+      "desc": "台積電高雄廠工安事故4人墜落送醫 相關工程已自主停工&nbsp;&nbsp;鉅亨網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "c6c38bf0fb8d54d6",
@@ -804,6 +969,17 @@
       "badge": "red"
     },
     {
+      "key": "a9431f5e141d2d46",
+      "title": "移工懷孕雇主就得養全家？勞動部打臉網傳說法：法律沒這規定 | 太報",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE12ZURJajBiQUQ0TFN6M1p6M2k3cmtWU05ITmYzQ1Vya0tiNUpjbVFjcEwyYU92czBvUzJnbzFaR3BsRDRPUHhsQ1VCMFZKM0JJYkFuTGFR?oc=5",
+      "pubDate": "Tue, 13 Oct 2026 13:45:46 GMT",
+      "pubTs": 1791899146.0,
+      "desc": "移工懷孕雇主就得養全家？勞動部打臉網傳說法：法律沒這規定 | 太報&nbsp;&nbsp;LINE TODAY",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
+    },
+    {
       "key": "03842d4e28647301",
       "title": "欣興楊梅廠工安意外勞檢處勒令部分停工- 產業",
       "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1HMFh1V045VGNjd0wtb2p4SkJsTnRtM1BVU0x0SkVfOXlQNmItcE5Hd0w1VmZCQlFWbmZ4Q0Rha3JBUEZFc2E3MkRzT2c3ZzFzZFI1WUlxcTJBTzQ4bmFJ?oc=5",
@@ -848,17 +1024,6 @@
       "badge": "teal"
     },
     {
-      "key": "a9431f5e141d2d46",
-      "title": "移工懷孕雇主就得養全家？勞動部打臉網傳說法：法律沒這規定 | 太報",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE12ZURJajBiQUQ0TFN6M1p6M2k3cmtWU05ITmYzQ1Vya0tiNUpjbVFjcEwyYU92czBvUzJnbzFaR3BsRDRPUHhsQ1VCMFZKM0JJYkFuTGFR?oc=5",
-      "pubDate": "Tue, 13 Oct 2026 08:14:52 GMT",
-      "pubTs": 1791879292.0,
-      "desc": "移工懷孕雇主就得養全家？勞動部打臉網傳說法：法律沒這規定 | 太報&nbsp;&nbsp;LINE TODAY",
-      "source_id": "gnews_law",
-      "source_name": "法規更新",
-      "badge": "teal"
-    },
-    {
       "key": "d135a5becdc65689",
       "title": "移工懷孕勞動部要雇主養全家？ 真相曝光",
       "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFBJRjI2dVZPNXZqVjhpdWtmZWxjOUJnc0ZCMGRzMXJab2FCUF9CMjI3QVhiWVhyM0FVV1o1RE9jVWl5UGRVcURpLTJsYw?oc=5",
@@ -879,6 +1044,17 @@
       "source_id": "gnews_law",
       "source_name": "法規更新",
       "badge": "teal"
+    },
+    {
+      "key": "3e49dd616e2234e5",
+      "title": "職業傷害+1！沈伯洋北投掃街握手無數 右手受傷塗藥超痛表情曝光",
+      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5Wd1NiR0FxRmR4M19peTkzOU5mN201M25sLXp2SHVjLVgyc210T1FZenlFT2NhUy1MZktRdGg5US1VQVVENVVHYtIBTEFVX3lxTE9ydEVsWXdmb0V3cHp4QTBhOVFwR29ZT0xlSlZFRTZ1LTlONXFfZk5lVDNvU203dHF1OTUwei1JSklGWW9KYWZNOWV0cGM?oc=5",
+      "pubDate": "Tue, 13 Oct 2026 07:00:00 GMT",
+      "pubTs": 1791874800.0,
+      "desc": "職業傷害+1！沈伯洋北投掃街握手無數 右手受傷塗藥超痛表情曝光&nbsp;&nbsp;三立新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "6bfe660a8b8ba1de",
@@ -906,17 +1082,6 @@
       "key": "031386ba5081887a",
       "title": "職業傷害+1！沈伯洋北投掃街握手無數 右手受傷塗藥超痛表情曝光",
       "link": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE9ydEVsWXdmb0V3cHp4QTBhOVFwR29ZT0xlSlZFRTZ1LTlONXFfZk5lVDNvU203dHF1OTUwei1JSklGWW9KYWZNOWV0cGPSAUxBVV95cUxPcnRFbFl3Zm9Fd3B6eEEwYTlRcEdvWU9MZUpWRUU2dS05TjVxX2ZOZVQzb1NtN3RxdTk1MHotSUpJRllvSmFmTTlldHBj?oc=5",
-      "pubDate": "Tue, 13 Oct 2026 05:38:00 GMT",
-      "pubTs": 1791869880.0,
-      "desc": "職業傷害+1！沈伯洋北投掃街握手無數 右手受傷塗藥超痛表情曝光&nbsp;&nbsp;三立新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "3e49dd616e2234e5",
-      "title": "職業傷害+1！沈伯洋北投掃街握手無數 右手受傷塗藥超痛表情曝光",
-      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5Wd1NiR0FxRmR4M19peTkzOU5mN201M25sLXp2SHVjLVgyc210T1FZenlFT2NhUy1MZktRdGg5US1VQVVENVVHYtIBTEFVX3lxTE9ydEVsWXdmb0V3cHp4QTBhOVFwR29ZT0xlSlZFRTZ1LTlONXFfZk5lVDNvU203dHF1OTUwei1JSklGWW9KYWZNOWV0cGM?oc=5",
       "pubDate": "Tue, 13 Oct 2026 05:38:00 GMT",
       "pubTs": 1791869880.0,
       "desc": "職業傷害+1！沈伯洋北投掃街握手無數 右手受傷塗藥超痛表情曝光&nbsp;&nbsp;三立新聞",
@@ -1165,61 +1330,6 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
-    },
-    {
-      "key": "c420a7c2a46cebe5",
-      "title": "臺南市勞工局舉辦「做工行善團職安卡教育訓練」守護修繕志工施工安全！",
-      "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE91OWRYcndCaXRpaGtVaUZuMUI0b3ktMnFfcllOSzlaVFh2bW9sQnhUTDlDckpYSTFiMnU3NTQxU1NOa2VvWUlRc2N3NngxckJoUnB1SE5nbmxvc3VGREVMcGFB?oc=5",
-      "pubDate": "Thu, 08 Oct 2026 05:25:21 GMT",
-      "pubTs": 1791437121.0,
-      "desc": "臺南市勞工局舉辦「做工行善團職安卡教育訓練」守護修繕志工施工安全！&nbsp;&nbsp;https://g4.village.tw/",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "830f6a902b1d0128",
-      "title": "臺南產業類勞雇安心 勞工局輔導移工職安前後測看見成效",
-      "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1LbnRuTmM3Q2Q0dVBxamNxc0ZVVWdnWV9JU25XSi10a1ZQeUxqUVF4VGFIcjkxdDFIeThqaVNEOEpmZTZUS1ZRbTVDemVqWGNxQVJBVGFiNEdiV1ZROXRWTVZvelhvdGNP?oc=5",
-      "pubDate": "Thu, 08 Oct 2026 05:18:53 GMT",
-      "pubTs": 1791436733.0,
-      "desc": "臺南產業類勞雇安心 勞工局輔導移工職安前後測看見成效&nbsp;&nbsp;視傳媒",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "97d7150e296bdf88",
-      "title": "守護修繕志工工安 台南勞工局攜手職安署辦職安卡訓練",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFB5Tm9NUzdIb21hU2tCMHN1V0J3LXdzS042VlBVVHJqR2VkbTVSR2JHeHg2T3d6eWh5VV9FZ0VsQ3ZrTkJSWFBOaThHRE5pcHRDZDBUbTZCanowRm9ITHfSAUtBVV95cUxQbm1KUzJQLTNUa0tLOHlxN1FQZFdtMG5rRkh2QjRZZEhXRjBLeFpHSGpHQWl5dUwzeXdUa3NCX2ltRXZXWXl3SWR1LWc?oc=5",
-      "pubDate": "Thu, 08 Oct 2026 03:01:00 GMT",
-      "pubTs": 1791428460.0,
-      "desc": "守護修繕志工工安 台南勞工局攜手職安署辦職安卡訓練&nbsp;&nbsp;ETtoday新聞雲",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "dae99e5f0cce37e3",
-      "title": "東涌工傷｜34歲孝順仔喪父後 為改善家境轉職地盤 遺母妹失依靠",
-      "link": "https://news.google.com/rss/articles/CBMinANBVV95cUxOcE9FRnkzSG0wYUNfaW5PWGE1ZEZiekZMRmNOajBsZnhjeFQ5NzRfcFdPVlJFVXAzQi00ZHhiLTVFN2pNQUFxOXZLYTJ2QUxmclJERW11UDB2aV9HVzNZRks5TGdqUnJaY1REWkpGNjJBVXRUZjlaNC14ckxJcmptaXlMaTNvTHFmLTA2eDlWVjBOdkZlVjl2OENUWDFna3lJa2FyRm44LWRkVkpYTklaMkpiR2VDMmpFc2IwcWlBemQ5NEJ4ZFh1M3NPcEh3VnVVQUgtMkZOMEl3dUUtcjhWOUwzTFVhYktGUVdVWjM4U0JiZllPX1dwSjZPbFZFMnNlRUliRngwZzBWLTVTZUJuZ0VvRm10TDRwOGF0cVQ3TGJFZ3JubmxfZHpRV1ZCTHNVZ1U5MzZybXBCNW5vRTlab3ZHbHExX2I1TmdxY18yOFkxLXM5TlUyb2g2aFJwS3JWN2xaU19wbkp2ZUJfcmdUVVRHWW14QmlYdFdkV25jdWNUY3h6RlBXUzZuRlNRUmFzNjFpNUh1OWNzakF1?oc=5",
-      "pubDate": "Thu, 08 Oct 2026 02:50:23 GMT",
-      "pubTs": 1791427823.0,
-      "desc": "東涌工傷｜34歲孝順仔喪父後 為改善家境轉職地盤 遺母妹失依靠&nbsp;&nbsp;香港01",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "923d358138288c61",
-      "title": "自由開講》工安事故接連發生，企業如何落實安全管理？",
-      "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE8zRzJpVENzZFNWU0JuZEVkYkJwRzhhdTIwSWp4M05ZVHBqb3FQZHJtY0tmWWZ1OUpWOFlrX01wU0ExR3NmWDNQOUFRak00MmlpZkJtTURPS1lQMjliTWgyYnFB0gFnQVVfeXFMTVg0Y2pRRmp5QUk3WlJtRXIxcUxZbW1QVVZHQW4tV1hMUjN3MWJTay15UnQ2SVFNSWY5Y2dhOWR3R3FkVFZCN3hIQXVMYmRFUE5fU3dESzI2QnJHNG1zbnEyN0EzNEtBdw?oc=5",
-      "pubDate": "Wed, 07 Oct 2026 07:00:00 GMT",
-      "pubTs": 1791356400.0,
-      "desc": "自由開講》工安事故接連發生，企業如何落實安全管理？&nbsp;&nbsp;自由評論網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
     },
     {
       "key": "c45f051b914165ca",
@@ -1651,5 +1761,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-10-21T05:28:23.035181+00:00"
+  "lastUpdated": "2026-10-22T05:32:11.436227+00:00"
 }
