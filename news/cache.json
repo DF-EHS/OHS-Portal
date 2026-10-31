@@ -1,6 +1,17 @@
 {
   "items": [
     {
+      "key": "61c54d88928b5e8b",
+      "title": "2026臺南就博會登場 勞工局職安宣導安全有感",
+      "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE9BYWF1cmp6VGJ5LW9mODlWX0dzeVNIVEJnMDlKbkZoek9aVVhDbHUwRWxfOU1hRTZrY2ZKZ3VmNnB4Tk0wdVVpTDlQdjdiT2NtU1hESTdFTzBXejFlNjM2R01iSEVFX0dEaWVfOEVSV2FLUQ?oc=5",
+      "pubDate": "Sat, 31 Oct 2026 04:04:02 GMT",
+      "pubTs": 1793419442.0,
+      "desc": "2026臺南就博會登場 勞工局職安宣導安全有感&nbsp;&nbsp;民安救護車",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "5877171b45b3f2e2",
       "title": "勞動部修正發布承攬管理檢查注意事項 強化風險評估、施工協調及統合管理，落實源頭防災",
       "link": "https://www.osha.gov.tw/48110/48417/48419/214908/",
@@ -10,6 +21,39 @@
       "source_id": "gnews_law",
       "source_name": "法規更新",
       "badge": "teal"
+    },
+    {
+      "key": "746040c55748eb57",
+      "title": "澎湖縣政府「臺灣港群-澎湖港安衛家族第二場教育訓練」提升職業安全衛生意識",
+      "link": "https://news.google.com/rss/articles/CBMiwwJBVV95cUxOU1REaTdJakJJaEJ0YzN4bS00SWVKZ2ozaWFjdGtyM19YSkViOGNLaHRxZXIzcTFuNTc1b05ab0V1SkkzLTlQcnd0anZQdl9DcGdCaTc4TjU1SFg4RDFsUkZLa1dqcXNxR2lRSktlNUMxWGs0YXVsTWZ4R0FOaEI4OEJfczRuc2JtSGZvM2U1b3UtbXRVSEgwb0N2NEx3XzBzbExuQUxVMVN5SWhqMTctWGNhNktsSFY2NnZlSU5vT1RNOW1sVFdjREphbFZGWjJ5dU5KSUFkLU5CLU1RNnZxcEFueXpJd0lLMkhXRVJUclBjNzFSU1RUWllWRXZ4VEFIcWhncGVKRVViMTlfTG15aVE4eXY4LUdaUnVZLXl5VTZxWnlGWXdBQnhKTVlLV1RPSWFHUUh0azNSdkNCcDFjSDA3TQ?oc=5",
+      "pubDate": "Fri, 30 Oct 2026 10:24:45 GMT",
+      "pubTs": 1793355885.0,
+      "desc": "澎湖縣政府「臺灣港群-澎湖港安衛家族第二場教育訓練」提升職業安全衛生意識&nbsp;&nbsp;澎湖e傳媒",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "85364cb9aebde27e",
+      "title": "勞動部發布承攬管理檢查注意事項三大修正促源頭防災| 生活",
+      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5HNXlNQjVBUmlmQ2NpSlI3M2RfM0FGSXBDT3hyMU5HYXkxdUk4bV85QkNrZGVTdjJndW9zZlJTb2cwTzQxUlM3R3FvMjlzb1pscWluMFVBeFk5LTA?oc=5",
+      "pubDate": "Fri, 30 Oct 2026 07:12:51 GMT",
+      "pubTs": 1793344371.0,
+      "desc": "勞動部發布承攬管理檢查注意事項三大修正促源頭防災| 生活&nbsp;&nbsp;Newtalk新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "8b3e0014d44ab28c",
+      "title": "職安新規範 勞動部修正發布承攬管理檢查注意事項 | 經濟日報",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE00UVV6STlkMjRMbU5pUTE2bWpDM0NJaVpDY3BSWnNvZnlObWJoVEFhRm1QdzUyb19tMnoxU3Q2U3MtOGJkSm9lemMyXy1LblpnQXVlSEh3?oc=5",
+      "pubDate": "Fri, 30 Oct 2026 05:39:24 GMT",
+      "pubTs": 1793338764.0,
+      "desc": "職安新規範 勞動部修正發布承攬管理檢查注意事項 | 經濟日報&nbsp;&nbsp;LINE TODAY",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "0eba3eb6f38c7411",
@@ -182,7 +226,7 @@
       "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNSElwSFp4RjhTMUcwTFEzdWVEdkZ1OXg3VTcyNkVvZ1ZuU015MlpWTDdkUGxEZ2Y2UnV6Y3NaUFJPT3NidXZRcm43VnoyRE45Tm1XMmJ3TTV3bV81aDdHZGVuSFRsbnN4dm9PTUc0aURqMExYelgzQU9qd3d2ekFLbnlUUktVUQ?oc=5",
       "pubDate": "Wed, 28 Oct 2026 04:51:32 GMT",
       "pubTs": 1793163092.0,
-      "desc": "轉知勞動部職業安全衛生署修正之「緊急應變措施指引」&nbsp;&nbsp;彰化縣政府",
+      "desc": "轉知勞動部職業安全衛生署修正之「緊急應變措施指引」&nbsp;&nbsp;彰化縣政府全球資訊網",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
@@ -716,17 +760,6 @@
       "badge": "red"
     },
     {
-      "key": "0ffef8f03a9d8664",
-      "title": "台積電建廠7年死18人…工傷協會：罰鍰無法阻止悲劇 籲政府介入",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9YcE42SmlwcmIwXy1pMUJYZUg0ejUzZXBQdW04MzdHODZndC1XNC1wdS1HUW1PUGdJR2VxQTFUMUsyMW44RVVkYVhxemJhaHZV0gFWQVVfeXFMTnJjNTNpeERYTnEwV3QwM1BwOFZIaFZxVTBZSU00QWpzWXIwQlN5Z3ByQi12Yjl3VGU3V2NtUmNmNS12bXltcG12VFpBYUVqT0FfVGhiRmc?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 09:00:18 GMT",
-      "pubTs": 1792573218.0,
-      "desc": "台積電建廠7年死18人…工傷協會：罰鍰無法阻止悲劇 籲政府介入&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
       "key": "2cf9aac719b45393",
       "title": "轉知勞動部職業安全衛生署訂於115年11月6日及17日分區辦理「115年度勞工體格與健康檢查認可醫療機構教育訓練」",
       "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQOUZKSmFXNUtfZnM5aE1hT21kQjdQeGhQSGJxOUh4cU1UUWFSanVaLXV6anZMN3dhRDh5cm1panhFY0F1cE5GOXBxbkFUU3FTbW9zU05aREtjR0h1SjZvdnYybjJXa01YWHN3OEpLWGhVRHVDT0tUT2JsM0Y1OXJzejExYTN6QQ?oc=5",
@@ -736,6 +769,17 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
+    },
+    {
+      "key": "0ffef8f03a9d8664",
+      "title": "台積電建廠7年死18人…工傷協會：罰鍰無法阻止悲劇 籲政府介入",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9YcE42SmlwcmIwXy1pMUJYZUg0ejUzZXBQdW04MzdHODZndC1XNC1wdS1HUW1PUGdJR2VxQTFUMUsyMW44RVVkYVhxemJhaHZV0gFWQVVfeXFMTnJjNTNpeERYTnEwV3QwM1BwOFZIaFZxVTBZSU00QWpzWXIwQlN5Z3ByQi12Yjl3VGU3V2NtUmNmNS12bXltcG12VFpBYUVqT0FfVGhiRmc?oc=5",
+      "pubDate": "Wed, 21 Oct 2026 07:00:00 GMT",
+      "pubTs": 1792566000.0,
+      "desc": "台積電建廠7年死18人…工傷協會：罰鍰無法阻止悲劇 籲政府介入&nbsp;&nbsp;UDN",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "e1993c206e58fae0",
@@ -763,9 +807,9 @@
       "key": "603c21b86505c84c",
       "title": "台積電楠梓廠工安意外釀4死 疑螺栓斷裂致工人與鋼梁墜落",
       "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5GenlVVlRzQ3FsT0pabU1KN25mREp1U2JwRWlNMVRKcTRpdms3VGpIMGdrbVVVNGNQZC0zOXp6SDJrMG9hb3dFa29NR2stNGc?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 05:10:00 GMT",
-      "pubTs": 1792559400.0,
-      "desc": "台積電楠梓廠工安意外釀4死 疑螺栓斷裂致工人與鋼梁墜落&nbsp;&nbsp;你的公共電視",
+      "pubDate": "Wed, 21 Oct 2026 07:00:00 GMT",
+      "pubTs": 1792566000.0,
+      "desc": "台積電楠梓廠工安意外釀4死 疑螺栓斷裂致工人與鋼梁墜落&nbsp;&nbsp;公視新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -854,6 +898,17 @@
       "pubDate": "Wed, 21 Oct 2026 02:58:16 GMT",
       "pubTs": 1792551496.0,
       "desc": "台積電鋼構工程釀4死工安事故 疑螺栓彈性疲乏、數量不足釀禍&nbsp;&nbsp;UDN",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "a6528f1e2840e3a4",
+      "title": "工人連同鋼構高處墜落！ 台積電高雄廠工安意外釀第4死",
+      "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBaWHFaZDNYOU9MUFRLeGtOSHd2ZVZDRlZTN29qZmRGY21wZDBCOTAzVjYxT1lVSXQ0ak5kbG5GQUhvVnRMM2dqODZaUmlETzBqbnpRYWRRamk3aWRLcnVGYXNBNjJPRGY0QmlMdWdGV2c?oc=5",
+      "pubDate": "Wed, 21 Oct 2026 01:40:00 GMT",
+      "pubTs": 1792546800.0,
+      "desc": "工人連同鋼構高處墜落！ 台積電高雄廠工安意外釀第4死&nbsp;&nbsp;華視新聞網",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -1176,39 +1231,6 @@
       "source_id": "gnews_law",
       "source_name": "法規更新",
       "badge": "teal"
-    },
-    {
-      "key": "f89e0964a0da79d1",
-      "title": "東莒猛澳港工安意外 檢測發現相鄰艙室含氧量僅15％",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFAtZjhwalBrVm9UV2VrR1ZTNFNiWFp1dk1iZThuUWpLVF9rcUtPcTlmZlY5SnpSYlpXWDN1anV3YzBuS3BwNmFST2d5djlKd0dqRmxYYUhSQVF3NkU4VHc?oc=5",
-      "pubDate": "Fri, 16 Oct 2026 16:04:09 GMT",
-      "pubTs": 1792166649.0,
-      "desc": "東莒猛澳港工安意外 檢測發現相鄰艙室含氧量僅15％&nbsp;&nbsp;馬祖日報",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "4a5c7e1ef55f484f",
-      "title": "大葉環安系把職安現場搬進教室",
-      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBad3pnM05ld2RZSDBkYktYbE5WRHRQNDN3VVdjUkNURks4N0pPMFVBS0JzV1V4b3BJUDNfbUsyaU11ZXFkX1hMaGVsUk1DVFh0TUVlNDFpNA?oc=5",
-      "pubDate": "Fri, 16 Oct 2026 13:44:55 GMT",
-      "pubTs": 1792158295.0,
-      "desc": "大葉環安系把職安現場搬進教室&nbsp;&nbsp;焦點時報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "0abcf59a79709c8b",
-      "title": "勞工局職安測驗上路 強化移工職場安全",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1ndWx4NWVhdmg4cV92OG53bzJwRGJuSmFGbkNLQlB1cHNYc1VsQngyaFdHNzlyeWY4SVJyRUtvamdnNWdDNE9CdTgzN2VQeFR1?oc=5",
-      "pubDate": "Fri, 16 Oct 2026 09:58:53 GMT",
-      "pubTs": 1792144733.0,
-      "desc": "勞工局職安測驗上路 強化移工職場安全&nbsp;&nbsp;台灣生活新聞",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
     },
     {
       "key": "56b5c002814018be",
@@ -1662,5 +1684,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-10-30T06:33:58.071639+00:00"
+  "lastUpdated": "2026-10-31T06:23:26.177702+00:00"
 }
