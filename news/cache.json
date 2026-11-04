@@ -1,6 +1,116 @@
 {
   "items": [
     {
+      "key": "9e946e36af9c0a08",
+      "title": "公告指定「中國醫藥大學附設醫院」為辦理勞工體格與健康檢查特定檢查項目之檢驗機構",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/215119/",
+      "pubDate": "Wed, 04 Nov 2026 10:49:27 GMT",
+      "pubTs": 1793789367.0,
+      "desc": "一、依據「辦理勞工體格與健康檢查醫療機構認可及管理辦法」第17條第4項及「勞工體格與健康檢查特定檢查項目檢驗機構指定及管理作業要點」第6點規定辦理。 二、指定「中國醫藥大學附設醫院」為辦理勞工體格與健康檢查特定檢查項目檢驗機構，檢查項目「血中鉛」、「尿中鉛」、「尿中鎳」、「尿中無機砷」、「尿中鎘」、…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "d8d6fd51d66d6bae",
+      "title": "拜票變《食尚玩家》！高雄參選人張以理走到哪吃到哪 網笑：職業傷害是變胖",
+      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFBFTEtndU1rdjExdmlqc3ZGWUNNOG1WVkJIbTF5RjNiY1ZWS0FTRzhodkxnUWVORExXQ0pKQWNnMHFrZjBJdTh0bkdYRQ?oc=5",
+      "pubDate": "Wed, 04 Nov 2026 06:23:00 GMT",
+      "pubTs": 1793773380.0,
+      "desc": "拜票變《食尚玩家》！高雄參選人張以理走到哪吃到哪 網笑：職業傷害是變胖&nbsp;&nbsp;FTNN 新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "797fa278656664a6",
+      "title": "新北捷運三鶯線工地水塔發現男屍警排除工安意外- 社會",
+      "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE54VXFnMGVaV3JVOHZkM1NmN0tCODZqcW1zS0RJck5iNjZxQmlScUxzN01DcUdfUy1wVWlaOGZWeWpkWURsV0lva0RGMDUyRzdkZXI3Smg2WmNMWXhxNHZsbGxsQjBXa3VFOFVSRFBfVXk?oc=5",
+      "pubDate": "Wed, 04 Nov 2026 05:15:39 GMT",
+      "pubTs": 1793769339.0,
+      "desc": "新北捷運三鶯線工地水塔發現男屍警排除工安意外- 社會&nbsp;&nbsp;華視新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "f0ba218293e57f42",
+      "title": "觀點投書：六條人命換不來安全警鐘？從重大工安事故檢視台灣職安改革的迫切性 | 鐘志明 | 評論",
+      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE80aGg2a29sUnREOWRtRzVZU3M4X0pzcEVNWXh5TDNHc05zNFJ5UnJoQl9QOW9nVlFiZkFOWVJxcF9MaUNxVnpGY19TRnR0Zw?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 21:22:00 GMT",
+      "pubTs": 1793740920.0,
+      "desc": "觀點投書：六條人命換不來安全警鐘？從重大工安事故檢視台灣職安改革的迫切性 | 鐘志明 | 評論&nbsp;&nbsp;風傳媒",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "f8cc352120601ddb",
+      "title": "前三季重大職災營造業死亡逆增逾7成為下包商勞工| 職場觀測| 生活",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE91QjBpYmJFcUZvS3JCM0tjbF9JLXl4cDJoTXRsd0VRVW1Pc0dhVWVSenZiLUxSNzJzcnljb1BSal9BMFd0OFRacU1TUmR6N2lr?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 19:01:42 GMT",
+      "pubTs": 1793732502.0,
+      "desc": "前三季重大職災營造業死亡逆增逾7成為下包商勞工| 職場觀測| 生活&nbsp;&nbsp;UDN",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "75ac682e26762134",
+      "title": "前3季重大職災死亡193人 營造業102人增加9人 墜落占62%",
+      "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPUGUxcDZIN0xUS2xFYTFsR0lHeVVwNFJzWTZBMEJXRTRDOWRKWHMzX29qY2dyTGpjOE1nekZmTnc1T3VBNlc2cndERVJGck9CeWNDczUzNkNwUjBQRXpCT1pjN2x4cTZJam4tcnMwZWZHVDg4REJiRmhWN2g5cXc3U2gwMk8?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 17:35:05 GMT",
+      "pubTs": 1793727305.0,
+      "desc": "前3季重大職災死亡193人 營造業102人增加9人 墜落占62%&nbsp;&nbsp;索引新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "1c2c73f8bda9ffc2",
+      "title": "北市勞檢處職安衛論壇 產官學共商職安法新制源頭管理",
+      "link": "https://news.google.com/rss/articles/CBMi6AJBVV95cUxOQWtVbnlvc09YU0g4cUpKV2U4bXJtb096OWFaWUNoSVN5TDRZSTFiNTIxcGNCS1JXZGltRWs5WUp2bGtoWGRIWFhrMnRWNUNiUURySVd0VVhYdVVZSFdOZWlJaVViYVNSTWJUSXQtSGJvX0FXZF9JSExpc25KMUUtdTh4RWhseVphS2ZqMW9oMGlXRk83clhTZnpxSUZYOWdPdlJ1M3h5SlhUVFlBT2hzTUJaN2R0dS1rTFEtbEY1Y3RrVXh5YkVuZGxOR2tqZXRYcWNqN090amYxV2VsV184dFQ5Vld6ZjlBOUNBWEIzdjFHNUhKTEJPci1LSDFucmJUbFQ5UTJSQVBRNE1LSWh5M3gzTGVaOXdCYmpsNGZ2Zk0tb0R0RENiRFlLR3pYQUdRdlVEaXJqUjNEQW1PSWhpRTA5bXpuQlNibWk3b1RTWFI5c1R6ZTdTYTFoOXRFY1dWUUV3d0ZEYk4?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 16:06:32 GMT",
+      "pubTs": 1793721992.0,
+      "desc": "北市勞檢處職安衛論壇 產官學共商職安法新制源頭管理&nbsp;&nbsp;報新聞 Mega News",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "8e998e44657d52bc",
+      "title": "職安署表揚局部排氣裝置優良設計案例 促進專業技術交流與實際應用",
+      "link": "https://www.osha.gov.tw/48110/48417/48419/215114/",
+      "pubDate": "Tue, 03 Nov 2026 15:54:30 GMT",
+      "pubTs": 1793721270.0,
+      "desc": "為提升局部排氣裝置設計品質及工程控制效能，勞動部職業安全衛生署首度辦理「優良局部排氣裝置設計案例」競賽活動，並於今（3）日在臺大校友會館舉辦頒獎暨成果發表交流會，由職安署萬榮富副署長出席頒獎，表揚將專業設計技術落實於工作場所改善的優秀設計人員。本次經專業評選，共有7件案例獲獎，包括特優獎2件、優等獎…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "4940b5dc26b61917",
+      "title": "臺東推動「臺灣職安卡」教育訓練2場次200人次參訓- 生活新聞",
+      "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNMU5OdEtXYUhsbkpVWXBuYzFQeXFQUTBPVVRLYVBhbGpqaXpST3pIdVFjV2JrbjZzUURXYUxYQjlmc1ltajVsZDEyc3dTTk9UNk1hZjFOVEJ1T2VfSVFxTGRBVktmd3l0aFpKalN1dVVNem5DZGhVMXB4UUpGMElmS3dCLVloSm81RzJtYnRmOXBrT28?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 13:39:15 GMT",
+      "pubTs": 1793713155.0,
+      "desc": "臺東推動「臺灣職安卡」教育訓練2場次200人次參訓- 生活新聞&nbsp;&nbsp;PChome Online 新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "c35e4d7a6c689410",
+      "title": "前3季重大職災降9% 營造業不降反增",
+      "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1JOEx4b05xRXRmRm5NWE9qS2ZNYUhMS0pxa0ppd2lPSlJJcDVVczlWMGVic1IwQm9XQWh6TUNseDRYUDNqel9mMV9PTXlOR3h1N0Q1T2NFd2xJTGc3SWE4TNIBZkFVX3lxTFBmMGU0X1VOeXJxNkZ6cEk3RUNPM3E0LVF6S3dKUUwyN2xpTktESG9CdmQ4UFl5TXZQLWVZUDNGdE5KR2prMDR6NDJpWmczTDZBU0xQdnA5eDhoVGdQZU9ISl8yN0JSdw?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 12:13:00 GMT",
+      "pubTs": 1793707980.0,
+      "desc": "前3季重大職災降9% 營造業不降反增&nbsp;&nbsp;大紀元",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "27a68001418fe178",
       "title": "勞動部公布115年前3季重大職災死亡統計，整體下降9％、營造業增加9人，強化科技廠房工程源頭防災",
       "link": "https://www.osha.gov.tw/48110/48417/48419/215089/",
@@ -12,23 +122,67 @@
       "badge": "red"
     },
     {
+      "key": "cd873cf64432e858",
+      "title": "科技業趕工擴廠釀危機！今年至今20勞工死亡 職災增幅逾5成",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5hYjNvSVRINnRRa2dQN3pvaF8xV3JCQ1BrYk1CZ0NxX3FJNmpxQ3FIVzlGamZYZEFyVm9EcUQ2M1A1QkdaS0tvbUFNWXlMc2d4VlRDOUZfalo5bVZrRkY3Yy1HLXdxenF0RllyblRn?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 09:43:20 GMT",
+      "pubTs": 1793699000.0,
+      "desc": "科技業趕工擴廠釀危機！今年至今20勞工死亡 職災增幅逾5成&nbsp;&nbsp;中時新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "f7f0ddc7ef91b01a",
+      "title": "職安署示範施工架爬升與鋁模 營造標準第17條：先用工法減少高處作業 - 墨新聞-MORE News",
+      "link": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE1kR0EwMnhuR0o2WEdha25mS0lYVW5UT3FsQjZSY1ZJdGdkRjJBODY1RzN6QTExVElIZWNwOXQ3U2M2UQ?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 08:59:03 GMT",
+      "pubTs": 1793696343.0,
+      "desc": "職安署示範施工架爬升與鋁模 營造標準第17條：先用工法減少高處作業&nbsp;&nbsp;墨新聞-MORE News",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "c7dfaf755688fe17",
+      "title": "職安卡新制：6小時分2單元 2027年7月1日起進營繕工地須先受訓 - 墨新聞-MORE News",
+      "link": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE9iQm5WRXA5QlJ5ZFB5aXBBdmF0ZUFOcGJ4NHhnNDVaNHFZUUxiTU5KUGFNTDhvdURqTklISlBTY252dw?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 08:59:02 GMT",
+      "pubTs": 1793696342.0,
+      "desc": "職安卡新制：6小時分2單元 2027年7月1日起進營繕工地須先受訓&nbsp;&nbsp;墨新聞-MORE News",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "d277787702e47190",
+      "title": "台積電工安事故頻傳今年已釀6死 民團批未見改善籲建立股東監督制度",
+      "link": "https://news.google.com/rss/articles/CBMivgNBVV95cUxQbWlFNUJLZ25zV3pyY1F6dmQzdGktVWk5SWZ1VlFUcVkzYnJoaFg4NTlTQUVMcEd1UE5kc2dpajNfOE9hZ3NPbzFvQ2R5UHRoeFlWRWZ1TV9MV2FIZlpjV3VXaTBRSWp5U1BFQ0x5SUozeWF0U2JkUGNMZDZORHpwOHJuNVlpalNzN0k5YWVDS3ZuTndhZWNzcm0tc1BfYWF2S0kycG9uQ3dCb1l6aXYySTNtbzY3LWpTUW5DQVdzTlFtaVkxYjdmcnA1R0I4UW1WZ2Vfc0txdzFlY3JfRkF3TTZXdC1zZjF1YlNiY08yQ2tyRGUwUkR1bFlfcUxOVGlJcWhLR3V0akYtUXNZd2VNNkdwWF9zSHZNWXlHcVZxS3dsMmp5aU11Y1R4M294eGsxOUNTQTZRSFNUdzd5RndfNGx4dkh6ZTV1NnZQWUJiSGtiX1RuUENzNThhcmVqZUJLZEw4dWh3RUNsejJFM2VOLTRvLTM5b0VJaUk3R0pLWkFXQTdmR1FSVjFkVjN1bEpKVWRpdWpxSWtWY1hvNWdIZi02bmdNWjRLUFJhdGNXbmxLRFJjNVZrTXh6enZpZw?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 08:39:00 GMT",
+      "pubTs": 1793695140.0,
+      "desc": "台積電工安事故頻傳今年已釀6死 民團批未見改善籲建立股東監督制度&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "25fed6699cf4192f",
+      "title": "外勞10年就能領勞退？ 勞動部解釋",
+      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE1aYXBURmRtbUR0ME5fS3lkdHVjTzhwbW44V1ZGMW5vM1JTZ0ZZUXNlTEdTMHRxUVpoZTNpLXhVSldMcmx2TjIxd2xHUQ?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 08:35:06 GMT",
+      "pubTs": 1793694906.0,
+      "desc": "外勞10年就能領勞退？ 勞動部解釋&nbsp;&nbsp;三立新聞網SETN.com",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
+    },
+    {
       "key": "a69f846e26e7d3c9",
       "title": "前3季重大職災死亡統計193人 較去年同期少9% | 生活",
       "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE9RdmtMY2ttcW5fcTU0NkxVd3F3N2NFem1Od3FFZGtRR2FoaEFWRTcwVFlxdEk5THBFUk5LaE15dFdVYVhwVzFJaVJVMHpCaVlSekgzOHJHN0xhdGs?oc=5",
       "pubDate": "Tue, 03 Nov 2026 07:12:41 GMT",
       "pubTs": 1793689961.0,
       "desc": "前3季重大職災死亡統計193人 較去年同期少9% | 生活&nbsp;&nbsp;Newtalk新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "67340ff90c2afb0e",
-      "title": "台積電7年發生15起職災釀19死 工傷團體促政府基金建監督機制",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5uWFkybWZWNm00bnRiY1M1SG5TM0ZkSmVBZzBibVlDUWtQS2c5TldLVlgxZWRmVW5UaWI5S1RfbWdsdDdXQXlXMjFDaGRrZzQ?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 06:31:07 GMT",
-      "pubTs": 1793687467.0,
-      "desc": "台積電7年發生15起職災釀19死 工傷團體促政府基金建監督機制&nbsp;&nbsp;公視新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -62,6 +216,17 @@
       "pubDate": "Tue, 03 Nov 2026 06:03:11 GMT",
       "pubTs": 1793685791.0,
       "desc": "台積工安意外釀4死 勞動部說話了！&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "a9b0aaa76225d253",
+      "title": "台積工安意外釀4死 勞動部說話了！",
+      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFB1bFRIMUVLaWNuTUY2Rjg4c3NaUEdkZmpJNjIwZFMtR1k1U1BjSjVqbGttNlNuOHdWeXk2WV9kVGh3QzNjVkd6SEtxMA?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 06:00:40 GMT",
+      "pubTs": 1793685640.0,
+      "desc": "台積工安意外釀4死 勞動部說話了！&nbsp;&nbsp;三立新聞",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -117,6 +282,28 @@
       "pubDate": "Tue, 03 Nov 2026 05:21:00 GMT",
       "pubTs": 1793683260.0,
       "desc": "前3季重大職災193人死亡營造業7成為下包商勞工| 生活&nbsp;&nbsp;中央社 CNA",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "67340ff90c2afb0e",
+      "title": "台積電7年發生15起職災釀19死 工傷團體促政府基金建監督機制",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5uWFkybWZWNm00bnRiY1M1SG5TM0ZkSmVBZzBibVlDUWtQS2c5TldLVlgxZWRmVW5UaWI5S1RfbWdsdDdXQXlXMjFDaGRrZzQ?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 05:20:14 GMT",
+      "pubTs": 1793683214.0,
+      "desc": "台積電7年發生15起職災釀19死 工傷團體促政府基金建監督機制&nbsp;&nbsp;公視新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "4bc6838c28622ee3",
+      "title": "勞團籲政府基金監督台積電工安 勞動部這麼說",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBPYkhPVUNfdjJYNGozS2lYbkNFYlBjcWhSUC1FRnFONERxbXlWTUw1eWxFTTQ5UUZpRU1rNVVzQkZYbHZlbTR6bV8yNl9qUmVUS3ZhMFhHTGtIaXZGa3c00gFkQVVfeXFMT1RabDNtTUp3VU1lNGF3czlwTC1ZWEwyM3psVkhvcE1NWGFOaXN0Q2VaNlMxdEszcDFib3owU0w0NzJoTFN6cWp6Rk9SX1llYUZGRFVHN25jOTBYbmdMSVZraE41VA?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 04:53:58 GMT",
+      "pubTs": 1793681638.0,
+      "desc": "勞團籲政府基金監督台積電工安 勞動部這麼說&nbsp;&nbsp;自由財經",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -188,6 +375,17 @@
       "badge": "red"
     },
     {
+      "key": "c8d4d905295b6e49",
+      "title": "影／台積電工安意外 勞團要求四大基金監督企業",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1HTGtldUpNY3oxa3pDMzNSQlBZcDMxVVBlTkpDcktHbW0wRGxfekxXa21BVUFtZnBJdllSTEM0VktZWDQzSzFWMHd6QWg3OXBR0gFWQVVfeXFMTmxHc0E0bVNUZVVWTldJaUJhOF9rM280Q1dHRm1RQ3pRTDVNMFpEX3JFcXdjMEZFYi1tRXd0cVVZdmROLURVaDFXb1pJYTMxTGd0ampQQWc?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 03:14:21 GMT",
+      "pubTs": 1793675661.0,
+      "desc": "影／台積電工安意外 勞團要求四大基金監督企業&nbsp;&nbsp;UDN",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "a57b5b5c743f8b28",
       "title": "台積電工安事故後續！勞動部祭4大措施要求提出工程安全改善計畫| 產業",
       "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9sSWZONkxGQ3JLcmU1WkpPSmRHU0l6Z0MzZ3NlakxQTFRoMkdpRS1oakxudmNMVmpHVVQzZzJkZjQ2VDFCUUE3YjZCbEw0RlQ4TUEzQ2FTWndjZXo2?oc=5",
@@ -199,11 +397,22 @@
       "badge": "red"
     },
     {
+      "key": "0203397fe4b92d32",
+      "title": "勞動部公布115年前3季重大職災死亡統計，整體下降9％、營造業增加9人，強化科技廠房工程源頭防災",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1XaXFudEJ2NTZLWTE5bHQ4djlWRkt3QXJGSHdfU2t1bkdZb3RIWlZoOFd1dHlDSndITkYtT0JWd294bjdsUTBGQW1fMXlwcXBQb1dfYmVtRQ?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 03:05:40 GMT",
+      "pubTs": 1793675140.0,
+      "desc": "勞動部公布115年前3季重大職災死亡統計，整體下降9％、營造業增加9人，強化科技廠房工程源頭防災&nbsp;&nbsp;勞動部全球資訊網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "a76db22037c9995f",
       "title": "精進職業安全衛生管理制度 南市消防局結合長榮大學團隊展現職安推動成果",
       "link": "https://news.google.com/rss/articles/CBMi3gNBVV95cUxNLXRTUXMxajdHRjVfbnNhdDN0eEtMcnhKYThacy15T2NFejRQMDhuV3gzaWljQ3JkOVRJUmI2WnJaVG53c1Y0V3lnb3A4MXFlLWRHaml0c2xET2tUTHdhVDdiUXM1ejRhLUt4alRoZFNLeXNDUGNnZlp3U2E5ajB0TzJzU2RncHZ2Qi1keVZSOTZRZDlkVFgwSXl0SWlNajhjenVpUGh5dDhPNE1INmVrTm9mb1BRSDMtLW1pWkRBUHJ5d1V1M09pU1BfRTZSa2cwX1BjMW0tLWxYYWU4RXFxTkNlTHMtVUNHWVUxWV9oX1hER211V3FMVktReURxTVZLV0tmblRQZklzWDZhMnRtM05MOWFsMF9zMmI1WDhueHlWZkpMem9YQ0JQTjVSQ202ckFVYTEwcHFNLTFyVVR1NTdqN2JxVHAxTzlQQXdrQVdTbENmTERuYTBFb0lGOUlwako4MFowOUdiVzQwMHNBbTNwUEcxczU1LXpxUFVOTGhqVTVSQXBMT0dGZDhmLTY5S0VMSTM1d3E4aGhsQkY4YjF2U1BlMnVybk1faUN1QmNkcy1RekpZNWtpVkpzNW9fb2VHdUZIbm9mZi1nRF85S3k3VVc1U3ExUEtGZnh3?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 02:51:39 GMT",
-      "pubTs": 1793674299.0,
+      "pubDate": "Tue, 03 Nov 2026 02:51:51 GMT",
+      "pubTs": 1793674311.0,
       "desc": "精進職業安全衛生管理制度 南市消防局結合長榮大學團隊展現職安推動成果&nbsp;&nbsp;台灣好新聞",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
@@ -241,6 +450,28 @@
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
+    },
+    {
+      "key": "ae4ced6926dd5e4b",
+      "title": "台中市污水下水道安全檢查 加強職業安全衛生管理",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE90MGpfek5RdjBpcWpFV2UxWkxxQWJmWjFReXRZcW1QOUkwQnpCUXNDb1huVnB3MFdwakc5aTgtYnM2T3ZQMUFJb0c0bHFycXoxN3c?oc=5",
+      "pubDate": "Mon, 02 Nov 2026 08:12:45 GMT",
+      "pubTs": 1793607165.0,
+      "desc": "台中市污水下水道安全檢查 加強職業安全衛生管理&nbsp;&nbsp;蕃新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "7bd10c0baa8e36d1",
+      "title": "台積電連爆重大職災致6死 勞動部將啟動高科技建廠專案檢查",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5oSmpObDVyamlPdElMUTZLRXRWc2ZkbHhQV21EUDZBRkFuXzE5dXR6UXpHcVlBS0YtektyOE9OZTUyMGppN2tvdUgwWW9abUVPRXR2NlUwZmhPOFNfX0FF0gFkQVVfeXFMT0xGcjRERWZmQkhHNHdoLUlFSGt4TTBfbWlKQWFtX1hUWVc1NVg0RVdJQjdIczVhZEd4TUlYaTJrSDdKNmdZOFRxMi1HckduMnhKaUROYl9pS1NiNVZZeFJpanpNbA?oc=5",
+      "pubDate": "Mon, 02 Nov 2026 07:36:19 GMT",
+      "pubTs": 1793604979.0,
+      "desc": "台積電連爆重大職災致6死 勞動部將啟動高科技建廠專案檢查&nbsp;&nbsp;自由財經",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "0336ace93d03ddf5",
@@ -1068,259 +1299,6 @@
       "badge": "purple"
     },
     {
-      "key": "0ffef8f03a9d8664",
-      "title": "台積電建廠7年死18人…工傷協會：罰鍰無法阻止悲劇 籲政府介入",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9YcE42SmlwcmIwXy1pMUJYZUg0ejUzZXBQdW04MzdHODZndC1XNC1wdS1HUW1PUGdJR2VxQTFUMUsyMW44RVVkYVhxemJhaHZV0gFWQVVfeXFMTnJjNTNpeERYTnEwV3QwM1BwOFZIaFZxVTBZSU00QWpzWXIwQlN5Z3ByQi12Yjl3VGU3V2NtUmNmNS12bXltcG12VFpBYUVqT0FfVGhiRmc?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 07:00:00 GMT",
-      "pubTs": 1792566000.0,
-      "desc": "台積電建廠7年死18人…工傷協會：罰鍰無法阻止悲劇 籲政府介入&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "e1993c206e58fae0",
-      "title": "基隆市公車職災廣告主題宣傳",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5rVGZaWWZHdDhXZE1XdWJiSW8wNC1DTS1ka2ZRS3JUWkpTYm5SWXBSV0k4Q0JXUzVnN0psdTFNOVJwa1RzUGYteUg3OXl1cTJQS2k3elJ3TExGdHZFQ184?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 07:00:00 GMT",
-      "pubTs": 1792566000.0,
-      "desc": "基隆市公車職災廣告主題宣傳&nbsp;&nbsp;基隆市政府",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "2571f450f92ac57a",
-      "title": "台積電重大職災4人墜落死亡 洪申翰：從源頭加強風險管理",
-      "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE0wVHRTaERTS0F6TUdDa0ViQmU4dnVZWUVFRm5YcXZZc1ZQVEZFYVdTczYyZUxGNXJRbHdRY21QZEN4dGFIV3RUdFlTT250QjdjOFVNVXptcW81Ql9hcHpMU1E5Zy15MWViMHlDTXNxcw?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 07:00:00 GMT",
-      "pubTs": 1792566000.0,
-      "desc": "台積電重大職災4人墜落死亡 洪申翰：從源頭加強風險管理&nbsp;&nbsp;知新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "603c21b86505c84c",
-      "title": "台積電楠梓廠工安意外釀4死 疑螺栓斷裂致工人與鋼梁墜落",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5GenlVVlRzQ3FsT0pabU1KN25mREp1U2JwRWlNMVRKcTRpdms3VGpIMGdrbVVVNGNQZC0zOXp6SDJrMG9hb3dFa29NR2stNGc?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 07:00:00 GMT",
-      "pubTs": 1792566000.0,
-      "desc": "台積電楠梓廠工安意外釀4死 疑螺栓斷裂致工人與鋼梁墜落&nbsp;&nbsp;公視新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "490e0f173fc287f1",
-      "title": "台積電工安意外4死驚悚還原 工人連同鋼樑墜落！肇因初判出爐",
-      "link": "https://news.google.com/rss/articles/CBMijwNBVV95cUxQZE9sSXBjODZPZ29XUkZzRXZZczJjdnlWZF9COFJXTGJxbHhSQlRHSERQVjdGaTY3X1hCQzk5N2tQTUdzR005dHFwZGRDTDk0YVRMN3p4SFVacXdQQ3FTX2d2VlQyVldaX25ocjVaVVNNa09aVE9GbDRZVWdtYjRyWldRWXhWTWtCd1NSV1RIS3YxNE1LbGV3Vjc2SEV2bkh6aDRMM0h0ZHV6Xzd1SXhIVGdralMtM0dwRXM2WmpGNTltODdlYUI2UVZfaXBhRHUzY2JCc2VZNHhxSEl2SWN1UV9hRC1LR0NFR0ZYZ0dwMWlNV2VXeWt1bFlDUDZhZE1WWC1NUmFCSjhjMy1BNDR4SjBJNnFPYnZLUk8zUU9NRF8xRXJUaG1WUUpsOXNmMHFySFBNSlFuRTlVVlkwQTdVeWpPOHNCZXBFdjFHRDZTY0hsVnc0SDdlTXY5SjZvU211bXBZaEh5c0pPeGl6d1o5dnpwc2dVWG40a05jRC15UlFoXzhra0xlbzVTNWxOcVU?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 07:00:00 GMT",
-      "pubTs": 1792566000.0,
-      "desc": "台積電工安意外4死驚悚還原 工人連同鋼樑墜落！肇因初判出爐&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "efb3fd68eff5f7a5",
-      "title": "職災重建中心前執行長涉論文抄襲請辭 勞安所所長王厚誠接任",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9LYWY2bDRwdWpKb3BYRjNLSS11NTRXMDRGMzRRbURzeXhJajhvdkpRYUNGUndrSXBncDVQSW42Y2dCSmJFMFlUQTlEZU5NQVU10gFWQVVfeXFMTmh1cE9DVkhaV0lmcVNGLWpyenZyVmRGVUdCUnM5dC1QdlJXYzRrSG9QVFRjbHd0ZEowMkpLZmtkTjduYzdtTy1kSzl6OUk1b3B5Y0ltN0E?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 07:00:00 GMT",
-      "pubTs": 1792566000.0,
-      "desc": "職災重建中心前執行長涉論文抄襲請辭 勞安所所長王厚誠接任&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "e4a1a00e286036a5",
-      "title": "台積電高雄P4廠工安意外釀4死！南科局初判：螺栓彈性疲乏或數量不足",
-      "link": "https://news.google.com/rss/articles/CBMiqgNBVV95cUxOV3pKYzhBTHlQTDZhSUQ1eGNtbU1CUVhJYWM2X0ZldTV4RkFwc2ZBbEhoazcxcEJxS3FuTmNQUlJHeDJpNzJMVUktSzZQN3c0MHdQR055V1ZsTHFnMWFiTExIRVpDLUpsZEE3WTZLdE5SVGVpdU14bUpzM3pSWHQ1cmZXUC1SUjF3ZnkwWTIteThWWWQ1ZTVsXzYzMHZ1R2NaVEV0YWNIR3RlSkJRQ29mSkwwNDYweFllc2lsQ1VWWnEzTW9aeUQ5OVNGVEZiMkQxUXlyWVR2VDBzTmlvX2pITHZGUUNnMzBvOEZiMFM5M2ZFVHBBZEZWUndDejRQZWk3MThNLXNhNXpzQUZ4Xzd2dGJzYzRVUlBJME9hb0d1bHBYT2dSa0hUN29waFhubWZERGd6eWdCU3kwdHFDYkdfR2tGMlRrX3lMcDBSaC0yOXgtZm1pN19teDhlbHoxSk9RczJCd09wWnVpYVFQT1VQU1BZWk1PWGlhU1F4X2JFMDM2b1RDUG9xYUVyWG5UQ19OcFFHbXZ1SFVMOUZnTGNENE9xb1N1b05FZWc?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 04:44:08 GMT",
-      "pubTs": 1792557848.0,
-      "desc": "台積電高雄P4廠工安意外釀4死！南科局初判：螺栓彈性疲乏或數量不足&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "b43298feb51360bf",
-      "title": "更新／台積電F22廠工安事故釀4人身亡 台積電嚴正看待、全台新建廠鋼構作業停工",
-      "link": "https://news.google.com/rss/articles/CBMingNBVV95cUxNb2Q5eXpfakpuajNJN1BSbkFJYUZMdUU5N0t1Rmo3VE1pcEhvQXVWQWxBa3FZakpqQnFZelJQbTNVYnJzVy10OEYzbUpDR1pVNkRidnZjNWowXzh6MlpjS3g4WkNqWXBQOExsWUFYVWVBU0lXdXdOeDJTN1BCY2dzaDZ6bzBxZkJZNjNZQjAzc0FCUERfN1FHeHdMVHZrUXNGR2JCV2FqdEI2aG9VZmRQckdMS3BQUTNZWHh3TjBfd3ZMZk5lS3U1ck9Kb3dyT2VnS0dVQW5obkt2ZFIzNUQ5SWtrSWt2LWQzQ2hTdlVQaVBZTnA5XzdXNmVjRnpGekg0WXZ3aXZIMllOZWlvS21RU2Zra1ZSTVVJZlJqTnNBUW1OeXBKNFcyX3RwLW91Y2VFdk5tRHJlSDlFd2l0Y3FDSVBIaUlTVkUwMHBHdy1MREZ0WV9icHlmbDJLeVhYUEhJZ0UyNFBZT3hsd2NfcGd5cjYtaWxtY09HS0FfMVNxSEExdHdJeHNFMlJtaW9IRFZXVERlWDQ2em1WdU1qdXc?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 04:41:12 GMT",
-      "pubTs": 1792557672.0,
-      "desc": "更新／台積電F22廠工安事故釀4人身亡 台積電嚴正看待、全台新建廠鋼構作業停工&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "d874b7973b4293df",
-      "title": "台積電高雄廠工安意外螺栓斷裂4工人墜落亡- 社會",
-      "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1IajQ2Z0dxUXNLeFpYMmYtcEpsR09fVmNiSjVVVHRBbXdHMm9YeTBpZkt4WVFralNLMTNLZTlQdGZBSF9xVmlpNFNueWpfX1d3V2lpTjQ3Q0ROUndfb1RTdDJHdjBKaXFaenFmbUV1SEs?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 04:05:00 GMT",
-      "pubTs": 1792555500.0,
-      "desc": "台積電高雄廠工安意外螺栓斷裂4工人墜落亡- 社會&nbsp;&nbsp;華視新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "b89d6b743a6b0e60",
-      "title": "7年15起事故釀18死 工傷協會喊話台積電：工人要安全回家",
-      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE41U0NqenFZWnpLZFdKTjk0ZThxSHUxQ3E5a3NlWWZPSUR6U1h2VWswYkNjaDdIUzgxNjdNRlJ0cldlajZOb0VqbUdQaXVvcFJkeFZEMmpaQnZCOXU5VEx0N1NHWVpGQlVRRzBN?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 03:46:44 GMT",
-      "pubTs": 1792554404.0,
-      "desc": "7年15起事故釀18死 工傷協會喊話台積電：工人要安全回家&nbsp;&nbsp;翻爆",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "e692aedb57a90de3",
-      "title": "一根螺栓斷裂狠奪4命 台積電工安意外！勞檢紀錄速看| 財經焦點",
-      "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFAxcnJ0Y1B3emM3ZENMeldCT1p5R2hVZGxRcUJrRC1zelowN01YZTZRSzgwZjlhRlMza1k1di00aWo0ZGl5cHdFWmtzR19Gc2xfTnJaWkhCS3FWbjE3?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 03:32:10 GMT",
-      "pubTs": 1792553530.0,
-      "desc": "一根螺栓斷裂狠奪4命 台積電工安意外！勞檢紀錄速看| 財經焦點&nbsp;&nbsp;太報 TaiSounds",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "e4c4a3300b413320",
-      "title": "台積電高雄廠4死工安意外「原因曝光」 勞檢曾2度違規挨罰",
-      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9ScWRiY1ZuQ1QyVUZhN3NqOFBoTTdkT0IxbEFJTkwyanpuNzY1Q2NpSllsSDExZE9NQThaQnc5WVlqdU93ZVI0LXJybnBzdzJyVUV3SW81eFFOMGgyM1d3UzdDS0dlbFZaVmk3RnF3?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 03:23:33 GMT",
-      "pubTs": 1792553013.0,
-      "desc": "台積電高雄廠4死工安意外「原因曝光」 勞檢曾2度違規挨罰&nbsp;&nbsp;中時新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "34cf45c1e686d699",
-      "title": "台積電高雄廠工安意外勞團籲全面檢查工安機制| 職場觀測| 生活",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE85VFY4a2FsaTBRcFhpS0FDWkFTQ280NDhPenhsYkhrUVFyNTlFVVJaSFhNa245cFZCTVBoWmI3RnRpXzVKU1hDcC1uYm9RcDZr?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 03:17:26 GMT",
-      "pubTs": 1792552646.0,
-      "desc": "台積電高雄廠工安意外勞團籲全面檢查工安機制| 職場觀測| 生活&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "fe1b6de15cabe594",
-      "title": "台積電鋼構工程釀4死工安事故 疑螺栓彈性疲乏、數量不足釀禍",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFB3WjM4OE5WenZfZHRJZkxLYTI5R2laNXlQWmZLOFBsUk1fRndmT1VIdkNLV3JHRjQzclhTSzUxMWJfVGp6MVV6MkZaU0RGN29k0gFWQVVfeXFMUDR0b0lEQTNYVTZTOWVVOVJGMTFVMUpVQ0FZc0hvWWI3Ulk0NTc0ek40WFVSRks0RzJGVjVnTDZwbXRqMnctaElpTGQzelJFSS1qSTJFNkE?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 02:58:16 GMT",
-      "pubTs": 1792551496.0,
-      "desc": "台積電鋼構工程釀4死工安事故 疑螺栓彈性疲乏、數量不足釀禍&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "a6528f1e2840e3a4",
-      "title": "工人連同鋼構高處墜落！ 台積電高雄廠工安意外釀第4死",
-      "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBaWHFaZDNYOU9MUFRLeGtOSHd2ZVZDRlZTN29qZmRGY21wZDBCOTAzVjYxT1lVSXQ0ak5kbG5GQUhvVnRMM2dqODZaUmlETzBqbnpRYWRRamk3aWRLcnVGYXNBNjJPRGY0QmlMdWdGV2c?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 01:40:00 GMT",
-      "pubTs": 1792546800.0,
-      "desc": "工人連同鋼構高處墜落！ 台積電高雄廠工安意外釀第4死&nbsp;&nbsp;華視新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "51e976d4c0763f51",
-      "title": "台積電高雄廠工安意外「再添1死」！鋼構斷裂4工人墜落全數身亡- 社會",
-      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5jODFWZUIyT3JYYlpNeXFOdHpDU3RtUHhXcnlRdXVjbDdmNnIxREpHeGNQV0d5czNRRnFWenVoMFowZEZscm41S3plWS1odVN6V1REdENZRGpzVWEzdHlLbFpDUDhsYm96ZUdTM1Zn?oc=5",
-      "pubDate": "Wed, 21 Oct 2026 01:18:18 GMT",
-      "pubTs": 1792545498.0,
-      "desc": "台積電高雄廠工安意外「再添1死」！鋼構斷裂4工人墜落全數身亡- 社會&nbsp;&nbsp;中時新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "4e4f117958339ba6",
-      "title": "陳玉發建議職安納入工程招標評比 推動北竿馬鼻灣停車場",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE05RE5ZS0JiUHdYNkFnMVFVVjRfM05hWi1EMllVZi1Ob0ZjajFFSVhxOW5yc3hiRFhEaU03TXpqWi02RzhDMFhSeEZRcGttUDYxcWN6RUJ3TWFhUXVMSWc?oc=5",
-      "pubDate": "Tue, 20 Oct 2026 16:01:07 GMT",
-      "pubTs": 1792512067.0,
-      "desc": "陳玉發建議職安納入工程招標評比 推動北竿馬鼻灣停車場&nbsp;&nbsp;馬祖日報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "8ffe8e3f89b136e0",
-      "title": "台積高雄廠工安事故 鋼梁墜落3死1傷",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5KbUxFTkQ4T1BjMHlmS0doVURHc3pnWFhkTHBuMmRaVjFCUjF4THNVN253dWxsd2RBMm15Y05BcUphMkFHaHpQNWhMckhhSVhr0gFWQVVfeXFMT1ZfU2p2Y1JIM0MyamxSdnQ2bTZVdHhFN1E1aEpnaG4tWWl4SUNLNzYwU1d2RExaeGtyUF9DSHRvdlJCck9IX0M4MFJDb3pzZE93bzJnN3c?oc=5",
-      "pubDate": "Tue, 20 Oct 2026 16:00:00 GMT",
-      "pubTs": 1792512000.0,
-      "desc": "台積高雄廠工安事故 鋼梁墜落3死1傷&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "b72eb27e5c9d2c57",
-      "title": "台積電高雄廠工安意外 工人高處墜落「增至4死」",
-      "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5Pc3h6VzR3bEJkWWJoeHFEd3ZfbHVOam8ySmE5QXhYQXZUUnk1cE8zTXpOeHh1bjZSVGhYalFSOTBfMGN0S1NXVGllaDU3Rk00YjhMS3RYdGpNT3Z3?oc=5",
-      "pubDate": "Tue, 20 Oct 2026 14:36:28 GMT",
-      "pubTs": 1792506988.0,
-      "desc": "台積電高雄廠工安意外 工人高處墜落「增至4死」&nbsp;&nbsp;太報 TaiSounds",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "415ed0745403d4cc",
-      "title": "台積電高雄廠工安事故4人墜落送醫 相關工程已自主停工",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9rdHZ0MDdCSW56RmtUclpfdDY5V1Q3M0FLLUJ3eGxERjl3Y3VDdDQ2YU5ickhZR0ltSVFGZTMxZzNuX0wtTkMydGJNVi0xSnc?oc=5",
-      "pubDate": "Tue, 20 Oct 2026 12:33:27 GMT",
-      "pubTs": 1792499607.0,
-      "desc": "台積電高雄廠工安事故4人墜落送醫 相關工程已自主停工&nbsp;&nbsp;鉅亨網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "748e2de865727191",
-      "title": "快訊》台積電高雄廠發生工安意外4人送醫、相關工程自主停工- 產業",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1jbzRHVWp0dUV2LUx0LUdCcEV5ajBPSl9nVkVUTXdxNVJqTEt3QW1YWm1TYXROVTJqLVNfZk9KQnVhVFp0UXJzN203T2kyNjkyVUJaRU9nY2FkcUJVUkUw?oc=5",
-      "pubDate": "Tue, 20 Oct 2026 12:13:00 GMT",
-      "pubTs": 1792498380.0,
-      "desc": "快訊》台積電高雄廠發生工安意外4人送醫、相關工程自主停工- 產業&nbsp;&nbsp;工商時報",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "c6c38bf0fb8d54d6",
-      "title": "安衛家族大會師 表揚6特優企業",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1Iek93czBiQUpTNVQwTVAwdlVPcWpiZE9mZ0FMdl9fdnQyTEtmY0xidmZCNXp0NUdfYmxFWmFwLV9xbmtNWHpsVWxVa0hINjB2UlE?oc=5",
-      "pubDate": "Tue, 20 Oct 2026 11:29:54 GMT",
-      "pubTs": 1792495794.0,
-      "desc": "安衛家族大會師 表揚6特優企業&nbsp;&nbsp;中華新聞雲／中華日報",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "ca9daa0391cae1b9",
-      "title": "旅宿業缺工有解 勞動部發布指引鼓勵進用中高齡部分工時勞工",
-      "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1zR0VNMUliSDB1SktkVHhVenNXcWNpQTc4MXFJR21zNUpCb3ctZDc0d19vdTlNUHZSVk9lMzU4X0tFZ3BqUEVfWHlyTE5rT2ZpWmF3OW44dEI?oc=5",
-      "pubDate": "Tue, 20 Oct 2026 11:08:58 GMT",
-      "pubTs": 1792494538.0,
-      "desc": "旅宿業缺工有解 勞動部發布指引鼓勵進用中高齡部分工時勞工&nbsp;&nbsp;自由時報",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
       "key": "56b5c002814018be",
       "title": "局部排氣裝置設計訓練合格專業人員名單",
       "link": "https://www.osha.gov.tw/48110/48417/48423/213467/",
@@ -1772,5 +1750,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-11-03T07:19:42.945714+00:00"
+  "lastUpdated": "2026-11-04T07:01:46.795604+00:00"
 }
