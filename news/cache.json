@@ -1,11 +1,33 @@
 {
   "items": [
     {
+      "key": "dc643ec236da1be2",
+      "title": "前三季重大職災死亡下降9％ 營造業身亡62％屬墜落災害",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBDaEdESDdaQ1JNTXNZZlVMNzY4WjktVUt1NHBUOTlFc25heS03ZFJLbnoweHlFaGpRSnFNOVdjM2c5azJpbUVsVl9hWkRWX0cz0gFWQVVfeXFMUFROTlhuT3RzaUFqbGlTVjRXeUVOWWZzeXlveXBuQk9YUXRGYzlVQ0t1ZkVBRjQ2QjFpNVRUYktrUHJoYlZkOGMtRHBVRlMwYUd6MHdjZXc?oc=5",
+      "pubDate": "Mon, 09 Nov 2026 05:13:24 GMT",
+      "pubTs": 1794201204.0,
+      "desc": "前三季重大職災死亡下降9％ 營造業身亡62％屬墜落災害&nbsp;&nbsp;UDN",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "d599cc47258ec60a",
+      "title": "台南市勞資體育競賽結合運動與職安打造健康樂活希望家園",
+      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5ZaWQ1d3NBNWQ2dmJCRjZxWjN2Sl90UlkwaDhGeFd0N2RNRzNReEJpNktzQWtWSUlZd29qVWh1dmh3ZGFFQ1JWXw?oc=5",
+      "pubDate": "Sun, 08 Nov 2026 06:50:12 GMT",
+      "pubTs": 1794120612.0,
+      "desc": "台南市勞資體育競賽結合運動與職安打造健康樂活希望家園&nbsp;&nbsp;台灣民眾電子報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "5be3eae7bb692129",
       "title": "勞資體育競賽熱鬧登場 結合運動與職安打造健康樂活希望家園",
       "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1fLVdnTExnQ0daRnJ0VG1zY19NTjN1WGtPTW4xVlg2ZFBFVjBQUkpLSVpTamhNaGZ1TE1tNk1JNnpoOUNjZHNMRmQ1RFFOcDlwLW1mYk9SajNhRF9aeldMSjln?oc=5",
-      "pubDate": "Sun, 08 Nov 2026 06:09:39 GMT",
-      "pubTs": 1794118179.0,
+      "pubDate": "Sun, 08 Nov 2026 06:14:34 GMT",
+      "pubTs": 1794118474.0,
       "desc": "勞資體育競賽熱鬧登場 結合運動與職安打造健康樂活希望家園&nbsp;&nbsp;新媒體經紀人",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
@@ -40,6 +62,17 @@
       "pubDate": "Sat, 07 Nov 2026 05:46:00 GMT",
       "pubTs": 1794030360.0,
       "desc": "勞動部與經濟部簽署MOU 推動智慧減災技術&nbsp;&nbsp;蕃新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "0c0fc00dcfdd0fe4",
+      "title": "勞動部、經濟部簽備忘錄 攜國營事業研發智慧減災技術",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE05OFNESGNkVkdEVTZVbUxEX19wUy1sSy1YMkN2Q2pQRTZMdXdZd2FhMktIOHNxS2JvNzBvV2o5QUtzMUF3QnZKU2N3bjMtMm5NYnc?oc=5",
+      "pubDate": "Sat, 07 Nov 2026 04:20:25 GMT",
+      "pubTs": 1794025225.0,
+      "desc": "勞動部、經濟部簽備忘錄 攜國營事業研發智慧減災技術&nbsp;&nbsp;蕃新聞",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
@@ -252,6 +285,17 @@
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
+    },
+    {
+      "key": "683f53afbce59bd0",
+      "title": "持續提升營造作業安全 中市勞工局攜手原民會扎根職安教育 | 王秀禾 | 地方新聞",
+      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9wb3haNTc4TE1qbVR4ZGRiQjM0NUZGZ3RIbWtqSFNET1czTmZ4eENVbG1KNnE5dUZ0UGQyMjdoY0lmOHE2Y2JhR3d2WkE0Zw?oc=5",
+      "pubDate": "Thu, 05 Nov 2026 07:24:00 GMT",
+      "pubTs": 1793863440.0,
+      "desc": "持續提升營造作業安全 中市勞工局攜手原民會扎根職安教育 | 王秀禾 | 地方新聞&nbsp;&nbsp;風傳媒",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
     },
     {
       "key": "1ec8705751e47b83",
@@ -1310,39 +1354,6 @@
       "badge": "red"
     },
     {
-      "key": "4abc785f9dd9842b",
-      "title": "獨家／轉戰開冷氣行！前美女主播認了「1職業傷害」 真實體況曝光",
-      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE40UjNBNDh6VEpaVzhUZFZqSUdNS2dOalRMR3VJZ0VDTU03alREYzhqME5XNnpqUHMtaDBNcDM4ZnNsWmtnWUhjYdIBTEFVX3lxTFBLa2licjNpaHg0WEJ4elJBdTJLcFVnRkpsdFdkdmhmYWNKczNHZ0QzOXMwczRpN3NRZy1nRWxvbmlGUDE5UDBPTlNILUk?oc=5",
-      "pubDate": "Mon, 26 Oct 2026 04:58:02 GMT",
-      "pubTs": 1792990682.0,
-      "desc": "獨家／轉戰開冷氣行！前美女主播認了「1職業傷害」 真實體況曝光&nbsp;&nbsp;三立新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "8c9bbad2207c342f",
-      "title": "曾從有害作業勞工 每年可申請健康追蹤檢查 | NOWNEWS今日新聞",
-      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9wZlpZSjMzZzhDOFZEdS1yOHEtSXV4MHhHcWlaRUViTWFKSXl4UkVCdWVsdUlta2VhR2dZUEhZN00zcGs0RkhlN21OSGdhNlRfSldfMXlB?oc=5",
-      "pubDate": "Mon, 26 Oct 2026 04:35:53 GMT",
-      "pubTs": 1792989353.0,
-      "desc": "曾從有害作業勞工 每年可申請健康追蹤檢查 | NOWNEWS今日新聞&nbsp;&nbsp;LINE TODAY",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "161426da178c4b47",
-      "title": "如何因應新建廠房工安事故| 民意論壇| 評論",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5iS0lwWjdyalNMTzN0djE2VGhOWlFqZHBraUJQNWJjOUxFeHprN216SHV2VVM3bmhYbFJKVkNidlBEQzhFYWVWU2xrdjVwc1l4?oc=5",
-      "pubDate": "Sun, 25 Oct 2026 16:00:00 GMT",
-      "pubTs": 1792944000.0,
-      "desc": "如何因應新建廠房工安事故| 民意論壇| 評論&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
       "key": "56b5c002814018be",
       "title": "局部排氣裝置設計訓練合格專業人員名單",
       "link": "https://www.osha.gov.tw/48110/48417/48423/213467/",
@@ -1794,5 +1805,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-11-08T06:46:27.154714+00:00"
+  "lastUpdated": "2026-11-09T07:19:06.780980+00:00"
 }
