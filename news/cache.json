@@ -1,6 +1,72 @@
 {
   "items": [
     {
+      "key": "493fcf22e15f9b1d",
+      "title": "韓國燃氣安全公社（Korea Gas Safety Corporation,KGS）技術理事拜訪職安署，交流氫能安全管理制度與技術發展",
+      "link": "https://www.osha.gov.tw/48110/48417/48423/216687/",
+      "pubDate": "Wed, 18 Nov 2026 15:00:49 GMT",
+      "pubTs": 1795014049.0,
+      "desc": "115年11月2日韓國燃氣安全公社（KGS）技術理事金洪哲(Kim Hong-Chul)於本（115）年率領4位成員，協同亞太ESG行動聯盟及中華民國工業安全衛生協會拜訪職安署，職安署由萬榮富副署長代表接待，與會人員就「氫能安全管理制度與技術發展」分享雙方制度與實務經驗，聚焦氫能安全法規、加氫站安全…",
+      "source_id": "osha_announce",
+      "source_name": "職安署公告",
+      "badge": "green"
+    },
+    {
+      "key": "d2e856cb57200cd5",
+      "title": "消防職安管理再升級！內政部專家團隊赴馬祖查核 連江消防局全面強化執勤安全",
+      "link": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE1lRXRuaDJ5MGp2YmhBV1U5RjI3aEJkYVBRVzdScFloR2Q0T1psa3U1d1liek5pNGlaQTNiSVRMbFh0OHFJUmlZ?oc=5",
+      "pubDate": "Wed, 18 Nov 2026 05:51:40 GMT",
+      "pubTs": 1794981100.0,
+      "desc": "消防職安管理再升級！內政部專家團隊赴馬祖查核 連江消防局全面強化執勤安全&nbsp;&nbsp;台灣新聞雲",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "018b3ddb40bdf637",
+      "title": "勞動部宣布重大新制！明年全國統一實施「千萬勞工退休金都受影響」， 最新規定一文看",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBtTkI4aGEtOVVKYTZqazJ2em9aejIwN1VHN0RTWVI0RU5hbWFhTGo2b1JoZFdSd0dTY09IZ3FFeWJ3S3MzY3hmQkRhSXZHVGFn?oc=5",
+      "pubDate": "Wed, 18 Nov 2026 04:24:00 GMT",
+      "pubTs": 1794975840.0,
+      "desc": "勞動部宣布重大新制！明年全國統一實施「千萬勞工退休金都受影響」， 最新規定一文看&nbsp;&nbsp;風傳媒",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
+    },
+    {
+      "key": "a9633f315738e475",
+      "title": "時事中文：工傷補償 - 20261118 - 教育",
+      "link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxPb05fRU05WVBJRWlob2YzR21iWDlnREZzN3BsSVctajJONl9LaXJJU2xsVWhvQ1FtQUYyTE94dVZUamlmdGw0ckNtOFl2ZjNFVHhTTFJaMzdmOERrRFBoVGNNcnVkblFQWlJtS0tXc1czMWplZjY3S0ZXZmtSVWw4bFhkcU9CckJNSWxuSGVWQjVwd1Exb0xBQUlIZmx0TlR2V2dYTm80ZU9aXzNQMG1aekZEalhLMnpZNkdGM2QtYklzajNxS2ZVWGp0VjZpVl9BVTQ1c3FWZTFEQnNTOEctUFpSTTI1Q1VYWk1VLU1aMnI?oc=5",
+      "pubDate": "Tue, 17 Nov 2026 20:30:00 GMT",
+      "pubTs": 1794947400.0,
+      "desc": "時事中文：工傷補償 - 20261118 - 教育&nbsp;&nbsp;明報新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "57d330742a97d044",
+      "title": "【23:40 即時新聞】Micron Technology(MU) 重挫逾5%／AI晶片利空與工安事故雙重打擊",
+      "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOVkF1WmcwTVliSUFvRUQ0bmJHdTZFNGpxZ2JiQVNOWDlDaTYyZkRrVzNHWjZ3WUF1a3lGOUVwRW15MXU1MUtIYzQ1cU92dnZXM3FxeFNKbUktOHZnMkFEMzdBSUhfRjItVUR4ZVg3QmJnUlgtSE4wWDNFX0tfNDVCcU5BVlZBVVBOY2FsMVF3?oc=5",
+      "pubDate": "Tue, 17 Nov 2026 15:40:38 GMT",
+      "pubTs": 1794930038.0,
+      "desc": "【23:40 即時新聞】Micron Technology(MU) 重挫逾5%／AI晶片利空與工安事故雙重打擊&nbsp;&nbsp;CMoney投資網誌",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "40110adf265e9271",
+      "title": "臺南工務局強化職場霸凌防治 推動「零霸凌、有溫度」友善職場",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE16dmVRY2FhN2xHNEgtWDd4eVhYYzR5Z2xUNzlBNVhtZzhZUmlQYnYyeFdYbTJDVm1Qcmp0TDBJTTUtTWRWc3c3VFNaV1UzLUEyaXc?oc=5",
+      "pubDate": "Tue, 17 Nov 2026 09:31:27 GMT",
+      "pubTs": 1794907887.0,
+      "desc": "臺南工務局強化職場霸凌防治 推動「零霸凌、有溫度」友善職場&nbsp;&nbsp;蕃新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "3d2a128fcae66f34",
       "title": "拒絕職場霸凌！ 南市工務局傳授「自我保護三步驟」",
       "link": "https://news.google.com/rss/articles/CBMi5gJBVV95cUxNNjZBeE1UVy1MNmtZU2lwVGF6YnVNV0lpQTNZOVJZUU5yTlBYZTVhYk1lREpzVE9QXzNWWWRKZHdEeGFfb0piTlFObmZkWF9Vbk9PQW5MTzRQbjhlWWFobHhIaWJoU216TGNjalVzNUlGeUFOM0ZOZEZCb2tBdHRRdVh3OFV1b19DTktfWFZoZkd0cEVZY25LU0tybldWck1Ca0pBakpoSTJ4MWQzU2o1NVVGNXQzejRTNERpenJBd0owMnJuejltTVctYV9hekJXenlmYTRQRUo0UFRaYzVxbTllY1ZUemZnSTAyOXFGay02d2lhTW9ObTZVLWY2WklBSnNHTDl6MmpBLUppbmhHT0xpWEJrME1NN2ZoNFIxTUFoam9fcWVwTFRRM2hnV0VTYzlWTERidG4wUHllYllXWE90cjExN2FuTUpkOTdUNWEwVlN6T2s1UEV3bFh1cmU2djRzYTV3?oc=5",
@@ -40,6 +106,17 @@
       "pubDate": "Mon, 16 Nov 2026 14:35:13 GMT",
       "pubTs": 1794839713.0,
       "desc": "【22:30 即時新聞】Micron Technology(MU) 跌5.67%／AI晶片族群遭拋售＋台中廠工安意外壓抑買氣&nbsp;&nbsp;CMoney投資網誌",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "188d613f97c1b347",
+      "title": "【22:30 即時新聞】Micron Technology(MU) 跌5.67%／AI晶片族群遭拋售＋台中廠工安意外壓抑買氣",
+      "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNdmVzbDdENE5UOGRLS1JPb0t6VlVsRGxBNjY4MkhZSDJjTUstc1lJZ0NGSHNYUjQ2UXlQZUUzWG5jWmJJNjRmbE85TXBxcXRYQWctQXpWU2xmc01uVXduTFpVTVhOa3lTaDdQaHVBQmwyY1ZuY1RETm56SmN1bzQwVGdCYjd5YzlMWWc4cGd6U0Jja2tF?oc=5",
+      "pubDate": "Mon, 16 Nov 2026 14:30:48 GMT",
+      "pubTs": 1794839448.0,
+      "desc": "【22:30 即時新聞】Micron Technology(MU) 跌5.67%／AI晶片族群遭拋售＋台中廠工安意外壓抑買氣&nbsp;&nbsp;美股放大鏡",
       "source_id": "gnews_incident",
       "source_name": "重大職災新聞",
       "badge": "red"
@@ -89,6 +166,28 @@
       "badge": "red"
     },
     {
+      "key": "53d654c277108bb8",
+      "title": "中科園區台灣美光發生重大職災 管理局勒令停工並強化工程安全管理",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE84SXdvTlVRUEVIWEV1bGg2Ni1UekNnZWZVYzY2UTBpUDZsZ1RIUm0tbjBEcDY1SE15bnNKY1NhY093NHpBRjctamhYdkg1QlZV0gFWQVVfeXFMUHg4WFVNY2VBcHI0MXBFeHREQzc4dVN4d0lzU2tOMXp5TldVSWlvcHp4eHNJZ0xRYVJHLVVrQ1loSHRUbE5YN1lINXdCWnVkUFRqMGtMamc?oc=5",
+      "pubDate": "Mon, 16 Nov 2026 10:39:59 GMT",
+      "pubTs": 1794825599.0,
+      "desc": "中科園區台灣美光發生重大職災 管理局勒令停工並強化工程安全管理&nbsp;&nbsp;UDN",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "e823b0d6163b21bc",
+      "title": "快訊／又爆工安意外！30歲司機被怪手重壓 OHCA送醫仍不治",
+      "link": "https://news.google.com/rss/articles/CBMi2wJBVV95cUxONk1xREdQVjdwSVBVNmVlOG4zRlBPUUNEN25ZOF8taVVFX1hOQTdIOFZaX1l5WTM0a0I2S2RiVGlvcE13d002RnFfcWZLWEpldm15YjZlVGpBVkZXZFdwYmowYmhjUmYzVVFINEZlX2taQ2xjd0twRE1fYVJJWGRrd1Q5enpULUZEOHVTUWZwMU1ESUlySy0yNGFscy1TbDJyNXpoVW9DaFlFU3VSa1hTdDJfakhXZ3FHd3pYbkFNN2lDdFdQTUM5U0pMYVRpSHJLZFc5eFNtczlVbkFDSFJzNzhKS2o2ZUUxTGxYeEJMNXAwcVo0RDJnbDExdnBKMmd5aFFzT1NHeEY0UmhINzRjX084SEdCSUpTRFNMNE1fRzFmUUR1NjZuZVlzcFR3T0drSldUOVZISDN4QkVTT2tiVjlhS0ZlMVg3MTc3TE50dGw5VjNIZzFjUnZWbw?oc=5",
+      "pubDate": "Mon, 16 Nov 2026 09:19:00 GMT",
+      "pubTs": 1794820740.0,
+      "desc": "快訊／又爆工安意外！30歲司機被怪手重壓 OHCA送醫仍不治&nbsp;&nbsp;Yahoo新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "25d0ba787560bcd6",
       "title": "台中廠突發工安意外釀1死！美光急宣布停工",
       "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBlZkRQZ3NMbVpKU3FILWk3VUdodGVLLU5DLWN6QXFLR050Z3FGal9reVktTHc5eG42NFV6NEdiZmc0QnJsTHBLMTJzeTBqOEcyeENEZlN3UWxzUQ?oc=5",
@@ -128,6 +227,17 @@
       "pubDate": "Mon, 16 Nov 2026 08:03:13 GMT",
       "pubTs": 1794816193.0,
       "desc": "元大金控舉辦供應商ESG交流會 攜手供應鏈打造永續韌性健康職場&nbsp;&nbsp;蕃新聞",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "08ff5ce89d229029",
+      "title": "元大金控舉辦供應商ESG交流會 攜手供應鏈打造永續韌性健康職場",
+      "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5aOEdYYjQ0UC1lSldSUjAxTkVEcjZ0UGhQcHloRW5KYmFxZVFhTWxfSG56STdLcWRxcG9TNmpvWFRCNHRTRFB6eG53UDc4U3ZXa1g4WmNhOEJGdw?oc=5",
+      "pubDate": "Mon, 16 Nov 2026 08:03:13 GMT",
+      "pubTs": 1794816193.0,
+      "desc": "元大金控舉辦供應商ESG交流會 攜手供應鏈打造永續韌性健康職場&nbsp;&nbsp;中央社 CNA",
       "source_id": "gnews_ohs",
       "source_name": "職安衛動態",
       "badge": "purple"
@@ -1299,83 +1409,6 @@
       "badge": "red"
     },
     {
-      "key": "859cf1392834c575",
-      "title": "前三季重大職災 營造業死亡逆增 逾7成為下包商勞工",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE91QjBpYmJFcUZvS3JCM0tjbF9JLXl4cDJoTXRsd0VRVW1Pc0dhVWVSenZiLUxSNzJzcnljb1BSal9BMFd0OFRacU1TUmR6N2lr0gFWQVVfeXFMTlh2NkV6djRETHk3OURYWm5GOGNaQ3pHNjBheW52bWpsWkl0cHA2SXVad3Nkblo3VmJJa3NGNm9iRjdyQzhBdjV6a0t2N0dJamZTTmtQemc?oc=5",
-      "pubDate": "Wed, 04 Nov 2026 08:00:00 GMT",
-      "pubTs": 1793779200.0,
-      "desc": "前三季重大職災 營造業死亡逆增 逾7成為下包商勞工&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "d8d6fd51d66d6bae",
-      "title": "拜票變《食尚玩家》！高雄參選人張以理走到哪吃到哪 網笑：職業傷害是變胖",
-      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFBFTEtndU1rdjExdmlqc3ZGWUNNOG1WVkJIbTF5RjNiY1ZWS0FTRzhodkxnUWVORExXQ0pKQWNnMHFrZjBJdTh0bkdYRQ?oc=5",
-      "pubDate": "Wed, 04 Nov 2026 06:23:00 GMT",
-      "pubTs": 1793773380.0,
-      "desc": "拜票變《食尚玩家》！高雄參選人張以理走到哪吃到哪 網笑：職業傷害是變胖&nbsp;&nbsp;FTNN 新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "797fa278656664a6",
-      "title": "新北捷運三鶯線工地水塔發現男屍警排除工安意外- 社會",
-      "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE54VXFnMGVaV3JVOHZkM1NmN0tCODZqcW1zS0RJck5iNjZxQmlScUxzN01DcUdfUy1wVWlaOGZWeWpkWURsV0lva0RGMDUyRzdkZXI3Smg2WmNMWXhxNHZsbGxsQjBXa3VFOFVSRFBfVXk?oc=5",
-      "pubDate": "Wed, 04 Nov 2026 05:15:39 GMT",
-      "pubTs": 1793769339.0,
-      "desc": "新北捷運三鶯線工地水塔發現男屍警排除工安意外- 社會&nbsp;&nbsp;華視新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "f0ba218293e57f42",
-      "title": "觀點投書：六條人命換不來安全警鐘？從重大工安事故檢視台灣職安改革的迫切性 | 鐘志明 | 評論",
-      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE80aGg2a29sUnREOWRtRzVZU3M4X0pzcEVNWXh5TDNHc05zNFJ5UnJoQl9QOW9nVlFiZkFOWVJxcF9MaUNxVnpGY19TRnR0Zw?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 21:22:00 GMT",
-      "pubTs": 1793740920.0,
-      "desc": "觀點投書：六條人命換不來安全警鐘？從重大工安事故檢視台灣職安改革的迫切性 | 鐘志明 | 評論&nbsp;&nbsp;風傳媒",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "f8cc352120601ddb",
-      "title": "前三季重大職災營造業死亡逆增逾7成為下包商勞工| 職場觀測| 生活",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE91QjBpYmJFcUZvS3JCM0tjbF9JLXl4cDJoTXRsd0VRVW1Pc0dhVWVSenZiLUxSNzJzcnljb1BSal9BMFd0OFRacU1TUmR6N2lr?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 19:01:42 GMT",
-      "pubTs": 1793732502.0,
-      "desc": "前三季重大職災營造業死亡逆增逾7成為下包商勞工| 職場觀測| 生活&nbsp;&nbsp;UDN",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "75ac682e26762134",
-      "title": "前3季重大職災死亡193人 營造業102人增加9人 墜落占62%",
-      "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPUGUxcDZIN0xUS2xFYTFsR0lHeVVwNFJzWTZBMEJXRTRDOWRKWHMzX29qY2dyTGpjOE1nekZmTnc1T3VBNlc2cndERVJGck9CeWNDczUzNkNwUjBQRXpCT1pjN2x4cTZJam4tcnMwZWZHVDg4REJiRmhWN2g5cXc3U2gwMk8?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 17:35:05 GMT",
-      "pubTs": 1793727305.0,
-      "desc": "前3季重大職災死亡193人 營造業102人增加9人 墜落占62%&nbsp;&nbsp;索引新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "1c2c73f8bda9ffc2",
-      "title": "北市勞檢處職安衛論壇 產官學共商職安法新制源頭管理",
-      "link": "https://news.google.com/rss/articles/CBMi6AJBVV95cUxOQWtVbnlvc09YU0g4cUpKV2U4bXJtb096OWFaWUNoSVN5TDRZSTFiNTIxcGNCS1JXZGltRWs5WUp2bGtoWGRIWFhrMnRWNUNiUURySVd0VVhYdVVZSFdOZWlJaVViYVNSTWJUSXQtSGJvX0FXZF9JSExpc25KMUUtdTh4RWhseVphS2ZqMW9oMGlXRk83clhTZnpxSUZYOWdPdlJ1M3h5SlhUVFlBT2hzTUJaN2R0dS1rTFEtbEY1Y3RrVXh5YkVuZGxOR2tqZXRYcWNqN090amYxV2VsV184dFQ5Vld6ZjlBOUNBWEIzdjFHNUhKTEJPci1LSDFucmJUbFQ5UTJSQVBRNE1LSWh5M3gzTGVaOXdCYmpsNGZ2Zk0tb0R0RENiRFlLR3pYQUdRdlVEaXJqUjNEQW1PSWhpRTA5bXpuQlNibWk3b1RTWFI5c1R6ZTdTYTFoOXRFY1dWUUV3d0ZEYk4?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 16:06:32 GMT",
-      "pubTs": 1793721992.0,
-      "desc": "北市勞檢處職安衛論壇 產官學共商職安法新制源頭管理&nbsp;&nbsp;報新聞 Mega News",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
       "key": "8e998e44657d52bc",
       "title": "職安署表揚局部排氣裝置優良設計案例 促進專業技術交流與實際應用",
       "link": "https://www.osha.gov.tw/48110/48417/48419/215114/",
@@ -1385,83 +1418,6 @@
       "source_id": "osha_announce",
       "source_name": "職安署公告",
       "badge": "green"
-    },
-    {
-      "key": "4940b5dc26b61917",
-      "title": "臺東推動「臺灣職安卡」教育訓練2場次200人次參訓- 生活新聞",
-      "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNMU5OdEtXYUhsbkpVWXBuYzFQeXFQUTBPVVRLYVBhbGpqaXpST3pIdVFjV2JrbjZzUURXYUxYQjlmc1ltajVsZDEyc3dTTk9UNk1hZjFOVEJ1T2VfSVFxTGRBVktmd3l0aFpKalN1dVVNem5DZGhVMXB4UUpGMElmS3dCLVloSm81RzJtYnRmOXBrT28?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 13:39:15 GMT",
-      "pubTs": 1793713155.0,
-      "desc": "臺東推動「臺灣職安卡」教育訓練2場次200人次參訓- 生活新聞&nbsp;&nbsp;PChome Online 新聞",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "cd873cf64432e858",
-      "title": "科技業趕工擴廠釀危機！今年至今20勞工死亡 職災增幅逾5成",
-      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5hYjNvSVRINnRRa2dQN3pvaF8xV3JCQ1BrYk1CZ0NxX3FJNmpxQ3FIVzlGamZYZEFyVm9EcUQ2M1A1QkdaS0tvbUFNWXlMc2d4VlRDOUZfalo5bVZrRkY3Yy1HLXdxenF0RllyblRn?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 09:43:20 GMT",
-      "pubTs": 1793699000.0,
-      "desc": "科技業趕工擴廠釀危機！今年至今20勞工死亡 職災增幅逾5成&nbsp;&nbsp;中時新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "262696f4715429b1",
-      "title": "科技業趕工擴廠釀危機！今年至今20勞工死亡 職災增幅逾5成",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE91Qnp4bmdqMndzWUliaFZ4UXR1aDlpQjlCQkFfbzU5cVJsdjFSWk9mODJ2ZWhFTEJ4TDRLaGhTc2tKRm45VDFfRlpQUFVxRk9xN1pWYWJULV9SS29hZS1n?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 09:43:00 GMT",
-      "pubTs": 1793698980.0,
-      "desc": "科技業趕工擴廠釀危機！今年至今20勞工死亡 職災增幅逾5成&nbsp;&nbsp;工商時報",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "f7f0ddc7ef91b01a",
-      "title": "職安署示範施工架爬升與鋁模 營造標準第17條：先用工法減少高處作業 - 墨新聞-MORE News",
-      "link": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE1kR0EwMnhuR0o2WEdha25mS0lYVW5UT3FsQjZSY1ZJdGdkRjJBODY1RzN6QTExVElIZWNwOXQ3U2M2UQ?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 08:59:03 GMT",
-      "pubTs": 1793696343.0,
-      "desc": "職安署示範施工架爬升與鋁模 營造標準第17條：先用工法減少高處作業&nbsp;&nbsp;墨新聞-MORE News",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "c7dfaf755688fe17",
-      "title": "職安卡新制：6小時分2單元 2027年7月1日起進營繕工地須先受訓 - 墨新聞-MORE News",
-      "link": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE9iQm5WRXA5QlJ5ZFB5aXBBdmF0ZUFOcGJ4NHhnNDVaNHFZUUxiTU5KUGFNTDhvdURqTklISlBTY252dw?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 08:59:02 GMT",
-      "pubTs": 1793696342.0,
-      "desc": "職安卡新制：6小時分2單元 2027年7月1日起進營繕工地須先受訓&nbsp;&nbsp;墨新聞-MORE News",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "d277787702e47190",
-      "title": "台積電工安事故頻傳今年已釀6死 民團批未見改善籲建立股東監督制度",
-      "link": "https://news.google.com/rss/articles/CBMivgNBVV95cUxQbWlFNUJLZ25zV3pyY1F6dmQzdGktVWk5SWZ1VlFUcVkzYnJoaFg4NTlTQUVMcEd1UE5kc2dpajNfOE9hZ3NPbzFvQ2R5UHRoeFlWRWZ1TV9MV2FIZlpjV3VXaTBRSWp5U1BFQ0x5SUozeWF0U2JkUGNMZDZORHpwOHJuNVlpalNzN0k5YWVDS3ZuTndhZWNzcm0tc1BfYWF2S0kycG9uQ3dCb1l6aXYySTNtbzY3LWpTUW5DQVdzTlFtaVkxYjdmcnA1R0I4UW1WZ2Vfc0txdzFlY3JfRkF3TTZXdC1zZjF1YlNiY08yQ2tyRGUwUkR1bFlfcUxOVGlJcWhLR3V0akYtUXNZd2VNNkdwWF9zSHZNWXlHcVZxS3dsMmp5aU11Y1R4M294eGsxOUNTQTZRSFNUdzd5RndfNGx4dkh6ZTV1NnZQWUJiSGtiX1RuUENzNThhcmVqZUJLZEw4dWh3RUNsejJFM2VOLTRvLTM5b0VJaUk3R0pLWkFXQTdmR1FSVjFkVjN1bEpKVWRpdWpxSWtWY1hvNWdIZi02bmdNWjRLUFJhdGNXbmxLRFJjNVZrTXh6enZpZw?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 08:39:00 GMT",
-      "pubTs": 1793695140.0,
-      "desc": "台積電工安事故頻傳今年已釀6死 民團批未見改善籲建立股東監督制度&nbsp;&nbsp;Yahoo新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "00a3e419bbc7df74",
-      "title": "台積電工安事故頻傳今年已釀6死 民團批未見改善籲建立股東監督制度",
-      "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFA5UHFPNVlVdXRTa1hKNnZRQVdLWWRCRmJ1cTdzTkU1Wm9tblV2Y1ctcmNnQTQxaXpEbzdxWDVsV2U2aDdMbW9KcnRld1NCel80T2JxUmM5bDNfdw?oc=5",
-      "pubDate": "Tue, 03 Nov 2026 08:39:00 GMT",
-      "pubTs": 1793695140.0,
-      "desc": "台積電工安事故頻傳今年已釀6死 民團批未見改善籲建立股東監督制度&nbsp;&nbsp;上報Up Media",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
     },
     {
       "key": "e35e990e0dff4989",
@@ -1937,5 +1893,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-11-17T08:36:50.393632+00:00"
+  "lastUpdated": "2026-11-18T08:00:13.362500+00:00"
 }
