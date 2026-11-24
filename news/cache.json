@@ -1,6 +1,138 @@
 {
   "items": [
     {
+      "key": "166e844a1fb4b83e",
+      "title": "職安署舉辦「2026年科技防災與職場安衛管理實務研討會」，從法規遵循邁向風險預防，公私協力共築安全健康職場。",
+      "link": "https://www.osha.gov.tw/48110/48417/48419/216818/",
+      "pubDate": "Tue, 24 Nov 2026 12:58:16 GMT",
+      "pubTs": 1795525096.0,
+      "desc": "為落實「職場減災行動計畫」，推動職業災害預防從法規遵循邁向源頭風險管理，勞動部職業安全衛生署於115年11月24日在臺大醫院國際會議中心舉辦「2026年科技防災與職場安衛管理實務研討會」，邀集產官學界交流高風險作業管理、製程安全及AI科技防災實務，並表揚長期投入職業安全衛生工作的企業及地方防災人員，…",
+      "source_id": "gnews_law",
+      "source_name": "法規更新",
+      "badge": "teal"
+    },
+    {
+      "key": "16a89e5b94e65969",
+      "title": "高雄水泥廠爆嚴重工安意外！印尼籍移工慘死勞工局勒令停工| 社會",
+      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE90d2RkektLMHFMU09xdkxHWDJVbm0xUk0xM1I2SHVpcWkyZ0MyLW1nNURqXzdWd3hsaWtwdlZjUW53Ujh4bUl4dURGa0E3YnMwbjhxdVNUVGZMOE0?oc=5",
+      "pubDate": "Tue, 24 Nov 2026 10:27:34 GMT",
+      "pubTs": 1795516054.0,
+      "desc": "高雄水泥廠爆嚴重工安意外！印尼籍移工慘死勞工局勒令停工| 社會&nbsp;&nbsp;Newtalk新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "bf39813c509d2d1b",
+      "title": "中信造船：高鼎遊艇因違反職業安全衛生法，遭高雄市政府勞工局裁罰100萬元- 股市爆料同學會",
+      "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE8weGh6S200T05qTktmSWJjYzFZQUpleXZpRU85eTN5b3pIQ2ZObnUwOU5Rc2JhZldrRGVIUFgydTE0U1hVMHUxMU83V1hJdlliZHBUZC1lNWc?oc=5",
+      "pubDate": "Tue, 24 Nov 2026 09:21:47 GMT",
+      "pubTs": 1795512107.0,
+      "desc": "中信造船：高鼎遊艇因違反職業安全衛生法，遭高雄市政府勞工局裁罰100萬元- 股市爆料同學會&nbsp;&nbsp;CMoney",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "74e921471d17a504",
+      "title": "南市安衛家族運作暨輔導績效卓著獲表揚",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFA0bHowQzFuWUxEUDlmbndfODJNYmRwT01mQnRwUUJ6SmprZ21hWE9hbTdHNW9OU2NfeHhPVElxYXMtRUxUcjdSM080cWRXcDFfRXc?oc=5",
+      "pubDate": "Tue, 24 Nov 2026 08:51:04 GMT",
+      "pubTs": 1795510264.0,
+      "desc": "南市安衛家族運作暨輔導績效卓著獲表揚&nbsp;&nbsp;中華新聞雲／中華日報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "d5bf6f0f334b2340",
+      "title": "消防職安跨域觀摩 金門借鏡科技訓練強化勤務安全",
+      "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1TdzR2am0wYV9OZjc5T2VMeTUxUTI5ejJNbDBrcUdWYmxmTmRXNFV1R1ZQWlJ1YkwxQUd1clBHMzVQUWZIMWxCY3Y0dnFweV83MWI3ekY0SVRxTFpBcGFyRmdxYzhHa0tJRHl0U2FrUXY5N0VrZGhjRDhXSHo?oc=5",
+      "pubDate": "Tue, 24 Nov 2026 05:23:39 GMT",
+      "pubTs": 1795497819.0,
+      "desc": "消防職安跨域觀摩 金門借鏡科技訓練強化勤務安全&nbsp;&nbsp;金門GO資訊網",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "66f2cd0673c35877",
+      "title": "驚悚！大寮水泥廠奪命工安 30歲工人墜3米混合槽「慘死輸送帶」勞檢勒令停工",
+      "link": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFB3RGV4R1JWaXhHQVFfN2NmRXVQNk1fOE8zaGZDWTI4Ullnd0dzOGY2dDc0UTd2TmJQdlAwNno2c1RpMVhDUXhXRUlxM2U2ZjFpZXBwTW0zWmJOQm9MSDY3c2hhYw?oc=5",
+      "pubDate": "Tue, 24 Nov 2026 01:40:00 GMT",
+      "pubTs": 1795484400.0,
+      "desc": "驚悚！大寮水泥廠奪命工安 30歲工人墜3米混合槽「慘死輸送帶」勞檢勒令停工&nbsp;&nbsp;鏡週刊Mirror Media",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "283f90d9a556fc54",
+      "title": "金門消防職安跨域觀摩取經 科技創新結合科學教育 打造安全健康消防職場",
+      "link": "https://news.google.com/rss/articles/CBMiREFVX3lxTE4tMFQ4cVBSQWs0SThsSFhveWd1R0ZhMk5XeXliajNxQVlsTkU0aTcyVDRZa21fdzdhZkFFWVVrMllaWUkx?oc=5",
+      "pubDate": "Tue, 24 Nov 2026 01:33:00 GMT",
+      "pubTs": 1795483980.0,
+      "desc": "金門消防職安跨域觀摩取經 科技創新結合科學教育 打造安全健康消防職場&nbsp;&nbsp;全國旅遊時報",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
+      "key": "73eaec656c0c7e1d",
+      "title": "高雄大寮傳工安意外！30歲印尼移工墜落水泥槽送醫不治",
+      "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9IQ1FiZHdORURWMXNVTE5HOXcxd0otaU96YkQ0WERZejZGbmsyODFrdmo5RHBHT1pBUzdub21qUkZrYWxkT0tWdlVPWkM1QVIzQUpSdGpla09zcy02QWJmTE1WbUUxVzJ20gFuQVVfeXFMTlc4VlJGeDc2NzdwbVJNQzVYa0tJaDVkeV8wbHREOEhxOHpiakZYdWtrQzB1c1Z1TGRjOEltS3l0VktSN2lPY29RdzhkMmliVjlneDh0cmp0enVHLXFNR2xBRjhUUk1OLUo5cVJ4aVE?oc=5",
+      "pubDate": "Mon, 23 Nov 2026 12:07:51 GMT",
+      "pubTs": 1795435671.0,
+      "desc": "高雄大寮傳工安意外！30歲印尼移工墜落水泥槽送醫不治&nbsp;&nbsp;自由時報",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "bab5f62880b3332a",
+      "title": "快訊／高雄工安意外！外籍男墜落3公尺夾輸送帶 失去呼吸心跳",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9HTHpwbnJCcVhuUEFySUdWazBNT2E3WTYyMFNNSUZCS2FoTy1qTElWZGY3SnEteWdxZEFzVnJvZTZHaXF6SVhPWkloYnhwcjQ?oc=5",
+      "pubDate": "Mon, 23 Nov 2026 11:06:00 GMT",
+      "pubTs": 1795431960.0,
+      "desc": "快訊／高雄工安意外！外籍男墜落3公尺夾輸送帶 失去呼吸心跳&nbsp;&nbsp;TVBS新聞網",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "e62e834d4a6810f1",
+      "title": "快訊／悚！高雄水泥廠工安意外「工人遭夾輸送帶」無生命跡象",
+      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE92LTUxX1VGQkxqRTNBdGhJYXNGaUQxZjk0aFdoWmlVN2cwZXREZFJiajZjcGRYbEZDejE1LVdUeHZGdUdBOGlxM0pFY0gxUQ?oc=5",
+      "pubDate": "Mon, 23 Nov 2026 10:45:00 GMT",
+      "pubTs": 1795430700.0,
+      "desc": "快訊／悚！高雄水泥廠工安意外「工人遭夾輸送帶」無生命跡象&nbsp;&nbsp;創新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "d2540a228e2c5404",
+      "title": "快訊／高雄水泥工廠工安意外！工人高處墜落「夾進輸送帶」無生命跡象",
+      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBrbDR6c3hrb3hCWVM5R3h2UFhNbzlqU180TkJkOS1HVWVSblNBd2hMd1JTU2o1WW0wVG9EbjJ5d25FdVlxX2EtZ9IBTEFVX3lxTE40QVVvT01SNXBVSzNCak1zSDY1UUdRd2lCRkQyU0dkUWJ6Z1plTmdTRHVubHBnUVBLN1BqMnFwMlpsZEVsV1VjWDhlTDY?oc=5",
+      "pubDate": "Mon, 23 Nov 2026 09:50:00 GMT",
+      "pubTs": 1795427400.0,
+      "desc": "快訊／高雄水泥工廠工安意外！工人高處墜落「夾進輸送帶」無生命跡象&nbsp;&nbsp;三立新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
+      "key": "df9250e6eb977221",
+      "title": "遇到職場霸凌，可能因為不同狀況不敢在工作期間申訴，這樣該怎麼辦？ 勞動部職業安全衛生署指出，即使霸凌行為終了已超過3年，勞工離職後1年內仍可提出職場霸凌申訴。 你不可不知的重要權益》https://reurl.cc/gN9XLz",
+      "link": "https://news.google.com/rss/articles/CBMimwhBVV95cUxOdGw3T3dzRFVwRHFJTWpuMklCdGZaWi1yVExBN1g0bXN3REdtTHhpU0o5SHpzNjc4Sk84SzEweHdCRkV5TWlJNGV6enRPQmJzeFJmclJqdndfWDYtbU1jSWp4ZkhkZGZfVUNTNjY5X2xvSWFNQ1BYYm1SbFd1TDlfVFQ4WmRUY3VORUFyVUhyVnRMT0ZLZ0xRbHB1bVVQYmJGUlFnenhramd6cDdGVjJEU0hkUXZ2UFZQMEx1N3BZQ0xGTW9GM25ya0dwZm8xdnh3ZXZ1a2h6UVVqcWtscTZJeEd3eEdkTWxEYnZGNU5mUHlDLWFFZXZIaENabVNmUlBlSkJ3NHJmbnBhWWhjdGRCNlFlZDk5ZW9LVGN4bVVfZkd2Q3JiSXoyNXgtbWJyZFcxY2Nza0ZhTmZReEdQeWRmdHFVcW11cXA5bWpSeU5PQnBEeE9wWlVDN0NxUDgtQ25hWWhZeE9fWDN4R2U3eHNkVDFudXNucGJmMzM1YldDN05BUDNYVFB4Y2JyOWR4akdfWHljNnJTRmoxUGxrN3d0VFhBcDRNM1FtX1VybGhUcVNqMlNyOHI1YnY4OGl6SjVES3IyM2NiSElSOXc3SEp5U1dOSjMzUzRzdm00YzNudkFjUFZWNmw2aXFIVERqdVJDbWlUUHh3UC1fdWRWUUJUSGFFb1JJTXBkNG43cUp2d0FITHZQOVRjdGNVYUNtaTExSUpKczJtaHRhbDMzZ2dDdVpnS2pxWEtObVlGVmpfTERqY3VLWDFoNGxjWkpVeW55eVVLYUFtWDdCcWgyLWUzbjB3TjhtN2sxY1pBNlZ5UkNTY1dQRlg5OEZRYUpqN1JIT1hQanZ5NXBTVU5MV2U1SlpsdWZJUGt0aVMzbllQWXBrajdsanZpVDIwMUJRQkd4VklBSG1jVGZJLTkta0F6clZhUlNZSXA3VFB0T05xZ0VGamdpaURhNDlfVi1EWklIZXJZdW1UZC1SVmlRZHZZLUNmbTVhaWlfWXM2UmZMNkQxUHdRZnpnS2lZdHJLd3B5NGhUQjBIZWFuWkI4QVh5elhCaEFId2xKZUh0cTBUOV9BZkRBdzNyWHZCWTctTkI5R0J6Y0FMTXRnRHdJTk5QeGVic3dacEFjRnZSWURQOHdyb3g5Y2JEcnhKWVAxUVNSZW9fQmFFYzRtOGIwbkljc2VKWFVrZU5jM3dRaF9LQTRMMFFpcnBmQWJiTWl4cW1HdWQwcEIya3RscmltSXVPMnVwaWtRNFowU3VRWU92djJQSTZLczU2Zy1FWGY3aFltdm1ueDR4alZlOGZjM19yMXNwbjdPOHRNRVRhaDFra2RRUzNCYVMzYkUwdEdlUDk1Z0Z4d0stYy0wcE5WYW5nYWhJcVJkYnB0empF?oc=5",
+      "pubDate": "Mon, 23 Nov 2026 08:40:35 GMT",
+      "pubTs": 1795423235.0,
+      "desc": "遇到職場霸凌，可能因為不同狀況不敢在工作期間申訴，這樣該怎麼辦？ 勞動部職業安全衛生署指出，即使霸凌行為終了已超過3年，勞工離職後1年內仍可提出職場霸凌申訴。 你不可不知的重要權益》https://reurl.cc/gN9XLz&nbsp;&nbsp;Facebook",
+      "source_id": "gnews_ohs",
+      "source_name": "職安衛動態",
+      "badge": "purple"
+    },
+    {
       "key": "fa8fa406dc0bfabf",
       "title": "職場霸凌終了逾三年 職安署：離職後一年內仍可申訴",
       "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFBKX0pvSnBpQTNEc1QzeU1hMTNMdlRHc1FjN3Uwa3JKUEhHLU5VcWs1Rnl2X2VleUFhcXhNWWE1WFRwTzl5SV9FaXN3aHdBd21oYkRKM1Vzb1c?oc=5",
@@ -122,6 +254,17 @@
       "badge": "red"
     },
     {
+      "key": "bc48e9408fc4680a",
+      "title": "別省小錢花大錢！雇主未幫勞工保災保 罰完錢還遭追繳保險給付",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5MWmNtZExIWm5xaEZFT0F4NnBPUEplR2laU3hQWWxUYmpZZVdUeEJMc1c4N2Y3YjFldHhydVFXVWVsLUI3Z2ZRZERSd0JndlRaTUHSAVJBVV95cUxOTFpjbWRMSFpucWhGRU9BeDZwT1BKZUdpWlN4UFlsVGJqWWVXVHhCTHNXODdmN2IxZXR4cnVRV1VlbC1CN2dmUWREUndCZ3ZUWk1B?oc=5",
+      "pubDate": "Sun, 22 Nov 2026 01:43:57 GMT",
+      "pubTs": 1795311837.0,
+      "desc": "別省小錢花大錢！雇主未幫勞工保災保 罰完錢還遭追繳保險給付&nbsp;&nbsp;NOWnews今日新聞",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
+    },
+    {
       "key": "7d88bebd60ee844e",
       "title": "中部五校攜手舉辦職安衛研討會 中臺科大結合勞安所實境體驗深化實務力",
       "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1mMVpxMXM5d2hweUlVeTdTOUZab00zQk5JLXBjUVlsZ2JpaXVzaWYwc2pDaU5IdDByQ1dEVE1ORE11QTYzb2pvMlQ4MzVJc0lnS1E?oc=5",
@@ -208,6 +351,17 @@
       "source_id": "osha_announce",
       "source_name": "職安署公告",
       "badge": "green"
+    },
+    {
+      "key": "3a8436022135302b",
+      "title": "[雇主注意職災保險漏保恐遭追繳百萬元勞動部籲到職即加保]",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1lVUJpTlVaM2xVbGVGdzNEMlgxNW5ZMkxCbm56ZTdFX21jcG5VWDFTa0xiaGlsZWt3MjBUTFotcGFXMkNfNUlJaWZkT3B5NFpGT0HSAVJBVV95cUxNZVVCaU5VWjNsVWxlRnczRDJYMTVuWTJMQm5uemU3RV9tY3BuVVgxU2tMYmhpbGVrdzIwVExaLXBhVzJDXzVJSWlmZE9weTRaRk9B?oc=5",
+      "pubDate": "Fri, 20 Nov 2026 06:28:00 GMT",
+      "pubTs": 1795156080.0,
+      "desc": "[雇主注意職災保險漏保恐遭追繳百萬元勞動部籲到職即加保]&nbsp;&nbsp;1111人力銀行",
+      "source_id": "gnews_incident",
+      "source_name": "重大職災新聞",
+      "badge": "red"
     },
     {
       "key": "bb2fb1fffdbbe0c5",
@@ -1090,160 +1244,6 @@
       "badge": "red"
     },
     {
-      "key": "3dfe9a059cbe7b23",
-      "title": "台中4單位3人獲職安殊榮 盧秀燕頒獎表揚",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1UQjVYWjg1emFNWTZJQ29fRjhiUE1kWDk3ZHFlTGVQXzdUU1hrYmFXZXZ5LUwtSEpyNjJ3cG82MkFpb0JRTGhyaTdVS2N5VTNtaWc?oc=5",
-      "pubDate": "Tue, 10 Nov 2026 10:30:08 GMT",
-      "pubTs": 1794306608.0,
-      "desc": "台中4單位3人獲職安殊榮 盧秀燕頒獎表揚&nbsp;&nbsp;蕃新聞",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "410789229e91881b",
-      "title": "台中4單位3人獲職安殊榮盧秀燕頒獎表揚- 政府消息新聞",
-      "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPYVUyNl9sVXFBR3lRNFkycElnc1k2RHVjYS0tdmw4clFsWVhRZmc2aXhFZnp6eGFOa255bXV5bjMzQkZjQnNMcGx3Q1hPeklKbUlGeW11bHlBMmhXbWZtREZOenN6UF9jYlJ2bEZCTE9JTnlkZEV5UlpIX2dZTXVHaFVoTFFEZVNFWXc?oc=5",
-      "pubDate": "Tue, 10 Nov 2026 10:15:26 GMT",
-      "pubTs": 1794305726.0,
-      "desc": "台中4單位3人獲職安殊榮盧秀燕頒獎表揚- 政府消息新聞&nbsp;&nbsp;PChome Online 新聞",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "bd7d52882b40ea17",
-      "title": "中市4單位、3人獲職安優良獎 盧秀燕頒獎肯定守護勞工安全貢獻",
-      "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1mckMtQkFYVk5KTzY1VUJZRXhtUWVaUXQtUE4wRW9XMG9kRnhVU3ZjelU3QklXay1zSktiVVI5clFaaUk4QjgtS09jYjVDWTRvbi1sc0dIYzA?oc=5",
-      "pubDate": "Tue, 10 Nov 2026 09:56:00 GMT",
-      "pubTs": 1794304560.0,
-      "desc": "中市4單位、3人獲職安優良獎 盧秀燕頒獎肯定守護勞工安全貢獻&nbsp;&nbsp;新華報導",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "77bea04ce4ec695a",
-      "title": "臺中市4家單位及3人獲職安優良獎項",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1yYXF5Y2JUYVhodzJfTGY3emZURUZuRnYtaW1BWjFwLTIyWW4tOUtLbEJHS2RlTEF3TTJnTUZrVlJSZUl1VW40WXllOENDZC04dWc?oc=5",
-      "pubDate": "Tue, 10 Nov 2026 08:28:52 GMT",
-      "pubTs": 1794299332.0,
-      "desc": "臺中市4家單位及3人獲職安優良獎項&nbsp;&nbsp;蕃新聞",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "c1efbc19b6b07445",
-      "title": "鼓勵民間團體踴躍辦理職災預防及重建宣導，勞動部放寬補助規定",
-      "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE03bHl4ZUdxNkVDUXBzdjh6QkUtTzFIbjdUOEp5OWY5d25LRE00ckVFSVg5NmZpd0dGZ2xaZnFnQTlkTm9sWkh4RGNPd3A2dk1DQlJ3WVN3NTA?oc=5",
-      "pubDate": "Tue, 10 Nov 2026 07:52:02 GMT",
-      "pubTs": 1794297122.0,
-      "desc": "鼓勵民間團體踴躍辦理職災預防及重建宣導，勞動部放寬補助規定&nbsp;&nbsp;勞動部全球資訊網",
-      "source_id": "gnews_law",
-      "source_name": "法規更新",
-      "badge": "teal"
-    },
-    {
-      "key": "463cabb3e0cfd050",
-      "title": "職災宣導補助放寬 三大新制增受理機會、加速審查",
-      "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOeGxJLUFWdXk2c1ZRS0JHUGV4ek55RXljVEJERmZFUWRtanZzeFVBMHRvU05mZFlicXNnM2ZnbEZfa3gxUFNHVnRkUl9raHFOMWdJd29xd1o0VEpZLXpiRW9SVzBSOF9NTHVUeTZOdkRucHBxM3Vpeno5ckNZaHhpWUhmelZnS3d1T1Aw?oc=5",
-      "pubDate": "Tue, 10 Nov 2026 07:36:45 GMT",
-      "pubTs": 1794296205.0,
-      "desc": "職災宣導補助放寬 三大新制增受理機會、加速審查&nbsp;&nbsp;PChome Online 新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "ac1c223a5f06148d",
-      "title": "松下廠爆炸釀2死5傷！丁酮疑外溢遇熱源瞬間引爆 消防設備竟全在爆炸區「自救能力歸零」 | 社會 | CTWANT",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1iQ1NNdVRGQXJmRmgzb1VLNF9Ha2lEQUpjT3RNYUlDa2d1ZFNsdk5fMWtfRXdPYTItNzBJcTFFNFdheTIybG1oMF8zclh4SlnSAVRBVV95cUxOWmdSSVdsM3JsTFhTYWVxcUoteFdGMjNMWTVZSTVzRWdORjFfTU9sUDZRSk93STNtMnhmLWV6cTRhNmlwRWdjdXdlZHlKb3pWYm13Zk0?oc=5",
-      "pubDate": "Tue, 10 Nov 2026 05:17:40 GMT",
-      "pubTs": 1794287860.0,
-      "desc": "松下廠爆炸釀2死5傷！丁酮疑外溢遇熱源瞬間引爆 消防設備竟全在爆炸區「自救能力歸零」 | 社會 | CTWANT&nbsp;&nbsp;CTWANT",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "2ef4f052d18098e6",
-      "title": "以為大地震！鋼鐵廠爆炸多人死傷 恐怖畫面曝",
-      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1HUWZGdWJYWENVX0pFb0pZTlpxdnhJT3JFLWlxZlZEX3pSZ3pCa3pZa3Z2Wk5rencxYW9HajAxbjdxTmUwVzQyN044bUNNRURsc1Zr?oc=5",
-      "pubDate": "Tue, 10 Nov 2026 04:47:00 GMT",
-      "pubTs": 1794286020.0,
-      "desc": "以為大地震！鋼鐵廠爆炸多人死傷 恐怖畫面曝&nbsp;&nbsp;東森新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "e121054c98b14f94",
-      "title": "印度塔塔iPhone零件廠傳工安意外 3名工人窒息身亡",
-      "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFA5T2Y3VWhmSW83X1poMWNUbmlreUJJaWJWcVFiakl4UjdjdDRNYy1lYkNLVmFVWFlRaC1IUzhYX19NYWdubUdLTG1MQU54Q1AyNVNXUDcwQ0E4ZkZYb2FkWA?oc=5",
-      "pubDate": "Tue, 10 Nov 2026 04:46:45 GMT",
-      "pubTs": 1794286005.0,
-      "desc": "印度塔塔iPhone零件廠傳工安意外 3名工人窒息身亡&nbsp;&nbsp;民視新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "a7f3b53816abe1d5",
-      "title": "金門消防職安大體檢！打造安全健康職場- 生活新聞",
-      "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSHREMHp2aUlqdFNmRlo1NEhramU4Tzc2VlEzZmpRR3pkclZoMXFJQ2Zac25jN2djLV9SU0VFLUQwNkU5a0VaT0tObXdEbTh2WFFyYjNhbTQxQWF3MlN0R2xJQVhjTVlORk1uMUZyRjRNZk1mMS1jWEU4LURacmJ5cGlxT1lGWldRWVpFdHYxTQ?oc=5",
-      "pubDate": "Tue, 10 Nov 2026 03:38:00 GMT",
-      "pubTs": 1794281880.0,
-      "desc": "金門消防職安大體檢！打造安全健康職場- 生活新聞&nbsp;&nbsp;PChome Online新聞",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
-      "key": "8c6a5aea86d93dbb",
-      "title": "1800度鋼水如瀑砸落！鋼鐵廠爆炸釀17死 家屬悲憤工廠外自焚",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9jcmtVUVB5bFZLdnlfdjJaS2JRNE5jZVFiVXV6THpiOHplcEtiSEx5MEVFbThPTFpEajRlSmE5OVFodlBXRmMtNU8waDI2V2c?oc=5",
-      "pubDate": "Tue, 10 Nov 2026 02:36:00 GMT",
-      "pubTs": 1794278160.0,
-      "desc": "1800度鋼水如瀑砸落！鋼鐵廠爆炸釀17死 家屬悲憤工廠外自焚&nbsp;&nbsp;TVBS新聞網",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "159e86030d4ab3a5",
-      "title": "土耳其哈巴斯鋼鐵廠爆炸致17死 6名疑犯被拘留",
-      "link": "https://news.google.com/rss/articles/CBMizgJBVV95cUxPdENNdkk5RkRZUzF6VXVxa19zb1VGNlVEOTVBNlU1Wk5zNHR5UWlOZGVZOGxaWXJja19PYUZKOFFrVG02ZkpZMGVVVk9ETlE3TUkzRWktRVZReC1veUZBSlY0S2J2dzFVclNkTTVaRU5UU1BSU2JMQTVjTmlIenQtVU5nWmFQZnZxWl9nOHp1dDBOS2ZobHduV2pxUkVSMFJnWW1Jdng5ekRDd2ZnTWNWWnFwaHp0RVJCMWpPWUYwYkt3YV9jY2ZXOWRaS29ZUURPeHBxTHQtMGhDVkNvcDRDY1NpQmd0bEVXQ3A1dXZucWxOQzhpYllvME1lSkJQSGVMWEprRzBNTENsLS02YjE5VkVUZGg4dGNXWVU1d3dDTUJEOEk0SjM0SUdxQmQ5dHluaU9Tc3VSRVZOT0lqQnJScGFjVTloNE5WbDJ3eWRR?oc=5",
-      "pubDate": "Tue, 10 Nov 2026 01:07:59 GMT",
-      "pubTs": 1794272879.0,
-      "desc": "土耳其哈巴斯鋼鐵廠爆炸致17死 6名疑犯被拘留&nbsp;&nbsp;橙新聞",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "27a68001418fe178",
-      "title": "勞動部公布115年前3季重大職災死亡統計，整體下降9％、營造業增加9人，強化科技廠房工程源頭防災",
-      "link": "https://www.osha.gov.tw/48110/48417/48419/215089/",
-      "pubDate": "Mon, 09 Nov 2026 18:44:42 GMT",
-      "pubTs": 1794249882.0,
-      "desc": "勞動部今（3）日公布115年前3季全產業重大職業災害死亡統計。截至9月30日止，全產業重大職災死亡人數為193人，較去年同期213人減少20人，降幅約9％，整體死亡人數呈下降趨勢。 勞動部說明，從行業別觀察，製造業今年前3季重大職災死亡45人，較去年同期減少7人；營造業則有102人死亡，較去年同期增…",
-      "source_id": "gnews_incident",
-      "source_name": "重大職災新聞",
-      "badge": "red"
-    },
-    {
-      "key": "59618a894d0fb094",
-      "title": "消防安全管理接受查核 金門強化第一線職場保障",
-      "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNazZmTmdYZjFzZ2I5TWktMjY0RmNXb1hfV2tYeFFCN3gwWUpWeHRFcmZqejRSZk4ycFM4c3p0dHRqSXFwV29IOS1pNTVoT0I3TGNNMTFQaDJmN3Q1MjBTekJJV0dLanBOX0o0azNZODFhMldPaTZTcmp5eENRaE1UUXRXUmdOdzJzQU1OYzdnUmswcGtXeUE?oc=5",
-      "pubDate": "Mon, 09 Nov 2026 13:44:55 GMT",
-      "pubTs": 1794231895.0,
-      "desc": "消防安全管理接受查核 金門強化第一線職場保障&nbsp;&nbsp;金門GO資訊網",
-      "source_id": "gnews_ohs",
-      "source_name": "職安衛動態",
-      "badge": "purple"
-    },
-    {
       "key": "e705a9b66d3432f2",
       "title": "職安署辦理首梯新進職場霸凌查察員申訴調查教育訓練，提升案件調查處理專業知能",
       "link": "https://www.osha.gov.tw/48110/48417/48423/215216/",
@@ -1750,5 +1750,5 @@
       "badge": "green"
     }
   ],
-  "lastUpdated": "2026-11-23T08:21:34.886625+00:00"
+  "lastUpdated": "2026-11-24T10:30:11.423863+00:00"
 }
